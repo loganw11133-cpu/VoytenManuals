@@ -1,0 +1,34 @@
+{
+  "name": "voyten-manuals",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "db:init": "npx tsx scripts/init-manuals-db.ts",
+    "db:import": "npx tsx scripts/import-real-manuals.ts"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.17.0",
+    "dotenv": "^17.2.3",
+    "lucide-react": "^0.562.0",
+    "next": "^15.2.4",
+    "nodemailer": "^7.0.12",
+    "postcss": "^8.5.8",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/nodemailer": "^7.0.5",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.1.4",
+    "tailwindcss": "^4",
+    "typescript": "5.9.3"
+  }
+}
