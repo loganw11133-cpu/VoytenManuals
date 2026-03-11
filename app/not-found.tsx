@@ -14,7 +14,7 @@ export default function NotFound() {
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Link
             href="/search"
-            className="flex items-center justify-center gap-2 bg-[#1a3a5c] hover:bg-[#0f2840] text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+            className="flex items-center justify-center gap-2 bg-[#1a1a1a] hover:bg-[#111111] text-white px-6 py-3 rounded-lg font-semibold transition-colors"
           >
             <Search size={18} />
             Search Manuals

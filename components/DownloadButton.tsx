@@ -20,7 +20,7 @@ export default function DownloadButton({ pdfUrl, manualId, fileSize, pageCount }
   };
 
   return (
-    <div className="bg-[#1a3a5c]/5 rounded-xl p-6 border border-[#1a3a5c]/10">
+    <div className="bg-[#1a1a1a]/5 rounded-xl p-6 border border-[#1a1a1a]/10">
       <div className="flex flex-col sm:flex-row items-center gap-4">
         <div className="flex-1 text-center sm:text-left">
           <h3 className="font-bold text-slate-900 text-lg">Download PDF</h3>
@@ -34,7 +34,7 @@ export default function DownloadButton({ pdfUrl, manualId, fileSize, pageCount }
           target="_blank"
           rel="noopener noreferrer"
           onClick={handleDownload}
-          className="flex items-center gap-2 bg-[#1a3a5c] hover:bg-[#0f2840] text-white px-8 py-3.5 rounded-xl font-bold transition-colors"
+          className="flex items-center gap-2 bg-[#1a1a1a] hover:bg-[#111111] text-white px-8 py-3.5 rounded-xl font-bold transition-colors"
         >
           <Download size={20} />
           Download Manual

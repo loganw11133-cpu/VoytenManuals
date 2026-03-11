@@ -32,7 +32,7 @@ export default async function CategoriesPage() {
 
   return (
     <div className="bg-slate-50 min-h-screen">
-      <div className="bg-[#1a3a5c] text-white">
+      <div className="bg-[#1a1a1a] text-white">
         <div className="max-w-7xl mx-auto px-4 py-12 lg:py-16">
           <h1 className="text-3xl lg:text-4xl font-bold mb-3">Browse by Category</h1>
           <p className="text-slate-300 text-lg max-w-2xl">
@@ -50,17 +50,17 @@ export default async function CategoriesPage() {
               <Link
                 key={cat.name}
                 href={`/search?category=${encodeURIComponent(cat.name)}`}
-                className="group bg-white rounded-xl border border-slate-200 p-6 hover:border-[#1a3a5c]/30 hover:shadow-lg transition-all"
+                className="group bg-white rounded-xl border border-slate-200 p-6 hover:border-[#1a1a1a]/30 hover:shadow-lg transition-all"
               >
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 bg-[#1a3a5c]/10 group-hover:bg-[#1a3a5c] rounded-xl flex items-center justify-center transition-colors">
-                    <Icon className="w-6 h-6 text-[#1a3a5c] group-hover:text-white transition-colors" />
+                  <div className="w-12 h-12 bg-[#1a1a1a]/10 group-hover:bg-[#1a1a1a] rounded-xl flex items-center justify-center transition-colors">
+                    <Icon className="w-6 h-6 text-[#1a1a1a] group-hover:text-white transition-colors" />
                   </div>
-                  <span className="text-sm font-semibold text-[#1a3a5c] bg-[#1a3a5c]/5 px-3 py-1 rounded-full">
+                  <span className="text-sm font-semibold text-[#1a1a1a] bg-[#1a1a1a]/5 px-3 py-1 rounded-full">
                     {cat.count.toLocaleString()} manuals
                   </span>
                 </div>
-                <h2 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-[#1a3a5c] transition-colors">{cat.name}</h2>
+                <h2 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-[#1a1a1a] transition-colors">{cat.name}</h2>
                 <p className="text-slate-500 text-sm">{meta.longDesc}</p>
               </Link>
             );
@@ -68,7 +68,7 @@ export default async function CategoriesPage() {
         </div>
 
         {/* CTA */}
-        <div className="mt-12 bg-[#1a3a5c] rounded-2xl p-8 lg:p-10 text-center text-white">
+        <div className="mt-12 bg-[#1a1a1a] rounded-2xl p-8 lg:p-10 text-center text-white">
           <h3 className="text-2xl font-bold mb-3">Need help finding a manual or part?</h3>
           <p className="text-slate-300 mb-6 max-w-xl mx-auto">
             Our team of 45+ experts has decades of hands-on experience with this equipment. Call us or submit a request.
@@ -76,7 +76,7 @@ export default async function CategoriesPage() {
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <a
               href="tel:1-800-458-4001"
-              className="flex items-center justify-center gap-2 bg-[#c8962e] hover:bg-[#b8862a] text-white px-6 py-3 rounded-lg font-bold transition-colors"
+              className="flex items-center justify-center gap-2 bg-[#dc2626] hover:bg-[#b91c1c] text-white px-6 py-3 rounded-lg font-bold transition-colors"
             >
               <Phone size={18} />
               1-800-458-4001

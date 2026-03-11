@@ -230,7 +230,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <meta name="theme-color" content="#1a3a5c" />
+        <meta name="theme-color" content="#dc2626" />
         <meta name="geo.region" content="US-PA" />
         <meta name="geo.placename" content="Polk, Pennsylvania" />
         <Script

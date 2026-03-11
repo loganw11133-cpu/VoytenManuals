@@ -24,11 +24,11 @@ export default function AboutPage() {
   return (
     <div className="bg-white">
       {/* Hero */}
-      <section className="bg-[#1a3a5c] text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0f2840] via-[#1a3a5c] to-[#2a5a8c]"></div>
+      <section className="bg-[#1a1a1a] text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#111111] via-[#1a1a1a] to-[#991b1b]"></div>
         <div className="relative max-w-7xl mx-auto px-4 py-14 lg:py-20">
           <div className="max-w-3xl">
-            <p className="text-[#c8962e] font-semibold mb-3 text-sm tracking-wide uppercase">Since 1953</p>
+            <p className="text-[#dc2626] font-semibold mb-3 text-sm tracking-wide uppercase">Since 1953</p>
             <h1 className="text-3xl lg:text-5xl font-extrabold mb-4 leading-tight">About Voyten Manuals</h1>
             <p className="text-lg lg:text-xl text-slate-300 leading-relaxed">
               A free resource for electrical professionals — powered by Voyten Electric & Electronics, Inc.,
@@ -59,7 +59,7 @@ export default function AboutPage() {
             </p>
             <p>
               Our library is continually growing. If you can&#39;t find what you need,{' '}
-              <Link href="/contact?type=manual-request" className="text-[#1a3a5c] font-medium hover:underline">
+              <Link href="/contact?type=manual-request" className="text-[#1a1a1a] font-medium hover:underline">
                 let us know
               </Link>{' '}
               and we&#39;ll do our best to track it down.
@@ -71,14 +71,14 @@ export default function AboutPage() {
       {/* Our History */}
       <section className="py-14 lg:py-18 bg-slate-50">
         <div className="max-w-4xl mx-auto px-4">
-          <p className="text-[#c8962e] font-semibold mb-2">Our Story</p>
+          <p className="text-[#dc2626] font-semibold mb-2">Our Story</p>
           <h2 className="text-3xl font-bold text-slate-900 mb-8">Three Generations of Electrical Expertise</h2>
 
           <div className="space-y-12">
             {/* John Voyten */}
-            <div className="relative pl-8 border-l-2 border-[#c8962e]/30">
-              <div className="absolute -left-2.5 top-0 w-5 h-5 bg-[#c8962e] rounded-full"></div>
-              <p className="text-sm font-semibold text-[#c8962e] mb-1">1953 — The Beginning</p>
+            <div className="relative pl-8 border-l-2 border-[#dc2626]/30">
+              <div className="absolute -left-2.5 top-0 w-5 h-5 bg-[#dc2626] rounded-full"></div>
+              <p className="text-sm font-semibold text-[#dc2626] mb-1">1953 — The Beginning</p>
               <h3 className="text-xl font-bold text-slate-900 mb-3">John Voyten, Founder</h3>
               <div className="space-y-3 text-slate-600 leading-relaxed">
                 <p>
@@ -107,9 +107,9 @@ export default function AboutPage() {
             </div>
 
             {/* Tom & Bonnie */}
-            <div className="relative pl-8 border-l-2 border-[#c8962e]/30">
-              <div className="absolute -left-2.5 top-0 w-5 h-5 bg-[#c8962e] rounded-full"></div>
-              <p className="text-sm font-semibold text-[#c8962e] mb-1">1970s — Second Generation</p>
+            <div className="relative pl-8 border-l-2 border-[#dc2626]/30">
+              <div className="absolute -left-2.5 top-0 w-5 h-5 bg-[#dc2626] rounded-full"></div>
+              <p className="text-sm font-semibold text-[#dc2626] mb-1">1970s — Second Generation</p>
               <h3 className="text-xl font-bold text-slate-900 mb-3">Tom & Bonnie Nightingale</h3>
               <div className="space-y-3 text-slate-600 leading-relaxed">
                 <p>
@@ -125,9 +125,9 @@ export default function AboutPage() {
             </div>
 
             {/* Mike Nightingale */}
-            <div className="relative pl-8 border-l-2 border-[#c8962e]/30">
-              <div className="absolute -left-2.5 top-0 w-5 h-5 bg-[#c8962e] rounded-full"></div>
-              <p className="text-sm font-semibold text-[#c8962e] mb-1">1997 — Third Generation</p>
+            <div className="relative pl-8 border-l-2 border-[#dc2626]/30">
+              <div className="absolute -left-2.5 top-0 w-5 h-5 bg-[#dc2626] rounded-full"></div>
+              <p className="text-sm font-semibold text-[#dc2626] mb-1">1997 — Third Generation</p>
               <h3 className="text-xl font-bold text-slate-900 mb-3">Mike Nightingale, President</h3>
               <div className="space-y-3 text-slate-600 leading-relaxed">
                 <p>
@@ -145,8 +145,8 @@ export default function AboutPage() {
 
             {/* Today */}
             <div className="relative pl-8">
-              <div className="absolute -left-2.5 top-0 w-5 h-5 bg-[#1a3a5c] rounded-full ring-4 ring-[#1a3a5c]/20"></div>
-              <p className="text-sm font-semibold text-[#1a3a5c] mb-1">Today</p>
+              <div className="absolute -left-2.5 top-0 w-5 h-5 bg-[#1a1a1a] rounded-full ring-4 ring-[#1a1a1a]/20"></div>
+              <p className="text-sm font-semibold text-[#1a1a1a] mb-1">Today</p>
               <h3 className="text-xl font-bold text-slate-900 mb-3">A Constant in a Changing Industry</h3>
               <div className="space-y-3 text-slate-600 leading-relaxed">
                 <p>
@@ -180,10 +180,10 @@ export default function AboutPage() {
               { value: '440', label: 'Acres in Allegheny Valley', icon: MapPin },
             ].map(stat => (
               <div key={stat.label} className="text-center">
-                <div className="w-12 h-12 bg-[#1a3a5c]/10 rounded-xl flex items-center justify-center mx-auto mb-3">
-                  <stat.icon className="w-6 h-6 text-[#1a3a5c]" />
+                <div className="w-12 h-12 bg-[#1a1a1a]/10 rounded-xl flex items-center justify-center mx-auto mb-3">
+                  <stat.icon className="w-6 h-6 text-[#1a1a1a]" />
                 </div>
-                <p className="text-3xl lg:text-4xl font-extrabold text-[#1a3a5c]">{stat.value}</p>
+                <p className="text-3xl lg:text-4xl font-extrabold text-[#1a1a1a]">{stat.value}</p>
                 <p className="text-slate-500 text-sm mt-1">{stat.label}</p>
               </div>
             ))}
@@ -205,8 +205,8 @@ export default function AboutPage() {
                   { icon: Users, title: 'Personal Service', desc: 'Every inquiry handled by our professional sales staff — not a call center' },
                 ].map(item => (
                   <div key={item.title} className="flex items-start gap-3">
-                    <div className="w-8 h-8 bg-[#1a3a5c]/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <item.icon className="w-4 h-4 text-[#1a3a5c]" />
+                    <div className="w-8 h-8 bg-[#1a1a1a]/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <item.icon className="w-4 h-4 text-[#1a1a1a]" />
                     </div>
                     <div>
                       <p className="font-semibold text-slate-900">{item.title}</p>
@@ -219,7 +219,7 @@ export default function AboutPage() {
               <div className="flex flex-col sm:flex-row gap-3">
                 <a
                   href="tel:1-800-458-4001"
-                  className="flex items-center justify-center gap-2 bg-[#1a3a5c] text-white px-6 py-3 rounded-lg font-bold hover:bg-[#0f2840] transition-colors"
+                  className="flex items-center justify-center gap-2 bg-[#1a1a1a] text-white px-6 py-3 rounded-lg font-bold hover:bg-[#111111] transition-colors"
                 >
                   <Phone size={18} />
                   1-800-458-4001
@@ -236,8 +236,8 @@ export default function AboutPage() {
               </div>
             </div>
 
-            <div className="bg-[#1a3a5c] rounded-2xl p-8 lg:p-10 text-white">
-              <BookOpen className="w-12 h-12 text-[#c8962e] mb-6" />
+            <div className="bg-[#1a1a1a] rounded-2xl p-8 lg:p-10 text-white">
+              <BookOpen className="w-12 h-12 text-[#dc2626] mb-6" />
               <h3 className="text-2xl font-bold mb-4">What You&#39;ll Find Here</h3>
               <ul className="space-y-3 text-slate-300">
                 {[
@@ -249,14 +249,14 @@ export default function AboutPage() {
                   'Equipment configuration guides',
                 ].map(item => (
                   <li key={item} className="flex items-start gap-2">
-                    <span className="text-[#c8962e] font-bold mt-0.5">-</span>
+                    <span className="text-[#dc2626] font-bold mt-0.5">-</span>
                     {item}
                   </li>
                 ))}
               </ul>
               <Link
                 href="/search"
-                className="mt-6 inline-flex items-center gap-2 bg-white text-[#1a3a5c] px-5 py-2.5 rounded-lg font-bold text-sm hover:bg-slate-100 transition-colors"
+                className="mt-6 inline-flex items-center gap-2 bg-white text-[#1a1a1a] px-5 py-2.5 rounded-lg font-bold text-sm hover:bg-slate-100 transition-colors"
               >
                 Browse All Manuals
                 <ArrowRight size={16} />
@@ -267,7 +267,7 @@ export default function AboutPage() {
       </section>
 
       {/* Bottom Lead-Gen CTA */}
-      <section className="py-14 lg:py-18 bg-[#1a3a5c]">
+      <section className="py-14 lg:py-18 bg-[#1a1a1a]">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
             Ready to Find Your Manual or Part?
@@ -278,7 +278,7 @@ export default function AboutPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/search"
-              className="flex items-center justify-center gap-2 bg-[#c8962e] hover:bg-[#b8862a] text-white px-8 py-4 rounded-xl font-bold text-lg transition-colors"
+              className="flex items-center justify-center gap-2 bg-[#dc2626] hover:bg-[#b91c1c] text-white px-8 py-4 rounded-xl font-bold text-lg transition-colors"
             >
               <BookOpen size={22} />
               Browse Manuals

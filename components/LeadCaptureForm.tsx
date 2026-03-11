@@ -94,7 +94,7 @@ export default function LeadCaptureForm({ type, manualTitle, manualId, sourcePag
             required
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a3a5c] focus:border-transparent placeholder:text-slate-400"
+            className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a1a] focus:border-transparent placeholder:text-slate-400"
           />
           <input
             type="email"
@@ -102,7 +102,7 @@ export default function LeadCaptureForm({ type, manualTitle, manualId, sourcePag
             required
             value={formData.email}
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a3a5c] focus:border-transparent placeholder:text-slate-400"
+            className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a1a] focus:border-transparent placeholder:text-slate-400"
           />
         </div>
         <div className={compact ? 'grid sm:grid-cols-2 gap-3' : 'space-y-3'}>
@@ -111,14 +111,14 @@ export default function LeadCaptureForm({ type, manualTitle, manualId, sourcePag
             placeholder="Phone Number"
             value={formData.phone}
             onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-            className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a3a5c] focus:border-transparent placeholder:text-slate-400"
+            className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a1a] focus:border-transparent placeholder:text-slate-400"
           />
           <input
             type="text"
             placeholder="Company"
             value={formData.company}
             onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-            className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a3a5c] focus:border-transparent placeholder:text-slate-400"
+            className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a1a] focus:border-transparent placeholder:text-slate-400"
           />
         </div>
         <textarea
@@ -132,7 +132,7 @@ export default function LeadCaptureForm({ type, manualTitle, manualId, sourcePag
           rows={compact ? 2 : 3}
           value={formData.message}
           onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-          className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a3a5c] focus:border-transparent placeholder:text-slate-400 resize-none"
+          className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a1a] focus:border-transparent placeholder:text-slate-400 resize-none"
         />
 
         {manualTitle && (
@@ -144,7 +144,7 @@ export default function LeadCaptureForm({ type, manualTitle, manualId, sourcePag
         <button
           type="submit"
           disabled={status === 'submitting'}
-          className="w-full bg-[#1a3a5c] hover:bg-[#0f2840] text-white py-3 rounded-lg font-semibold text-sm transition-colors flex items-center justify-center gap-2 disabled:opacity-60"
+          className="w-full bg-[#1a1a1a] hover:bg-[#111111] text-white py-3 rounded-lg font-semibold text-sm transition-colors flex items-center justify-center gap-2 disabled:opacity-60"
         >
           {status === 'submitting' ? (
             'Submitting...'

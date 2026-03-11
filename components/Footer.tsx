@@ -3,9 +3,9 @@ import { Phone, Mail, MapPin, BookOpen } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer className="bg-[#0f1f33] text-white">
+    <footer className="bg-[#111111] text-white">
       {/* CTA Banner */}
-      <div className="bg-[#c8962e]">
+      <div className="bg-[#dc2626]">
         <div className="max-w-7xl mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-center md:text-left">
@@ -15,7 +15,7 @@ export default function Footer() {
             <div className="flex gap-3">
               <a
                 href="tel:1-800-458-4001"
-                className="flex items-center gap-2 bg-white text-[#1a3a5c] px-6 py-2.5 rounded-lg font-bold hover:bg-slate-100 transition-colors"
+                className="flex items-center gap-2 bg-white text-[#1a1a1a] px-6 py-2.5 rounded-lg font-bold hover:bg-slate-100 transition-colors"
               >
                 <Phone size={18} />
                 1-800-458-4001
@@ -38,9 +38,9 @@ export default function Footer() {
           <div>
             <div className="flex items-center gap-2 mb-4">
               <div className="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center">
-                <BookOpen className="w-4 h-4 text-[#c8962e]" />
+                <BookOpen className="w-4 h-4 text-[#dc2626]" />
               </div>
-              <span className="text-lg font-bold">Voyten<span className="text-[#c8962e]">Manuals</span></span>
+              <span className="text-lg font-bold">Voyten<span className="text-[#dc2626]">Manuals</span></span>
             </div>
             <p className="text-slate-400 text-sm mb-4">
               A free resource by Voyten Electric. Searchable library of electrical equipment manuals, instruction guides, and technical documentation.
@@ -49,7 +49,7 @@ export default function Footer() {
               href="https://voytenelectric.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#c8962e] hover:text-[#d8a63e] text-sm font-medium"
+              className="text-[#dc2626] hover:text-[#ef4444] text-sm font-medium"
             >
               Visit VoytenElectric.com
             </a>

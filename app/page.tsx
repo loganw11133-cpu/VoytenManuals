@@ -29,8 +29,8 @@ export default async function Home() {
   return (
     <div className="bg-white">
       {/* Hero Section */}
-      <section className="bg-[#1a3a5c] relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0f2840] via-[#1a3a5c] to-[#2a5a8c]"></div>
+      <section className="bg-[#1a1a1a] relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#111111] via-[#1a1a1a] to-[#991b1b]"></div>
         <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")' }}></div>
         <div className="relative max-w-7xl mx-auto px-4 py-16 lg:py-24">
           <div className="max-w-3xl mx-auto text-center">
@@ -40,7 +40,7 @@ export default async function Home() {
             </div>
             <h1 className="text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-4">
               Find the Electrical Manual
-              <span className="text-[#c8962e]"> You Need</span>
+              <span className="text-[#dc2626]"> You Need</span>
             </h1>
             <p className="text-lg lg:text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
               Searchable library of instruction manuals, renewal parts catalogs, characteristic curves,
@@ -68,7 +68,7 @@ export default async function Home() {
               { icon: Truck, text: 'Parts Available' },
             ].map(item => (
               <div key={item.text} className="flex items-center justify-center gap-2 text-sm text-slate-600">
-                <item.icon size={16} className="text-[#c8962e] flex-shrink-0" />
+                <item.icon size={16} className="text-[#dc2626] flex-shrink-0" />
                 <span className="font-medium">{item.text}</span>
               </div>
             ))}
@@ -94,11 +94,11 @@ export default async function Home() {
                 <Link
                   key={cat.name}
                   href={`/search?category=${encodeURIComponent(cat.name)}`}
-                  className="group bg-slate-50 hover:bg-[#1a3a5c] rounded-xl p-5 transition-all hover:shadow-lg"
+                  className="group bg-slate-50 hover:bg-[#1a1a1a] rounded-xl p-5 transition-all hover:shadow-lg"
                 >
                   <div className="flex items-center justify-between mb-3">
-                    <div className="w-10 h-10 bg-[#1a3a5c]/10 group-hover:bg-white/20 rounded-lg flex items-center justify-center transition-colors">
-                      <Icon className="w-5 h-5 text-[#1a3a5c] group-hover:text-white transition-colors" />
+                    <div className="w-10 h-10 bg-[#1a1a1a]/10 group-hover:bg-white/20 rounded-lg flex items-center justify-center transition-colors">
+                      <Icon className="w-5 h-5 text-[#1a1a1a] group-hover:text-white transition-colors" />
                     </div>
                     {dbCat && (
                       <span className="text-xs font-medium text-slate-400 group-hover:text-white/50 bg-slate-100 group-hover:bg-white/10 px-2 py-0.5 rounded-full transition-colors">
@@ -127,7 +127,7 @@ export default async function Home() {
               <Link
                 key={mfr.name}
                 href={`/search?manufacturer=${encodeURIComponent(mfr.name)}`}
-                className="px-5 py-2.5 bg-white border border-slate-200 rounded-lg text-slate-700 font-medium text-sm hover:border-[#1a3a5c] hover:text-[#1a3a5c] hover:shadow-sm transition-all"
+                className="px-5 py-2.5 bg-white border border-slate-200 rounded-lg text-slate-700 font-medium text-sm hover:border-[#1a1a1a] hover:text-[#1a1a1a] hover:shadow-sm transition-all"
               >
                 {mfr.name}
                 <span className="text-slate-400 ml-1.5 text-xs">({mfr.count})</span>
@@ -135,7 +135,7 @@ export default async function Home() {
             ))}
             <Link
               href="/manufacturers"
-              className="px-5 py-2.5 border border-dashed border-slate-300 rounded-lg text-slate-500 text-sm hover:border-[#1a3a5c] hover:text-[#1a3a5c] transition-all flex items-center gap-1"
+              className="px-5 py-2.5 border border-dashed border-slate-300 rounded-lg text-slate-500 text-sm hover:border-[#1a1a1a] hover:text-[#1a1a1a] transition-all flex items-center gap-1"
             >
               View all
               <ArrowRight size={14} />
@@ -156,7 +156,7 @@ export default async function Home() {
 
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="w-14 h-14 bg-[#1a3a5c] rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <div className="w-14 h-14 bg-[#1a1a1a] rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <Search className="w-7 h-7 text-white" />
               </div>
               <h3 className="text-lg font-bold text-slate-900 mb-2">Easy to Search</h3>
@@ -167,7 +167,7 @@ export default async function Home() {
             </div>
 
             <div className="text-center">
-              <div className="w-14 h-14 bg-[#1a3a5c] rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <div className="w-14 h-14 bg-[#1a1a1a] rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <Download className="w-7 h-7 text-white" />
               </div>
               <h3 className="text-lg font-bold text-slate-900 mb-2">Free PDF Downloads</h3>
@@ -178,7 +178,7 @@ export default async function Home() {
             </div>
 
             <div className="text-center">
-              <div className="w-14 h-14 bg-[#1a3a5c] rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <div className="w-14 h-14 bg-[#1a1a1a] rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <Users className="w-7 h-7 text-white" />
               </div>
               <h3 className="text-lg font-bold text-slate-900 mb-2">EOL &amp; Legacy Expert Support</h3>
@@ -192,7 +192,7 @@ export default async function Home() {
       </section>
 
       {/* Lead Gen CTA - Parts */}
-      <section className="py-14 lg:py-18 bg-[#1a3a5c]">
+      <section className="py-14 lg:py-18 bg-[#1a1a1a]">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
             Found the Manual? Need the Part?
@@ -204,7 +204,7 @@ export default async function Home() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="tel:1-800-458-4001"
-              className="flex items-center justify-center gap-3 bg-[#c8962e] hover:bg-[#b8862a] text-white px-8 py-4 rounded-xl font-bold text-lg transition-colors"
+              className="flex items-center justify-center gap-3 bg-[#dc2626] hover:bg-[#b91c1c] text-white px-8 py-4 rounded-xl font-bold text-lg transition-colors"
             >
               <Phone size={22} />
               Call: 1-800-458-4001
@@ -235,7 +235,7 @@ export default async function Home() {
           </p>
           <Link
             href="/contact?type=manual-request"
-            className="inline-flex items-center gap-2 bg-[#1a3a5c] hover:bg-[#0f2840] text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+            className="inline-flex items-center gap-2 bg-[#1a1a1a] hover:bg-[#111111] text-white px-6 py-3 rounded-lg font-semibold transition-colors"
           >
             Request a Manual
             <ChevronRight size={18} />

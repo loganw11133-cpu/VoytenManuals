@@ -115,11 +115,11 @@ export default function AdminPage() {
             value={apiKey}
             onChange={e => setApiKey(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && handleLogin()}
-            className="w-full px-4 py-3 border border-slate-300 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-[#1a3a5c]"
+            className="w-full px-4 py-3 border border-slate-300 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-[#1a1a1a]"
           />
           <button
             onClick={handleLogin}
-            className="w-full bg-[#1a3a5c] text-white py-3 rounded-lg font-bold hover:bg-[#0f2840] transition-colors"
+            className="w-full bg-[#1a1a1a] text-white py-3 rounded-lg font-bold hover:bg-[#111111] transition-colors"
           >
             Sign In
           </button>
@@ -133,7 +133,7 @@ export default function AdminPage() {
   return (
     <div className="min-h-screen bg-slate-100">
       {/* Header */}
-      <header className="bg-[#1a3a5c] text-white">
+      <header className="bg-[#1a1a1a] text-white">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-6">
             <h1 className="text-lg font-bold">Voyten Admin</h1>
@@ -241,7 +241,7 @@ export default function AdminPage() {
                 {stats.categories.map(cat => (
                   <div key={cat.category} className="bg-slate-50 rounded-lg p-3">
                     <p className="text-sm font-medium text-slate-900">{cat.category}</p>
-                    <p className="text-lg font-bold text-[#1a3a5c]">{cat.count}</p>
+                    <p className="text-lg font-bold text-[#1a1a1a]">{cat.count}</p>
                   </div>
                 ))}
               </div>
@@ -260,12 +260,12 @@ export default function AdminPage() {
                   placeholder="Search manuals..."
                   value={searchQuery}
                   onChange={e => { setSearchQuery(e.target.value); setPage(1); }}
-                  className="w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1a3a5c]"
+                  className="w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1a1a1a]"
                 />
               </div>
               <button
                 onClick={() => { setShowCreate(true); setEditManual(null); }}
-                className="flex items-center gap-2 bg-[#1a3a5c] text-white px-4 py-2.5 rounded-lg font-medium hover:bg-[#0f2840]"
+                className="flex items-center gap-2 bg-[#1a1a1a] text-white px-4 py-2.5 rounded-lg font-medium hover:bg-[#111111]"
               >
                 <Plus size={16} /> Add Manual
               </button>
@@ -292,7 +292,7 @@ export default function AdminPage() {
                     ) : manuals.map(m => (
                       <tr key={m.id} className="border-b border-slate-100 hover:bg-slate-50">
                         <td className="px-4 py-3">
-                          <Link href={`/manual/${m.slug}`} className="text-[#1a3a5c] hover:underline font-medium" target="_blank">
+                          <Link href={`/manual/${m.slug}`} className="text-[#1a1a1a] hover:underline font-medium" target="_blank">
                             {m.title}
                           </Link>
                         </td>
@@ -301,7 +301,7 @@ export default function AdminPage() {
                         <td className="px-4 py-3 text-slate-500 font-mono text-xs">{m.manual_number || '—'}</td>
                         <td className="px-4 py-3 text-right">
                           <div className="flex items-center justify-end gap-2">
-                            <button onClick={() => { setEditManual(m); setShowCreate(false); }} className="text-slate-400 hover:text-[#1a3a5c]">
+                            <button onClick={() => { setEditManual(m); setShowCreate(false); }} className="text-slate-400 hover:text-[#1a1a1a]">
                               <Pencil size={14} />
                             </button>
                             <a href={m.pdf_url} target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-green-600">
@@ -457,56 +457,56 @@ function ManualForm({ manual, onSave, onClose }: {
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">Title *</label>
-            <input required value={form.title} onChange={e => update('title', e.target.value)} className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1a3a5c]" />
+            <input required value={form.title} onChange={e => update('title', e.target.value)} className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1a1a1a]" />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1">Category *</label>
-              <select required value={form.category} onChange={e => update('category', e.target.value)} className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1a3a5c]">
+              <select required value={form.category} onChange={e => update('category', e.target.value)} className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1a1a1a]">
                 <option value="">Select...</option>
                 {categories.map(c => <option key={c} value={c}>{c}</option>)}
               </select>
             </div>
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1">Manufacturer *</label>
-              <input required value={form.manufacturer} onChange={e => update('manufacturer', e.target.value)} className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1a3a5c]" />
+              <input required value={form.manufacturer} onChange={e => update('manufacturer', e.target.value)} className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1a1a1a]" />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1">Subcategory</label>
-              <input value={form.subcategory} onChange={e => update('subcategory', e.target.value)} className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1a3a5c]" />
+              <input value={form.subcategory} onChange={e => update('subcategory', e.target.value)} className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1a1a1a]" />
             </div>
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1">Manual Number</label>
-              <input value={form.manual_number} onChange={e => update('manual_number', e.target.value)} className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1a3a5c]" />
+              <input value={form.manual_number} onChange={e => update('manual_number', e.target.value)} className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1a1a1a]" />
             </div>
           </div>
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">PDF URL *</label>
-            <input required type="url" value={form.pdf_url} onChange={e => update('pdf_url', e.target.value)} className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1a3a5c] font-mono text-sm" />
+            <input required type="url" value={form.pdf_url} onChange={e => update('pdf_url', e.target.value)} className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1a1a1a] font-mono text-sm" />
           </div>
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">Description</label>
-            <textarea rows={3} value={form.description} onChange={e => update('description', e.target.value)} className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1a3a5c]" />
+            <textarea rows={3} value={form.description} onChange={e => update('description', e.target.value)} className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1a1a1a]" />
           </div>
           <div className="grid grid-cols-3 gap-4">
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1">Page Count</label>
-              <input type="number" value={form.page_count} onChange={e => update('page_count', e.target.value)} className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1a3a5c]" />
+              <input type="number" value={form.page_count} onChange={e => update('page_count', e.target.value)} className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1a1a1a]" />
             </div>
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1">File Size (bytes)</label>
-              <input type="number" value={form.file_size_bytes} onChange={e => update('file_size_bytes', e.target.value)} className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1a3a5c]" />
+              <input type="number" value={form.file_size_bytes} onChange={e => update('file_size_bytes', e.target.value)} className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1a1a1a]" />
             </div>
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1">Keywords</label>
-              <input value={form.keywords} onChange={e => update('keywords', e.target.value)} className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1a3a5c]" />
+              <input value={form.keywords} onChange={e => update('keywords', e.target.value)} className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1a1a1a]" />
             </div>
           </div>
           <div className="flex justify-end gap-3 pt-4">
             <button type="button" onClick={onClose} className="px-4 py-2.5 border border-slate-300 rounded-lg text-slate-700 hover:bg-slate-50">Cancel</button>
-            <button type="submit" className="px-6 py-2.5 bg-[#1a3a5c] text-white rounded-lg font-medium hover:bg-[#0f2840]">
+            <button type="submit" className="px-6 py-2.5 bg-[#1a1a1a] text-white rounded-lg font-medium hover:bg-[#111111]">
               {isNew ? 'Create Manual' : 'Save Changes'}
             </button>
           </div>

@@ -92,7 +92,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
               </h2>
 
               {hasFilters && (
-                <Link href="/search" className="text-sm text-[#1a3a5c] hover:underline mb-4 block">
+                <Link href="/search" className="text-sm text-[#1a1a1a] hover:underline mb-4 block">
                   Clear all filters
                 </Link>
               )}
@@ -107,7 +107,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                       href={buildUrl({ category: category === cat.name ? '' : cat.name, subcategory: '', manufacturer: '', page: 1 })}
                       className={`block text-sm px-3 py-1.5 rounded-lg transition-colors ${
                         category === cat.name
-                          ? 'bg-[#1a3a5c] text-white font-medium'
+                          ? 'bg-[#1a1a1a] text-white font-medium'
                           : 'text-slate-600 hover:bg-slate-100'
                       }`}
                     >
@@ -128,7 +128,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                         href={buildUrl({ manufacturer: manufacturer === mfr.name ? '' : mfr.name, subcategory: '', page: 1 })}
                         className={`block text-sm px-3 py-1.5 rounded-lg transition-colors ${
                           manufacturer === mfr.name
-                            ? 'bg-[#1a3a5c] text-white font-medium'
+                            ? 'bg-[#1a1a1a] text-white font-medium'
                             : 'text-slate-600 hover:bg-slate-100'
                         }`}
                       >
@@ -150,7 +150,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                         href={buildUrl({ subcategory: subcategory === sub ? '' : sub, page: 1 })}
                         className={`block text-sm px-3 py-1.5 rounded-lg transition-colors ${
                           subcategory === sub
-                            ? 'bg-[#1a3a5c] text-white font-medium'
+                            ? 'bg-[#1a1a1a] text-white font-medium'
                             : 'text-slate-600 hover:bg-slate-100'
                         }`}
                       >
@@ -166,7 +166,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                 <p className="text-xs text-slate-500 mb-2">Can&#39;t find what you need?</p>
                 <Link
                   href="/contact?type=manual-request"
-                  className="block text-center text-sm bg-[#c8962e] hover:bg-[#b8862a] text-white py-2.5 rounded-lg font-medium transition-colors"
+                  className="block text-center text-sm bg-[#dc2626] hover:bg-[#b91c1c] text-white py-2.5 rounded-lg font-medium transition-colors"
                 >
                   Request a Manual
                 </Link>

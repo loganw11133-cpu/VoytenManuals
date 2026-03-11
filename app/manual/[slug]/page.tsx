@@ -168,7 +168,7 @@ export default async function ManualPage({ params }: ManualPageProps) {
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Main Content */}
           <div className="flex-1">
-            <Link href="/search" className="inline-flex items-center gap-1 text-sm text-[#1a3a5c] hover:underline mb-4">
+            <Link href="/search" className="inline-flex items-center gap-1 text-sm text-[#1a1a1a] hover:underline mb-4">
               <ArrowLeft size={14} />
               Back to Search
             </Link>
@@ -177,7 +177,7 @@ export default async function ManualPage({ params }: ManualPageProps) {
               {/* Manual Header */}
               <div className="p-6 lg:p-8">
                 <div className="flex items-start gap-4 mb-6">
-                  <div className="w-14 h-14 bg-[#1a3a5c] rounded-xl flex items-center justify-center flex-shrink-0">
+                  <div className="w-14 h-14 bg-[#1a1a1a] rounded-xl flex items-center justify-center flex-shrink-0">
                     <FileText className="w-7 h-7 text-white" aria-hidden="true" />
                   </div>
                   <div>
@@ -194,14 +194,14 @@ export default async function ManualPage({ params }: ManualPageProps) {
                 <div className="flex flex-wrap gap-3 mb-6">
                   <Link
                     href={`/search?manufacturer=${encodeURIComponent(manual.manufacturer)}`}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-[#1a3a5c]/10 rounded-lg text-sm text-slate-700 transition-colors"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-[#1a1a1a]/10 rounded-lg text-sm text-slate-700 transition-colors"
                   >
                     <Building2 size={14} aria-hidden="true" />
                     {manual.manufacturer}
                   </Link>
                   <Link
                     href={`/search?category=${encodeURIComponent(manual.category)}`}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-[#1a3a5c]/10 rounded-lg text-sm text-slate-700 transition-colors"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-[#1a1a1a]/10 rounded-lg text-sm text-slate-700 transition-colors"
                   >
                     <Tag size={14} aria-hidden="true" />
                     {manual.category}
@@ -209,7 +209,7 @@ export default async function ManualPage({ params }: ManualPageProps) {
                   {manual.subcategory && (
                     <Link
                       href={`/search?subcategory=${encodeURIComponent(manual.subcategory)}`}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-[#1a3a5c]/10 rounded-lg text-sm text-slate-700 transition-colors"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-[#1a1a1a]/10 rounded-lg text-sm text-slate-700 transition-colors"
                     >
                       <Layers size={14} aria-hidden="true" />
                       {manual.subcategory}
@@ -243,7 +243,7 @@ export default async function ManualPage({ params }: ManualPageProps) {
               </div>
 
               {/* Conversion CTA - Below download */}
-              <div className="bg-[#c8962e]/10 border-t border-[#c8962e]/20 p-6">
+              <div className="bg-[#dc2626]/10 border-t border-[#dc2626]/20 p-6">
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                   <div>
                     <h3 className="font-bold text-slate-900">Need the replacement part?</h3>
@@ -253,7 +253,7 @@ export default async function ManualPage({ params }: ManualPageProps) {
                   </div>
                   <a
                     href="tel:1-800-458-4001"
-                    className="flex items-center gap-2 bg-[#c8962e] hover:bg-[#b8862a] text-white px-6 py-3 rounded-lg font-bold transition-colors flex-shrink-0"
+                    className="flex items-center gap-2 bg-[#dc2626] hover:bg-[#b91c1c] text-white px-6 py-3 rounded-lg font-bold transition-colors flex-shrink-0"
                   >
                     <Phone size={18} aria-hidden="true" />
                     1-800-458-4001
@@ -263,10 +263,10 @@ export default async function ManualPage({ params }: ManualPageProps) {
             </div>
 
             {/* EOL / Legacy Equipment Banner */}
-            <div className="mt-6 bg-[#1a3a5c] rounded-xl p-6 text-white">
+            <div className="mt-6 bg-[#1a1a1a] rounded-xl p-6 text-white">
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Shield className="w-5 h-5 text-[#c8962e]" aria-hidden="true" />
+                  <Shield className="w-5 h-5 text-[#dc2626]" aria-hidden="true" />
                 </div>
                 <div>
                   <h3 className="font-bold text-lg mb-1">EOL &amp; Legacy Equipment Support</h3>
@@ -276,7 +276,7 @@ export default async function ManualPage({ params }: ManualPageProps) {
                     trip units, motor controls, and accessories for models no longer manufactured.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-3 mt-4">
-                    <a href="tel:1-800-458-4001" className="flex items-center gap-2 bg-[#c8962e] hover:bg-[#b8862a] text-white px-5 py-2.5 rounded-lg font-semibold text-sm transition-colors">
+                    <a href="tel:1-800-458-4001" className="flex items-center gap-2 bg-[#dc2626] hover:bg-[#b91c1c] text-white px-5 py-2.5 rounded-lg font-semibold text-sm transition-colors">
                       <Phone size={16} aria-hidden="true" />
                       Call for Parts
                     </a>
@@ -318,27 +318,27 @@ export default async function ManualPage({ params }: ManualPageProps) {
               <div className="space-y-2">
                 <Link
                   href={`/search?manufacturer=${encodeURIComponent(manual.manufacturer)}`}
-                  className="block text-sm text-[#1a3a5c] hover:underline"
+                  className="block text-sm text-[#1a1a1a] hover:underline"
                 >
                   All {manual.manufacturer} manuals
                 </Link>
                 <Link
                   href={`/search?category=${encodeURIComponent(manual.category)}`}
-                  className="block text-sm text-[#1a3a5c] hover:underline"
+                  className="block text-sm text-[#1a1a1a] hover:underline"
                 >
                   All {manual.category} manuals
                 </Link>
                 {manual.subcategory && (
                   <Link
                     href={`/search?subcategory=${encodeURIComponent(manual.subcategory)}`}
-                    className="block text-sm text-[#1a3a5c] hover:underline"
+                    className="block text-sm text-[#1a1a1a] hover:underline"
                   >
                     More {manual.subcategory}
                   </Link>
                 )}
                 <Link
                   href={`/search?manufacturer=${encodeURIComponent(manual.manufacturer)}&category=${encodeURIComponent(manual.category)}`}
-                  className="block text-sm text-[#1a3a5c] hover:underline"
+                  className="block text-sm text-[#1a1a1a] hover:underline"
                 >
                   {manual.manufacturer} {manual.category}
                 </Link>
@@ -346,14 +346,14 @@ export default async function ManualPage({ params }: ManualPageProps) {
             </div>
 
             {/* Contact CTA */}
-            <div className="bg-[#1a3a5c] rounded-xl p-5 text-white">
+            <div className="bg-[#1a1a1a] rounded-xl p-5 text-white">
               <h3 className="font-bold text-lg mb-2">Need Expert Help?</h3>
               <p className="text-slate-300 text-sm mb-4">
                 Our team can help identify parts, source discontinued equipment, or answer technical questions about legacy {manual.manufacturer} products.
               </p>
               <a
                 href="tel:1-800-458-4001"
-                className="flex items-center justify-center gap-2 bg-white text-[#1a3a5c] py-3 rounded-lg font-bold text-sm hover:bg-slate-100 transition-colors mb-2"
+                className="flex items-center justify-center gap-2 bg-white text-[#1a1a1a] py-3 rounded-lg font-bold text-sm hover:bg-slate-100 transition-colors mb-2"
               >
                 <Phone size={16} aria-hidden="true" />
                 1-800-458-4001

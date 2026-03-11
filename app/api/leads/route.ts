@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
       subject: `[Voyten Manuals] New ${typeLabels[type] || 'Lead'} from ${name}`,
       html: `
         <div style="font-family: -apple-system, sans-serif; max-width: 600px; margin: 0 auto;">
-          <div style="background: #1a3a5c; color: white; padding: 20px; border-radius: 8px 8px 0 0;">
+          <div style="background: #1a1a1a; color: white; padding: 20px; border-radius: 8px 8px 0 0;">
             <h1 style="margin: 0; font-size: 18px;">New ${typeLabels[type] || 'Lead'} — Voyten Manuals</h1>
           </div>
           <div style="background: #f8fafc; padding: 20px; border: 1px solid #e2e8f0; border-top: 0;">

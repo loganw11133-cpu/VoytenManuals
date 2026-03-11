@@ -10,14 +10,14 @@
   --bg-tertiary: #f1f5f9;
   --border-light: #e2e8f0;
   --border-medium: #cbd5e1;
-  --brand-primary: #1a3a5c;
-  --brand-dark: #0f2840;
-  --brand-light: #2a5a8c;
+  --brand-primary: #1a1a1a;
+  --brand-dark: #111111;
+  --brand-light: #991b1b;
   --accent: #d97706;
   --accent-dark: #b45309;
   --accent-light: #fffbeb;
-  --voyten-blue: #1a3a5c;
-  --voyten-gold: #c8962e;
+  --voyten-blue: #1a1a1a;
+  --voyten-gold: #dc2626;
 }
 
 * {

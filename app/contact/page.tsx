@@ -21,7 +21,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
   return (
     <div className="bg-slate-50 min-h-screen">
       {/* Header */}
-      <div className="bg-[#1a3a5c] text-white">
+      <div className="bg-[#1a1a1a] text-white">
         <div className="max-w-7xl mx-auto px-4 py-12 lg:py-16">
           <h1 className="text-3xl lg:text-4xl font-bold mb-3">Contact Us</h1>
           <p className="text-slate-300 text-lg max-w-2xl">
@@ -36,7 +36,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
           <div className="space-y-6">
             <div className="bg-white rounded-xl border border-slate-200 p-6">
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 bg-[#1a3a5c] rounded-lg flex items-center justify-center">
+                <div className="w-10 h-10 bg-[#1a1a1a] rounded-lg flex items-center justify-center">
                   <Phone className="w-5 h-5 text-white" />
                 </div>
                 <div>
@@ -44,17 +44,17 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                   <p className="text-slate-500 text-sm">Talk to an expert now</p>
                 </div>
               </div>
-              <a href="tel:1-800-458-4001" className="text-2xl font-bold text-[#1a3a5c] hover:underline block">
+              <a href="tel:1-800-458-4001" className="text-2xl font-bold text-[#1a1a1a] hover:underline block">
                 1-800-458-4001
               </a>
-              <a href="tel:814-432-5893" className="text-sm text-slate-500 hover:text-[#1a3a5c] mt-1 block">
+              <a href="tel:814-432-5893" className="text-sm text-slate-500 hover:text-[#1a1a1a] mt-1 block">
                 Local: (814) 432-5893
               </a>
             </div>
 
             <div className="bg-white rounded-xl border border-slate-200 p-6">
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 bg-[#1a3a5c] rounded-lg flex items-center justify-center">
+                <div className="w-10 h-10 bg-[#1a1a1a] rounded-lg flex items-center justify-center">
                   <Mail className="w-5 h-5 text-white" />
                 </div>
                 <div>
@@ -62,14 +62,14 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                   <p className="text-slate-500 text-sm">We respond within 24 hours</p>
                 </div>
               </div>
-              <a href="mailto:info@voytenelectric.com" className="text-[#1a3a5c] font-medium hover:underline">
+              <a href="mailto:info@voytenelectric.com" className="text-[#1a1a1a] font-medium hover:underline">
                 info@voytenelectric.com
               </a>
             </div>
 
             <div className="bg-white rounded-xl border border-slate-200 p-6">
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 bg-[#1a3a5c] rounded-lg flex items-center justify-center">
+                <div className="w-10 h-10 bg-[#1a1a1a] rounded-lg flex items-center justify-center">
                   <MapPin className="w-5 h-5 text-white" />
                 </div>
                 <div>
@@ -83,7 +83,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
 
             <div className="bg-white rounded-xl border border-slate-200 p-6">
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 bg-[#1a3a5c] rounded-lg flex items-center justify-center">
+                <div className="w-10 h-10 bg-[#1a1a1a] rounded-lg flex items-center justify-center">
                   <Clock className="w-5 h-5 text-white" />
                 </div>
                 <h3 className="font-bold text-slate-900">Hours</h3>

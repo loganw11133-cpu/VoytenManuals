@@ -40,7 +40,7 @@ export default function ManualSearchBar({ size = 'default', placeholder, default
           placeholder={placeholder || 'Search by title, part number, manufacturer, or keyword...'}
           className={`
             w-full bg-white border border-slate-300 rounded-xl
-            focus:outline-none focus:ring-2 focus:ring-[#1a3a5c] focus:border-transparent
+            focus:outline-none focus:ring-2 focus:ring-[#1a1a1a] focus:border-transparent
             placeholder:text-slate-400
             ${isLarge ? 'pl-12 pr-36 py-4 text-lg' : 'pl-11 pr-28 py-3 text-sm'}
           `}
@@ -49,7 +49,7 @@ export default function ManualSearchBar({ size = 'default', placeholder, default
           type="submit"
           className={`
             absolute right-2 top-1/2 -translate-y-1/2
-            bg-[#1a3a5c] hover:bg-[#0f2840] text-white font-semibold rounded-lg transition-colors
+            bg-[#1a1a1a] hover:bg-[#111111] text-white font-semibold rounded-lg transition-colors
             ${isLarge ? 'px-6 py-2.5 text-sm' : 'px-4 py-2 text-xs'}
           `}
         >
