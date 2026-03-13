@@ -4,6 +4,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://voytenmanuals.com'),
@@ -124,7 +126,7 @@ export const metadata: Metadata = {
     canonical: "https://voytenmanuals.com",
   },
   other: {
-    'google-site-verification': '',
+    'google-site-verification': 'sCvqtjcL4JViSFDqfD8qwMAD4Obwq-848gevmECeOL8',
   },
 };
 
@@ -251,6 +253,8 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
