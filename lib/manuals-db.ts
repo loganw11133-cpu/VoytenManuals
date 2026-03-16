@@ -207,7 +207,7 @@ export async function getRelatedManuals(manual: Manual, limit = 4): Promise<Manu
 }
 
 export async function getTotalManualCount(): Promise<number> {
-  const result = await getDb().execute('SELECT COUNT(*) as count FROM manuals');
+  const result = await getDb().execute("SELECT COUNT(*) as count FROM manuals WHERE pdf_url != 'NONE'");
   return (result.rows[0] as unknown as { count: number }).count;
 }
 
