@@ -112,7 +112,7 @@ export async function searchManuals(filters: SearchFilters): Promise<SearchResul
 
   // Get page of results
   const dataResult = await getDb().execute({
-    sql: `SELECT * FROM manuals ${whereClause} ORDER BY title ASC LIMIT ? OFFSET ?`,
+    sql: `SELECT * FROM manuals ${whereClause} ORDER BY search_priority DESC, title ASC LIMIT ? OFFSET ?`,
     args: [...params, limit, offset],
   });
 
