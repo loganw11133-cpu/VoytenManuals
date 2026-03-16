@@ -176,6 +176,28 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 
           {/* Results */}
           <div className="flex-1">
+            {/* Subcategory pills — prominent when a category is selected */}
+            {category && subcategories.length > 0 && (
+              <div className="bg-white rounded-xl border border-slate-200 p-4 mb-5">
+                <h3 className="text-sm font-semibold text-slate-700 mb-3">Browse {category} by Type</h3>
+                <div className="flex flex-wrap gap-2">
+                  {subcategories.map((sub) => (
+                    <Link
+                      key={sub}
+                      href={buildUrl({ subcategory: subcategory === sub ? '' : sub, page: 1 })}
+                      className={`inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                        subcategory === sub
+                          ? 'bg-[#1a1a1a] text-white shadow-sm'
+                          : 'bg-slate-100 text-slate-700 hover:bg-[#1a1a1a] hover:text-white'
+                      }`}
+                    >
+                      {sub}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Results header */}
             <div className="flex items-center justify-between mb-4">
               <p className="text-sm text-slate-600">
