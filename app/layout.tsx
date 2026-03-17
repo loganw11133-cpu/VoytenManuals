@@ -126,7 +126,7 @@ export const metadata: Metadata = {
     canonical: "https://voytenmanuals.com",
   },
   other: {
-    'google-site-verification': 'sCvqtjcL4JViSFDqfD8qwMAD4Obwq-848gevmECeOL8',
+    'google-site-verification': 'Jw_q01212LegO8F79GblirnWi7HprIK46shkmyiiwzU',
   },
 };
 
