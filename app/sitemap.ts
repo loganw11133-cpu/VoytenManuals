@@ -44,9 +44,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  // Category and manufacturer landing pages for SEO
+  // Category, manufacturer, and combo landing pages for SEO
   let categoryPages: MetadataRoute.Sitemap = [];
   let manufacturerPages: MetadataRoute.Sitemap = [];
+  let comboPages: MetadataRoute.Sitemap = [];
 
   try {
     const [categories, manufacturers] = await Promise.all([
@@ -67,6 +68,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'weekly' as const,
       priority: 0.7,
     }));
+
+    // Category + manufacturer combo pages (high-value long-tail)
+    for (const cat of categories) {
+      const mfrsForCat = await getManufacturers(cat.name);
+      for (const mfr of mfrsForCat) {
+        comboPages.push({
+          url: `${baseUrl}/search?category=${encodeURIComponent(cat.name)}&manufacturer=${encodeURIComponent(mfr.name)}`,
+          lastModified: new Date(),
+          changeFrequency: 'weekly' as const,
+          priority: 0.65,
+        });
+      }
+    }
   } catch {
     // DB not available during build
   }
@@ -95,5 +109,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // DB not available during build — that's fine
   }
 
-  return [...staticPages, ...categoryPages, ...manufacturerPages, ...manualPages];
+  return [...staticPages, ...categoryPages, ...manufacturerPages, ...comboPages, ...manualPages];
 }

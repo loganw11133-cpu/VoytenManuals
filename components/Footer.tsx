@@ -59,13 +59,13 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-4 text-white">Manual Categories</h4>
             <ul className="space-y-2 text-sm">
-              <li><Link href="/categories/circuit-breakers" className="text-slate-400 hover:text-white">Circuit Breakers</Link></li>
-              <li><Link href="/categories/relays-and-meters" className="text-slate-400 hover:text-white">Relays & Meters</Link></li>
-              <li><Link href="/categories/motor-controls" className="text-slate-400 hover:text-white">Motor Controls</Link></li>
-              <li><Link href="/categories/switches" className="text-slate-400 hover:text-white">Switches</Link></li>
-              <li><Link href="/categories/fuses" className="text-slate-400 hover:text-white">Fuses</Link></li>
-              <li><Link href="/categories/transformers" className="text-slate-400 hover:text-white">Transformers</Link></li>
-              <li><Link href="/categories/bus-products" className="text-slate-400 hover:text-white">Bus Products</Link></li>
+              <li><Link href="/search?category=Circuit+Breakers" className="text-slate-400 hover:text-white">Circuit Breakers</Link></li>
+              <li><Link href="/search?category=Relays+and+Meters" className="text-slate-400 hover:text-white">Relays & Meters</Link></li>
+              <li><Link href="/search?category=Motor+Controls" className="text-slate-400 hover:text-white">Motor Controls</Link></li>
+              <li><Link href="/search?category=Switches" className="text-slate-400 hover:text-white">Switches</Link></li>
+              <li><Link href="/search?category=Fuses" className="text-slate-400 hover:text-white">Fuses</Link></li>
+              <li><Link href="/search?category=Transformers" className="text-slate-400 hover:text-white">Transformers</Link></li>
+              <li><Link href="/search?category=Bus+Products" className="text-slate-400 hover:text-white">Bus Products</Link></li>
             </ul>
           </div>
 

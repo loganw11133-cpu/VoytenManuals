@@ -25,7 +25,7 @@ const nextConfig: NextConfig = {
       // This lets us serve PDFs from voytenmanuals.com/manuals/pdf/...
       {
         source: '/manuals/pdf/:path*',
-        destination: 'http://www.electricalpartmanuals.com/part_manuals/pdf/:path*',
+        destination: 'https://www.electricalpartmanuals.com/part_manuals/pdf/:path*',
       },
     ];
   },
