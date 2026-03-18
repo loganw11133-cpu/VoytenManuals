@@ -5,7 +5,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Browse Electrical Equipment Manual Categories — Circuit Breakers, Relays, Motor Controls & More',
-  description: 'Browse 4,800+ free electrical equipment manuals by category. Find PDF documentation for circuit breakers, relays, motor controls, switches, fuses, transformers, and bus products from Westinghouse, GE, Siemens, Square D, and more.',
+  description: 'Browse 5,800+ free electrical equipment manuals by category. Find PDF documentation for circuit breakers, relays, motor controls, switches, fuses, transformers, and bus products from Westinghouse, GE, Siemens, Square D, and more.',
   alternates: {
     canonical: 'https://voytenmanuals.com/categories',
   },

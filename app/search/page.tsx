@@ -12,6 +12,7 @@ export async function generateMetadata({ searchParams }: SearchPageProps): Promi
   const query = params.q || '';
   const category = params.category || '';
   const manufacturer = params.manufacturer || '';
+  const subcategory = params.subcategory || '';
 
   const parts: string[] = [];
   if (query) parts.push(`"${query}"`);
@@ -23,10 +24,22 @@ export async function generateMetadata({ searchParams }: SearchPageProps): Promi
     ? `Search results for ${parts.join(', ')} in our`
     : 'Search our';
 
+  // Build canonical URL - category/manufacturer filter pages get their own canonical
+  const canonicalParams = new URLSearchParams();
+  if (category) canonicalParams.set('category', category);
+  if (manufacturer) canonicalParams.set('manufacturer', manufacturer);
+  if (subcategory) canonicalParams.set('subcategory', subcategory);
+  const canonicalUrl = canonicalParams.toString()
+    ? `https://voytenmanuals.com/search?${canonicalParams.toString()}`
+    : 'https://voytenmanuals.com/search';
+
   return {
     title: titleSuffix,
-    description: `${descParts} library of 4,800+ free electrical equipment manuals. Download PDF instruction guides, renewal parts catalogs, and technical documentation. Powered by Voyten Electric.`,
+    description: `${descParts} library of 5,800+ free electrical equipment manuals. Download PDF instruction guides, renewal parts catalogs, and technical documentation. Powered by Voyten Electric.`,
     robots: { index: !query, follow: true },
+    alternates: {
+      canonical: canonicalUrl,
+    },
   };
 }
 

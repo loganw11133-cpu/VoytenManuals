@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     default: "Voyten Manuals | Free Electrical Equipment Manual Library — PDF Downloads",
     template: "%s | Voyten Manuals"
   },
-  description: "Free searchable library of 4,800+ electrical equipment manuals including EOL and legacy equipment documentation. Download PDF instruction guides, renewal parts catalogs, wiring diagrams, and technical documentation for circuit breakers, relays, motor controls, switches, transformers, and more. Westinghouse, GE, Siemens, Square D, Cutler-Hammer, ITE, ABB — including discontinued and end-of-life models. Powered by Voyten Electric — serving the industry since 1953.",
+  description: "Free searchable library of 5,800+ electrical equipment manuals including EOL and legacy equipment documentation. Download PDF instruction guides, renewal parts catalogs, wiring diagrams, and technical documentation for circuit breakers, relays, motor controls, switches, transformers, and more. Westinghouse, GE, Siemens, Square D, Cutler-Hammer, ITE, ABB — including discontinued and end-of-life models. Powered by Voyten Electric — serving the industry since 1953.",
   keywords: [
     "electrical manuals",
     "circuit breaker manuals",
@@ -94,7 +94,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://voytenmanuals.com",
     siteName: "Voyten Manuals",
-    title: "Voyten Manuals | Free Electrical Equipment Manual Library — 4,800+ PDFs",
+    title: "Voyten Manuals | Free Electrical Equipment Manual Library — 5,800+ PDFs",
     description: "Free searchable library of electrical equipment manuals — instruction guides, renewal parts catalogs, characteristic curves, and technical documentation for current, EOL, and legacy equipment. Download PDFs for circuit breakers, relays, motor controls, switches, transformers from Westinghouse, GE, Siemens, Square D, and more. Parts available for discontinued models.",
     images: [
       {
@@ -107,7 +107,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Voyten Manuals | 4,800+ Free Electrical Equipment Manuals",
+    title: "Voyten Manuals | 5,800+ Free Electrical Equipment Manuals",
     description: "Free searchable library of electrical equipment manuals and technical documentation. Download PDFs instantly — no login required. Powered by Voyten Electric.",
     images: ["/images/og-image.jpg"],
   },
@@ -137,7 +137,7 @@ const jsonLd = {
   "alternateName": ["Voyten Electric", "Voyten Manuals"],
   "url": "https://voytenmanuals.com",
   "logo": "https://voytenmanuals.com/images/voyten-logo.png",
-  "description": "Free searchable library of 4,800+ electrical equipment manuals and technical documentation. Backed by Voyten Electric & Electronics, Inc. — a third-generation family owned electrical equipment wholesaler since 1953.",
+  "description": "Free searchable library of 5,800+ electrical equipment manuals and technical documentation. Backed by Voyten Electric & Electronics, Inc. — a third-generation family owned electrical equipment wholesaler since 1953.",
   "telephone": "+1-800-458-4001",
   "email": "info@voytenelectric.com",
   "foundingDate": "1953",

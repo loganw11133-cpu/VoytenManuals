@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'About Voyten Manuals & Voyten Electric — Family Owned Since 1953',
-  description: 'Voyten Manuals is a free library of 4,800+ electrical equipment manuals powered by Voyten Electric & Electronics, Inc. — a third-generation family business with 200,000 sq. ft. of facilities and 45+ employees. Remanufactured circuit breakers, switchgear, motor controls, and more. Founded 1953 in Pennsylvania.',
+  description: 'Voyten Manuals is a free library of 5,800+ electrical equipment manuals powered by Voyten Electric & Electronics, Inc. — a third-generation family business with 200,000 sq. ft. of facilities and 45+ employees. Remanufactured circuit breakers, switchgear, motor controls, and more. Founded 1953 in Pennsylvania.',
   alternates: {
     canonical: 'https://voytenmanuals.com/about',
   },
@@ -273,7 +273,7 @@ export default function AboutPage() {
             Ready to Find Your Manual or Part?
           </h2>
           <p className="text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
-            Browse our library of 4,800+ free manuals — or call us directly for parts, pricing, and expert support.
+            Browse our library of 5,800+ free manuals — or call us directly for parts, pricing, and expert support.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
