@@ -294,6 +294,9 @@ export default function AboutPage() {
           <p className="text-slate-400 text-sm mt-6">
             Voyten Electric & Electronics, Inc. — 173 Voyten Blvd, Polk, PA 16342
           </p>
+          <p className="text-slate-500 text-xs mt-2">
+            CAGE: 0GEF5 &nbsp;|&nbsp; DUNS: 070449368
+          </p>
         </div>
       </section>
     </div>

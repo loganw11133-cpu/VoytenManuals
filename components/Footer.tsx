@@ -121,7 +121,10 @@ export default function Footer() {
             All trademarks, brand names, and product names are the property of their respective owners. Voyten Manuals is an independent resource and is not affiliated with or endorsed by any manufacturer listed.
           </p>
           <p className="text-sm text-slate-500 text-center">
-            &copy; {new Date().getFullYear()} Voyten Electric. All rights reserved.
+            &copy; {new Date().getFullYear()} Voyten Electric & Electronics, Inc. All rights reserved.
+          </p>
+          <p className="text-xs text-slate-600 text-center">
+            CAGE: 0GEF5 &nbsp;|&nbsp; DUNS: 070449368
           </p>
         </div>
       </div>
