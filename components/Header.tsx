@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { Phone, Mail, Menu, X, Search, BookOpen, ChevronDown, Zap } from 'lucide-react';
+import Image from 'next/image';
+import { Phone, Mail, Menu, X, Search, ChevronDown, Zap } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 
 export default function Header() {
@@ -71,9 +72,14 @@ export default function Header() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-9 h-9 bg-[#1a1a1a] rounded-lg flex items-center justify-center">
-              <BookOpen className="w-5 h-5 text-white" />
-            </div>
+            <Image
+              src="/voyten-logo.png"
+              alt="Voyten Electric Logo"
+              width={36}
+              height={36}
+              className="w-9 h-9 object-contain"
+              priority
+            />
             <div className="flex flex-col">
               <span className="text-xl sm:text-2xl font-extrabold tracking-tight text-[#1a1a1a] leading-none">
                 Voyten<span className="text-[#dc2626]">Manuals</span>
