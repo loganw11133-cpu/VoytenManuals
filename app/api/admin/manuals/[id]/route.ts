@@ -23,14 +23,19 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
   const authError = validateAdminAccess(request);
   if (authError) return authError;
 
-  const { id } = await params;
-  const manual = await getManualById(parseInt(id));
-  if (!manual) return NextResponse.json({ error: 'Not found' }, { status: 404 });
+  try {
+    const { id } = await params;
+    const manual = await getManualById(parseInt(id));
+    if (!manual) return NextResponse.json({ error: 'Not found' }, { status: 404 });
 
-  const body = await request.json();
-  await updateManual(parseInt(id), body);
+    const body = await request.json();
+    await updateManual(parseInt(id), body);
 
-  return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error('Manual update error:', error);
+    return NextResponse.json({ error: 'Failed to update manual' }, { status: 500 });
+  }
 }
 
 // DELETE /api/admin/manuals/[id] — delete manual
@@ -38,10 +43,15 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
   const authError = validateAdminAccess(request);
   if (authError) return authError;
 
-  const { id } = await params;
-  const manual = await getManualById(parseInt(id));
-  if (!manual) return NextResponse.json({ error: 'Not found' }, { status: 404 });
+  try {
+    const { id } = await params;
+    const manual = await getManualById(parseInt(id));
+    if (!manual) return NextResponse.json({ error: 'Not found' }, { status: 404 });
 
-  await deleteManual(parseInt(id));
-  return NextResponse.json({ success: true });
+    await deleteManual(parseInt(id));
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error('Manual delete error:', error);
+    return NextResponse.json({ error: 'Failed to delete manual' }, { status: 500 });
+  }
 }

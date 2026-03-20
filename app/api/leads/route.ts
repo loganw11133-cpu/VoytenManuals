@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@libsql/client';
 import { sendEmail } from '@/lib/email';
+import { checkRateLimit, RATE_LIMITS } from '@/lib/rate-limit';
 
 function getDb() {
   return createClient({
@@ -9,13 +10,23 @@ function getDb() {
   });
 }
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export async function POST(request: NextRequest) {
+  // Rate limit: 5 submissions per minute per IP
+  const rateLimited = checkRateLimit(request, RATE_LIMITS.formSubmission);
+  if (rateLimited) return rateLimited;
+
   try {
     const body = await request.json();
     const { type, name, email, phone, company, message, manual_id, manual_title, source_page } = body;
 
     if (!name || !email || !type) {
       return NextResponse.json({ error: 'Name, email, and type are required' }, { status: 400 });
+    }
+
+    if (!EMAIL_REGEX.test(email)) {
+      return NextResponse.json({ error: 'Invalid email address' }, { status: 400 });
     }
 
     // Store lead

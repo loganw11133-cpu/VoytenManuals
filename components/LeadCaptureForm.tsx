@@ -23,6 +23,14 @@ export default function LeadCaptureForm({ type, manualTitle, manualId, sourcePag
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Client-side email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setStatus('error');
+      return;
+    }
+
     setStatus('submitting');
 
     try {
