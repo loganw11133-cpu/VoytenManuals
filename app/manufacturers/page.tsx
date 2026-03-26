@@ -4,7 +4,7 @@ import { getManufacturers, getTotalManualCount } from '@/lib/manuals-db';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Browse Manuals by Manufacturer — Westinghouse, GE, Siemens, Square D & More',
+  title: 'Browse by Manufacturer — Westinghouse, GE & More',
   description: 'Browse free electrical equipment manuals by manufacturer. Find PDF documentation from Westinghouse, General Electric, Siemens, Square D, Cutler-Hammer, ITE, ABB, Allis-Chalmers, and dozens more. Powered by Voyten Electric.',
   alternates: {
     canonical: 'https://voytenmanuals.com/manufacturers',

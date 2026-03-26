@@ -99,6 +99,7 @@ export default function Header() {
             <Link href="/categories" className="text-slate-600 hover:text-slate-900 font-medium">Browse Categories</Link>
             <Link href="/manufacturers" className="text-slate-600 hover:text-slate-900 font-medium">Manufacturers</Link>
             <Link href="/about" className="text-slate-600 hover:text-slate-900 font-medium">About</Link>
+            <Link href="/faq" className="text-slate-600 hover:text-slate-900 font-medium">FAQ</Link>
             <Link href="/contact" className="text-slate-600 hover:text-slate-900 font-medium">Contact</Link>
           </nav>
 
@@ -196,6 +197,7 @@ export default function Header() {
             <Link href="/categories" onClick={() => setMobileMenuOpen(false)} className="block py-2.5 text-slate-700 hover:text-slate-900">Browse Categories</Link>
             <Link href="/manufacturers" onClick={() => setMobileMenuOpen(false)} className="block py-2.5 text-slate-700 hover:text-slate-900">Manufacturers</Link>
             <Link href="/about" onClick={() => setMobileMenuOpen(false)} className="block py-2.5 text-slate-700 hover:text-slate-900">About</Link>
+            <Link href="/faq" onClick={() => setMobileMenuOpen(false)} className="block py-2.5 text-slate-700 hover:text-slate-900">FAQ</Link>
             <Link href="/contact" onClick={() => setMobileMenuOpen(false)} className="block py-2.5 text-slate-700 hover:text-slate-900">Contact</Link>
 
             <div className="pt-4 mt-4 border-t border-slate-200">

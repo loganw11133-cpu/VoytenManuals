@@ -10,7 +10,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 export const metadata: Metadata = {
   metadataBase: new URL('https://voytenmanuals.com'),
   title: {
-    default: "Voyten Manuals | Free Electrical Equipment Manual Library — PDF Downloads",
+    default: "Free Electrical Equipment Manual Library — PDF Downloads | Voyten Manuals",
     template: "%s | Voyten Manuals"
   },
   description: "Free searchable library of 5,800+ electrical equipment manuals including EOL and legacy equipment documentation. Download PDF instruction guides, renewal parts catalogs, wiring diagrams, and technical documentation for circuit breakers, relays, motor controls, switches, transformers, and more. Westinghouse, GE, Siemens, Square D, Cutler-Hammer, ITE, ABB — including discontinued and end-of-life models. Powered by Voyten Electric — serving the industry since 1953.",

@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: ManualPageProps): Promise<Met
 
   const partNum = manual.manual_number ? ` (${manual.manual_number})` : '';
   const subcatStr = manual.subcategory ? ` — ${manual.subcategory}` : '';
-  const title = `${manual.title}${partNum} | ${manual.manufacturer} ${manual.category} Manual`;
+  const title = `${manual.title}${partNum} — ${manual.manufacturer} ${manual.category}`;
   const description = `Download free PDF: ${manual.title}${partNum} by ${manual.manufacturer}. ${manual.category}${subcatStr} documentation including instruction guides, renewal parts lists, wiring diagrams, and technical data. EOL and legacy equipment support available. Replacement parts from Voyten Electric — call 1-800-458-4001.`;
 
   const keywords = [

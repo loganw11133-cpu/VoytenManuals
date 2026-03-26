@@ -3,7 +3,7 @@ import LeadCaptureForm from '@/components/LeadCaptureForm';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Contact Voyten Electric — Request Parts, Quotes & Manual Support',
+  title: 'Contact Us — Request Parts, Quotes & Manuals',
   description: 'Contact Voyten Electric for electrical parts, manual requests, quotes, and technical support. Call 1-800-458-4001 or submit a request online. Circuit breakers, motor controls, switchgear, and more. 173 Voyten Blvd, Polk, PA 16342.',
   alternates: {
     canonical: 'https://voytenmanuals.com/contact',
