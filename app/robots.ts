@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/api/', '/admin/', '/tools/'],
     },
-    sitemap: 'https://voytenmanuals.com/sitemap.xml',
+    sitemap: 'https://voytenmanuals.com/sitemap-index.xml',
   };
 }
