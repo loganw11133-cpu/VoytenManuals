@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Phone, BookOpen, ArrowRight, HelpCircle, ChevronDown } from 'lucide-react';
+import { Phone, BookOpen, ArrowRight, HelpCircle } from 'lucide-react';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {

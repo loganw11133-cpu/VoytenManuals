@@ -69,8 +69,11 @@ export default function AdminPage() {
 
   useEffect(() => {
     if (!authenticated) return;
-    if (tab === 'dashboard') fetchStats();
-    if (tab === 'manuals') fetchManuals();
+    // Async data fetching on tab change — setState occurs after await, not synchronously
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (tab === 'dashboard') void fetchStats();
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (tab === 'manuals') void fetchManuals();
   }, [authenticated, tab, fetchStats, fetchManuals]);
 
   const handleLogin = async () => {

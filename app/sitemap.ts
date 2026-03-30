@@ -86,7 +86,7 @@ async function generateStaticAndFilterSitemap(): Promise<MetadataRoute.Sitemap> 
 
   let categoryPages: MetadataRoute.Sitemap = [];
   let manufacturerPages: MetadataRoute.Sitemap = [];
-  let comboPages: MetadataRoute.Sitemap = [];
+  const comboPages: MetadataRoute.Sitemap = [];
 
   try {
     const [categories, manufacturers] = await Promise.all([
