@@ -6,6 +6,16 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Browse Manual Categories — Breakers, Relays & More',
   description: 'Browse 5,800+ free electrical equipment manuals by category. Find PDF documentation for circuit breakers, relays, motor controls, switches, fuses, transformers, and bus products from Westinghouse, GE, Siemens, Square D, and more.',
+  openGraph: {
+    title: 'Browse Manual Categories — Breakers, Relays & More',
+    description: 'Browse 5,800+ free electrical equipment manuals by category. Circuit breakers, relays, motor controls, switches, fuses, transformers, and bus products.',
+    url: 'https://voytenmanuals.com/categories',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Browse Manual Categories | Voyten Manuals',
+    description: 'Browse 5,800+ free electrical equipment manuals by category. Circuit breakers, relays, motor controls, and more.',
+  },
   alternates: {
     canonical: 'https://voytenmanuals.com/categories',
   },

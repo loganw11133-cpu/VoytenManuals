@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@libsql/client';
 import { sendEmail } from '@/lib/email';
 import { checkRateLimit, RATE_LIMITS } from '@/lib/rate-limit';
+import { validateCsrf } from '@/lib/csrf';
 
 function getDb() {
   return createClient({
@@ -13,6 +14,10 @@ function getDb() {
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export async function POST(request: NextRequest) {
+  // CSRF protection
+  const csrfError = validateCsrf(request);
+  if (csrfError) return csrfError;
+
   // Rate limit: 5 submissions per minute per IP
   const rateLimited = checkRateLimit(request, RATE_LIMITS.formSubmission);
   if (rateLimited) return rateLimited;

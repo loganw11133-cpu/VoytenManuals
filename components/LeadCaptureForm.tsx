@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Send, CheckCircle, Phone } from 'lucide-react';
+import { csrfFetch } from '@/lib/csrf-client';
 
 interface LeadCaptureFormProps {
   type: 'quote' | 'manual-request' | 'contact';
@@ -34,16 +35,12 @@ export default function LeadCaptureForm({ type, manualTitle, manualId, sourcePag
     setStatus('submitting');
 
     try {
-      const res = await fetch('/api/leads', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...formData,
-          type,
-          manual_id: manualId,
-          manual_title: manualTitle,
-          source_page: sourcePage || window.location.pathname,
-        }),
+      const res = await csrfFetch('/api/leads', {
+        ...formData,
+        type,
+        manual_id: manualId,
+        manual_title: manualTitle,
+        source_page: sourcePage || window.location.pathname,
       });
 
       if (res.ok) {

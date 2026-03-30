@@ -1,10 +1,44 @@
 import { MetadataRoute } from 'next';
 import { searchManuals, getCategories, getManufacturers } from '@/lib/manuals-db';
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://voytenmanuals.com';
+const baseUrl = 'https://voytenmanuals.com';
+const MANUALS_PER_SITEMAP = 1000;
 
-  // Static pages
+/**
+ * Generate sitemap index — Next.js calls this to determine how many sitemaps exist.
+ * Returns [{id: 0}, {id: 1}, ...] where id 0 = static/filter pages,
+ * and ids 1+ = batches of manual pages.
+ */
+export async function generateSitemaps() {
+  let totalManuals = 0;
+  try {
+    const result = await searchManuals({ limit: 1, page: 1 });
+    totalManuals = result.total;
+  } catch {
+    // DB not available during build
+  }
+
+  const manualSitemapCount = Math.max(1, Math.ceil(totalManuals / MANUALS_PER_SITEMAP));
+
+  // id 0 = static + filter pages, ids 1..N = manual page batches
+  const sitemaps = [];
+  for (let i = 0; i <= manualSitemapCount; i++) {
+    sitemaps.push({ id: i });
+  }
+  return sitemaps;
+}
+
+export default async function sitemap({ id }: { id: number }): Promise<MetadataRoute.Sitemap> {
+  // Sitemap 0: static pages + category/manufacturer/combo filter pages
+  if (id === 0) {
+    return generateStaticAndFilterSitemap();
+  }
+
+  // Sitemaps 1+: batches of individual manual pages
+  return generateManualBatchSitemap(id);
+}
+
+async function generateStaticAndFilterSitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
@@ -50,7 +84,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  // Category, manufacturer, and combo landing pages for SEO
   let categoryPages: MetadataRoute.Sitemap = [];
   let manufacturerPages: MetadataRoute.Sitemap = [];
   let comboPages: MetadataRoute.Sitemap = [];
@@ -91,29 +124,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // DB not available during build
   }
 
-  // All individual manual pages — paginate through entire DB
-  let manualPages: MetadataRoute.Sitemap = [];
+  return [...staticPages, ...categoryPages, ...manufacturerPages, ...comboPages];
+}
+
+async function generateManualBatchSitemap(id: number): Promise<MetadataRoute.Sitemap> {
   try {
-    const batchSize = 1000;
-    let page = 1;
-    let hasMore = true;
+    const result = await searchManuals({
+      limit: MANUALS_PER_SITEMAP,
+      page: id, // id 1 = page 1, id 2 = page 2, etc.
+    });
 
-    while (hasMore) {
-      const results = await searchManuals({ limit: batchSize, page });
-      manualPages.push(
-        ...results.manuals.map(manual => ({
-          url: `${baseUrl}/manual/${manual.slug}`,
-          lastModified: new Date(manual.updated_at || manual.created_at),
-          changeFrequency: 'monthly' as const,
-          priority: 0.6,
-        }))
-      );
-      hasMore = page < results.totalPages;
-      page++;
-    }
+    return result.manuals.map(manual => ({
+      url: `${baseUrl}/manual/${manual.slug}`,
+      lastModified: new Date(manual.updated_at || manual.created_at),
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
+    }));
   } catch {
-    // DB not available during build — that's fine
+    return [];
   }
-
-  return [...staticPages, ...categoryPages, ...manufacturerPages, ...comboPages, ...manualPages];
 }

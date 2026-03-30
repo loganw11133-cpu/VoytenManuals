@@ -5,6 +5,16 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'FAQ — Electrical Equipment Manuals & Parts',
   description: 'Find answers about downloading free electrical equipment manuals, ordering discontinued and obsolete parts, legacy circuit breaker support, EOL switchgear documentation, and how Voyten Electric can help with remanufactured electrical equipment.',
+  openGraph: {
+    title: 'FAQ — Electrical Equipment Manuals & Parts',
+    description: 'Answers about free manual downloads, discontinued parts, legacy breaker support, and EOL equipment documentation.',
+    url: 'https://voytenmanuals.com/faq',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'FAQ | Voyten Manuals',
+    description: 'Answers about free manual downloads, discontinued parts, and legacy equipment support.',
+  },
   alternates: {
     canonical: 'https://voytenmanuals.com/faq',
   },

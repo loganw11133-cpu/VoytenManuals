@@ -5,6 +5,16 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'About Voyten Electric — Family Owned Since 1953',
   description: 'Voyten Manuals is a free library of 5,800+ electrical equipment manuals powered by Voyten Electric & Electronics, Inc. — a third-generation family business with 200,000 sq. ft. of facilities and 45+ employees. Remanufactured circuit breakers, switchgear, motor controls, and more. Founded 1953 in Pennsylvania.',
+  openGraph: {
+    title: 'About Voyten Electric — Family Owned Since 1953',
+    description: 'Third-generation family business powering 5,800+ free electrical equipment manuals. 200,000 sq ft facilities, 45+ employees, serving the industry since 1953.',
+    url: 'https://voytenmanuals.com/about',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'About Voyten Electric | Voyten Manuals',
+    description: 'Third-generation family business since 1953. 5,800+ free electrical equipment manuals. Polk, PA.',
+  },
   alternates: {
     canonical: 'https://voytenmanuals.com/about',
   },

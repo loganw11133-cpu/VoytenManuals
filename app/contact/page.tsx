@@ -5,6 +5,16 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Contact Us — Request Parts, Quotes & Manuals',
   description: 'Contact Voyten Electric for electrical parts, manual requests, quotes, and technical support. Call 1-800-458-4001 or submit a request online. Circuit breakers, motor controls, switchgear, and more. 173 Voyten Blvd, Polk, PA 16342.',
+  openGraph: {
+    title: 'Contact Us — Request Parts, Quotes & Manuals',
+    description: 'Contact Voyten Electric for parts, quotes, and manual requests. Call 1-800-458-4001 or submit online. Polk, PA.',
+    url: 'https://voytenmanuals.com/contact',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Contact Voyten Electric | Voyten Manuals',
+    description: 'Request parts, quotes, and manuals. Call 1-800-458-4001 or submit a request online.',
+  },
   alternates: {
     canonical: 'https://voytenmanuals.com/contact',
   },

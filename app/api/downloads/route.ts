@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@libsql/client';
 import { createHash } from 'crypto';
+import { validateCsrf } from '@/lib/csrf';
 
 function getDb() {
   return createClient({
@@ -15,6 +16,10 @@ function hashIp(ip: string): string {
 
 // POST /api/downloads — track a download event
 export async function POST(request: NextRequest) {
+  // CSRF protection
+  const csrfError = validateCsrf(request);
+  if (csrfError) return csrfError;
+
   try {
     const { manual_id } = await request.json();
     if (!manual_id) {

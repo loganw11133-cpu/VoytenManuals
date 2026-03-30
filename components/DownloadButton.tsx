@@ -1,6 +1,7 @@
 'use client';
 
 import { Download, Phone } from 'lucide-react';
+import { csrfFetch } from '@/lib/csrf-client';
 
 interface DownloadButtonProps {
   pdfUrl: string;
@@ -14,11 +15,7 @@ export default function DownloadButton({ pdfUrl, manualId, fileSize, pageCount }
 
   const handleDownload = () => {
     // Track the download asynchronously — don't block the actual download
-    fetch('/api/downloads', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ manual_id: manualId }),
-    }).catch(() => {}); // Silently fail tracking
+    csrfFetch('/api/downloads', { manual_id: manualId }).catch(() => {});
   };
 
   if (!hasValidPdf) {
