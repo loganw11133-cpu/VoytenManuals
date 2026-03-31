@@ -4,7 +4,7 @@ import { searchManuals, createManual, toSlug } from '@/lib/manuals-db';
 
 // GET /api/admin/manuals — list manuals with search/filter (admin)
 export async function GET(request: NextRequest) {
-  const authError = validateAdminAccess(request);
+  const authError = await validateAdminAccess(request);
   if (authError) return authError;
 
   const { searchParams } = new URL(request.url);
@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
 
 // POST /api/admin/manuals — create a new manual
 export async function POST(request: NextRequest) {
-  const authError = validateAdminAccess(request);
+  const authError = await validateAdminAccess(request);
   if (authError) return authError;
 
   try {

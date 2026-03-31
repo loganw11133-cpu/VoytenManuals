@@ -11,7 +11,7 @@ function getDb() {
 
 // GET /api/admin/stats — dashboard overview stats
 export async function GET(request: NextRequest) {
-  const authError = validateAdminAccess(request);
+  const authError = await validateAdminAccess(request);
   if (authError) return authError;
 
   try {

@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
   if (csrfError) return csrfError;
 
   // Rate limit: 5 submissions per minute per IP
-  const rateLimited = checkRateLimit(request, RATE_LIMITS.formSubmission);
+  const rateLimited = await checkRateLimit(request, RATE_LIMITS.formSubmission);
   if (rateLimited) return rateLimited;
 
   try {
@@ -32,6 +32,22 @@ export async function POST(request: NextRequest) {
 
     if (!EMAIL_REGEX.test(email)) {
       return NextResponse.json({ error: 'Invalid email address' }, { status: 400 });
+    }
+
+    // Input length validation — prevent DB bloat from oversized submissions
+    const MAX_LENGTHS: Record<string, number> = {
+      name: 200, email: 254, phone: 30, company: 200,
+      message: 5000, type: 30, manual_title: 500, source_page: 500,
+    };
+
+    for (const [field, maxLen] of Object.entries(MAX_LENGTHS)) {
+      const val = body[field];
+      if (typeof val === 'string' && val.length > maxLen) {
+        return NextResponse.json(
+          { error: `${field} exceeds maximum length of ${maxLen} characters` },
+          { status: 400 }
+        );
+      }
     }
 
     // Store lead

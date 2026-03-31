@@ -8,7 +8,7 @@ interface RouteParams {
 
 // GET /api/admin/manuals/[id] — get single manual
 export async function GET(request: NextRequest, { params }: RouteParams) {
-  const authError = validateAdminAccess(request);
+  const authError = await validateAdminAccess(request);
   if (authError) return authError;
 
   const { id } = await params;
@@ -20,7 +20,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
 
 // PUT /api/admin/manuals/[id] — update manual
 export async function PUT(request: NextRequest, { params }: RouteParams) {
-  const authError = validateAdminAccess(request);
+  const authError = await validateAdminAccess(request);
   if (authError) return authError;
 
   try {
@@ -40,7 +40,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
 
 // DELETE /api/admin/manuals/[id] — delete manual
 export async function DELETE(request: NextRequest, { params }: RouteParams) {
-  const authError = validateAdminAccess(request);
+  const authError = await validateAdminAccess(request);
   if (authError) return authError;
 
   try {
