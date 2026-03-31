@@ -25,15 +25,10 @@ export default function Header() {
       {/* Emergency service banner */}
       <div className="bg-[#dc2626] text-white">
         <div className="max-w-7xl mx-auto px-4">
-          <a href="tel:1-800-458-4001" className="flex items-center justify-center gap-2 h-8 text-xs sm:text-sm font-semibold tracking-wide hover:opacity-90 transition-opacity">
+          <div className="flex items-center justify-center gap-2 h-8 text-xs sm:text-sm font-semibold tracking-wide">
             <Zap size={13} className="flex-shrink-0" />
             <span>Emergency Service Available 24/7/365</span>
-            <span className="hidden sm:inline">—</span>
-            <span className="flex items-center gap-1">
-              <Phone size={12} className="flex-shrink-0" />
-              1-800-458-4001
-            </span>
-          </a>
+          </div>
         </div>
       </div>
 

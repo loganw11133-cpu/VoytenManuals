@@ -39,19 +39,19 @@ export default async function Home() {
               {totalCount.toLocaleString()} Free Electrical Equipment Manuals
             </div>
             <h1 className="text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-4">
-              Find the Electrical Manual
-              <span className="text-[#dc2626]"> You Need</span>
+              Your Source for Electrical
+              <span className="text-[#dc2626]"> Equipment Manuals</span>
             </h1>
             <p className="text-lg lg:text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
-              Searchable library of instruction manuals, renewal parts catalogs, characteristic curves,
+              Instruction manuals, renewal parts catalogs, wiring diagrams,
               and technical documentation — including EOL and legacy equipment. Backed by 70+ years of industry expertise.
             </p>
 
             {/* Search Bar - Primary CTA */}
-            <ManualSearchBar size="large" className="max-w-2xl mx-auto mb-6" />
+            <ManualSearchBar size="large" className="max-w-2xl mx-auto mb-4" />
 
             <p className="text-slate-400 text-sm">
-              Search by title, part number, manufacturer, or keyword
+              Search by title, part number, manufacturer, or keyword — {totalCount.toLocaleString()} manuals available
             </p>
           </div>
         </div>

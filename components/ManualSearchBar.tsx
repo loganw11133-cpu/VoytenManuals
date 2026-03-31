@@ -31,18 +31,18 @@ export default function ManualSearchBar({ size = 'default', placeholder, default
       <div className="relative">
         <Search
           size={isLarge ? 22 : 18}
-          className={`absolute left-4 top-1/2 -translate-y-1/2 text-slate-400`}
+          className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
         />
         <input
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder={placeholder || 'Search by title, part number, manufacturer, or keyword...'}
+          placeholder={placeholder || (isLarge ? 'Search manuals, part numbers, manufacturers...' : 'Search by title, part number, manufacturer...')}
           className={`
             w-full bg-white border border-slate-300 rounded-xl
             focus:outline-none focus:ring-2 focus:ring-[#1a1a1a] focus:border-transparent
             placeholder:text-slate-400
-            ${isLarge ? 'pl-12 pr-36 py-4 text-lg' : 'pl-11 pr-28 py-3 text-sm'}
+            ${isLarge ? 'pl-12 pr-28 sm:pr-36 py-4 text-base sm:text-lg' : 'pl-11 pr-28 py-3 text-sm'}
           `}
         />
         <button
@@ -50,10 +50,11 @@ export default function ManualSearchBar({ size = 'default', placeholder, default
           className={`
             absolute right-2 top-1/2 -translate-y-1/2
             bg-[#1a1a1a] hover:bg-[#111111] text-white font-semibold rounded-lg transition-colors
-            ${isLarge ? 'px-6 py-2.5 text-sm' : 'px-4 py-2 text-xs'}
+            ${isLarge ? 'px-4 sm:px-6 py-2.5 text-sm' : 'px-4 py-2 text-xs'}
           `}
         >
-          Search Manuals
+          <span className={isLarge ? 'hidden sm:inline' : ''}>Search Manuals</span>
+          <span className={isLarge ? 'sm:hidden' : 'hidden'}>Search</span>
         </button>
       </div>
     </form>
