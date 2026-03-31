@@ -29,8 +29,26 @@ export default async function ManufacturersPage() {
     getTotalManualCount(),
   ]);
 
+  const itemListSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Electrical Equipment Manual Manufacturers',
+    description: `Browse ${totalCount.toLocaleString()} manuals from ${manufacturers.length} electrical equipment manufacturers.`,
+    numberOfItems: manufacturers.length,
+    itemListElement: manufacturers.map((mfr, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: mfr.name,
+      url: `https://voytenmanuals.com/search?manufacturer=${encodeURIComponent(mfr.name)}`,
+    })),
+  };
+
   return (
     <div className="bg-slate-50 min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
+      />
       <div className="bg-[#1a1a1a] text-white">
         <div className="max-w-7xl mx-auto px-4 py-12 lg:py-16">
           <h1 className="text-3xl lg:text-4xl font-bold mb-3">Browse by Manufacturer</h1>

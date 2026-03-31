@@ -40,8 +40,26 @@ export default async function CategoriesPage() {
     getTotalManualCount(),
   ]);
 
+  const itemListSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Electrical Equipment Manual Categories',
+    description: `Browse ${totalCount.toLocaleString()} free electrical equipment manuals organized by category.`,
+    numberOfItems: categories.length,
+    itemListElement: categories.map((cat, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: cat.name,
+      url: `https://voytenmanuals.com/search?category=${encodeURIComponent(cat.name)}`,
+    })),
+  };
+
   return (
     <div className="bg-slate-50 min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
+      />
       <div className="bg-[#1a1a1a] text-white">
         <div className="max-w-7xl mx-auto px-4 py-12 lg:py-16">
           <h1 className="text-3xl lg:text-4xl font-bold mb-3">Browse by Category</h1>

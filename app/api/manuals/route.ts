@@ -19,11 +19,15 @@ export async function GET(request: NextRequest) {
         getManufacturers(category),
         getSubcategories(category, manufacturer),
       ]);
-      return NextResponse.json({ categories, manufacturers, subcategories });
+      const filterResponse = NextResponse.json({ categories, manufacturers, subcategories });
+      filterResponse.headers.set('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=600');
+      return filterResponse;
     }
 
     const results = await searchManuals({ query, category, manufacturer, subcategory, page, limit });
-    return NextResponse.json(results);
+    const response = NextResponse.json(results);
+    response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
+    return response;
   } catch (error) {
     console.error('Manuals API error:', error);
     return NextResponse.json({ error: 'Failed to fetch manuals' }, { status: 500 });

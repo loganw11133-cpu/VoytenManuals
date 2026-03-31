@@ -100,7 +100,11 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
       <div className="bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 py-6">
           <h1 className="text-2xl font-bold text-slate-900 mb-4">Search Manuals</h1>
-          <Suspense fallback={null}>
+          <Suspense fallback={
+            <div className="relative">
+              <div className="w-full h-12 bg-slate-100 rounded-xl animate-pulse" />
+            </div>
+          }>
             <ManualSearchBar defaultValue={query} />
           </Suspense>
         </div>
