@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Eaton Magnum PXR / PD-SB Decoder — Voyten Electric</title>
+<style>
+:root {
+  --red: #dc2626;
+  --dark-red: #b91c1c;
+  --deep-red: #991b1b;
+  --black: #1a1a1a;
+  --deep-black: #111111;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --white: #ffffff;
+  --blue: #2563eb;
+  --blue-light: #dbeafe;
+  --green: #16a34a;
+  --green-light: #dcfce7;
+  --yellow: #ca8a04;
+  --yellow-light: #fef9c3;
+  --purple: #7c3aed;
+  --purple-light: #ede9fe;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--gray-100);
+  color: var(--gray-800);
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+
+.header {
+  background: linear-gradient(135deg, var(--deep-black) 0%, var(--black) 100%);
+  color: var(--white);
+  padding: 24px 20px 20px;
+  text-align: center;
+  border-bottom: 4px solid var(--red);
+}
+.header h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: 0.5px; }
+.header h1 .accent { color: var(--red); }
+.header .subtitle { font-size: 0.85rem; color: var(--gray-300); margin-top: 4px; }
+.badge {
+  display: inline-block; background: var(--deep-red); color: var(--white);
+  font-size: 0.65rem; font-weight: 700; padding: 2px 10px;
+  border-radius: 999px; margin-top: 8px; letter-spacing: 1px; text-transform: uppercase;
+}
+
+.container { max-width: 960px; margin: 0 auto; padding: 16px; }
+
+/* Input Section */
+.input-section {
+  background: var(--white); border-radius: 12px; padding: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 16px;
+  border: 2px solid var(--red);
+}
+.input-section label {
+  display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 6px; color: var(--gray-700);
+}
+.input-row { display: flex; gap: 8px; margin-bottom: 8px; }
+.input-row input {
+  flex: 1; padding: 12px 14px; font-size: 16px; font-family: 'Consolas', 'Monaco', monospace;
+  border: 2px solid var(--gray-200); border-radius: 8px; text-transform: uppercase;
+  letter-spacing: 1.5px; -webkit-appearance: none; transition: border-color 0.2s;
+}
+.input-row input:focus { outline: none; border-color: var(--red); }
+.hint { font-size: 0.75rem; color: var(--gray-500); margin-bottom: 10px; }
+
+.detect-badge {
+  display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 2px 8px;
+  border-radius: 4px; margin-left: 8px; vertical-align: middle;
+}
+.detect-breaker { background: var(--blue-light); color: var(--blue); }
+.detect-cassette { background: var(--purple-light); color: var(--purple); }
+.detect-unknown { background: var(--yellow-light); color: var(--yellow); }
+
+.btn-row { display: flex; gap: 8px; margin-bottom: 12px; }
+.btn {
+  padding: 10px 20px; border: none; border-radius: 8px; font-weight: 700;
+  font-size: 0.9rem; cursor: pointer; transition: background 0.2s; touch-action: manipulation;
+}
+.btn-decode { background: var(--red); color: var(--white); flex: 1; }
+.btn-decode:hover { background: var(--dark-red); }
+.btn-clear { background: var(--gray-200); color: var(--gray-700); }
+.btn-clear:hover { background: var(--gray-300); }
+
+.examples-label { font-size: 0.75rem; font-weight: 600; color: var(--gray-500); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+.examples { display: flex; flex-wrap: wrap; gap: 6px; }
+.ex-btn {
+  padding: 4px 10px; font-size: 0.72rem; font-family: 'Consolas', monospace;
+  background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 6px;
+  cursor: pointer; transition: all 0.15s; color: var(--gray-700); touch-action: manipulation;
+}
+.ex-btn:hover { background: var(--red); color: var(--white); border-color: var(--red); }
+
+/* Char Map */
+.charmap-wrap { margin: 16px 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.charmap-inner { min-width: 600px; }
+.group-labels { display: flex; gap: 2px; margin-bottom: 2px; }
+.group-label {
+  font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--gray-500); text-align: center; padding: 2px 0;
+  border-bottom: 2px solid var(--gray-300);
+}
+.char-boxes { display: flex; gap: 2px; }
+.char-box {
+  width: 32px; height: 38px; display: flex; align-items: center; justify-content: center;
+  font-family: 'Consolas', monospace; font-size: 0.85rem; font-weight: 700;
+  border-radius: 4px; border: 1px solid var(--gray-300); background: var(--gray-50); color: var(--gray-700);
+}
+.char-box.entered { background: var(--black); color: var(--white); border-color: var(--black); }
+.char-box.assumed { background: var(--blue-light); color: var(--blue); border-color: #93c5fd; }
+.char-box.error { background: #fecaca; color: #dc2626; border-color: #f87171; }
+.char-box.separator { width: 8px; border: none; background: transparent; }
+.pos-labels { display: flex; gap: 2px; margin-top: 1px; }
+.pos-label { width: 32px; text-align: center; font-size: 0.55rem; color: var(--gray-400); }
+.pos-label.sep { width: 8px; }
+
+.char-legend {
+  display: none; margin-top: 8px; font-size: 0.7rem; color: var(--gray-500);
+}
+.char-legend span { margin-right: 14px; }
+.char-legend .swatch {
+  display: inline-block; width: 10px; height: 10px; border-radius: 2px;
+  vertical-align: middle; margin-right: 3px;
+}
+
+/* Results */
+.results { display: none; }
+.summary-banner {
+  background: linear-gradient(135deg, var(--deep-black), var(--black));
+  color: var(--white); border-radius: 12px; padding: 20px; margin-bottom: 16px;
+  border-left: 5px solid var(--red);
+}
+.summary-banner .headline { font-size: 1.15rem; font-weight: 700; margin-bottom: 6px; }
+.summary-banner .catalog-fmt { font-family: 'Consolas', monospace; font-size: 0.85rem; color: var(--gray-300); letter-spacing: 2px; }
+.summary-banner .partial-tag {
+  display: inline-block; font-size: 0.65rem; background: rgba(255,255,255,0.1);
+  padding: 2px 8px; border-radius: 4px; margin-top: 6px; color: var(--gray-400);
+}
+
+.result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 640px) { .result-grid { grid-template-columns: 1fr; } }
+.result-card {
+  background: var(--white); border-radius: 10px; padding: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-left: 4px solid var(--gray-300);
+}
+.result-card.wide { grid-column: 1 / -1; }
+.result-card.warn { border-left-color: #f59e0b; background: #fffbeb; }
+.result-card.info { border-left-color: var(--blue); }
+.result-card.config { border-left-color: var(--red); }
+.result-card.trip { border-left-color: var(--green); }
+.result-card.access { border-left-color: var(--purple); }
+.result-card.options { border-left-color: var(--yellow); }
+.card-title {
+  font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--gray-500); margin-bottom: 8px;
+}
+.card-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 0.85rem; border-bottom: 1px solid var(--gray-100); }
+.card-row:last-child { border-bottom: none; }
+.card-label { color: var(--gray-500); font-weight: 500; }
+.card-value { font-weight: 600; color: var(--gray-800); text-align: right; max-width: 60%; }
+
+/* Tables */
+.ref-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin-top: 8px; }
+.ref-table th {
+  background: var(--gray-100); text-align: left; padding: 6px 10px;
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gray-500);
+}
+.ref-table td { padding: 5px 10px; border-bottom: 1px solid var(--gray-100); }
+
+.btn-copy {
+  background: var(--gray-100); color: var(--gray-600); border: 1px solid var(--gray-300);
+  padding: 6px 14px; border-radius: 6px; font-size: 0.75rem; font-weight: 600;
+  cursor: pointer; transition: all 0.2s; margin-top: 8px;
+}
+.btn-copy:hover { background: var(--gray-200); }
+.btn-copy.copied { background: var(--green-light); color: var(--green); border-color: var(--green); }
+
+.footer {
+  text-align: center; padding: 20px; font-size: 0.7rem; color: var(--gray-400); margin-top: 20px;
+}
+
+noscript .ns-msg {
+  max-width: 480px; margin: 60px auto; padding: 24px; background: var(--white);
+  border-radius: 12px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+</style>
+</head>
+<body>
+
+<noscript>
+<div class="ns-msg">
+  <h2>JavaScript Required</h2>
+  <p style="margin-top:12px;color:#6b7280;">This decoder requires JavaScript. If you're viewing in iOS Files app, open in Safari instead.</p>
+</div>
+</noscript>
+
+<div class="header">
+  <h1>Eaton <span class="accent">Magnum PXR / PD-SB</span> Decoder</h1>
+  <div class="subtitle">Catalog Number Breakdown — Breakers &amp; Cassettes</div>
+  <div class="badge">Offline Tool</div>
+</div>
+
+<div class="container">
+
+  <div class="input-section">
+    <label>Catalog Number <span id="detectBadge"></span></label>
+    <div class="input-row">
+      <input type="text" id="catInput" placeholder="Paste catalog number..." spellcheck="false" autocomplete="off" autocapitalize="characters">
+    </div>
+    <div class="hint">Breaker: 25 chars (e.g. MPS8203VEA 062A MACHN...) &nbsp;|&nbsp; Cassette: 15 chars &nbsp;|&nbsp; Partial input accepted</div>
+    <div class="btn-row">
+      <button class="btn btn-decode" onclick="decode()">DECODE</button>
+      <button class="btn btn-clear" onclick="clearAll()">CLEAR</button>
+    </div>
+    <div class="examples-label">Magnum PXR — Full 25-char</div>
+    <div class="examples" style="margin-bottom:8px;">
+      <button class="ex-btn" onclick="loadExample(this)">MPS8203CEA202AATAAWKPALAX</button>
+      <button class="ex-btn" onclick="loadExample(this)">MPS8253WEA252SANANCNNANAX</button>
+      <button class="ex-btn" onclick="loadExample(this)">MPS8203WEA202SANANCYPANAX</button>
+    </div>
+    <div class="examples-label">Magnum PXR — Partial (common from nameplates)</div>
+    <div class="examples" style="margin-bottom:8px;">
+      <button class="ex-btn" onclick="loadExample(this)">MPS8253WEA</button>
+      <button class="ex-btn" onclick="loadExample(this)">MPS6123WEA</button>
+      <button class="ex-btn" onclick="loadExample(this)">MPNC163WEA</button>
+      <button class="ex-btn" onclick="loadExample(this)">MPNC083HEA</button>
+      <button class="ex-btn" onclick="loadExample(this)">MPS4203MEA</button>
+      <button class="ex-btn" onclick="loadExample(this)">MPSC203WEA202S</button>
+    </div>
+    <div class="examples-label">Power Defense SB</div>
+    <div class="examples" style="margin-bottom:8px;">
+      <button class="ex-btn" onclick="loadExample(this)">SPSC323WEA322C</button>
+      <button class="ex-btn" onclick="loadExample(this)">SPSC083WEA</button>
+      <button class="ex-btn" onclick="loadExample(this)">SPN6163BEA</button>
+      <button class="ex-btn" onclick="loadExample(this)">SPSC403WEA</button>
+    </div>
+    <div class="examples-label">Drawout Cassettes (15-char)</div>
+    <div class="examples">
+      <button class="ex-btn" onclick="loadExample(this)">AN323CADNNSNNNC</button>
+      <button class="ex-btn" onclick="loadExample(this)">BN163HADNNSNNNC</button>
+      <button class="ex-btn" onclick="loadExample(this)">AN403UADNNSNNWB</button>
+    </div>
+  </div>
+
+  <div class="charmap-wrap">
+    <div class="charmap-inner">
+      <div id="groupLabels" class="group-labels"></div>
+      <div id="charBoxes" class="char-boxes"></div>
+      <div id="posLabels" class="pos-labels"></div>
+    </div>
+  </div>
+  <div id="charLegend" class="char-legend">
+    <span><span class="swatch" style="background:var(--black)"></span> Entered</span>
+    <span><span class="swatch" style="background:var(--blue-light);border:1px solid #93c5fd"></span> Assumed (default)</span>
+    <span><span class="swatch" style="background:#fecaca;border:1px solid #f87171"></span> Unrecognized</span>
+  </div>
+
+  <div id="results" class="results"></div>
+
+
+</div>
+
+<div class="footer">
+  Eaton Magnum PXR / PD-SB Decoder &mdash; Voyten Electric &amp; Electronics, Inc.<br>
+  Data sourced from Eaton PA013006EN (August 2025). Contact Voyten at <strong>1-800-458-4001</strong> for assistance.
+</div>
+
+<script>
+/* ============================================================
+   DATA TABLES — Eaton Magnum PXR & Power Defense SB
+   Source: PA013006EN (August 2025)
+   ============================================================ */
+
+var DATA = {};
+
+// Pos 1-2: Product family
+DATA.family = {
+  'MP': { name: 'Magnum PXR', desc: 'Low Voltage Power Circuit Breaker', standard: 'UL 1066', application: 'Switchgear (UL 1558)' },
+  'SP': { name: 'Power Defense SB', desc: 'Low Voltage Insulated-Case Circuit Breaker', standard: 'UL 1066', application: 'Switchboards (UL 891)' }
+};
+
+// Pos 3: Frame type
+DATA.frameType = {
+  'S': { name: 'Standard', desc: 'Standard or Double Standard frame' },
+  'N': { name: 'Narrow', desc: 'Narrow or Double Narrow frame' }
+};
+
+// Pos 4: Interrupting rating
+DATA.interruptRating = {
+  '4': { kA: 42, desc: '42 kA' },
+  '5': { kA: 50, desc: '50 kA' },
+  '6': { kA: 65, desc: '65 kA' },
+  '8': { kA: 85, desc: '85 kA' },
+  'C': { kA: 100, desc: '100 kA' }
+};
+
+// Pos 5-6: Continuous amperes (2-char codes)
+DATA.ampFrame = {
+  '08': { amps: 800, phasing: 'ABC / NABC' },
+  '12': { amps: 1200, phasing: 'ABC / NABC' },
+  '16': { amps: 1600, phasing: 'ABC / NABC' },
+  '20': { amps: 2000, phasing: 'ABC / NABC' },
+  '25': { amps: 2500, phasing: 'ABC / NABC' },
+  '30': { amps: 3000, phasing: 'ABC / NABC' },
+  '32': { amps: 3200, phasing: 'ABC / NABC' },
+  '40': { amps: 4000, phasing: 'ABCABC / NNABCABC / NABCABC' },
+  '4A': { amps: 4000, phasing: 'NABCNABC' },
+  '4N': { amps: 4000, phasing: 'AABBCC / NNAABBCC / NAABBCC' },
+  '50': { amps: 5000, phasing: 'ABCABC / NNABCABC / NABCABC' },
+  '5A': { amps: 5000, phasing: 'NABCNABC' },
+  '5N': { amps: 5000, phasing: 'AABBCC / NNAABBCC / NAABBCC' },
+  '60': { amps: 6000, phasing: 'ABCABC / NNABCABC / NABCABC' },
+  '6A': { amps: 6000, phasing: 'NABCNABC' },
+  '6N': { amps: 6000, phasing: 'AABBCC / NNAABBCC / NAABBCC' }
+};
+
+// Pos 7: Poles
+DATA.poles = {
+  '3': '3-Pole',
+  '4': '4-Pole (Switched Neutral)'
+};
+
+// Pos 8: Mounting configuration
+DATA.mounting = {
+  'H': 'Fixed — Horizontal',
+  'V': 'Fixed — Vertical',
+  'L': 'Drawout — Horizontal (Narrow frame only)',
+  'W': 'Drawout — Vertical',
+  'E': 'Drawout — Vertical (6000A)',
+  'C': 'Drawout — Horizontal with MR2 (Narrow only)',
+  'M': 'Drawout — Vertical with MR2',
+  'G': 'Drawout — Vertical with MR2 (6000A)'
+};
+
+// Pos 9: Language
+DATA.language = {
+  'E': 'English',
+  'F': 'French',
+  'S': 'Spanish',
+  'N': 'No Nameplate'
+};
+
+// Pos 10: Current limiter
+DATA.limiter = {
+  'A': 'No Current Limiters'
+};
+
+// Pos 11-12: In rating (sensor)
+DATA.inRating = {
+  'NN': { amps: 0, desc: 'None (Non-automatic / Switch)' },
+  '01': { amps: 100, desc: '100A' },
+  '02': { amps: 200, desc: '200A' },
+  '05': { amps: 250, desc: '250A' },
+  '03': { amps: 300, desc: '300A' },
+  '04': { amps: 400, desc: '400A' },
+  '06': { amps: 600, desc: '600A' },
+  '08': { amps: 800, desc: '800A' },
+  '10': { amps: 1000, desc: '1000A' },
+  '12': { amps: 1200, desc: '1200A' },
+  '16': { amps: 1600, desc: '1600A' },
+  '20': { amps: 2000, desc: '2000A' },
+  '25': { amps: 2500, desc: '2500A' },
+  '30': { amps: 3000, desc: '3000A' },
+  '32': { amps: 3200, desc: '3200A' },
+  '36': { amps: 3600, desc: '3600A' },
+  '38': { amps: 3800, desc: '3800A' },
+  '40': { amps: 4000, desc: '4000A' },
+  '50': { amps: 5000, desc: '5000A' },
+  '60': { amps: 6000, desc: '6000A' }
+};
+
+// Pos 13-14: Trip unit
+DATA.tripUnit = {
+  'NN': { name: 'Non-Automatic (Switch)', protection: 'None', pxr: 'N/A', comms: 'None', arms: false },
+  '2A': { name: 'PXR 20 — LSI', protection: 'LSI', pxr: 'PXR 20', comms: 'None', arms: false },
+  '2C': { name: 'PXR 20 — LSIG', protection: 'LSIG', pxr: 'PXR 20', comms: 'None', arms: false },
+  '2F': { name: 'PXR 20 — LSIG + ARMS + Modbus RTU', protection: 'LSIG', pxr: 'PXR 20', comms: 'Modbus RTU', arms: true },
+  '2H': { name: 'PXR 20 — LSI + ARMS + Modbus RTU', protection: 'LSI', pxr: 'PXR 20', comms: 'Modbus RTU', arms: true },
+  '2Q': { name: 'PXR 25 — LSI + ARMS + Modbus RTU', protection: 'LSI', pxr: 'PXR 25', comms: 'Modbus RTU', arms: true },
+  '2S': { name: 'PXR 25 — LSIG + ARMS + Modbus RTU', protection: 'LSIG', pxr: 'PXR 25', comms: 'Modbus RTU', arms: true },
+  '3A': { name: 'PXR 35 — LSI + ARMS + Modbus + Ethernet', protection: 'LSI', pxr: 'PXR 35', comms: 'Modbus RTU + Ethernet', arms: true },
+  '3B': { name: 'PXR 35 — LSIG + ARMS + Modbus + Ethernet', protection: 'LSIG', pxr: 'PXR 35', comms: 'Modbus RTU + Ethernet', arms: true },
+  '3C': { name: 'PXR 35 — LSI + ARMS + Modbus + Ethernet + Bluetooth', protection: 'LSI', pxr: 'PXR 35', comms: 'Modbus RTU + Ethernet + Bluetooth', arms: true },
+  '3D': { name: 'PXR 35 — LSIG + ARMS + Modbus + Ethernet + Bluetooth', protection: 'LSIG', pxr: 'PXR 35', comms: 'Modbus RTU + Ethernet + Bluetooth', arms: true }
+};
+
+// Pos 16: Motor operator
+DATA.motorOp = {
+  'M': 'Manual Operated',
+  'N': '110–125 Vac (5-sec charge)',
+  'P': '208–277 Vac (5-sec charge)',
+  'L': '24 Vdc (5-sec charge)',
+  'K': '48 Vdc (5-sec charge)',
+  'S': '60 Vdc (5-sec charge)',
+  'W': '110–125 Vdc (5-sec charge)',
+  'T': '220–250 Vdc (5-sec charge)',
+  '1': '110–125 Vac (3-sec charge)',
+  '2': '220–250 Vac (3-sec charge)',
+  '4': '24 Vdc (3-sec charge)',
+  '8': '48 Vdc (3-sec charge)',
+  '5': '110–125 Vdc (3-sec charge)',
+  '9': '220–250 Vdc (3-sec charge)'
+};
+
+// Pos 17: Spring release
+DATA.springRelease = {
+  'N': 'None',
+  'A': '110–127 Vac/Vdc',
+  'R': '208–250 Vac/Vdc',
+  'C': '24 Vdc',
+  'H': '48 Vdc',
+  'S': '60 Vdc'
+};
+
+// Pos 18: UVR or 2nd shunt trip
+DATA.uvr = {
+  'N': 'None',
+  'A': 'Inst. UVR — 110–127 Vac',
+  'R': 'Inst. UVR — 208–240 Vac',
+  'X': 'Inst. UVR — 380–415 Vac',
+  'J': 'Inst. UVR — 480 Vac',
+  'K': 'Inst. UVR — 600 Vac',
+  'C': 'Inst. UVR — 24 Vdc',
+  'G': 'Inst. UVR — 32 Vdc',
+  'H': 'Inst. UVR — 48 Vdc',
+  'D': 'Inst. UVR — 60 Vdc',
+  'E': 'Inst. UVR — 110–125 Vdc',
+  'F': 'Inst. UVR — 220–250 Vdc',
+  'B': '2nd Shunt Trip 100% Duty — 110–127 Vac/Vdc',
+  'Z': '2nd Shunt Trip 100% Duty — 220–250 Vac/Vdc',
+  '5': '2nd Shunt Trip 100% Duty — 24 Vdc',
+  'Q': '2nd Shunt Trip 100% Duty — 48 Vdc',
+  '9': '2nd Shunt Trip 100% Duty — 60 Vdc'
+};
+
+// Pos 15: Shunt trip (1st)
+DATA.shuntTrip = {
+  'N': 'None',
+  'A': '110–127 Vac/Vdc',
+  'R': '208–250 Vac/Vdc',
+  'C': '24 Vdc',
+  'H': '48 Vdc',
+  'J': '60 Vdc (100% Duty)',
+  'B': '110–127 Vac/Vdc (100% Duty)',
+  'S': '220–250 Vac/Vdc (100% Duty)',
+  'D': '24 Vdc (100% Duty)',
+  'K': '48 Vdc (100% Duty)'
+};
+
+// Pos 19: Auxiliary switch
+DATA.auxSwitch = {
+  'N': 'None',
+  'C': '4 Form C (3-wire switches)',
+  'D': '8 Form C (3-wire switches)',
+  'W': '12 Form C (3-wire switches)'
+};
+
+// Pos 20: Bell alarm / OTS
+DATA.bellAlarm = {
+  'E': 'No trip indicator / No interlock / No OTS',
+  'N': 'Trip indicator / No interlock / No OTS',
+  'Y': 'Trip indicator / No interlock / OTS',
+  'M': 'Trip indicator / Interlock / No OTS',
+  'L': 'Trip indicator / Interlock / OTS',
+  'I': 'Trip indicator / Interlock / OTS + 24V elec. reset',
+  'J': 'Trip indicator / Interlock / OTS + 120V elec. reset',
+  'K': 'Trip indicator / Interlock / OTS + 250V elec. reset'
+};
+
+// Pos 21: Pushbutton covers
+DATA.pushbuttonCover = {
+  'N': 'None',
+  'M': 'Metal frame, plastic cover',
+  'P': 'Plastic frame, plastic cover',
+  'H': 'Plastic frame, plastic cover — Close PB blocked',
+  'C': 'Metal frame, plastic cover — Close PB blocked',
+  'S': 'Metal switchboard lock-off (block close, depress open)'
+};
+
+// Pos 22: Operations counter / keylock
+DATA.counterKeylock = {
+  'N': 'No counter / No keylock',
+  'K': 'No counter / Kirk keylock',
+  'C': 'No counter / Castell keylock',
+  'R': 'No counter / Ronis keylock',
+  'S': 'No counter / CES keylock',
+  'A': 'Operations counter / No keylock',
+  'Y': 'Operations counter / Kirk keylock',
+  'L': 'Operations counter / Castell keylock',
+  'H': 'Operations counter / Ronis keylock',
+  'E': 'Operations counter / CES keylock'
+};
+
+// Pos 23: Latch check switch / PXR voltage
+DATA.latchCheck = {
+  'N': 'None',
+  'M': 'No LCS / PXR 25 lower terminals',
+  'L': 'LCS wired to SR / PXR upper terminals',
+  'Y': 'LCS wired to SR / PXR 25 lower terminals',
+  'C': 'LCS wired external / PXR upper terminals',
+  'D': 'LCS wired external / PXR 25 lower terminals'
+};
+
+// Pos 24: Shipping
+DATA.shipping = {
+  'A': 'Fixed breaker alone, unwired, with door kit — or DO breaker alone without door kit',
+  'E': 'Fixed breaker, commonly wired with door kit',
+  'F': 'Fixed breaker, unwired without door kit',
+  'C': 'DO breaker in cassette (no shutters), unwired with door kit',
+  'P': 'DO breaker in cassette (no shutters), fully wired secondary with door kit',
+  'W': 'DO breaker in cassette (with shutters), fully wired secondary with door kit',
+  'S': 'DO breaker in cassette (with shutters), unwired with door kit',
+  'K': 'DO breaker in cassette (no shutters), req. & common wired with door kit',
+  'M': 'DO breaker in cassette (with shutters), req. & common wired with door kit'
+};
+
+// Pos 25: Future
+DATA.future = {
+  'X': 'Standard'
+};
+
+/* ============================================================
+   CASSETTE DATA — 15-position format
+   ============================================================ */
+var CASS = {};
+
+CASS.family = {
+  'A': 'Standard or Double Standard (DS) frame',
+  'B': 'Narrow or Double Narrow (DN) frame'
+};
+
+CASS.interrupt = {
+  'N': 'Up to 100 kA'
+};
+
+CASS.amps = {
+  '16': { amps: 1600, desc: 'Up to 1600A (Narrow only)' },
+  '20': { amps: 2000, desc: 'Up to 2000A (Standard only)' },
+  '32': { amps: 3200, desc: 'Up to 3200A (Standard only)' },
+  '40': { amps: 4000, desc: '4000A Double (DN/DS)' },
+  '4E': { amps: 4000, desc: '4000A Double (DN vertical interleaf)' },
+  '50': { amps: 5000, desc: '5000A Double (DS only)' },
+  '5E': { amps: 5000, desc: '5000A Double (DN vertical interleaf)' },
+  '6E': { amps: 6000, desc: '6000A Double' }
+};
+
+CASS.poles = { '3': '3-Pole', '4': '4-Pole' };
+
+CASS.frameTerminals = {
+  'P': 'Basic (backplane w/o stabs, vert. slots)',
+  'C': 'Basic (backplane with stabs, vert. slots)',
+  'U': 'Universal cassette (with terminal pads)',
+  'H': 'Narrow frame with horizontal stabs',
+  'T': 'Basic with rear extended stabs — short-short (tie config, 6000A)',
+  'M': 'Basic with rear extended stabs — short-long (main config, 6000A)',
+  'V': 'Vertical interleaf stabs (4000A DN)',
+  'Y': 'Vertical interleaf stabs — short-long (main config, 5000A DN)',
+  'Z': 'Vertical interleaf stabs — short-short (tie config, 5000A DN)'
+};
+
+CASS.arcHood = { 'A': 'Arc hood installed' };
+
+CASS.doorKit = {
+  'DN': 'Door frame and gasket kit included',
+  'XN': 'Door frame and gasket kit not included'
+};
+
+CASS.shutters = {
+  'N': 'No shutters',
+  'S': 'Shutters included'
+};
+
+CASS.mr2 = {
+  'N': 'None',
+  'M': 'MR2 equipped'
+};
+
+CASS.wiring = {
+  'N': 'No secondary wiring',
+  'W': 'Fully wired secondary (PXR 20/25, non-auto)',
+  'A': 'Required & common wired secondary (PXR 20/25, non-auto)',
+  'E': 'Fully wired secondary with Ethernet I/O block (PXR 35)'
+};
+
+CASS.cassShipping = {
+  'C': 'Cassette only',
+  'B': 'Breaker shipped in cassette'
+};
+
+/* ============================================================
+   RATINGS TABLES — Magnum PXR (Table 5 from PA013006EN)
+   ============================================================ */
+var RATINGS_MP = [
+  // [frameAmps, catalogPrefix, frameType, int254, int508, int635, stw254_508, stw635]
+  [800,'MPN-408','Narrow',42,42,42,42,42],
+  [800,'MPN-508','Narrow',50,50,50,50,50],
+  [800,'MPN-608','Narrow',65,65,65,65,65],
+  [800,'MPN-C08','Narrow',100,100,65,65,65],
+  [800,'MPS-408','Standard',42,42,42,42,42],
+  [800,'MPS-508','Standard',50,50,50,50,50],
+  [800,'MPS-608','Standard',65,65,65,65,65],
+  [800,'MPS-808','Standard',85,85,85,85,85],
+  [800,'MPS-C08','Standard',100,100,100,85,85],
+  [1200,'MPN-412','Narrow',42,42,42,42,42],
+  [1200,'MPN-512','Narrow',50,50,50,50,50],
+  [1200,'MPN-612','Narrow',65,65,65,65,65],
+  [1200,'MPN-C12','Narrow',100,100,65,65,65],
+  [1200,'MPS-512','Standard',50,50,50,50,50],
+  [1200,'MPS-612','Standard',65,65,65,65,65],
+  [1200,'MPS-812','Standard',85,85,85,85,85],
+  [1200,'MPS-C12','Standard',100,100,100,85,85],
+  [1600,'MPN-416','Narrow',42,42,42,42,42],
+  [1600,'MPN-516','Narrow',50,50,50,50,50],
+  [1600,'MPN-616','Narrow',65,65,65,65,65],
+  [1600,'MPN-C16','Narrow',100,100,65,65,65],
+  [1600,'MPS-516','Standard',50,50,50,50,50],
+  [1600,'MPS-616','Standard',65,65,65,65,65],
+  [1600,'MPS-816','Standard',85,85,85,85,85],
+  [1600,'MPS-C16','Standard',100,100,100,85,85],
+  [2000,'MPN-620','Narrow',65,65,65,65,65],
+  [2000,'MPN-C20','Narrow',100,100,65,65,65],
+  [2000,'MPS-620','Standard',65,65,65,65,65],
+  [2000,'MPS-820','Standard',85,85,85,85,85],
+  [2000,'MPS-C20','Standard',100,100,100,85,85],
+  [2500,'MPS-625','Standard',65,65,65,65,65],
+  [2500,'MPS-825','Standard',85,85,85,85,85],
+  [2500,'MPS-C25','Standard',100,100,100,85,85],
+  [3000,'MPS-630','Standard',65,65,65,65,65],
+  [3000,'MPS-830','Standard',85,85,85,85,85],
+  [3000,'MPS-C30','Standard',100,100,100,85,85],
+  [3200,'MPS-632','Standard',65,65,65,65,65],
+  [3200,'MPS-832','Standard',85,85,85,85,85],
+  [3200,'MPS-C32','Standard',100,100,100,85,85],
+  [4000,'MPN-640','Dbl Narrow',65,65,65,65,65],
+  [4000,'MPN-840','Dbl Narrow',85,85,65,85,65],
+  [4000,'MPN-C40','Dbl Narrow',100,100,65,100,65],
+  [4000,'MPS-840','Double',85,85,85,85,85],
+  [4000,'MPS-C40','Double',100,100,100,100,100],
+  [5000,'MPN-65N','Dbl Narrow',65,65,65,65,65],
+  [5000,'MPN-85N','Dbl Narrow',85,85,65,85,65],
+  [5000,'MPN-C5N','Dbl Narrow',100,100,65,100,65],
+  [5000,'MPS-850','Double',85,85,85,85,85],
+  [5000,'MPS-C50','Double',100,100,100,100,100],
+  [6000,'MPS-860','Double',85,85,85,85,85],
+  [6000,'MPS-C60','Double',100,100,100,100,100]
+];
+
+// PD-SB ratings (Table 7) — includes fixed internal inst trip
+var RATINGS_SP = [
+  // [frameAmps, catalogPrefix, frameType, int254, int508, int635, stw, fixedInstPeak]
+  [800,'SPN-408','Narrow',42,42,42,22,20],
+  [800,'SPN-508','Narrow',50,50,50,22,20],
+  [800,'SPN-608','Narrow',65,65,65,22,20],
+  [800,'SPN-C08','Narrow',100,100,65,22,20],
+  [800,'SPS-408','Standard',42,42,42,22,20],
+  [800,'SPS-508','Standard',50,50,50,22,20],
+  [800,'SPS-608','Standard',65,65,65,22,20],
+  [800,'SPS-808','Standard',85,85,85,22,20],
+  [800,'SPS-C08','Standard',100,100,100,22,20],
+  [1200,'SPN-412','Narrow',42,42,42,25,31],
+  [1200,'SPN-512','Narrow',50,50,50,25,31],
+  [1200,'SPN-612','Narrow',65,65,65,25,31],
+  [1200,'SPN-C12','Narrow',100,100,65,25,31],
+  [1200,'SPS-512','Standard',50,50,50,25,31],
+  [1200,'SPS-612','Standard',65,65,65,25,31],
+  [1200,'SPS-812','Standard',85,85,85,25,31],
+  [1200,'SPS-C12','Standard',100,100,100,25,31],
+  [1600,'SPN-416','Narrow',42,42,42,30,41],
+  [1600,'SPN-516','Narrow',50,50,50,30,41],
+  [1600,'SPN-616','Narrow',65,65,65,30,41],
+  [1600,'SPN-C16','Narrow',100,100,65,30,41],
+  [1600,'SPS-516','Standard',50,50,50,30,41],
+  [1600,'SPS-616','Standard',65,65,65,30,41],
+  [1600,'SPS-816','Standard',85,85,85,30,41],
+  [1600,'SPS-C16','Standard',100,100,100,30,41],
+  [2000,'SPN-620','Narrow',65,65,65,42,51],
+  [2000,'SPN-C20','Narrow',100,100,65,42,51],
+  [2000,'SPS-620','Standard',65,65,65,42,51],
+  [2000,'SPS-820','Standard',85,85,85,42,51],
+  [2000,'SPS-C20','Standard',100,100,100,42,51],
+  [2500,'SPS-625','Standard',65,65,65,42,64],
+  [2500,'SPS-825','Standard',85,85,85,42,64],
+  [2500,'SPS-C25','Standard',100,100,100,42,64],
+  [3000,'SPS-630','Standard',65,65,65,50,81],
+  [3000,'SPS-830','Standard',85,85,85,50,81],
+  [3000,'SPS-C30','Standard',100,100,100,50,81],
+  [3200,'SPS-632','Standard',65,65,65,50,81],
+  [3200,'SPS-832','Standard',85,85,85,50,81],
+  [3200,'SPS-C32','Standard',100,100,100,50,81],
+  [4000,'SPN-640','Dbl Narrow',65,65,65,65,102],
+  [4000,'SPN-840','Dbl Narrow',85,85,65,65,102],
+  [4000,'SPN-C40','Dbl Narrow',100,100,65,65,102],
+  [4000,'SPS-840','Double',85,85,85,65,102],
+  [4000,'SPS-C40','Double',100,100,100,65,102],
+  [5000,'SPN-65N','Dbl Narrow',65,65,65,65,127],
+  [5000,'SPN-85N','Dbl Narrow',85,85,85,85,127],
+  [5000,'SPN-C5N','Dbl Narrow',100,100,65,65,127],
+  [5000,'SPS-850','Double',85,85,85,65,127],
+  [5000,'SPS-C50','Double',100,100,100,65,127]
+];
+
+/* Accessory renewal part kits */
+var RENEWAL_PARTS = {
+  shuntTrip: [
+    { kit: 'MST1', voltage: '110–127 Vac', type: 'Shunt Trip' },
+    { kit: 'MST2', voltage: '208–240 Vac', type: 'Shunt Trip' },
+    { kit: 'MST3', voltage: '24 Vdc', type: 'Shunt Trip' },
+    { kit: 'MTS1', voltage: '110–125 Vdc', type: 'Shunt Trip' },
+    { kit: 'MTS2', voltage: '220–250 Vdc', type: 'Shunt Trip' },
+    { kit: 'MTS4', voltage: '48 Vdc', type: 'Shunt Trip' }
+  ],
+  shuntTrip100: [
+    { kit: 'MSTA', voltage: '110–127 Vac / 110–125 Vdc', type: 'Shunt Trip 100% Duty' },
+    { kit: 'MSTR', voltage: '208–240 Vac / 220–250 Vdc', type: 'Shunt Trip 100% Duty' },
+    { kit: 'MSTL', voltage: '24 Vdc', type: 'Shunt Trip 100% Duty' },
+    { kit: 'MSTH', voltage: '48 Vdc', type: 'Shunt Trip 100% Duty' },
+    { kit: 'MSTD', voltage: '60 Vdc', type: 'Shunt Trip 100% Duty' }
+  ],
+  springRelease: [
+    { kit: 'MSRA', voltage: '110–127 Vac / 110–125 Vdc', type: 'Spring Release' },
+    { kit: 'MSRR', voltage: '208–240 Vac / 220–250 Vdc', type: 'Spring Release' },
+    { kit: 'MSRC', voltage: '24 Vdc', type: 'Spring Release' },
+    { kit: 'MSRH', voltage: '48 Vdc', type: 'Spring Release' },
+    { kit: 'MSRS', voltage: '60 Vdc', type: 'Spring Release' }
+  ],
+  uvr: [
+    { kit: 'MUVRA', voltage: '110–127 Vac', type: 'UVR' },
+    { kit: 'MUVRR', voltage: '208–240 Vac', type: 'UVR' },
+    { kit: 'MUVRX', voltage: '380–415 Vac', type: 'UVR' },
+    { kit: 'MUVRJ', voltage: '480 Vac', type: 'UVR' },
+    { kit: 'MUVRK', voltage: '600 Vac', type: 'UVR' },
+    { kit: 'MUVRC', voltage: '24 Vdc', type: 'UVR' },
+    { kit: 'MUVRG', voltage: '32 Vdc', type: 'UVR' },
+    { kit: 'MUVRH', voltage: '48 Vdc', type: 'UVR' },
+    { kit: 'MUVRS', voltage: '60 Vdc', type: 'UVR' },
+    { kit: 'MUVRE', voltage: '110–125 Vdc', type: 'UVR' },
+    { kit: 'MUVRF', voltage: '220–250 Vdc', type: 'UVR' }
+  ]
+};
+
+/* ============================================================
+   PROTECTION FUNCTION LEGEND
+   ============================================================ */
+var PROTECTION_LEGEND = {
+  'L': { name: 'Long-Time', desc: 'Overload protection — adjustable pickup and time delay' },
+  'S': { name: 'Short-Time', desc: 'Short-circuit protection — adjustable pickup and time delay, enables selective coordination' },
+  'I': { name: 'Instantaneous', desc: 'Instantaneous fault protection — adjustable pickup, no intentional delay' },
+  'G': { name: 'Ground Fault', desc: 'Ground fault protection — adjustable pickup and time delay' },
+  'A': { name: 'ARMS', desc: 'Arcflash Reduction Maintenance System — reduces incident energy when armed' }
+};
+
+/* ============================================================
+   FRAME SIZE DETERMINATION
+   ============================================================ */
+function getFrameSize(frameType, ampCode) {
+  var amps = DATA.ampFrame[ampCode] ? DATA.ampFrame[ampCode].amps : 0;
+  if (amps >= 4000) {
+    if (frameType === 'N') return 'Double Narrow';
+    return 'Double Standard';
+  }
+  if (frameType === 'N') return 'Narrow';
+  return 'Standard';
+}
+
+/* ============================================================
+   HELPER — Available In Ratings per frame
+   ============================================================ */
+var AVAILABLE_IN = {
+  'MP': {
+    800:  '100, 200, 250, 300, 400, 600, 800',
+    1200: '100, 200, 250, 300, 400, 600, 800, 1000, 1200',
+    1600: '100, 200, 250, 300, 400, 600, 800, 1000, 1200, 1600',
+    2000: '100, 200, 250, 300, 400, 600, 800, 1000, 1200, 1600, 2000',
+    2500: '200, 250, 300, 400, 600, 800, 1000, 1200, 1600, 2000, 2500',
+    3000: '200, 250, 300, 400, 600, 800, 1000, 1200, 1600, 2000, 2500, 3000',
+    3200: '200, 250, 300, 400, 600, 800, 1000, 1200, 1600, 2000, 2500, 3000, 3200',
+    4000: '800, 1200, 1600, 2000, 2500, 3200, 3600, 3800, 4000',
+    5000: '800, 1200, 1600, 2000, 2500, 3200, 3600, 3800, 4000, 5000',
+    6000: '800, 1200, 1600, 2000, 2500, 3200, 3600, 3800, 4000, 5000, 6000'
+  },
+  'SP': {
+    800:  '100, 200, 250, 300, 400, 600, 800',
+    1200: '100, 200, 250, 300, 400, 600, 800, 1000, 1200',
+    1600: '100, 200, 250, 300, 400, 600, 800, 1000, 1200, 1600',
+    2000: '100, 200, 250, 300, 400, 600, 800, 1000, 1200, 1600, 2000',
+    2500: '200, 250, 300, 400, 600, 800, 1000, 1200, 1600, 2000, 2500',
+    3000: '200, 250, 300, 400, 600, 800, 1000, 1200, 1600, 2000, 2500, 3000',
+    3200: '200, 250, 300, 400, 600, 800, 1000, 1200, 1600, 2000, 2500, 3000, 3200',
+    4000: '800, 1200, 1600, 2000, 2500, 3200, 3600, 3800, 4000',
+    5000: '800, 1200, 1600, 2000, 2500, 3200, 3600, 3800, 4000, 5000'
+  }
+};
+
+function findAvailableInRatings(familyCode, amps) {
+  var fam = AVAILABLE_IN[familyCode] || AVAILABLE_IN['MP'];
+  return fam[amps] || null;
+}
+
+/* ============================================================
+   HELPER — Relevant renewal parts based on configured accessories
+   ============================================================ */
+function getRelevantParts(d) {
+  var parts = [];
+  // Match shunt trip voltage
+  if (d.stCode && d.stCode !== 'N') {
+    var stDesc = d.shuntTrip || '';
+    var is100 = stDesc.indexOf('100%') >= 0;
+    var list = is100 ? RENEWAL_PARTS.shuntTrip100 : RENEWAL_PARTS.shuntTrip;
+    for (var i = 0; i < list.length; i++) {
+      if (stDesc.indexOf(list[i].voltage.split('/')[0].split('–')[0].trim()) >= 0 ||
+          stDesc.indexOf(list[i].voltage.split(',')[0].trim()) >= 0) {
+        parts.push(list[i]);
+      }
+    }
+    // If no exact match, show all ST kits
+    if (parts.length === 0) {
+      parts = parts.concat(is100 ? RENEWAL_PARTS.shuntTrip100 : RENEWAL_PARTS.shuntTrip);
+    }
+  }
+  // Match spring release
+  if (d.srCode && d.srCode !== 'N') {
+    for (var i = 0; i < RENEWAL_PARTS.springRelease.length; i++) {
+      var sr = RENEWAL_PARTS.springRelease[i];
+      var srDesc = d.springRelease || '';
+      if (srDesc.indexOf(sr.voltage.split('/')[0].split('–')[0].trim()) >= 0) {
+        parts.push(sr);
+      }
+    }
+  }
+  // Match UVR
+  if (d.uvrCode && d.uvrCode !== 'N' && (d.uvr || '').indexOf('UVR') >= 0) {
+    for (var i = 0; i < RENEWAL_PARTS.uvr.length; i++) {
+      var u = RENEWAL_PARTS.uvr[i];
+      var uvrDesc = d.uvr || '';
+      if (uvrDesc.indexOf(u.voltage.split('/')[0].split('–')[0].trim()) >= 0) {
+        parts.push(u);
+      }
+    }
+  }
+  return parts;
+}
+
+/* ============================================================
+   INPUT DETECTION
+   ============================================================ */
+function detectInputType(raw) {
+  var s = raw.replace(/[\s\-]/g, '').toUpperCase();
+  if (s.length < 2) return 'unknown';
+  var prefix2 = s.substring(0, 2);
+  // Breaker prefixes
+  if (prefix2 === 'MP' || prefix2 === 'SP') return 'breaker';
+  // Cassette prefixes
+  if ((s[0] === 'A' || s[0] === 'B') && s[1] === 'N') return 'cassette';
+  return 'unknown';
+}
+
+/* ============================================================
+   NORMALIZE & BUILD
+   ============================================================ */
+function normalize(input) {
+  return input.replace(/[\s\-]/g, '').toUpperCase();
+}
+
+// Breaker defaults for positions 15-25
+// Order: ST(15), Motor(16), SR(17), UVR(18), Aux(19), Bell(20), PB(21), Counter(22), LCS(23), Ship(24), Future(25)
+var BREAKER_DEFAULTS = 'NMNNNENNNAX';
+
+function buildFullBreaker(entered) {
+  var full = entered;
+  var defaulted = new Set();
+  // Pad to 25 with defaults
+  if (full.length < 25) {
+    var defaults = BREAKER_DEFAULTS;
+    // Positions 11-14 defaults depend on entered positions
+    var pos11_14_default = '';
+    if (full.length <= 10) {
+      // Default In rating = frame amps (pos 5-6)
+      var ampCode = full.length >= 6 ? full.substring(4, 6) : '08';
+      pos11_14_default = ampCode + 'NN'; // sensor = frame amps, trip = non-auto
+    }
+    var needed = '';
+    for (var i = full.length; i < 25; i++) {
+      if (i >= 10 && i < 14 && pos11_14_default) {
+        var idx = i - 10;
+        needed += idx < pos11_14_default.length ? pos11_14_default[idx] : 'N';
+      } else if (i >= 14) {
+        needed += defaults[i - 14] || 'X';
+      } else {
+        needed += 'N';
+      }
+      defaulted.add(i);
+    }
+    full += needed;
+  }
+  return { full: full.substring(0, 25), defaulted: defaulted, enteredLen: entered.length };
+}
+
+// Cassette defaults
+function buildFullCassette(entered) {
+  var full = entered;
+  var defaulted = new Set();
+  var cassDefaults = 'ADNNSNNNNC';
+  if (full.length < 15) {
+    for (var i = full.length; i < 15; i++) {
+      var idx = i - 5;
+      full += idx >= 0 && idx < cassDefaults.length ? cassDefaults[idx] : 'N';
+      defaulted.add(i);
+    }
+  }
+  return { full: full.substring(0, 15), defaulted: defaulted, enteredLen: entered.length };
+}
+
+/* ============================================================
+   DECODE — BREAKER
+   ============================================================ */
+function decodeBreaker(input) {
+  var entered = normalize(input);
+  var build = buildFullBreaker(entered);
+  var cat = build.full;
+  var defaulted = build.defaulted;
+  var errors = [];
+
+  // Parse each position
+  var familyCode = cat.substring(0, 2);
+  var frameTypeCode = cat[2];
+  var intCode = cat[3];
+  var ampCode = cat.substring(4, 6);
+  var polesCode = cat[6];
+  var mountCode = cat[7];
+  var langCode = cat[8];
+  var limiterCode = cat[9];
+  var inCode = cat.substring(10, 12);
+  var tripCode = cat.substring(12, 14);
+  var stCode = cat[14];      // Pos 15: Shunt Trip
+  var motorCode = cat[15];   // Pos 16: Motor Operator
+  var srCode = cat[16];      // Pos 17: Spring Release
+  var uvrCode = cat[17];     // Pos 18: UVR / 2nd Shunt Trip
+  var auxCode = cat[18];     // Pos 19: Auxiliary Switch
+  var bellCode = cat[19];    // Pos 20: Bell Alarm / OTS
+  var pbCode = cat[20];      // Pos 21: Pushbutton Cover
+  var counterCode = cat[21]; // Pos 22: Counter / Keylock
+  var lcsCode = cat[22];     // Pos 23: LCS / PXR Voltage
+  var shipCode = cat[23];    // Pos 24: Shipping
+  var futureCode = cat[24];  // Pos 25: Future
+
+  // Validate each position
+  var errorPositions = new Set();
+  function check(code, table, pos, label) {
+    if (!table[code]) {
+      if (!defaulted.has(pos)) {
+        errors.push({ pos: pos, label: label, code: code });
+        errorPositions.add(pos);
+      }
+      return null;
+    }
+    return table[code];
+  }
+
+  var family = check(familyCode, DATA.family, 0, 'Product Family');
+  var frameType = check(frameTypeCode, DATA.frameType, 2, 'Frame Type');
+  var interrupt = check(intCode, DATA.interruptRating, 3, 'Interrupt Rating');
+  var ampFrame = check(ampCode, DATA.ampFrame, 4, 'Continuous Amps');
+  var poles = DATA.poles[polesCode] || null;
+  if (!poles && !defaulted.has(6)) { errors.push({ pos: 6, label: 'Poles', code: polesCode }); errorPositions.add(6); }
+  var mounting = check(mountCode, DATA.mounting, 7, 'Mounting');
+  var language = check(langCode, DATA.language, 8, 'Language');
+  var limiter = check(limiterCode, DATA.limiter, 9, 'Current Limiter');
+  var inRating = check(inCode, DATA.inRating, 10, 'In Rating');
+  var tripUnit = check(tripCode, DATA.tripUnit, 12, 'Trip Unit');
+  var shuntTrip = check(stCode, DATA.shuntTrip, 14, 'Shunt Trip');
+  var motorOp = check(motorCode, DATA.motorOp, 15, 'Motor Operator');
+  var springRelease = check(srCode, DATA.springRelease, 16, 'Spring Release');
+  var uvr = check(uvrCode, DATA.uvr, 17, 'UVR / 2nd Shunt Trip');
+  var auxSwitch = check(auxCode, DATA.auxSwitch, 18, 'Aux Switch');
+  var bellAlarm = check(bellCode, DATA.bellAlarm, 19, 'Bell Alarm / OTS');
+  var pbCover = check(pbCode, DATA.pushbuttonCover, 20, 'Pushbutton Cover');
+  var counterKl = check(counterCode, DATA.counterKeylock, 21, 'Counter / Keylock');
+  var lcs = check(lcsCode, DATA.latchCheck, 22, 'Latch Check / PXR Voltage');
+  var ship = check(shipCode, DATA.shipping, 23, 'Shipping');
+
+  // Determine frame size
+  var frameSize = getFrameSize(frameTypeCode, ampCode);
+  var ampsVal = ampFrame ? ampFrame.amps : 0;
+
+  // Find matching ratings row
+  var ratingsTable = familyCode === 'SP' ? RATINGS_SP : RATINGS_MP;
+  var matchedRating = null;
+  var intKA = interrupt ? interrupt.kA : 0;
+  for (var i = 0; i < ratingsTable.length; i++) {
+    var r = ratingsTable[i];
+    if (r[0] === ampsVal && r[3] >= intKA && r[2].toLowerCase().indexOf(frameType ? frameType.name.toLowerCase() : '???') >= 0) {
+      matchedRating = r;
+      break;
+    }
+  }
+  // Fallback: match just amps + interrupt
+  if (!matchedRating) {
+    for (var i = 0; i < ratingsTable.length; i++) {
+      var r = ratingsTable[i];
+      if (r[0] === ampsVal) {
+        // Find closest interrupt match
+        var fKey = (familyCode === 'SP' ? 'SP' : 'MP') + frameTypeCode;
+        if (r[3] >= intKA || r[4] >= intKA) { matchedRating = r; break; }
+      }
+    }
+  }
+
+  // Build protection string
+  var protectionStr = tripUnit ? tripUnit.protection : 'N/A';
+
+  return {
+    type: 'breaker',
+    catalog: cat,
+    entered: entered,
+    enteredLen: build.enteredLen,
+    defaulted: defaulted,
+    errors: errors,
+    errorPositions: errorPositions,
+    familyCode: familyCode, family: family,
+    frameTypeCode: frameTypeCode, frameType: frameType,
+    frameSize: frameSize,
+    intCode: intCode, interrupt: interrupt,
+    ampCode: ampCode, ampFrame: ampFrame, ampsVal: ampsVal,
+    polesCode: polesCode, poles: poles || 'Unknown',
+    mountCode: mountCode, mounting: mounting,
+    langCode: langCode, language: language,
+    limiterCode: limiterCode, limiter: limiter,
+    inCode: inCode, inRating: inRating,
+    tripCode: tripCode, tripUnit: tripUnit,
+    protectionStr: protectionStr,
+    motorCode: motorCode, motorOp: motorOp,
+    srCode: srCode, springRelease: springRelease,
+    uvrCode: uvrCode, uvr: uvr,
+    stCode: stCode, shuntTrip: shuntTrip,
+    auxCode: auxCode, auxSwitch: auxSwitch,
+    bellCode: bellCode, bellAlarm: bellAlarm,
+    pbCode: pbCode, pbCover: pbCover,
+    counterCode: counterCode, counterKl: counterKl,
+    lcsCode: lcsCode, lcs: lcs,
+    shipCode: shipCode, ship: ship,
+    futureCode: futureCode,
+    matchedRating: matchedRating
+  };
+}
+
+/* ============================================================
+   DECODE — CASSETTE
+   ============================================================ */
+function decodeCassette(input) {
+  var entered = normalize(input);
+  var build = buildFullCassette(entered);
+  var cat = build.full;
+  var defaulted = build.defaulted;
+  var errors = [];
+  var errorPositions = new Set();
+
+  function check(code, table, pos, label) {
+    if (!table[code]) {
+      if (!defaulted.has(pos)) {
+        errors.push({ pos: pos, label: label, code: code });
+        errorPositions.add(pos);
+      }
+      return null;
+    }
+    return table[code];
+  }
+
+  var familyCode = cat[0];
+  var intCode = cat[1];
+  var ampCode = cat.substring(2, 4);
+  var polesCode = cat[4];
+  var termCode = cat[5];
+  var arcCode = cat[6];
+  var doorCode = cat.substring(7, 9);
+  var shutterCode = cat[9];
+  var future1 = cat.substring(10, 12); // NN
+  var mr2Code = cat[12];
+  var wiringCode = cat[13];
+  var shipCode = cat[14];
+
+  var family = check(familyCode, CASS.family, 0, 'Cassette Family');
+  var interrupt = check(intCode, CASS.interrupt, 1, 'Interrupt Type');
+  var amps = check(ampCode, CASS.amps, 2, 'Continuous Amps');
+  var poles = CASS.poles[polesCode] || null;
+  if (!poles && !defaulted.has(4)) { errors.push({ pos: 4, label: 'Poles', code: polesCode }); errorPositions.add(4); }
+  var terminals = check(termCode, CASS.frameTerminals, 5, 'Frame / Terminals');
+  var arcHood = check(arcCode, CASS.arcHood, 6, 'Arc Hood');
+  var doorKit = check(doorCode, CASS.doorKit, 7, 'Door Kit');
+  var shutters = check(shutterCode, CASS.shutters, 9, 'Shutters');
+  var mr2 = check(mr2Code, CASS.mr2, 12, 'MR2');
+  var wiring = check(wiringCode, CASS.wiring, 13, 'Wiring');
+  var shipping = check(shipCode, CASS.cassShipping, 14, 'Shipping');
+
+  return {
+    type: 'cassette',
+    catalog: cat,
+    entered: entered,
+    enteredLen: build.enteredLen,
+    defaulted: defaulted,
+    errors: errors,
+    errorPositions: errorPositions,
+    familyCode: familyCode, family: family,
+    intCode: intCode, interrupt: interrupt,
+    ampCode: ampCode, amps: amps,
+    polesCode: polesCode, poles: poles || 'Unknown',
+    termCode: termCode, terminals: terminals,
+    arcCode: arcCode, arcHood: arcHood,
+    doorCode: doorCode, doorKit: doorKit,
+    shutterCode: shutterCode, shutters: shutters,
+    mr2Code: mr2Code, mr2: mr2,
+    wiringCode: wiringCode, wiring: wiring,
+    shipCode: shipCode, shipping: shipping
+  };
+}
+
+/* ============================================================
+   RENDER — CHARACTER MAP
+   ============================================================ */
+function renderCharMap(catalog, groups, totalPos, defaulted, errorPositions) {
+  var boxesEl = document.getElementById('charBoxes');
+  var labelsEl = document.getElementById('groupLabels');
+  var posEl = document.getElementById('posLabels');
+  var legendEl = document.getElementById('charLegend');
+  boxesEl.innerHTML = '';
+  labelsEl.innerHTML = '';
+  posEl.innerHTML = '';
+
+  if (!catalog || !groups.length) { legendEl.style.display = 'none'; return; }
+  legendEl.style.display = 'block';
+
+  var posIdx = 0;
+  for (var g = 0; g < groups.length; g++) {
+    var grp = groups[g];
+    // Group label
+    var gl = document.createElement('div');
+    gl.className = 'group-label';
+    gl.style.width = (grp.size * 34 - 2) + 'px';
+    gl.textContent = grp.label;
+    labelsEl.appendChild(gl);
+
+    // Char boxes
+    for (var i = 0; i < grp.size; i++) {
+      var ch = catalog[posIdx] || '';
+      var box = document.createElement('div');
+      box.className = 'char-box';
+      if (errorPositions && errorPositions.has(posIdx)) {
+        box.classList.add('error');
+      } else if (defaulted && defaulted.has(posIdx)) {
+        box.classList.add('assumed');
+      } else if (ch) {
+        box.classList.add('entered');
+      }
+      box.textContent = ch;
+      boxesEl.appendChild(box);
+
+      var pl = document.createElement('div');
+      pl.className = 'pos-label';
+      pl.textContent = posIdx + 1;
+      posEl.appendChild(pl);
+
+      posIdx++;
+    }
+
+    // Separator between groups (except last)
+    if (g < groups.length - 1) {
+      var sep = document.createElement('div');
+      sep.className = 'char-box separator';
+      boxesEl.appendChild(sep);
+      var sepL = document.createElement('div');
+      sepL.className = 'pos-label sep';
+      posEl.appendChild(sepL);
+      // label spacer
+      var gs = document.createElement('div');
+      gs.className = 'group-label';
+      gs.style.width = '8px';
+      gs.style.borderBottom = 'none';
+      labelsEl.appendChild(gs);
+    }
+  }
+}
+
+/* ============================================================
+   RENDER — RESULTS
+   ============================================================ */
+function renderBreakerResults(d) {
+  var html = '';
+  var familyName = d.family ? d.family.name : 'Unknown';
+  var intDesc = d.interrupt ? d.interrupt.desc : '??';
+  var ampsStr = d.ampsVal ? d.ampsVal.toLocaleString() + 'A' : '??';
+  var tripName = d.tripUnit ? d.tripUnit.pxr : 'N/A';
+  var mountShort = d.mounting ? (d.mounting.indexOf('Drawout') >= 0 ? 'Drawout' : 'Fixed') : '??';
+
+  // Summary banner
+  html += '<div class="summary-banner">';
+  html += '<div class="headline">' + familyName + ' &mdash; ' + d.frameSize + ' &mdash; ' + ampsStr + ' &mdash; ' + intDesc + ' &mdash; ' + (d.poles || '??') + ' &mdash; ' + mountShort + '</div>';
+  html += '<div class="catalog-fmt">' + d.catalog.substring(0,2) + ' ' + d.catalog[2] + ' ' + d.catalog[3] + ' ' + d.catalog.substring(4,6) + ' ' + d.catalog[6] + ' ' + d.catalog[7] + ' ' + d.catalog[8] + d.catalog[9] + ' ' + d.catalog.substring(10,12) + ' ' + d.catalog.substring(12,14) + ' ' + d.catalog.substring(14,20) + ' ' + d.catalog.substring(20,25) + '</div>';
+  if (d.enteredLen < 25) {
+    html += '<div class="partial-tag">Partial &mdash; ' + d.enteredLen + ' of 25 chars entered</div>';
+  }
+  html += '<button class="btn-copy" onclick="copyCatalog(\'' + d.catalog + '\', this)">Copy Full Catalog Number</button>';
+  html += '</div>';
+
+  // Warnings
+  if (d.errors.length > 0) {
+    html += '<div class="result-card warn wide">';
+    html += '<div class="card-title">Warnings</div>';
+    for (var i = 0; i < d.errors.length; i++) {
+      var e = d.errors[i];
+      html += '<div class="card-row"><span class="card-label">Position ' + (e.pos + 1) + ' (' + e.label + ')</span><span class="card-value" style="color:#dc2626">Code "' + e.code + '" not recognized</span></div>';
+    }
+    html += '</div>';
+  }
+
+  html += '<div class="result-grid">';
+
+  // Breaker Configuration
+  html += '<div class="result-card config">';
+  html += '<div class="card-title">Breaker Configuration</div>';
+  html += row('Product Family', d.family ? d.family.name + ' (' + d.familyCode + ')' : d.familyCode);
+  html += row('Application', d.family ? d.family.application : 'N/A');
+  html += row('UL Standard', d.family ? d.family.standard : 'N/A');
+  html += row('Frame Type', d.frameType ? d.frameType.name + ' (' + d.frameTypeCode + ')' : d.frameTypeCode);
+  html += row('Frame Size', d.frameSize);
+  html += row('Continuous Amps', ampsStr);
+  if (d.ampFrame) { html += row('Phasing', d.ampFrame.phasing); }
+  html += row('Poles', d.poles);
+  html += row('Interrupt Rating', intDesc);
+  html += row('Mounting', d.mounting || d.mountCode);
+  html += row('Nameplate Language', d.language || d.langCode);
+  html += row('Current Limiters', d.limiter || d.limiterCode);
+  html += '</div>';
+
+  // Sensor & Trip Unit
+  html += '<div class="result-card trip">';
+  html += '<div class="card-title">Sensor &amp; Trip Unit</div>';
+  html += row('In Rating (Sensor)', d.inRating ? d.inRating.desc : d.inCode);
+  html += row('Trip Unit', d.tripUnit ? d.tripUnit.name : d.tripCode);
+  html += row('PXR Model', d.tripUnit ? d.tripUnit.pxr : 'N/A');
+  html += row('Protection', d.protectionStr);
+  html += row('ARMS Capable', d.tripUnit ? (d.tripUnit.arms ? 'Yes' : 'No') : 'N/A');
+  html += row('Communications', d.tripUnit ? d.tripUnit.comms : 'N/A');
+  html += '</div>';
+
+  // Accessories (order matches positions 15-20)
+  html += '<div class="result-card access">';
+  html += '<div class="card-title">Accessories</div>';
+  html += row('1st Shunt Trip (Pos 15)', d.shuntTrip || d.stCode);
+  html += row('Motor Operator (Pos 16)', d.motorOp || d.motorCode);
+  html += row('Spring Release (Pos 17)', d.springRelease || d.srCode);
+  html += row('UVR / 2nd Shunt Trip (Pos 18)', d.uvr || d.uvrCode);
+  html += row('Auxiliary Switch (Pos 19)', d.auxSwitch || d.auxCode);
+  html += row('Bell Alarm / OTS (Pos 20)', d.bellAlarm || d.bellCode);
+  html += '</div>';
+
+  // Options
+  html += '<div class="result-card options">';
+  html += '<div class="card-title">Options</div>';
+  html += row('Pushbutton Cover', d.pbCover || d.pbCode);
+  html += row('Counter / Keylock', d.counterKl || d.counterCode);
+  html += row('Latch Check / PXR Voltage', d.lcs || d.lcsCode);
+  html += row('Shipping Config', d.ship || d.shipCode);
+  html += '</div>';
+
+  html += '</div>'; // end result-grid
+
+  // General Specifications card
+  html += '<div class="result-card wide info" style="margin-top:12px;">';
+  html += '<div class="card-title">General Specifications</div>';
+  html += '<div class="result-grid" style="margin:0;">';
+  html += '<div style="font-size:0.85rem;">';
+  html += row('Manufacturer', 'Eaton Corporation');
+  html += row('Product Line', d.family ? d.family.name : 'Unknown');
+  html += row('Description', d.family ? d.family.desc : 'N/A');
+  html += row('UL Standard', d.family ? d.family.standard : 'N/A');
+  html += row('Application', d.family ? d.family.application : 'N/A');
+  html += row('Frequency', '50/60 Hz');
+  html += row('Max Operating Voltage', '635 Vac');
+  html += row('100% Rated', 'Yes');
+  if (d.familyCode === 'SP') {
+    html += row('Fixed Internal Inst. Trip', 'Yes (3-cycle bus bracing)');
+  }
+  html += '</div>';
+  html += '<div style="font-size:0.85rem;">';
+  html += row('ANSI Standards', 'C37.13, C37.16, C37.17, C37.50');
+  html += row('Reverse Feed Capable', 'Yes');
+  var isDrawout = d.mounting && d.mounting.indexOf('Drawout') >= 0;
+  html += row('Configuration', isDrawout ? 'Drawout' : 'Fixed');
+  var hasMR2 = d.mounting && d.mounting.indexOf('MR2') >= 0;
+  if (hasMR2) { html += row('Remote Racking', 'MR2 Integral'); }
+  if (d.tripUnit && d.tripUnit.pxr !== 'N/A') {
+    html += row('USB / PXPM', 'Yes (Micro-B)');
+  }
+  html += '</div></div>';
+  html += '</div>';
+
+  // Ratings table if matched
+  if (d.matchedRating) {
+    var r = d.matchedRating;
+    html += '<div class="result-card wide info" style="margin-top:12px;">';
+    html += '<div class="card-title">Interrupting &amp; Withstand Ratings (kA rms sym.)</div>';
+    html += '<table class="ref-table"><thead><tr>';
+    if (d.familyCode === 'SP') {
+      html += '<th>@ 254V</th><th>@ 508V</th><th>@ 635V</th><th>Short-Time Withstand (kA)</th><th>Fixed Inst Trip (kA peak)</th>';
+      html += '</tr></thead><tbody><tr>';
+      html += '<td><strong>' + r[3] + ' kA</strong></td><td><strong>' + r[4] + ' kA</strong></td><td><strong>' + r[5] + ' kA</strong></td><td>' + r[6] + ' kA</td><td>' + r[7] + ' kA</td>';
+    } else {
+      html += '<th>@ 254V</th><th>@ 508V</th><th>@ 635V</th><th>STW @ 254/508V</th><th>STW @ 635V</th>';
+      html += '</tr></thead><tbody><tr>';
+      html += '<td><strong>' + r[3] + ' kA</strong></td><td><strong>' + r[4] + ' kA</strong></td><td><strong>' + r[5] + ' kA</strong></td><td>' + r[6] + ' kA</td><td>' + r[7] + ' kA</td>';
+    }
+    html += '</tr></tbody></table>';
+    // Show available In ratings for this frame
+    var availableIn = findAvailableInRatings(d.familyCode, d.ampsVal);
+    if (availableIn) {
+      html += '<div style="margin-top:8px;font-size:0.8rem;color:var(--gray-600);"><strong>Available In Ratings:</strong> ' + availableIn + '</div>';
+    }
+    html += '</div>';
+  }
+
+  // Renewal parts — only show relevant kits based on configured accessories
+  var relevantParts = getRelevantParts(d);
+  if (relevantParts.length > 0) {
+    html += '<div class="result-card wide access" style="margin-top:12px;">';
+    html += '<div class="card-title">Matching Renewal Part Kits</div>';
+    html += '<table class="ref-table"><thead><tr><th>Kit Number</th><th>Type</th><th>Voltage</th></tr></thead><tbody>';
+    for (var i = 0; i < relevantParts.length; i++) {
+      var p = relevantParts[i];
+      html += '<tr><td><strong>' + p.kit + '</strong></td><td>' + p.type + '</td><td>' + p.voltage + '</td></tr>';
+    }
+    html += '</tbody></table>';
+    html += '</div>';
+  }
+
+  // Full renewal parts reference (collapsed)
+  html += '<div class="result-card wide" style="margin-top:12px;">';
+  html += '<div class="card-title" style="cursor:pointer;" onclick="var t=this.nextElementSibling;t.style.display=t.style.display===\'none\'?\'block\':\'none\';">All Renewal Part Kits (click to expand)</div>';
+  html += '<div style="display:none;">';
+  html += '<table class="ref-table"><thead><tr><th>Kit Number</th><th>Type</th><th>Voltage</th></tr></thead><tbody>';
+  var allParts = RENEWAL_PARTS.shuntTrip.concat(RENEWAL_PARTS.shuntTrip100, RENEWAL_PARTS.springRelease, RENEWAL_PARTS.uvr);
+  for (var i = 0; i < allParts.length; i++) {
+    var p = allParts[i];
+    html += '<tr><td><strong>' + p.kit + '</strong></td><td>' + p.type + '</td><td>' + p.voltage + '</td></tr>';
+  }
+  html += '</tbody></table></div>';
+  html += '</div>';
+
+  // Protection legend
+  if (d.protectionStr && d.protectionStr !== 'N/A' && d.protectionStr !== 'None') {
+    html += '<div class="result-card wide" style="margin-top:12px;">';
+    html += '<div class="card-title">Protection Function Legend</div>';
+    var letters = d.protectionStr.split('');
+    for (var i = 0; i < letters.length; i++) {
+      var l = PROTECTION_LEGEND[letters[i]];
+      if (l) {
+        html += '<div class="card-row"><span class="card-label"><strong>' + letters[i] + '</strong> &mdash; ' + l.name + '</span><span class="card-value" style="font-weight:400;color:var(--gray-600)">' + l.desc + '</span></div>';
+      }
+    }
+    html += '</div>';
+  }
+
+  return html;
+}
+
+function renderCassetteResults(d) {
+  var html = '';
+  var ampsDesc = d.amps ? d.amps.desc : '??';
+  var ampsVal = d.amps ? d.amps.amps : 0;
+
+  html += '<div class="summary-banner">';
+  html += '<div class="headline">Cassette &mdash; ' + (d.family || d.familyCode) + ' &mdash; ' + ampsDesc + ' &mdash; ' + (d.poles || '??') + '</div>';
+  html += '<div class="catalog-fmt">' + d.catalog.substring(0,1) + ' ' + d.catalog[1] + ' ' + d.catalog.substring(2,4) + ' ' + d.catalog[4] + ' ' + d.catalog[5] + ' ' + d.catalog[6] + ' ' + d.catalog.substring(7,9) + ' ' + d.catalog[9] + ' ' + d.catalog.substring(10,12) + ' ' + d.catalog[12] + ' ' + d.catalog[13] + ' ' + d.catalog[14] + '</div>';
+  if (d.enteredLen < 15) {
+    html += '<div class="partial-tag">Partial &mdash; ' + d.enteredLen + ' of 15 chars entered</div>';
+  }
+  html += '<button class="btn-copy" onclick="copyCatalog(\'' + d.catalog + '\', this)">Copy Full Catalog Number</button>';
+  html += '</div>';
+
+  if (d.errors.length > 0) {
+    html += '<div class="result-card warn wide">';
+    html += '<div class="card-title">Warnings</div>';
+    for (var i = 0; i < d.errors.length; i++) {
+      var e = d.errors[i];
+      html += '<div class="card-row"><span class="card-label">Position ' + (e.pos + 1) + ' (' + e.label + ')</span><span class="card-value" style="color:#dc2626">Code "' + e.code + '" not recognized</span></div>';
+    }
+    html += '</div>';
+  }
+
+  html += '<div class="result-grid">';
+
+  html += '<div class="result-card config">';
+  html += '<div class="card-title">Cassette Configuration</div>';
+  html += row('Cassette Family', d.family || d.familyCode);
+  html += row('Interrupt Type', d.interrupt || d.intCode);
+  html += row('Continuous Amps', ampsDesc);
+  html += row('Poles', d.poles);
+  html += row('Frame / Rear Terminals', d.terminals || d.termCode);
+  html += row('Arc Hood', d.arcHood || d.arcCode);
+  html += '</div>';
+
+  html += '<div class="result-card options">';
+  html += '<div class="card-title">Cassette Options</div>';
+  html += row('Door Frame &amp; Gasket Kit', d.doorKit || d.doorCode);
+  html += row('Shutters', d.shutters || d.shutterCode);
+  html += row('MR2 Remote Racking', d.mr2 || d.mr2Code);
+  html += row('Secondary Wiring', d.wiring || d.wiringCode);
+  html += row('Shipping', d.shipping || d.shipCode);
+  html += '</div>';
+
+  html += '</div>';
+  return html;
+}
+
+function row(label, value) {
+  return '<div class="card-row"><span class="card-label">' + label + '</span><span class="card-value">' + (value || 'N/A') + '</span></div>';
+}
+
+/* ============================================================
+   MAIN DECODE FUNCTION
+   ============================================================ */
+function decode() {
+  var raw = document.getElementById('catInput').value;
+  if (!raw.trim()) return;
+
+  var inputType = detectInputType(raw);
+  var resultsEl = document.getElementById('results');
+
+  if (inputType === 'breaker') {
+    var d = decodeBreaker(raw);
+    renderCharMap(d.catalog,
+      [
+        { label: 'Family', size: 2 },
+        { label: 'Frame', size: 1 },
+        { label: 'Int', size: 1 },
+        { label: 'Amps', size: 2 },
+        { label: 'Poles', size: 1 },
+        { label: 'Mount', size: 1 },
+        { label: 'Lang/Lim', size: 2 },
+        { label: 'In Rating', size: 2 },
+        { label: 'Trip', size: 2 },
+        { label: 'ST/Mot/SR/UVR/Aux/Bell', size: 6 },
+        { label: 'PB/Cnt/LCS/Ship/Fut', size: 5 }
+      ], 25, d.defaulted, d.errorPositions);
+    resultsEl.innerHTML = renderBreakerResults(d);
+    resultsEl.style.display = 'block';
+
+  } else if (inputType === 'cassette') {
+    var d = decodeCassette(raw);
+    renderCharMap(d.catalog,
+      [
+        { label: 'Fam', size: 1 },
+        { label: 'Int', size: 1 },
+        { label: 'Amps', size: 2 },
+        { label: 'Poles', size: 1 },
+        { label: 'Term', size: 1 },
+        { label: 'Arc', size: 1 },
+        { label: 'Door', size: 2 },
+        { label: 'Shut', size: 1 },
+        { label: 'Future', size: 2 },
+        { label: 'MR2', size: 1 },
+        { label: 'Wire', size: 1 },
+        { label: 'Ship', size: 1 }
+      ], 15, d.defaulted, d.errorPositions);
+    resultsEl.innerHTML = renderCassetteResults(d);
+    resultsEl.style.display = 'block';
+
+  } else {
+    // Try breaker decode anyway with warning
+    var d = decodeBreaker(raw);
+    renderCharMap(d.catalog,
+      [
+        { label: 'Family', size: 2 },
+        { label: 'Frame', size: 1 },
+        { label: 'Int', size: 1 },
+        { label: 'Amps', size: 2 },
+        { label: 'Poles', size: 1 },
+        { label: 'Mount', size: 1 },
+        { label: 'Lang/Lim', size: 2 },
+        { label: 'In Rating', size: 2 },
+        { label: 'Trip', size: 2 },
+        { label: 'ST/Mot/SR/UVR/Aux/Bell', size: 6 },
+        { label: 'PB/Cnt/LCS/Ship/Fut', size: 5 }
+      ], 25, d.defaulted, d.errorPositions);
+    var warn = '<div class="result-card warn wide" style="margin-bottom:12px;"><div class="card-title">Input Not Recognized</div><div class="card-row"><span class="card-label">Tip</span><span class="card-value">Breaker numbers start with MP or SP. Cassettes start with AN or BN. Contact Voyten at 1-800-458-4001 for assistance.</span></div></div>';
+    resultsEl.innerHTML = warn + renderBreakerResults(d);
+    resultsEl.style.display = 'block';
+  }
+
+  updateDetectBadge(raw);
+}
+
+function updateDetectBadge(raw) {
+  var badge = document.getElementById('detectBadge');
+  if (!raw || !raw.trim()) { badge.innerHTML = ''; return; }
+  var t = detectInputType(raw);
+  if (t === 'breaker') {
+    var prefix = normalize(raw).substring(0, 2);
+    var label = prefix === 'SP' ? 'PD-SB Breaker' : 'Magnum PXR Breaker';
+    badge.innerHTML = '<span class="detect-badge detect-breaker">' + label + '</span>';
+  } else if (t === 'cassette') {
+    badge.innerHTML = '<span class="detect-badge detect-cassette">Cassette</span>';
+  } else {
+    badge.innerHTML = '<span class="detect-badge detect-unknown">Unknown Format</span>';
+  }
+}
+
+function copyCatalog(cat, btn) {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(cat).then(function() {
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(function() { btn.textContent = 'Copy Full Catalog Number'; btn.classList.remove('copied'); }, 2000);
+    });
+  } else {
+    // Fallback for older browsers / iOS Files app
+    var ta = document.createElement('textarea');
+    ta.value = cat; ta.style.position = 'fixed'; ta.style.left = '-9999px';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+    document.body.removeChild(ta);
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(function() { btn.textContent = 'Copy Full Catalog Number'; btn.classList.remove('copied'); }, 2000);
+  }
+}
+
+function clearAll() {
+  document.getElementById('catInput').value = '';
+  document.getElementById('results').innerHTML = '';
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('charBoxes').innerHTML = '';
+  document.getElementById('groupLabels').innerHTML = '';
+  document.getElementById('posLabels').innerHTML = '';
+  document.getElementById('charLegend').style.display = 'none';
+  document.getElementById('detectBadge').innerHTML = '';
+}
+
+function loadExample(btn) {
+  document.getElementById('catInput').value = btn.textContent;
+  decode();
+}
+
+// Live detection badge on input
+document.getElementById('catInput').addEventListener('input', function() {
+  updateDetectBadge(this.value);
+});
+
+// Enter to decode
+document.getElementById('catInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') decode();
+});
+
+// Init
+renderCharMap('', [], 0, new Set(), new Set());
+</script>
+
+</body>
+</html>
