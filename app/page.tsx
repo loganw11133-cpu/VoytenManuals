@@ -41,10 +41,10 @@ export default async function Home() {
           fill
           sizes="100vw"
           priority
-          className="object-cover opacity-20"
+          className="object-cover opacity-35"
         />
         {/* Dark gradient overlay for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#111111]/80 via-[#1a1a1a]/70 to-[#1a1a1a]/90"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-[#111111]/70 via-[#1a1a1a]/55 to-[#1a1a1a]/80"></div>
         <div className="relative max-w-7xl mx-auto px-4 py-16 lg:py-24">
           <div className="max-w-3xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 bg-white/10 px-4 py-1.5 rounded-full text-sm text-white/80 mb-6">
