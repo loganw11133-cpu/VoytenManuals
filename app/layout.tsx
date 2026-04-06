@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     default: "Free Electrical Equipment Manual Library — PDF Downloads | Voyten Manuals",
     template: "%s | Voyten Manuals"
   },
-  description: "Free searchable library of 5,800+ electrical equipment manuals including EOL and legacy equipment documentation. Download PDF instruction guides, renewal parts catalogs, wiring diagrams, and technical documentation for circuit breakers, relays, motor controls, switches, transformers, and more. Westinghouse, GE, Siemens, Square D, Cutler-Hammer, ITE, ABB — including discontinued and end-of-life models. Powered by Voyten Electric — serving the industry since 1953.",
+  description: "Free library of 5,800+ electrical equipment manuals. Download PDFs for circuit breakers, relays, motor controls, switches, and transformers. Westinghouse, GE, Siemens, Square D, and more.",
   keywords: [
     "electrical manuals",
     "circuit breaker manuals",
@@ -95,7 +95,7 @@ export const metadata: Metadata = {
     url: "https://voytenmanuals.com",
     siteName: "Voyten Manuals",
     title: "Voyten Manuals | Free Electrical Equipment Manual Library — 5,800+ PDFs",
-    description: "Free searchable library of electrical equipment manuals — instruction guides, renewal parts catalogs, characteristic curves, and technical documentation for current, EOL, and legacy equipment. Download PDFs for circuit breakers, relays, motor controls, switches, transformers from Westinghouse, GE, Siemens, Square D, and more.",
+    description: "Free library of 5,800+ electrical equipment manuals. Download PDFs for circuit breakers, relays, motor controls, and more from Westinghouse, GE, Siemens, Square D. Powered by Voyten Electric.",
   },
   twitter: {
     card: "summary_large_image",

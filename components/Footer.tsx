@@ -74,6 +74,7 @@ export default function Footer() {
             <h4 className="font-semibold mb-4 text-white">Quick Links</h4>
             <ul className="space-y-2 text-sm">
               <li><Link href="/search" className="text-slate-400 hover:text-white">Search Manuals</Link></li>
+              <li><Link href="/categories" className="text-slate-400 hover:text-white">Browse Categories</Link></li>
               <li><Link href="/manufacturers" className="text-slate-400 hover:text-white">By Manufacturer</Link></li>
               <li><Link href="/about" className="text-slate-400 hover:text-white">About Voyten Manuals</Link></li>
               <li><Link href="/faq" className="text-slate-400 hover:text-white">FAQ</Link></li>

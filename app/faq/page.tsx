@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'FAQ — Electrical Equipment Manuals & Parts',
-  description: 'Find answers about downloading free electrical equipment manuals, ordering discontinued and obsolete parts, legacy circuit breaker support, EOL switchgear documentation, and how Voyten Electric can help with remanufactured electrical equipment.',
+  description: 'Answers about downloading free electrical manuals, ordering discontinued parts, legacy breaker support, and EOL equipment documentation from Voyten Electric.',
   openGraph: {
     title: 'FAQ — Electrical Equipment Manuals & Parts',
     description: 'Answers about free manual downloads, discontinued parts, legacy breaker support, and EOL equipment documentation.',

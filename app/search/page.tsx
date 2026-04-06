@@ -33,7 +33,7 @@ export async function generateMetadata({ searchParams }: SearchPageProps): Promi
     ? `https://voytenmanuals.com/search?${canonicalParams.toString()}`
     : 'https://voytenmanuals.com/search';
 
-  const desc = `${descParts} library of 5,800+ free electrical equipment manuals. Download PDF instruction guides, renewal parts catalogs, and technical documentation. Powered by Voyten Electric.`;
+  const desc = `${descParts} library of 5,800+ free electrical equipment manuals. Download PDF guides, parts catalogs, and technical docs.`;
 
   return {
     title: titleSuffix,

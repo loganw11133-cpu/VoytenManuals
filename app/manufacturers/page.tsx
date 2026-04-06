@@ -5,7 +5,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Browse by Manufacturer — Westinghouse, GE & More',
-  description: 'Browse free electrical equipment manuals by manufacturer. Find PDF documentation from Westinghouse, General Electric, Siemens, Square D, Cutler-Hammer, ITE, ABB, Allis-Chalmers, and dozens more. Powered by Voyten Electric.',
+  description: 'Browse free electrical manuals from 130+ manufacturers — Westinghouse, GE, Siemens, Square D, Cutler-Hammer, ABB, ITE, and more. Download PDFs instantly.',
   openGraph: {
     title: 'Browse by Manufacturer — Westinghouse, GE & More',
     description: 'Browse free electrical equipment manuals by manufacturer. Westinghouse, GE, Siemens, Square D, Cutler-Hammer, ABB, and 120+ more.',

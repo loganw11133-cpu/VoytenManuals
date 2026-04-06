@@ -18,8 +18,10 @@ export async function generateMetadata({ params }: ManualPageProps): Promise<Met
 
   const partNum = manual.manual_number ? ` (${manual.manual_number})` : '';
   const subcatStr = manual.subcategory ? ` — ${manual.subcategory}` : '';
-  const title = `${manual.title}${partNum} — ${manual.manufacturer} ${manual.category}`;
-  const description = `Download free PDF: ${manual.title}${partNum} by ${manual.manufacturer}. ${manual.category}${subcatStr} documentation including instruction guides, renewal parts lists, wiring diagrams, and technical data. EOL and legacy equipment support available. Replacement parts from Voyten Electric — call 1-800-458-4001.`;
+  // Keep title under ~60 chars (template adds " | Voyten Manuals" = 17 chars)
+  const titleBase = `${manual.title}${partNum}`;
+  const title = titleBase.length > 42 ? titleBase : `${titleBase} — ${manual.manufacturer}`;
+  const description = `Free PDF: ${manual.title}${partNum} by ${manual.manufacturer}. ${manual.category}${subcatStr} — instruction guides, parts lists, and wiring diagrams.`;
 
   const keywords = [
     manual.title,
@@ -46,7 +48,7 @@ export async function generateMetadata({ params }: ManualPageProps): Promise<Met
     keywords,
     openGraph: {
       title: `${manual.title}${partNum} — Free PDF Download`,
-      description: `Free ${manual.manufacturer} ${manual.category} manual: ${manual.title}. Download PDF with instruction guides, renewal parts, and technical data. EOL and legacy equipment replacement parts available.`,
+      description: `Free ${manual.manufacturer} ${manual.category} manual: ${manual.title}. Download PDF with instruction guides, parts lists, and technical data.`,
       type: 'article',
       url: `https://voytenmanuals.com/manual/${manual.slug}`,
     },

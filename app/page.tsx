@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import { Phone, ChevronRight, BookOpen, Search, Download, Users, Shield, Zap, FileText, Building2, ArrowRight, Clock, Truck } from 'lucide-react';
 import ManualSearchBar from '@/components/ManualSearchBar';
-import { getTotalManualCount, getCategories, getManufacturers } from '@/lib/manuals-db';
+import { getTotalManualCount, getCategories, getManufacturers, getRecentManuals } from '@/lib/manuals-db';
+import ManualCard from '@/components/ManualCard';
 
 const CATEGORIES = [
   { name: 'Circuit Breakers', icon: Zap, description: 'Air breakers, insulated case, molded case, trip units, retrofit kits' },
@@ -17,10 +18,11 @@ const CATEGORIES = [
 export const revalidate = 3600;
 
 export default async function Home() {
-  const [totalCount, categories, manufacturers] = await Promise.all([
+  const [totalCount, categories, manufacturers, recentManuals] = await Promise.all([
     getTotalManualCount(),
     getCategories(),
     getManufacturers(),
+    getRecentManuals(8),
   ]);
 
   // Top manufacturers by manual count
@@ -143,6 +145,32 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
+      {/* Recently Added Manuals */}
+      {recentManuals.length > 0 && (
+        <section className="py-14 lg:py-18 bg-white">
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="flex items-center justify-between mb-8">
+              <div>
+                <h2 className="text-2xl font-bold text-slate-900 mb-1">Recently Added</h2>
+                <p className="text-slate-500 text-sm">Latest manuals added to our library</p>
+              </div>
+              <Link
+                href="/search"
+                className="text-sm font-medium text-[#dc2626] hover:text-[#b91c1c] flex items-center gap-1"
+              >
+                View all
+                <ArrowRight size={14} />
+              </Link>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {recentManuals.map((manual) => (
+                <ManualCard key={manual.id} manual={manual} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Value Props */}
       <section className="py-14 lg:py-18 bg-white">

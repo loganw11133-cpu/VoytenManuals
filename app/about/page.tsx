@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'About Voyten Electric — Family Owned Since 1953',
-  description: 'Voyten Manuals is a free library of 5,800+ electrical equipment manuals powered by Voyten Electric & Electronics, Inc. — a third-generation family business with 200,000 sq. ft. of facilities and 45+ employees. Remanufactured circuit breakers, switchgear, motor controls, and more. Founded 1953 in Pennsylvania.',
+  description: 'Voyten Manuals is powered by Voyten Electric — a third-generation family business since 1953. 200,000 sq ft, 45+ employees, specializing in remanufactured breakers and switchgear.',
   openGraph: {
     title: 'About Voyten Electric — Family Owned Since 1953',
     description: 'Third-generation family business powering 5,800+ free electrical equipment manuals. 200,000 sq ft facilities, 45+ employees, serving the industry since 1953.',

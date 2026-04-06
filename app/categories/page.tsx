@@ -5,7 +5,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Browse Manual Categories — Breakers, Relays & More',
-  description: 'Browse 5,800+ free electrical equipment manuals by category. Find PDF documentation for circuit breakers, relays, motor controls, switches, fuses, transformers, and bus products from Westinghouse, GE, Siemens, Square D, and more.',
+  description: 'Browse 5,800+ free electrical manuals by category — circuit breakers, relays, motor controls, switches, fuses, transformers, and bus products. Download PDFs instantly.',
   openGraph: {
     title: 'Browse Manual Categories — Breakers, Relays & More',
     description: 'Browse 5,800+ free electrical equipment manuals by category. Circuit breakers, relays, motor controls, switches, fuses, transformers, and bus products.',
