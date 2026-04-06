@@ -3,6 +3,7 @@ import { Phone, ChevronRight, BookOpen, Search, Download, Users, Shield, Zap, Fi
 import ManualSearchBar from '@/components/ManualSearchBar';
 import { getTotalManualCount, getCategories, getManufacturers, getRecentManuals } from '@/lib/manuals-db';
 import ManualCard from '@/components/ManualCard';
+import YouTubeEmbed from '@/components/YouTubeEmbed';
 
 const CATEGORIES = [
   { name: 'Circuit Breakers', icon: Zap, description: 'Air breakers, insulated case, molded case, trip units, retrofit kits' },
@@ -219,35 +220,51 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Lead Gen CTA - Parts */}
-      <section className="py-14 lg:py-18 bg-[#1a1a1a]">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
-            Found the Manual? Need the Part?
-          </h2>
-          <p className="text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
-            Voyten Electric stocks thousands of electrical parts across 200,000 sq. ft. of warehouse space —
-            circuit breakers, trip units, motor controls, and more. Specializing in EOL, legacy, and discontinued equipment replacement. We ship nationwide with same-day options.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="tel:1-800-458-4001"
-              className="flex items-center justify-center gap-3 bg-[#dc2626] hover:bg-[#b91c1c] text-white px-8 py-4 rounded-xl font-bold text-lg transition-colors"
-            >
-              <Phone size={22} />
-              Call: 1-800-458-4001
-            </a>
-            <Link
-              href="/contact"
-              className="flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white px-8 py-4 rounded-xl font-medium border border-white/20 transition-colors"
-            >
-              Request a Quote
-              <ArrowRight size={18} />
-            </Link>
+      {/* Facility Video + CTA */}
+      <section className="py-14 lg:py-20 bg-[#1a1a1a]">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+            {/* Video */}
+            <div>
+              <YouTubeEmbed
+                videoId="pf5XGcExiM0"
+                title="Voyten Electric & Electronics Facility Tour — Polk, PA"
+              />
+            </div>
+
+            {/* CTA Content */}
+            <div className="text-center lg:text-left">
+              <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
+                Found the Manual? Need the Part?
+              </h2>
+              <p className="text-lg text-slate-300 mb-4">
+                Voyten Electric stocks thousands of electrical parts across 200,000 sq. ft. of warehouse space —
+                circuit breakers, trip units, motor controls, and more.
+              </p>
+              <p className="text-slate-400 mb-8">
+                Specializing in EOL, legacy, and discontinued equipment replacement. We ship nationwide with same-day options.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <a
+                  href="tel:1-800-458-4001"
+                  className="flex items-center justify-center gap-3 bg-[#dc2626] hover:bg-[#b91c1c] text-white px-8 py-4 rounded-xl font-bold text-lg transition-colors"
+                >
+                  <Phone size={22} />
+                  Call: 1-800-458-4001
+                </a>
+                <Link
+                  href="/contact"
+                  className="flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white px-8 py-4 rounded-xl font-medium border border-white/20 transition-colors"
+                >
+                  Request a Quote
+                  <ArrowRight size={18} />
+                </Link>
+              </div>
+              <p className="text-slate-500 text-sm mt-6">
+                Voyten Electric & Electronics, Inc. — Family Owned Since 1953 — Polk, PA
+              </p>
+            </div>
           </div>
-          <p className="text-slate-400 text-sm mt-6">
-            Voyten Electric & Electronics, Inc. — Family Owned Since 1953 — 173 Voyten Blvd, Polk, PA 16342
-          </p>
         </div>
       </section>
 
