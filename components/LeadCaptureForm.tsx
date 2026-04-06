@@ -93,52 +93,72 @@ export default function LeadCaptureForm({ type, manualTitle, manualId, sourcePag
 
       <form onSubmit={handleSubmit} className="space-y-3">
         <div className={compact ? 'grid sm:grid-cols-2 gap-3' : 'space-y-3'}>
-          <input
-            type="text"
-            placeholder="Your Name *"
-            required
-            value={formData.name}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a1a] focus:border-transparent placeholder:text-slate-400"
-          />
-          <input
-            type="email"
-            placeholder="Email Address *"
-            required
-            value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a1a] focus:border-transparent placeholder:text-slate-400"
-          />
+          <div>
+            <label htmlFor="lead-name" className="sr-only">Your Name</label>
+            <input
+              id="lead-name"
+              type="text"
+              placeholder="Your Name *"
+              required
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a1a] focus:border-transparent placeholder:text-slate-400"
+            />
+          </div>
+          <div>
+            <label htmlFor="lead-email" className="sr-only">Email Address</label>
+            <input
+              id="lead-email"
+              type="email"
+              placeholder="Email Address *"
+              required
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a1a] focus:border-transparent placeholder:text-slate-400"
+            />
+          </div>
         </div>
         <div className={compact ? 'grid sm:grid-cols-2 gap-3' : 'space-y-3'}>
-          <input
-            type="tel"
-            placeholder="Phone Number"
-            value={formData.phone}
-            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-            className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a1a] focus:border-transparent placeholder:text-slate-400"
-          />
-          <input
-            type="text"
-            placeholder="Company"
-            value={formData.company}
-            onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-            className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a1a] focus:border-transparent placeholder:text-slate-400"
+          <div>
+            <label htmlFor="lead-phone" className="sr-only">Phone Number</label>
+            <input
+              id="lead-phone"
+              type="tel"
+              placeholder="Phone Number"
+              value={formData.phone}
+              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a1a] focus:border-transparent placeholder:text-slate-400"
+            />
+          </div>
+          <div>
+            <label htmlFor="lead-company" className="sr-only">Company</label>
+            <input
+              id="lead-company"
+              type="text"
+              placeholder="Company"
+              value={formData.company}
+              onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+              className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a1a] focus:border-transparent placeholder:text-slate-400"
+            />
+          </div>
+        </div>
+        <div>
+          <label htmlFor="lead-message" className="sr-only">Message</label>
+          <textarea
+            id="lead-message"
+            placeholder={
+              type === 'quote'
+                ? 'What part(s) do you need? Include model numbers, quantities, etc.'
+                : type === 'manual-request'
+                ? 'Describe the manual you need — equipment type, model, manufacturer...'
+                : 'How can we help?'
+            }
+            rows={compact ? 2 : 3}
+            value={formData.message}
+            onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+            className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a1a] focus:border-transparent placeholder:text-slate-400 resize-none"
           />
         </div>
-        <textarea
-          placeholder={
-            type === 'quote'
-              ? 'What part(s) do you need? Include model numbers, quantities, etc.'
-              : type === 'manual-request'
-              ? 'Describe the manual you need — equipment type, model, manufacturer...'
-              : 'How can we help?'
-          }
-          rows={compact ? 2 : 3}
-          value={formData.message}
-          onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-          className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a1a1a] focus:border-transparent placeholder:text-slate-400 resize-none"
-        />
 
         {manualTitle && (
           <p className="text-xs text-slate-500 bg-slate-50 px-3 py-2 rounded-lg">

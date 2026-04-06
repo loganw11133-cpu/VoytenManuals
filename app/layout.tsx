@@ -250,9 +250,12 @@ export default function RootLayout({
             gtag('config', 'G-B3NR8SVSQT');
           `}
         </Script>
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:top-2 focus:left-2 focus:bg-[#dc2626] focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:text-sm focus:font-semibold">
+          Skip to main content
+        </a>
         <ScrollToTop />
         <Header />
-        <main className="flex-grow">
+        <main id="main-content" className="flex-grow">
           {children}
         </main>
         <Footer />

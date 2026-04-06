@@ -29,11 +29,13 @@ export default function ManualSearchBar({ size = 'default', placeholder, default
   return (
     <form onSubmit={handleSubmit} className={`relative ${className}`}>
       <div className="relative">
+        <label htmlFor="manual-search" className="sr-only">Search manuals</label>
         <Search
           size={isLarge ? 22 : 18}
           className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
         />
         <input
+          id="manual-search"
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
