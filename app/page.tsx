@@ -36,7 +36,7 @@ export default async function Home() {
       <section className="bg-[#1a1a1a] relative overflow-hidden">
         {/* Aerial facility photo background */}
         <Image
-          src="https://img.youtube.com/vi/pf5XGcExiM0/maxresdefault.jpg"
+          src="/images/aerial-facility.png"
           alt=""
           fill
           sizes="100vw"
@@ -65,6 +65,9 @@ export default async function Home() {
 
             <p className="text-slate-400 text-sm">
               Search by title, part number, manufacturer, or keyword — {totalCount.toLocaleString()} manuals available
+            </p>
+            <p className="text-slate-500 text-xs mt-3 tracking-wide">
+              173 Voyten Blvd. &nbsp;&bull;&nbsp; Polk, PA 16342
             </p>
           </div>
         </div>
