@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Phone, ChevronRight, BookOpen, Search, Download, Users, Shield, Zap, FileText, Building2, ArrowRight, Clock, Truck } from 'lucide-react';
+import { Phone, ChevronRight, BookOpen, Shield, Zap, FileText, Building2, ArrowRight, Clock, Truck } from 'lucide-react';
 import Image from 'next/image';
 import ManualSearchBar from '@/components/ManualSearchBar';
 import { getTotalManualCount, getCategories, getManufacturers, getRecentManuals } from '@/lib/manuals-db';
@@ -166,8 +166,8 @@ export default async function Home() {
           <div className="max-w-7xl mx-auto px-4">
             <div className="flex items-center justify-between mb-8">
               <div>
-                <h2 className="text-2xl font-bold text-slate-900 mb-1">Recently Added</h2>
-                <p className="text-slate-500 text-sm">Latest manuals added to our library</p>
+                <h2 className="text-2xl font-bold text-slate-900 mb-1">Browse by Relevance</h2>
+                <p className="text-slate-500 text-sm">In stock at our PA facility</p>
               </div>
               <Link
                 href="/search"
@@ -185,53 +185,6 @@ export default async function Home() {
           </div>
         </section>
       )}
-
-      {/* Value Props */}
-      <section className="py-14 lg:py-18 bg-white">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold text-slate-900 mb-3">Why Voyten Manuals?</h2>
-            <p className="text-slate-500 max-w-xl mx-auto">
-              Built by a third-generation family business that understands this equipment inside and out.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="w-14 h-14 bg-[#1a1a1a] rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <Search className="w-7 h-7 text-white" />
-              </div>
-              <h3 className="text-lg font-bold text-slate-900 mb-2">Easy to Search</h3>
-              <p className="text-slate-500 text-sm">
-                Find manuals by title, part number, manufacturer, category, or keyword.
-                Filter and browse {totalCount.toLocaleString()} documents instantly.
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-14 h-14 bg-[#1a1a1a] rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <Download className="w-7 h-7 text-white" />
-              </div>
-              <h3 className="text-lg font-bold text-slate-900 mb-2">Free PDF Downloads</h3>
-              <p className="text-slate-500 text-sm">
-                Every manual is available as a free downloadable PDF.
-                Print it, save it, share it with your team — no login required.
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-14 h-14 bg-[#1a1a1a] rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <Users className="w-7 h-7 text-white" />
-              </div>
-              <h3 className="text-lg font-bold text-slate-900 mb-2">EOL &amp; Legacy Expert Support</h3>
-              <p className="text-slate-500 text-sm">
-                Backed by Voyten Electric — 45 employees with decades of hands-on experience.
-                We specialize in discontinued and end-of-life equipment. Need a part? We stock it, test it, and ship it.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Facility Video + CTA */}
       <section className="py-14 lg:py-20 bg-[#1a1a1a]">
