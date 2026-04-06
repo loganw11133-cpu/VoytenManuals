@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Phone, ChevronRight, BookOpen, Shield, Zap, FileText, Building2, ArrowRight, Clock, Truck } from 'lucide-react';
+import { Phone, ChevronRight, BookOpen, Shield, Zap, FileText, Building2, ArrowRight, Clock, Truck, Download } from 'lucide-react';
 import Image from 'next/image';
 import ManualSearchBar from '@/components/ManualSearchBar';
 import { getTotalManualCount, getCategories, getManufacturers, getRecentManuals } from '@/lib/manuals-db';
