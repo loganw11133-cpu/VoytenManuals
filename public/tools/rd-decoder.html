@@ -1,0 +1,1547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="description" content="Free Eaton RD (R-Frame) circuit breaker catalog number decoder. Identify frame type, trip unit, ratings, and factory-installed accessories for RD, RDC, CRD, and CRDC 1600A–2500A breakers. Call Voyten Electric at 1-800-458-4001 for pricing and availability.">
+<title>Eaton RD (R-Frame) Decoder — Voyten Electric</title>
+<style>
+:root {
+  --red: #dc2626;
+  --dark-red: #b91c1c;
+  --deep-red: #991b1b;
+  --black: #1a1a1a;
+  --deep-black: #111111;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --white: #ffffff;
+  --blue: #2563eb;
+  --blue-light: #dbeafe;
+  --green: #16a34a;
+  --green-light: #dcfce7;
+  --yellow: #ca8a04;
+  --yellow-light: #fef9c3;
+  --purple: #7c3aed;
+  --purple-light: #ede9fe;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--gray-100);
+  color: var(--gray-800);
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+
+.header {
+  background: linear-gradient(135deg, var(--deep-black) 0%, var(--black) 100%);
+  color: var(--white);
+  padding: 24px 20px 20px;
+  text-align: center;
+  border-bottom: 4px solid var(--red);
+}
+.header h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: 0.5px; }
+.header h1 .accent { color: var(--red); }
+.header .subtitle { font-size: 0.85rem; color: var(--gray-300); margin-top: 4px; }
+.header-cta {
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  flex-wrap: wrap; margin-top: 10px;
+}
+.badge {
+  display: inline-block; background: var(--deep-red); color: var(--white);
+  font-size: 0.65rem; font-weight: 700; padding: 2px 10px;
+  border-radius: 999px; letter-spacing: 1px; text-transform: uppercase;
+}
+.header-phone {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--red); color: var(--white); text-decoration: none;
+  font-size: 0.85rem; font-weight: 700; padding: 6px 14px;
+  border-radius: 999px; letter-spacing: 0.3px;
+  transition: background 0.15s;
+}
+.header-phone:hover, .header-phone:focus-visible {
+  background: var(--dark-red); outline: none;
+}
+.header-phone:focus-visible { box-shadow: 0 0 0 3px rgba(220,38,38,0.4); }
+
+.container { max-width: 960px; margin: 0 auto; padding: 16px; }
+
+/* Input Section */
+.input-section {
+  background: var(--white); border-radius: 12px; padding: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 16px;
+  border: 2px solid var(--red);
+}
+.input-section label {
+  display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 6px; color: var(--gray-700);
+}
+.input-row { display: flex; gap: 8px; margin-bottom: 8px; }
+.input-row input {
+  flex: 1; padding: 12px 14px; font-size: 16px; font-family: 'Consolas', 'Monaco', monospace;
+  border: 2px solid var(--gray-200); border-radius: 8px; text-transform: uppercase;
+  letter-spacing: 1.5px; -webkit-appearance: none; transition: border-color 0.2s;
+}
+.input-row input:focus { outline: none; border-color: var(--red); }
+.hint { font-size: 0.75rem; color: var(--gray-500); margin-bottom: 10px; }
+
+.detect-badge {
+  display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 2px 8px;
+  border-radius: 4px; margin-left: 8px; vertical-align: middle;
+}
+.detect-rd { background: var(--blue-light); color: var(--blue); }
+.detect-rdc { background: var(--purple-light); color: var(--purple); }
+.detect-crd { background: var(--green-light); color: var(--green); }
+.detect-crdc { background: var(--yellow-light); color: var(--yellow); }
+.detect-switch { background: #fef3c7; color: #92400e; }
+.detect-unknown { background: var(--yellow-light); color: var(--yellow); }
+
+.btn-row { display: flex; gap: 8px; margin-bottom: 12px; }
+.btn {
+  padding: 10px 20px; border: none; border-radius: 8px; font-weight: 700;
+  font-size: 0.9rem; cursor: pointer; transition: background 0.2s; touch-action: manipulation;
+}
+.btn-decode { background: var(--red); color: var(--white); flex: 1; }
+.btn-decode:hover { background: var(--dark-red); }
+.btn-clear { background: var(--gray-200); color: var(--gray-700); }
+.btn-clear:hover { background: var(--gray-300); }
+
+.examples-label { font-size: 0.75rem; font-weight: 600; color: var(--gray-500); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+.examples { display: flex; flex-wrap: wrap; gap: 6px; }
+.ex-btn {
+  padding: 4px 10px; font-size: 0.72rem; font-family: 'Consolas', monospace;
+  background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 6px;
+  cursor: pointer; transition: all 0.15s; color: var(--gray-700); touch-action: manipulation;
+}
+.ex-btn:hover { background: var(--red); color: var(--white); border-color: var(--red); }
+
+/* Char Map */
+.charmap-wrap { margin: 16px 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.charmap-inner { min-width: 400px; }
+.group-labels { display: flex; gap: 2px; margin-bottom: 2px; }
+.group-label {
+  font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--gray-500); text-align: center; padding: 2px 0;
+  border-bottom: 2px solid var(--gray-300);
+}
+.char-boxes { display: flex; gap: 2px; }
+.char-box {
+  width: 32px; height: 38px; display: flex; align-items: center; justify-content: center;
+  font-family: 'Consolas', monospace; font-size: 0.85rem; font-weight: 700;
+  border-radius: 4px; border: 1px solid var(--gray-300); background: var(--gray-50); color: var(--gray-700);
+}
+.char-box.entered { background: var(--black); color: var(--white); border-color: var(--black); }
+.char-box.assumed { background: var(--blue-light); color: var(--blue); border-color: #93c5fd; }
+.char-box.error { background: #fecaca; color: #dc2626; border-color: #f87171; }
+.char-box.separator { width: 8px; border: none; background: transparent; }
+.pos-labels { display: flex; gap: 2px; margin-top: 1px; }
+.pos-label { width: 32px; text-align: center; font-size: 0.55rem; color: var(--gray-400); }
+.pos-label.sep { width: 8px; }
+
+.char-legend {
+  display: none; margin-top: 8px; font-size: 0.7rem; color: var(--gray-500);
+}
+.char-legend span { margin-right: 14px; }
+.char-legend .swatch {
+  display: inline-block; width: 10px; height: 10px; border-radius: 2px;
+  vertical-align: middle; margin-right: 3px;
+}
+
+/* Results */
+.results { display: none; }
+.summary-banner {
+  background: linear-gradient(135deg, var(--deep-black), var(--black));
+  color: var(--white); border-radius: 12px; padding: 20px; margin-bottom: 16px;
+  border-left: 5px solid var(--red);
+}
+.summary-banner .headline { font-size: 1.15rem; font-weight: 700; margin-bottom: 6px; }
+.summary-banner .catalog-fmt { font-family: 'Consolas', monospace; font-size: 0.85rem; color: var(--gray-300); letter-spacing: 2px; }
+.summary-banner .partial-tag {
+  display: inline-block; font-size: 0.65rem; background: rgba(255,255,255,0.1);
+  padding: 2px 8px; border-radius: 4px; margin-top: 6px; color: var(--gray-400);
+}
+
+.result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 640px) { .result-grid { grid-template-columns: 1fr; } }
+.result-card {
+  background: var(--white); border-radius: 10px; padding: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-left: 4px solid var(--gray-300);
+}
+.result-card.wide { grid-column: 1 / -1; }
+.result-card.warn { border-left-color: #f59e0b; background: #fffbeb; }
+.result-card.info { border-left-color: var(--blue); }
+.result-card.config { border-left-color: var(--red); }
+.result-card.trip { border-left-color: var(--green); }
+.result-card.access { border-left-color: var(--purple); }
+.result-card.options { border-left-color: var(--yellow); }
+.card-title {
+  font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--gray-500); margin-bottom: 8px;
+}
+.card-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 0.85rem; border-bottom: 1px solid var(--gray-100); }
+.card-row:last-child { border-bottom: none; }
+.card-label { color: var(--gray-500); font-weight: 500; }
+.card-value { font-weight: 600; color: var(--gray-800); text-align: right; max-width: 60%; }
+
+/* Tables */
+.ref-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin-top: 8px; }
+.ref-table th {
+  background: var(--gray-100); text-align: left; padding: 6px 10px;
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gray-500);
+}
+.ref-table td { padding: 5px 10px; border-bottom: 1px solid var(--gray-100); }
+
+.btn-copy {
+  background: var(--gray-100); color: var(--gray-600); border: 1px solid var(--gray-300);
+  padding: 6px 14px; border-radius: 6px; font-size: 0.75rem; font-weight: 600;
+  cursor: pointer; transition: all 0.2s; margin-top: 8px;
+}
+.btn-copy:hover { background: var(--gray-200); }
+.btn-copy.copied { background: var(--green-light); color: var(--green); border-color: var(--green); }
+
+.cta-banner {
+  background: linear-gradient(135deg, var(--red) 0%, var(--dark-red) 100%);
+  color: var(--white); border-radius: 10px; padding: 16px 20px;
+  margin-bottom: 16px; display: flex; align-items: center;
+  justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  box-shadow: 0 2px 8px rgba(220,38,38,0.25);
+}
+.cta-banner .cta-text { flex: 1 1 260px; font-size: 0.9rem; line-height: 1.4; }
+.cta-banner .cta-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.cta-btn {
+  display: inline-block; padding: 10px 18px; border-radius: 6px;
+  font-weight: 700; font-size: 0.85rem; text-decoration: none;
+  transition: all 0.15s; white-space: nowrap;
+}
+.cta-primary { background: var(--white); color: var(--red); }
+.cta-primary:hover, .cta-primary:focus-visible {
+  background: var(--gray-100); outline: none; transform: translateY(-1px);
+}
+.cta-secondary { background: transparent; color: var(--white); border: 2px solid var(--white); }
+.cta-secondary:hover, .cta-secondary:focus-visible {
+  background: var(--white); color: var(--red); outline: none;
+}
+.cta-primary:focus-visible, .cta-secondary:focus-visible {
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.5);
+}
+
+.ex-btn:focus-visible {
+  outline: 2px solid var(--red); outline-offset: 2px;
+}
+
+.footer {
+  text-align: center; padding: 20px; font-size: 0.7rem; color: var(--gray-400); margin-top: 20px;
+}
+
+noscript .ns-msg {
+  max-width: 480px; margin: 60px auto; padding: 24px; background: var(--white);
+  border-radius: 12px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+</style>
+</head>
+<body>
+
+<noscript>
+<div class="ns-msg">
+  <h2>JavaScript Required</h2>
+  <p style="margin-top:12px;color:#6b7280;">This decoder requires JavaScript. If you're viewing in iOS Files app, open in Safari instead.</p>
+</div>
+</noscript>
+
+<div class="header">
+  <h1>Eaton <span class="accent">RD (R-Frame)</span> Decoder</h1>
+  <div class="subtitle">1600A &middot; 2000A &middot; 2500A Series C Molded Case Circuit Breakers</div>
+  <div class="header-cta">
+    <span class="badge">Offline Tool</span>
+    <a class="header-phone" href="tel:+18004584001" aria-label="Call Voyten Electric at 1-800-458-4001">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.24.2 2.45.57 3.57a1 1 0 01-.24 1.02l-2.21 2.2z"/></svg>
+      1-800-458-4001
+    </a>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="input-section">
+    <label for="catInput">Catalog Number <span id="detectBadge"></span></label>
+    <div class="input-row">
+      <input type="text" id="catInput" placeholder="Paste catalog number..." spellcheck="false" autocomplete="off" autocapitalize="characters" aria-describedby="catHint">
+    </div>
+    <div class="hint" id="catHint">Format: [C]RD[C] + Poles + Amps + Trip + Suffix &nbsp;(e.g. RD316T56W, CRDC320T86W, RD320WK)</div>
+    <div class="btn-row">
+      <button class="btn btn-decode" onclick="decode()">DECODE</button>
+      <button class="btn btn-clear" onclick="clearAll()">CLEAR</button>
+    </div>
+    <div class="examples-label">RD &mdash; Standard (65 kAIC @ 480V)</div>
+    <div class="examples" style="margin-bottom:8px;">
+      <button class="ex-btn" onclick="loadExample(this)">RD316T56W</button>
+      <button class="ex-btn" onclick="loadExample(this)">RD320T86W</button>
+      <button class="ex-btn" onclick="loadExample(this)">RD325T96W</button>
+      <button class="ex-btn" onclick="loadExample(this)">RD416T32W</button>
+      <button class="ex-btn" onclick="loadExample(this)">RD320T106W</button>
+    </div>
+    <div class="examples-label">RDC &mdash; High Interrupting (100 kAIC @ 480V)</div>
+    <div class="examples" style="margin-bottom:8px;">
+      <button class="ex-btn" onclick="loadExample(this)">RDC316T53W</button>
+      <button class="ex-btn" onclick="loadExample(this)">RDC320T65W</button>
+      <button class="ex-btn" onclick="loadExample(this)">RDC325T107W</button>
+    </div>
+    <div class="examples-label">CRD / CRDC &mdash; 100% Rated</div>
+    <div class="examples" style="margin-bottom:8px;">
+      <button class="ex-btn" onclick="loadExample(this)">CRD316T56W</button>
+      <button class="ex-btn" onclick="loadExample(this)">CRD320T86W</button>
+      <button class="ex-btn" onclick="loadExample(this)">CRDC316T96W</button>
+      <button class="ex-btn" onclick="loadExample(this)">CRDC320T106W</button>
+    </div>
+    <div class="examples-label">RMS 310 (Legacy) &amp; Molded Case Switch</div>
+    <div class="examples" style="margin-bottom:8px;">
+      <button class="ex-btn" onclick="loadExample(this)">RD316T33W</button>
+      <button class="ex-btn" onclick="loadExample(this)">RD320T36W</button>
+      <button class="ex-btn" onclick="loadExample(this)">RD416T33PW</button>
+      <button class="ex-btn" onclick="loadExample(this)">RD316WK</button>
+      <button class="ex-btn" onclick="loadExample(this)">RD420WK</button>
+    </div>
+    <div class="examples-label">With Factory-Installed Accessories</div>
+    <div class="examples">
+      <button class="ex-btn" onclick="loadExample(this)">RD316T33WP02S29Y01</button>
+      <button class="ex-btn" onclick="loadExample(this)">RD316T33WS29</button>
+      <button class="ex-btn" onclick="loadExample(this)">RD320T33WU49A12</button>
+      <button class="ex-btn" onclick="loadExample(this)">RD316T33WS29A12B05</button>
+    </div>
+  </div>
+
+  <div class="charmap-wrap">
+    <div class="charmap-inner">
+      <div id="groupLabels" class="group-labels"></div>
+      <div id="charBoxes" class="char-boxes"></div>
+      <div id="posLabels" class="pos-labels"></div>
+    </div>
+  </div>
+  <div id="charLegend" class="char-legend">
+    <span><span class="swatch" style="background:var(--black)"></span> Entered</span>
+    <span><span class="swatch" style="background:#fecaca;border:1px solid #f87171"></span> Unrecognized</span>
+  </div>
+
+  <div id="results" class="results" role="region" aria-live="polite" aria-label="Decode results"></div>
+
+</div>
+
+<div class="footer">
+  Eaton RD (R-Frame) Decoder &mdash; Voyten Electric &amp; Electronics, Inc.<br>
+  Data sourced from Eaton TD012038EN (trip curves), CA08100014E (aftermarket / cross-reference), and the R-Frame internal-accessory reference. Factory-installed accessory codes marked &ldquo;undocumented&rdquo; are genuine Eaton SKU components without public specification.<br>
+  Sales &amp; technical support: <a href="tel:+18004584001" style="color:var(--red);text-decoration:none;font-weight:700;">1-800-458-4001</a> &middot; <a href="mailto:info@voytenelectric.com" style="color:var(--red);text-decoration:none;">info@voytenelectric.com</a>
+</div>
+
+<script>
+/* ============================================================
+   DATA TABLES — Eaton RD (R-Frame) Series C
+   Sources: TD012038EN (April 2014, trip curves),
+            CA08100014E (Feb 2019, aftermarket / cross-ref),
+            R-Frame internal accessory reference
+   ============================================================ */
+
+// HTML-escape helper — applied to every user-derived value before
+// it is concatenated into innerHTML. Defense-in-depth: the input
+// is ALSO whitelisted at parse time, so this is belt + suspenders.
+function esc(s) {
+  if (s === null || s === undefined) return '';
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+var DATA = {};
+
+// Frame types
+DATA.frameType = {
+  'RD':   { name: 'RD', desc: 'Standard', int480: 65, int240: 125, int600: 50, rated100: false, polesAvail: [3,4], ampsAvail: [16,20,25], iec240: '135/100', iec415: '70/50', iec690: '25/13' },
+  'RDC':  { name: 'RDC', desc: 'High Interrupting', int480: 100, int240: 200, int600: 65, rated100: false, polesAvail: [3,4], ampsAvail: [16,20,25], iec240: '200/100', iec415: '100/50', iec690: '35/18' },
+  'CRD':  { name: 'CRD', desc: 'Standard — 100% Rated', int480: 65, int240: 125, int600: 50, rated100: true, polesAvail: [3], ampsAvail: [16,20], iec240: '135/100', iec415: '70/50', iec690: '25/13' },
+  'CRDC': { name: 'CRDC', desc: 'High Interrupting — 100% Rated', int480: 100, int240: 200, int600: 65, rated100: true, polesAvail: [3], ampsAvail: [16,20], iec240: '200/100', iec415: '100/50', iec690: '35/18' }
+};
+
+// Poles
+DATA.poles = { '3': '3-Pole', '4': '4-Pole' };
+
+// Frame ampere ratings
+DATA.amps = {
+  '16': { amps: 1600, desc: '1600A Frame' },
+  '20': { amps: 2000, desc: '2000A Frame' },
+  '25': { amps: 2500, desc: '2500A Frame' }
+};
+
+// Trip unit codes — comprehensive from all sources
+DATA.tripUnit = {
+  // RMS 310 (legacy SELTRONIC — RES rating plugs)
+  'T33': { name: 'Digitrip RMS 310 — LS', series: 'RMS 310', protection: 'LS', plugType: 'RES', fourPole: true },
+  'T32': { name: 'Digitrip RMS 310 — LSI', series: 'RMS 310', protection: 'LSI', plugType: 'RES', fourPole: true },
+  'T35': { name: 'Digitrip RMS 310 — LSG', series: 'RMS 310', protection: 'LSG', plugType: 'RES', fourPole: false },
+  'T36': { name: 'Digitrip RMS 310 — LSIG', series: 'RMS 310', protection: 'LSIG', plugType: 'RES', fourPole: false },
+  // RMS 510 (RP6R rating plugs)
+  'T51': { name: 'Digitrip RMS 510 — LI', series: 'RMS 510', protection: 'LI', plugType: 'RP6R', fourPole: false },
+  'T53': { name: 'Digitrip RMS 510 — LS', series: 'RMS 510', protection: 'LS', plugType: 'RP6R', fourPole: false },
+  'T52': { name: 'Digitrip RMS 510 — LSI', series: 'RMS 510', protection: 'LSI', plugType: 'RP6R', fourPole: false },
+  'T54': { name: 'Digitrip RMS 510 — LIG', series: 'RMS 510', protection: 'LIG', plugType: 'RP6R', fourPole: false },
+  'T55': { name: 'Digitrip RMS 510 — LSG', series: 'RMS 510', protection: 'LSG', plugType: 'RP6R', fourPole: false },
+  'T56': { name: 'Digitrip RMS 510 — LSIG', series: 'RMS 510', protection: 'LSIG', plugType: 'RP6R', fourPole: false },
+  // RMS 610 (RP6R rating plugs)
+  'T61': { name: 'Digitrip RMS 610 — LI', series: 'RMS 610', protection: 'LI', plugType: 'RP6R', fourPole: false },
+  'T63': { name: 'Digitrip RMS 610 — LS', series: 'RMS 610', protection: 'LS', plugType: 'RP6R', fourPole: false },
+  'T62': { name: 'Digitrip RMS 610 — LSI', series: 'RMS 610', protection: 'LSI', plugType: 'RP6R', fourPole: false },
+  'T64': { name: 'Digitrip RMS 610 — LIG', series: 'RMS 610', protection: 'LIG', plugType: 'RP6R', fourPole: false },
+  'T65': { name: 'Digitrip RMS 610 — LSG', series: 'RMS 610', protection: 'LSG', plugType: 'RP6R', fourPole: false },
+  'T66': { name: 'Digitrip RMS 610 — LSIG', series: 'RMS 610', protection: 'LSIG', plugType: 'RP6R', fourPole: false },
+  // RMS 810 (RP6R rating plugs)
+  'T81': { name: 'Digitrip RMS 810 — LI', series: 'RMS 810', protection: 'LI', plugType: 'RP6R', fourPole: false },
+  'T83': { name: 'Digitrip RMS 810 — LS', series: 'RMS 810', protection: 'LS', plugType: 'RP6R', fourPole: false },
+  'T82': { name: 'Digitrip RMS 810 — LSI', series: 'RMS 810', protection: 'LSI', plugType: 'RP6R', fourPole: false },
+  'T84': { name: 'Digitrip RMS 810 — LIG', series: 'RMS 810', protection: 'LIG', plugType: 'RP6R', fourPole: false },
+  'T85': { name: 'Digitrip RMS 810 — LSG', series: 'RMS 810', protection: 'LSG', plugType: 'RP6R', fourPole: false },
+  'T86': { name: 'Digitrip RMS 810 — LSIG', series: 'RMS 810', protection: 'LSIG', plugType: 'RP6R', fourPole: false },
+  // RMS 910 (RP6R rating plugs)
+  'T91': { name: 'Digitrip RMS 910 — LI', series: 'RMS 910', protection: 'LI', plugType: 'RP6R', fourPole: false },
+  'T93': { name: 'Digitrip RMS 910 — LS', series: 'RMS 910', protection: 'LS', plugType: 'RP6R', fourPole: false },
+  'T92': { name: 'Digitrip RMS 910 — LSI', series: 'RMS 910', protection: 'LSI', plugType: 'RP6R', fourPole: false },
+  'T94': { name: 'Digitrip RMS 910 — LIG', series: 'RMS 910', protection: 'LIG', plugType: 'RP6R', fourPole: false },
+  'T95': { name: 'Digitrip RMS 910 — LSG', series: 'RMS 910', protection: 'LSG', plugType: 'RP6R', fourPole: false },
+  'T96': { name: 'Digitrip RMS 910 — LSIG', series: 'RMS 910', protection: 'LSIG', plugType: 'RP6R', fourPole: false },
+  // OPTIM 1050 (ORPL rating plugs)
+  'T106': { name: 'Digitrip OPTIM 1050 — LSIG', series: 'OPTIM 1050', protection: 'LSIG', plugType: 'ORPL', fourPole: false },
+  'T107': { name: 'Digitrip OPTIM 1050 — LSIA', series: 'OPTIM 1050', protection: 'LSIA', plugType: 'ORPL', fourPole: false }
+};
+
+// Suffix codes
+DATA.suffix = {
+  'W':  'Without terminals (standard)',
+  'PW': '100% protected neutral pole, without terminals',
+  'RW': 'Ground fault remote indication, without terminals (RMS 310 only)',
+  'K':  'Molded case switch (no trip unit)'
+};
+
+/* ============================================================
+   FACTORY-INSTALLED INTERNAL ACCESSORIES
+   Codes appearing after the "W" suffix (e.g. RD316T33W•S29•Y01).
+   Sourced from R-Frame internal accessory reference
+   (klocknermoeller.com/sc-internalaccessories/).
+   Codes marked undocumented appear on real Eaton SKUs but are
+   not defined in any public source located — they are parsed
+   but flagged for the user.
+   ============================================================ */
+DATA.factoryAccessories = {
+  // Shunt Trip — S##
+  'S': {
+    label: 'Shunt Trip',
+    codes: {
+      '21': { desc: '24 Vac/Vdc',                         kit: 'SNT6P03K' },
+      '25': { desc: '48–60 Vac',                          kit: 'SNT6P05K' },
+      '29': { desc: '110–240 Vac',                        kit: 'SNT6P11K' },
+      '33': { desc: '380–440 Vac / 220–250 Vdc',          kit: 'SNT6P14K' },
+      '37': { desc: '480–600 Vac',                        kit: 'SNT6P18K' },
+      '45': { desc: '110–125 Vdc',                        kit: '' },
+      '88': { desc: '48–60 Vdc',                          kit: 'SNT6P23K / SNT6P26K' }
+    }
+  },
+  // Undervoltage Release (AC) — U##
+  'U': {
+    label: 'Undervoltage Release (AC)',
+    codes: {
+      '37': { desc: '12 Vac',        kit: 'UVH6RP02K' },
+      '41': { desc: '24 Vac',        kit: 'UVH6RP03K' },
+      '45': { desc: '48–60 Vac',     kit: 'UVH6RP05K' },
+      '49': { desc: '110–127 Vac',   kit: 'UVH6RP08K' },
+      '53': { desc: '208–240 Vac',   kit: 'UVH6RP11K' },
+      '57': { desc: '380–500 Vac',   kit: 'UVH6RP29K' }
+    }
+  },
+  // Undervoltage Release (DC) — T##  (note: collides with trip "T" prefix,
+  // but is only parsed AFTER the base "W" so no conflict)
+  'T': {
+    label: 'Undervoltage Release (DC)',
+    codes: {
+      '21': { desc: '12 Vdc',        kit: 'UVH6RP20K' },
+      '25': { desc: '24 Vdc',        kit: 'UVH6RP21K' },
+      '29': { desc: '48–60 Vdc',     kit: 'UVH6RP23K' },
+      '33': { desc: '110–125 Vdc',   kit: 'UVH6RP26K' },
+      '37': { desc: '220–250 Vdc',   kit: 'UVH6RP28K' }
+    }
+  },
+  // Auxiliary Switch — A##
+  'A': {
+    label: 'Auxiliary Switch',
+    codes: {
+      '12': { desc: '2a / 2b contacts' },
+      '19': { desc: '4a / 4b contacts' }
+    }
+  },
+  // Bell Alarm / Trip Indicator — B##
+  'B': {
+    label: 'Bell Alarm',
+    codes: {
+      '05': { desc: '1m / 1b contact' },
+      '12': { desc: '2m / 2b contacts' }
+    }
+  },
+  // Terminal Block — Q##
+  'Q': {
+    label: 'Terminal Block',
+    codes: {
+      '01': { desc: 'Factory-installed terminal block', kit: 'TBRDK' }
+    }
+  },
+  // Low-Energy Shunt Trip — N##
+  'N': {
+    label: 'Low-Energy Shunt Trip',
+    codes: {
+      '01': { desc: 'Right pole low-energy shunt', kit: 'LST6RPK' }
+    }
+  },
+  // --- Undocumented prefixes (parsed but flagged) ---
+  'P': { label: 'Accessory Option (P)', undocumented: true },
+  'Y': { label: 'Accessory Option (Y)', undocumented: true },
+  'X': { label: 'Accessory Option (X)', undocumented: true },
+  'Z': { label: 'Accessory Option (Z)', undocumented: true }
+};
+
+/* ============================================================
+   RATING PLUGS
+   ============================================================ */
+var RATING_PLUGS = {
+  'RES': {
+    '16': [
+      { plug: '16RES08T', amps: 800, type: 'Fixed' },
+      { plug: '16RES10T', amps: 1000, type: 'Fixed' },
+      { plug: '16RES12T', amps: 1200, type: 'Fixed' },
+      { plug: '16RES125T', amps: 1250, type: 'Fixed' },
+      { plug: '16RES14T', amps: 1400, type: 'Fixed' },
+      { plug: '16RES15T', amps: 1500, type: 'Fixed' },
+      { plug: '16RES16T', amps: 1600, type: 'Fixed' },
+      { plug: 'A16RES16T1', amps: '800–1600', type: 'Adjustable' }
+    ],
+    '20': [
+      { plug: '20RES10T', amps: 1000, type: 'Fixed' },
+      { plug: '20RES12T', amps: 1200, type: 'Fixed' },
+      { plug: '20RES125T', amps: 1250, type: 'Fixed' },
+      { plug: '20RES14T', amps: 1400, type: 'Fixed' },
+      { plug: '20RES16T', amps: 1600, type: 'Fixed' },
+      { plug: '20RES20T', amps: 2000, type: 'Fixed' },
+      { plug: 'A20RES20T1', amps: '1000–2000', type: 'Adjustable' }
+    ],
+    '25': [
+      { plug: '25RES12T', amps: 1200, type: 'Fixed' },
+      { plug: '25RES125T', amps: 1250, type: 'Fixed' },
+      { plug: '25RES16T', amps: 1600, type: 'Fixed' },
+      { plug: '25RES20T', amps: 2000, type: 'Fixed' },
+      { plug: '25RES25T', amps: 2500, type: 'Fixed' },
+      { plug: 'A25RES25T1', amps: '1200–2500', type: 'Adjustable' }
+    ]
+  },
+  'RP6R': {
+    '16': [
+      { plug: 'RP6R16A080', amps: 800, type: 'Fixed' },
+      { plug: 'RP6R16A100', amps: 1000, type: 'Fixed' },
+      { plug: 'RP6R16A120', amps: 1200, type: 'Fixed' },
+      { plug: 'RP6R16A125', amps: 1250, type: 'Fixed (50Hz)' },
+      { plug: 'RP6R16A160', amps: 1600, type: 'Fixed' }
+    ],
+    '20': [
+      { plug: 'RP6R20A100', amps: 1000, type: 'Fixed' },
+      { plug: 'RP6R20A120', amps: 1200, type: 'Fixed' },
+      { plug: 'RP6R20A125', amps: 1250, type: 'Fixed (50Hz)' },
+      { plug: 'RP6R20A160', amps: 1600, type: 'Fixed' },
+      { plug: 'RP6R20A200', amps: 2000, type: 'Fixed' }
+    ],
+    '25': [
+      { plug: 'RP6R25A160', amps: 1600, type: 'Fixed' },
+      { plug: 'RP6R25A200', amps: 2000, type: 'Fixed' },
+      { plug: 'RP6R25A250', amps: 2500, type: 'Fixed' }
+    ]
+  },
+  'ORPL': {
+    '16': [
+      { plug: 'ORPL16A080', amps: 800, type: 'Fixed' },
+      { plug: 'ORPL16A100', amps: 1000, type: 'Fixed' },
+      { plug: 'ORPL16A120', amps: 1200, type: 'Fixed' },
+      { plug: 'ORPL16A125', amps: 1250, type: 'Fixed' },
+      { plug: 'ORPL16A160', amps: 1600, type: 'Fixed' }
+    ],
+    '20': [
+      { plug: 'ORPL20A100', amps: 1000, type: 'Fixed' },
+      { plug: 'ORPL20A120', amps: 1200, type: 'Fixed' },
+      { plug: 'ORPL20A125', amps: 1250, type: 'Fixed' },
+      { plug: 'ORPL20A160', amps: 1600, type: 'Fixed' },
+      { plug: 'ORPL20A200', amps: 2000, type: 'Fixed' }
+    ],
+    '25': [
+      { plug: 'ORPL25A160', amps: 1600, type: 'Fixed' },
+      { plug: 'ORPL25A200', amps: 2000, type: 'Fixed' },
+      { plug: 'ORPL25A250', amps: 2500, type: 'Fixed' }
+    ]
+  }
+};
+
+/* ============================================================
+   TRIP UNIT FEATURE COMPARISON
+   ============================================================ */
+var TRIP_FEATURES = {
+  'RMS 310': {
+    ldPickup: '0.5–1.0 × In',
+    ldTime: 'I²t, 12 sec @ 6×Ir',
+    sdPickup: '200–800% × In',
+    sdTime: '0.08–0.30 sec',
+    sdZSI: 'No',
+    inst: 'No (T33/T35) / Yes (T32/T36)',
+    gfPickup: '200–1200A',
+    gfTime: '3.5–30 cycles',
+    gfZSI: 'No',
+    display: 'No',
+    comms: 'No',
+    testing: 'External test set',
+    plugStyle: 'RES (interchangeable)',
+    adjustablePlug: 'Available',
+    fixedOverride: '17,500A'
+  },
+  'RMS 510': {
+    ldPickup: '0.5–1.0 × In',
+    ldTime: 'I²t, 2–24 sec @ 6×Ir',
+    sdPickup: '2–8 × Ir',
+    sdTime: '0.1–0.5 sec (I²t or Flat)',
+    sdZSI: 'Yes',
+    inst: '2–6 × In (+ M1/M2)',
+    gfPickup: '25–100% × Is (max 1200A)',
+    gfTime: '0.1–0.5 sec (I²t or Flat)',
+    gfZSI: 'Yes',
+    display: 'No',
+    comms: 'No',
+    testing: 'External test set',
+    plugStyle: 'RP6R (interchangeable)',
+    adjustablePlug: 'No',
+    fixedOverride: '17,500A'
+  },
+  'RMS 610': {
+    ldPickup: '0.5–1.0 × In',
+    ldTime: 'I²t, 2–24 sec @ 6×Ir',
+    sdPickup: '2–6 × Ir',
+    sdTime: '0.1–0.5 sec (I²t or Flat)',
+    sdZSI: 'Yes',
+    inst: '2–6 × In (+ M1/M2)',
+    gfPickup: '25–100% × Is (max 1200A)',
+    gfTime: '0.1–0.5 sec (I²t or Flat)',
+    gfZSI: 'Yes',
+    display: 'No',
+    comms: 'No',
+    testing: 'Integral',
+    plugStyle: 'RP6R (interchangeable)',
+    adjustablePlug: 'No',
+    fixedOverride: '17,500A',
+    discriminator: 'Yes (LS/LSG modes)'
+  },
+  'RMS 810': {
+    ldPickup: '0.5–1.0 × In',
+    ldTime: 'I²t, 2–24 sec @ 6×Ir',
+    sdPickup: '2–6 × Ir',
+    sdTime: '0.1–0.5 sec (I²t or Flat)',
+    sdZSI: 'Yes',
+    inst: '2–6 × In (+ M1/M2)',
+    gfPickup: '25–100% × Is (max 1200A)',
+    gfTime: '0.1–0.5 sec (I²t or Flat)',
+    gfZSI: 'Yes',
+    display: 'Digital — current monitoring',
+    comms: 'No',
+    testing: 'Integral',
+    plugStyle: 'RP6R (interchangeable)',
+    adjustablePlug: 'No',
+    fixedOverride: '17,500A',
+    highLoadAlarm: '0.85 × Ir',
+    discriminator: 'Yes (LS/LSG modes)'
+  },
+  'RMS 910': {
+    ldPickup: '0.5–1.0 × In',
+    ldTime: 'I²t, 2–24 sec @ 6×Ir',
+    sdPickup: '2–6 × Ir',
+    sdTime: '0.1–0.5 sec (I²t or Flat)',
+    sdZSI: 'Yes',
+    inst: '2–6 × In (+ M1/M2)',
+    gfPickup: '25–100% × Is (max 1200A)',
+    gfTime: '0.1–0.5 sec (I²t or Flat)',
+    gfZSI: 'Yes',
+    display: 'Digital — current, voltage, power, energy, harmonics',
+    comms: 'PowerNet',
+    testing: 'Integral',
+    plugStyle: 'RP6R (interchangeable)',
+    adjustablePlug: 'No',
+    fixedOverride: '17,500A',
+    highLoadAlarm: '0.85 × Ir',
+    discriminator: 'Yes (LS/LSG modes)'
+  },
+  'OPTIM 1050': {
+    ldPickup: '0.4–1.0 × In (0.01 steps)',
+    ldTime: 'I²t 2–24 sec or I⁴t 1–5 sec @ 6×Ir',
+    sdPickup: '1.5–8 × Ir (1600/2000A) or 1.5–6.4 × Ir (2500A)',
+    sdTime: '0.1–0.5 sec (I²t or Flat, 0.01s steps)',
+    sdZSI: 'Yes',
+    inst: '2–10 × In (1600A) / 2–8 × In (2000A) / 2–6.4 × In (2500A)',
+    gfPickup: '25–100% × In (max 1200A)',
+    gfTime: '0.1–0.5 sec (I²t or Flat)',
+    gfZSI: 'Yes',
+    display: 'Via BIM (Breaker Interface Module)',
+    comms: 'PowerNet / BIM / OPTIMizer',
+    testing: 'OPTIMizer / BIM / PowerNet',
+    plugStyle: 'ORPL (interchangeable)',
+    adjustablePlug: 'No',
+    fixedOverride: '14,875–20,125A',
+    highLoadAlarm: '0.5–1.0 × Ir',
+    discriminator: 'Yes'
+  }
+};
+
+/* ============================================================
+   CROSS-REFERENCE — PB/PC/PCC → RD/CRD
+   ============================================================ */
+var CROSS_REF = [
+  { old: 'PB31000', oldDesc: 'PB 3P 1000A', new: 'RD316T33W/16RES10T', newDesc: 'RD 3P 1600A frame, 1000A plug' },
+  { old: 'PB31200', oldDesc: 'PB 3P 1200A', new: 'RD316T33W/16RES12T', newDesc: 'RD 3P 1600A frame, 1200A plug' },
+  { old: 'PB31400', oldDesc: 'PB 3P 1400A', new: 'RD316T33W/16RES14T', newDesc: 'RD 3P 1600A frame, 1400A plug' },
+  { old: 'PB31600', oldDesc: 'PB 3P 1600A', new: 'RD316T33W/16RES16T', newDesc: 'RD 3P 1600A frame, 1600A plug' },
+  { old: 'PB32000', oldDesc: 'PB 3P 2000A', new: 'RD320T33W/20RES20T', newDesc: 'RD 3P 2000A frame, 2000A plug' },
+  { old: 'PB32500F', oldDesc: 'PB 3P 2500A', new: 'RD325T33W', newDesc: 'RD 3P 2500A frame' },
+  { old: 'PC32000F', oldDesc: 'PC SELTRONIC 3P 2000A', new: 'RD320T33W', newDesc: 'RD 3P 2000A frame' },
+  { old: 'PC32500F', oldDesc: 'PC SELTRONIC 3P 2500A', new: 'RD325T33W', newDesc: 'RD 3P 2500A frame' },
+  { old: 'PCFA32000F', oldDesc: 'PC + Adj SD 3P 2000A', new: 'RD320T32W', newDesc: 'RD 3P 2000A, LSI trip' },
+  { old: 'PCG32000F', oldDesc: 'PC + GF 3P 2000A', new: 'RD320T35W', newDesc: 'RD 3P 2000A, LSG trip' },
+  { old: 'PCGA32000F', oldDesc: 'PC + GF + Adj SD 3P 2000A', new: 'RD320T36W', newDesc: 'RD 3P 2000A, LSIG trip' },
+  { old: 'PCC32000F', oldDesc: 'PCC 100% 3P 2000A', new: 'CRD320T33W', newDesc: 'CRD 3P 2000A frame' },
+  { old: 'PCCGA32000F', oldDesc: 'PCC + GF + Adj SD 3P 2000A', new: 'CRD320T36W', newDesc: 'CRD 3P 2000A, LSIG trip' }
+];
+
+/* ============================================================
+   BRAND CROSS-REFERENCE
+   ============================================================ */
+var BRAND_XREF = {
+  'RD':   { westinghouse: 'RD', challenger: 'CR', cutlerHammer: 'RD' },
+  'RDC':  { westinghouse: 'RDC', challenger: 'CRV', cutlerHammer: 'RDC' },
+  'CRD':  { westinghouse: 'CRD', challenger: 'CRC', cutlerHammer: 'CRD' },
+  'CRDC': { westinghouse: 'CRDC', challenger: 'CRVC', cutlerHammer: 'CRDC' }
+};
+
+/* ============================================================
+   ACCESSORY CATALOG NUMBERS
+   ============================================================ */
+var ACCESSORIES = {
+  shuntTrips: [
+    { cat: '1372D35G22', desc: 'Shunt Trip — 32–120 Vdc, 60 Hz' },
+    { cat: '1372D35G32', desc: 'Shunt Trip — 240–600 Vac, 50/60 Hz' },
+    { cat: '1371D95G01', desc: 'Shunt Trip — 24 Vdc' },
+    { cat: '1372D35G15', desc: 'Shunt Trip + 1A-1B Aux — 32–120 Vdc' },
+    { cat: '1372D35G25', desc: 'Shunt Trip + 1A-1B Aux — 240–600 Vac' },
+    { cat: '1371D95G04', desc: 'Shunt Trip + 1A-1B Aux — 24 Vdc' },
+    { cat: '1371D95G07', desc: 'Shunt Trip + 2A-2B Aux — 24 Vdc' },
+    { cat: '1371D95G10', desc: 'Shunt Trip + 3A-3B Aux — 24 Vdc' }
+  ],
+  auxSwitches: [
+    { cat: '1372D35G03', desc: 'Auxiliary Switch — 1A-1B' },
+    { cat: '1372D35G18', desc: 'Auxiliary Switch — 2A-2B' }
+  ],
+  terminals: [
+    { cat: 'TA1600RD', desc: 'Al body, Cu/Al wire, 500–1000 kcmil (4 cond) — 1600A' },
+    { cat: 'T1600RD', desc: 'Cu body, Cu only wire, 1–600 kcmil (4 cond) — 1600A' },
+    { cat: 'TA2000RD', desc: 'Al body, Cu/Al wire, 2–600 kcmil (6 cond) — 2000A' }
+  ],
+  rearConnectors: [
+    { cat: 'B2016RD', desc: 'Rear bus connector kit — 2000A standard' },
+    { cat: 'B2016RDL', desc: 'Rear bus connector kit — CRD/CRDC 100% rated 1600/2000A (included)' },
+    { cat: 'B2500RD', desc: 'Rear bus connector kit — 2500A (included with 2500A frame)' }
+  ],
+  handleMechanisms: [
+    { cat: 'HMCC6B', desc: 'Euro IEC Direct Close-Coupled Handle — Black' },
+    { cat: 'HMCC6R', desc: 'Euro IEC Direct Close-Coupled Handle — Red' },
+    { cat: 'F6S04', desc: 'Flex Shaft Handle — 4 ft' },
+    { cat: 'F6S05', desc: 'Flex Shaft Handle — 5 ft' },
+    { cat: 'F6S06', desc: 'Flex Shaft Handle — 6 ft' },
+    { cat: '505C294G03', desc: 'Slide Plate (padlocks in OFF only)' }
+  ],
+  other: [
+    { cat: '6635C78G02', desc: 'Handle Extension (included with frame at no charge)' },
+    { cat: '624B375G22', desc: 'Terminal Shields' },
+    { cat: '6591C30G03', desc: 'Padlockable Handle Lock Hasp — OFF position' },
+    { cat: '765A767G01', desc: 'Racking Crank — 0.50-inch hex socket (drawout frames)' }
+  ]
+};
+
+/* ============================================================
+   PROTECTION FUNCTION LEGEND
+   ============================================================ */
+var PROTECTION_LEGEND = {
+  'L': { name: 'Long-Time (L)', desc: 'Overload protection — adjustable pickup and time delay' },
+  'S': { name: 'Short-Time (S)', desc: 'Short-circuit protection — adjustable pickup and time delay, enables selective coordination' },
+  'I': { name: 'Instantaneous (I)', desc: 'Instantaneous fault protection — adjustable pickup, no intentional delay' },
+  'G': { name: 'Ground Fault (G)', desc: 'Ground fault protection — adjustable pickup and time delay' },
+  'A': { name: 'Alarm (A)', desc: 'Ground fault alarm — signals fault condition without tripping breaker' }
+};
+
+/* ============================================================
+   DIMENSIONS & WEIGHTS
+   ============================================================ */
+var DIMENSIONS = {
+  '3': { width: '15.50 in (393.7 mm)', height: '16.00 in (406.4 mm)', depth: '9.75 in (247.7 mm)' },
+  '4': { width: '20.00 in (508.0 mm)', height: '16.00 in (406.4 mm)', depth: '9.75 in (247.7 mm)' }
+};
+
+var WEIGHTS = {
+  '16_RD':   { '3': '102 lbs (46.3 kg)', '4': '135 lbs (61.2 kg)' },
+  '16_RDC':  { '3': '102 lbs (46.3 kg)', '4': '135 lbs (61.2 kg)' },
+  '16_CRD':  { '3': '102 lbs (46.3 kg)' },
+  '16_CRDC': { '3': '102 lbs (46.3 kg)' },
+  '20_RD':   { '3': '102 lbs (46.3 kg)', '4': '135 lbs (61.2 kg)' },
+  '20_RDC':  { '3': '102 lbs (46.3 kg)', '4': '135 lbs (61.2 kg)' },
+  '20_CRD':  { '3': '130 lbs (59.0 kg)' },
+  '20_CRDC': { '3': '130 lbs (59.0 kg)' },
+  '25_RD':   { '3': '135 lbs (61.2 kg)', '4': '182 lbs (82.6 kg)' },
+  '25_RDC':  { '3': '135 lbs (61.2 kg)', '4': '182 lbs (82.6 kg)' }
+};
+
+/* ============================================================
+   PARSER — Variable-length catalog number
+   ============================================================ */
+function parseCatalog(raw) {
+  // Strip whitespace + dashes, uppercase, then whitelist to [A-Z0-9].
+  // Any other character is dropped entirely — this prevents HTML
+  // metacharacters (<, >, ", ', &, /, =) from ever entering p.raw,
+  // error messages, or the rendered output.
+  var s = String(raw).replace(/[\s\-]/g, '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+  var result = {
+    raw: s,
+    frameTypeCode: null,
+    polesCode: null,
+    ampsCode: null,
+    tripCode: null,
+    suffixCode: null,
+    accessories: [],  // [{ prefix, number, label, desc, kit, undocumented, raw }]
+    isSwitch: false,
+    errors: [],
+    segments: []
+  };
+
+  var pos = 0;
+
+  // 1. Frame type: CRDC, CRD, RDC, RD (longest match first)
+  var frameTypes = ['CRDC', 'CRD', 'RDC', 'RD'];
+  for (var i = 0; i < frameTypes.length; i++) {
+    if (s.substring(pos, pos + frameTypes[i].length) === frameTypes[i]) {
+      result.frameTypeCode = frameTypes[i];
+      result.segments.push({ label: 'Frame', start: pos, len: frameTypes[i].length });
+      pos += frameTypes[i].length;
+      break;
+    }
+  }
+  if (!result.frameTypeCode) {
+    result.errors.push({ label: 'Frame Type', msg: 'Must start with RD, RDC, CRD, or CRDC' });
+    return result;
+  }
+
+  if (pos >= s.length) return result;
+
+  // 2. Poles: single digit 3 or 4
+  var polesChar = s[pos];
+  if (polesChar === '3' || polesChar === '4') {
+    result.polesCode = polesChar;
+    result.segments.push({ label: 'Poles', start: pos, len: 1 });
+    pos++;
+  } else {
+    result.errors.push({ label: 'Poles', msg: 'Expected 3 or 4, got "' + polesChar + '"' });
+    return result;
+  }
+
+  if (pos >= s.length) return result;
+
+  // 3. Ampere rating: 16, 20, or 25
+  var ampsStr = s.substring(pos, pos + 2);
+  if (DATA.amps[ampsStr]) {
+    result.ampsCode = ampsStr;
+    result.segments.push({ label: 'Amps', start: pos, len: 2 });
+    pos += 2;
+  } else {
+    result.errors.push({ label: 'Ampere Rating', msg: 'Expected 16, 20, or 25, got "' + ampsStr + '"' });
+    return result;
+  }
+
+  if (pos >= s.length) return result;
+
+  // 4. Check for molded case switch: remaining starts with W or just K
+  var remaining = s.substring(pos);
+  if (remaining === 'WK' || remaining === 'K') {
+    result.isSwitch = true;
+    result.suffixCode = 'K';
+    result.segments.push({ label: 'Switch', start: pos, len: remaining.length });
+    pos += remaining.length;
+    return result;
+  }
+
+  // 5. Trip code: T + 2-3 digits (match longest first)
+  if (s[pos] === 'T') {
+    // Try 4-char (T106, T107), then 3-char (T33, T32, etc.)
+    var try4 = s.substring(pos, pos + 4);
+    var try3 = s.substring(pos, pos + 3);
+    if (DATA.tripUnit[try4]) {
+      result.tripCode = try4;
+      result.segments.push({ label: 'Trip', start: pos, len: 4 });
+      pos += 4;
+    } else if (DATA.tripUnit[try3]) {
+      result.tripCode = try3;
+      result.segments.push({ label: 'Trip', start: pos, len: 3 });
+      pos += 3;
+    } else {
+      var tryCode = s.substring(pos, pos + 4);
+      result.errors.push({ label: 'Trip Code', msg: 'Unrecognized trip code "' + tryCode + '"' });
+      result.tripCode = tryCode;
+      result.segments.push({ label: 'Trip', start: pos, len: tryCode.length });
+      pos += tryCode.length;
+    }
+  } else {
+    result.errors.push({ label: 'Trip Code', msg: 'Expected "T" prefix for trip code at position ' + (pos + 1) });
+  }
+
+  if (pos >= s.length) return result;
+
+  // 6. Base suffix: P, R, or W (always followed by W where P/R is used).
+  //    After the base suffix, zero or more factory-installed accessory
+  //    groups may follow, each formatted as [Letter][digits].
+  //    Examples:
+  //      ...T33W                    (no accessories)
+  //      ...T33WS29                  (one accessory)
+  //      ...T33WP02S29Y01            (three accessory groups)
+  var base = null;
+  if (s[pos] === 'P' && s[pos + 1] === 'W') {
+    base = 'PW';
+  } else if (s[pos] === 'R' && s[pos + 1] === 'W') {
+    base = 'RW';
+  } else if (s[pos] === 'W') {
+    base = 'W';
+  }
+
+  if (base) {
+    result.suffixCode = base;
+    result.segments.push({ label: 'Suffix', start: pos, len: base.length });
+    pos += base.length;
+  } else {
+    result.errors.push({ label: 'Suffix', msg: 'Expected base suffix (W, PW, or RW) at position ' + (pos + 1) });
+    return result;
+  }
+
+  // 7. Tokenize factory-installed accessory groups: [A-Z]\d+
+  while (pos < s.length) {
+    var prefix = s[pos];
+    if (prefix < 'A' || prefix > 'Z') {
+      result.errors.push({ label: 'Accessory', msg: 'Unexpected character "' + prefix + '" at position ' + (pos + 1) });
+      break;
+    }
+    // Consume digits after the letter
+    var numStart = pos + 1;
+    var numEnd = numStart;
+    while (numEnd < s.length && s[numEnd] >= '0' && s[numEnd] <= '9') {
+      numEnd++;
+    }
+    if (numEnd === numStart) {
+      result.errors.push({ label: 'Accessory', msg: 'Expected digits after accessory prefix "' + prefix + '" at position ' + (pos + 1) });
+      break;
+    }
+    var number = s.substring(numStart, numEnd);
+    var groupLen = (numEnd - pos);
+    var groupRaw = s.substring(pos, numEnd);
+
+    var spec = DATA.factoryAccessories[prefix];
+    var entry = {
+      prefix: prefix,
+      number: number,
+      raw: groupRaw,
+      label: spec ? spec.label : ('Unknown Accessory (' + prefix + ')'),
+      desc: null,
+      kit: null,
+      undocumented: false
+    };
+    if (!spec) {
+      entry.undocumented = true;
+      entry.desc = 'Unrecognized accessory prefix';
+      result.errors.push({ label: 'Accessory', msg: 'Unknown accessory prefix "' + prefix + '" in segment "' + groupRaw + '"' });
+    } else if (spec.undocumented) {
+      entry.undocumented = true;
+      entry.desc = 'Factory-installed option — code not documented in available Eaton references';
+    } else if (spec.codes && spec.codes[number]) {
+      entry.desc = spec.codes[number].desc;
+      entry.kit = spec.codes[number].kit || null;
+    } else {
+      entry.undocumented = true;
+      entry.desc = 'Unrecognized ' + spec.label.toLowerCase() + ' variant';
+      result.errors.push({ label: 'Accessory', msg: 'Unknown ' + spec.label + ' code "' + groupRaw + '"' });
+    }
+
+    result.accessories.push(entry);
+    result.segments.push({ label: 'Accessory', start: pos, len: groupLen });
+    pos = numEnd;
+  }
+
+  return result;
+}
+
+/* ============================================================
+   VALIDATION
+   ============================================================ */
+function validate(p) {
+  var warnings = [];
+  var ft = DATA.frameType[p.frameTypeCode];
+
+  if (ft && p.polesCode) {
+    // Check poles availability
+    if (ft.polesAvail.indexOf(parseInt(p.polesCode)) < 0) {
+      warnings.push(p.frameTypeCode + ' is not available in ' + p.polesCode + '-pole. Only ' + ft.polesAvail.join(', ') + '-pole.');
+    }
+    // Check amps availability
+    if (p.ampsCode && ft.ampsAvail.indexOf(parseInt(p.ampsCode)) < 0) {
+      warnings.push(p.frameTypeCode + ' is not available in ' + DATA.amps[p.ampsCode].desc + '. Available: ' + ft.ampsAvail.map(function(a) { return a * 100 + 'A'; }).join(', ') + '.');
+    }
+  }
+
+  // Four-pole restrictions
+  if (p.polesCode === '4' && p.tripCode) {
+    var trip = DATA.tripUnit[p.tripCode];
+    if (trip && !trip.fourPole) {
+      warnings.push('Four-pole is only available with RMS 310 LS (T33) and LSI (T32). ' + trip.series + ' (' + p.tripCode + ') requires 3-pole.');
+    }
+  }
+
+  // Protected neutral pole suffix
+  if (p.suffixCode === 'PW' && p.polesCode !== '4') {
+    warnings.push('Protected neutral pole (P suffix) requires 4-pole configuration.');
+  }
+
+  // GF remote suffix
+  if (p.suffixCode === 'RW') {
+    var trip = p.tripCode ? DATA.tripUnit[p.tripCode] : null;
+    if (trip && trip.series !== 'RMS 310') {
+      warnings.push('Ground fault remote (R suffix) is only available with RMS 310 trip units.');
+    }
+  }
+
+  return warnings;
+}
+
+/* ============================================================
+   DETECT INPUT TYPE
+   ============================================================ */
+function detectType(raw) {
+  var s = raw.replace(/[\s\-]/g, '').toUpperCase();
+  if (s.length < 2) return 'unknown';
+  if (s.substring(0, 4) === 'CRDC') return 'crdc';
+  if (s.substring(0, 3) === 'CRD') return 'crd';
+  if (s.substring(0, 3) === 'RDC') return 'rdc';
+  if (s.substring(0, 2) === 'RD') return 'rd';
+  return 'unknown';
+}
+
+/* ============================================================
+   RENDER — CHARACTER MAP
+   ============================================================ */
+function renderCharMap(parsed) {
+  var boxesEl = document.getElementById('charBoxes');
+  var labelsEl = document.getElementById('groupLabels');
+  var posEl = document.getElementById('posLabels');
+  var legendEl = document.getElementById('charLegend');
+  boxesEl.innerHTML = '';
+  labelsEl.innerHTML = '';
+  posEl.innerHTML = '';
+
+  if (!parsed || !parsed.raw || parsed.segments.length === 0) {
+    legendEl.style.display = 'none';
+    return;
+  }
+  legendEl.style.display = 'block';
+
+  // Map parser-error labels → character-map segment labels.
+  // Error labels come from parseCatalog() (human-readable, with spaces);
+  // segment labels are single words used in the character-map grouping.
+  var ERROR_TO_SEGMENT = {
+    'Frame Type':    'Frame',
+    'Poles':         'Poles',
+    'Ampere Rating': 'Amps',
+    'Trip Code':     'Trip',
+    'Suffix':        'Suffix',
+    'Accessory':     'Accessory'
+  };
+  var errorSet = {};
+  for (var i = 0; i < parsed.errors.length; i++) {
+    var targetSegLabel = ERROR_TO_SEGMENT[parsed.errors[i].label] || parsed.errors[i].label;
+    for (var j = 0; j < parsed.segments.length; j++) {
+      if (parsed.segments[j].label === targetSegLabel) {
+        for (var k = parsed.segments[j].start; k < parsed.segments[j].start + parsed.segments[j].len; k++) {
+          errorSet[k] = true;
+        }
+      }
+    }
+  }
+
+  var posIdx = 0;
+  for (var g = 0; g < parsed.segments.length; g++) {
+    var seg = parsed.segments[g];
+
+    // Group label
+    var gl = document.createElement('div');
+    gl.className = 'group-label';
+    gl.style.width = (seg.len * 34 - 2) + 'px';
+    gl.textContent = seg.label;
+    labelsEl.appendChild(gl);
+
+    // Char boxes for this segment
+    for (var i = 0; i < seg.len; i++) {
+      var charIdx = seg.start + i;
+      var ch = parsed.raw[charIdx] || '';
+      var box = document.createElement('div');
+      box.className = 'char-box';
+      if (errorSet[charIdx]) {
+        box.classList.add('error');
+      } else if (ch) {
+        box.classList.add('entered');
+      }
+      box.textContent = ch;
+      boxesEl.appendChild(box);
+
+      var pl = document.createElement('div');
+      pl.className = 'pos-label';
+      pl.textContent = charIdx + 1;
+      posEl.appendChild(pl);
+    }
+
+    // Separator
+    if (g < parsed.segments.length - 1) {
+      var sep = document.createElement('div');
+      sep.className = 'char-box separator';
+      boxesEl.appendChild(sep);
+      var sepL = document.createElement('div');
+      sepL.className = 'pos-label sep';
+      posEl.appendChild(sepL);
+      var gs = document.createElement('div');
+      gs.className = 'group-label';
+      gs.style.width = '8px';
+      gs.style.borderBottom = 'none';
+      labelsEl.appendChild(gs);
+    }
+  }
+}
+
+/* ============================================================
+   RENDER — RESULTS
+   ============================================================ */
+// row() escapes both arguments — all call sites pass plain text.
+// Labels and values may contain em-dashes (—) and other unicode,
+// which are safe to render after esc() (esc only touches &, <, >, ", ').
+function row(label, value) {
+  return '<div class="card-row"><span class="card-label">' + esc(label) + '</span><span class="card-value">' + esc(value || 'N/A') + '</span></div>';
+}
+
+function renderResults(p) {
+  var html = '';
+  var ft = DATA.frameType[p.frameTypeCode];
+  var ampsInfo = DATA.amps[p.ampsCode];
+  var trip = p.tripCode ? DATA.tripUnit[p.tripCode] : null;
+  var warnings = validate(p);
+  var allWarnings = p.errors.concat(warnings.map(function(w) { return { label: 'Validation', msg: w }; }));
+
+  // Summary banner
+  var ftName = ft ? ft.name + ' — ' + ft.desc : p.frameTypeCode;
+  var ampsStr = ampsInfo ? ampsInfo.amps + 'A' : '??';
+  var polesStr = DATA.poles[p.polesCode] || '??';
+  var intStr = ft ? ft.int480 + ' kAIC @ 480V' : '??';
+  var tripShort = trip ? trip.series : (p.isSwitch ? 'Molded Case Switch' : '??');
+  var ratedStr = ft && ft.rated100 ? '100% Rated' : '80% Rated';
+
+  html += '<div class="summary-banner">';
+  html += '<div class="headline">' + esc(ftName) + ' &mdash; ' + esc(ampsStr) + ' &mdash; ' + esc(polesStr) + ' &mdash; ' + esc(intStr) + '</div>';
+  html += '<div class="catalog-fmt">' + esc(p.raw) + '</div>';
+  if (p.isSwitch) {
+    html += '<div class="partial-tag">Molded Case Switch &mdash; No Trip Unit</div>';
+  }
+  // NOTE: event listener is attached AFTER innerHTML is set (see decode()).
+  // Do NOT use inline onclick — that would allow attribute injection via p.raw.
+  html += '<button class="btn-copy" id="btnCopyCat" type="button">Copy Catalog Number</button>';
+  html += '</div>';
+
+  // Lead-gen CTA
+  html += '<div class="cta-banner">';
+  html += '<div class="cta-text"><strong>Need pricing or stock on this breaker?</strong><br>';
+  html += 'Voyten stocks Eaton R-Frame breakers, parts, and accessories &mdash; call or email for same-day response.</div>';
+  html += '<div class="cta-actions">';
+  html += '<a class="cta-btn cta-primary" href="tel:+18004584001">Call 1-800-458-4001</a>';
+  html += '<a class="cta-btn cta-secondary" href="mailto:info@voytenelectric.com?subject=Eaton%20RD%20Quote%20-%20' + encodeURIComponent(p.raw) + '">Request Quote</a>';
+  html += '</div>';
+  html += '</div>';
+
+  // Warnings
+  if (allWarnings.length > 0) {
+    html += '<div class="result-card warn wide">';
+    html += '<div class="card-title">Warnings</div>';
+    for (var i = 0; i < allWarnings.length; i++) {
+      var w = allWarnings[i];
+      html += '<div class="card-row"><span class="card-label">' + esc(w.label || 'Parse') + '</span><span class="card-value" style="color:#dc2626">' + esc(w.msg || w) + '</span></div>';
+    }
+    html += '</div>';
+  }
+
+  html += '<div class="result-grid">';
+
+  // Breaker Configuration
+  html += '<div class="result-card config">';
+  html += '<div class="card-title">Breaker Configuration</div>';
+  html += row('Product Type', 'Molded Case Circuit Breaker (MCCB)');
+  html += row('Frame Type', ft ? ft.name + ' — ' + ft.desc : p.frameTypeCode);
+  html += row('Frame Size', 'R-Frame (Series C)');
+  html += row('Continuous Rating', ratedStr);
+  html += row('Frame Amps', ampsStr);
+  html += row('Poles', polesStr);
+  html += row('Suffix', p.suffixCode ? (DATA.suffix[p.suffixCode] || p.suffixCode) : 'N/A');
+  html += '</div>';
+
+  // Interrupting Ratings
+  html += '<div class="result-card info">';
+  html += '<div class="card-title">Interrupting Ratings (UL 489)</div>';
+  if (ft) {
+    html += row('@ 240 Vac', ft.int240 + ' kAIC');
+    html += row('@ 480 Vac', ft.int480 + ' kAIC');
+    html += row('@ 600 Vac', ft.int600 + ' kAIC');
+    html += row('IEC @ 240V (Icu/Ics)', ft.iec240 + ' kA');
+    html += row('IEC @ 415V (Icu/Ics)', ft.iec415 + ' kA');
+    html += row('IEC @ 690V (Icu/Ics)', ft.iec690 + ' kA');
+  }
+  html += '</div>';
+
+  // Trip Unit (only if not a switch)
+  if (!p.isSwitch) {
+    html += '<div class="result-card trip">';
+    html += '<div class="card-title">Trip Unit</div>';
+    html += row('Trip Code', p.tripCode || 'N/A');
+    html += row('Trip Unit', trip ? trip.name : 'Unknown');
+    html += row('Series', trip ? trip.series : 'N/A');
+    html += row('Protection Functions', trip ? trip.protection : 'N/A');
+    html += row('Rating Plug Style', trip ? trip.plugType : 'N/A');
+    html += row('Four-Pole Compatible', trip ? (trip.fourPole ? 'Yes' : 'No — 3-pole only') : 'N/A');
+    html += '</div>';
+
+    // Trip unit features
+    if (trip) {
+      var tf = TRIP_FEATURES[trip.series];
+      if (tf) {
+        html += '<div class="result-card options">';
+        html += '<div class="card-title">Trip Unit Settings — ' + trip.series + '</div>';
+        html += row('Long-Time Pickup', tf.ldPickup);
+        html += row('Long-Time Delay', tf.ldTime);
+        html += row('Short-Time Pickup', tf.sdPickup);
+        html += row('Short-Time Delay', tf.sdTime);
+        html += row('Short-Time ZSI', tf.sdZSI);
+        html += row('Instantaneous', tf.inst);
+        html += row('Fixed Override', tf.fixedOverride);
+        if (tf.gfPickup) { html += row('Ground Fault Pickup', tf.gfPickup); }
+        if (tf.gfTime) { html += row('Ground Fault Delay', tf.gfTime); }
+        if (tf.gfZSI) { html += row('Ground Fault ZSI', tf.gfZSI); }
+        if (tf.highLoadAlarm) { html += row('High Load Alarm', tf.highLoadAlarm); }
+        if (tf.discriminator) { html += row('Discriminator', tf.discriminator); }
+        html += row('Display', tf.display);
+        html += row('Communications', tf.comms);
+        html += row('Testing', tf.testing);
+        html += '</div>';
+      }
+    }
+  }
+
+  html += '</div>'; // end result-grid
+
+  // Factory-Installed Accessories (only if any were parsed)
+  if (p.accessories && p.accessories.length > 0) {
+    html += '<div class="result-card wide access" style="margin-top:12px;">';
+    html += '<div class="card-title">Factory-Installed Internal Accessories</div>';
+    html += '<table class="ref-table"><thead><tr><th>Code</th><th>Type</th><th>Description</th><th>Field Kit</th></tr></thead><tbody>';
+    var hasUndoc = false;
+    for (var ai = 0; ai < p.accessories.length; ai++) {
+      var a = p.accessories[ai];
+      if (a.undocumented) hasUndoc = true;
+      var codeStyle = a.undocumented ? 'color:#92400e;' : '';
+      html += '<tr>';
+      html += '<td><strong style="' + codeStyle + '">' + esc(a.raw) + '</strong></td>';
+      html += '<td>' + esc(a.label) + (a.undocumented ? ' <span style="color:#92400e;font-size:0.7rem;">(undocumented)</span>' : '') + '</td>';
+      html += '<td>' + esc(a.desc || '—') + '</td>';
+      html += '<td>' + esc(a.kit || '—') + '</td>';
+      html += '</tr>';
+    }
+    html += '</tbody></table>';
+    if (hasUndoc) {
+      html += '<div style="margin-top:8px;font-size:0.75rem;color:var(--gray-600);">';
+      html += 'Some accessory codes (P##, Y##, X##, Z##) appear on genuine Eaton SKUs but are not defined in any public R-Frame reference located. ';
+      html += 'These represent factory-installed options — contact Eaton or Voyten with the full catalog number to confirm exact configuration.';
+      html += '</div>';
+    }
+    html += '</div>';
+  }
+
+  // General Specifications
+  html += '<div class="result-card wide info" style="margin-top:12px;">';
+  html += '<div class="card-title">General Specifications</div>';
+  html += '<div class="result-grid" style="margin:0;">';
+  html += '<div style="font-size:0.85rem;">';
+  html += row('Manufacturer', 'Eaton Corporation');
+  html += row('Product Line', 'Series C R-Frame');
+  html += row('Type', ft ? ft.name : p.frameTypeCode);
+  html += row('Standard', 'UL 489 / CSA / IEC 60947-2');
+  html += row('Utilization Category', 'A');
+  html += row('Impulse Withstand (Uimp)', '8 kV');
+  html += row('Frequency', '50/60 Hz');
+  html += '</div>';
+  html += '<div style="font-size:0.85rem;">';
+  html += row('Max Voltage', '600 Vac');
+  html += row('Continuous Rating', ratedStr);
+  if (ft && ft.rated100) {
+    html += row('NEC Requirement', '90°C wire at 75°C ampacity');
+  }
+  var dimKey = p.polesCode || '3';
+  var dim = DIMENSIONS[dimKey];
+  if (dim) {
+    html += row('Width', dim.width);
+    html += row('Height', dim.height);
+    html += row('Depth', dim.depth);
+  }
+  var weightKey = p.ampsCode + '_' + p.frameTypeCode;
+  var weight = WEIGHTS[weightKey];
+  if (weight && weight[p.polesCode]) {
+    html += row('Shipping Weight', weight[p.polesCode]);
+  }
+  html += '</div></div>';
+  html += '</div>';
+
+  // Rating plugs table
+  if (!p.isSwitch && trip && p.ampsCode) {
+    var plugs = RATING_PLUGS[trip.plugType];
+    if (plugs && plugs[p.ampsCode]) {
+      var plugList = plugs[p.ampsCode];
+      html += '<div class="result-card wide access" style="margin-top:12px;">';
+      html += '<div class="card-title">Available Rating Plugs — ' + trip.plugType + ' Series (' + DATA.amps[p.ampsCode].desc + ')</div>';
+      html += '<table class="ref-table"><thead><tr><th>Catalog Number</th><th>Ampere Rating</th><th>Type</th></tr></thead><tbody>';
+      for (var i = 0; i < plugList.length; i++) {
+        var pl = plugList[i];
+        html += '<tr><td><strong>' + pl.plug + '</strong></td><td>' + pl.amps + (typeof pl.amps === 'number' ? 'A' : '') + '</td><td>' + pl.type + '</td></tr>';
+      }
+      html += '</tbody></table>';
+      html += '</div>';
+    }
+  }
+
+  // Protection function legend
+  if (trip && trip.protection && trip.protection !== 'N/A') {
+    html += '<div class="result-card wide" style="margin-top:12px;">';
+    html += '<div class="card-title">Protection Function Legend</div>';
+    var letters = trip.protection.split('');
+    for (var i = 0; i < letters.length; i++) {
+      var l = PROTECTION_LEGEND[letters[i]];
+      if (l) {
+        html += '<div class="card-row"><span class="card-label"><strong>' + letters[i] + '</strong> &mdash; ' + l.name + '</span><span class="card-value" style="font-weight:400;color:var(--gray-600)">' + l.desc + '</span></div>';
+      }
+    }
+    html += '</div>';
+  }
+
+  // Brand cross-reference
+  if (p.frameTypeCode && BRAND_XREF[p.frameTypeCode]) {
+    var bx = BRAND_XREF[p.frameTypeCode];
+    html += '<div class="result-card wide" style="margin-top:12px;">';
+    html += '<div class="card-title">Brand Cross-Reference</div>';
+    html += row('Eaton / Cutler-Hammer', bx.cutlerHammer);
+    html += row('Westinghouse', bx.westinghouse);
+    html += row('Challenger', bx.challenger);
+    html += '</div>';
+  }
+
+  // Cross-reference: obsolete → RD (collapsed)
+  html += '<div class="result-card wide" style="margin-top:12px;">';
+  html += '<div class="card-title" style="cursor:pointer;" onclick="var t=this.nextElementSibling;t.style.display=t.style.display===\'none\'?\'block\':\'none\';">Obsolete Breaker Cross-Reference — PB / PC / PCC → RD (click to expand)</div>';
+  html += '<div style="display:none;">';
+  html += '<table class="ref-table"><thead><tr><th>Old Catalog</th><th>Description</th><th>Replacement</th><th>Notes</th></tr></thead><tbody>';
+  for (var i = 0; i < CROSS_REF.length; i++) {
+    var cr = CROSS_REF[i];
+    html += '<tr><td><strong>' + cr.old + '</strong></td><td>' + cr.oldDesc + '</td><td><strong>' + cr.new + '</strong></td><td>' + cr.newDesc + '</td></tr>';
+  }
+  html += '</tbody></table>';
+  html += '<div style="margin-top:8px;font-size:0.75rem;color:var(--gray-500);">Note: Electrical replacement only. Dimensions may differ. Higher IC Series C does not increase assembly IC rating.</div>';
+  html += '</div>';
+  html += '</div>';
+
+  // Accessories (collapsed)
+  html += '<div class="result-card wide" style="margin-top:12px;">';
+  html += '<div class="card-title" style="cursor:pointer;" onclick="var t=this.nextElementSibling;t.style.display=t.style.display===\'none\'?\'block\':\'none\';">Accessories &amp; Renewal Parts (click to expand)</div>';
+  html += '<div style="display:none;">';
+
+  html += '<h4 style="font-size:0.8rem;color:var(--gray-700);margin:8px 0 4px;">Shunt Trips</h4>';
+  html += '<table class="ref-table"><thead><tr><th>Catalog Number</th><th>Description</th></tr></thead><tbody>';
+  for (var i = 0; i < ACCESSORIES.shuntTrips.length; i++) {
+    var a = ACCESSORIES.shuntTrips[i];
+    html += '<tr><td><strong>' + a.cat + '</strong></td><td>' + a.desc + '</td></tr>';
+  }
+  html += '</tbody></table>';
+
+  html += '<h4 style="font-size:0.8rem;color:var(--gray-700);margin:12px 0 4px;">Auxiliary Switches</h4>';
+  html += '<table class="ref-table"><thead><tr><th>Catalog Number</th><th>Description</th></tr></thead><tbody>';
+  for (var i = 0; i < ACCESSORIES.auxSwitches.length; i++) {
+    var a = ACCESSORIES.auxSwitches[i];
+    html += '<tr><td><strong>' + a.cat + '</strong></td><td>' + a.desc + '</td></tr>';
+  }
+  html += '</tbody></table>';
+
+  html += '<h4 style="font-size:0.8rem;color:var(--gray-700);margin:12px 0 4px;">Terminals</h4>';
+  html += '<table class="ref-table"><thead><tr><th>Catalog Number</th><th>Description</th></tr></thead><tbody>';
+  for (var i = 0; i < ACCESSORIES.terminals.length; i++) {
+    var a = ACCESSORIES.terminals[i];
+    html += '<tr><td><strong>' + a.cat + '</strong></td><td>' + a.desc + '</td></tr>';
+  }
+  html += '</tbody></table>';
+
+  html += '<h4 style="font-size:0.8rem;color:var(--gray-700);margin:12px 0 4px;">Rear Bus Connectors</h4>';
+  html += '<table class="ref-table"><thead><tr><th>Catalog Number</th><th>Description</th></tr></thead><tbody>';
+  for (var i = 0; i < ACCESSORIES.rearConnectors.length; i++) {
+    var a = ACCESSORIES.rearConnectors[i];
+    html += '<tr><td><strong>' + a.cat + '</strong></td><td>' + a.desc + '</td></tr>';
+  }
+  html += '</tbody></table>';
+
+  html += '<h4 style="font-size:0.8rem;color:var(--gray-700);margin:12px 0 4px;">Handle Mechanisms</h4>';
+  html += '<table class="ref-table"><thead><tr><th>Catalog Number</th><th>Description</th></tr></thead><tbody>';
+  for (var i = 0; i < ACCESSORIES.handleMechanisms.length; i++) {
+    var a = ACCESSORIES.handleMechanisms[i];
+    html += '<tr><td><strong>' + a.cat + '</strong></td><td>' + a.desc + '</td></tr>';
+  }
+  html += '</tbody></table>';
+
+  html += '<h4 style="font-size:0.8rem;color:var(--gray-700);margin:12px 0 4px;">Other</h4>';
+  html += '<table class="ref-table"><thead><tr><th>Catalog Number</th><th>Description</th></tr></thead><tbody>';
+  for (var i = 0; i < ACCESSORIES.other.length; i++) {
+    var a = ACCESSORIES.other[i];
+    html += '<tr><td><strong>' + a.cat + '</strong></td><td>' + a.desc + '</td></tr>';
+  }
+  html += '</tbody></table>';
+
+  html += '</div>';
+  html += '</div>';
+
+  return html;
+}
+
+/* ============================================================
+   MAIN DECODE FUNCTION
+   ============================================================ */
+function decode() {
+  var raw = document.getElementById('catInput').value;
+  if (!raw.trim()) return;
+
+  var parsed = parseCatalog(raw);
+  var resultsEl = document.getElementById('results');
+
+  renderCharMap(parsed);
+
+  if (parsed.frameTypeCode) {
+    resultsEl.innerHTML = renderResults(parsed);
+    resultsEl.style.display = 'block';
+    // Attach copy-button listener AFTER innerHTML is set.
+    // (We cannot use inline onclick because p.raw is user input and
+    // attribute injection would be possible — see esc() note above.)
+    var copyBtn = document.getElementById('btnCopyCat');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', function() {
+        copyCatalog(parsed.raw, copyBtn);
+      });
+    }
+  } else {
+    var warn = '<div class="result-card warn wide"><div class="card-title">Input Not Recognized</div>';
+    for (var i = 0; i < parsed.errors.length; i++) {
+      warn += '<div class="card-row"><span class="card-label">' + esc(parsed.errors[i].label) + '</span><span class="card-value" style="color:#dc2626">' + esc(parsed.errors[i].msg) + '</span></div>';
+    }
+    warn += '<div class="card-row"><span class="card-label">Tip</span><span class="card-value">Catalog numbers start with RD, RDC, CRD, or CRDC (e.g. RD316T56W)</span></div>';
+    warn += '</div>';
+    resultsEl.innerHTML = warn;
+    resultsEl.style.display = 'block';
+  }
+
+  updateDetectBadge(raw);
+}
+
+function updateDetectBadge(raw) {
+  var badge = document.getElementById('detectBadge');
+  if (!raw || !raw.trim()) { badge.innerHTML = ''; return; }
+  var t = detectType(raw);
+  var labels = {
+    'rd': ['RD — Standard', 'detect-rd'],
+    'rdc': ['RDC — High Interrupting', 'detect-rdc'],
+    'crd': ['CRD — 100% Rated', 'detect-crd'],
+    'crdc': ['CRDC — 100% HI Rated', 'detect-crdc']
+  };
+  if (labels[t]) {
+    badge.innerHTML = '<span class="detect-badge ' + labels[t][1] + '">' + labels[t][0] + '</span>';
+  } else {
+    badge.innerHTML = '<span class="detect-badge detect-unknown">Unknown Format</span>';
+  }
+}
+
+function copyCatalog(cat, btn) {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(cat).then(function() {
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(function() { btn.textContent = 'Copy Catalog Number'; btn.classList.remove('copied'); }, 2000);
+    });
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = cat; ta.style.position = 'fixed'; ta.style.left = '-9999px';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+    document.body.removeChild(ta);
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(function() { btn.textContent = 'Copy Catalog Number'; btn.classList.remove('copied'); }, 2000);
+  }
+}
+
+function clearAll() {
+  document.getElementById('catInput').value = '';
+  document.getElementById('results').innerHTML = '';
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('charBoxes').innerHTML = '';
+  document.getElementById('groupLabels').innerHTML = '';
+  document.getElementById('posLabels').innerHTML = '';
+  document.getElementById('charLegend').style.display = 'none';
+  document.getElementById('detectBadge').innerHTML = '';
+}
+
+function loadExample(btn) {
+  document.getElementById('catInput').value = btn.textContent;
+  decode();
+}
+
+// Live detection badge on input
+document.getElementById('catInput').addEventListener('input', function() {
+  updateDetectBadge(this.value);
+});
+
+// Enter to decode
+document.getElementById('catInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') decode();
+});
+
+// Init
+renderCharMap(null);
+</script>
+
+</body>
+</html>
