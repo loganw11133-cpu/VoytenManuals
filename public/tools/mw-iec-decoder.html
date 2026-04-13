@@ -1,0 +1,1754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Eaton Magnum IEC (MW) Circuit Breaker Decoder</title>
+<style>
+  :root {
+    --red: #dc2626;
+    --dark-red: #b91c1c;
+    --black: #1a1a1a;
+    --deep-black: #111111;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --white: #ffffff;
+    --blue: #2563eb;
+    --blue-light: #dbeafe;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--gray-100);
+    color: var(--gray-800);
+    min-height: 100vh;
+  }
+
+  .header {
+    background: linear-gradient(135deg, var(--deep-black), var(--black));
+    color: var(--white);
+    padding: 24px 20px 20px;
+    text-align: center;
+    border-bottom: 4px solid var(--red);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  }
+  .header h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: 0.5px; }
+  .header h1 .accent { color: var(--red); }
+  .header .subtitle { font-size: 0.85rem; color: var(--gray-300); margin-top: 4px; }
+  .header-cta {
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    flex-wrap: wrap; margin-top: 10px;
+  }
+  .header-phone {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--red); color: var(--white); text-decoration: none;
+    font-size: 0.85rem; font-weight: 700; padding: 6px 14px;
+    border-radius: 999px; transition: background 0.2s;
+  }
+  .header-phone:hover, .header-phone:focus-visible {
+    background: var(--dark-red); outline: none;
+  }
+  .header-phone:focus-visible { box-shadow: 0 0 0 3px rgba(220,38,38,0.4); }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 25px 20px;
+  }
+
+  .input-section {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 25px 30px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+  }
+
+  .input-section label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+    color: var(--gray-700);
+  }
+
+  .input-row {
+    display: flex;
+    gap: 12px;
+    align-items: stretch;
+  }
+
+  .input-row input {
+    flex: 1;
+    padding: 14px 18px;
+    font-size: 1.3rem;
+    font-family: 'Consolas', 'Courier New', monospace;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border: 2px solid var(--gray-300);
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .input-row input:focus { border-color: var(--red); }
+
+  .input-row button {
+    padding: 14px 28px;
+    background: var(--red);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+
+  .input-row button:hover { background: var(--dark-red); }
+
+  .btn-clear { background: var(--gray-600) !important; }
+  .btn-clear:hover { background: var(--gray-700) !important; }
+
+  .hint {
+    margin-top: 10px;
+    font-size: 0.8rem;
+    color: var(--gray-400);
+  }
+
+  .hint code {
+    background: var(--gray-200);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Consolas', monospace;
+    font-size: 0.8rem;
+  }
+
+  .detect-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+  .detect-badge.breaker { background: var(--blue-light); color: var(--blue); }
+  .detect-badge.cassette { background: #d1fae5; color: #047857; }
+  .detect-badge.unknown { background: #fecaca; color: var(--red); }
+
+  .char-map {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 20px 30px 30px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+    overflow-x: auto;
+  }
+
+  .char-map h3 {
+    font-size: 0.85rem;
+    color: var(--gray-600);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .char-boxes {
+    display: flex;
+    gap: 2px;
+    flex-wrap: nowrap;
+  }
+
+  .char-box {
+    width: 38px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Consolas', monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+    border-radius: 4px;
+    background: var(--gray-200);
+    color: var(--gray-600);
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .char-box.filled { background: var(--deep-black); color: var(--white); }
+  .char-box.defaulted { background: var(--blue); color: var(--white); opacity: 0.7; }
+  .char-box.error { background: #fecaca; color: var(--red); }
+  .char-box.space { background: transparent; width: 14px; }
+
+  .char-box .pos-label {
+    position: absolute;
+    bottom: -16px;
+    font-size: 0.55rem;
+    color: var(--gray-400);
+    font-weight: 400;
+  }
+
+  .group-labels {
+    display: flex;
+    gap: 2px;
+    margin-top: 24px;
+  }
+
+  .group-label {
+    font-size: 0.6rem;
+    color: var(--red);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .group-label-spacer { width: 14px; flex-shrink: 0; }
+
+  .char-legend {
+    display: flex;
+    gap: 16px;
+    margin-top: 14px;
+    font-size: 0.7rem;
+    color: var(--gray-600);
+  }
+
+  .char-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .char-legend-swatch {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  .results-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  @media (max-width: 768px) {
+    .results-section { grid-template-columns: 1fr; }
+    .char-box { width: 28px; height: 38px; font-size: 0.95rem; }
+  }
+
+  .result-card {
+    background: var(--white);
+    border-radius: 10px;
+    padding: 20px 24px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    border-left: 4px solid var(--gray-300);
+  }
+
+  .result-card.valid { border-left-color: var(--red); }
+  .result-card.info-card { border-left-color: var(--blue); }
+  .result-card.error-card { border-left-color: #f59e0b; }
+  .result-card.full-width { grid-column: 1 / -1; }
+
+  .result-card h3 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--gray-400);
+    margin-bottom: 10px;
+  }
+
+  .result-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--gray-100);
+    font-size: 0.9rem;
+  }
+
+  .result-item:last-child { border-bottom: none; }
+
+  .result-item .label { color: var(--gray-600); font-weight: 500; }
+  .result-item .value { font-weight: 600; color: var(--gray-800); text-align: right; max-width: 60%; }
+  .result-item .value.error-val { color: var(--red); }
+  .result-item .value.default-val { color: var(--blue); font-style: italic; }
+
+  .summary-banner {
+    background: linear-gradient(135deg, var(--deep-black), var(--black));
+    color: white;
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    grid-column: 1 / -1;
+  }
+
+  .summary-banner h2 { font-size: 1.1rem; margin-bottom: 4px; }
+  .summary-banner p { color: var(--gray-400); font-size: 0.85rem; }
+  .summary-banner .partial-tag {
+    display: inline-block;
+    background: var(--blue);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    margin-left: 8px;
+    vertical-align: middle;
+    letter-spacing: 0.5px;
+  }
+
+  .hidden { display: none; }
+
+  footer {
+    text-align: center;
+    padding: 20px;
+    color: var(--gray-400);
+    font-size: 0.75rem;
+  }
+
+  .examples-bar {
+    margin-top: 12px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .examples-label {
+    font-size: 0.78rem;
+    color: var(--gray-400);
+    line-height: 30px;
+    flex-shrink: 0;
+  }
+
+  .example-btn {
+    padding: 5px 12px;
+    background: var(--gray-200);
+    border: 1px solid var(--gray-300);
+    border-radius: 6px;
+    font-family: 'Consolas', monospace;
+    font-size: 0.72rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--gray-700);
+  }
+
+  .example-btn:hover {
+    background: var(--red);
+    color: white;
+    border-color: var(--red);
+  }
+
+  .renewal-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+    font-size: 0.82rem;
+  }
+
+  .renewal-table th {
+    background: var(--gray-100);
+    padding: 6px 10px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--gray-600);
+  }
+
+  .renewal-table td {
+    padding: 5px 10px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .ratings-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+    font-size: 0.8rem;
+  }
+
+  .ratings-table th {
+    background: var(--gray-100);
+    padding: 6px 8px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: var(--gray-600);
+  }
+
+  .ratings-table td {
+    padding: 5px 8px;
+    border-bottom: 1px solid var(--gray-100);
+    text-align: center;
+  }
+
+  .ratings-table tr.highlight { background: #fef3c7; }
+
+  .cta-banner {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, #1e3a5f, #1a1a2e);
+    color: white;
+    border-radius: 10px;
+    padding: 24px;
+    text-align: center;
+    margin-top: 8px;
+  }
+
+  .cta-text {
+    font-size: 0.95rem;
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-decoration: none;
+    margin: 4px 8px;
+    transition: all 0.2s;
+  }
+
+  .cta-primary {
+    background: var(--red);
+    color: white;
+  }
+  .cta-primary:hover { background: var(--dark-red); }
+
+  .cta-secondary {
+    background: transparent;
+    color: white;
+    border: 2px solid rgba(255,255,255,0.4);
+  }
+  .cta-secondary:hover { border-color: white; background: rgba(255,255,255,0.1); }
+
+  /* iOS / Mobile notice for Quick Look (no JS) */
+  .ios-notice {
+    background: #fef3c7;
+    border: 2px solid #f59e0b;
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin: 20px auto;
+    max-width: 600px;
+    text-align: center;
+    font-size: 0.95rem;
+    color: #92400e;
+    line-height: 1.6;
+  }
+  .ios-notice strong { color: #78350f; font-size: 1.05rem; }
+  .ios-notice .steps { text-align: left; margin: 12px auto; max-width: 400px; }
+  .ios-notice .steps li { margin: 6px 0; }
+
+  /* Mobile-responsive */
+  @media (max-width: 768px) {
+    .header { padding: 14px 16px; flex-wrap: wrap; gap: 8px; }
+    .header h1 { font-size: 1.2rem; }
+    .container { padding: 14px 10px; }
+    .input-section { padding: 16px 14px; }
+    .input-row { flex-direction: column; gap: 8px; }
+    .input-row input {
+      font-size: 1rem;
+      padding: 12px 14px;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+    }
+    .input-row button {
+      padding: 14px 20px;
+      font-size: 1rem;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .examples-bar { gap: 6px; }
+    .example-btn { font-size: 0.65rem; padding: 4px 7px; }
+    .char-box { width: 28px; height: 38px; font-size: 0.9rem; }
+    .char-map { padding: 14px 12px 20px; }
+    .results-section { grid-template-columns: 1fr; }
+    .summary-banner h2 { font-size: 1rem; }
+  }
+
+  /* Touch-friendly tap targets (iOS Safari) */
+  @supports (-webkit-touch-callout: none) {
+    button, .example-btn {
+      -webkit-tap-highlight-color: rgba(220, 38, 38, 0.2);
+      touch-action: manipulation;
+      cursor: pointer;
+    }
+    input[type="text"] {
+      -webkit-appearance: none;
+      font-size: 16px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<noscript>
+<div class="ios-notice">
+  <strong>Interactive Mode Required</strong><br><br>
+  This decoder requires JavaScript to run. If you are viewing this on an iPhone or iPad, the Files app preview does not support interactive content.
+  <ol class="steps">
+    <li>Tap the <strong>Share</strong> button (box with arrow)</li>
+    <li>Select <strong>"Open in Safari"</strong></li>
+    <li>The decoder will be fully interactive in Safari</li>
+  </ol>
+  On Mac: Right-click the file &rarr; Open With &rarr; Safari.<br>
+  On Android: Open with Chrome or any browser.
+</div>
+</noscript>
+
+<div class="header">
+  <h1>Eaton <span class="accent">Magnum IEC (MW)</span> Decoder</h1>
+  <div class="subtitle">IEC 60947-2 Low Voltage Air Circuit Breakers &mdash; 800A to 6300A</div>
+  <div class="header-cta">
+    <a class="header-phone" href="tel:+18004584001" aria-label="Call Voyten Electric at 1-800-458-4001">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.24.2 2.45.57 3.57a1 1 0 01-.24 1.02l-2.21 2.2z"/></svg>
+      1-800-458-4001
+    </a>
+  </div>
+</div>
+
+<div class="container">
+  <div class="input-section">
+    <label for="catInput">Enter MW Breaker or IEC Cassette Number <span id="detectBadge"></span></label>
+    <div class="input-row">
+      <input type="text" id="catInput" placeholder="MWI8203LEA or EN324HANNSNNNWC" maxlength="30" autocomplete="off" spellcheck="false" oninput="updateDetectBadge()">
+      <button onclick="decode()">Decode</button>
+      <button class="btn-clear" onclick="clearAll()">Clear</button>
+    </div>
+    <div class="hint">
+      Breaker: <code>MW + 23 chars (25 total)</code> &nbsp;|&nbsp; Cassette: <code>15 chars starting with E or N</code> &nbsp;|&nbsp; Partial input accepted.
+    </div>
+    <div class="examples-bar">
+      <span class="examples-label">Narrow Frame:</span>
+      <button class="example-btn" onclick="loadExample(this)">MWN5124LEA03MT</button>
+      <button class="example-btn" onclick="loadExample(this)">MWN6163HEA</button>
+      <button class="example-btn" onclick="loadExample(this)">MWN5084LEA</button>
+      <span class="examples-label">Standard Frame:</span>
+      <button class="example-btn" onclick="loadExample(this)">MWI8203LEA20MT6MCJ2MCNMWX</button>
+      <button class="example-btn" onclick="loadExample(this)">MWI6253HEA25C8</button>
+      <button class="example-btn" onclick="loadExample(this)">MWIZ324LEA</button>
+      <span class="examples-label">Double/Special:</span>
+      <button class="example-btn" onclick="loadExample(this)">MWI64N3LEA</button>
+      <button class="example-btn" onclick="loadExample(this)">MWIZ5N3LEA</button>
+      <span class="examples-label">Cassettes:</span>
+      <button class="example-btn" onclick="loadExample(this)">EN324HANNSNNNWC</button>
+      <button class="example-btn" onclick="loadExample(this)">NN204HANNSNNNWC</button>
+    </div>
+  </div>
+
+  <div class="char-map" id="charMap">
+    <h3>Character Position Map</h3>
+    <div class="char-boxes" id="charBoxes"></div>
+    <div class="group-labels" id="groupLabels"></div>
+    <div class="char-legend" id="charLegend" style="display:none;">
+      <div class="char-legend-item"><div class="char-legend-swatch" style="background:var(--deep-black)"></div> Entered</div>
+      <div class="char-legend-item"><div class="char-legend-swatch" style="background:var(--blue);opacity:0.7"></div> Assumed Default</div>
+      <div class="char-legend-item"><div class="char-legend-swatch" style="background:#fecaca;border:1px solid #fca5a5"></div> Unrecognized</div>
+    </div>
+  </div>
+
+  <div class="results-section hidden" id="results"></div>
+</div>
+
+<footer>
+  Eaton Magnum IEC (MW) Decoder &mdash; Voyten Electric &amp; Electronics, Inc. &mdash; Data sourced from Eaton CA013002EN (April 2017)
+</footer>
+
+<script>
+// ============================================================
+// XSS SAFETY
+// ============================================================
+function esc(s) {
+  if (s === null || s === undefined) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+// ============================================================
+// DATA TABLES — Eaton Magnum IEC (MW)
+// Sourced: Eaton CA013002EN (April 2017)
+// ============================================================
+
+var DATA = {
+  family: {
+    'MW': 'Magnum IEC (IEC 60947-2)'
+  },
+
+  frameType: {
+    'I': 'Standard Frame',
+    'N': 'Narrow Frame',
+    'K': 'Special 1100V ACB'
+  },
+
+  interruptRating: {
+    '4': { kA: 40 },
+    '5': { kA: 50 },
+    '6': { kA: 65 },
+    '8': { kA: 85 },
+    'Z': { kA: 100 },
+    'H': { kA: 125 }
+  },
+
+  ampFrame: {
+    '08': { amps: 800, phasing: 'ABC' },
+    '10': { amps: 1000, phasing: 'ABC' },
+    '12': { amps: 1250, phasing: 'ABC' },
+    '16': { amps: 1600, phasing: 'ABC' },
+    '20': { amps: 2000, phasing: 'ABC' },
+    '25': { amps: 2500, phasing: 'ABC' },
+    '32': { amps: 3200, phasing: 'ABC' },
+    '41': { amps: 4000, phasing: 'ABC (Standard D/O Only)' },
+    '4N': { amps: 4000, phasing: 'AABBCC (Double)' },
+    '5N': { amps: 5000, phasing: 'AABBCC (Double)' },
+    '6N': { amps: 6300, phasing: 'AABBCC (Double)' },
+    '40': { amps: 4000, phasing: 'ABCABC' },
+    '50': { amps: 5000, phasing: 'ABCABC' },
+    '60': { amps: 6300, phasing: 'ABCABC' }
+  },
+
+  poles: {
+    '3': '3-Pole',
+    '4': '4-Pole (Switched Neutral, Left Side)',
+    'R': '4-Pole (Neutral Right, Reserved)'
+  },
+
+  mounting: {
+    'H': 'Fixed \u2014 Horizontal Rear Bus',
+    'V': 'Fixed \u2014 Vertical Rear Bus',
+    'L': 'Drawout \u2014 Horizontal'
+  },
+
+  language: {
+    'E': 'English',
+    'A': 'Spanish'
+  },
+
+  config: {
+    'A': 'Standard IEC Configuration'
+  },
+
+  sensorRating: {
+    'NN': 0,
+    '01': 100,
+    '02': 200,
+    '05': 250,
+    '03': 300,
+    '04': 400,
+    '06': 600,
+    '08': 800,
+    '10': 1000,
+    '12': 1200,
+    '13': 1250,
+    '16': 1600,
+    '20': 2000,
+    '25': 2500,
+    '30': 3000,
+    '32': 3200,
+    '40': 4000,
+    '50': 5000,
+    '63': 6300
+  },
+
+  tripUnit: {
+    'NN': { name: 'Non-Automatic', protection: 'None (No Trip Unit)', controlPower: 'N/A' },
+    '22': { name: 'Digitrip 520', protection: 'LI', controlPower: 'N/A' },
+    '52': { name: 'Digitrip 520', protection: 'LSI', controlPower: 'N/A' },
+    '5W': { name: 'Digitrip 520i', protection: 'LSIG', controlPower: 'N/A' },
+    'M2': { name: 'Digitrip 520M', protection: 'LSI', controlPower: 'N/A' },
+    'MT': { name: 'Digitrip 520M', protection: 'LSI', controlPower: '24\u201348 Vdc' },
+    'MU': { name: 'Digitrip 520M', protection: 'LSI', controlPower: '120 Vac' },
+    'MV': { name: 'Digitrip 520M', protection: 'LSI', controlPower: '240 Vac' },
+    'MW': { name: 'Digitrip 520Mi', protection: 'LSIG', controlPower: 'N/A' },
+    'MJ': { name: 'Digitrip 520Mi', protection: 'LSIG', controlPower: '24\u201348 Vdc' },
+    'MK': { name: 'Digitrip 520Mi', protection: 'LSIG', controlPower: '120 Vac' },
+    'ML': { name: 'Digitrip 520Mi', protection: 'LSIG', controlPower: '240 Vac' },
+    'ME': { name: 'Digitrip 520M', protection: 'LSIA', controlPower: '24\u201348 Vdc' },
+    'MC': { name: 'Digitrip 520M', protection: 'LSIA', controlPower: '120 Vac' },
+    'MF': { name: 'Digitrip 520M', protection: 'LSIA', controlPower: '240 Vac' },
+    'CT': { name: 'Digitrip 520MC', protection: 'LSI', controlPower: '24\u201348 Vdc' },
+    'CU': { name: 'Digitrip 520MC', protection: 'LSI', controlPower: '120 Vac' },
+    'CV': { name: 'Digitrip 520MC', protection: 'LSI', controlPower: '240 Vac' },
+    'CE': { name: 'Digitrip 520MC', protection: 'LSIA', controlPower: '24\u201348 Vdc' },
+    'CC': { name: 'Digitrip 520MC', protection: 'LSIA', controlPower: '120 Vac' },
+    'CF': { name: 'Digitrip 520MC', protection: 'LSIA', controlPower: '240 Vac' },
+    'CJ': { name: 'Digitrip 520MCi', protection: 'LSIG', controlPower: '24\u201348 Vdc' },
+    'CK': { name: 'Digitrip 520MCi', protection: 'LSIG', controlPower: '120 Vac' },
+    'CL': { name: 'Digitrip 520MCi', protection: 'LSIG', controlPower: '240 Vac' },
+    'C1': { name: 'Digitrip 520MC ARMS', protection: 'LSI', controlPower: '24\u201348 Vdc' },
+    'C2': { name: 'Digitrip 520MC ARMS', protection: 'LSI', controlPower: '120 Vac' },
+    'C3': { name: 'Digitrip 520MC ARMS', protection: 'LSI', controlPower: '240 Vac' },
+    'C4': { name: 'Digitrip 520MC ARMS', protection: 'LSIA', controlPower: '24\u201348 Vdc' },
+    'C5': { name: 'Digitrip 520MC ARMS', protection: 'LSIA', controlPower: '120 Vac' },
+    'C6': { name: 'Digitrip 520MC ARMS', protection: 'LSIA', controlPower: '240 Vac' },
+    'C7': { name: 'Digitrip 520MC ARMS', protection: 'LSIG', controlPower: '24\u201348 Vdc' },
+    'C8': { name: 'Digitrip 520MC ARMS', protection: 'LSIG', controlPower: '120 Vac' },
+    'C9': { name: 'Digitrip 520MC ARMS', protection: 'LSIG', controlPower: '240 Vac' },
+    '1W': { name: 'Digitrip 1150i', protection: 'LSI', controlPower: '24\u201348 Vdc' },
+    '1N': { name: 'Digitrip 1150i', protection: 'LSI', controlPower: '120 Vac' },
+    '1P': { name: 'Digitrip 1150i', protection: 'LSI', controlPower: '240 Vac' },
+    '1R': { name: 'Digitrip 1150i', protection: 'LSIG/A', controlPower: '24\u201348 Vdc' },
+    '1S': { name: 'Digitrip 1150i', protection: 'LSIG/A', controlPower: '120 Vac' },
+    '1T': { name: 'Digitrip 1150i', protection: 'LSIG/A', controlPower: '240 Vac' }
+  },
+
+  shuntTrip: {
+    'N': 'None',
+    'A': '110\u2013127 Vac/Vdc',
+    'R': '208\u2013240 Vac/Vdc',
+    'C': '24 Vdc',
+    'H': '48 Vdc',
+    'B': '110\u2013127 Vac/Vdc (100% Duty)',
+    'S': '220\u2013250 Vac/Vdc (100% Duty)',
+    'D': '24 Vdc (100% Duty)',
+    'K': '48 Vdc (100% Duty)',
+    'J': '60 Vdc (100% Duty)',
+    '6': '60 Vdc'
+  },
+
+  motorOp: {
+    'M': 'Manual (No Motor)',
+    'N': '110\u2013125 Vac (5-sec)',
+    'W': '110\u2013125 Vdc (5-sec)',
+    'T': '220\u2013250 Vdc (5-sec)',
+    'P': '208\u2013277 Vac (5-sec)',
+    'L': '24 Vdc (5-sec)',
+    'K': '48 Vdc (5-sec)',
+    'S': '60 Vdc (5-sec)',
+    '1': '110\u2013125 Vac (3-sec)',
+    '2': '220\u2013250 Vac (3-sec)',
+    '4': '24 Vdc (3-sec)',
+    '8': '48 Vdc (3-sec)',
+    '5': '110\u2013125 Vdc (3-sec)',
+    '9': '220\u2013250 Vdc (3-sec)'
+  },
+
+  springRelease: {
+    'N': 'None',
+    'A': '110\u2013127 Vac/Vdc',
+    'R': '208\u2013240 Vac/Vdc',
+    'C': '24 Vdc',
+    'H': '48 Vdc',
+    'S': '60 Vdc'
+  },
+
+  uvr: {
+    'N': 'None',
+    'A': 'UVR 110\u2013127 Vac',
+    'R': 'UVR 208\u2013240 Vac',
+    'C': 'UVR 24 Vdc',
+    'H': 'UVR 48 Vdc',
+    'D': 'UVR 60 Vdc',
+    'E': 'UVR 110\u2013125 Vdc',
+    'F': 'UVR 220\u2013250 Vdc',
+    'G': 'UVR 32 Vdc',
+    'X': 'UVR 380\u2013415 Vac',
+    'J': 'UVR 480 Vac',
+    'K': 'UVR 600 Vac',
+    '1': '2nd ST 110\u2013127 Vac/Vdc',
+    '2': '2nd ST 208\u2013250 Vac/Vdc',
+    '3': '2nd ST 24 Vdc',
+    '4': '2nd ST 48 Vdc',
+    '6': '2nd ST 60 Vdc',
+    'B': '2nd ST 110\u2013127 Vac/Vdc (100% Duty)',
+    'O': '2nd ST 220\u2013250 Vac/Vdc (100% Duty)',
+    'I': '2nd ST 24 Vdc (100% Duty)',
+    'Q': '2nd ST 48 Vdc (100% Duty)',
+    '9': '2nd ST 60 Vdc (100% Duty)'
+  },
+
+  auxSwitch: {
+    'N': 'None',
+    '2': '2A/2B',
+    '4': '4A/4B',
+    '6': '6A/6B'
+  },
+
+  padlock: {
+    'N': 'None',
+    'M': 'Metal (Block Close + Open)',
+    'P': 'Plastic (Block Close + Open)',
+    'C': 'Metal (Block Close Only)',
+    'H': 'Plastic (Block Close Only)'
+  },
+
+  counterKeylock: {
+    'N': 'No Counter / No Lock',
+    'K': 'No Counter / Kirk Lock',
+    'C': 'No Counter / Castell Lock',
+    'R': 'No Counter / Ronis Lock',
+    'S': 'No Counter / CES Lock',
+    'A': 'Counter / No Lock',
+    'Y': 'Counter / Kirk Lock',
+    'L': 'Counter / Castell Lock',
+    'H': 'Counter / Ronis Lock',
+    'E': 'Counter / CES Lock'
+  },
+
+  bellAlarm: {
+    'E': 'No Trip Indicator / No OTS',
+    'N': 'Trip Indicator / No OTS',
+    'Y': 'Trip Indicator + OTS (2 Form C)',
+    'M': 'Trip Indicator + Mech Interlock / No OTS',
+    'L': 'Trip Indicator + Mech Interlock + OTS',
+    'F': 'Trip Indicator + OTS w/ 24V Reset',
+    'G': 'Trip Indicator + OTS w/ 120V Reset',
+    'H': 'Trip Indicator + OTS w/ 240V Reset',
+    'I': 'Trip Indicator + Interlock + OTS w/ 24V Reset',
+    'J': 'Trip Indicator + Interlock + OTS w/ 120V Reset',
+    'K': 'Trip Indicator + Interlock + OTS w/ 240V Reset'
+  },
+
+  latchSwitch: {
+    'N': 'No Latch Check Switch',
+    'A': 'LCS Installed \u2014 Lower Terminals',
+    'M': 'LCS Wired \u2014 Lower Terminals',
+    'L': 'LCS Wired \u2014 Upper Terminals',
+    'E': 'External'
+  },
+
+  shipping: {
+    'A': 'Fixed Breaker + Door Kit',
+    'B': 'Fixed Breaker + Door Kit (Pre-wired)',
+    'F': 'Fixed Breaker (No Door Kit)',
+    'D': 'D/O ACB Only (No Door Kit)',
+    'C': 'D/O ACB in Cassette (Un-wired)',
+    'P': 'D/O ACB in Cassette (Pre-wired)',
+    'S': 'D/O ACB in Cassette (Shutters)',
+    'W': 'D/O ACB in Cassette (Pre-wired + Shutters)'
+  },
+
+  future: {
+    'X': 'Standard (Reserved)'
+  }
+};
+
+// ============================================================
+// CASSETTE DATA
+// ============================================================
+
+var CASSETTE_DATA = {
+  cassetteFamily: {
+    'E': 'Standard/Double Frame IEC',
+    'N': 'Narrow Frame IEC'
+  },
+  interruptType: {
+    'N': 'All Cassettes'
+  },
+  cassetteAmps: {
+    '20': 'Up to 2000A',
+    '32': '2500\u20133000A',
+    '41': '4000A (Standard Frame)',
+    '40': '4000A',
+    '63': '5000\u20136300A'
+  },
+  cassettePoles: {
+    '3': 'Three-Pole',
+    '4': 'Four-Pole'
+  },
+  rearTerminals: {
+    'H': 'Horizontal Stabs (Upper and Lower)'
+  },
+  arcHood: {
+    'A': 'Arc Hood for 690 Vac',
+    'K': 'Arc Hood for 1100 Vac'
+  },
+  doorFrame: {
+    'N': 'All Cassettes'
+  },
+  futureUse8: {
+    'N': 'All Cassettes'
+  },
+  shutters: {
+    'N': 'No Shutters',
+    'S': 'Shutters Installed'
+  },
+  futureUse11_13: {
+    'NNN': 'All Cassettes'
+  },
+  cassetteWiring: {
+    'N': 'Un-wired',
+    'W': 'Cassette Wired'
+  },
+  cassetteShipping: {
+    'C': 'Cassette Only'
+  }
+};
+
+// ============================================================
+// IEC RATINGS TABLE (Table 9 from CA013002EN)
+// ============================================================
+
+var RATINGS = [
+  { frame: 800, type: 'MWN-508', frameType: 'Narrow', icu240: 50, icu440: 50, icu690: 50, icw1s: 50, icw3s: null, kema: true, ccc: true },
+  { frame: 800, type: 'MWN-608', frameType: 'Narrow', icu240: 66, icu440: 66, icu690: 65, icw1s: 66, icw3s: 40, kema: true, ccc: true },
+  { frame: 800, type: 'MWI-608', frameType: 'Standard', icu240: 65, icu440: 65, icu690: 65, icw1s: 65, icw3s: null, kema: true, ccc: true },
+  { frame: 800, type: 'MWI-808', frameType: 'Standard', icu240: 85, icu440: 85, icu690: 85, icw1s: 85, icw3s: 65, kema: true, ccc: true },
+  { frame: 800, type: 'MWI-C08', frameType: 'Standard', icu240: 100, icu440: 100, icu690: 85, icw1s: 85, icw3s: 85, kema: true, ccc: true },
+  { frame: 1000, type: 'MWN-410', frameType: 'Narrow', icu240: 40, icu440: 40, icu690: 40, icw1s: 40, icw3s: null, kema: true, ccc: false },
+  { frame: 1000, type: 'MWN-510', frameType: 'Narrow', icu240: 50, icu440: 50, icu690: 50, icw1s: 50, icw3s: null, kema: true, ccc: false },
+  { frame: 1000, type: 'MWN-610', frameType: 'Narrow', icu240: 66, icu440: 66, icu690: 65, icw1s: 66, icw3s: 40, kema: true, ccc: false },
+  { frame: 1000, type: 'MWI-610', frameType: 'Standard', icu240: 65, icu440: 65, icu690: 65, icw1s: 65, icw3s: null, kema: true, ccc: false },
+  { frame: 1000, type: 'MWI-810', frameType: 'Standard', icu240: 85, icu440: 85, icu690: 85, icw1s: 85, icw3s: 65, kema: true, ccc: false },
+  { frame: 1000, type: 'MWI-C10', frameType: 'Standard', icu240: 100, icu440: 100, icu690: 85, icw1s: 85, icw3s: 85, kema: true, ccc: false },
+  { frame: 1250, type: 'MWN-412', frameType: 'Narrow', icu240: 40, icu440: 40, icu690: 40, icw1s: 40, icw3s: null, kema: true, ccc: true },
+  { frame: 1250, type: 'MWN-512', frameType: 'Narrow', icu240: 50, icu440: 50, icu690: 50, icw1s: 50, icw3s: null, kema: true, ccc: true },
+  { frame: 1250, type: 'MWN-612', frameType: 'Narrow', icu240: 66, icu440: 66, icu690: 65, icw1s: 66, icw3s: 40, kema: true, ccc: true },
+  { frame: 1250, type: 'MWI-612', frameType: 'Standard', icu240: 65, icu440: 65, icu690: 65, icw1s: 65, icw3s: null, kema: true, ccc: true },
+  { frame: 1250, type: 'MWI-812', frameType: 'Standard', icu240: 85, icu440: 85, icu690: 85, icw1s: 85, icw3s: 65, kema: true, ccc: true },
+  { frame: 1250, type: 'MWI-C12', frameType: 'Standard', icu240: 100, icu440: 100, icu690: 85, icw1s: 85, icw3s: 85, kema: true, ccc: true },
+  { frame: 1600, type: 'MWN-516', frameType: 'Narrow', icu240: 50, icu440: 50, icu690: 50, icw1s: 50, icw3s: null, kema: true, ccc: true },
+  { frame: 1600, type: 'MWN-616', frameType: 'Narrow', icu240: 66, icu440: 66, icu690: 65, icw1s: 66, icw3s: 40, kema: true, ccc: true },
+  { frame: 1600, type: 'MWI-616', frameType: 'Standard', icu240: 65, icu440: 65, icu690: 65, icw1s: 65, icw3s: null, kema: true, ccc: true },
+  { frame: 1600, type: 'MWI-816', frameType: 'Standard', icu240: 85, icu440: 85, icu690: 85, icw1s: 85, icw3s: 65, kema: true, ccc: true },
+  { frame: 1600, type: 'MWI-C16', frameType: 'Standard', icu240: 100, icu440: 100, icu690: 85, icw1s: 85, icw3s: 85, kema: true, ccc: true },
+  { frame: 2000, type: 'MWN-520', frameType: 'Narrow', icu240: 50, icu440: 50, icu690: 50, icw1s: 50, icw3s: 30, kema: true, ccc: true },
+  { frame: 2000, type: 'MWN-620', frameType: 'Narrow', icu240: 66, icu440: 66, icu690: 65, icw1s: 66, icw3s: 40, kema: true, ccc: true },
+  { frame: 2000, type: 'MWI-620', frameType: 'Standard', icu240: 65, icu440: 65, icu690: 65, icw1s: 65, icw3s: 50, kema: true, ccc: true },
+  { frame: 2000, type: 'MWI-820', frameType: 'Standard', icu240: 85, icu440: 85, icu690: 85, icw1s: 85, icw3s: 65, kema: true, ccc: true },
+  { frame: 2000, type: 'MWI-C20', frameType: 'Standard', icu240: 100, icu440: 100, icu690: 85, icw1s: 85, icw3s: 85, kema: true, ccc: true },
+  { frame: 2500, type: 'MWI-625', frameType: 'Standard', icu240: 65, icu440: 65, icu690: 65, icw1s: 65, icw3s: null, kema: true, ccc: true },
+  { frame: 2500, type: 'MWI-825', frameType: 'Standard', icu240: 85, icu440: 85, icu690: 85, icw1s: 85, icw3s: 65, kema: true, ccc: true },
+  { frame: 2500, type: 'MWI-C25', frameType: 'Standard', icu240: 100, icu440: 100, icu690: 85, icw1s: 85, icw3s: 85, kema: false, ccc: false },
+  { frame: 2500, type: 'MWI-H25', frameType: 'Standard', icu240: 125, icu440: 125, icu690: 125, icw1s: 85, icw3s: 65, kema: true, ccc: true },
+  { frame: 3200, type: 'MWK-232', frameType: 'Standard', icu240: 85, icu440: 85, icu690: 85, icw1s: 85, icw3s: 65, kema: false, ccc: false },
+  { frame: 3200, type: 'MWI-632', frameType: 'Standard', icu240: 65, icu440: 65, icu690: 65, icw1s: 65, icw3s: 50, kema: true, ccc: true },
+  { frame: 3200, type: 'MWI-832', frameType: 'Standard', icu240: 85, icu440: 85, icu690: 85, icw1s: 85, icw3s: 65, kema: true, ccc: true },
+  { frame: 3200, type: 'MWI-C32', frameType: 'Standard', icu240: 100, icu440: 100, icu690: 85, icw1s: 85, icw3s: 85, kema: true, ccc: true },
+  { frame: 3200, type: 'MWI-H32', frameType: 'Standard', icu240: 125, icu440: 125, icu690: 125, icw1s: 85, icw3s: 65, kema: false, ccc: false },
+  { frame: 4000, type: 'MWI-64N', frameType: 'Double', icu240: 65, icu440: 65, icu690: 65, icw1s: 65, icw3s: null, kema: true, ccc: true },
+  { frame: 4000, type: 'MWN-64N', frameType: 'Double Narrow', icu240: 66, icu440: 66, icu690: 66, icw1s: 66, icw3s: null, kema: true, ccc: true },
+  { frame: 4000, type: 'MWI-641', frameType: 'Standard', icu240: 66, icu440: 66, icu690: 66, icw1s: 66, icw3s: null, kema: true, ccc: true },
+  { frame: 4000, type: 'MWI-84N', frameType: 'Double', icu240: 85, icu440: 85, icu690: 85, icw1s: 85, icw3s: null, kema: true, ccc: true },
+  { frame: 4000, type: 'MWN-84N', frameType: 'Double Narrow', icu240: 85, icu440: 85, icu690: 66, icw1s: 85, icw3s: 66, kema: true, ccc: true },
+  { frame: 4000, type: 'MWI-841', frameType: 'Standard', icu240: 85, icu440: 85, icu690: 85, icw1s: 85, icw3s: 66, kema: true, ccc: true },
+  { frame: 4000, type: 'MWI-C4N', frameType: 'Double', icu240: 100, icu440: 100, icu690: 100, icw1s: 100, icw3s: null, kema: true, ccc: true },
+  { frame: 4000, type: 'MWN-C4N', frameType: 'Double Narrow', icu240: 105, icu440: 105, icu690: 66, icw1s: 105, icw3s: 66, kema: true, ccc: true },
+  { frame: 4000, type: 'MWI-C41', frameType: 'Standard', icu240: 105, icu440: 105, icu690: 85, icw1s: 85, icw3s: null, kema: true, ccc: true },
+  { frame: 5000, type: 'MWI-85N', frameType: 'Double', icu240: 85, icu440: 85, icu690: 85, icw1s: 85, icw3s: null, kema: true, ccc: true },
+  { frame: 5000, type: 'MWI-C5N', frameType: 'Double', icu240: 100, icu440: 100, icu690: 100, icw1s: 100, icw3s: null, kema: true, ccc: true },
+  { frame: 6300, type: 'MWI-86N', frameType: 'Double', icu240: 85, icu440: 85, icu690: 85, icw1s: 85, icw3s: null, kema: true, ccc: true },
+  { frame: 6300, type: 'MWI-C6N', frameType: 'Double', icu240: 100, icu440: 100, icu690: 100, icw1s: 100, icw3s: null, kema: true, ccc: true }
+];
+
+// ============================================================
+// SENSOR RANGES PER FRAME
+// ============================================================
+
+var SENSOR_RANGES = {
+  '08': [200, 250, 300, 400, 630, 800],
+  '10': [200, 250, 300, 400, 630, 800, 1000],
+  '12': [200, 250, 300, 400, 630, 800, 1000, 1250],
+  '16': [200, 250, 300, 400, 630, 800, 1000, 1250, 1600],
+  '20': [200, 250, 300, 400, 630, 800, 1000, 1250, 1600, 2000],
+  '25': [200, 250, 300, 400, 630, 800, 1000, 1250, 1600, 2000, 2500],
+  '32': [200, 250, 300, 400, 630],
+  '41': [2000, 2500, 3200, 4000],
+  '4N': [2000, 2500, 3200, 4000],
+  '40': [2000, 2500, 3200, 4000],
+  '5N': [2500, 3200, 4000, 5000],
+  '50': [2500, 3200, 4000, 5000],
+  '6N': [3200, 4000, 5000, 6300],
+  '60': [3200, 4000, 5000, 6300]
+};
+
+// ============================================================
+// DEFAULT BUILD PATTERN
+// ============================================================
+
+var POSITION_DEFAULTS = {
+  10: 'N',  // sensor char 1 -> NN = None
+  11: 'N',  // sensor char 2
+  12: 'N',  // trip unit char 1 -> NN = Non-Auto
+  13: 'N',  // trip unit char 2
+  14: 'N',  // shunt trip -> None
+  15: 'M',  // motor -> Manual
+  16: 'N',  // spring release -> None
+  17: 'N',  // UVR -> None
+  18: 'N',  // aux switch -> None
+  19: 'N',  // padlock -> None
+  20: 'N',  // counter/keylock -> None
+  21: 'N',  // bell alarm -> Trip Indicator / No OTS
+  22: 'N',  // latch switch -> None
+  23: 'D',  // shipping -> D/O ACB Only
+  24: 'X'   // future -> Standard
+};
+
+// ============================================================
+// INPUT DETECTION
+// ============================================================
+
+function detectType(input) {
+  var s = input.toUpperCase().replace(/[^A-Z0-9]/g, '');
+  if (s.length >= 2 && s.substring(0, 2) === 'MW') return 'breaker';
+  if (s.length >= 2 && (s[0] === 'E' || s[0] === 'N') && s[1] === 'N') return 'cassette';
+  if (s.length === 0) return 'none';
+  return 'unknown';
+}
+
+function updateDetectBadge() {
+  var input = document.getElementById('catInput').value.trim();
+  var badge = document.getElementById('detectBadge');
+  var t = detectType(input);
+  if (t === 'breaker') {
+    badge.innerHTML = '<span class="detect-badge breaker">MW Breaker</span>';
+  } else if (t === 'cassette') {
+    badge.innerHTML = '<span class="detect-badge cassette">IEC Cassette</span>';
+  } else if (t === 'unknown' && input.length > 0) {
+    badge.innerHTML = '<span class="detect-badge unknown">Unknown</span>';
+  } else {
+    badge.innerHTML = '';
+  }
+}
+
+// ============================================================
+// NORMALIZE + DECODE
+// ============================================================
+
+function normalize(input) {
+  return input.toUpperCase().replace(/[^A-Z0-9]/g, '');
+}
+
+function buildFullCatalog(entered) {
+  var enteredLen = entered.length;
+  var full = [];
+  var isDefault = [];
+
+  for (var i = 0; i < 25; i++) {
+    if (i < enteredLen) {
+      full.push(entered[i]);
+      isDefault.push(false);
+    } else {
+      if (POSITION_DEFAULTS[i] !== undefined) {
+        full.push(POSITION_DEFAULTS[i]);
+      } else {
+        full.push('N');
+      }
+      isDefault.push(true);
+    }
+  }
+
+  return { full: full.join(''), isDefault: isDefault, enteredLen: enteredLen };
+}
+
+function itemD(label, value, isDef) {
+  var cls = isDef ? ' default-val' : '';
+  return '<div class="result-item"><span class="label">' + esc(label) + '</span><span class="value' + cls + '">' + esc(value || 'N/A') + '</span></div>';
+}
+
+function itemE(label, value) {
+  return '<div class="result-item"><span class="label">' + esc(label) + '</span><span class="value error-val">' + esc(value) + '</span></div>';
+}
+
+// ============================================================
+// RATINGS LOOKUP
+// ============================================================
+
+function lookupRating(frameTypeCode, interruptCode, ampCode) {
+  // Build type designation like MWI-820, MWN-512, etc.
+  var familyPrefix = 'MW' + frameTypeCode;
+  var intChar = interruptCode;
+  // Map Z->C for type designation (100kA uses 'C' in type string)
+  if (intChar === 'Z') intChar = 'C';
+  var typeStr = familyPrefix + '-' + intChar + ampCode;
+
+  for (var i = 0; i < RATINGS.length; i++) {
+    if (RATINGS[i].type === typeStr) return RATINGS[i];
+  }
+  return null;
+}
+
+function buildTypeDesignation(frameTypeCode, interruptCode, ampCode) {
+  var intChar = interruptCode;
+  if (intChar === 'Z') intChar = 'C';
+  return 'MW' + frameTypeCode + '-' + intChar + ampCode;
+}
+
+// ============================================================
+// BREAKER DECODER
+// ============================================================
+
+function decodeBreaker(entered) {
+  if (entered.length < 4) {
+    showError('Enter at least the first 4 characters (MW + frame type + interrupt) to decode.');
+    renderBreakerCharMap(entered, [], 0, new Set());
+    return;
+  }
+
+  if (entered.length > 25) {
+    showError('Breaker catalog number cannot exceed 25 characters. Got ' + entered.length + '.');
+    renderBreakerCharMap(entered.substring(0, 25), [], 0, new Set());
+    return;
+  }
+
+  var build = buildFullCatalog(entered);
+  var c = build.full;
+  var isDefault = build.isDefault;
+  var enteredLen = build.enteredLen;
+  var isPartial = enteredLen < 25;
+
+  var errors = [];
+  var errorPositions = new Set();
+  var r = {};
+
+  // ---- Parse positions ----
+  var family = c.substring(0, 2);
+  var frameTypeCode = c[2];
+  var interruptCode = c[3];
+  var ampCode = c.substring(4, 6);
+  var polesCode = c[6];
+  var mountCode = c[7];
+  var langCode = c[8];
+  var configCode = c[9];
+  var sensorCode = c.substring(10, 12);
+  var tripCode = c.substring(12, 14);
+  var shuntCode = c[14];
+  var motorCode = c[15];
+  var springCode = c[16];
+  var uvrCode = c[17];
+  var auxCode = c[18];
+  var padlockCode = c[19];
+  var counterCode = c[20];
+  var bellCode = c[21];
+  var latchCode = c[22];
+  var shipCode = c[23];
+  var futureCode = c[24];
+
+  // ---- Decode each position ----
+
+  // Family (pos 1-2)
+  r.family = DATA.family[family] || null;
+  if (!r.family) { errors.push({ pos: '1-2', code: family, msg: 'Unknown product family (expected MW)' }); errorPositions.add(0); errorPositions.add(1); }
+
+  // Frame type (pos 3)
+  r.frameType = DATA.frameType[frameTypeCode] || null;
+  if (!r.frameType && enteredLen > 2) { errors.push({ pos: '3', code: frameTypeCode, msg: 'Unknown frame type' }); errorPositions.add(2); }
+
+  // Interrupt rating (pos 4)
+  var intData = DATA.interruptRating[interruptCode];
+  if (intData) {
+    r.interruptKA = intData.kA;
+  } else if (enteredLen > 3) {
+    errors.push({ pos: '4', code: interruptCode, msg: 'Unknown interrupt rating' });
+    errorPositions.add(3);
+  }
+
+  // Amp frame (pos 5-6)
+  if (enteredLen >= 6) {
+    var ampData = DATA.ampFrame[ampCode];
+    if (ampData) {
+      r.amps = ampData.amps;
+      r.phasing = ampData.phasing;
+    } else {
+      errors.push({ pos: '5-6', code: ampCode, msg: 'Unknown ampere frame' });
+      errorPositions.add(4); errorPositions.add(5);
+    }
+  }
+
+  // Poles (pos 7)
+  if (enteredLen >= 7) {
+    r.poles = DATA.poles[polesCode] || null;
+    if (!r.poles) { errors.push({ pos: '7', code: polesCode, msg: 'Unknown pole configuration' }); errorPositions.add(6); }
+  }
+
+  // Mounting (pos 8)
+  if (enteredLen >= 8) {
+    r.mounting = DATA.mounting[mountCode] || null;
+    if (!r.mounting) { errors.push({ pos: '8', code: mountCode, msg: 'Unknown mounting type' }); errorPositions.add(7); }
+  }
+
+  // Language (pos 9)
+  if (enteredLen >= 9) {
+    r.language = DATA.language[langCode] || null;
+    if (!r.language) { errors.push({ pos: '9', code: langCode, msg: 'Unknown language code' }); errorPositions.add(8); }
+  }
+
+  // Config (pos 10)
+  if (enteredLen >= 10) {
+    r.config = DATA.config[configCode] || null;
+    if (!r.config) { errors.push({ pos: '10', code: configCode, msg: 'Unknown configuration code' }); errorPositions.add(9); }
+  }
+
+  // Sensor / Rating Plug (pos 11-12)
+  var sensorAmps = DATA.sensorRating[sensorCode];
+  if (sensorAmps !== undefined) {
+    r.sensorAmps = sensorAmps;
+    r.sensorLabel = sensorAmps === 0 ? 'No Sensor (Core / Stripped)' : sensorAmps + 'A';
+  } else if (!isDefault[10]) {
+    errors.push({ pos: '11-12', code: sensorCode, msg: 'Unknown sensor rating' });
+    errorPositions.add(10); errorPositions.add(11);
+  }
+
+  // Trip unit (pos 13-14)
+  var tripData = DATA.tripUnit[tripCode];
+  if (tripData) {
+    r.tripName = tripData.name;
+    r.protection = tripData.protection;
+    r.controlPower = tripData.controlPower;
+  } else if (!isDefault[12]) {
+    errors.push({ pos: '13-14', code: tripCode, msg: 'Unknown trip unit code' });
+    errorPositions.add(12); errorPositions.add(13);
+  }
+
+  // Shunt trip (pos 15)
+  r.shuntTrip = DATA.shuntTrip[shuntCode] || null;
+  if (!r.shuntTrip && !isDefault[14]) { errors.push({ pos: '15', code: shuntCode, msg: 'Unknown shunt trip code' }); errorPositions.add(14); }
+
+  // Motor operator (pos 16)
+  r.motor = DATA.motorOp[motorCode] || null;
+  if (!r.motor && !isDefault[15]) { errors.push({ pos: '16', code: motorCode, msg: 'Unknown motor operator code' }); errorPositions.add(15); }
+
+  // Spring release (pos 17)
+  r.spring = DATA.springRelease[springCode] || null;
+  if (!r.spring && !isDefault[16]) { errors.push({ pos: '17', code: springCode, msg: 'Unknown spring release code' }); errorPositions.add(16); }
+
+  // UVR / 2nd Shunt Trip (pos 18)
+  r.uvr = DATA.uvr[uvrCode] || null;
+  if (!r.uvr && !isDefault[17]) { errors.push({ pos: '18', code: uvrCode, msg: 'Unknown UVR / 2nd shunt trip code' }); errorPositions.add(17); }
+
+  // Aux switch (pos 19)
+  r.auxSwitch = DATA.auxSwitch[auxCode] || null;
+  if (!r.auxSwitch && !isDefault[18]) { errors.push({ pos: '19', code: auxCode, msg: 'Unknown aux switch code' }); errorPositions.add(18); }
+
+  // Padlock (pos 20)
+  r.padlock = DATA.padlock[padlockCode] || null;
+  if (!r.padlock && !isDefault[19]) { errors.push({ pos: '20', code: padlockCode, msg: 'Unknown padlock code' }); errorPositions.add(19); }
+
+  // Counter / Keylock (pos 21)
+  r.counterKeylock = DATA.counterKeylock[counterCode] || null;
+  if (!r.counterKeylock && !isDefault[20]) { errors.push({ pos: '21', code: counterCode, msg: 'Unknown counter/keylock code' }); errorPositions.add(20); }
+
+  // Bell Alarm / OTS (pos 22)
+  r.bellAlarm = DATA.bellAlarm[bellCode] || null;
+  if (!r.bellAlarm && !isDefault[21]) { errors.push({ pos: '22', code: bellCode, msg: 'Unknown bell alarm/OTS code' }); errorPositions.add(21); }
+
+  // Latch Switch / TTO (pos 23)
+  r.latchSwitch = DATA.latchSwitch[latchCode] || null;
+  if (!r.latchSwitch && !isDefault[22]) { errors.push({ pos: '23', code: latchCode, msg: 'Unknown latch switch code' }); errorPositions.add(22); }
+
+  // Shipping (pos 24)
+  r.shipping = DATA.shipping[shipCode] || null;
+  if (!r.shipping && !isDefault[23]) { errors.push({ pos: '24', code: shipCode, msg: 'Unknown shipping code' }); errorPositions.add(23); }
+
+  // Future (pos 25)
+  r.future = DATA.future[futureCode] || null;
+  if (!r.future && !isDefault[24]) { errors.push({ pos: '25', code: futureCode, msg: 'Unknown future code' }); errorPositions.add(24); }
+
+  // ---- Ratings lookup ----
+  var rating = null;
+  var typeDesignation = '';
+  if (r.frameType && r.interruptKA && r.amps) {
+    typeDesignation = buildTypeDesignation(frameTypeCode, interruptCode, ampCode);
+    rating = lookupRating(frameTypeCode, interruptCode, ampCode);
+  }
+
+  // ---- Validation ----
+  var warnings = [];
+
+  // Validate rating exists
+  if (r.frameType && r.interruptKA && r.amps && !rating) {
+    warnings.push('No IEC rating found for type ' + esc(typeDesignation) + '. This combination may not be a valid IEC offering.');
+  }
+
+  // Validate sensor range
+  if (r.sensorAmps !== undefined && r.sensorAmps > 0 && r.amps) {
+    var validRange = SENSOR_RANGES[ampCode];
+    if (validRange && validRange.indexOf(r.sensorAmps) === -1) {
+      warnings.push('Sensor rating ' + r.sensorAmps + 'A is outside valid range for ' + r.amps + 'A frame. Valid: ' + validRange.join(', ') + 'A.');
+    }
+  }
+
+  // Warn on non-automatic with sensor specified
+  if (tripCode === 'NN' && r.sensorAmps > 0 && !isDefault[12]) {
+    warnings.push('Non-automatic breaker (no trip unit) with sensor rating specified (' + r.sensorAmps + 'A). Sensor will not provide protection without a trip unit.');
+  }
+
+  renderBreakerCharMap(c, isDefault, enteredLen, errorPositions);
+  renderBreakerResults(c, r, errors, warnings, isDefault, isPartial, enteredLen, rating, typeDesignation);
+}
+
+// ============================================================
+// CASSETTE DECODER
+// ============================================================
+
+function decodeCassette(entered) {
+  if (entered.length < 2) {
+    showError('Enter at least the first 2 characters for cassette decoding.');
+    renderCassetteCharMap(entered, [], 0, new Set());
+    return;
+  }
+
+  if (entered.length > 15) {
+    showError('Cassette number cannot exceed 15 characters. Got ' + entered.length + '.');
+    renderCassetteCharMap(entered.substring(0, 15), [], 0, new Set());
+    return;
+  }
+
+  var enteredLen = entered.length;
+  var full = [];
+  var isDefault = [];
+  var cassetteDefaults = 'ENNNNHANNSNNNWC';
+
+  for (var i = 0; i < 15; i++) {
+    if (i < enteredLen) {
+      full.push(entered[i]);
+      isDefault.push(false);
+    } else {
+      full.push(cassetteDefaults[i]);
+      isDefault.push(true);
+    }
+  }
+
+  var c = full.join('');
+  var isPartial = enteredLen < 15;
+  var errors = [];
+  var errorPositions = new Set();
+  var r = {};
+
+  // Pos 1: Cassette family
+  r.cassetteFamily = CASSETTE_DATA.cassetteFamily[c[0]] || null;
+  if (!r.cassetteFamily) { errors.push({ pos: '1', code: c[0], msg: 'Unknown cassette family' }); errorPositions.add(0); }
+
+  // Pos 2: Interrupt type
+  r.interruptType = CASSETTE_DATA.interruptType[c[1]] || null;
+  if (!r.interruptType) { errors.push({ pos: '2', code: c[1], msg: 'Unknown interrupt type' }); errorPositions.add(1); }
+
+  // Pos 3-4: Continuous amps
+  var casAmpCode = c.substring(2, 4);
+  r.cassetteAmps = CASSETTE_DATA.cassetteAmps[casAmpCode] || null;
+  if (!r.cassetteAmps && enteredLen >= 4) { errors.push({ pos: '3-4', code: casAmpCode, msg: 'Unknown cassette amp range' }); errorPositions.add(2); errorPositions.add(3); }
+
+  // Pos 5: Poles
+  r.cassettePoles = CASSETTE_DATA.cassettePoles[c[4]] || null;
+  if (!r.cassettePoles && enteredLen >= 5) { errors.push({ pos: '5', code: c[4], msg: 'Unknown pole config' }); errorPositions.add(4); }
+
+  // Pos 6: Rear terminals
+  r.rearTerminals = CASSETTE_DATA.rearTerminals[c[5]] || null;
+  if (!r.rearTerminals && enteredLen >= 6) { errors.push({ pos: '6', code: c[5], msg: 'Unknown rear terminal type' }); errorPositions.add(5); }
+
+  // Pos 7: Arc hood
+  r.arcHood = CASSETTE_DATA.arcHood[c[6]] || null;
+  if (!r.arcHood && enteredLen >= 7) { errors.push({ pos: '7', code: c[6], msg: 'Unknown arc hood type' }); errorPositions.add(6); }
+
+  // Pos 8: Door frame/gasket
+  r.doorFrame = CASSETTE_DATA.doorFrame[c[7]] || null;
+  if (!r.doorFrame && enteredLen >= 8) { errors.push({ pos: '8', code: c[7], msg: 'Unknown door frame code' }); errorPositions.add(7); }
+
+  // Pos 9: Future use
+  r.futureUse9 = (c[8] === 'N') ? 'All Cassettes' : null;
+  if (!r.futureUse9 && enteredLen >= 9) { errors.push({ pos: '9', code: c[8], msg: 'Expected N (future use)' }); errorPositions.add(8); }
+
+  // Pos 10: Shutters
+  r.shutters = CASSETTE_DATA.shutters[c[9]] || null;
+  if (!r.shutters && enteredLen >= 10) { errors.push({ pos: '10', code: c[9], msg: 'Unknown shutter code' }); errorPositions.add(9); }
+
+  // Pos 11-13: Future use
+  var fut11_13 = c.substring(10, 13);
+  r.futureUse11_13 = (fut11_13 === 'NNN') ? 'All Cassettes' : null;
+  if (!r.futureUse11_13 && enteredLen >= 13) { errors.push({ pos: '11-13', code: fut11_13, msg: 'Expected NNN (future use)' }); errorPositions.add(10); errorPositions.add(11); errorPositions.add(12); }
+
+  // Pos 14: Cassette wiring
+  r.cassetteWiring = CASSETTE_DATA.cassetteWiring[c[13]] || null;
+  if (!r.cassetteWiring && enteredLen >= 14) { errors.push({ pos: '14', code: c[13], msg: 'Unknown wiring code' }); errorPositions.add(13); }
+
+  // Pos 15: Cassette shipping
+  r.cassetteShipping = CASSETTE_DATA.cassetteShipping[c[14]] || null;
+  if (!r.cassetteShipping && enteredLen >= 15) { errors.push({ pos: '15', code: c[14], msg: 'Unknown shipping code' }); errorPositions.add(14); }
+
+  renderCassetteCharMap(c, isDefault, enteredLen, errorPositions);
+  renderCassetteResults(c, r, errors, isDefault, isPartial, enteredLen);
+}
+
+// ============================================================
+// MAIN DECODE DISPATCHER
+// ============================================================
+
+function decode() {
+  var raw = document.getElementById('catInput').value.trim();
+  if (!raw) return;
+
+  var entered = normalize(raw);
+  var t = detectType(entered);
+
+  if (t === 'breaker') {
+    decodeBreaker(entered);
+  } else if (t === 'cassette') {
+    decodeCassette(entered);
+  } else {
+    showError('Could not detect input type. Breaker numbers start with "MW". Cassette numbers start with "EN" or "NN".');
+    clearCharMap();
+  }
+}
+
+// ============================================================
+// CHAR MAP RENDERING — BREAKER (25-char)
+// ============================================================
+
+function renderBreakerCharMap(chars, isDefault, enteredLen, errorPositions) {
+  var container = document.getElementById('charBoxes');
+  var labelsContainer = document.getElementById('groupLabels');
+  var legend = document.getElementById('charLegend');
+  // Groups: Config(10), Sensor/Trip(4), Accessories(5), Options(6)
+  var groups = [10, 4, 5, 6];
+  var groupNames = ['Breaker Config', 'Sensor / Trip', 'Accessories', 'Options'];
+  var html = '';
+  var labelHtml = '';
+  var idx = 0;
+  var hasDefaults = isDefault && isDefault.some(function(d) { return d; });
+  var errSet = errorPositions || new Set();
+
+  for (var g = 0; g < groups.length; g++) {
+    if (g > 0) {
+      html += '<div class="char-box space"></div>';
+      labelHtml += '<div class="group-label-spacer"></div>';
+    }
+    labelHtml += '<div class="group-label" style="width:' + (groups[g] * 40) + 'px">' + esc(groupNames[g]) + '</div>';
+
+    for (var i = 0; i < groups[g]; i++) {
+      var ch = idx < chars.length ? chars[idx] : '';
+      var cls = 'char-box';
+      if (ch) {
+        if (errSet.has(idx) && !(isDefault && isDefault[idx])) {
+          cls = 'char-box error';
+        } else if (isDefault && isDefault[idx]) {
+          cls = 'char-box defaulted';
+        } else {
+          cls = 'char-box filled';
+        }
+      }
+      html += '<div class="' + cls + '">' + esc(ch) + '<span class="pos-label">' + (idx + 1) + '</span></div>';
+      idx++;
+    }
+  }
+
+  container.innerHTML = html;
+  labelsContainer.innerHTML = labelHtml;
+  legend.style.display = hasDefaults ? 'flex' : 'none';
+}
+
+// ============================================================
+// CHAR MAP RENDERING — CASSETTE (15-char)
+// ============================================================
+
+function renderCassetteCharMap(chars, isDefault, enteredLen, errorPositions) {
+  var container = document.getElementById('charBoxes');
+  var labelsContainer = document.getElementById('groupLabels');
+  var legend = document.getElementById('charLegend');
+  // Groups: Family/Amps(4), Physical(6), Options(5)
+  var groups = [4, 6, 5];
+  var groupNames = ['Family / Amps', 'Physical Config', 'Options'];
+  var html = '';
+  var labelHtml = '';
+  var idx = 0;
+  var hasDefaults = isDefault && isDefault.some(function(d) { return d; });
+  var errSet = errorPositions || new Set();
+
+  for (var g = 0; g < groups.length; g++) {
+    if (g > 0) {
+      html += '<div class="char-box space"></div>';
+      labelHtml += '<div class="group-label-spacer"></div>';
+    }
+    labelHtml += '<div class="group-label" style="width:' + (groups[g] * 40) + 'px">' + esc(groupNames[g]) + '</div>';
+
+    for (var i = 0; i < groups[g]; i++) {
+      var ch = idx < chars.length ? chars[idx] : '';
+      var cls = 'char-box';
+      if (ch) {
+        if (errSet.has(idx) && !(isDefault && isDefault[idx])) {
+          cls = 'char-box error';
+        } else if (isDefault && isDefault[idx]) {
+          cls = 'char-box defaulted';
+        } else {
+          cls = 'char-box filled';
+        }
+      }
+      html += '<div class="' + cls + '">' + esc(ch) + '<span class="pos-label">' + (idx + 1) + '</span></div>';
+      idx++;
+    }
+  }
+
+  container.innerHTML = html;
+  labelsContainer.innerHTML = labelHtml;
+  legend.style.display = hasDefaults ? 'flex' : 'none';
+}
+
+// ============================================================
+// BREAKER RESULTS RENDERING
+// ============================================================
+
+function renderBreakerResults(chars, r, errors, warnings, isDefault, isPartial, enteredLen, rating, typeDesignation) {
+  var el = document.getElementById('results');
+  el.classList.remove('hidden');
+
+  var summaryParts = [];
+  if (typeDesignation) summaryParts.push(typeDesignation);
+  if (r.amps) summaryParts.push(r.amps + 'A');
+  if (r.interruptKA) summaryParts.push(r.interruptKA + 'kA @440V');
+  if (r.frameType) summaryParts.push(r.frameType);
+
+  var html = '';
+
+  // Summary banner
+  var partialTag = isPartial ? '<span class="partial-tag">Partial \u2014 ' + enteredLen + ' of 25 chars entered</span>' : '';
+  html += '<div class="summary-banner">';
+  html += '<h2>' + esc(summaryParts.join(' \u2014 ')) + partialTag + '</h2>';
+  html += '<p>Catalog: ' + esc(chars.substring(0,10)) + ' ' + esc(chars.substring(10,14)) + ' ' + esc(chars.substring(14,19)) + ' ' + esc(chars.substring(19,25)) + '</p>';
+  html += '</div>';
+
+  // Partial input info card
+  if (isPartial) {
+    var defaultCount = isDefault.filter(function(d) { return d; }).length;
+    html += '<div class="result-card info-card full-width"><h3>Partial Input</h3>';
+    html += itemD('Characters Entered', enteredLen + ' of 25', false);
+    html += itemD('Positions Defaulted', defaultCount + ' positions assumed base build', false);
+    html += '<div class="result-item"><span class="label">Defaults Applied</span><span class="value default-val">No sensor, no trip unit, manual operation, no accessories</span></div>';
+    html += '</div>';
+  }
+
+  // Errors card
+  if (errors.length > 0) {
+    html += '<div class="result-card error-card full-width"><h3>Errors</h3>';
+    for (var i = 0; i < errors.length; i++) {
+      var e = errors[i];
+      html += '<div class="result-item"><span class="label">Pos ' + esc(e.pos) + ' (' + esc(e.code) + ')</span><span class="value error-val">' + esc(e.msg) + '</span></div>';
+    }
+    html += '</div>';
+  }
+
+  // Warnings card
+  if (warnings.length > 0) {
+    html += '<div class="result-card error-card full-width"><h3>Validation Warnings</h3>';
+    for (var w = 0; w < warnings.length; w++) {
+      html += '<div class="result-item"><span class="label">Warning</span><span class="value error-val">' + esc(warnings[w]) + '</span></div>';
+    }
+    html += '</div>';
+  }
+
+  // Breaker Config card
+  html += '<div class="result-card valid"><h3>Breaker Configuration</h3>';
+  html += itemD('Product Family', r.family, isDefault[0]);
+  html += itemD('Frame Type', r.frameType, isDefault[2]);
+  html += itemD('Interrupt Rating (Icu @440V)', r.interruptKA ? r.interruptKA + ' kA' : null, isDefault[3]);
+  html += itemD('Continuous Amps', r.amps ? r.amps + 'A' : null, isDefault[4]);
+  html += itemD('Phase Configuration', r.phasing, isDefault[4]);
+  html += itemD('Poles', r.poles, isDefault[6]);
+  html += itemD('Mounting', r.mounting, isDefault[7]);
+  html += itemD('Language', r.language, isDefault[8]);
+  html += itemD('Configuration', r.config, isDefault[9]);
+  if (typeDesignation) html += itemD('Type Designation', typeDesignation, false);
+  html += '</div>';
+
+  // Sensor / Trip Unit card
+  html += '<div class="result-card valid"><h3>Sensor / Trip Unit</h3>';
+  html += itemD('Sensor / Rating Plug', r.sensorLabel, isDefault[10]);
+  html += itemD('Trip Unit', r.tripName, isDefault[12]);
+  html += itemD('Protection', r.protection, isDefault[12]);
+  html += itemD('Control Power', r.controlPower, isDefault[12]);
+  html += '</div>';
+
+  // Accessories card
+  html += '<div class="result-card valid"><h3>Accessories</h3>';
+  html += itemD('Shunt Trip (STA)', r.shuntTrip, isDefault[14]);
+  html += itemD('Motor Operator', r.motor, isDefault[15]);
+  html += itemD('Spring Release (SRD)', r.spring, isDefault[16]);
+  html += itemD('UVR / 2nd Shunt Trip', r.uvr, isDefault[17]);
+  html += itemD('Auxiliary Switch', r.auxSwitch, isDefault[18]);
+  html += '</div>';
+
+  // Options card
+  html += '<div class="result-card valid"><h3>Options</h3>';
+  html += itemD('Padlock Provisions', r.padlock, isDefault[19]);
+  html += itemD('Counter / Keylock', r.counterKeylock, isDefault[20]);
+  html += itemD('Bell Alarm / OTS', r.bellAlarm, isDefault[21]);
+  html += itemD('Latch Check Switch / TTO', r.latchSwitch, isDefault[22]);
+  html += itemD('Shipping', r.shipping, isDefault[23]);
+  html += itemD('Future', r.future, isDefault[24]);
+  html += '</div>';
+
+  // IEC Ratings card
+  if (rating) {
+    html += '<div class="result-card info-card full-width"><h3>IEC Ratings \u2014 ' + esc(rating.type) + '</h3>';
+    html += '<table class="ratings-table">';
+    html += '<tr><th>Parameter</th><th>Value</th></tr>';
+    html += '<tr><td>Type Designation</td><td><strong>' + esc(rating.type) + '</strong></td></tr>';
+    html += '<tr><td>Frame Type</td><td>' + esc(rating.frameType) + '</td></tr>';
+    html += '<tr><td>Continuous Current (In)</td><td>' + rating.frame + ' A</td></tr>';
+    html += '<tr><td>Icu @ 240V</td><td>' + rating.icu240 + ' kA</td></tr>';
+    html += '<tr><td>Icu @ 440V</td><td>' + rating.icu440 + ' kA</td></tr>';
+    html += '<tr><td>Icu @ 690V</td><td>' + rating.icu690 + ' kA</td></tr>';
+    html += '<tr><td>Icw (1-sec)</td><td>' + rating.icw1s + ' kA</td></tr>';
+    html += '<tr><td>Icw (3-sec)</td><td>' + (rating.icw3s !== null ? rating.icw3s + ' kA' : 'N/A') + '</td></tr>';
+    html += '<tr><td>KEMA Certified</td><td>' + (rating.kema ? 'Yes' : 'No') + '</td></tr>';
+    html += '<tr><td>CCC Certified</td><td>' + (rating.ccc ? 'Yes' : 'No') + '</td></tr>';
+    html += '</table>';
+    html += '</div>';
+  }
+
+  // Related ratings table (same frame size)
+  if (r.amps) {
+    var relatedRatings = RATINGS.filter(function(rt) { return rt.frame === r.amps; });
+    if (relatedRatings.length > 1) {
+      html += '<div class="result-card full-width"><h3>All ' + r.amps + 'A IEC Ratings</h3>';
+      html += '<table class="ratings-table">';
+      html += '<tr><th>Type</th><th>Frame</th><th>Icu@240V</th><th>Icu@440V</th><th>Icu@690V</th><th>Icw 1s</th><th>Icw 3s</th><th>KEMA</th><th>CCC</th></tr>';
+      for (var ri = 0; ri < relatedRatings.length; ri++) {
+        var rt = relatedRatings[ri];
+        var isMatch = rating && rt.type === rating.type;
+        html += '<tr' + (isMatch ? ' class="highlight"' : '') + '>';
+        html += '<td><strong>' + esc(rt.type) + '</strong></td>';
+        html += '<td>' + esc(rt.frameType) + '</td>';
+        html += '<td>' + rt.icu240 + '</td>';
+        html += '<td>' + rt.icu440 + '</td>';
+        html += '<td>' + rt.icu690 + '</td>';
+        html += '<td>' + rt.icw1s + '</td>';
+        html += '<td>' + (rt.icw3s !== null ? rt.icw3s : '\u2014') + '</td>';
+        html += '<td>' + (rt.kema ? '\u2713' : '\u2014') + '</td>';
+        html += '<td>' + (rt.ccc ? '\u2713' : '\u2014') + '</td>';
+        html += '</tr>';
+      }
+      html += '</table>';
+      html += '</div>';
+    }
+  }
+
+  // CTA Banner
+  var encodedCat = encodeURIComponent(chars);
+  html += '<div class="cta-banner">';
+  html += '<div class="cta-text"><strong>Need pricing or stock on this breaker?</strong> Voyten Electric stocks Magnum IEC breakers and accessories.</div>';
+  html += '<a class="cta-btn cta-primary" href="tel:+18004584001">Call 1-800-458-4001</a>';
+  html += '<a class="cta-btn cta-secondary" href="mailto:info@voytenelectric.com?subject=Eaton%20MW%20IEC%20Quote%20-%20' + encodedCat + '">Request Quote</a>';
+  html += '</div>';
+
+  el.innerHTML = html;
+}
+
+// ============================================================
+// CASSETTE RESULTS RENDERING
+// ============================================================
+
+function renderCassetteResults(chars, r, errors, isDefault, isPartial, enteredLen) {
+  var el = document.getElementById('results');
+  el.classList.remove('hidden');
+
+  var summaryParts = [];
+  if (r.cassetteFamily) summaryParts.push(r.cassetteFamily);
+  if (r.cassetteAmps) summaryParts.push(r.cassetteAmps);
+  if (r.cassettePoles) summaryParts.push(r.cassettePoles);
+
+  var html = '';
+
+  // Summary banner
+  var partialTag = isPartial ? '<span class="partial-tag">Partial \u2014 ' + enteredLen + ' of 15 chars entered</span>' : '';
+  html += '<div class="summary-banner">';
+  html += '<h2>IEC Cassette \u2014 ' + esc(summaryParts.join(' \u2014 ')) + partialTag + '</h2>';
+  html += '<p>Cassette: ' + esc(chars) + '</p>';
+  html += '</div>';
+
+  // Partial input
+  if (isPartial) {
+    var defaultCount = isDefault.filter(function(d) { return d; }).length;
+    html += '<div class="result-card info-card full-width"><h3>Partial Input</h3>';
+    html += itemD('Characters Entered', enteredLen + ' of 15', false);
+    html += itemD('Positions Defaulted', defaultCount + ' positions assumed defaults', false);
+    html += '</div>';
+  }
+
+  // Errors
+  if (errors.length > 0) {
+    html += '<div class="result-card error-card full-width"><h3>Errors</h3>';
+    for (var i = 0; i < errors.length; i++) {
+      var e = errors[i];
+      html += '<div class="result-item"><span class="label">Pos ' + esc(e.pos) + ' (' + esc(e.code) + ')</span><span class="value error-val">' + esc(e.msg) + '</span></div>';
+    }
+    html += '</div>';
+  }
+
+  // Cassette Configuration card
+  html += '<div class="result-card valid"><h3>Cassette Configuration</h3>';
+  html += itemD('Cassette Family', r.cassetteFamily, isDefault[0]);
+  html += itemD('Interrupt Type', r.interruptType, isDefault[1]);
+  html += itemD('Continuous Amps', r.cassetteAmps, isDefault[2]);
+  html += itemD('Poles', r.cassettePoles, isDefault[4]);
+  html += '</div>';
+
+  // Physical card
+  html += '<div class="result-card valid"><h3>Physical Configuration</h3>';
+  html += itemD('Rear Terminals', r.rearTerminals, isDefault[5]);
+  html += itemD('Arc Hood', r.arcHood, isDefault[6]);
+  html += itemD('Door Frame / Gasket', r.doorFrame, isDefault[7]);
+  html += itemD('Future Use (Pos 9)', r.futureUse9, isDefault[8]);
+  html += itemD('Shutters', r.shutters, isDefault[9]);
+  html += '</div>';
+
+  // Options card
+  html += '<div class="result-card valid"><h3>Options</h3>';
+  html += itemD('Future Use (Pos 11-13)', r.futureUse11_13, isDefault[10]);
+  html += itemD('Cassette Wiring', r.cassetteWiring, isDefault[13]);
+  html += itemD('Cassette Shipping', r.cassetteShipping, isDefault[14]);
+  html += '</div>';
+
+  // CTA Banner
+  var encodedCat = encodeURIComponent(chars);
+  html += '<div class="cta-banner">';
+  html += '<div class="cta-text"><strong>Need pricing or stock on this cassette?</strong> Voyten Electric stocks Magnum IEC cassettes and accessories.</div>';
+  html += '<a class="cta-btn cta-primary" href="tel:+18004584001">Call 1-800-458-4001</a>';
+  html += '<a class="cta-btn cta-secondary" href="mailto:info@voytenelectric.com?subject=Eaton%20MW%20IEC%20Cassette%20Quote%20-%20' + encodedCat + '">Request Quote</a>';
+  html += '</div>';
+
+  el.innerHTML = html;
+}
+
+// ============================================================
+// UI HELPERS
+// ============================================================
+
+function showError(msg) {
+  var el = document.getElementById('results');
+  el.classList.remove('hidden');
+  el.innerHTML = '<div class="result-card error-card full-width"><h3>Error</h3><div class="result-item"><span class="label">Input Error</span><span class="value error-val">' + esc(msg) + '</span></div></div>';
+}
+
+function clearCharMap() {
+  document.getElementById('charBoxes').innerHTML = '';
+  document.getElementById('groupLabels').innerHTML = '';
+  document.getElementById('charLegend').style.display = 'none';
+}
+
+function clearAll() {
+  document.getElementById('catInput').value = '';
+  document.getElementById('results').classList.add('hidden');
+  document.getElementById('results').innerHTML = '';
+  document.getElementById('detectBadge').innerHTML = '';
+  clearCharMap();
+}
+
+function loadExample(btn) {
+  var val = btn.textContent || btn.innerText;
+  document.getElementById('catInput').value = val.trim();
+  updateDetectBadge();
+  decode();
+}
+
+// Enter key to decode
+document.getElementById('catInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') { e.preventDefault(); decode(); }
+});
+</script>
+</body>
+</html>
