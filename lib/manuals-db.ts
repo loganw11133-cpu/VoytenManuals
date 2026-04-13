@@ -72,6 +72,31 @@ export function formatFileSize(bytes: number | null): string {
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
+// ── Fuzzy search helpers ──
+
+const SEARCH_COLS = ['title', 'manual_number', 'keywords', 'description', 'manufacturer'] as const;
+
+/** Generate near-miss variants of a token for fuzzy matching.
+ *  - Tokens ≥ 4 chars: also try with trailing char removed (catches plurals, extra chars)
+ *  - Tokens 4-5 chars: also try removing each char (catches model-number typos like MDSC→MDS)
+ */
+function generateSearchVariants(token: string): string[] {
+  const variants = new Set([token]);
+
+  if (token.length >= 4) {
+    variants.add(token.slice(0, -1));
+  }
+
+  if (token.length >= 4 && token.length <= 5) {
+    for (let i = 0; i < token.length; i++) {
+      const v = token.slice(0, i) + token.slice(i + 1);
+      if (v.length >= 3) variants.add(v);
+    }
+  }
+
+  return Array.from(variants);
+}
+
 // ── Queries ──
 
 export async function searchManuals(filters: SearchFilters): Promise<SearchResult> {
@@ -83,9 +108,36 @@ export async function searchManuals(filters: SearchFilters): Promise<SearchResul
   const params: (string | number)[] = [];
 
   if (filters.query) {
-    whereClause += ' AND (title LIKE ? OR manual_number LIKE ? OR keywords LIKE ? OR description LIKE ?)';
-    const q = `%${filters.query}%`;
-    params.push(q, q, q, q);
+    const raw = filters.query.trim();
+    const tokens = raw.split(/\s+/).filter(t => t.length >= 2);
+
+    if (tokens.length === 0) {
+      // Very short query (single char) — broad match across all columns
+      whereClause += ` AND (${SEARCH_COLS.map(c => `${c} LIKE ?`).join(' OR ')})`;
+      const q = `%${raw}%`;
+      for (let i = 0; i < SEARCH_COLS.length; i++) params.push(q);
+    } else {
+      // Token-based search: each token must match somewhere (AND between tokens)
+      // with fuzzy variants (OR between variants × columns)
+      const tokenClauses: string[] = [];
+
+      for (const token of tokens) {
+        const variants = generateSearchVariants(token);
+        const conds: string[] = [];
+
+        for (const v of variants) {
+          const like = `%${v}%`;
+          for (const col of SEARCH_COLS) {
+            conds.push(`${col} LIKE ?`);
+            params.push(like);
+          }
+        }
+
+        tokenClauses.push(`(${conds.join(' OR ')})`);
+      }
+
+      whereClause += ` AND (${tokenClauses.join(' AND ')})`;
+    }
   }
 
   if (filters.category) {
