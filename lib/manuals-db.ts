@@ -263,10 +263,26 @@ export async function getTotalManualCount(): Promise<number> {
   return (result.rows[0] as unknown as { count: number }).count;
 }
 
-export async function getRecentManuals(limit = 8): Promise<Manual[]> {
+export async function getFeaturedManuals(limit = 8): Promise<Manual[]> {
+  // Curated featured slugs — top-sellers in stock at PA facility
+  const featuredSlugs = [
+    'top-seller-eaton-magnum-ds-mds6163wea-1600a',
+    'sel-321-data-sheet-phase-and-ground-distance-relay-directional-overcurrent-relay-fault-locator',
+    'kirk-key-interlock-system-application-information-and-schemes',
+    'top-seller-westinghouse-ds-416-1600a-air-breaker',
+    'top-seller-cutler-hammer-spb65-1600a-iccb',
+    'top-seller-ge-akr-50-1600a-air-breaker',
+    'top-seller-ge-power-break-ii-tpss6616dg-1600a',
+    'top-seller-siemens-wlf-1600a-air-breaker',
+  ];
+
+  const placeholders = featuredSlugs.map(() => '?').join(', ');
   const result = await getDb().execute({
-    sql: 'SELECT * FROM manuals ORDER BY created_at DESC LIMIT ?',
-    args: [limit],
+    sql: `SELECT * FROM manuals
+          WHERE slug IN (${placeholders}) AND pdf_url != 'NONE'
+          ORDER BY CASE ${featuredSlugs.map((s, i) => `WHEN slug = ? THEN ${i}`).join(' ')} ELSE ${featuredSlugs.length} END
+          LIMIT ?`,
+    args: [...featuredSlugs, ...featuredSlugs, limit],
   });
   return result.rows as unknown as Manual[];
 }

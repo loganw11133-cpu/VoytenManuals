@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Phone, ChevronRight, BookOpen, Shield, Zap, FileText, Building2, ArrowRight, Clock, Truck, Download } from 'lucide-react';
 import Image from 'next/image';
 import ManualSearchBar from '@/components/ManualSearchBar';
-import { getTotalManualCount, getCategories, getManufacturers, getRecentManuals } from '@/lib/manuals-db';
+import { getTotalManualCount, getCategories, getManufacturers, getFeaturedManuals } from '@/lib/manuals-db';
 import ManualCard from '@/components/ManualCard';
 import YouTubeEmbed from '@/components/YouTubeEmbed';
 
@@ -20,11 +20,11 @@ const CATEGORIES = [
 export const revalidate = 3600;
 
 export default async function Home() {
-  const [totalCount, categories, manufacturers, recentManuals] = await Promise.all([
+  const [totalCount, categories, manufacturers, featuredManuals] = await Promise.all([
     getTotalManualCount(),
     getCategories(),
     getManufacturers(),
-    getRecentManuals(8),
+    getFeaturedManuals(8),
   ]);
 
   // Top manufacturers by manual count
@@ -161,7 +161,7 @@ export default async function Home() {
       </section>
 
       {/* Recently Added Manuals */}
-      {recentManuals.length > 0 && (
+      {featuredManuals.length > 0 && (
         <section className="py-14 lg:py-18 bg-white">
           <div className="max-w-7xl mx-auto px-4">
             <div className="flex items-center justify-between mb-8">
@@ -178,7 +178,7 @@ export default async function Home() {
               </Link>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {recentManuals.map((manual) => (
+              {featuredManuals.map((manual) => (
                 <ManualCard key={manual.id} manual={manual} />
               ))}
             </div>
