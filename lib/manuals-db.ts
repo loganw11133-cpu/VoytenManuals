@@ -269,11 +269,11 @@ export async function getFeaturedManuals(limit = 8): Promise<Manual[]> {
     'top-seller-eaton-magnum-ds-mds6163wea-1600a',
     'sel-321-data-sheet-phase-and-ground-distance-relay-directional-overcurrent-relay-fault-locator',
     'kirk-key-interlock-system-application-information-and-schemes',
+    'square-d-masterpact-nw16-1600a-air-circuit-breaker',
+    'square-d-masterpact-nw20-2000a-air-circuit-breaker',
     'top-seller-westinghouse-ds-416-1600a-air-breaker',
     'top-seller-cutler-hammer-spb65-1600a-iccb',
     'top-seller-ge-akr-50-1600a-air-breaker',
-    'top-seller-ge-power-break-ii-tpss6616dg-1600a',
-    'top-seller-siemens-wlf-1600a-air-breaker',
   ];
 
   const placeholders = featuredSlugs.map(() => '?').join(', ');
