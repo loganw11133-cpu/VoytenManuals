@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/api/', '/admin/', '/tools/'],
+      disallow: ['/api/', '/admin/', '/tools/', '/part_manuals/'],
     },
     sitemap: 'https://voytenmanuals.com/sitemap-index.xml',
   };
