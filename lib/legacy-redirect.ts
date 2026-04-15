@@ -48,7 +48,7 @@ export async function handleLegacyPdfRedirect(
       return NextResponse.redirect(new URL(`/manual/${slug}`, request.url), 301);
     }
 
-    // Fallback: match filename against manual_number
+    // Fallback 1: exact filename match against manual_number
     const result2 = await db.execute({
       sql: 'SELECT slug FROM manuals WHERE manual_number = ? LIMIT 1',
       args: [filename],
@@ -56,6 +56,33 @@ export async function handleLegacyPdfRedirect(
 
     if (result2.rows.length > 0) {
       const slug = (result2.rows[0] as unknown as { slug: string }).slug;
+      return NextResponse.redirect(new URL(`/manual/${slug}`, request.url), 301);
+    }
+
+    // Fallback 2: normalize the filename and try again.
+    // The old site had inconsistent naming — e.g., "I.L.41945" in URLs but
+    // "IL41945" in the database, or spaces vs underscores in paths.
+    const normalized = filename.replace(/[.\-\s]/g, '');
+    if (normalized !== filename) {
+      const result3 = await db.execute({
+        sql: `SELECT slug FROM manuals WHERE REPLACE(REPLACE(REPLACE(manual_number, '.', ''), '-', ''), ' ', '') = ? LIMIT 1`,
+        args: [normalized],
+      });
+
+      if (result3.rows.length > 0) {
+        const slug = (result3.rows[0] as unknown as { slug: string }).slug;
+        return NextResponse.redirect(new URL(`/manual/${slug}`, request.url), 301);
+      }
+    }
+
+    // Fallback 3: try matching just the filename against pdf_url (ignoring path structure)
+    const result4 = await db.execute({
+      sql: 'SELECT slug FROM manuals WHERE pdf_url LIKE ? LIMIT 1',
+      args: [`%/${filename}.pdf`],
+    });
+
+    if (result4.rows.length > 0) {
+      const slug = (result4.rows[0] as unknown as { slug: string }).slug;
       return NextResponse.redirect(new URL(`/manual/${slug}`, request.url), 301);
     }
 
