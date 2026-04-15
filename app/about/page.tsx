@@ -7,13 +7,13 @@ export const metadata: Metadata = {
   description: 'Voyten Manuals is powered by Voyten Electric — a third-generation family business since 1953. 200,000 sq ft, 45+ employees, specializing in remanufactured breakers and switchgear.',
   openGraph: {
     title: 'About Voyten Electric — Family Owned Since 1953',
-    description: 'Third-generation family business powering 5,800+ free electrical equipment manuals. 200,000 sq ft facilities, 45+ employees, serving the industry since 1953.',
+    description: 'Third-generation family business powering 6,000+ free electrical equipment manuals. 200,000 sq ft facilities, 45+ employees, serving the industry since 1953.',
     url: 'https://voytenmanuals.com/about',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'About Voyten Electric | Voyten Manuals',
-    description: 'Third-generation family business since 1953. 5,800+ free electrical equipment manuals. Polk, PA.',
+    description: 'Third-generation family business since 1953. 6,000+ free electrical equipment manuals. Polk, PA.',
   },
   alternates: {
     canonical: 'https://voytenmanuals.com/about',
@@ -283,7 +283,7 @@ export default function AboutPage() {
             Ready to Find Your Manual or Part?
           </h2>
           <p className="text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
-            Browse our library of 5,800+ free manuals — or call us directly for parts, pricing, and expert support.
+            Browse our library of 6,000+ free manuals — or call us directly for parts, pricing, and expert support.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link

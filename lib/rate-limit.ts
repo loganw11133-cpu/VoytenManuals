@@ -127,4 +127,9 @@ export const RATE_LIMITS = {
     windowMs: 60 * 1000, // 60 requests per minute for authenticated admin
     identifier: 'admin-api',
   },
+  searchApi: {
+    maxRequests: 30,
+    windowMs: 60 * 1000, // 30 requests per minute for public search
+    identifier: 'search',
+  },
 } as const;

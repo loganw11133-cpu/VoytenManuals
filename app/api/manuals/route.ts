@@ -1,8 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { searchManuals, getCategories, getManufacturers, getSubcategories } from '@/lib/manuals-db';
+import { checkRateLimit, RATE_LIMITS } from '@/lib/rate-limit';
 
 export async function GET(request: NextRequest) {
   try {
+    const rateLimited = await checkRateLimit(request, RATE_LIMITS.searchApi);
+    if (rateLimited) return rateLimited;
     const { searchParams } = new URL(request.url);
 
     const query = searchParams.get('q') || undefined;

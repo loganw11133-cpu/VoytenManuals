@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@libsql/client';
 import { createHash } from 'crypto';
 import { validateCsrf } from '@/lib/csrf';
+import { validateAdminAccess } from '@/lib/admin-auth';
 
 function getDb() {
   return createClient({
@@ -59,7 +60,10 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ downloads: (result.rows[0] as unknown as { count: number }).count });
   }
 
-  // Stats overview (top downloaded manuals)
+  // Stats overview — admin only
+  const authError = await validateAdminAccess(request);
+  if (authError) return authError;
+
   const result = await db.execute(`
     SELECT m.title, m.slug, m.manufacturer, m.category, COUNT(d.id) as downloads
     FROM download_events d
