@@ -9,16 +9,76 @@ function getDb() {
 }
 
 /**
+ * In-memory lookup maps for legacy URL redirects.
+ * Loaded once from DB, then all redirects are zero-cost.
+ *
+ * Maps built:
+ *   pdfPathToSlug  — full PDF path (after /pdf/ or /part_manuals/pdf/) → slug
+ *   filenameToSlug — just the PDF filename (no extension) → slug
+ *   normalizedToSlug — filename with dots/dashes/spaces stripped → slug
+ */
+let pdfPathToSlug: Map<string, string> | null = null;
+let filenameToSlug: Map<string, string> | null = null;
+let normalizedToSlug: Map<string, string> | null = null;
+let cacheLoadedAt = 0;
+const CACHE_TTL_MS = 60 * 60 * 1000; // 1 hour
+
+async function ensureCache(): Promise<void> {
+  if (pdfPathToSlug && Date.now() - cacheLoadedAt < CACHE_TTL_MS) return;
+
+  const db = getDb();
+  const result = await db.execute(
+    'SELECT slug, manual_number, pdf_url FROM manuals WHERE pdf_url IS NOT NULL'
+  );
+
+  const pathMap = new Map<string, string>();
+  const fnMap = new Map<string, string>();
+  const normMap = new Map<string, string>();
+
+  for (const row of result.rows) {
+    const { slug, manual_number, pdf_url } = row as unknown as {
+      slug: string;
+      manual_number: string | null;
+      pdf_url: string;
+    };
+
+    // Extract the path after the domain for full-path matching
+    // e.g., "http://www.electricalpartmanuals.com/part_manuals/pdf/transformer/Westinghouse/Bushings/TD33-360.pdf"
+    //   → "transformer/Westinghouse/Bushings/TD33-360.pdf"
+    const pdfMatch = pdf_url.match(/\.com\/(?:part_manuals\/)?pdf\/(.+)$/);
+    if (pdfMatch) {
+      // Store with spaces (decoded) and with underscores for flexible matching
+      const fullPath = decodeURIComponent(pdfMatch[1]).toLowerCase();
+      pathMap.set(fullPath, slug);
+      // Also store with underscores replaced by spaces and vice versa
+      pathMap.set(fullPath.replace(/_/g, ' '), slug);
+      pathMap.set(fullPath.replace(/ /g, '_'), slug);
+    }
+
+    // Extract just the filename
+    const fnMatch = pdf_url.match(/\/([^/]+)\.pdf$/i);
+    if (fnMatch) {
+      const fn = decodeURIComponent(fnMatch[1]).toLowerCase();
+      fnMap.set(fn, slug);
+    }
+
+    // Map manual_number (exact and normalized)
+    if (manual_number) {
+      fnMap.set(manual_number.toLowerCase(), slug);
+      const norm = manual_number.replace(/[.\-\s]/g, '').toLowerCase();
+      normMap.set(norm, slug);
+    }
+  }
+
+  pdfPathToSlug = pathMap;
+  filenameToSlug = fnMap;
+  normalizedToSlug = normMap;
+  cacheLoadedAt = Date.now();
+}
+
+/**
  * Handles legacy electricalpartmanuals.com PDF URL redirects.
- *
- * The old domain 301-redirects all traffic to voytenmanuals.com preserving
- * the path. Two known URL patterns exist in the wild:
- *   /part_manuals/pdf/{category}/{manufacturer}/{sub}/{filename}.pdf
- *   /pdf/{category}/{manufacturer}/{sub}/{filename}.pdf
- *
- * This function looks up the manual by pdf_url or manual_number and
- * returns a 301 redirect to the listing page. Falls back to /search
- * with the filename as query if no DB match is found.
+ * Uses in-memory lookup maps — zero DB queries after initial cache load.
  */
 export async function handleLegacyPdfRedirect(
   request: NextRequest,
@@ -32,61 +92,26 @@ export async function handleLegacyPdfRedirect(
   }
 
   try {
-    const db = getDb();
+    await ensureCache();
 
-    // Build the path suffix for LIKE matching (handles URL-encoded spaces, etc.)
-    const joinedPath = path.map(p => decodeURIComponent(p)).join('/');
+    const joinedPath = path.map(p => decodeURIComponent(p)).join('/').toLowerCase();
+    const filenameLower = filename.toLowerCase();
+    const normalized = filename.replace(/[.\-\s]/g, '').toLowerCase();
 
-    // Try matching the full path against pdf_url (both /pdf/ and /part_manuals/pdf/ variants)
-    const result = await db.execute({
-      sql: 'SELECT slug FROM manuals WHERE pdf_url LIKE ? OR pdf_url LIKE ? LIMIT 1',
-      args: [`%/pdf/${joinedPath}`, `%/part_manuals/pdf/${joinedPath}`],
-    });
+    // 1. Full path match
+    let slug = pdfPathToSlug!.get(joinedPath);
 
-    if (result.rows.length > 0) {
-      const slug = (result.rows[0] as unknown as { slug: string }).slug;
+    // 2. Filename match (includes manual_number exact matches)
+    if (!slug) slug = filenameToSlug!.get(filenameLower);
+
+    // 3. Normalized match (strips dots, dashes, spaces)
+    if (!slug) slug = normalizedToSlug!.get(normalized);
+
+    if (slug) {
       return NextResponse.redirect(new URL(`/manual/${slug}`, request.url), 301);
     }
 
-    // Fallback 1: exact filename match against manual_number
-    const result2 = await db.execute({
-      sql: 'SELECT slug FROM manuals WHERE manual_number = ? LIMIT 1',
-      args: [filename],
-    });
-
-    if (result2.rows.length > 0) {
-      const slug = (result2.rows[0] as unknown as { slug: string }).slug;
-      return NextResponse.redirect(new URL(`/manual/${slug}`, request.url), 301);
-    }
-
-    // Fallback 2: normalize the filename and try again.
-    // The old site had inconsistent naming — e.g., "I.L.41945" in URLs but
-    // "IL41945" in the database, or spaces vs underscores in paths.
-    const normalized = filename.replace(/[.\-\s]/g, '');
-    if (normalized !== filename) {
-      const result3 = await db.execute({
-        sql: `SELECT slug FROM manuals WHERE REPLACE(REPLACE(REPLACE(manual_number, '.', ''), '-', ''), ' ', '') = ? LIMIT 1`,
-        args: [normalized],
-      });
-
-      if (result3.rows.length > 0) {
-        const slug = (result3.rows[0] as unknown as { slug: string }).slug;
-        return NextResponse.redirect(new URL(`/manual/${slug}`, request.url), 301);
-      }
-    }
-
-    // Fallback 3: try matching just the filename against pdf_url (ignoring path structure)
-    const result4 = await db.execute({
-      sql: 'SELECT slug FROM manuals WHERE pdf_url LIKE ? LIMIT 1',
-      args: [`%/${filename}.pdf`],
-    });
-
-    if (result4.rows.length > 0) {
-      const slug = (result4.rows[0] as unknown as { slug: string }).slug;
-      return NextResponse.redirect(new URL(`/manual/${slug}`, request.url), 301);
-    }
-
-    // No match — redirect to search with the filename as query
+    // No match — redirect to search
     return NextResponse.redirect(
       new URL(`/search?q=${encodeURIComponent(filename)}`, request.url),
       302

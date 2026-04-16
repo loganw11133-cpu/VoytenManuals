@@ -59,6 +59,32 @@ export interface SearchResult {
   totalPages: number;
 }
 
+// ── Cache ──
+
+interface CacheEntry<T> {
+  data: T;
+  expiry: number;
+}
+
+const cache = new Map<string, CacheEntry<unknown>>();
+
+function getCached<T>(key: string): T | null {
+  const entry = cache.get(key);
+  if (!entry || Date.now() > entry.expiry) {
+    cache.delete(key);
+    return null;
+  }
+  return entry.data as T;
+}
+
+function setCache<T>(key: string, data: T, ttlMs: number): T {
+  cache.set(key, { data, expiry: Date.now() + ttlMs });
+  return data;
+}
+
+const CACHE_5MIN = 5 * 60 * 1000;
+const CACHE_1HR = 60 * 60 * 1000;
+
 // ── Utility ──
 
 export function toSlug(str: string): string {
@@ -74,11 +100,14 @@ export function formatFileSize(bytes: number | null): string {
 
 // ── Fuzzy search helpers ──
 
-const SEARCH_COLS = ['title', 'manual_number', 'keywords', 'description', 'manufacturer'] as const;
+// Primary search columns (indexed or short) — searched first for efficiency
+// 'description' excluded from LIKE scans to reduce row reads; it's long text
+// that rarely contains unique search terms not already in title/keywords
+const SEARCH_COLS = ['title', 'manual_number', 'keywords', 'manufacturer'] as const;
 
 /** Generate near-miss variants of a token for fuzzy matching.
  *  - Tokens ≥ 4 chars: also try with trailing char removed (catches plurals, extra chars)
- *  - Tokens 4-5 chars: also try removing each char (catches model-number typos like MDSC→MDS)
+ *  - Capped at 3 variants max to limit row reads
  */
 function generateSearchVariants(token: string): string[] {
   const variants = new Set([token]);
@@ -87,8 +116,9 @@ function generateSearchVariants(token: string): string[] {
     variants.add(token.slice(0, -1));
   }
 
-  if (token.length >= 4 && token.length <= 5) {
-    for (let i = 0; i < token.length; i++) {
+  // Only do single-char deletion for very short tokens where typos matter most
+  if (token.length === 4) {
+    for (let i = 0; i < token.length && variants.size < 3; i++) {
       const v = token.slice(0, i) + token.slice(i + 1);
       if (v.length >= 3) variants.add(v);
     }
@@ -103,6 +133,11 @@ export async function searchManuals(filters: SearchFilters): Promise<SearchResul
   const page = filters.page || 1;
   const limit = filters.limit || 24;
   const offset = (page - 1) * limit;
+
+  // Cache search results for 60 seconds — identical queries from bots/users reuse results
+  const cacheKey = `search:${JSON.stringify(filters)}`;
+  const cached = getCached<SearchResult>(cacheKey);
+  if (cached) return cached;
 
   let whereClause = 'WHERE 1=1';
   const params: (string | number)[] = [];
@@ -168,12 +203,13 @@ export async function searchManuals(filters: SearchFilters): Promise<SearchResul
     args: [...params, limit, offset],
   });
 
-  return {
+  const result = {
     manuals: dataResult.rows as unknown as Manual[],
     total,
     page,
     totalPages: Math.ceil(total / limit),
   };
+  return setCache(cacheKey, result, 60 * 1000); // 60s cache
 }
 
 export async function getManualBySlug(slug: string): Promise<Manual | null> {
@@ -195,17 +231,25 @@ export async function getManualById(id: number): Promise<Manual | null> {
 }
 
 export async function getCategories(): Promise<Category[]> {
+  const cached = getCached<Category[]>('categories');
+  if (cached) return cached;
+
   const result = await getDb().execute(
     'SELECT category as name, COUNT(*) as count FROM manuals GROUP BY category ORDER BY count DESC'
   );
-  return result.rows.map(row => ({
+  const categories = result.rows.map(row => ({
     name: row.name as string,
     count: row.count as number,
     slug: toSlug(row.name as string),
   }));
+  return setCache('categories', categories, CACHE_1HR);
 }
 
 export async function getManufacturers(category?: string): Promise<Manufacturer[]> {
+  const cacheKey = `manufacturers:${category || 'all'}`;
+  const cached = getCached<Manufacturer[]>(cacheKey);
+  if (cached) return cached;
+
   let sql = 'SELECT manufacturer as name, COUNT(*) as count FROM manuals';
   const args: string[] = [];
 
@@ -217,14 +261,19 @@ export async function getManufacturers(category?: string): Promise<Manufacturer[
   sql += ' GROUP BY manufacturer ORDER BY count DESC, name ASC';
 
   const result = await getDb().execute({ sql, args });
-  return result.rows.map(row => ({
+  const manufacturers = result.rows.map(row => ({
     name: row.name as string,
     count: row.count as number,
     slug: toSlug(row.name as string),
   }));
+  return setCache(cacheKey, manufacturers, CACHE_5MIN);
 }
 
 export async function getSubcategories(category?: string, manufacturer?: string): Promise<string[]> {
+  const cacheKey = `subcategories:${category || ''}:${manufacturer || ''}`;
+  const cached = getCached<string[]>(cacheKey);
+  if (cached) return cached;
+
   let sql = 'SELECT DISTINCT subcategory FROM manuals WHERE subcategory IS NOT NULL';
   const args: string[] = [];
 
@@ -240,7 +289,8 @@ export async function getSubcategories(category?: string, manufacturer?: string)
   sql += ' ORDER BY subcategory ASC';
 
   const result = await getDb().execute({ sql, args });
-  return result.rows.map(row => row.subcategory as string);
+  const subcategories = result.rows.map(row => row.subcategory as string);
+  return setCache(cacheKey, subcategories, CACHE_5MIN);
 }
 
 export async function getRelatedManuals(manual: Manual, limit = 4): Promise<Manual[]> {
@@ -259,11 +309,18 @@ export async function getRelatedManuals(manual: Manual, limit = 4): Promise<Manu
 }
 
 export async function getTotalManualCount(): Promise<number> {
+  const cached = getCached<number>('totalCount');
+  if (cached !== null) return cached;
+
   const result = await getDb().execute("SELECT COUNT(*) as count FROM manuals WHERE pdf_url != 'NONE'");
-  return (result.rows[0] as unknown as { count: number }).count;
+  const count = (result.rows[0] as unknown as { count: number }).count;
+  return setCache('totalCount', count, CACHE_1HR);
 }
 
 export async function getFeaturedManuals(limit = 8): Promise<Manual[]> {
+  const cached = getCached<Manual[]>('featured');
+  if (cached) return cached;
+
   // Curated featured slugs — top-sellers in stock at PA facility
   const featuredSlugs = [
     'top-seller-eaton-magnum-ds-mds6163wea-1600a',
@@ -284,7 +341,8 @@ export async function getFeaturedManuals(limit = 8): Promise<Manual[]> {
           LIMIT ?`,
     args: [...featuredSlugs, ...featuredSlugs, limit],
   });
-  return result.rows as unknown as Manual[];
+  const manuals = result.rows as unknown as Manual[];
+  return setCache('featured', manuals, CACHE_1HR);
 }
 
 // ── Admin: Create/Update ──
