@@ -1407,8 +1407,8 @@ function renderBreakerCharMap(chars, isDefault, enteredLen, errorPositions) {
   var container = document.getElementById('charBoxes');
   var labelsContainer = document.getElementById('groupLabels');
   var legend = document.getElementById('charLegend');
-  // Groups: Config(10), Sensor/Trip(4), Accessories(5), Options(6)
-  var groups = [10, 4, 5, 6];
+  // Groups: Config(10), Sensor/Trip(5), Accessories(5), Options(5)
+  var groups = [10, 5, 5, 5];
   var groupNames = ['Breaker Config', 'Sensor / Trip', 'Accessories', 'Options'];
   var html = '';
   var labelHtml = '';
@@ -1563,20 +1563,20 @@ function renderBreakerResults(chars, r, errors, warnings, isDefault, isPartial, 
   html += itemD('Trip Unit', r.tripName, isDefault[12]);
   html += itemD('Protection', r.protection, isDefault[12]);
   html += itemD('Control Power', r.controlPower, isDefault[12]);
+  html += itemD('Shunt Trip (STA)', r.shuntTrip, isDefault[14]);
   html += '</div>';
 
   // Accessories card
   html += '<div class="result-card valid"><h3>Accessories</h3>';
-  html += itemD('Shunt Trip (STA)', r.shuntTrip, isDefault[14]);
   html += itemD('Motor Operator', r.motor, isDefault[15]);
   html += itemD('Spring Release (SRD)', r.spring, isDefault[16]);
   html += itemD('UVR / 2nd Shunt Trip', r.uvr, isDefault[17]);
   html += itemD('Auxiliary Switch', r.auxSwitch, isDefault[18]);
+  html += itemD('Bell Alarm / OTS', r.bellAlarm, isDefault[19]);
   html += '</div>';
 
   // Options card
   html += '<div class="result-card valid"><h3>Options</h3>';
-  html += itemD('Bell Alarm / OTS', r.bellAlarm, isDefault[19]);
   html += itemD('Padlock Provisions', r.padlock, isDefault[20]);
   html += itemD('Counter / Keylock', r.counterKeylock, isDefault[21]);
   html += itemD('Latch Check Switch / TTO', r.latchSwitch, isDefault[22]);
