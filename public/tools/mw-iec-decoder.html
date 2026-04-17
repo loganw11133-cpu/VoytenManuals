@@ -1126,9 +1126,9 @@ function decodeBreaker(entered) {
   var springCode = c[16];
   var uvrCode = c[17];
   var auxCode = c[18];
-  var padlockCode = c[19];
-  var counterCode = c[20];
-  var bellCode = c[21];
+  var bellCode = c[19];
+  var padlockCode = c[20];
+  var counterCode = c[21];
   var latchCode = c[22];
   var shipCode = c[23];
   var futureCode = c[24];
@@ -1229,17 +1229,17 @@ function decodeBreaker(entered) {
   r.auxSwitch = DATA.auxSwitch[auxCode] || null;
   if (!r.auxSwitch && !isDefault[18]) { errors.push({ pos: '19', code: auxCode, msg: 'Unknown aux switch code' }); errorPositions.add(18); }
 
-  // Padlock (pos 20)
-  r.padlock = DATA.padlock[padlockCode] || null;
-  if (!r.padlock && !isDefault[19]) { errors.push({ pos: '20', code: padlockCode, msg: 'Unknown padlock code' }); errorPositions.add(19); }
-
-  // Counter / Keylock (pos 21)
-  r.counterKeylock = DATA.counterKeylock[counterCode] || null;
-  if (!r.counterKeylock && !isDefault[20]) { errors.push({ pos: '21', code: counterCode, msg: 'Unknown counter/keylock code' }); errorPositions.add(20); }
-
-  // Bell Alarm / OTS (pos 22)
+  // Bell Alarm / OTS (pos 20)
   r.bellAlarm = DATA.bellAlarm[bellCode] || null;
-  if (!r.bellAlarm && !isDefault[21]) { errors.push({ pos: '22', code: bellCode, msg: 'Unknown bell alarm/OTS code' }); errorPositions.add(21); }
+  if (!r.bellAlarm && !isDefault[19]) { errors.push({ pos: '20', code: bellCode, msg: 'Unknown bell alarm/OTS code' }); errorPositions.add(19); }
+
+  // Padlock (pos 21)
+  r.padlock = DATA.padlock[padlockCode] || null;
+  if (!r.padlock && !isDefault[20]) { errors.push({ pos: '21', code: padlockCode, msg: 'Unknown padlock code' }); errorPositions.add(20); }
+
+  // Counter / Keylock (pos 22)
+  r.counterKeylock = DATA.counterKeylock[counterCode] || null;
+  if (!r.counterKeylock && !isDefault[21]) { errors.push({ pos: '22', code: counterCode, msg: 'Unknown counter/keylock code' }); errorPositions.add(21); }
 
   // Latch Switch / TTO (pos 23)
   r.latchSwitch = DATA.latchSwitch[latchCode] || null;
@@ -1576,9 +1576,9 @@ function renderBreakerResults(chars, r, errors, warnings, isDefault, isPartial, 
 
   // Options card
   html += '<div class="result-card valid"><h3>Options</h3>';
-  html += itemD('Padlock Provisions', r.padlock, isDefault[19]);
-  html += itemD('Counter / Keylock', r.counterKeylock, isDefault[20]);
-  html += itemD('Bell Alarm / OTS', r.bellAlarm, isDefault[21]);
+  html += itemD('Bell Alarm / OTS', r.bellAlarm, isDefault[19]);
+  html += itemD('Padlock Provisions', r.padlock, isDefault[20]);
+  html += itemD('Counter / Keylock', r.counterKeylock, isDefault[21]);
   html += itemD('Latch Check Switch / TTO', r.latchSwitch, isDefault[22]);
   html += itemD('Shipping', r.shipping, isDefault[23]);
   html += itemD('Future', r.future, isDefault[24]);
