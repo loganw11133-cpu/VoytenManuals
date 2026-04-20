@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 import { searchManuals, getCategories, getManufacturers } from '@/lib/manuals-db';
 
-const baseUrl = 'https://voytenmanuals.com';
+const baseUrl = 'https://www.voytenmanuals.com';
 const MANUALS_PER_SITEMAP = 1000;
 
 /**
