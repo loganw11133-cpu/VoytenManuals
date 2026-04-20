@@ -41,6 +41,26 @@ export const metadata: Metadata = {
 
 const faqs = [
   {
+    question: 'I found the manual — can Voyten Electric supply the replacement parts?',
+    answer: 'Yes. Voyten Electric & Electronics, Inc. is a full-service supplier of remanufactured and surplus electrical equipment and parts. If you\'ve identified the parts you need from one of our manuals, call us at 1-800-458-4001 or request a quote online. We stock thousands of items including circuit breakers, contactors, relay components, motor starters, and more.',
+  },
+  {
+    question: 'Do you carry parts for discontinued, obsolete, or end-of-life (EOL) electrical equipment?',
+    answer: 'This is one of our specialties. Voyten Electric has been supplying hard-to-find parts for legacy and discontinued equipment since 1953. Whether you need a renewal part for a Westinghouse DS circuit breaker, a GE Magne-Blast component, or an obsolete Square D relay, we likely have it in stock or can source it. We maintain one of the largest inventories of remanufactured legacy electrical equipment in the country.',
+  },
+  {
+    question: 'Can I get emergency or after-hours support for critical equipment failures?',
+    answer: 'Yes — Voyten Electric offers emergency service 24 hours a day, 7 days a week, 365 days a year. If you have a critical equipment failure and need parts or technical support urgently, call us at 1-800-458-4001. We understand that downtime in industrial and utility environments is extremely costly, and we prioritize emergency orders.',
+  },
+  {
+    question: 'How do I know which parts I need from a manual?',
+    answer: 'Most of our manuals include renewal parts lists with manufacturer part numbers, assembly diagrams, and bill-of-materials tables. Locate the section titled "Renewal Parts" or "Parts List" in the manual for your equipment. If you need help identifying the correct part, call Voyten Electric at 1-800-458-4001 — our team can walk you through it.',
+  },
+  {
+    question: 'Can I request a quote for multiple parts at once?',
+    answer: 'Yes. You can submit a quote request through our contact page or email us at info@voytenelectric.com with a list of part numbers, equipment model numbers, or manual references. Our sales team will respond with pricing and availability, typically within one business day.',
+  },
+  {
     question: 'Are the electrical equipment manuals on Voyten Manuals really free?',
     answer: 'Yes — every manual in our library is completely free to view and download. Voyten Manuals is a public resource provided by Voyten Electric & Electronics, Inc. We believe technicians, engineers, and facility managers should have easy access to the documentation they need for maintaining and servicing electrical equipment.',
   },
@@ -57,36 +77,16 @@ const faqs = [
     answer: 'Absolutely. Our team at Voyten Electric has over 70 years of experience working with electrical equipment and maintains an extensive archive of technical documentation. If you can\'t find what you need, submit a manual request through our contact page and we\'ll do our best to locate it for you.',
   },
   {
-    question: 'I found the manual — can Voyten Electric supply the replacement parts?',
-    answer: 'Yes. Voyten Electric & Electronics, Inc. is a full-service supplier of remanufactured and surplus electrical equipment and parts. If you\'ve identified the parts you need from one of our manuals, call us at 1-800-458-4001 or request a quote online. We stock thousands of items including circuit breakers, contactors, relay components, motor starters, and more.',
-  },
-  {
-    question: 'Do you carry parts for discontinued, obsolete, or end-of-life (EOL) electrical equipment?',
-    answer: 'This is one of our specialties. Voyten Electric has been supplying hard-to-find parts for legacy and discontinued equipment since 1953. Whether you need a renewal part for a Westinghouse DS circuit breaker, a GE Magne-Blast component, or an obsolete Square D relay, we likely have it in stock or can source it. We maintain one of the largest inventories of remanufactured legacy electrical equipment in the country.',
-  },
-  {
     question: 'What does "remanufactured" electrical equipment mean?',
     answer: 'Remanufactured equipment has been completely disassembled, cleaned, inspected, and rebuilt to meet or exceed original manufacturer specifications. At Voyten Electric, our skilled technicians test every remanufactured unit before it ships. Remanufactured equipment is a cost-effective and reliable alternative when OEM parts are no longer available or lead times are too long.',
-  },
-  {
-    question: 'Can I get emergency or after-hours support for critical equipment failures?',
-    answer: 'Yes — Voyten Electric offers emergency service 24 hours a day, 7 days a week, 365 days a year. If you have a critical equipment failure and need parts or technical support urgently, call us at 1-800-458-4001. We understand that downtime in industrial and utility environments is extremely costly, and we prioritize emergency orders.',
   },
   {
     question: 'Do you ship parts internationally?',
     answer: 'Yes. Voyten Electric serves customers across the United States and internationally. Our sales team handles domestic and international shipping for parts, equipment, and large assemblies. Contact us for a quote that includes shipping to your location.',
   },
   {
-    question: 'How do I know which parts I need from a manual?',
-    answer: 'Most of our manuals include renewal parts lists with manufacturer part numbers, assembly diagrams, and bill-of-materials tables. Locate the section titled "Renewal Parts" or "Parts List" in the manual for your equipment. If you need help identifying the correct part, call Voyten Electric at 1-800-458-4001 — our team can walk you through it.',
-  },
-  {
     question: 'What is the difference between Voyten Manuals and Voyten Electric?',
     answer: 'Voyten Manuals (voytenmanuals.com) is a free online library of electrical equipment documentation. Voyten Electric & Electronics, Inc. (voytenelectric.com) is the parent company — a third-generation, family-owned business that sells remanufactured and surplus electrical equipment and parts. The manual library is a resource we provide to help electrical professionals find the documentation they need.',
-  },
-  {
-    question: 'Can I request a quote for multiple parts at once?',
-    answer: 'Yes. You can submit a quote request through our contact page or email us at info@voytenelectric.com with a list of part numbers, equipment model numbers, or manual references. Our sales team will respond with pricing and availability, typically within one business day.',
   },
 ];
 
