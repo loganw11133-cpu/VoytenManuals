@@ -21,6 +21,7 @@
     --gray-800: #1f2937;
     --white: #ffffff;
     --blue: #2563eb;
+    --green: #16a34a;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -32,33 +33,25 @@
     min-height: 100vh;
   }
 
-  .header {
+  header {
     background: linear-gradient(135deg, var(--deep-black), var(--black));
     color: var(--white);
-    padding: 24px 20px 20px;
-    text-align: center;
-    border-bottom: 4px solid var(--red);
+    padding: 20px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     box-shadow: 0 2px 10px rgba(0,0,0,0.3);
   }
 
-  .header h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: 0.5px; }
-  .header h1 .accent { color: var(--red); }
-  .header .subtitle { font-size: 0.85rem; color: var(--gray-300); margin-top: 4px; }
+  header h1 { font-size: 1.6rem; font-weight: 700; letter-spacing: 0.5px; }
+  header h1 span { color: var(--red); }
+  header .subtitle { font-size: 0.85rem; color: var(--gray-400); margin-top: 2px; }
 
-  .header-cta {
-    display: flex; align-items: center; justify-content: center; gap: 12px;
-    flex-wrap: wrap; margin-top: 10px;
+  .badge {
+    background: var(--red); color: white; padding: 6px 14px;
+    border-radius: 6px; font-size: 0.75rem; font-weight: 600;
+    letter-spacing: 1px; text-transform: uppercase;
   }
-  .header-phone {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: var(--red); color: var(--white); text-decoration: none;
-    font-size: 0.85rem; font-weight: 700; padding: 6px 14px;
-    border-radius: 999px; transition: background 0.2s;
-  }
-  .header-phone:hover, .header-phone:focus-visible {
-    background: var(--dark-red); outline: none;
-  }
-  .header-phone:focus-visible { box-shadow: 0 0 0 3px rgba(220,38,38,0.4); }
 
   .container { max-width: 1100px; margin: 0 auto; padding: 25px 20px; }
 
@@ -102,7 +95,7 @@
     font-size: 0.72rem; color: var(--gray-400); margin-top: 4px;
   }
 
-  .btn-row { display: flex; gap: 12px; }
+  .btn-row { display: flex; gap: 12px; flex-wrap: wrap; }
 
   .btn-row button {
     padding: 12px 28px; border: none; border-radius: 8px;
@@ -147,6 +140,7 @@
 
   .result-card.valid { border-left-color: var(--red); }
   .result-card.error-card { border-left-color: #f59e0b; }
+  .result-card.info-card { border-left-color: var(--blue); }
   .result-card.full-width { grid-column: 1 / -1; }
 
   .result-card h3 {
@@ -164,6 +158,7 @@
   .result-item .label { color: var(--gray-600); font-weight: 500; }
   .result-item .value { font-weight: 600; color: var(--gray-800); text-align: right; max-width: 60%; }
   .result-item .value.error-val { color: var(--red); }
+  .result-item .value.info-val { color: var(--blue); }
 
   .summary-banner {
     background: linear-gradient(135deg, var(--deep-black), var(--black));
@@ -232,6 +227,58 @@
     font-size: 0.5rem; color: var(--gray-400); font-weight: 400;
   }
 
+  /* Quick lookup section */
+  .quick-section {
+    background: var(--white); border-radius: 12px;
+    padding: 25px 30px; box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    margin-bottom: 20px; border: 2px solid var(--red);
+  }
+
+  .quick-section h3 {
+    font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;
+    color: var(--red); margin-bottom: 6px;
+  }
+
+  .quick-section .quick-desc {
+    font-size: 0.82rem; color: var(--gray-600); margin-bottom: 14px;
+    line-height: 1.5;
+  }
+
+  .quick-row {
+    display: flex; gap: 12px; align-items: flex-end;
+  }
+
+  .quick-row .field { flex: 1; }
+
+  @media (max-width: 768px) {
+    .quick-row { flex-direction: column; align-items: stretch; }
+    .quick-row .field { width: 100%; }
+    .quick-row button { width: 100%; }
+  }
+
+  .detected-badge {
+    display: inline-block; padding: 3px 10px; border-radius: 4px;
+    font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.5px; margin-top: 6px;
+  }
+
+  .detected-badge.style { background: #dbeafe; color: #1e40af; }
+  .detected-badge.trip { background: #fef3c7; color: #92400e; }
+  .detected-badge.plug { background: #dcfce7; color: #166534; }
+  .detected-badge.accessory { background: #f3e8ff; color: #6b21a8; }
+  .detected-badge.frame-class { background: #fee2e2; color: #991b1b; }
+
+  .section-divider {
+    display: flex; align-items: center; gap: 12px;
+    margin: 6px 0 20px; font-size: 0.75rem; color: var(--gray-400);
+    text-transform: uppercase; letter-spacing: 1px;
+  }
+
+  .section-divider::before,
+  .section-divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--gray-300);
+  }
+
   .ios-notice {
     background: #fef3c7;
     border: 2px solid #f59e0b;
@@ -253,6 +300,7 @@
     header h1 { font-size: 1.2rem; }
     .container { padding: 14px 10px; }
     .input-section { padding: 16px 14px; }
+    .quick-section { padding: 16px 14px; }
     input[type="text"] {
       font-size: 16px;
       -webkit-appearance: none;
@@ -295,23 +343,49 @@
 </div>
 </noscript>
 
-<div class="header">
-  <h1>Eaton <span class="accent">SPB</span> Decoder</h1>
-  <div class="subtitle">Systems Pow-R Breaker Catalog Number Breakdown</div>
-  <div class="header-cta">
-    <a class="header-phone" href="tel:+18004584001" aria-label="Call Voyten Electric at 1-800-458-4001">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.24.2 2.45.57 3.57a1 1 0 01-.24 1.02l-2.21 2.2z"/></svg>
-      1-800-458-4001
-    </a>
+<header>
+  <div>
+    <h1>Eaton <span>SPB</span> Decoder</h1>
+    <div class="subtitle">Systems Pow-R Breaker Catalog Number Breakdown</div>
   </div>
-</div>
+  <div class="badge">Offline Tool</div>
+</header>
 
 <div class="container">
+
+  <!-- Quick Lookup — single input, auto-detect -->
+  <div class="quick-section">
+    <h3>Quick Lookup</h3>
+    <p class="quick-desc">Paste any SPB catalog number, part number, or accessory number. The decoder will auto-detect the format.</p>
+    <div class="quick-row">
+      <div class="field">
+        <input type="text" id="quickInput" placeholder="e.g. SPBR316D56, SPBMR330C, 8702C34G01..., 8SPB400" maxlength="40" autocomplete="off" spellcheck="false">
+        <div id="quickDetect"></div>
+      </div>
+      <button class="btn-decode" onclick="quickDecode()" style="height:48px;">Decode</button>
+    </div>
+    <div class="examples-bar">
+      <span class="examples-label">Try:</span>
+      <button class="example-btn" onclick="quickEx('8SPB400')">8SPB400</button>
+      <button class="example-btn" onclick="quickEx('SPBR316D56')">SPBR316D56</button>
+      <button class="example-btn" onclick="quickEx('T56BLSIG')">T56BLSIG</button>
+      <button class="example-btn" onclick="quickEx('PD6S16A160')">PD6S16A160</button>
+      <button class="example-btn" onclick="quickEx('SPBMR330C')">SPBMR330C</button>
+      <button class="example-btn" onclick="quickEx('1221C21G03')">1221C21G03</button>
+      <button class="example-btn" onclick="quickEx('8702C34G0178083229020071000162')">8702C34G01... (Edge#)</button>
+      <button class="example-btn" onclick="quickEx('SPBST120A')">SPBST120A</button>
+      <button class="example-btn" onclick="quickEx('SPB50')">SPB-50</button>
+    </div>
+  </div>
+
+  <div class="section-divider">or use detailed input</div>
+
+  <!-- Detailed 3-field input -->
   <div class="input-section">
-    <h3>Enter Breaker Information</h3>
+    <h3>Detailed Breaker Input</h3>
     <div class="input-grid">
       <div class="field">
-        <label>Style Number <span class="req">*</span></label>
+        <label>Style Number <span class="opt">(nameplate)</span></label>
         <input type="text" id="styleInput" placeholder="SPBR316D56" maxlength="20" autocomplete="off" spellcheck="false">
         <div class="field-hint">Nameplate style (e.g., SPBR312C, SPBSR38R)</div>
       </div>
@@ -323,7 +397,7 @@
       <div class="field">
         <label>Rating Plug <span class="opt">(optional)</span></label>
         <input type="text" id="plugInput" placeholder="PD6S16A160" maxlength="20" autocomplete="off" spellcheck="false">
-        <div class="field-hint">e.g., PD6S16A160, RP6S30A300</div>
+        <div class="field-hint">e.g., PD6S16A160, RP6S30A300, 8SPB400</div>
       </div>
     </div>
     <div class="btn-row">
@@ -340,6 +414,7 @@
       <button class="example-btn" onclick="loadEx('SPBR340R','S56LSIG','RP6S40A400')">SPBR340R + S56LSIG + RP6S40A400</button>
       <button class="example-btn" onclick="loadEx('SPBR312C','','PD6S12A120')">SPBR312C + PD6S12A120</button>
       <button class="example-btn" onclick="loadEx('SPBR34D','T52BLSI','PD6S04A040')">SPBR34D + T52BLSI + PD6S04A040</button>
+      <button class="example-btn" onclick="loadEx('SPBMR330C','','')">SPBMR330C (Main)</button>
     </div>
   </div>
 
@@ -386,6 +461,19 @@ var AMP_CODES = {
   '30': 3000,
   '40': 4000,
   '50': 5000
+};
+
+// Maps amp codes to their correct plug frame code for cross-reference
+var AMP_TO_PLUG_FRAME = {
+  '2': '02', '02': '02',
+  '2H': '02', '2F': '04',
+  '25H': '04',
+  '4': '04', '04': '04',
+  '8': '08', '08': '08',
+  '12': '12', '16': '16',
+  '20': '20', '21': '21',
+  '25': '25', '30': '30',
+  '40': '40', '50': '50'
 };
 
 // Trip unit suffix in style number
@@ -472,7 +560,7 @@ var TRIP_FUNC_NUM = {
 
 // Rating plug frame codes
 var PLUG_FRAME = {
-  '04': 400, '08': 800, '12': 1200, '16': 1600,
+  '02': 200, '04': 400, '08': 800, '12': 1200, '16': 1600,
   '20': 2000, '21': 2000, '25': 2500, '30': 3000,
   '40': 4000, '50': 5000
 };
@@ -517,66 +605,558 @@ var PRT7_PLUGS = {
 
 // Accessory part number cross-reference
 var SHUNT_TRIP_PARTS = {
-  '1221C21G01': '24 VAC',   '1221C21G02': '48 VAC',
-  '1221C21G03': '120 VAC',  '1221C21G04': '208 VAC',
-  '1221C21G05': '240 VAC',  '1221C21G06': '480 VAC',
-  '1221C21G07': '600 VAC',  '1221C21G08': '24 VDC',
-  '1221C21G09': '32 VDC',   '1221C21G10': '48 VDC',
-  '1221C21G11': '60 VDC',   '1221C21G12': '125 VDC',
-  '1221C21G13': '24 VAC (5000A)', '1221C21G14': '48 VAC (5000A)',
-  '1221C21G15': '120 VAC (5000A)', '1221C21G16': '208 VAC (5000A)',
-  '1221C21G17': '240 VAC (5000A)', '1221C21G18': '480 VAC (5000A)',
-  '1221C21G19': '600 VAC (5000A)', '1221C21G20': '24 VDC (5000A)',
-  '1221C21G21': '32 VDC (5000A)',  '1221C21G22': '48 VDC (5000A)',
-  '1221C21G23': '60 VDC (5000A)',  '1221C21G24': '125 VDC (5000A)',
-  '6649C93G01': '24 VAC',   '6649C93G02': '48 VAC',
-  '6649C93G03': '120 VAC',  '6649C93G04': '208 VAC',
-  '6649C93G05': '240 VAC',  '6649C93G06': '480 VAC',
-  '6649C93G07': '600 VAC',  '6649C93G08': '24 VDC',
-  '6649C93G09': '32 VDC',   '6649C93G10': '48 VDC',
-  '6649C93G11': '60 VDC',   '6649C93G12': '125 VDC',
-  '6649C93G13': '24 VAC (5000A)', '6649C93G14': '48 VAC (5000A)',
-  '6649C93G15': '120 VAC (5000A)', '6649C93G16': '208 VAC (5000A)',
-  '6649C93G17': '240 VAC (5000A)', '6649C93G18': '480 VAC (5000A)',
-  '6649C93G19': '600 VAC (5000A)', '6649C93G20': '24 VDC (5000A)',
-  '6649C93G21': '32 VDC (5000A)',  '6649C93G22': '48 VDC (5000A)',
-  '6649C93G23': '60 VDC (5000A)',  '6649C93G24': '125 VDC (5000A)',
-  'SPBST024A': '24 VAC Kit (400-3150A)',
-  'SPBST120A': '120 VAC Kit (400-3150A)',
-  'SPBST120S': '120 VAC Kit (Alt Style)',
-  'SPBST125D': '125 VDC Kit',
-  'SPBST048D': '48 VDC Kit',
-  'SPBSTC':    'Capacitor Trip Device',
-  'SPBSTEO024D': '24 VDC Kit (EO Breakers)',
-  'SPBSTEO120A': '120 VAC Kit (EO Breakers)',
-  'SPBST4024A': '24 VAC Kit (4000-5000A)',
-  'SPBST4120A': '120 VAC Kit (4000-5000A)',
-  'SPBST4125D': '125 VDC Kit (4000-5000A)'
+  '1221C21G01': { voltage: '24 VAC',  frameRange: '400-3150A', type: 'Shunt Trip Coil' },
+  '1221C21G02': { voltage: '48 VAC',  frameRange: '400-3150A', type: 'Shunt Trip Coil' },
+  '1221C21G03': { voltage: '120 VAC', frameRange: '400-3150A', type: 'Shunt Trip Coil' },
+  '1221C21G04': { voltage: '208 VAC', frameRange: '400-3150A', type: 'Shunt Trip Coil' },
+  '1221C21G05': { voltage: '240 VAC', frameRange: '400-3150A', type: 'Shunt Trip Coil' },
+  '1221C21G06': { voltage: '480 VAC', frameRange: '400-3150A', type: 'Shunt Trip Coil' },
+  '1221C21G07': { voltage: '600 VAC', frameRange: '400-3150A', type: 'Shunt Trip Coil' },
+  '1221C21G08': { voltage: '24 VDC',  frameRange: '400-3150A', type: 'Shunt Trip Coil' },
+  '1221C21G09': { voltage: '32 VDC',  frameRange: '400-3150A', type: 'Shunt Trip Coil' },
+  '1221C21G10': { voltage: '48 VDC',  frameRange: '400-3150A', type: 'Shunt Trip Coil' },
+  '1221C21G11': { voltage: '60 VDC',  frameRange: '400-3150A', type: 'Shunt Trip Coil' },
+  '1221C21G12': { voltage: '125 VDC', frameRange: '400-3150A', type: 'Shunt Trip Coil' },
+  '1221C21G13': { voltage: '24 VAC',  frameRange: '4000-5000A', type: 'Shunt Trip Coil' },
+  '1221C21G14': { voltage: '48 VAC',  frameRange: '4000-5000A', type: 'Shunt Trip Coil' },
+  '1221C21G15': { voltage: '120 VAC', frameRange: '4000-5000A', type: 'Shunt Trip Coil' },
+  '1221C21G16': { voltage: '208 VAC', frameRange: '4000-5000A', type: 'Shunt Trip Coil' },
+  '1221C21G17': { voltage: '240 VAC', frameRange: '4000-5000A', type: 'Shunt Trip Coil' },
+  '1221C21G18': { voltage: '480 VAC', frameRange: '4000-5000A', type: 'Shunt Trip Coil' },
+  '1221C21G19': { voltage: '600 VAC', frameRange: '4000-5000A', type: 'Shunt Trip Coil' },
+  '1221C21G20': { voltage: '24 VDC',  frameRange: '4000-5000A', type: 'Shunt Trip Coil' },
+  '1221C21G21': { voltage: '32 VDC',  frameRange: '4000-5000A', type: 'Shunt Trip Coil' },
+  '1221C21G22': { voltage: '48 VDC',  frameRange: '4000-5000A', type: 'Shunt Trip Coil' },
+  '1221C21G23': { voltage: '60 VDC',  frameRange: '4000-5000A', type: 'Shunt Trip Coil' },
+  '1221C21G24': { voltage: '125 VDC', frameRange: '4000-5000A', type: 'Shunt Trip Coil' },
+  '6649C93G01': { voltage: '24 VAC',  frameRange: '400-3150A', type: 'Shunt Trip Coil (Alt Style)' },
+  '6649C93G02': { voltage: '48 VAC',  frameRange: '400-3150A', type: 'Shunt Trip Coil (Alt Style)' },
+  '6649C93G03': { voltage: '120 VAC', frameRange: '400-3150A', type: 'Shunt Trip Coil (Alt Style)' },
+  '6649C93G04': { voltage: '208 VAC', frameRange: '400-3150A', type: 'Shunt Trip Coil (Alt Style)' },
+  '6649C93G05': { voltage: '240 VAC', frameRange: '400-3150A', type: 'Shunt Trip Coil (Alt Style)' },
+  '6649C93G06': { voltage: '480 VAC', frameRange: '400-3150A', type: 'Shunt Trip Coil (Alt Style)' },
+  '6649C93G07': { voltage: '600 VAC', frameRange: '400-3150A', type: 'Shunt Trip Coil (Alt Style)' },
+  '6649C93G08': { voltage: '24 VDC',  frameRange: '400-3150A', type: 'Shunt Trip Coil (Alt Style)' },
+  '6649C93G09': { voltage: '32 VDC',  frameRange: '400-3150A', type: 'Shunt Trip Coil (Alt Style)' },
+  '6649C93G10': { voltage: '48 VDC',  frameRange: '400-3150A', type: 'Shunt Trip Coil (Alt Style)' },
+  '6649C93G11': { voltage: '60 VDC',  frameRange: '400-3150A', type: 'Shunt Trip Coil (Alt Style)' },
+  '6649C93G12': { voltage: '125 VDC', frameRange: '400-3150A', type: 'Shunt Trip Coil (Alt Style)' },
+  '6649C93G13': { voltage: '24 VAC',  frameRange: '4000-5000A', type: 'Shunt Trip Coil (Alt Style)' },
+  '6649C93G14': { voltage: '48 VAC',  frameRange: '4000-5000A', type: 'Shunt Trip Coil (Alt Style)' },
+  '6649C93G15': { voltage: '120 VAC', frameRange: '4000-5000A', type: 'Shunt Trip Coil (Alt Style)' },
+  '6649C93G16': { voltage: '208 VAC', frameRange: '4000-5000A', type: 'Shunt Trip Coil (Alt Style)' },
+  '6649C93G17': { voltage: '240 VAC', frameRange: '4000-5000A', type: 'Shunt Trip Coil (Alt Style)' },
+  '6649C93G18': { voltage: '480 VAC', frameRange: '4000-5000A', type: 'Shunt Trip Coil (Alt Style)' },
+  '6649C93G19': { voltage: '600 VAC', frameRange: '4000-5000A', type: 'Shunt Trip Coil (Alt Style)' },
+  '6649C93G20': { voltage: '24 VDC',  frameRange: '4000-5000A', type: 'Shunt Trip Coil (Alt Style)' },
+  '6649C93G21': { voltage: '32 VDC',  frameRange: '4000-5000A', type: 'Shunt Trip Coil (Alt Style)' },
+  '6649C93G22': { voltage: '48 VDC',  frameRange: '4000-5000A', type: 'Shunt Trip Coil (Alt Style)' },
+  '6649C93G23': { voltage: '60 VDC',  frameRange: '4000-5000A', type: 'Shunt Trip Coil (Alt Style)' },
+  '6649C93G24': { voltage: '125 VDC', frameRange: '4000-5000A', type: 'Shunt Trip Coil (Alt Style)' }
 };
 
 var ELEC_OP_PARTS = {
-  '1375D66G01': '120 VAC',  '1375D66G02': '208 VAC',
-  '1375D66G03': '240 VAC',  '1375D66G04': '480 VAC',
-  '1375D66G05': '24 VDC',   '1375D66G06': '48 VDC',
-  '1375D66G07': '60 VDC',   '1375D66G08': '125 VDC',
-  '1375D66G11': '120 VAC (5000A)', '1375D66G12': '208 VAC (5000A)',
-  '1375D66G13': '240 VAC (5000A)', '1375D66G14': '480 VAC (5000A)',
-  '1375D66G15': '24 VDC (5000A)',  '1375D66G16': '48 VDC (5000A)',
-  '1375D66G17': '60 VDC (5000A)',  '1375D66G18': '125 VDC (5000A)',
-  '6649C92G01': '120 VAC',  '6649C92G02': '208 VAC',
-  '6649C92G03': '240 VAC',  '6649C92G04': '480 VAC',
-  '6649C92G05': '24 VDC',   '6649C92G06': '48 VDC',
-  '6649C92G07': '60 VDC',   '6649C92G08': '125 VDC',
-  '6649C92G11': '120 VAC (5000A)', '6649C92G12': '208 VAC (5000A)',
-  '6649C92G13': '240 VAC (5000A)', '6649C92G14': '480 VAC (5000A)',
-  '6649C92G15': '24 VDC (5000A)',  '6649C92G16': '48 VDC (5000A)',
-  '6649C92G17': '60 VDC (5000A)',  '6649C92G18': '125 VDC (5000A)',
-  'SPBEO120A': '120 VAC Kit',   'SPBEO120S': '120 VAC Kit (Alt)',
-  'SPBEO048D': '48 VDC Kit',    'SPBEO125D': '125 VDC Kit',
-  'SPBEO024D': '24 VDC Kit',
-  'SPBEO4120A': '120 VAC Kit (4000-5000A)',
-  'SPBEO4125D': '125 VDC Kit (4000-5000A)'
+  '1375D66G01': { voltage: '120 VAC', frameRange: '400-3150A', type: 'Electrical Operator' },
+  '1375D66G02': { voltage: '208 VAC', frameRange: '400-3150A', type: 'Electrical Operator' },
+  '1375D66G03': { voltage: '240 VAC', frameRange: '400-3150A', type: 'Electrical Operator' },
+  '1375D66G04': { voltage: '480 VAC', frameRange: '400-3150A', type: 'Electrical Operator' },
+  '1375D66G05': { voltage: '24 VDC',  frameRange: '400-3150A', type: 'Electrical Operator' },
+  '1375D66G06': { voltage: '48 VDC',  frameRange: '400-3150A', type: 'Electrical Operator' },
+  '1375D66G07': { voltage: '60 VDC',  frameRange: '400-3150A', type: 'Electrical Operator' },
+  '1375D66G08': { voltage: '125 VDC', frameRange: '400-3150A', type: 'Electrical Operator' },
+  '1375D66G11': { voltage: '120 VAC', frameRange: '4000-5000A', type: 'Electrical Operator' },
+  '1375D66G12': { voltage: '208 VAC', frameRange: '4000-5000A', type: 'Electrical Operator' },
+  '1375D66G13': { voltage: '240 VAC', frameRange: '4000-5000A', type: 'Electrical Operator' },
+  '1375D66G14': { voltage: '480 VAC', frameRange: '4000-5000A', type: 'Electrical Operator' },
+  '1375D66G15': { voltage: '24 VDC',  frameRange: '4000-5000A', type: 'Electrical Operator' },
+  '1375D66G16': { voltage: '48 VDC',  frameRange: '4000-5000A', type: 'Electrical Operator' },
+  '1375D66G17': { voltage: '60 VDC',  frameRange: '4000-5000A', type: 'Electrical Operator' },
+  '1375D66G18': { voltage: '125 VDC', frameRange: '4000-5000A', type: 'Electrical Operator' },
+  '6649C92G01': { voltage: '120 VAC', frameRange: '400-3150A', type: 'Electrical Operator (Alt Style)' },
+  '6649C92G02': { voltage: '208 VAC', frameRange: '400-3150A', type: 'Electrical Operator (Alt Style)' },
+  '6649C92G03': { voltage: '240 VAC', frameRange: '400-3150A', type: 'Electrical Operator (Alt Style)' },
+  '6649C92G04': { voltage: '480 VAC', frameRange: '400-3150A', type: 'Electrical Operator (Alt Style)' },
+  '6649C92G05': { voltage: '24 VDC',  frameRange: '400-3150A', type: 'Electrical Operator (Alt Style)' },
+  '6649C92G06': { voltage: '48 VDC',  frameRange: '400-3150A', type: 'Electrical Operator (Alt Style)' },
+  '6649C92G07': { voltage: '60 VDC',  frameRange: '400-3150A', type: 'Electrical Operator (Alt Style)' },
+  '6649C92G08': { voltage: '125 VDC', frameRange: '400-3150A', type: 'Electrical Operator (Alt Style)' },
+  '6649C92G11': { voltage: '120 VAC', frameRange: '4000-5000A', type: 'Electrical Operator (Alt Style)' },
+  '6649C92G12': { voltage: '208 VAC', frameRange: '4000-5000A', type: 'Electrical Operator (Alt Style)' },
+  '6649C92G13': { voltage: '240 VAC', frameRange: '4000-5000A', type: 'Electrical Operator (Alt Style)' },
+  '6649C92G14': { voltage: '480 VAC', frameRange: '4000-5000A', type: 'Electrical Operator (Alt Style)' },
+  '6649C92G15': { voltage: '24 VDC',  frameRange: '4000-5000A', type: 'Electrical Operator (Alt Style)' },
+  '6649C92G16': { voltage: '48 VDC',  frameRange: '4000-5000A', type: 'Electrical Operator (Alt Style)' },
+  '6649C92G17': { voltage: '60 VDC',  frameRange: '4000-5000A', type: 'Electrical Operator (Alt Style)' },
+  '6649C92G18': { voltage: '125 VDC', frameRange: '4000-5000A', type: 'Electrical Operator (Alt Style)' }
 };
+
+// Kit-style accessory part numbers
+var ACCESSORY_KITS = {
+  'SPBST024A':    { voltage: '24 VAC',  frameRange: '400-3150A', type: 'Shunt Trip Kit' },
+  'SPBST120A':    { voltage: '120 VAC', frameRange: '400-3150A', type: 'Shunt Trip Kit' },
+  'SPBST120S':    { voltage: '120 VAC', frameRange: '400-3150A', type: 'Shunt Trip Kit (Alt Style)' },
+  'SPBST125D':    { voltage: '125 VDC', frameRange: '400-3150A', type: 'Shunt Trip Kit' },
+  'SPBST048D':    { voltage: '48 VDC',  frameRange: '400-3150A', type: 'Shunt Trip Kit' },
+  'SPBSTC':       { voltage: 'N/A',     frameRange: 'All',       type: 'Capacitor Trip Device' },
+  'SPBSTEO024D':  { voltage: '24 VDC',  frameRange: 'E/O Breakers', type: 'Shunt Trip Kit (E/O)' },
+  'SPBSTEO120A':  { voltage: '120 VAC', frameRange: 'E/O Breakers', type: 'Shunt Trip Kit (E/O)' },
+  'SPBST4024A':   { voltage: '24 VAC',  frameRange: '4000-5000A', type: 'Shunt Trip Kit' },
+  'SPBST4120A':   { voltage: '120 VAC', frameRange: '4000-5000A', type: 'Shunt Trip Kit' },
+  'SPBST4125D':   { voltage: '125 VDC', frameRange: '4000-5000A', type: 'Shunt Trip Kit' },
+  'SPBEO120A':    { voltage: '120 VAC', frameRange: '400-3150A', type: 'Electrical Operator Kit' },
+  'SPBEO120S':    { voltage: '120 VAC', frameRange: '400-3150A', type: 'Electrical Operator Kit (Alt Style)' },
+  'SPBEO048D':    { voltage: '48 VDC',  frameRange: '400-3150A', type: 'Electrical Operator Kit' },
+  'SPBEO125D':    { voltage: '125 VDC', frameRange: '400-3150A', type: 'Electrical Operator Kit' },
+  'SPBEO024D':    { voltage: '24 VDC',  frameRange: '400-3150A', type: 'Electrical Operator Kit' },
+  'SPBEO4120A':   { voltage: '120 VAC', frameRange: '4000-5000A', type: 'Electrical Operator Kit' },
+  'SPBEO4125D':   { voltage: '125 VDC', frameRange: '4000-5000A', type: 'Electrical Operator Kit' },
+  'SPBAUX162':    { voltage: 'N/A',     frameRange: 'All',       type: 'Auxiliary Switch (1A/1B)' },
+  'SPBAUX304':    { voltage: 'N/A',     frameRange: 'All',       type: 'Auxiliary Switch (4A/4B)' }
+};
+
+// Draw-out frame kits
+var DRAWOUT_KITS = {
+  '8SPBD0S':  { frameRange: 'Up to 800A',   type: 'Draw-Out Frame Kit' },
+  '16SPBD0S': { frameRange: 'Up to 1600A',  type: 'Draw-Out Frame Kit' },
+  '25SPBDOS': { frameRange: 'Up to 2500A',  type: 'Draw-Out Frame Kit' }
+};
+
+
+// ============================================================
+// INPUT AUTO-DETECTION
+// ============================================================
+
+function detectInputType(raw) {
+  var s = raw.toUpperCase().replace(/[\s\-]/g, '');
+
+  // Pow-R Trip 7 rating plug: digits + SPB + digits (e.g., 8SPB400)
+  if (/^\d{1,2}SPB\d{3,4}$/.test(s)) return 'plug-prt7';
+
+  // PD6S / RP6S rating plug
+  if (/^(PD6S|RP6S)/.test(s)) return 'plug-digitrip';
+
+  // Trip unit: T##B, T##C, T##D, S## prefix
+  if (/^(T\d{2}[BCD]|S\d{2})/.test(s)) return 'trip';
+
+  // Style number: SPBSR/SPBMSR or SPBR/SPBMR prefix followed by poles+amps
+  if (/^SPB[M]?SR\d/.test(s)) return 'style';
+  if (/^SPB[M]?R\d/.test(s)) return 'style';
+
+  // Frame class designation: SPB + digits only (SPB50, SPB65, SPB100, SPB150)
+  if (/^SPB(50|65|100|150)$/.test(s)) return 'frame-class';
+
+  // Kit-style accessory: SPBST, SPBEO, SPBAUX, xSPBD0S
+  if (/^SPB(ST|EO|AUX)/.test(s)) return 'accessory-kit';
+  if (/^\d+SPBD[O0]S$/.test(s)) return 'accessory-drawout';
+
+  // Edge number (Feature & Option Number): 30-char Westinghouse format ####X##G## + 20-digit option code
+  if (/^\d{4}[A-Z]\d{2}G\d{22}$/.test(s)) return 'edge';
+
+  // Westinghouse style numbers: ####C##G## or ####D##G##
+  if (/^\d{4}[CD]\d{2}G\d{2}$/.test(s)) return 'accessory-wh';
+
+  // OPTIM trip
+  if (/^OPTIM/.test(s)) return 'trip';
+
+  // Loose SPB prefix (user typed "SPB" then something else)
+  if (/^SPB/.test(s)) return 'style-maybe';
+
+  return 'unknown';
+}
+
+function getDetectLabel(type) {
+  var labels = {
+    'plug-prt7': ['Rating Plug (Pow-R Trip 7)', 'plug'],
+    'plug-digitrip': ['Rating Plug (Digitrip)', 'plug'],
+    'trip': ['Trip Unit Part Number', 'trip'],
+    'style': ['Style Number', 'style'],
+    'frame-class': ['Frame Class Designation', 'frame-class'],
+    'accessory-kit': ['SPB Accessory Kit', 'accessory'],
+    'accessory-drawout': ['Draw-Out Frame Kit', 'accessory'],
+    'accessory-wh': ['Westinghouse Part Number', 'accessory'],
+    'edge': ['Breaker Edge Number (Feature & Option)', 'style'],
+    'style-maybe': ['Style Number (verify)', 'style'],
+    'unknown': null
+  };
+  return labels[type] || null;
+}
+
+
+// ============================================================
+// QUICK DECODE — single input, auto-route
+// ============================================================
+
+function quickDecode() {
+  var raw = document.getElementById('quickInput').value.trim();
+  if (!raw) return;
+
+  var type = detectInputType(raw);
+  var s = raw.toUpperCase().replace(/[\s\-]/g, '');
+
+  // Clear detailed fields
+  document.getElementById('styleInput').value = '';
+  document.getElementById('tripInput').value = '';
+  document.getElementById('plugInput').value = '';
+
+  switch (type) {
+    case 'style':
+    case 'style-maybe':
+      document.getElementById('styleInput').value = raw;
+      decode();
+      break;
+
+    case 'plug-prt7':
+    case 'plug-digitrip':
+      document.getElementById('plugInput').value = raw;
+      decodeSinglePlug(raw);
+      break;
+
+    case 'trip':
+      document.getElementById('tripInput').value = raw;
+      decodeSingleTrip(raw);
+      break;
+
+    case 'frame-class':
+      decodeFrameClass(s);
+      break;
+
+    case 'edge':
+      decodeEdgeNumber(s);
+      break;
+
+    case 'accessory-kit':
+    case 'accessory-drawout':
+    case 'accessory-wh':
+      decodeAccessory(s);
+      break;
+
+    default:
+      // Try all parsers and see if anything matches
+      if (tryFallbackDecode(s)) break;
+      showError('Could not identify this catalog number format: "' + raw + '". Try entering it in the specific field above.');
+      break;
+  }
+}
+
+function tryFallbackDecode(s) {
+  // Try as plug
+  var plug = parsePlug(s);
+  if (plug.plugAmps && plug.errors.length === 0) {
+    document.getElementById('plugInput').value = s;
+    decodeSinglePlug(s);
+    return true;
+  }
+  // Try as trip
+  var trip = parseTrip(s);
+  if (trip.name && trip.errors.length === 0) {
+    document.getElementById('tripInput').value = s;
+    decodeSingleTrip(s);
+    return true;
+  }
+  return false;
+}
+
+
+// ============================================================
+// SINGLE-COMPONENT DECODERS (for quick lookup)
+// ============================================================
+
+function decodeSinglePlug(raw) {
+  var plug = parsePlug(raw);
+  var el = document.getElementById('results');
+  var mapEl = document.getElementById('charMap');
+  el.classList.remove('hidden');
+  mapEl.classList.remove('hidden');
+
+  // Char map
+  var segs = document.getElementById('charSegments');
+  var charHtml = '<div><div class="char-segment-label">Rating Plug</div><div class="char-boxes">';
+  for (var k = 0; k < plug.raw.length; k++) {
+    charHtml += '<div class="char-box">' + plug.raw[k] + '</div>';
+  }
+  charHtml += '</div></div>';
+  segs.innerHTML = charHtml;
+
+  var html = '';
+
+  // Summary
+  var parts = [];
+  if (plug.plugAmps) parts.push(plug.plugAmps + 'A Rating Plug');
+  if (plug.frameAmps) parts.push('for ' + plug.frameAmps + 'A Frame');
+  if (plug.generation) parts.push(plug.generation);
+
+  html += '<div class="summary-banner">';
+  html += '<h2>' + (parts.length > 0 ? parts.join(' \u2014 ') : 'SPB Rating Plug') + '</h2>';
+  html += '<p>Rating Plug: ' + plug.raw + '</p></div>';
+
+  if (plug.errors.length > 0) {
+    html += '<div class="result-card error-card full-width"><h3>Warnings</h3>';
+    for (var e = 0; e < plug.errors.length; e++) {
+      html += item('Warning', plug.errors[e]);
+    }
+    html += '</div>';
+  }
+
+  // Plug details
+  html += '<div class="result-card valid"><h3>Rating Plug Details</h3>';
+  html += item('Part Number', plug.raw);
+  html += item('Generation', plug.generation);
+  html += item('Plug Rating', plug.plugAmps ? plug.plugAmps + 'A' : null);
+  html += item('For Frame Size', plug.frameAmps ? plug.frameAmps + 'A Frame' : null);
+  if (plug.plugAmps && plug.frameAmps && plug.plugAmps < plug.frameAmps) {
+    var pct = Math.round((plug.plugAmps / plug.frameAmps) * 100);
+    html += item('Derate', plug.plugAmps + 'A of ' + plug.frameAmps + 'A (' + pct + '%)');
+  }
+  html += '</div>';
+
+  // Compatible style numbers
+  if (plug.frameAmps) {
+    html += '<div class="result-card info-card"><h3>Compatible Breakers</h3>';
+    html += item('Manufacturer', 'Westinghouse / Cutler-Hammer / Eaton');
+    html += item('Breaker Type', 'SPB (Systems Pow-R Breaker)');
+    html += item('Frame Amperage', plug.frameAmps + 'A');
+
+    // Determine which style number amp codes produce this frame
+    var compatStyles = [];
+    for (var code in AMP_CODES) {
+      if (AMP_CODES[code] === plug.frameAmps) {
+        compatStyles.push('SPBR3' + code + 'x / SPBSR3' + code + 'x');
+      }
+    }
+    if (compatStyles.length > 0) {
+      html += item('Style Pattern', compatStyles.join(', '));
+    }
+    html += '<div class="result-item"><span class="label">Note</span><span class="value info-val" style="font-size:0.8rem;">Enter the full style number from the breaker nameplate for complete decode</span></div>';
+    html += '</div>';
+  }
+
+  el.innerHTML = html;
+}
+
+function decodeSingleTrip(raw) {
+  var trip = parseTrip(raw);
+  var el = document.getElementById('results');
+  var mapEl = document.getElementById('charMap');
+  el.classList.remove('hidden');
+  mapEl.classList.remove('hidden');
+
+  // Char map
+  var segs = document.getElementById('charSegments');
+  var charHtml = '<div><div class="char-segment-label">Trip Unit</div><div class="char-boxes">';
+  for (var j = 0; j < trip.raw.length; j++) {
+    charHtml += '<div class="char-box">' + trip.raw[j] + '</div>';
+  }
+  charHtml += '</div></div>';
+  segs.innerHTML = charHtml;
+
+  var html = '';
+
+  var parts = [];
+  if (trip.name) parts.push(trip.name);
+  if (trip.protection) parts.push(trip.protection);
+  if (trip.protectionDesc) parts.push(trip.protectionDesc);
+
+  html += '<div class="summary-banner">';
+  html += '<h2>' + (parts.length > 0 ? parts.join(' \u2014 ') : 'SPB Trip Unit') + '</h2>';
+  html += '<p>Trip Unit: ' + trip.raw + '</p></div>';
+
+  if (trip.errors.length > 0) {
+    html += '<div class="result-card error-card full-width"><h3>Warnings</h3>';
+    for (var e = 0; e < trip.errors.length; e++) {
+      html += item('Warning', trip.errors[e]);
+    }
+    html += '</div>';
+  }
+
+  html += '<div class="result-card valid"><h3>Trip Unit Details</h3>';
+  html += item('Part Number', trip.raw);
+  if (trip.name) html += item('Trip Unit Name', trip.name);
+  if (trip.series) html += item('Series', trip.series);
+  if (trip.protection) html += item('Protection Code', trip.protection);
+  if (trip.protectionDesc) html += item('Protection Functions', trip.protectionDesc);
+  html += '</div>';
+
+  // Protection legend
+  html += '<div class="result-card full-width"><h3>Protection Function Legend</h3>';
+  html += item('L', 'Long-Time (Overload Protection)');
+  html += item('S', 'Short-Time (Short Circuit Delay)');
+  html += item('I', 'Instantaneous (Instantaneous Trip)');
+  html += item('G', 'Ground Fault Protection');
+  html += '</div>';
+
+  el.innerHTML = html;
+}
+
+function decodeFrameClass(s) {
+  // Extract the class number (50, 65, 100, 150)
+  var classNum = s.replace('SPB', '');
+  var fc = FRAME_CLASS[classNum];
+
+  var el = document.getElementById('results');
+  var mapEl = document.getElementById('charMap');
+  el.classList.remove('hidden');
+  mapEl.classList.remove('hidden');
+
+  var segs = document.getElementById('charSegments');
+  var charHtml = '<div><div class="char-segment-label">Frame Class</div><div class="char-boxes">';
+  var chars = ('SPB-' + classNum).split('');
+  for (var i = 0; i < chars.length; i++) {
+    charHtml += '<div class="char-box">' + chars[i] + '</div>';
+  }
+  charHtml += '</div></div>';
+  segs.innerHTML = charHtml;
+
+  var html = '';
+  html += '<div class="summary-banner">';
+  html += '<h2>' + (fc ? fc.name : 'SPB-' + classNum) + ' \u2014 Frame Class Information</h2>';
+  html += '<p>This is a frame class designation, not a specific catalog number</p></div>';
+
+  if (!fc) {
+    html += '<div class="result-card error-card full-width"><h3>Error</h3>';
+    html += item('Unknown', 'SPB-' + classNum + ' is not a recognized frame class. Valid: SPB-50, SPB-65, SPB-100, SPB-150');
+    html += '</div>';
+  } else {
+    html += '<div class="result-card valid"><h3>Frame Class Specifications</h3>';
+    html += item('Frame Class', fc.name);
+    html += item('Max Continuous Amps', fc.maxAmps + 'A');
+    html += item('Int. Capacity @240V', fc.kA_240 + ' kAIC');
+    html += item('Int. Capacity @480V', fc.kA_480 + ' kAIC');
+    html += item('Int. Capacity @600V', fc.kA_600 + ' kAIC');
+    html += item('Max Voltage', '600 VAC');
+    html += '</div>';
+
+    html += '<div class="result-card info-card"><h3>Style Number Prefixes for ' + fc.name + '</h3>';
+    if (classNum === '50') {
+      html += item('Prefix', 'SPBSR (Small/Compact Frame)');
+      html += item('Amp Range', '200A \u2013 1600A');
+    } else if (classNum === '65') {
+      html += item('Prefix', 'SPBSR (Small/Compact Frame)');
+      html += item('Amp Range', '200A \u2013 2000A');
+    } else if (classNum === '100' || classNum === '150') {
+      html += item('Prefix', 'SPBR (Standard Frame)');
+      html += item('Amp Range', '200A \u2013 ' + fc.maxAmps + 'A');
+      if (classNum === '100') {
+        html += '<div class="result-item"><span class="label">Note</span><span class="value info-val" style="font-size:0.8rem;">SPB-100 and SPB-150 both use SPBR prefix. Verify interrupting capacity on nameplate.</span></div>';
+      }
+    }
+    html += '</div>';
+  }
+
+  el.innerHTML = html;
+}
+
+function decodeAccessory(s) {
+  var el = document.getElementById('results');
+  var mapEl = document.getElementById('charMap');
+  el.classList.remove('hidden');
+  mapEl.classList.remove('hidden');
+
+  var segs = document.getElementById('charSegments');
+  var charHtml = '<div><div class="char-segment-label">Part Number</div><div class="char-boxes">';
+  for (var i = 0; i < s.length; i++) {
+    charHtml += '<div class="char-box">' + s[i] + '</div>';
+  }
+  charHtml += '</div></div>';
+  segs.innerHTML = charHtml;
+
+  // Look up in all accessory tables
+  var found = null;
+  if (SHUNT_TRIP_PARTS[s]) {
+    found = SHUNT_TRIP_PARTS[s];
+  } else if (ELEC_OP_PARTS[s]) {
+    found = ELEC_OP_PARTS[s];
+  } else if (ACCESSORY_KITS[s]) {
+    found = ACCESSORY_KITS[s];
+  } else if (DRAWOUT_KITS[s]) {
+    found = DRAWOUT_KITS[s];
+  }
+
+  var html = '';
+
+  if (found) {
+    html += '<div class="summary-banner">';
+    html += '<h2>' + found.type + ' \u2014 ' + (found.voltage || '') + '</h2>';
+    html += '<p>Part Number: ' + s + '</p></div>';
+
+    html += '<div class="result-card valid"><h3>Accessory Details</h3>';
+    html += item('Part Number', s);
+    html += item('Type', found.type);
+    if (found.voltage) html += item('Voltage', found.voltage);
+    html += item('Frame Range', found.frameRange);
+    html += item('Manufacturer', 'Westinghouse / Cutler-Hammer / Eaton');
+    html += item('For Breaker', 'SPB (Systems Pow-R Breaker)');
+    html += '</div>';
+
+    // Show cross-reference (WH style ↔ kit P/N)
+    html += '<div class="result-card info-card"><h3>Cross-Reference</h3>';
+
+    // If this is a WH style, find equivalent kits
+    if (/^\d{4}[CD]\d{2}G\d{2}$/.test(s)) {
+      var equivKits = findEquivKits(found);
+      if (equivKits.length > 0) {
+        for (var k = 0; k < equivKits.length; k++) {
+          html += item('Eaton Kit P/N', equivKits[k]);
+        }
+      } else {
+        html += item('Eaton Kit P/N', 'No direct kit equivalent found');
+      }
+    }
+
+    // If this is a kit, find equivalent WH styles
+    if (/^SPB/.test(s)) {
+      var equivWH = findEquivWH(found);
+      if (equivWH.length > 0) {
+        for (var w = 0; w < equivWH.length; w++) {
+          html += item('Westinghouse Style', equivWH[w]);
+        }
+      }
+    }
+
+    html += '</div>';
+  } else {
+    html += '<div class="summary-banner">';
+    html += '<h2>SPB Accessory Lookup</h2>';
+    html += '<p>Part Number: ' + s + '</p></div>';
+
+    html += '<div class="result-card error-card full-width"><h3>Not Found</h3>';
+    html += item('Part Number', s);
+    html += item('Status', 'Not found in the accessory database');
+    html += '<div class="result-item"><span class="label">Suggestion</span><span class="value info-val" style="font-size:0.8rem;">Contact Voyten Electric at 1-800-458-4001 for assistance</span></div>';
+    html += '</div>';
+  }
+
+  el.innerHTML = html;
+}
+
+function findEquivKits(accessory) {
+  var results = [];
+  for (var k in ACCESSORY_KITS) {
+    var kit = ACCESSORY_KITS[k];
+    if (kit.voltage === accessory.voltage && kit.type.indexOf(accessory.type.split(' ')[0]) !== -1) {
+      if (accessory.frameRange === kit.frameRange ||
+          (accessory.frameRange === '400-3150A' && kit.frameRange === '400-3150A') ||
+          (accessory.frameRange === '4000-5000A' && kit.frameRange === '4000-5000A')) {
+        results.push(k);
+      }
+    }
+  }
+  return results;
+}
+
+function findEquivWH(accessory) {
+  var results = [];
+  var tables = [SHUNT_TRIP_PARTS, ELEC_OP_PARTS];
+  for (var t = 0; t < tables.length; t++) {
+    for (var pn in tables[t]) {
+      var part = tables[t][pn];
+      if (part.voltage === accessory.voltage && part.frameRange === accessory.frameRange) {
+        results.push(pn + ' (' + part.type + ')');
+      }
+    }
+  }
+  return results;
+}
+
 
 // ============================================================
 // STYLE NUMBER PARSER
@@ -585,28 +1165,52 @@ var ELEC_OP_PARTS = {
 function parseStyle(raw) {
   var s = raw.toUpperCase().replace(/[^A-Z0-9]/g, '');
   var result = { raw: s, errors: [], frameType: null, frameClass: null,
-    poles: null, amps: null, tripSuffix: null, tripGen: null };
+    poles: null, amps: null, tripSuffix: null, tripGen: null, application: null };
 
-  // Determine prefix: SPBSR or SPBR
+  // Check if this is actually a frame class designation (SPB50, SPB65, etc.)
+  if (/^SPB(50|65|100|150)$/.test(s)) {
+    result.errors.push(s.replace('SPB', 'SPB-') + ' is a frame class designation, not a style number. Use Quick Lookup for frame class info.');
+    return result;
+  }
+
+  // Check if this is actually a PRT7 rating plug entered in style field
+  if (/^\d{1,2}SPB\d{3,4}$/.test(s)) {
+    result.errors.push('"' + s + '" is a Pow-R Trip 7 rating plug, not a style number. Enter it in the Rating Plug field or use Quick Lookup.');
+    return result;
+  }
+
+  // Determine prefix: SPBMSR/SPBSR (compact) or SPBMR/SPBR (standard)
+  // M = Main breaker designation (used when configured as main in switchgear)
   var prefix, rest;
-  if (s.indexOf('SPBSR') === 0) {
+  if (s.indexOf('SPBMSR') === 0) {
+    prefix = 'SPBMSR';
+    result.frameType = 'Small/Compact Frame (SR)';
+    result.application = 'Main Breaker';
+    rest = s.substring(6);
+  } else if (s.indexOf('SPBSR') === 0) {
     prefix = 'SPBSR';
     result.frameType = 'Small/Compact Frame (SR)';
+    rest = s.substring(5);
+  } else if (s.indexOf('SPBMR') === 0) {
+    prefix = 'SPBMR';
+    result.frameType = 'Standard Frame (R)';
+    result.application = 'Main Breaker';
     rest = s.substring(5);
   } else if (s.indexOf('SPBR') === 0) {
     prefix = 'SPBR';
     result.frameType = 'Standard Frame (R)';
     rest = s.substring(4);
-  } else if (s.indexOf('SPB') === 0) {
+  } else if (s.indexOf('SPB') === 0 && s.length > 3) {
     prefix = 'SPB';
     result.frameType = 'SPB Frame';
     rest = s.substring(3);
+    result.errors.push('Unusual prefix "SPB" (expected SPBR or SPBSR). Results may be approximate.');
   } else {
-    result.errors.push('Style number must start with SPB, SPBR, or SPBSR');
+    result.errors.push('Style number must start with SPBR or SPBSR (e.g., SPBR316D56)');
     return result;
   }
 
-  // Poles: always starts with 3
+  // Poles: always starts with 3 or 4
   if (rest[0] === '3') {
     result.poles = '3-Pole';
     rest = rest.substring(1);
@@ -615,11 +1219,9 @@ function parseStyle(raw) {
     rest = rest.substring(1);
   } else {
     // Some style numbers omit the pole digit (rare)
-    // Try to continue parsing
   }
 
   // Extract amp code: take digits (and possibly trailing letter for codes like '2H')
-  // Amp codes: 2, 4, 8, 12, 16, 20, 21, 25, 30, 40, 50, 2H, 2F, 25H
   var ampStr = '';
   var tripStr = '';
 
@@ -648,16 +1250,18 @@ function parseStyle(raw) {
   result.ampCode = ampStr;
 
   // Determine frame class from prefix + amps
-  if (prefix === 'SPBSR') {
-    // SR = SPB-50 or SPB-65
+  if (prefix === 'SPBSR' || prefix === 'SPBMSR') {
     if (result.amps && result.amps <= 1600) {
       result.frameClass = FRAME_CLASS['50'];
+      result.frameClassNote = null;
     } else {
       result.frameClass = FRAME_CLASS['65'];
+      result.frameClassNote = null;
     }
   } else {
-    // Standard SPBR = SPB-100 (most common), could be SPB-150
+    // Standard SPBR — could be SPB-100 or SPB-150 (not encoded in style number)
     result.frameClass = FRAME_CLASS['100'];
+    result.frameClassNote = 'SPBR prefix is used for both SPB-100 and SPB-150. The interrupting capacity class is not encoded in the style number. Verify from the breaker nameplate.';
   }
 
   // Trip suffix
@@ -717,7 +1321,6 @@ function parseTrip(raw) {
 
     // Extract protection from remaining string
     var remainder = s.substring(matchedPrefix.length);
-    // Protection codes: LI, LSI, LS, LIG, LSG, LSIG
     var protCandidates = ['LSIG','LSI','LSG','LIG','LS','LI','L'];
     for (var j = 0; j < protCandidates.length; j++) {
       if (remainder.indexOf(protCandidates[j]) !== -1) {
@@ -779,12 +1382,11 @@ function parsePlug(raw) {
     result.generation = 'RMS 510/610/810/910/OPTIM (RP6S)';
     rest = s.substring(4);
   } else {
-    result.errors.push('Unknown rating plug format: ' + s);
+    result.errors.push('Unknown rating plug format: ' + s + '. Expected PD6S, RP6S, or xSPByyy format.');
     return result;
   }
 
   // rest should be: [frameCode]A[plugCode]
-  // frameCode: 2 digits, plugCode: 3 digits (amps / 10)
   var aIdx = rest.indexOf('A');
   if (aIdx === -1 || aIdx < 2) {
     result.errors.push('Invalid rating plug structure: ' + s);
@@ -811,7 +1413,7 @@ function parsePlug(raw) {
 }
 
 // ============================================================
-// MAIN DECODE
+// MAIN DECODE (3-field detailed input)
 // ============================================================
 
 function decode() {
@@ -819,8 +1421,26 @@ function decode() {
   var tripRaw = document.getElementById('tripInput').value.trim();
   var plugRaw = document.getElementById('plugInput').value.trim();
 
-  if (!styleRaw) {
-    showError('Style number is required.');
+  if (!styleRaw && !tripRaw && !plugRaw) {
+    showError('Enter at least one field to decode.');
+    return;
+  }
+
+  // If no style but have trip or plug, use single decoders
+  if (!styleRaw && tripRaw && !plugRaw) {
+    decodeSingleTrip(tripRaw);
+    return;
+  }
+  if (!styleRaw && plugRaw && !tripRaw) {
+    decodeSinglePlug(plugRaw);
+    return;
+  }
+  if (!styleRaw && tripRaw && plugRaw) {
+    // Decode both individually and combine
+    var trip = parseTrip(tripRaw);
+    var plug = parsePlug(plugRaw);
+    renderCharMap({ raw: '', errors: [] }, trip, plug);
+    renderCombinedTripPlug(trip, plug);
     return;
   }
 
@@ -830,6 +1450,54 @@ function decode() {
 
   renderCharMap(style, trip, plug);
   renderResults(style, trip, plug);
+}
+
+function renderCombinedTripPlug(trip, plug) {
+  var el = document.getElementById('results');
+  el.classList.remove('hidden');
+  var html = '';
+
+  var parts = [];
+  if (trip.name) parts.push(trip.name);
+  if (trip.protection) parts.push(trip.protection);
+  if (plug.plugAmps) parts.push(plug.plugAmps + 'A Plug');
+
+  html += '<div class="summary-banner">';
+  html += '<h2>' + (parts.length > 0 ? parts.join(' \u2014 ') : 'SPB Components') + '</h2>';
+  html += '<p>';
+  if (trip.raw) html += 'Trip: ' + trip.raw;
+  if (plug.raw) html += ' | Plug: ' + plug.raw;
+  html += '</p></div>';
+
+  var allErrors = [].concat(trip.errors, plug.errors);
+  if (allErrors.length > 0) {
+    html += '<div class="result-card error-card full-width"><h3>Warnings</h3>';
+    for (var e = 0; e < allErrors.length; e++) {
+      html += item('Warning', allErrors[e]);
+    }
+    html += '</div>';
+  }
+
+  if (trip.raw) {
+    html += '<div class="result-card valid"><h3>Trip Unit</h3>';
+    html += item('Trip Unit P/N', trip.raw);
+    if (trip.name) html += item('Trip Unit Name', trip.name);
+    if (trip.series) html += item('Series', trip.series);
+    if (trip.protection) html += item('Protection Code', trip.protection);
+    if (trip.protectionDesc) html += item('Protection Functions', trip.protectionDesc);
+    html += '</div>';
+  }
+
+  if (plug.raw) {
+    html += '<div class="result-card valid"><h3>Rating Plug</h3>';
+    html += item('Rating Plug P/N', plug.raw);
+    html += item('Generation', plug.generation);
+    html += item('Plug Rating', plug.plugAmps ? plug.plugAmps + 'A' : null);
+    html += item('For Frame Size', plug.frameAmps ? plug.frameAmps + 'A Frame' : null);
+    html += '</div>';
+  }
+
+  el.innerHTML = html;
 }
 
 // ============================================================
@@ -844,11 +1512,13 @@ function renderCharMap(style, trip, plug) {
   var html = '';
 
   // Style segment
-  html += '<div><div class="char-segment-label">Style Number</div><div class="char-boxes">';
-  for (var i = 0; i < style.raw.length; i++) {
-    html += '<div class="char-box">' + style.raw[i] + '</div>';
+  if (style.raw) {
+    html += '<div><div class="char-segment-label">Style Number</div><div class="char-boxes">';
+    for (var i = 0; i < style.raw.length; i++) {
+      html += '<div class="char-box">' + style.raw[i] + '</div>';
+    }
+    html += '</div></div>';
   }
-  html += '</div></div>';
 
   // Trip segment
   if (trip.raw) {
@@ -906,7 +1576,11 @@ function renderResults(style, trip, plug) {
   html += '<div class="result-card valid"><h3>Breaker Configuration</h3>';
   html += item('Style Number', style.raw);
   html += item('Frame Type', style.frameType);
+  if (style.application) html += item('Application', style.application);
   html += item('Frame Class', style.frameClass ? style.frameClass.name : null);
+  if (style.frameClassNote) {
+    html += '<div class="result-item"><span class="label">Note</span><span class="value info-val" style="font-size:0.78rem;">' + style.frameClassNote + '</span></div>';
+  }
   html += item('Continuous Amps', style.amps ? style.amps + 'A' : null);
   html += item('Poles', style.poles);
   html += item('Voltage Rating', '600 VAC Max');
@@ -966,7 +1640,6 @@ function renderResults(style, trip, plug) {
   html += '<div class="result-card valid full-width"><h3>Common Accessories Reference</h3>';
   html += '<table class="renewal-table"><thead><tr><th>Accessory</th><th>Kit Part Number</th><th>Westinghouse Style</th></tr></thead><tbody>';
 
-  var frameRange = (style.amps && style.amps >= 4000) ? '4000-5000A' : '400-3150A';
   var isLarge = style.amps && style.amps >= 4000;
 
   // Shunt trips
@@ -1024,28 +1697,24 @@ function renderResults(style, trip, plug) {
     html += '<div class="result-card valid full-width"><h3>Compatible Rating Plugs</h3>';
     html += '<table class="renewal-table"><thead><tr><th>Pow-R Trip 7</th><th>PD6S (RMS 500/600)</th><th>RP6S (RMS 510+)</th><th>Plug Amps</th></tr></thead><tbody>';
 
-    var frameCode2 = style.ampCode;
-    // Normalize to 2-digit for plug lookup
-    if (frameCode2.length === 1) frameCode2 = '0' + frameCode2;
-    // Special: amp code '8' -> frame codes '08', amp code '4' -> '04'
-    var lookupCodes = [frameCode2];
+    // Use the correct plug frame code mapping
+    var plugFrameCode = AMP_TO_PLUG_FRAME[style.ampCode] || style.ampCode;
+    if (plugFrameCode.length === 1) plugFrameCode = '0' + plugFrameCode;
+
+    var lookupCodes = [plugFrameCode];
     // Also check alternate codes (20 vs 21)
-    if (frameCode2 === '20') lookupCodes.push('21');
-    if (frameCode2 === '21') lookupCodes.push('20');
+    if (plugFrameCode === '20') lookupCodes.push('21');
+    if (plugFrameCode === '21') lookupCodes.push('20');
 
     // Collect PRT7 plugs
     var prt7Keys = Object.keys(PRT7_PLUGS);
-    var pd6sEntries = [];
     var plugFrameCodes = Object.keys(PLUG_FRAME);
 
     for (var fc = 0; fc < lookupCodes.length; fc++) {
       var code = lookupCodes[fc];
-      // Find all plug amp values for this frame
       for (var pf = 0; pf < plugFrameCodes.length; pf++) {
         if (plugFrameCodes[pf] === code) {
-          // Generate all plausible plug amps
           var fAmps = PLUG_FRAME[code];
-          // Look through PRT7 plugs
           var prt7Matches = {};
           for (var p7 = 0; p7 < prt7Keys.length; p7++) {
             var prt7Data = PRT7_PLUGS[prt7Keys[p7]];
@@ -1054,7 +1723,6 @@ function renderResults(style, trip, plug) {
             }
           }
 
-          // Standard plug amps for each frame
           var stdPlugAmps = getStdPlugAmps(fAmps);
           for (var sa = 0; sa < stdPlugAmps.length; sa++) {
             var pa = stdPlugAmps[sa];
@@ -1110,31 +1778,186 @@ function showError(msg) {
   el.classList.remove('hidden');
   el.innerHTML = '<div class="result-card error-card full-width"><h3>Error</h3>' +
     '<div class="result-item"><span class="label">Input Error</span><span class="value error-val">' + msg + '</span></div></div>';
+  document.getElementById('charMap').classList.add('hidden');
+}
+
+// ============================================================
+// EDGE NUMBER DECODER (Feature & Option Number)
+// 30-character format: Positions 1-10 = Westinghouse Style Number,
+// Positions 11-30 = 20-digit Option/Configuration Code
+// ============================================================
+
+function parseEdgeNumber(raw) {
+  var s = raw.toUpperCase().replace(/[\s\-]/g, '');
+  var result = { raw: s, errors: [], styleNumber: null, optionCode: null,
+    drawingBase: null, sheetSize: null, sequence: null, group: null };
+
+  if (s.length !== 30) {
+    result.errors.push('Edge number must be exactly 30 characters. Got ' + s.length + '.');
+    return result;
+  }
+
+  // Positions 1-10: Westinghouse style number
+  result.styleNumber = s.substring(0, 10);
+  // Positions 11-30: Option/configuration code
+  result.optionCode = s.substring(10);
+
+  // Parse the style number: ####X##G##
+  result.drawingBase = s.substring(0, 4);         // Drawing base number
+  result.sheetSize = s.substring(4, 5);            // Sheet size letter
+  result.sequence = s.substring(5, 7);             // Sequence number
+  var gChar = s.substring(7, 8);                   // Should be 'G'
+  result.group = s.substring(8, 10);               // Group number
+
+  if (gChar !== 'G') {
+    result.errors.push('Position 8 should be "G" (group separator). Found "' + gChar + '".');
+  }
+
+  // Sheet size descriptions
+  var sheetSizes = {
+    'A': 'A-Size (8.5" × 11")', 'B': 'B-Size (11" × 17")',
+    'C': 'C-Size (17" × 22")', 'D': 'D-Size (22" × 34")',
+    'E': 'E-Size (34" × 44")'
+  };
+  result.sheetSizeDesc = sheetSizes[result.sheetSize] || 'Non-standard (' + result.sheetSize + ')';
+
+  return result;
+}
+
+function decodeEdgeNumber(raw) {
+  var edge = parseEdgeNumber(raw);
+  var el = document.getElementById('results');
+  var mapEl = document.getElementById('charMap');
+  el.classList.remove('hidden');
+  mapEl.classList.remove('hidden');
+
+  // Character map
+  var segs = document.getElementById('charSegments');
+  var html = '';
+
+  // Style number segment (positions 1-10)
+  html += '<div><div class="char-segment-label">Style Number (Pos 1–10)</div><div class="char-boxes">';
+  for (var i = 0; i < 10; i++) {
+    html += '<div class="char-box"><span class="pos-label">' + (i + 1) + '</span>' + edge.raw[i] + '</div>';
+  }
+  html += '</div></div>';
+
+  // Option code segment (positions 11-30)
+  html += '<div><div class="char-segment-label">Option Code (Pos 11–30)</div><div class="char-boxes">';
+  for (var i = 10; i < 30; i++) {
+    html += '<div class="char-box"><span class="pos-label">' + (i + 1) + '</span>' + edge.raw[i] + '</div>';
+  }
+  html += '</div></div>';
+
+  segs.innerHTML = html;
+
+  // Render results
+  renderEdgeResults(edge);
+}
+
+function renderEdgeResults(edge) {
+  var el = document.getElementById('results');
+  var html = '';
+
+  // Summary banner
+  html += '<div class="summary-banner">';
+  html += '<h2>Breaker Edge Number (Feature & Option)</h2>';
+  html += '<p>Full Number: ' + edge.raw + '</p></div>';
+
+  // Errors
+  if (edge.errors.length > 0) {
+    html += '<div class="result-card error-card full-width"><h3>Warnings</h3>';
+    for (var e = 0; e < edge.errors.length; e++) {
+      html += item('Warning', edge.errors[e]);
+    }
+    html += '</div>';
+  }
+
+  // Westinghouse Style Number breakdown
+  html += '<div class="result-card valid"><h3>Westinghouse Style Number</h3>';
+  html += item('Full Style Number', edge.styleNumber);
+  html += item('Drawing Base', edge.drawingBase);
+  html += item('Sheet Size', edge.sheetSize + ' — ' + edge.sheetSizeDesc);
+  html += item('Sequence Number', edge.sequence);
+  html += item('Group Number', edge.group);
+  html += '</div>';
+
+  // Option/Configuration Code
+  html += '<div class="result-card valid"><h3>Option / Configuration Code</h3>';
+  html += item('Full Option Code', edge.optionCode);
+  html += item('Length', edge.optionCode.length + ' digits');
+  html += '<div class="result-item"><span class="label">Note</span><span class="value info-val" style="font-size:0.78rem;">The 20-digit option code encodes factory-configured features (trip unit, rating plug, accessories, operation type, mounting). Position-by-position mapping is proprietary to Eaton/Westinghouse.</span></div>';
+  html += '</div>';
+
+  // Cross-reference info
+  html += '<div class="result-card info-card full-width"><h3>Cross-Reference</h3>';
+  html += '<div class="result-item"><span class="label">Tip</span><span class="value info-val" style="font-size:0.78rem;">The edge number is stamped on the breaker frame. The catalog number (e.g., SPBR330C) is on the nameplate label. Both identify the same breaker — enter the catalog number for detailed configuration decoding.</span></div>';
+  html += '</div>';
+
+  el.innerHTML = html;
 }
 
 function clearAll() {
+  document.getElementById('quickInput').value = '';
   document.getElementById('styleInput').value = '';
   document.getElementById('tripInput').value = '';
   document.getElementById('plugInput').value = '';
+  document.getElementById('quickDetect').innerHTML = '';
   document.getElementById('results').innerHTML = '';
   document.getElementById('results').classList.add('hidden');
   document.getElementById('charMap').classList.add('hidden');
 }
 
 function loadEx(style, trip, plug) {
+  document.getElementById('quickInput').value = '';
+  document.getElementById('quickDetect').innerHTML = '';
   document.getElementById('styleInput').value = style;
   document.getElementById('tripInput').value = trip;
   document.getElementById('plugInput').value = plug;
   decode();
 }
 
-// Enter key on any input
-var inputs = document.querySelectorAll('.field input');
-for (var i = 0; i < inputs.length; i++) {
-  inputs[i].addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') decode();
-  });
+function quickEx(val) {
+  document.getElementById('quickInput').value = val;
+  updateQuickDetect();
+  quickDecode();
 }
+
+// Live detection badge on quick input
+function updateQuickDetect() {
+  var raw = document.getElementById('quickInput').value.trim();
+  var detectEl = document.getElementById('quickDetect');
+
+  if (!raw) {
+    detectEl.innerHTML = '';
+    return;
+  }
+
+  var type = detectInputType(raw);
+  var labelInfo = getDetectLabel(type);
+
+  if (labelInfo) {
+    detectEl.innerHTML = '<span class="detected-badge ' + labelInfo[1] + '">Detected: ' + labelInfo[0] + '</span>';
+  } else {
+    detectEl.innerHTML = '<span class="detected-badge" style="background:#fee2e2;color:#991b1b;">Format not recognized</span>';
+  }
+}
+
+// Enter key on any input
+document.addEventListener('DOMContentLoaded', function() {
+  var detailedInputs = document.querySelectorAll('.input-section .field input');
+  for (var i = 0; i < detailedInputs.length; i++) {
+    detailedInputs[i].addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') decode();
+    });
+  }
+
+  var quickInput = document.getElementById('quickInput');
+  quickInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') quickDecode();
+  });
+  quickInput.addEventListener('input', updateQuickDetect);
+});
 </script>
 
 </body>
