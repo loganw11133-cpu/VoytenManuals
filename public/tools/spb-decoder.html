@@ -1920,7 +1920,9 @@ var EDGE_STYLE_LOOKUP = {
   '8705C04': { frameClass: 'N',    poles: '3P', name: 'SPB-N' },
   '8705C64': { frameClass: 'N',    poles: '4P', name: 'SPB-N' },
   '8705C05': { frameClass: 'NH',   poles: '3P', name: 'SPB-NH' },
-  '8705C65': { frameClass: 'NH',   poles: '4P', name: 'SPB-NH' }
+  '8705C65': { frameClass: 'NH',   poles: '4P', name: 'SPB-NH' },
+  // Older Westinghouse drawing number series (7805C##, pre-8702/8705 era)
+  '7805C19': { frameClass: '100M', poles: '4P', name: 'SPB-100M' }
 };
 
 // Group number meaning
@@ -2244,7 +2246,7 @@ function parseEdgeNumber(raw) {
 
   // Group description
   var groupKey = 'G' + result.group;
-  result.groupDesc = EDGE_GROUP[groupKey] || ('Group ' + result.group);
+  result.groupDesc = EDGE_GROUP[groupKey] || ('Factory configuration G' + result.group);
 
   // Lookup frame info from drawing base key
   result.frameInfo = EDGE_STYLE_LOOKUP[result.drawingBaseKey] || null;
