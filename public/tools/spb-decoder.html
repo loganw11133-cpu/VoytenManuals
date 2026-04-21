@@ -1947,9 +1947,10 @@ var EDGE_FRAME_AMPS = {
 
 // Aux Switch (1 digit)
 var EDGE_AUX_SW = {
-  '0': 'None', '1': '4A-4B', '2': '4A-4B', '3': '4A-4B',
-  '4': 'Retro', '5': 'Retro', '6': 'Retro',
-  '7': '4A-5B', '8': '4A-5B', '9': '4A-5B'
+  '0': 'None',
+  '1': '4NO-4NC (6A@600VAC, 0.5A@125VDC)', '2': '4NO-4NC (6A@600VAC, 0.5A@125VDC)', '3': '4NO-4NC (6A@600VAC, 0.5A@125VDC)',
+  '4': 'Retro-fit', '5': 'Retro-fit', '6': 'Retro-fit',
+  '7': '4NO-5NC (6A@600VAC, 0.5A@125VDC)', '8': '4NO-5NC (6A@600VAC, 0.5A@125VDC)', '9': '4NO-5NC (6A@600VAC, 0.5A@125VDC)'
 };
 
 // Trip Unit (2 digits)
@@ -1991,72 +1992,40 @@ var EDGE_PLUG = {
 // Close / Electrical Operator (2 digits)
 var EDGE_CLOSE = {
   '00': 'None (Manual Operation)',
-  '01': '120-VAC E/O Auto Charge W/O Antipump (Small 3P)',
-  '02': '120-VAC E/O Fast Charge (Small 3P)',
-  '03': '208-VAC E/O Auto Charge (Small 3P)',
-  '04': '240-VAC E/O Auto Charge (Small 3P)',
-  '05': '24-VDC E/O Auto Charge (Small 3P)',
-  '06': '32-VDC E/O Auto Charge (Small 3P)',
-  '07': '48-VDC E/O Auto Charge (Small 3P)',
-  '08': '125-VDC E/O Auto Charge (Small 3P)',
-  '09': '120-VAC E/O Auto Charge W/O Antipump',
-  '10': '120-VAC E/O Auto Charge',
-  '11': '208-VAC E/O Auto Charge',
-  '12': '240-VAC E/O Auto Charge',
-  '13': '24-VDC E/O Auto Charge',
-  '14': '32-VDC E/O Auto Charge',
-  '15': '48-VDC E/O Auto Charge',
-  '16': '125-VDC E/O Auto Charge',
-  '17': '120-VAC E/O W/Local Elec Close',
-  '18': '120-VAC E/O (Waukesha)',
-  '19': '120-VAC E/O (Waukesha) W/Local Chg',
-  '20': '120-VAC E/O W/Local Chg Pushbutton (Small 3P)',
-  '21': '208-VAC E/O W/Local Chg Pushbutton (Small 3P)',
-  '22': '240-VAC E/O W/Local Chg Pushbutton (Small 3P)',
-  '23': '24-VDC E/O W/Local Chg Pushbutton (Small 3P)',
-  '24': '32-VDC E/O W/Local Chg Pushbutton (Small 3P)',
-  '25': '48-VDC E/O W/Local Chg Pushbutton (Small 3P)',
-  '26': '125-VDC E/O W/Local Chg Pushbutton (Small 3P)',
-  '27': '120-VAC E/O W/Local Chg Pushbutton',
-  '28': '208-VAC E/O W/Local Chg Pushbutton',
-  '29': '240-VAC E/O W/Local Chg Pushbutton',
-  '30': '24-VDC E/O W/Local Chg Pushbutton',
-  '31': '32-VDC E/O W/Local Chg Pushbutton',
-  '32': '48-VDC E/O W/Local Chg Pushbutton',
-  '33': '125-VDC E/O W/Local Chg Pushbutton',
-  '35': '120-VAC S/R W/O Antipump (Small 3P)',
-  '36': '208-VAC S/R W/O Antipump (Small 3P)',
-  '37': '240-VAC S/R W/O Antipump (Small 3P)',
-  '38': '24-VDC S/R W/O Antipump (Small 3P)',
-  '39': '32-VDC S/R W/O Antipump (Small 3P)',
-  '40': '48-VDC S/R W/O Antipump (Small 3P)',
-  '41': '125-VDC S/R W/O Antipump (Small 3P)',
-  '42': '120-VAC S/R W/O Antipump',
-  '43': '208-VAC S/R W/O Antipump',
-  '44': '240-VAC S/R W/O Antipump',
-  '45': '24-VDC S/R W/O Antipump',
-  '46': '32-VDC S/R W/O Antipump',
-  '47': '48-VDC S/R W/O Antipump',
-  '48': '125-VDC S/R W/O Antipump',
-  '49': '120-VAC S/R W/ Antipump (Small 3P)',
-  '50': '208-VAC S/R W/ Antipump (Small 3P)',
-  '51': '240-VAC S/R W/ Antipump (Small 3P)',
-  '52': '24-VDC S/R W/ Antipump (Small 3P)',
-  '53': '32-VDC S/R W/ Antipump (Small 3P)',
-  '54': '48-VDC S/R W/ Antipump (Small 3P)',
-  '55': '125-VDC S/R W/ Antipump (Small 3P)',
-  '56': '120-VAC S/R W/ Antipump',
-  '57': '208-VAC S/R W/ Antipump',
-  '58': '240-VAC S/R W/ Antipump',
-  '59': '24-VDC S/R W/ Antipump',
-  '60': '32-VDC S/R W/ Antipump',
-  '61': '48-VDC S/R W/ Antipump',
-  '62': '125-VDC S/R W/ Antipump',
-  '63': '120-VAC S/R W/Local Elec Close W/O Antipump (Small 3P)',
-  '70': '120-VAC E/O W/Local Chg PB W/O Antipump',
-  '71': '120-VAC E/O W/Local Chg PB W/O Antipump (Small 3P)',
-  '72': '120-VAC E/O Auto Charge (Small 3P)',
-  '73': '120-VAC E/O Auto Charge 50Hz (Small 3P)'
+  '01': '120-VAC E/O', '02': '120-VAC E/O',
+  '03': '208-VAC E/O', '04': '240-VAC E/O',
+  '05': '24-VDC E/O', '06': '32-VDC E/O',
+  '07': '48-VDC E/O', '08': '125-VDC E/O',
+  '09': '120-VAC E/O', '10': '120-VAC E/O',
+  '11': '208-VAC E/O', '12': '240-VAC E/O',
+  '13': '24-VDC E/O', '14': '32-VDC E/O',
+  '15': '48-VDC E/O', '16': '125-VDC E/O',
+  '17': '120-VAC E/O', '18': '120-VAC E/O',
+  '19': '120-VAC E/O',
+  '20': '120-VAC E/O', '21': '208-VAC E/O',
+  '22': '240-VAC E/O', '23': '24-VDC E/O',
+  '24': '32-VDC E/O', '25': '48-VDC E/O',
+  '26': '125-VDC E/O', '27': '120-VAC E/O',
+  '28': '208-VAC E/O', '29': '240-VAC E/O',
+  '30': '24-VDC E/O', '31': '32-VDC E/O',
+  '32': '48-VDC E/O', '33': '125-VDC E/O',
+  '35': '120-VAC S/R', '36': '208-VAC S/R',
+  '37': '240-VAC S/R', '38': '24-VDC S/R',
+  '39': '32-VDC S/R', '40': '48-VDC S/R',
+  '41': '125-VDC S/R', '42': '120-VAC S/R',
+  '43': '208-VAC S/R', '44': '240-VAC S/R',
+  '45': '24-VDC S/R', '46': '32-VDC S/R',
+  '47': '48-VDC S/R', '48': '125-VDC S/R',
+  '49': '120-VAC S/R', '50': '208-VAC S/R',
+  '51': '240-VAC S/R', '52': '24-VDC S/R',
+  '53': '32-VDC S/R', '54': '48-VDC S/R',
+  '55': '125-VDC S/R', '56': '120-VAC S/R',
+  '57': '208-VAC S/R', '58': '240-VAC S/R',
+  '59': '24-VDC S/R', '60': '32-VDC S/R',
+  '61': '48-VDC S/R', '62': '125-VDC S/R',
+  '63': '120-VAC S/R', '70': '120-VAC E/O',
+  '71': '120-VAC E/O', '72': '120-VAC E/O',
+  '73': '120-VAC E/O (50Hz)'
 };
 
 // Marine (1 digit)
@@ -2406,7 +2375,7 @@ function renderEdgeResults(edge) {
     html += item('Frame Class', edge.frameInfo.name);
     html += item('Poles', edge.frameInfo.poles);
   }
-  html += item('Sheet Size', edge.sheetSize + ' \u2014 ' + edge.sheetSizeDesc);
+  // Sheet size omitted — not useful for breaker identification
   html += item('Group Number', edge.group + ' \u2014 ' + edge.groupDesc);
   html += '</div>';
 
