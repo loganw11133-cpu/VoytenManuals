@@ -440,10 +440,14 @@
 
 // Frame class lookup: maps interrupting capacity designation
 var FRAME_CLASS = {
-  '50':  { name: 'SPB-50',  kA_240: 85,  kA_480: 50,  kA_600: 42, maxAmps: 1600 },
-  '65':  { name: 'SPB-65',  kA_240: 85,  kA_480: 65,  kA_600: 50, maxAmps: 2000 },
-  '100': { name: 'SPB-100', kA_240: 100, kA_480: 100, kA_600: 85, maxAmps: 5000 },
-  '150': { name: 'SPB-150', kA_240: 150, kA_480: 150, kA_600: 100, maxAmps: 4000 }
+  '50':   { name: 'SPB-50',   kA_240: 85,   kA_480: 50,   kA_600: 42,  maxAmps: 1600 },
+  '65':   { name: 'SPB-65',   kA_240: 85,   kA_480: 65,   kA_600: 50,  maxAmps: 2000 },
+  '100':  { name: 'SPB-100',  kA_240: 100,  kA_480: 100,  kA_600: 85,  maxAmps: 5000 },
+  '150':  { name: 'SPB-150',  kA_240: 150,  kA_480: 150,  kA_600: 100, maxAmps: 4000 },
+  'W50':  { name: 'SPBW-50',  kA_240: 50,   kA_480: 50,   kA_600: 42,  maxAmps: 5000 },
+  'W100': { name: 'SPBW-100', kA_240: 100,  kA_480: 100,  kA_600: 85,  maxAmps: 5000 },
+  'N':    { name: 'SPB-N',    kA_240: null,  kA_480: null,  kA_600: null, maxAmps: 5000 },
+  'NH':   { name: 'SPB-NH',   kA_240: null,  kA_480: null,  kA_600: null, maxAmps: 5000 }
 };
 
 // Amp codes from style number
@@ -476,7 +480,7 @@ var AMP_TO_PLUG_FRAME = {
   '40': '40', '50': '50'
 };
 
-// Trip unit suffix in style number
+// Trip unit suffix in style number (after mounting letter is removed)
 var STYLE_TRIP_SUFFIX = {
   '':    { gen: 'Pow-R Trip 7', series: 'Analog', era: 'Original' },
   'C':   { gen: 'Digitrip RMS 610/810', series: 'RMS 600/800', era: '2nd Gen Solid-State' },
@@ -484,7 +488,31 @@ var STYLE_TRIP_SUFFIX = {
   'D56': { gen: 'Digitrip RMS 500 (LSIG)', series: 'RMS 500', era: '1st Gen Solid-State' },
   'D66': { gen: 'Digitrip RMS 600', series: 'RMS 600', era: '2nd Gen Solid-State' },
   'F':   { gen: 'Digitrip RMS 630', series: 'RMS 600', era: '2nd Gen Solid-State' },
-  'R':   { gen: 'Digitrip RMS 510', series: 'RMS 510', era: 'Current Production' }
+  'R':   { gen: 'Digitrip RMS 510', series: 'RMS 510', era: 'Current Production' },
+  '51':  { gen: 'RMS 510 LI', series: 'RMS 510', era: 'Current Production' },
+  '52':  { gen: 'RMS 510 LSI', series: 'RMS 510', era: 'Current Production' },
+  '53':  { gen: 'RMS 510 LS', series: 'RMS 510', era: 'Current Production' },
+  '54':  { gen: 'RMS 510 LIG', series: 'RMS 510', era: 'Current Production' },
+  '55':  { gen: 'RMS 510 LSG', series: 'RMS 510', era: 'Current Production' },
+  '56':  { gen: 'RMS 510 LSIG', series: 'RMS 510', era: 'Current Production' },
+  '61':  { gen: 'RMS 610 LI', series: 'RMS 600', era: '2nd Gen Solid-State' },
+  '62':  { gen: 'RMS 610 LSI', series: 'RMS 600', era: '2nd Gen Solid-State' },
+  '63':  { gen: 'RMS 610 LS', series: 'RMS 600', era: '2nd Gen Solid-State' },
+  '64':  { gen: 'RMS 610 LIG', series: 'RMS 600', era: '2nd Gen Solid-State' },
+  '65':  { gen: 'RMS 610 LSG', series: 'RMS 600', era: '2nd Gen Solid-State' },
+  '66':  { gen: 'RMS 610 LSIG', series: 'RMS 600', era: '2nd Gen Solid-State' },
+  '81':  { gen: 'RMS 810 LI', series: 'RMS 800', era: '2nd Gen Solid-State' },
+  '82':  { gen: 'RMS 810 LSI', series: 'RMS 800', era: '2nd Gen Solid-State' },
+  '83':  { gen: 'RMS 810 LS', series: 'RMS 800', era: '2nd Gen Solid-State' },
+  '84':  { gen: 'RMS 810 LIG', series: 'RMS 800', era: '2nd Gen Solid-State' },
+  '85':  { gen: 'RMS 810 LSG', series: 'RMS 800', era: '2nd Gen Solid-State' },
+  '86':  { gen: 'RMS 810 LSIG', series: 'RMS 800', era: '2nd Gen Solid-State' },
+  '91':  { gen: 'RMS 910 LI', series: 'RMS 900', era: 'Current Production' },
+  '92':  { gen: 'RMS 910 LSI', series: 'RMS 900', era: 'Current Production' },
+  '93':  { gen: 'RMS 910 LS', series: 'RMS 900', era: 'Current Production' },
+  '94':  { gen: 'RMS 910 LIG', series: 'RMS 900', era: 'Current Production' },
+  '95':  { gen: 'RMS 910 LSG', series: 'RMS 900', era: 'Current Production' },
+  '96':  { gen: 'RMS 910 LSIG', series: 'RMS 900', era: 'Current Production' }
 };
 
 // Trip unit part number decoding
@@ -738,12 +766,19 @@ function detectInputType(raw) {
   // Trip unit: T##B, T##C, T##D, S## prefix
   if (/^(T\d{2}[BCD]|S\d{2})/.test(s)) return 'trip';
 
-  // Style number: SPBSR/SPBMSR or SPBR/SPBMR prefix followed by poles+amps
+  // Style number: various SPB prefixes followed by poles+amps
+  // SPBMSR/SPBSR (compact), SPBMR/SPBR (standard), SPBMHR/SPBHR (150),
+  // SPBMWR/SPBWR (W50), SPBMWHR/SPBWHR (W100), SPBMN/SPBN, SPBMNH/SPBNH
   if (/^SPB[M]?SR\d/.test(s)) return 'style';
+  if (/^SPB[M]?WHR\d/.test(s)) return 'style';
+  if (/^SPB[M]?WR\d/.test(s)) return 'style';
+  if (/^SPB[M]?HR\d/.test(s)) return 'style';
+  if (/^SPB[M]?NH\d/.test(s)) return 'style';
+  if (/^SPB[M]?N\d/.test(s)) return 'style';
   if (/^SPB[M]?R\d/.test(s)) return 'style';
 
-  // Frame class designation: SPB + digits only (SPB50, SPB65, SPB100, SPB150)
-  if (/^SPB(50|65|100|150)$/.test(s)) return 'frame-class';
+  // Frame class designation: SPB + class identifier
+  if (/^SPB(50|65|100|150|W50|W100|N|NH)$/.test(s)) return 'frame-class';
 
   // Kit-style accessory: SPBST, SPBEO, SPBAUX, xSPBD0S
   if (/^SPB(ST|EO|AUX)/.test(s)) return 'accessory-kit';
@@ -1013,15 +1048,19 @@ function decodeFrameClass(s) {
 
   if (!fc) {
     html += '<div class="result-card error-card full-width"><h3>Error</h3>';
-    html += item('Unknown', 'SPB-' + classNum + ' is not a recognized frame class. Valid: SPB-50, SPB-65, SPB-100, SPB-150');
+    html += item('Unknown', 'SPB-' + classNum + ' is not a recognized frame class. Valid: SPB-50, SPB-65, SPB-100, SPB-150, SPBW-50, SPBW-100, SPB-N, SPB-NH');
     html += '</div>';
   } else {
     html += '<div class="result-card valid"><h3>Frame Class Specifications</h3>';
     html += item('Frame Class', fc.name);
     html += item('Max Continuous Amps', fc.maxAmps + 'A');
-    html += item('Int. Capacity @240V', fc.kA_240 + ' kAIC');
-    html += item('Int. Capacity @480V', fc.kA_480 + ' kAIC');
-    html += item('Int. Capacity @600V', fc.kA_600 + ' kAIC');
+    if (fc.kA_240 !== null) {
+      html += item('Int. Capacity @240V', fc.kA_240 + ' kAIC');
+      html += item('Int. Capacity @480V', fc.kA_480 + ' kAIC');
+      html += item('Int. Capacity @600V', fc.kA_600 + ' kAIC');
+    } else {
+      html += item('Int. Capacity', 'N/A (Molded Case Switch)');
+    }
     html += item('Max Voltage', '600 VAC');
     html += '</div>';
 
@@ -1032,6 +1071,18 @@ function decodeFrameClass(s) {
     } else if (classNum === '65') {
       html += item('Prefix', 'SPBSR (Small/Compact Frame)');
       html += item('Amp Range', '200A \u2013 2000A');
+    } else if (classNum === 'W50') {
+      html += item('Prefix', 'SPBWR (IEC W-Series)');
+      html += item('Amp Range', '400A \u2013 5000A');
+    } else if (classNum === 'W100') {
+      html += item('Prefix', 'SPBWHR (IEC W-Series High)');
+      html += item('Amp Range', '1600A \u2013 5000A');
+    } else if (classNum === 'N') {
+      html += item('Prefix', 'SPBN (Molded Case Switch)');
+      html += item('Amp Range', '400A \u2013 5000A');
+    } else if (classNum === 'NH') {
+      html += item('Prefix', 'SPBNH (Molded Case Switch High)');
+      html += item('Amp Range', '400A \u2013 5000A');
     } else if (classNum === '100' || classNum === '150') {
       html += item('Prefix', 'SPBR (Standard Frame)');
       html += item('Amp Range', '200A \u2013 ' + fc.maxAmps + 'A');
@@ -1162,13 +1213,23 @@ function findEquivWH(accessory) {
 // STYLE NUMBER PARSER
 // ============================================================
 
+// Mounting type lookup
+var MOUNTING_TYPES = {
+  'F': 'Front Connected',
+  'R': 'Rear Connected',
+  'D': 'DOS Drawout',
+  'C': 'COS Drawout',
+  'B': 'Front Removable'
+};
+
 function parseStyle(raw) {
   var s = raw.toUpperCase().replace(/[^A-Z0-9]/g, '');
   var result = { raw: s, errors: [], frameType: null, frameClass: null,
-    poles: null, amps: null, tripSuffix: null, tripGen: null, application: null };
+    poles: null, amps: null, tripSuffix: null, tripGen: null, application: null,
+    mounting: null, mountingDesc: null };
 
-  // Check if this is actually a frame class designation (SPB50, SPB65, etc.)
-  if (/^SPB(50|65|100|150)$/.test(s)) {
+  // Check if this is actually a frame class designation
+  if (/^SPB(50|65|100|150|W50|W100|N|NH)$/.test(s)) {
     result.errors.push(s.replace('SPB', 'SPB-') + ' is a frame class designation, not a style number. Use Quick Lookup for frame class info.');
     return result;
   }
@@ -1179,34 +1240,59 @@ function parseStyle(raw) {
     return result;
   }
 
-  // Determine prefix: SPBMSR/SPBSR (compact) or SPBMR/SPBR (standard)
+  // Determine prefix — order matters (longest first)
   // M = Main breaker designation (used when configured as main in switchgear)
-  var prefix, rest;
-  if (s.indexOf('SPBMSR') === 0) {
-    prefix = 'SPBMSR';
-    result.frameType = 'Small/Compact Frame (SR)';
-    result.application = 'Main Breaker';
-    rest = s.substring(6);
+  // SR = Small/Compact, R = Standard, HR = High (150), WR = W50, WHR = W100
+  // N = Molded Case Switch Standard, NH = Molded Case Switch High
+  var prefix, rest, frameKey;
+  if (s.indexOf('SPBMWHR') === 0) {
+    prefix = 'SPBMWHR'; result.frameType = 'SPBW-100 Frame (WHR)';
+    result.application = 'Main Breaker'; frameKey = 'W100'; rest = s.substring(7);
+  } else if (s.indexOf('SPBWHR') === 0) {
+    prefix = 'SPBWHR'; result.frameType = 'SPBW-100 Frame (WHR)';
+    frameKey = 'W100'; rest = s.substring(6);
+  } else if (s.indexOf('SPBMWR') === 0) {
+    prefix = 'SPBMWR'; result.frameType = 'SPBW-50 Frame (WR)';
+    result.application = 'Main Breaker'; frameKey = 'W50'; rest = s.substring(6);
+  } else if (s.indexOf('SPBWR') === 0) {
+    prefix = 'SPBWR'; result.frameType = 'SPBW-50 Frame (WR)';
+    frameKey = 'W50'; rest = s.substring(5);
+  } else if (s.indexOf('SPBMNH') === 0) {
+    prefix = 'SPBMNH'; result.frameType = 'Molded Case Switch, High Withstand (NH)';
+    result.application = 'Main Switch'; frameKey = 'NH'; rest = s.substring(6);
+  } else if (s.indexOf('SPBNH') === 0) {
+    prefix = 'SPBNH'; result.frameType = 'Molded Case Switch, High Withstand (NH)';
+    frameKey = 'NH'; rest = s.substring(5);
+  } else if (s.indexOf('SPBMN') === 0) {
+    prefix = 'SPBMN'; result.frameType = 'Molded Case Switch, Standard Withstand (N)';
+    result.application = 'Main Switch'; frameKey = 'N'; rest = s.substring(5);
+  } else if (s.indexOf('SPBN') === 0) {
+    prefix = 'SPBN'; result.frameType = 'Molded Case Switch, Standard Withstand (N)';
+    frameKey = 'N'; rest = s.substring(4);
+  } else if (s.indexOf('SPBMHR') === 0) {
+    prefix = 'SPBMHR'; result.frameType = 'SPB-150 Frame (HR)';
+    result.application = 'Main Breaker'; frameKey = '150'; rest = s.substring(6);
+  } else if (s.indexOf('SPBHR') === 0) {
+    prefix = 'SPBHR'; result.frameType = 'SPB-150 Frame (HR)';
+    frameKey = '150'; rest = s.substring(5);
+  } else if (s.indexOf('SPBMSR') === 0) {
+    prefix = 'SPBMSR'; result.frameType = 'Small/Compact Frame (SR)';
+    result.application = 'Main Breaker'; frameKey = 'SR'; rest = s.substring(6);
   } else if (s.indexOf('SPBSR') === 0) {
-    prefix = 'SPBSR';
-    result.frameType = 'Small/Compact Frame (SR)';
-    rest = s.substring(5);
+    prefix = 'SPBSR'; result.frameType = 'Small/Compact Frame (SR)';
+    frameKey = 'SR'; rest = s.substring(5);
   } else if (s.indexOf('SPBMR') === 0) {
-    prefix = 'SPBMR';
-    result.frameType = 'Standard Frame (R)';
-    result.application = 'Main Breaker';
-    rest = s.substring(5);
+    prefix = 'SPBMR'; result.frameType = 'Standard Frame (R)';
+    result.application = 'Main Breaker'; frameKey = 'R'; rest = s.substring(5);
   } else if (s.indexOf('SPBR') === 0) {
-    prefix = 'SPBR';
-    result.frameType = 'Standard Frame (R)';
-    rest = s.substring(4);
+    prefix = 'SPBR'; result.frameType = 'Standard Frame (R)';
+    frameKey = 'R'; rest = s.substring(4);
   } else if (s.indexOf('SPB') === 0 && s.length > 3) {
-    prefix = 'SPB';
-    result.frameType = 'SPB Frame';
-    rest = s.substring(3);
-    result.errors.push('Unusual prefix "SPB" (expected SPBR or SPBSR). Results may be approximate.');
+    prefix = 'SPB'; result.frameType = 'SPB Frame';
+    frameKey = 'R'; rest = s.substring(3);
+    result.errors.push('Unusual prefix "SPB" (expected SPBR, SPBSR, SPBHR, SPBWR, SPBWHR, SPBN, or SPBNH). Results may be approximate.');
   } else {
-    result.errors.push('Style number must start with SPBR or SPBSR (e.g., SPBR316D56)');
+    result.errors.push('Style number must start with a valid SPB prefix (e.g., SPBR316F, SPBHR330D)');
     return result;
   }
 
@@ -1223,7 +1309,7 @@ function parseStyle(raw) {
 
   // Extract amp code: take digits (and possibly trailing letter for codes like '2H')
   var ampStr = '';
-  var tripStr = '';
+  var suffix = '';
 
   // Try longest amp codes first
   var ampCandidates = ['50','40','30','25H','25','21','20','16','12','08','8','04','4','2H','2F','02','2'];
@@ -1231,7 +1317,7 @@ function parseStyle(raw) {
   for (var i = 0; i < ampCandidates.length; i++) {
     if (rest.indexOf(ampCandidates[i]) === 0) {
       ampStr = ampCandidates[i];
-      tripStr = rest.substring(ampStr.length);
+      suffix = rest.substring(ampStr.length);
       matched = true;
       break;
     }
@@ -1249,8 +1335,16 @@ function parseStyle(raw) {
 
   result.ampCode = ampStr;
 
-  // Determine frame class from prefix + amps
-  if (prefix === 'SPBSR' || prefix === 'SPBMSR') {
+  // Extract mounting type: first character of suffix if it is F/R/D/C/B
+  var tripStr = suffix;
+  if (suffix.length > 0 && MOUNTING_TYPES[suffix[0]]) {
+    result.mounting = suffix[0];
+    result.mountingDesc = MOUNTING_TYPES[suffix[0]];
+    tripStr = suffix.substring(1);
+  }
+
+  // Determine frame class from prefix key + amps
+  if (frameKey === 'SR') {
     if (result.amps && result.amps <= 1600) {
       result.frameClass = FRAME_CLASS['50'];
       result.frameClassNote = null;
@@ -1258,13 +1352,28 @@ function parseStyle(raw) {
       result.frameClass = FRAME_CLASS['65'];
       result.frameClassNote = null;
     }
+  } else if (frameKey === '150') {
+    result.frameClass = FRAME_CLASS['150'];
+    result.frameClassNote = null;
+  } else if (frameKey === 'W50') {
+    result.frameClass = FRAME_CLASS['W50'];
+    result.frameClassNote = null;
+  } else if (frameKey === 'W100') {
+    result.frameClass = FRAME_CLASS['W100'];
+    result.frameClassNote = null;
+  } else if (frameKey === 'N') {
+    result.frameClass = FRAME_CLASS['N'];
+    result.frameClassNote = 'Molded Case Switch — no interrupting capacity (isolation switch only).';
+  } else if (frameKey === 'NH') {
+    result.frameClass = FRAME_CLASS['NH'];
+    result.frameClassNote = 'Molded Case Switch, High Withstand — no interrupting capacity (isolation switch only).';
   } else {
     // Standard SPBR — could be SPB-100 or SPB-150 (not encoded in style number)
     result.frameClass = FRAME_CLASS['100'];
     result.frameClassNote = 'SPBR prefix is used for both SPB-100 and SPB-150. The interrupting capacity class is not encoded in the style number. Verify from the breaker nameplate.';
   }
 
-  // Trip suffix
+  // Trip suffix (after mounting letter has been removed)
   result.tripSuffix = tripStr || '';
   var tsData = STYLE_TRIP_SUFFIX[result.tripSuffix];
   if (tsData) {
@@ -1577,6 +1686,7 @@ function renderResults(style, trip, plug) {
   html += item('Style Number', style.raw);
   html += item('Frame Type', style.frameType);
   if (style.application) html += item('Application', style.application);
+  if (style.mountingDesc) html += item('Mounting Type', style.mounting + ' \u2014 ' + style.mountingDesc);
   html += item('Frame Class', style.frameClass ? style.frameClass.name : null);
   if (style.frameClassNote) {
     html += '<div class="result-item"><span class="label">Note</span><span class="value info-val" style="font-size:0.78rem;">' + style.frameClassNote + '</span></div>';
@@ -1585,9 +1695,13 @@ function renderResults(style, trip, plug) {
   html += item('Poles', style.poles);
   html += item('Voltage Rating', '600 VAC Max');
   if (style.frameClass) {
-    html += item('Int. Capacity @240V', style.frameClass.kA_240 + ' kAIC');
-    html += item('Int. Capacity @480V', style.frameClass.kA_480 + ' kAIC');
-    html += item('Int. Capacity @600V', style.frameClass.kA_600 + ' kAIC');
+    if (style.frameClass.kA_240 !== null) {
+      html += item('Int. Capacity @240V', style.frameClass.kA_240 + ' kAIC');
+      html += item('Int. Capacity @480V', style.frameClass.kA_480 + ' kAIC');
+      html += item('Int. Capacity @600V', style.frameClass.kA_600 + ' kAIC');
+    } else {
+      html += item('Int. Capacity', 'N/A (Molded Case Switch)');
+    }
   }
   html += '</div>';
 
@@ -1787,10 +1901,314 @@ function showError(msg) {
 // Positions 11-30 = 20-digit Option/Configuration Code
 // ============================================================
 
+// Style number lookup — maps drawing base (positions 1-7) to frame class + poles
+var EDGE_STYLE_LOOKUP = {
+  '8702C30': { frameClass: '50',   poles: '3P', name: 'SPB-50' },
+  '8702C37': { frameClass: '50',   poles: '4P', name: 'SPB-50' },
+  '8702C31': { frameClass: '65',   poles: '3P', name: 'SPB-65' },
+  '8702C38': { frameClass: '65',   poles: '4P', name: 'SPB-65' },
+  '8702C32': { frameClass: '100',  poles: '3P', name: 'SPB-100' },
+  '8702C39': { frameClass: '100',  poles: '4P', name: 'SPB-100' },
+  '8702C33': { frameClass: '150',  poles: '3P', name: 'SPB-150' },
+  '8702C40': { frameClass: '150',  poles: '4P', name: 'SPB-150' },
+  '8702C34': { frameClass: '100M', poles: '3P', name: 'SPB-100M' },
+  '8702C41': { frameClass: '100M', poles: '4P', name: 'SPB-100M' },
+  '8702C35': { frameClass: 'W50',  poles: '3P', name: 'SPB-W50' },
+  '8702C43': { frameClass: 'W50',  poles: '4P', name: 'SPB-W50' },
+  '8702C36': { frameClass: 'W100', poles: '3P', name: 'SPB-W100' },
+  '8702C42': { frameClass: 'W100', poles: '4P', name: 'SPB-W100' },
+  '8705C04': { frameClass: 'N',    poles: '3P', name: 'SPB-N' },
+  '8705C64': { frameClass: 'N',    poles: '4P', name: 'SPB-N' },
+  '8705C05': { frameClass: 'NH',   poles: '3P', name: 'SPB-NH' },
+  '8705C65': { frameClass: 'NH',   poles: '4P', name: 'SPB-NH' }
+};
+
+// Group number meaning
+var EDGE_GROUP = {
+  'G01': 'Breaker only (no cassette)',
+  'G02': 'With cassette, without shutters',
+  'G03': 'With cassette, with shutters'
+};
+
+// Frame amps feature (1 digit) — keyed by frame class family
+var EDGE_FRAME_AMPS = {
+  '50':   { '0': 'None', '1': '400A', '2': '800A' },
+  '65':   { '0': 'None', '1': '1200A', '2': '1600A', '3': '2000A' },
+  '100':  { '0': 'None', '1': '400A', '2': '800A', '3': '1200A', '4': '1600A', '5': '2000A', '6': '2500A', '7': '3000A', '8': '4000A', '9': '5000A' },
+  '100M': { '0': 'None', '1': '400A', '2': '800A', '3': '1200A', '4': '1600A', '5': '2000A', '6': '2500A', '7': '3000A', '8': '4000A', '9': '5000A' },
+  '150':  { '0': 'None', '1': '400A', '2': '800A', '3': '1200A', '4': '1600A', '5': '2000A', '6': '2500A', '7': '3000A', '8': '4000A', '9': '5000A' },
+  'N':    { '0': 'None', '1': '400A', '2': '800A', '3': '1200A', '4': '1600A', '5': '2000A', '6': '2500A', '7': '3000A', '8': '4000A', '9': '5000A' },
+  'NH':   { '0': 'None', '1': '400A', '2': '800A', '3': '1200A', '4': '1600A', '5': '2000A', '6': '2500A', '7': '3000A', '8': '4000A', '9': '5000A' },
+  'W50':  { '0': 'None', '1': '400A', '2': '800A', '3': '1250A', '4': '1600A', '5': '2000A', '7': '3150A', '8': '4000A', '9': '5000A' },
+  'W100': { '0': 'None', '4': '1600A', '5': '2000A', '7': '3150A', '8': '4000A', '9': '5000A' }
+};
+
+// Aux Switch (1 digit)
+var EDGE_AUX_SW = {
+  '0': 'None', '1': '4A-4B', '2': '4A-4B', '3': '4A-4B',
+  '4': 'Retro', '5': 'Retro', '6': 'Retro',
+  '7': '4A-5B', '8': '4A-5B', '9': '4A-5B'
+};
+
+// Trip Unit (2 digits)
+var EDGE_TRIP = {
+  '00': 'None',
+  '01': 'RMS-510 (51) LI', '02': 'RMS-510 (52) LSI', '03': 'RMS-510 (53) LS',
+  '04': 'RMS-510 (54) LIG', '05': 'RMS-510 (55) LSG', '06': 'RMS-510 (56) LSIG',
+  '10': 'RMS-610 (61) LI', '11': 'RMS-610 (62) LSI', '12': 'RMS-610 (63) LS',
+  '13': 'RMS-610 (64) LIG', '14': 'RMS-610 (65) LSG', '15': 'RMS-610 (66) LSIG',
+  '19': 'RMS-810 (81) LI', '20': 'RMS-810 (82) LSI', '21': 'RMS-810 (83) LS',
+  '22': 'RMS-810 (84) LIG', '23': 'RMS-810 (85) LSG', '24': 'RMS-810 (86) LSIG',
+  '28': 'RMS-910 (91) LI', '29': 'RMS-910 (92) LSI', '30': 'RMS-910 (93) LS',
+  '31': 'RMS-910 (94) LIG', '32': 'RMS-910 (95) LSG', '33': 'RMS-910 (96) LSIG',
+  '37': 'RMS-210', '38': 'OPT-750 LSI', '39': 'OPT-750 LSIG', '40': 'OPT-750 LSIA',
+  '41': 'OPT-1050 LSI', '42': 'OPT-1050 LSIG', '43': 'OPT-1050 LSIA',
+  '44': 'RMS-610i (62) LSI', '45': 'RMS-610i (66) LSIG',
+  '46': 'RMS-810i (82) LSI', '47': 'RMS-810i (86) LSIG',
+  '51': 'Pow-R 7 (51) LI', '52': 'Pow-R 7 (52) LSI', '53': 'Pow-R 7 (53) LS',
+  '54': 'Pow-R 7 (54) LIG', '55': 'Pow-R 7 (55) LSG', '56': 'Pow-R 7 (56) LSIG'
+};
+
+// Rating Plug (2 digits)
+var EDGE_PLUG = {
+  '00': 'None',
+  '01': '200A (400A frame)', '02': '250A (400A)', '03': '300A (400A)', '04': '400A (400A)',
+  '05': '400A (800A)', '07': '600A (800A)', '08': '800A (800A)',
+  '09': '600A (1200A)', '10': '800A (1200A)', '11': '1000A (1200A)', '12': '1200A (1200A)',
+  '13': '800A (1600A)', '14': '1000A (1600A)', '15': '1200A (1600A)', '16': '1600A (1600A)',
+  '17': '1000A (2000A)', '18': '1200A (2000A)', '19': '1600A (2000A)', '20': '2000A (2000A)',
+  '21': '1600A (2000A)', '22': '2000A (2000A)',
+  '23': '1600A (2500A)', '24': '2000A (2500A)', '25': '2500A (2500A)',
+  '26': '1600A (3000A)', '27': '2000A (3000A)', '28': '2500A (3000A)', '29': '3000A (3000A)',
+  '30': '2000A (4000A)', '31': '2500A (4000A)', '32': '3000A (4000A)', '33': '3200A (4000A)', '34': '4000A (4000A)',
+  '35': '3000A (5000A)', '36': '3200A (5000A)', '37': '4000A (5000A)', '38': '5000A (5000A)',
+  '39': '630A (800A)', '40': '630A (1200A)', '41': '1250A (1250A)', '42': '1250A (1600A)',
+  '43': '1250A (2000A)', '44': '3150A (3150A)'
+};
+
+// Close / Electrical Operator (2 digits)
+var EDGE_CLOSE = {
+  '00': 'None (Manual Operation)',
+  '01': '120-VAC E/O Auto Charge W/O Antipump (Small 3P)',
+  '02': '120-VAC E/O Fast Charge (Small 3P)',
+  '03': '208-VAC E/O Auto Charge (Small 3P)',
+  '04': '240-VAC E/O Auto Charge (Small 3P)',
+  '05': '24-VDC E/O Auto Charge (Small 3P)',
+  '06': '32-VDC E/O Auto Charge (Small 3P)',
+  '07': '48-VDC E/O Auto Charge (Small 3P)',
+  '08': '125-VDC E/O Auto Charge (Small 3P)',
+  '09': '120-VAC E/O Auto Charge W/O Antipump',
+  '10': '120-VAC E/O Auto Charge',
+  '11': '208-VAC E/O Auto Charge',
+  '12': '240-VAC E/O Auto Charge',
+  '13': '24-VDC E/O Auto Charge',
+  '14': '32-VDC E/O Auto Charge',
+  '15': '48-VDC E/O Auto Charge',
+  '16': '125-VDC E/O Auto Charge',
+  '17': '120-VAC E/O W/Local Elec Close',
+  '18': '120-VAC E/O (Waukesha)',
+  '19': '120-VAC E/O (Waukesha) W/Local Chg',
+  '20': '120-VAC E/O W/Local Chg Pushbutton (Small 3P)',
+  '21': '208-VAC E/O W/Local Chg Pushbutton (Small 3P)',
+  '22': '240-VAC E/O W/Local Chg Pushbutton (Small 3P)',
+  '23': '24-VDC E/O W/Local Chg Pushbutton (Small 3P)',
+  '24': '32-VDC E/O W/Local Chg Pushbutton (Small 3P)',
+  '25': '48-VDC E/O W/Local Chg Pushbutton (Small 3P)',
+  '26': '125-VDC E/O W/Local Chg Pushbutton (Small 3P)',
+  '27': '120-VAC E/O W/Local Chg Pushbutton',
+  '28': '208-VAC E/O W/Local Chg Pushbutton',
+  '29': '240-VAC E/O W/Local Chg Pushbutton',
+  '30': '24-VDC E/O W/Local Chg Pushbutton',
+  '31': '32-VDC E/O W/Local Chg Pushbutton',
+  '32': '48-VDC E/O W/Local Chg Pushbutton',
+  '33': '125-VDC E/O W/Local Chg Pushbutton',
+  '35': '120-VAC S/R W/O Antipump (Small 3P)',
+  '36': '208-VAC S/R W/O Antipump (Small 3P)',
+  '37': '240-VAC S/R W/O Antipump (Small 3P)',
+  '38': '24-VDC S/R W/O Antipump (Small 3P)',
+  '39': '32-VDC S/R W/O Antipump (Small 3P)',
+  '40': '48-VDC S/R W/O Antipump (Small 3P)',
+  '41': '125-VDC S/R W/O Antipump (Small 3P)',
+  '42': '120-VAC S/R W/O Antipump',
+  '43': '208-VAC S/R W/O Antipump',
+  '44': '240-VAC S/R W/O Antipump',
+  '45': '24-VDC S/R W/O Antipump',
+  '46': '32-VDC S/R W/O Antipump',
+  '47': '48-VDC S/R W/O Antipump',
+  '48': '125-VDC S/R W/O Antipump',
+  '49': '120-VAC S/R W/ Antipump (Small 3P)',
+  '50': '208-VAC S/R W/ Antipump (Small 3P)',
+  '51': '240-VAC S/R W/ Antipump (Small 3P)',
+  '52': '24-VDC S/R W/ Antipump (Small 3P)',
+  '53': '32-VDC S/R W/ Antipump (Small 3P)',
+  '54': '48-VDC S/R W/ Antipump (Small 3P)',
+  '55': '125-VDC S/R W/ Antipump (Small 3P)',
+  '56': '120-VAC S/R W/ Antipump',
+  '57': '208-VAC S/R W/ Antipump',
+  '58': '240-VAC S/R W/ Antipump',
+  '59': '24-VDC S/R W/ Antipump',
+  '60': '32-VDC S/R W/ Antipump',
+  '61': '48-VDC S/R W/ Antipump',
+  '62': '125-VDC S/R W/ Antipump',
+  '63': '120-VAC S/R W/Local Elec Close W/O Antipump (Small 3P)',
+  '70': '120-VAC E/O W/Local Chg PB W/O Antipump',
+  '71': '120-VAC E/O W/Local Chg PB W/O Antipump (Small 3P)',
+  '72': '120-VAC E/O Auto Charge (Small 3P)',
+  '73': '120-VAC E/O Auto Charge 50Hz (Small 3P)'
+};
+
+// Marine (1 digit)
+var EDGE_MARINE = {
+  '0': 'None', '1': 'Marine Label', '2': 'UL'
+};
+
+// Shunt Trip / Trip 2 (2 digits)
+var EDGE_SHUNT_TRIP = {
+  '00': 'None',
+  '01': '24-VAC (Small 3P)', '02': '48-VAC (Small 3P)', '03': '120-VAC (Small 3P)',
+  '04': '208-VAC (Small 3P)', '05': '240-VAC (Small 3P)', '06': '480-VAC (Small 3P)',
+  '07': '600-VAC (Small 3P)', '08': '24-VDC (Small 3P)', '09': '32-VDC (Small 3P)',
+  '10': '48-VDC (Small 3P)', '11': '60-VDC (Small 3P)', '12': '125-VDC (Small 3P)',
+  '13': '24-VAC', '14': '48-VAC', '15': '120-VAC', '16': '208-VAC',
+  '17': '240-VAC', '18': '480-VAC', '19': '600-VAC', '20': '24-VDC',
+  '21': '32-VDC', '22': '48-VDC', '23': '60-VDC', '24': '125-VDC',
+  '25': '120-VAC Dual (Small 3P)', '26': '120-VAC Dual'
+};
+
+// Padlock (1 digit)
+var EDGE_PADLOCK = {
+  '0': 'None', '1': 'Padlockable Push to Open', '2': 'Cover for Manual Close Pushbtn',
+  '3': 'Padlockable & Man. Close Block', '4': 'Manual Close Cover W/O Hole',
+  '5': 'Padlock & Man CL Block W/O Hole'
+};
+
+// Bell Alarm (1 digit)
+var EDGE_BELL = {
+  '0': 'None', '1': 'Yes', '2': 'Yes (4000A frame)', '3': 'Yes (4-pole)'
+};
+
+// UVR (2 digits)
+var EDGE_UVR = {
+  '00': 'None',
+  '01': 'Instantaneous 24-VDC', '02': 'Instantaneous 32-VDC', '03': 'Instantaneous 48-VDC',
+  '04': 'Instantaneous 60-VDC', '05': 'Instantaneous 125-VDC', '06': 'Time Delay',
+  '07': 'Instantaneous 24-VAC', '08': 'Instantaneous 48-VAC', '09': 'Instantaneous 120-VAC',
+  '10': 'Instantaneous 208-VAC', '11': 'Instantaneous 240-VAC', '12': 'Instantaneous 480-VAC',
+  '13': 'Instantaneous 600-VAC',
+  '14': 'Instantaneous 24-VDC (4P)', '15': 'Instantaneous 32-VDC (4P)', '16': 'Instantaneous 48-VDC (4P)',
+  '17': 'Instantaneous 60-VDC (4P)', '18': 'Instantaneous 125-VDC (4P)', '19': 'Time Delay (4P)',
+  '20': 'Instantaneous 24-VAC (4P)', '21': 'Instantaneous 48-VAC (4P)', '22': 'Instantaneous 120-VAC (4P)',
+  '23': 'Instantaneous 208-VAC (4P)', '24': 'Instantaneous 240-VAC (4P)', '25': 'Instantaneous 480-VAC (4P)',
+  '26': 'Instantaneous 600-VAC (4P)'
+};
+
+// ATR (1 digit)
+var EDGE_ATR = {
+  '0': 'None', '1': '120-VAC', '2': '240-VAC'
+};
+
+// Trip Wiring / Trip F (2 digits)
+var EDGE_TRIP_WIRING = {
+  '00': 'None',
+  '01': 'R500 (400A)', '02': 'R500 GF Residual (400A)', '03': 'R500 GF Source 0/SEQ (400A)',
+  '04': 'R500 (800A)', '05': 'R500 GF Residual (800A)', '06': 'R500 GF Source 0/SEQ (800A)',
+  '07': 'R500 (1200A)', '08': 'R500 GF Residual (1200A)', '09': 'R500 GF Source 0/SEQ (1200A)',
+  '10': 'R500 (1600A)', '11': 'R500 GF Residual (1600A)', '12': 'R500 GF Source 0/SEQ (1600A)',
+  '13': 'R500 (2000A)', '14': 'R500 GF Residual (2000A)', '15': 'R500 GF Source 0/SEQ (2000A)',
+  '19': 'R500 (2500A)', '20': 'R500 GF Residual (2500A)', '21': 'R500 GF Source 0/SEQ (2500A)',
+  '22': 'R500 (3000A)', '23': 'R500 GF Residual (3000A)', '24': 'R500 GF Source 0/SEQ (3000A)',
+  '25': 'R500 (4000A)', '26': 'R500 GF Residual (4000A)', '27': 'R500 GF Source 0/SEQ (4000A)',
+  '28': 'R500 (5000A)', '29': 'R500 GF Residual (5000A)', '30': 'R500 GF Source 0/SEQ (5000A)',
+  '40': 'R800 (400A)', '41': 'R800 GF Residual (400A)', '42': 'R800 GF Source 0/SEQ (400A)',
+  '43': 'R800 (800A)', '44': 'R800 GF Residual (800A)', '45': 'R800 GF Source 0/SEQ (800A)',
+  '46': 'R800 (1200A)', '47': 'R800 GF Residual (1200A)', '48': 'R800 GF Source 0/SEQ (1200A)',
+  '49': 'R800 (1600A)', '50': 'R800 GF Residual (1600A)', '51': 'R800 GF Source 0/SEQ (1600A)',
+  '52': 'R800 (2000A)', '53': 'R800 GF Residual (2000A)', '54': 'R800 GF Source 0/SEQ (2000A)',
+  '58': 'R800 (2500A)', '59': 'R800 GF Residual (2500A)', '60': 'R800 GF Source 0/SEQ (2500A)',
+  '61': 'R800 (3000A)', '62': 'R800 GF Residual (3000A)', '63': 'R800 GF Source 0/SEQ (3000A)',
+  '64': 'R800 (4000A)', '65': 'R800 GF Residual (4000A)', '66': 'R800 GF Source 0/SEQ (4000A)',
+  '67': 'R800 (5000A)', '68': 'R800 GF Residual (5000A)', '69': 'R800 GF Source 0/SEQ (5000A)',
+  '71': 'O750 (400A)', '72': 'O750 GF Residual (400A)', '73': 'O750 GF Source 0/SEQ (400A)',
+  '74': 'O750 (800A)', '75': 'O750 GF Residual (800A)', '76': 'O750 GF Source 0/SEQ (800A)',
+  '77': 'O750 (1200A)', '78': 'O750 GF Residual (1200A)', '79': 'O750 GF Source 0/SEQ (1200A)',
+  '80': 'O750 (1600A)', '81': 'O750 GF Residual (1600A)', '82': 'O750 GF Source 0/SEQ (1600A)',
+  '83': 'O750 (2000A)', '84': 'O750 GF Residual (2000A)', '85': 'O750 GF Source 0/SEQ (2000A)',
+  '86': 'O750 (2500A)', '87': 'O750 GF Residual (2500A)', '88': 'O750 GF Source 0/SEQ (2500A)',
+  '89': 'O750 (3000A)', '90': 'O750 GF Residual (3000A)', '91': 'O750 GF Source 0/SEQ (3000A)',
+  '92': 'O750 (4000A)', '93': 'O750 GF Residual (4000A)', '94': 'O750 GF Source 0/SEQ (4000A)'
+};
+
+// Mount (2 digits) — simplified descriptions
+var EDGE_MOUNT = {
+  '00': 'None',
+  '01': 'Rear, Vertical, Standard', '02': 'Rear, Vertical, Standard', '03': 'Rear, Vertical, Standard',
+  '04': 'Rear, Vertical, W/Cable Interlock', '05': 'Rear, Vertical, W/Cable Interlock', '06': 'Rear, Vertical, W/Cable Interlock',
+  '07': 'Rear, Vertical, W/Kirk Key', '08': 'Rear, Vertical, W/Kirk Key', '09': 'Rear, Vertical, W/Kirk Key',
+  '10': 'Front, W/O Terms', '11': 'Front, W/O Terms', '12': 'Front, W/O Terms',
+  '13': 'Front, W/Copper Terms', '14': 'Front, W/Copper Terms',
+  '15': 'Front, W/Aluminum Terms', '16': 'Front, W/Aluminum Terms',
+  '17': 'Front, W/O Terms, W/Cable Interlock', '18': 'Front, W/O Terms, W/Cable Interlock', '19': 'Front, W/O Terms, W/Cable Interlock',
+  '20': 'Front, W/Copper Terms, W/Cable Interlock', '21': 'Front, W/Copper Terms, W/Cable Interlock',
+  '22': 'Front, W/Aluminum Terms, W/Cable Interlock', '23': 'Front, W/Aluminum Terms, W/Cable Interlock',
+  '24': 'Front, W/O Terms, W/Kirk Key', '25': 'Front, W/O Terms, W/Kirk Key', '26': 'Front, W/O Terms, W/Kirk Key',
+  '27': 'Front, W/Copper Terms, W/Kirk Key', '28': 'Front, W/Copper Terms, W/Kirk Key',
+  '29': 'Front, W/Aluminum Terms, W/Kirk Key', '30': 'Front, W/Aluminum Terms, W/Kirk Key',
+  '31': 'Behind Door, Standard', '32': 'Behind Door, Standard', '33': 'Behind Door, Standard',
+  '34': 'Behind Door, W/Cable Interlock', '35': 'Behind Door, W/Cable Interlock', '36': 'Behind Door, W/Cable Interlock',
+  '37': 'Through Door, W/Shutter, Standard', '38': 'Through Door, W/Shutter, Standard',
+  '39': 'Through Door, W/Shutter, Standard', '40': 'Through Door, W/Shutter, Standard', '41': 'Through Door, W/Shutter, Standard',
+  '43': 'Through Door, W/Shutter, W/Cable Interlock', '44': 'Through Door, W/Shutter, W/Cable Interlock',
+  '45': 'Through Door, W/Shutter, W/Cable Interlock', '46': 'Through Door, W/Shutter, W/Cable Interlock',
+  '47': 'Through Door, W/Shutter, W/Cable Interlock',
+  '51': 'Rear, Horizontal, Standard', '52': 'Rear, Horizontal, Standard', '53': 'Rear, Horizontal, Standard',
+  '54': 'Rear, Horizontal, W/Cable Interlock', '55': 'Rear, Horizontal, W/Cable Interlock', '56': 'Rear, Horizontal, W/Cable Interlock',
+  '57': 'Rear, Horizontal, W/Kirk Key', '58': 'Rear, Horizontal, W/Kirk Key', '59': 'Rear, Horizontal, W/Kirk Key',
+  '60': 'Behind Door (100-class)', '61': 'Behind Door (100-class)', '62': 'Behind Door (100-class)',
+  '63': 'Behind Door (100-class), W/Cable Interlock', '64': 'Behind Door (100-class), W/Cable Interlock',
+  '65': 'Behind Door (100-class), W/Cable Interlock', '66': 'Behind Door (100-class), W/Cable Interlock',
+  '67': 'Behind Door (100-class), W/Cable Interlock',
+  '68': 'Through Door, W/Shutter (100-class), Standard', '69': 'Through Door, W/Shutter (100-class), Standard',
+  '70': 'Through Door, W/Shutter (100-class), Standard', '71': 'Through Door, W/Shutter (100-class), Standard',
+  '72': 'Through Door, W/Shutter (100-class), Standard', '73': 'Through Door, W/Shutter (100-class), Standard',
+  '74': 'Through Door, W/Shutter (100-class), Standard', '75': 'Through Door, W/Shutter (100-class), Standard',
+  '76': 'Through Door, W/Shutter (100-class), Standard', '77': 'Through Door, W/Shutter (100-class), Standard',
+  '78': 'Through Door, W/Shutter (100-class), Standard', '79': 'Through Door, W/Shutter (100-class), Standard',
+  '80': 'Through Door, W/Shutter (100-class), Standard',
+  '82': 'Through Door, W/Shutter (100-class), W/Cable Interlock',
+  '83': 'Through Door, W/Shutter (100-class), W/Cable Interlock',
+  '84': 'Through Door, W/Shutter (100-class), W/Cable Interlock',
+  '85': 'Through Door, W/Shutter (100-class), W/Cable Interlock',
+  '86': 'Through Door, W/Shutter (100-class), W/Cable Interlock',
+  '87': 'Through Door, W/Shutter (100-class), W/Cable Interlock',
+  '88': 'Through Door, W/Shutter (100-class), W/Cable Interlock',
+  '89': 'Through Door, W/Shutter (100-class), W/Cable Interlock',
+  '90': 'Through Door, W/Shutter (100-class), W/Cable Interlock',
+  '91': 'Through Door, W/Shutter (100-class), W/Cable Interlock',
+  '92': 'Through Door, W/Shutter (100-class), W/Cable Interlock',
+  '93': 'Through Door, W/Shutter (100-class), W/Cable Interlock',
+  '94': 'Through Door, W/Shutter (100-class), W/Cable Interlock',
+  '96': 'Through Door, W/Shutter (100-class), Standard',
+  '97': 'Through Door, W/Shutter (100-class), W/Cable Interlock'
+};
+
 function parseEdgeNumber(raw) {
   var s = raw.toUpperCase().replace(/[\s\-]/g, '');
   var result = { raw: s, errors: [], styleNumber: null, optionCode: null,
-    drawingBase: null, sheetSize: null, sequence: null, group: null };
+    drawingBase: null, drawingBaseKey: null, sheetSize: null, sequence: null,
+    group: null, groupDesc: null, frameInfo: null,
+    frameFeature: null, frameFeatureDesc: null,
+    mount: null, mountDesc: null,
+    auxSw: null, auxSwDesc: null,
+    trip: null, tripDesc: null,
+    plug: null, plugDesc: null,
+    close: null, closeDesc: null,
+    marine: null, marineDesc: null,
+    shuntTrip: null, shuntTripDesc: null,
+    padlock: null, padlockDesc: null,
+    bell: null, bellDesc: null,
+    uvr: null, uvrDesc: null,
+    atr: null, atrDesc: null,
+    tripWiring: null, tripWiringDesc: null };
 
   if (s.length !== 30) {
     result.errors.push('Edge number must be exactly 30 characters. Got ' + s.length + '.');
@@ -1803,11 +2221,14 @@ function parseEdgeNumber(raw) {
   result.optionCode = s.substring(10);
 
   // Parse the style number: ####X##G##
-  result.drawingBase = s.substring(0, 4);         // Drawing base number
-  result.sheetSize = s.substring(4, 5);            // Sheet size letter
-  result.sequence = s.substring(5, 7);             // Sequence number
-  var gChar = s.substring(7, 8);                   // Should be 'G'
-  result.group = s.substring(8, 10);               // Group number
+  result.drawingBase = s.substring(0, 4);
+  result.sheetSize = s.substring(4, 5);
+  result.sequence = s.substring(5, 7);
+  var gChar = s.substring(7, 8);
+  result.group = s.substring(8, 10);
+
+  // Drawing base key = positions 1-7 (e.g. 8702C34)
+  result.drawingBaseKey = s.substring(0, 7);
 
   if (gChar !== 'G') {
     result.errors.push('Position 8 should be "G" (group separator). Found "' + gChar + '".');
@@ -1815,11 +2236,88 @@ function parseEdgeNumber(raw) {
 
   // Sheet size descriptions
   var sheetSizes = {
-    'A': 'A-Size (8.5" × 11")', 'B': 'B-Size (11" × 17")',
-    'C': 'C-Size (17" × 22")', 'D': 'D-Size (22" × 34")',
-    'E': 'E-Size (34" × 44")'
+    'A': 'A-Size (8.5" x 11")', 'B': 'B-Size (11" x 17")',
+    'C': 'C-Size (17" x 22")', 'D': 'D-Size (22" x 34")',
+    'E': 'E-Size (34" x 44")'
   };
   result.sheetSizeDesc = sheetSizes[result.sheetSize] || 'Non-standard (' + result.sheetSize + ')';
+
+  // Group description
+  var groupKey = 'G' + result.group;
+  result.groupDesc = EDGE_GROUP[groupKey] || ('Group ' + result.group);
+
+  // Lookup frame info from drawing base key
+  result.frameInfo = EDGE_STYLE_LOOKUP[result.drawingBaseKey] || null;
+  if (!result.frameInfo) {
+    result.errors.push('Unknown drawing base number: ' + result.drawingBaseKey + '. Not found in SPB style lookup.');
+  }
+
+  // Parse the 20-digit option code
+  // Format: [Frame:1][Mount:2][AuxSw:1][Trip:2][Plug:2][Close:2][Marine:1][ShuntTrip:2][Padlock:1][Bell:1][UVR:2][ATR:1][TripWiring:2]
+  var opt = result.optionCode;
+  var pos = 0;
+
+  // Frame Feature (1 digit)
+  result.frameFeature = opt.substring(pos, pos + 1); pos += 1;
+  if (result.frameInfo) {
+    var fcKey = result.frameInfo.frameClass;
+    var frameAmpsTable = EDGE_FRAME_AMPS[fcKey];
+    if (frameAmpsTable) {
+      result.frameFeatureDesc = frameAmpsTable[result.frameFeature] || ('Unknown code: ' + result.frameFeature);
+    } else {
+      result.frameFeatureDesc = 'No frame amps table for class: ' + fcKey;
+    }
+  } else {
+    result.frameFeatureDesc = 'Cannot determine (unknown frame class)';
+  }
+
+  // Mount (2 digits)
+  result.mount = opt.substring(pos, pos + 2); pos += 2;
+  result.mountDesc = EDGE_MOUNT[result.mount] || ('Unknown mount code: ' + result.mount);
+
+  // Aux Switch (1 digit)
+  result.auxSw = opt.substring(pos, pos + 1); pos += 1;
+  result.auxSwDesc = EDGE_AUX_SW[result.auxSw] || ('Unknown aux switch code: ' + result.auxSw);
+
+  // Trip Unit (2 digits)
+  result.trip = opt.substring(pos, pos + 2); pos += 2;
+  result.tripDesc = EDGE_TRIP[result.trip] || ('Unknown trip code: ' + result.trip);
+
+  // Rating Plug (2 digits)
+  result.plug = opt.substring(pos, pos + 2); pos += 2;
+  result.plugDesc = EDGE_PLUG[result.plug] || ('Unknown plug code: ' + result.plug);
+
+  // Close / Electrical Operator (2 digits)
+  result.close = opt.substring(pos, pos + 2); pos += 2;
+  result.closeDesc = EDGE_CLOSE[result.close] || ('Unknown close code: ' + result.close);
+
+  // Marine (1 digit)
+  result.marine = opt.substring(pos, pos + 1); pos += 1;
+  result.marineDesc = EDGE_MARINE[result.marine] || ('Unknown marine code: ' + result.marine);
+
+  // Shunt Trip / Trip 2 (2 digits)
+  result.shuntTrip = opt.substring(pos, pos + 2); pos += 2;
+  result.shuntTripDesc = EDGE_SHUNT_TRIP[result.shuntTrip] || ('Unknown shunt trip code: ' + result.shuntTrip);
+
+  // Padlock (1 digit)
+  result.padlock = opt.substring(pos, pos + 1); pos += 1;
+  result.padlockDesc = EDGE_PADLOCK[result.padlock] || ('Unknown padlock code: ' + result.padlock);
+
+  // Bell Alarm (1 digit)
+  result.bell = opt.substring(pos, pos + 1); pos += 1;
+  result.bellDesc = EDGE_BELL[result.bell] || ('Unknown bell code: ' + result.bell);
+
+  // UVR (2 digits)
+  result.uvr = opt.substring(pos, pos + 2); pos += 2;
+  result.uvrDesc = EDGE_UVR[result.uvr] || ('Unknown UVR code: ' + result.uvr);
+
+  // ATR (1 digit)
+  result.atr = opt.substring(pos, pos + 1); pos += 1;
+  result.atrDesc = EDGE_ATR[result.atr] || ('Unknown ATR code: ' + result.atr);
+
+  // Trip Wiring / Trip F (2 digits)
+  result.tripWiring = opt.substring(pos, pos + 2); pos += 2;
+  result.tripWiringDesc = EDGE_TRIP_WIRING[result.tripWiring] || ('Unknown trip wiring code: ' + result.tripWiring);
 
   return result;
 }
@@ -1831,23 +2329,42 @@ function decodeEdgeNumber(raw) {
   el.classList.remove('hidden');
   mapEl.classList.remove('hidden');
 
-  // Character map
+  // Character map — show labeled segments
   var segs = document.getElementById('charSegments');
   var html = '';
 
   // Style number segment (positions 1-10)
-  html += '<div><div class="char-segment-label">Style Number (Pos 1–10)</div><div class="char-boxes">';
+  html += '<div><div class="char-segment-label">Style Number (1\u201310)</div><div class="char-boxes">';
   for (var i = 0; i < 10; i++) {
     html += '<div class="char-box"><span class="pos-label">' + (i + 1) + '</span>' + edge.raw[i] + '</div>';
   }
   html += '</div></div>';
 
-  // Option code segment (positions 11-30)
-  html += '<div><div class="char-segment-label">Option Code (Pos 11–30)</div><div class="char-boxes">';
-  for (var i = 10; i < 30; i++) {
-    html += '<div class="char-box"><span class="pos-label">' + (i + 1) + '</span>' + edge.raw[i] + '</div>';
+  // Option code broken into labeled segments
+  var optSegments = [
+    { label: 'Frame (11)', start: 10, len: 1 },
+    { label: 'Mount (12\u201313)', start: 11, len: 2 },
+    { label: 'Aux (14)', start: 13, len: 1 },
+    { label: 'Trip (15\u201316)', start: 14, len: 2 },
+    { label: 'Plug (17\u201318)', start: 16, len: 2 },
+    { label: 'Close (19\u201320)', start: 18, len: 2 },
+    { label: 'Marine (21)', start: 20, len: 1 },
+    { label: 'Shunt (22\u201323)', start: 21, len: 2 },
+    { label: 'Padlock (24)', start: 23, len: 1 },
+    { label: 'Bell (25)', start: 24, len: 1 },
+    { label: 'UVR (26\u201327)', start: 25, len: 2 },
+    { label: 'ATR (28)', start: 27, len: 1 },
+    { label: 'Trip Wiring (29\u201330)', start: 28, len: 2 }
+  ];
+
+  for (var si = 0; si < optSegments.length; si++) {
+    var seg = optSegments[si];
+    html += '<div><div class="char-segment-label">' + seg.label + '</div><div class="char-boxes">';
+    for (var ci = seg.start; ci < seg.start + seg.len; ci++) {
+      html += '<div class="char-box"><span class="pos-label">' + (ci + 1) + '</span>' + edge.raw[ci] + '</div>';
+    }
+    html += '</div></div>';
   }
-  html += '</div></div>';
 
   segs.innerHTML = html;
 
@@ -1859,9 +2376,15 @@ function renderEdgeResults(edge) {
   var el = document.getElementById('results');
   var html = '';
 
-  // Summary banner
+  // Build summary
+  var summaryParts = [];
+  if (edge.frameInfo) summaryParts.push(edge.frameInfo.name);
+  if (edge.frameInfo) summaryParts.push(edge.frameInfo.poles);
+  if (edge.frameFeatureDesc && edge.frameFeatureDesc !== 'None') summaryParts.push(edge.frameFeatureDesc);
+  if (edge.tripDesc && edge.tripDesc !== 'None') summaryParts.push(edge.tripDesc);
+
   html += '<div class="summary-banner">';
-  html += '<h2>Breaker Edge Number (Feature & Option)</h2>';
+  html += '<h2>' + (summaryParts.length > 0 ? summaryParts.join(' \u2014 ') : 'Breaker Edge Number') + '</h2>';
   html += '<p>Full Number: ' + edge.raw + '</p></div>';
 
   // Errors
@@ -1876,22 +2399,48 @@ function renderEdgeResults(edge) {
   // Westinghouse Style Number breakdown
   html += '<div class="result-card valid"><h3>Westinghouse Style Number</h3>';
   html += item('Full Style Number', edge.styleNumber);
-  html += item('Drawing Base', edge.drawingBase);
-  html += item('Sheet Size', edge.sheetSize + ' — ' + edge.sheetSizeDesc);
-  html += item('Sequence Number', edge.sequence);
-  html += item('Group Number', edge.group);
+  html += item('Drawing Base', edge.drawingBaseKey);
+  if (edge.frameInfo) {
+    html += item('Frame Class', edge.frameInfo.name);
+    html += item('Poles', edge.frameInfo.poles);
+  }
+  html += item('Sheet Size', edge.sheetSize + ' \u2014 ' + edge.sheetSizeDesc);
+  html += item('Group Number', edge.group + ' \u2014 ' + edge.groupDesc);
   html += '</div>';
 
-  // Option/Configuration Code
-  html += '<div class="result-card valid"><h3>Option / Configuration Code</h3>';
-  html += item('Full Option Code', edge.optionCode);
-  html += item('Length', edge.optionCode.length + ' digits');
-  html += '<div class="result-item"><span class="label">Note</span><span class="value info-val" style="font-size:0.78rem;">The 20-digit option code encodes factory-configured features (trip unit, rating plug, accessories, operation type, mounting). Position-by-position mapping is proprietary to Eaton/Westinghouse.</span></div>';
+  // Breaker Configuration (from option code)
+  html += '<div class="result-card valid"><h3>Breaker Configuration</h3>';
+  html += item('Frame Feature', edge.frameFeature + ' \u2014 ' + edge.frameFeatureDesc);
+  html += item('Mounting', edge.mount + ' \u2014 ' + edge.mountDesc);
+  html += item('Continuous Amps', edge.frameFeatureDesc !== 'None' ? edge.frameFeatureDesc : 'Not specified');
+  html += '</div>';
+
+  // Trip & Protection
+  html += '<div class="result-card valid"><h3>Trip Unit & Rating Plug</h3>';
+  html += item('Trip Unit', edge.trip + ' \u2014 ' + edge.tripDesc);
+  html += item('Rating Plug', edge.plug + ' \u2014 ' + edge.plugDesc);
+  html += item('Trip Wiring', edge.tripWiring + ' \u2014 ' + edge.tripWiringDesc);
+  html += '</div>';
+
+  // Operation & Accessories
+  html += '<div class="result-card valid"><h3>Operation & Accessories</h3>';
+  html += item('Close / Elec. Operator', edge.close + ' \u2014 ' + edge.closeDesc);
+  html += item('Auxiliary Switch', edge.auxSw + ' \u2014 ' + edge.auxSwDesc);
+  html += item('Shunt Trip', edge.shuntTrip + ' \u2014 ' + edge.shuntTripDesc);
+  html += item('UVR', edge.uvr + ' \u2014 ' + edge.uvrDesc);
+  html += item('ATR', edge.atr + ' \u2014 ' + edge.atrDesc);
+  html += '</div>';
+
+  // Additional Features
+  html += '<div class="result-card valid"><h3>Additional Features</h3>';
+  html += item('Marine', edge.marine + ' \u2014 ' + edge.marineDesc);
+  html += item('Padlock', edge.padlock + ' \u2014 ' + edge.padlockDesc);
+  html += item('Bell Alarm', edge.bell + ' \u2014 ' + edge.bellDesc);
   html += '</div>';
 
   // Cross-reference info
   html += '<div class="result-card info-card full-width"><h3>Cross-Reference</h3>';
-  html += '<div class="result-item"><span class="label">Tip</span><span class="value info-val" style="font-size:0.78rem;">The edge number is stamped on the breaker frame. The catalog number (e.g., SPBR330C) is on the nameplate label. Both identify the same breaker — enter the catalog number for detailed configuration decoding.</span></div>';
+  html += '<div class="result-item"><span class="label">Tip</span><span class="value info-val" style="font-size:0.78rem;">The edge number is stamped on the breaker frame. The catalog number (e.g., SPBR330C) is on the nameplate label. Both identify the same breaker \u2014 enter the catalog number for style-based decoding.</span></div>';
   html += '</div>';
 
   el.innerHTML = html;
