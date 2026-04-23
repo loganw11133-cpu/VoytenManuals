@@ -2110,11 +2110,13 @@ var EDGE_TRIP_WIRING = {
 };
 
 // Mount (2 digits) — simplified descriptions
-var EDGE_MOUNT = {
+// Mount tables are frame-class dependent — same code means different things per frame
+var EDGE_MOUNT_SMALL = {
+  // SPB-50, SPB-65
   '00': 'None',
-  '01': 'Rear, Vertical, Standard', '02': 'Rear, Vertical, Standard', '03': 'Rear, Vertical, Standard',
-  '04': 'Rear, Vertical, W/Cable Interlock', '05': 'Rear, Vertical, W/Cable Interlock', '06': 'Rear, Vertical, W/Cable Interlock',
-  '07': 'Rear, Vertical, W/Kirk Key', '08': 'Rear, Vertical, W/Kirk Key', '09': 'Rear, Vertical, W/Kirk Key',
+  '01': 'Rear, Vert, Standard', '02': 'Rear, Vert, Standard', '03': 'Rear, Vert, Standard',
+  '04': 'Rear, Vert, W/Cable Interlock', '05': 'Rear, Vert, W/Cable Interlock', '06': 'Rear, Vert, W/Cable Interlock',
+  '07': 'Rear, Vert, W/Kirk Key', '08': 'Rear, Vert, W/Kirk Key', '09': 'Rear, Vert, W/Kirk Key',
   '10': 'Front, W/O Terms', '11': 'Front, W/O Terms', '12': 'Front, W/O Terms',
   '13': 'Front, W/Copper Terms', '14': 'Front, W/Copper Terms',
   '15': 'Front, W/Aluminum Terms', '16': 'Front, W/Aluminum Terms',
@@ -2126,41 +2128,105 @@ var EDGE_MOUNT = {
   '29': 'Front, W/Aluminum Terms, W/Kirk Key', '30': 'Front, W/Aluminum Terms, W/Kirk Key',
   '31': 'Behind Door, Standard', '32': 'Behind Door, Standard', '33': 'Behind Door, Standard',
   '34': 'Behind Door, W/Cable Interlock', '35': 'Behind Door, W/Cable Interlock', '36': 'Behind Door, W/Cable Interlock',
-  '37': 'Through Door, W/Shutter, Standard', '38': 'Through Door, W/Shutter, Standard',
-  '39': 'Through Door, W/Shutter, Standard', '40': 'Through Door, W/Shutter, Standard', '41': 'Through Door, W/Shutter, Standard',
-  '43': 'Through Door, W/Shutter, W/Cable Interlock', '44': 'Through Door, W/Shutter, W/Cable Interlock',
-  '45': 'Through Door, W/Shutter, W/Cable Interlock', '46': 'Through Door, W/Shutter, W/Cable Interlock',
-  '47': 'Through Door, W/Shutter, W/Cable Interlock',
+  '37': 'Through Door, W/Shutter, Standard', '39': 'Through Door, W/Shutter, Standard', '41': 'Through Door, W/Shutter, Standard',
+  '43': 'Through Door, W/Shutter, W/Cable Interlock', '45': 'Through Door, W/Shutter, W/Cable Interlock', '47': 'Through Door, W/Shutter, W/Cable Interlock',
   '51': 'Rear, Horizontal, Standard', '52': 'Rear, Horizontal, Standard', '53': 'Rear, Horizontal, Standard',
   '54': 'Rear, Horizontal, W/Cable Interlock', '55': 'Rear, Horizontal, W/Cable Interlock', '56': 'Rear, Horizontal, W/Cable Interlock',
-  '57': 'Rear, Horizontal, W/Kirk Key', '58': 'Rear, Horizontal, W/Kirk Key', '59': 'Rear, Horizontal, W/Kirk Key',
-  '60': 'Behind Door (100-class)', '61': 'Behind Door (100-class)', '62': 'Behind Door (100-class)',
-  '63': 'Behind Door (100-class), W/Cable Interlock', '64': 'Behind Door (100-class), W/Cable Interlock',
-  '65': 'Behind Door (100-class), W/Cable Interlock', '66': 'Behind Door (100-class), W/Cable Interlock',
-  '67': 'Behind Door (100-class), W/Cable Interlock',
-  '68': 'Through Door, W/Shutter (100-class), Standard', '69': 'Through Door, W/Shutter (100-class), Standard',
-  '70': 'Through Door, W/Shutter (100-class), Standard', '71': 'Through Door, W/Shutter (100-class), Standard',
-  '72': 'Through Door, W/Shutter (100-class), Standard', '73': 'Through Door, W/Shutter (100-class), Standard',
-  '74': 'Through Door, W/Shutter (100-class), Standard', '75': 'Through Door, W/Shutter (100-class), Standard',
-  '76': 'Through Door, W/Shutter (100-class), Standard', '77': 'Through Door, W/Shutter (100-class), Standard',
-  '78': 'Through Door, W/Shutter (100-class), Standard', '79': 'Through Door, W/Shutter (100-class), Standard',
-  '80': 'Through Door, W/Shutter (100-class), Standard',
-  '82': 'Through Door, W/Shutter (100-class), W/Cable Interlock',
-  '83': 'Through Door, W/Shutter (100-class), W/Cable Interlock',
-  '84': 'Through Door, W/Shutter (100-class), W/Cable Interlock',
-  '85': 'Through Door, W/Shutter (100-class), W/Cable Interlock',
-  '86': 'Through Door, W/Shutter (100-class), W/Cable Interlock',
-  '87': 'Through Door, W/Shutter (100-class), W/Cable Interlock',
-  '88': 'Through Door, W/Shutter (100-class), W/Cable Interlock',
-  '89': 'Through Door, W/Shutter (100-class), W/Cable Interlock',
-  '90': 'Through Door, W/Shutter (100-class), W/Cable Interlock',
-  '91': 'Through Door, W/Shutter (100-class), W/Cable Interlock',
-  '92': 'Through Door, W/Shutter (100-class), W/Cable Interlock',
-  '93': 'Through Door, W/Shutter (100-class), W/Cable Interlock',
-  '94': 'Through Door, W/Shutter (100-class), W/Cable Interlock',
-  '96': 'Through Door, W/Shutter (100-class), Standard',
-  '97': 'Through Door, W/Shutter (100-class), W/Cable Interlock'
+  '57': 'Rear, Horizontal, W/Kirk Key', '58': 'Rear, Horizontal, W/Kirk Key', '59': 'Rear, Horizontal, W/Kirk Key'
 };
+
+var EDGE_MOUNT_LARGE = {
+  // SPB-100, SPB-100M, SPB-N, SPB-NH, SPB-W50, SPB-W100
+  '00': 'None',
+  '01': 'Rear, Vert, Standard', '02': 'Rear, Vert, Standard', '03': 'Rear, Vert, Standard',
+  '04': 'Rear, Standard', '05': 'Rear, Standard', '06': 'Rear, Standard',
+  '07': 'Rear, Standard', '08': 'Rear, Standard', '09': 'Rear, Standard',
+  '10': 'Rear, Vert, W/Cable Interlock', '11': 'Rear, W/Cable Interlock', '12': 'Rear, W/Cable Interlock',
+  '13': 'Rear, W/Cable Interlock', '14': 'Rear, W/Cable Interlock', '15': 'Rear, W/Cable Interlock',
+  '16': 'Rear, W/Cable Interlock', '17': 'Rear, W/Cable Interlock', '18': 'Rear, W/Cable Interlock',
+  '19': 'Rear, W/Kirk Key', '20': 'Rear, W/Kirk Key', '21': 'Rear, W/Kirk Key',
+  '22': 'Rear, W/Kirk Key', '23': 'Rear, W/Kirk Key', '24': 'Rear, W/Kirk Key',
+  '25': 'Rear, W/Kirk Key', '26': 'Rear, W/Kirk Key', '27': 'Rear, W/Kirk Key',
+  '28': 'Front, Standard', '29': 'Front, Standard', '30': 'Front, Standard',
+  '31': 'Front, Standard', '32': 'Front, Standard', '33': 'Front, Standard',
+  '34': 'Front, Standard', '35': 'Front, Standard',
+  '36': 'Front, W/Cable Interlock', '37': 'Front, W/Cable Interlock', '38': 'Front, W/Cable Interlock',
+  '39': 'Front, W/Cable Interlock', '40': 'Front, W/Cable Interlock', '41': 'Front, W/Cable Interlock',
+  '42': 'Front, W/Cable Interlock', '43': 'Front, W/Cable Interlock',
+  '44': 'Front, W/Kirk Key', '45': 'Front, W/Kirk Key', '46': 'Front, W/Kirk Key',
+  '47': 'Front, W/Kirk Key', '48': 'Front, W/Kirk Key', '49': 'Front, W/Kirk Key',
+  '50': 'Front, W/Kirk Key', '51': 'Front, W/Kirk Key',
+  '52': 'Behind Door, Standard', '53': 'Behind Door, Standard', '54': 'Behind Door, Standard',
+  '55': 'Behind Door, Standard', '56': 'Behind Door, Standard', '57': 'Behind Door, Standard',
+  '58': 'Behind Door, Standard', '59': 'Behind Door, Standard',
+  '60': 'Behind Door, W/Cable Interlock', '61': 'Behind Door, W/Cable Interlock', '62': 'Behind Door, W/Cable Interlock',
+  '63': 'Behind Door, W/Cable Interlock', '64': 'Behind Door, W/Cable Interlock', '65': 'Behind Door, W/Cable Interlock',
+  '66': 'Behind Door, W/Cable Interlock', '67': 'Behind Door, W/Cable Interlock',
+  '68': 'Through Door, W/Shutter, Standard', '69': 'Rear, Horizontal, W/Cable Interlock',
+  '70': 'Through Door, W/Shutter, Standard', '71': 'Rear, Horizontal, Standard',
+  '72': 'Through Door, W/Shutter, Standard', '73': 'Rear, Horizontal, Standard',
+  '74': 'Through Door, W/Shutter, Standard', '75': 'Rear, Horizontal, Standard',
+  '76': 'Through Door, W/Shutter, Standard', '77': 'Rear, Horizontal, W/Cable Interlock',
+  '78': 'Through Door, W/Shutter, Standard', '79': 'Rear, Horizontal, W/Cable Interlock',
+  '80': 'Through Door, W/Shutter, Standard', '81': 'Rear, Horizontal, W/Cable Interlock',
+  '82': 'Through Door, W/Shutter, W/Cable Interlock', '83': 'Rear, Horizontal, W/Kirk Key',
+  '84': 'Through Door, W/Shutter, W/Cable Interlock', '85': 'Rear, Horizontal, W/Kirk Key',
+  '86': 'Through Door, W/Shutter, W/Cable Interlock', '87': 'Rear, Horizontal, W/Kirk Key',
+  '88': 'Through Door, W/Shutter, W/Cable Interlock',
+  '90': 'Through Door, W/Shutter, W/Cable Interlock',
+  '92': 'Through Door, W/Shutter, W/Cable Interlock',
+  '94': 'Through Door, W/Shutter, W/Cable Interlock',
+  '96': 'Through Door, W/Shutter, Standard',
+  '97': 'Through Door, W/Shutter, W/Cable Interlock'
+};
+
+var EDGE_MOUNT_150 = {
+  // SPB-150
+  '00': 'None',
+  '01': 'Rear, Vert, Standard', '02': 'Rear, Vert, Standard', '03': 'Rear, Vert, Standard',
+  '04': 'Rear, Vert, Standard', '05': 'Rear, Vert, Standard', '06': 'Rear, Vert, Standard',
+  '07': 'Rear, Vert, Standard', '08': 'Rear, Standard', '09': 'Rear, Standard',
+  '10': 'Rear, Vert, W/Cable Interlock', '11': 'Rear, Vert, W/Cable Interlock', '12': 'Rear, Vert, W/Cable Interlock',
+  '13': 'Rear, Vert, W/Cable Interlock', '14': 'Rear, Vert, W/Cable Interlock', '15': 'Rear, Vert, W/Cable Interlock',
+  '16': 'Rear, Vert, W/Cable Interlock', '17': 'Rear, W/Cable Interlock', '18': 'Rear, W/Cable Interlock',
+  '19': 'Rear, Vert, W/Kirk Key', '20': 'Rear, Vert, W/Kirk Key', '21': 'Rear, Vert, W/Kirk Key',
+  '22': 'Rear, Vert, W/Kirk Key', '23': 'Rear, Vert, W/Kirk Key', '24': 'Rear, Vert, W/Kirk Key',
+  '25': 'Rear, Vert, W/Kirk Key', '26': 'Rear, W/Kirk Key', '27': 'Rear, W/Kirk Key',
+  '28': 'Front, Standard', '29': 'Front, Standard', '30': 'Front, Standard',
+  '31': 'Front, Standard', '32': 'Front, Standard', '33': 'Front, Standard',
+  '34': 'Front, Standard', '35': 'Front, Standard',
+  '36': 'Front, W/Cable Interlock', '37': 'Front, W/Cable Interlock', '38': 'Front, W/Cable Interlock',
+  '39': 'Front, W/Cable Interlock', '40': 'Front, W/Cable Interlock', '41': 'Front, W/Cable Interlock',
+  '42': 'Front, W/Cable Interlock', '43': 'Front, W/Cable Interlock',
+  '44': 'Front, W/Kirk Key', '45': 'Front, W/Kirk Key', '46': 'Front, W/Kirk Key',
+  '47': 'Front, W/Kirk Key', '48': 'Front, W/Kirk Key', '49': 'Front, W/Kirk Key',
+  '50': 'Front, W/Kirk Key', '51': 'Front, W/Kirk Key',
+  '52': 'Behind Door, Standard', '53': 'Behind Door, Standard', '54': 'Behind Door, Standard',
+  '55': 'Behind Door, Standard', '56': 'Behind Door, Standard', '57': 'Behind Door, Standard',
+  '58': 'Behind Door, Standard', '59': 'Behind Door, Standard',
+  '60': 'Behind Door, W/Cable Interlock', '61': 'Behind Door, W/Cable Interlock', '62': 'Behind Door, W/Cable Interlock',
+  '63': 'Behind Door, W/Cable Interlock', '64': 'Behind Door, W/Cable Interlock', '65': 'Behind Door, W/Cable Interlock',
+  '66': 'Behind Door, W/Cable Interlock', '67': 'Behind Door, W/Cable Interlock',
+  '68': 'Rear, Horizontal, W/Kirk Key', '69': 'Rear, Horizontal, W/Kirk Key', '70': 'Rear, Horizontal, W/Kirk Key',
+  '71': 'Rear, Horizontal, Standard', '72': 'Rear, Horizontal, Standard', '73': 'Rear, Horizontal, Standard',
+  '74': 'Rear, Horizontal, Standard', '75': 'Rear, Horizontal, Standard', '76': 'Rear, Horizontal, Standard',
+  '77': 'Rear, Horizontal, Standard',
+  '80': 'Rear, Horizontal, W/Cable Interlock', '81': 'Rear, Horizontal, W/Cable Interlock',
+  '82': 'Rear, Horizontal, W/Cable Interlock', '83': 'Rear, Horizontal, W/Cable Interlock',
+  '84': 'Rear, Horizontal, W/Cable Interlock', '85': 'Rear, Horizontal, W/Cable Interlock',
+  '86': 'Rear, Horizontal, W/Cable Interlock',
+  '89': 'Rear, Horizontal, W/Kirk Key', '90': 'Rear, Horizontal, W/Kirk Key', '91': 'Rear, Horizontal, W/Kirk Key',
+  '92': 'Rear, Horizontal, W/Kirk Key', '93': 'Rear, Horizontal, W/Kirk Key', '94': 'Rear, Horizontal, W/Kirk Key',
+  '95': 'Rear, Horizontal, W/Kirk Key'
+};
+
+// Helper to get mount table for a frame class
+function getEdgeMountTable(frameClass) {
+  if (frameClass === '50' || frameClass === '65') return EDGE_MOUNT_SMALL;
+  if (frameClass === '150') return EDGE_MOUNT_150;
+  return EDGE_MOUNT_LARGE; // 100, 100M, N, NH, W50, W100
+}
+
 
 function parseEdgeNumber(raw) {
   var s = raw.toUpperCase().replace(/[\s\-]/g, '');
@@ -2244,7 +2310,8 @@ function parseEdgeNumber(raw) {
 
   // Mount (2 digits)
   result.mount = opt.substring(pos, pos + 2); pos += 2;
-  result.mountDesc = EDGE_MOUNT[result.mount] || ('Unknown mount code: ' + result.mount);
+  var mountTable = result.frameInfo ? getEdgeMountTable(result.frameInfo.frameClass) : EDGE_MOUNT_LARGE;
+  result.mountDesc = mountTable[result.mount] || ('Unknown mount code: ' + result.mount);
 
   // Aux Switch (1 digit)
   result.auxSw = opt.substring(pos, pos + 1); pos += 1;
