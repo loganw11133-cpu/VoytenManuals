@@ -1922,7 +1922,7 @@ var EDGE_STYLE_LOOKUP = {
   '8705C05': { frameClass: 'NH',   poles: '3P', name: 'SPB-NH' },
   '8705C65': { frameClass: 'NH',   poles: '4P', name: 'SPB-NH' },
   // Older Westinghouse drawing number series (7805C##, pre-8702/8705 era)
-  '7805C19': { frameClass: '100M', poles: '4P', name: 'SPB-100M' }
+  '7805C19': { frameClass: '100M', poles: '3P', name: 'SPB-100M' }
 };
 
 // Group number meaning
@@ -2467,13 +2467,13 @@ function renderEdgeResults(edge) {
   html += item('Shunt Trip', edge.shuntTrip + ' \u2014 ' + edge.shuntTripDesc);
   html += item('UVR', edge.uvr + ' \u2014 ' + edge.uvrDesc);
   html += item('ATR', edge.atr + ' \u2014 ' + edge.atrDesc);
+  html += item('Padlock', edge.padlock + ' \u2014 ' + edge.padlockDesc);
+  html += item('Bell Alarm', edge.bell + ' \u2014 ' + edge.bellDesc);
   html += '</div>';
 
   // Additional Features
   html += '<div class="result-card valid"><h3>Additional Features</h3>';
   html += item('Marine', edge.marine + ' \u2014 ' + edge.marineDesc);
-  html += item('Padlock', edge.padlock + ' \u2014 ' + edge.padlockDesc);
-  html += item('Bell Alarm', edge.bell + ' \u2014 ' + edge.bellDesc);
   html += '</div>';
 
   // Cross-reference info
