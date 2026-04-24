@@ -1,10 +1,7 @@
 import { Suspense } from 'react';
 import ManualSearchBar from '@/components/ManualSearchBar';
-import ManualCard from '@/components/ManualCard';
-import LeadCaptureForm from '@/components/LeadCaptureForm';
+import SearchResults from '@/components/SearchResults';
 import { searchManuals, getCategories, getManufacturers, getSubcategories } from '@/lib/manuals-db';
-import Link from 'next/link';
-import { Filter, ChevronLeft, ChevronRight, BookOpen } from 'lucide-react';
 import type { Metadata } from 'next';
 
 export async function generateMetadata({ searchParams }: SearchPageProps): Promise<Metadata> {
@@ -24,7 +21,6 @@ export async function generateMetadata({ searchParams }: SearchPageProps): Promi
     ? `Search results for ${parts.join(', ')} in our`
     : 'Search our';
 
-  // Build canonical URL - category/manufacturer filter pages get their own canonical
   const canonicalParams = new URLSearchParams();
   if (category) canonicalParams.set('category', category);
   if (manufacturer) canonicalParams.set('manufacturer', manufacturer);
@@ -82,18 +78,6 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
     getSubcategories(category || undefined, manufacturer || undefined),
   ]);
 
-  const hasFilters = query || category || manufacturer || subcategory;
-
-  // Build pagination URLs
-  function buildUrl(overrides: Record<string, string | number | undefined>) {
-    const p = new URLSearchParams();
-    const merged = { q: query, category, manufacturer, subcategory, page: String(page), ...overrides };
-    for (const [k, v] of Object.entries(merged)) {
-      if (v && v !== '' && v !== '1') p.set(k, String(v));
-    }
-    return `/search?${p.toString()}`;
-  }
-
   return (
     <div className="bg-slate-50 min-h-screen">
       {/* Search Header */}
@@ -110,187 +94,26 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 py-6">
-        <div className="flex flex-col lg:flex-row gap-6">
-          {/* Sidebar Filters */}
-          <aside className="lg:w-64 flex-shrink-0">
-            <div className="bg-white rounded-xl border border-slate-200 p-5 sticky top-24">
-              <h2 className="font-bold text-slate-900 flex items-center gap-2 mb-4">
-                <Filter size={16} />
-                Filters
-              </h2>
-
-              {hasFilters && (
-                <Link href="/search" className="text-sm text-[#1a1a1a] hover:underline mb-4 block">
-                  Clear all filters
-                </Link>
-              )}
-
-              {/* Categories */}
-              <div className="mb-5">
-                <h3 className="text-sm font-semibold text-slate-700 mb-2">Category</h3>
-                <div className="space-y-1.5">
-                  {categories.map((cat) => (
-                    <Link
-                      key={cat.name}
-                      href={buildUrl({ category: category === cat.name ? '' : cat.name, subcategory: '', manufacturer: '', page: 1 })}
-                      className={`block text-sm px-3 py-1.5 rounded-lg transition-colors ${
-                        category === cat.name
-                          ? 'bg-[#1a1a1a] text-white font-medium'
-                          : 'text-slate-600 hover:bg-slate-100'
-                      }`}
-                    >
-                      {cat.name} <span className="text-xs opacity-60">({cat.count})</span>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-
-              {/* Manufacturers */}
-              {manufacturers.length > 0 && (
-                <div className="mb-5">
-                  <h3 className="text-sm font-semibold text-slate-700 mb-2">Manufacturer</h3>
-                  <div className="space-y-1.5 max-h-48 overflow-y-auto">
-                    {manufacturers.map((mfr) => (
-                      <Link
-                        key={mfr.name}
-                        href={buildUrl({ manufacturer: manufacturer === mfr.name ? '' : mfr.name, subcategory: '', page: 1 })}
-                        className={`block text-sm px-3 py-1.5 rounded-lg transition-colors ${
-                          manufacturer === mfr.name
-                            ? 'bg-[#1a1a1a] text-white font-medium'
-                            : 'text-slate-600 hover:bg-slate-100'
-                        }`}
-                      >
-                        {mfr.name} <span className="text-xs opacity-60">({mfr.count})</span>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Subcategories */}
-              {subcategories.length > 0 && (
-                <div className="mb-5">
-                  <h3 className="text-sm font-semibold text-slate-700 mb-2">Subcategory</h3>
-                  <div className="space-y-1.5 max-h-48 overflow-y-auto">
-                    {subcategories.map((sub) => (
-                      <Link
-                        key={sub}
-                        href={buildUrl({ subcategory: subcategory === sub ? '' : sub, page: 1 })}
-                        className={`block text-sm px-3 py-1.5 rounded-lg transition-colors ${
-                          subcategory === sub
-                            ? 'bg-[#1a1a1a] text-white font-medium'
-                            : 'text-slate-600 hover:bg-slate-100'
-                        }`}
-                      >
-                        {sub}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Lead capture - sidebar */}
-              <div className="pt-4 border-t border-slate-200">
-                <p className="text-xs text-slate-500 mb-2">Can&#39;t find what you need?</p>
-                <Link
-                  href="/contact?type=manual-request"
-                  className="block text-center text-sm bg-[#dc2626] hover:bg-[#b91c1c] text-white py-2.5 rounded-lg font-medium transition-colors"
-                >
-                  Request a Manual
-                </Link>
-              </div>
+      <Suspense fallback={
+        <div className="max-w-7xl mx-auto px-4 py-6">
+          <div className="animate-pulse space-y-4">
+            <div className="h-8 bg-slate-200 rounded w-48" />
+            <div className="grid sm:grid-cols-2 gap-4">
+              {[1,2,3,4].map(i => <div key={i} className="h-32 bg-slate-200 rounded-xl" />)}
             </div>
-          </aside>
-
-          {/* Results */}
-          <div className="flex-1">
-            {/* Subcategory pills — prominent when a category is selected */}
-            {category && subcategories.length > 0 && (
-              <div className="bg-white rounded-xl border border-slate-200 p-4 mb-5">
-                <h3 className="text-sm font-semibold text-slate-700 mb-3">Browse {category} by Type</h3>
-                <div className="flex flex-wrap gap-2">
-                  {subcategories.map((sub) => (
-                    <Link
-                      key={sub}
-                      href={buildUrl({ subcategory: subcategory === sub ? '' : sub, page: 1 })}
-                      className={`inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                        subcategory === sub
-                          ? 'bg-[#1a1a1a] text-white shadow-sm'
-                          : 'bg-slate-100 text-slate-700 hover:bg-[#1a1a1a] hover:text-white'
-                      }`}
-                    >
-                      {sub}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Results header */}
-            <div className="flex items-center justify-between mb-4">
-              <p className="text-sm text-slate-600">
-                {results.total > 0 ? (
-                  <>
-                    Showing {((page - 1) * 24) + 1}–{Math.min(page * 24, results.total)} of{' '}
-                    <span className="font-semibold">{results.total}</span> manuals
-                    {query && <> matching &#34;<span className="font-medium">{query}</span>&#34;</>}
-                  </>
-                ) : (
-                  'No manuals found'
-                )}
-              </p>
-            </div>
-
-            {/* Results Grid */}
-            {results.manuals.length > 0 ? (
-              <div className="grid sm:grid-cols-2 gap-4 mb-8">
-                {results.manuals.map((manual) => (
-                  <ManualCard key={manual.id} manual={manual} />
-                ))}
-              </div>
-            ) : (
-              <div className="bg-white rounded-xl border border-slate-200 p-12 text-center">
-                <BookOpen className="w-12 h-12 text-slate-300 mx-auto mb-4" />
-                <h3 className="font-bold text-slate-900 text-lg mb-2">No manuals found</h3>
-                <p className="text-slate-500 mb-6 max-w-md mx-auto">
-                  We couldn&#39;t find any manuals matching your search. Try adjusting your filters or let us know what you need.
-                </p>
-                <div className="max-w-md mx-auto">
-                  <LeadCaptureForm type="manual-request" compact />
-                </div>
-              </div>
-            )}
-
-            {/* Pagination */}
-            {results.totalPages > 1 && (
-              <div className="flex items-center justify-center gap-2">
-                {page > 1 && (
-                  <Link
-                    href={buildUrl({ page: page - 1 })}
-                    className="flex items-center gap-1 px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm hover:bg-slate-50 transition-colors"
-                  >
-                    <ChevronLeft size={16} />
-                    Previous
-                  </Link>
-                )}
-                <span className="px-4 py-2 text-sm text-slate-600">
-                  Page {page} of {results.totalPages}
-                </span>
-                {page < results.totalPages && (
-                  <Link
-                    href={buildUrl({ page: page + 1 })}
-                    className="flex items-center gap-1 px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm hover:bg-slate-50 transition-colors"
-                  >
-                    Next
-                    <ChevronRight size={16} />
-                  </Link>
-                )}
-              </div>
-            )}
           </div>
         </div>
-      </div>
+      }>
+        <SearchResults
+          initialResults={results}
+          initialFilters={{ categories, manufacturers, subcategories }}
+          initialQuery={query}
+          initialCategory={category}
+          initialManufacturer={manufacturer}
+          initialSubcategory={subcategory}
+          initialPage={page}
+        />
+      </Suspense>
     </div>
   );
 }
