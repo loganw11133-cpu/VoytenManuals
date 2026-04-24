@@ -66,7 +66,16 @@ export default function SearchResults({
   const [filters, setFilters] = useState<FilterData>(initialFilters);
   const [loading, setLoading] = useState(false);
 
-  // Current filter state
+  // Sync state when server re-renders with new props (e.g. search form submit)
+  const serverKey = `${initialQuery}|${initialCategory}|${initialManufacturer}|${initialSubcategory}|${initialPage}`;
+  const [lastServerKey, setLastServerKey] = useState(serverKey);
+  if (serverKey !== lastServerKey) {
+    setResults(initialResults);
+    setFilters(initialFilters);
+    setLastServerKey(serverKey);
+  }
+
+  // Current filter state from URL
   const query = searchParams.get('q') || '';
   const category = searchParams.get('category') || '';
   const manufacturer = searchParams.get('manufacturer') || '';
@@ -94,12 +103,11 @@ export default function SearchResults({
     }
   }, []);
 
-  // When URL params change (from Link clicks), fetch new data
+  // When URL params change from client-side navigation, fetch new data
   useEffect(() => {
-    // Skip on initial render — we already have server data
+    // Skip if URL matches what the server already rendered
     const currentKey = `${query}|${category}|${manufacturer}|${subcategory}|${page}`;
-    const initialKey = `${initialQuery}|${initialCategory}|${initialManufacturer}|${initialSubcategory}|${initialPage}`;
-    if (currentKey === initialKey) return;
+    if (currentKey === lastServerKey) return;
 
     const params = new URLSearchParams();
     if (query) params.set('q', query);
@@ -110,7 +118,7 @@ export default function SearchResults({
     params.set('limit', '24');
 
     fetchResults(params);
-  }, [query, category, manufacturer, subcategory, page, fetchResults, initialQuery, initialCategory, initialManufacturer, initialSubcategory, initialPage]);
+  }, [query, category, manufacturer, subcategory, page, fetchResults, lastServerKey]);
 
   // Navigate without full page reload — just update URL, useEffect handles fetch
   function navigate(overrides: Record<string, string | number | undefined>) {
