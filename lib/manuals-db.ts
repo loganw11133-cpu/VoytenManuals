@@ -190,18 +190,13 @@ export async function searchManuals(filters: SearchFilters): Promise<SearchResul
     params.push(filters.subcategory);
   }
 
-  // Get total count
-  const countResult = await getDb().execute({
-    sql: `SELECT COUNT(*) as count FROM manuals ${whereClause}`,
-    args: params,
-  });
-  const total = (countResult.rows[0] as unknown as { count: number }).count;
-
-  // Get page of results — only columns needed for card display
-  const dataResult = await getDb().execute({
-    sql: `SELECT id, slug, title, manual_number, category, manufacturer, subcategory, pdf_url, file_size_bytes, page_count, search_priority FROM manuals ${whereClause} ORDER BY search_priority DESC, title ASC LIMIT ? OFFSET ?`,
-    args: [...params, limit, offset],
-  });
+  // Run count + data in a single batch (one HTTP round-trip to Turso)
+  const batchResults = await getDb().batch([
+    { sql: `SELECT COUNT(*) as count FROM manuals ${whereClause}`, args: params },
+    { sql: `SELECT id, slug, title, manual_number, category, manufacturer, subcategory, pdf_url, file_size_bytes, page_count, search_priority FROM manuals ${whereClause} ORDER BY search_priority DESC, title ASC LIMIT ? OFFSET ?`, args: [...params, limit, offset] },
+  ]);
+  const total = (batchResults[0].rows[0] as unknown as { count: number }).count;
+  const dataResult = batchResults[1];
 
   const result = {
     manuals: dataResult.rows as unknown as Manual[],
@@ -266,7 +261,7 @@ export async function getManufacturers(category?: string): Promise<Manufacturer[
     count: row.count as number,
     slug: toSlug(row.name as string),
   }));
-  return setCache(cacheKey, manufacturers, CACHE_5MIN);
+  return setCache(cacheKey, manufacturers, CACHE_1HR);
 }
 
 export async function getSubcategories(category?: string, manufacturer?: string): Promise<string[]> {
@@ -290,7 +285,7 @@ export async function getSubcategories(category?: string, manufacturer?: string)
 
   const result = await getDb().execute({ sql, args });
   const subcategories = result.rows.map(row => row.subcategory as string);
-  return setCache(cacheKey, subcategories, CACHE_5MIN);
+  return setCache(cacheKey, subcategories, CACHE_1HR);
 }
 
 export async function getRelatedManuals(manual: Manual, limit = 4): Promise<Manual[]> {
