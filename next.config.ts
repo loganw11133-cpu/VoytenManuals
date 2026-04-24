@@ -28,16 +28,6 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-  async rewrites() {
-    return [
-      // Proxy PDF downloads through the original EPM domain
-      // This lets us serve PDFs from voytenmanuals.com/manuals/pdf/...
-      {
-        source: '/manuals/pdf/:path*',
-        destination: 'https://www.electricalpartmanuals.com/part_manuals/pdf/:path*',
-      },
-    ];
-  },
 };
 
 export default nextConfig;

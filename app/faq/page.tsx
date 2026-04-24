@@ -186,7 +186,7 @@ export default function FAQPage() {
             Ready to Find Your Manual or Part?
           </h2>
           <p className="text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
-            Browse our library of 6,000+ free manuals — or call us directly for parts, pricing, and expert support.
+            Browse our library of 8,400+ free manuals — or call us directly for parts, pricing, and expert support.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link

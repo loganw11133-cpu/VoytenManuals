@@ -109,9 +109,12 @@ async function generateStaticAndFilterSitemap(): Promise<MetadataRoute.Sitemap> 
     }));
 
     // Category + manufacturer combo pages (high-value long-tail)
-    for (const cat of categories) {
-      const mfrsForCat = await getManufacturers(cat.name);
-      for (const mfr of mfrsForCat) {
+    // Run all category manufacturer queries in parallel to avoid serial N+1
+    const mfrsByCat = await Promise.all(
+      categories.map(cat => getManufacturers(cat.name).then(mfrs => ({ cat, mfrs })))
+    );
+    for (const { cat, mfrs } of mfrsByCat) {
+      for (const mfr of mfrs) {
         comboPages.push({
           url: `${baseUrl}/search?category=${encodeURIComponent(cat.name)}&manufacturer=${encodeURIComponent(mfr.name)}`,
           lastModified: new Date(),
@@ -134,12 +137,15 @@ async function generateManualBatchSitemap(id: number): Promise<MetadataRoute.Sit
       page: id, // id 1 = page 1, id 2 = page 2, etc.
     });
 
-    return result.manuals.map(manual => ({
-      url: `${baseUrl}/manual/${manual.slug}`,
-      lastModified: new Date(manual.updated_at || manual.created_at),
-      changeFrequency: 'monthly' as const,
-      priority: 0.6,
-    }));
+    return result.manuals.map(manual => {
+      const d = new Date(manual.updated_at || manual.created_at);
+      return {
+        url: `${baseUrl}/manual/${manual.slug}`,
+        lastModified: isNaN(d.getTime()) ? new Date() : d,
+        changeFrequency: 'monthly' as const,
+        priority: 0.6,
+      };
+    });
   } catch {
     return [];
   }

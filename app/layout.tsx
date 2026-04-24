@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     default: "Free Electrical Equipment Manual Library — PDF Downloads | Voyten Manuals",
     template: "%s | Voyten Manuals"
   },
-  description: "Free library of 6,000+ electrical equipment manuals. Download PDFs for circuit breakers, relays, motor controls, switches, and transformers. Westinghouse, GE, Siemens, Square D, and more.",
+  description: "Free library of 8,400+ electrical equipment manuals. Download PDFs for circuit breakers, relays, motor controls, switches, and transformers. Westinghouse, GE, Siemens, Square D, and more.",
   keywords: [
     "electrical manuals",
     "circuit breaker manuals",
@@ -94,12 +94,12 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://voytenmanuals.com",
     siteName: "Voyten Manuals",
-    title: "Voyten Manuals | Free Electrical Equipment Manual Library — 6,000+ PDFs",
-    description: "Free library of 6,000+ electrical equipment manuals. Download PDFs for circuit breakers, relays, motor controls, and more from Westinghouse, GE, Siemens, Square D. Powered by Voyten Electric.",
+    title: "Voyten Manuals | Free Electrical Equipment Manual Library — 8,400+ PDFs",
+    description: "Free library of 8,400+ electrical equipment manuals. Download PDFs for circuit breakers, relays, motor controls, and more from Westinghouse, GE, Siemens, Square D. Powered by Voyten Electric.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Voyten Manuals | 6,000+ Free Electrical Equipment Manuals",
+    title: "Voyten Manuals | 8,400+ Free Electrical Equipment Manuals",
     description: "Free searchable library of electrical equipment manuals and technical documentation. Download PDFs instantly — no login required. Powered by Voyten Electric.",
   },
   robots: {
@@ -128,7 +128,7 @@ const jsonLd = {
   "alternateName": ["Voyten Electric", "Voyten Manuals"],
   "url": "https://voytenmanuals.com",
   "logo": "https://voytenmanuals.com/icon.svg",
-  "description": "Free searchable library of 6,000+ electrical equipment manuals and technical documentation. Backed by Voyten Electric & Electronics, Inc. — a third-generation family owned electrical equipment wholesaler since 1953.",
+  "description": "Free searchable library of 8,400+ electrical equipment manuals and technical documentation. Backed by Voyten Electric & Electronics, Inc. — a third-generation family owned electrical equipment wholesaler since 1953.",
   "telephone": "+1-800-458-4001",
   "email": "info@voytenelectric.com",
   "foundingDate": "1953",

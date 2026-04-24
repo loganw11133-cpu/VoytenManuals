@@ -197,9 +197,9 @@ export async function searchManuals(filters: SearchFilters): Promise<SearchResul
   });
   const total = (countResult.rows[0] as unknown as { count: number }).count;
 
-  // Get page of results
+  // Get page of results — only columns needed for card display
   const dataResult = await getDb().execute({
-    sql: `SELECT * FROM manuals ${whereClause} ORDER BY search_priority DESC, title ASC LIMIT ? OFFSET ?`,
+    sql: `SELECT id, slug, title, manual_number, category, manufacturer, subcategory, pdf_url, file_size_bytes, page_count, search_priority FROM manuals ${whereClause} ORDER BY search_priority DESC, title ASC LIMIT ? OFFSET ?`,
     args: [...params, limit, offset],
   });
 
@@ -209,7 +209,7 @@ export async function searchManuals(filters: SearchFilters): Promise<SearchResul
     page,
     totalPages: Math.ceil(total / limit),
   };
-  return setCache(cacheKey, result, 60 * 1000); // 60s cache
+  return setCache(cacheKey, result, CACHE_5MIN);
 }
 
 export async function getManualBySlug(slug: string): Promise<Manual | null> {
@@ -294,25 +294,38 @@ export async function getSubcategories(category?: string, manufacturer?: string)
 }
 
 export async function getRelatedManuals(manual: Manual, limit = 4): Promise<Manual[]> {
-  const result = await getDb().execute({
-    sql: `SELECT * FROM manuals
-          WHERE id != ? AND (manufacturer = ? OR category = ?)
-          ORDER BY
-            CASE WHEN manufacturer = ? AND category = ? THEN 0
-                 WHEN manufacturer = ? THEN 1
-                 ELSE 2 END,
-            title ASC
-          LIMIT ?`,
-    args: [manual.id, manual.manufacturer, manual.category, manual.manufacturer, manual.category, manual.manufacturer, limit],
+  const cacheKey = `related:${manual.id}`;
+  const cached = getCached<Manual[]>(cacheKey);
+  if (cached) return cached;
+
+  // Two fast indexed queries instead of one broad scan
+  const sameManufacturer = await getDb().execute({
+    sql: `SELECT * FROM manuals WHERE manufacturer = ? AND id != ? ORDER BY
+            CASE WHEN category = ? THEN 0 ELSE 1 END, title ASC LIMIT ?`,
+    args: [manual.manufacturer, manual.id, manual.category, limit],
   });
-  return result.rows as unknown as Manual[];
+
+  let results = sameManufacturer.rows as unknown as Manual[];
+
+  // Fill remaining slots from same category if needed
+  if (results.length < limit) {
+    const ids = [manual.id, ...results.map(r => r.id)];
+    const placeholders = ids.map(() => '?').join(',');
+    const sameCategory = await getDb().execute({
+      sql: `SELECT * FROM manuals WHERE category = ? AND id NOT IN (${placeholders}) ORDER BY title ASC LIMIT ?`,
+      args: [manual.category, ...ids, limit - results.length],
+    });
+    results = results.concat(sameCategory.rows as unknown as Manual[]);
+  }
+
+  return setCache(cacheKey, results, CACHE_5MIN);
 }
 
 export async function getTotalManualCount(): Promise<number> {
   const cached = getCached<number>('totalCount');
   if (cached !== null) return cached;
 
-  const result = await getDb().execute("SELECT COUNT(*) as count FROM manuals WHERE pdf_url != 'NONE'");
+  const result = await getDb().execute("SELECT COUNT(*) as count FROM manuals WHERE pdf_url != '' AND pdf_url IS NOT NULL");
   const count = (result.rows[0] as unknown as { count: number }).count;
   return setCache('totalCount', count, CACHE_1HR);
 }
@@ -336,7 +349,7 @@ export async function getFeaturedManuals(limit = 8): Promise<Manual[]> {
   const placeholders = featuredSlugs.map(() => '?').join(', ');
   const result = await getDb().execute({
     sql: `SELECT * FROM manuals
-          WHERE slug IN (${placeholders}) AND pdf_url != 'NONE'
+          WHERE slug IN (${placeholders}) AND pdf_url != '' AND pdf_url IS NOT NULL
           ORDER BY CASE ${featuredSlugs.map((s, i) => `WHEN slug = ? THEN ${i}`).join(' ')} ELSE ${featuredSlugs.length} END
           LIMIT ?`,
     args: [...featuredSlugs, ...featuredSlugs, limit],

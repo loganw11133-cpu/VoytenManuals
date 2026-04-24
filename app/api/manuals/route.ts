@@ -1,11 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { searchManuals, getCategories, getManufacturers, getSubcategories } from '@/lib/manuals-db';
-import { checkRateLimit, RATE_LIMITS } from '@/lib/rate-limit';
+
+// In-memory rate limit for search — avoids DB round-trip on every query
+const searchHits = new Map<string, { count: number; reset: number }>();
+function checkSearchRate(ip: string): boolean {
+  const now = Date.now();
+  const entry = searchHits.get(ip);
+  if (!entry || now > entry.reset) {
+    searchHits.set(ip, { count: 1, reset: now + 60_000 });
+    return false;
+  }
+  entry.count++;
+  return entry.count > 60; // 60 req/min — generous for real users
+}
 
 export async function GET(request: NextRequest) {
   try {
-    const rateLimited = await checkRateLimit(request, RATE_LIMITS.searchApi);
-    if (rateLimited) return rateLimited;
+    const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown';
+    if (checkSearchRate(ip)) {
+      return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
+    }
     const { searchParams } = new URL(request.url);
 
     const query = searchParams.get('q') || undefined;
@@ -29,7 +43,8 @@ export async function GET(request: NextRequest) {
 
     const results = await searchManuals({ query, category, manufacturer, subcategory, page, limit });
     const response = NextResponse.json(results);
-    response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
+    // Static catalog — cache aggressively at CDN edge
+    response.headers.set('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');
     return response;
   } catch (error) {
     console.error('Manuals API error:', error);
