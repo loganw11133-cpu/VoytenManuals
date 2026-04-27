@@ -98,33 +98,18 @@ export function formatFileSize(bytes: number | null): string {
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
-// ── Fuzzy search helpers ──
+// ── FTS5 search helpers ──
 
-// Primary search columns (indexed or short) — searched first for efficiency
-// 'description' excluded from LIKE scans to reduce row reads; it's long text
-// that rarely contains unique search terms not already in title/keywords
-const SEARCH_COLS = ['title', 'manual_number', 'keywords', 'manufacturer'] as const;
-
-/** Generate near-miss variants of a token for fuzzy matching.
- *  - Tokens ≥ 4 chars: also try with trailing char removed (catches plurals, extra chars)
- *  - Capped at 3 variants max to limit row reads
+/** Sanitize user input for FTS5 MATCH syntax.
+ *  Removes special FTS5 operators, adds prefix matching with * suffix.
  */
-function generateSearchVariants(token: string): string[] {
-  const variants = new Set([token]);
-
-  if (token.length >= 4) {
-    variants.add(token.slice(0, -1));
-  }
-
-  // Only do single-char deletion for very short tokens where typos matter most
-  if (token.length === 4) {
-    for (let i = 0; i < token.length && variants.size < 3; i++) {
-      const v = token.slice(0, i) + token.slice(i + 1);
-      if (v.length >= 3) variants.add(v);
-    }
-  }
-
-  return Array.from(variants);
+function buildFtsQuery(raw: string): string {
+  // Remove FTS5 special chars that could cause syntax errors
+  const cleaned = raw.replace(/['"():^*{}[\]~@#$%&\\]/g, ' ').trim();
+  const tokens = cleaned.split(/\s+/).filter(t => t.length >= 2);
+  if (tokens.length === 0) return cleaned + '*';
+  // Each token gets prefix matching; all tokens must match (implicit AND in FTS5)
+  return tokens.map(t => `"${t}"*`).join(' ');
 }
 
 // ── Queries ──
@@ -134,72 +119,81 @@ export async function searchManuals(filters: SearchFilters): Promise<SearchResul
   const limit = filters.limit || 24;
   const offset = (page - 1) * limit;
 
-  // Cache search results for 60 seconds — identical queries from bots/users reuse results
   const cacheKey = `search:${JSON.stringify(filters)}`;
   const cached = getCached<SearchResult>(cacheKey);
   if (cached) return cached;
 
+  const hasTextQuery = filters.query && filters.query.trim().length >= 1;
+
+  if (hasTextQuery) {
+    // FTS5 path — fast full-text search via virtual table
+    const ftsQuery = buildFtsQuery(filters.query!);
+    let filterClause = '';
+    const filterArgs: (string | number)[] = [];
+
+    if (filters.category) {
+      filterClause += ' AND m.category = ?';
+      filterArgs.push(filters.category);
+    }
+    if (filters.manufacturer) {
+      filterClause += ' AND m.manufacturer = ?';
+      filterArgs.push(filters.manufacturer);
+    }
+    if (filters.subcategory) {
+      filterClause += ' AND m.subcategory = ?';
+      filterArgs.push(filters.subcategory);
+    }
+
+    const batchResults = await getDb().batch([
+      {
+        sql: `SELECT COUNT(*) as count FROM manuals_fts f JOIN manuals m ON m.id = f.rowid WHERE manuals_fts MATCH ?${filterClause}`,
+        args: [ftsQuery, ...filterArgs],
+      },
+      {
+        sql: `SELECT m.id, m.slug, m.title, m.manual_number, m.category, m.manufacturer, m.subcategory, m.pdf_url, m.file_size_bytes, m.page_count, m.search_priority
+              FROM manuals_fts f JOIN manuals m ON m.id = f.rowid
+              WHERE manuals_fts MATCH ?${filterClause}
+              ORDER BY m.search_priority DESC, rank
+              LIMIT ? OFFSET ?`,
+        args: [ftsQuery, ...filterArgs, limit, offset],
+      },
+    ]);
+
+    const total = (batchResults[0].rows[0] as unknown as { count: number }).count;
+    const result = {
+      manuals: batchResults[1].rows as unknown as Manual[],
+      total,
+      page,
+      totalPages: Math.ceil(total / limit),
+    };
+    return setCache(cacheKey, result, CACHE_5MIN);
+  }
+
+  // Filter-only path (no text query) — direct indexed queries on manuals table
   let whereClause = 'WHERE 1=1';
   const params: (string | number)[] = [];
-
-  if (filters.query) {
-    const raw = filters.query.trim();
-    const tokens = raw.split(/\s+/).filter(t => t.length >= 2);
-
-    if (tokens.length === 0) {
-      // Very short query (single char) — broad match across all columns
-      whereClause += ` AND (${SEARCH_COLS.map(c => `${c} LIKE ?`).join(' OR ')})`;
-      const q = `%${raw}%`;
-      for (let i = 0; i < SEARCH_COLS.length; i++) params.push(q);
-    } else {
-      // Token-based search: each token must match somewhere (AND between tokens)
-      // with fuzzy variants (OR between variants × columns)
-      const tokenClauses: string[] = [];
-
-      for (const token of tokens) {
-        const variants = generateSearchVariants(token);
-        const conds: string[] = [];
-
-        for (const v of variants) {
-          const like = `%${v}%`;
-          for (const col of SEARCH_COLS) {
-            conds.push(`${col} LIKE ?`);
-            params.push(like);
-          }
-        }
-
-        tokenClauses.push(`(${conds.join(' OR ')})`);
-      }
-
-      whereClause += ` AND (${tokenClauses.join(' AND ')})`;
-    }
-  }
 
   if (filters.category) {
     whereClause += ' AND category = ?';
     params.push(filters.category);
   }
-
   if (filters.manufacturer) {
     whereClause += ' AND manufacturer = ?';
     params.push(filters.manufacturer);
   }
-
   if (filters.subcategory) {
     whereClause += ' AND subcategory = ?';
     params.push(filters.subcategory);
   }
 
-  // Run count + data in a single batch (one HTTP round-trip to Turso)
   const batchResults = await getDb().batch([
     { sql: `SELECT COUNT(*) as count FROM manuals ${whereClause}`, args: params },
     { sql: `SELECT id, slug, title, manual_number, category, manufacturer, subcategory, pdf_url, file_size_bytes, page_count, search_priority FROM manuals ${whereClause} ORDER BY search_priority DESC, title ASC LIMIT ? OFFSET ?`, args: [...params, limit, offset] },
   ]);
   const total = (batchResults[0].rows[0] as unknown as { count: number }).count;
-  const dataResult = batchResults[1];
 
   const result = {
-    manuals: dataResult.rows as unknown as Manual[],
+    manuals: batchResults[1].rows as unknown as Manual[],
     total,
     page,
     totalPages: Math.ceil(total / limit),
