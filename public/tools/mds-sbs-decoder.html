@@ -330,6 +330,7 @@
     border-color: var(--red);
   }
 
+  /* [HIDDEN FOR LATER DEPLOYMENT] Renewal table styles
   .renewal-table {
     width: 100%;
     border-collapse: collapse;
@@ -351,6 +352,7 @@
     padding: 5px 10px;
     border-bottom: 1px solid var(--gray-100);
   }
+  */
 
   /* iOS / Mobile notice for Quick Look (no JS) */
   .ios-notice {
@@ -754,7 +756,8 @@ const DATA = {
   }
 };
 
-// Renewal parts cross-reference
+// [HIDDEN FOR LATER DEPLOYMENT] Renewal parts cross-reference
+/*
 const RENEWAL_PARTS = {
   shuntTrip: {
     'A': { part: 'MST1 / MSTA', desc: 'Shunt Trip, 110–127 Vac/Vdc' },
@@ -800,6 +803,7 @@ const RENEWAL_PARTS = {
     'K': { part: 'MOPC-K', desc: 'Key-Reset Operations Counter' }
   }
 };
+*/
 
 // ============================================================
 // DEFAULT BUILD PATTERN
@@ -1169,13 +1173,16 @@ function decode() {
   if (!results.future && !isDefault[24]) { errors.push({ pos: '25', code: futureCode, msg: 'Unknown future code' }); errorPositions.add(24); }
 
   // Renewal parts
+  // [HIDDEN FOR LATER DEPLOYMENT] Renewal parts cross-reference collection
   const renewalParts = [];
+  /*
   if (shuntCode1 !== 'N' && RENEWAL_PARTS.shuntTrip[shuntCode1]) renewalParts.push(RENEWAL_PARTS.shuntTrip[shuntCode1]);
   if (motorCode !== 'M' && RENEWAL_PARTS.motorOp[motorCode]) renewalParts.push(RENEWAL_PARTS.motorOp[motorCode]);
   if (springCode !== 'N' && RENEWAL_PARTS.springRelease[springCode]) renewalParts.push(RENEWAL_PARTS.springRelease[springCode]);
   if (auxCode !== 'N' && RENEWAL_PARTS.auxSwitch[auxCode]) renewalParts.push(RENEWAL_PARTS.auxSwitch[auxCode]);
   if (bellCode !== 'N' && RENEWAL_PARTS.bellAlarm[bellCode]) renewalParts.push(RENEWAL_PARTS.bellAlarm[bellCode]);
   if (opsCode !== 'N' && RENEWAL_PARTS.opsCounter[opsCode]) renewalParts.push(RENEWAL_PARTS.opsCounter[opsCode]);
+  */
 
   renderCharMap(c, isDefault, enteredLen, errorPositions);
   renderResults(c, results, errors, renewalParts, isDefault, isPartial, enteredLen, wasExpanded, normalized);
@@ -1321,7 +1328,8 @@ function renderResults(chars, r, errors, renewalParts, isDefault, isPartial, ent
   html += itemD('Shipping Config', r.shipping || null, isDefault[23]);
   html += '</div>';
 
-  // Renewal Parts cross-reference
+  // [HIDDEN FOR LATER DEPLOYMENT] Renewal Parts cross-reference
+  /*
   if (renewalParts.length > 0) {
     html += '<div class="result-card valid full-width"><h3>Renewal Parts Cross-Reference</h3>';
     html += '<table class="renewal-table"><thead><tr><th>Part Number</th><th>Description</th></tr></thead><tbody>';
@@ -1330,8 +1338,10 @@ function renderResults(chars, r, errors, renewalParts, isDefault, isPartial, ent
     }
     html += '</tbody></table></div>';
   }
+  */
 
-  // Protection legend
+  // [HIDDEN FOR LATER DEPLOYMENT] Protection Function Legend
+  /*
   html += '<div class="result-card full-width"><h3>Protection Function Legend</h3>';
   html += item('L', 'Long-Time (Overload Protection)');
   html += item('S', 'Short-Time (Short Circuit Delay)');
@@ -1339,6 +1349,7 @@ function renderResults(chars, r, errors, renewalParts, isDefault, isPartial, ent
   html += item('G', 'Ground Fault Protection');
   html += item('A', 'Arc-Flash / Ammeter Display');
   html += '</div>';
+  */
 
   html += '<button class="btn-copy" onclick="copyCatalog(\'' + chars + '\', this)">Copy Catalog Number</button>';
 
