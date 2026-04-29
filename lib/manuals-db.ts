@@ -1,4 +1,4 @@
-import { createClient, Client } from '@libsql/client';
+import { createClient, Client, type Row } from '@libsql/client';
 
 let _db: Client | null = null;
 
@@ -29,6 +29,25 @@ export interface Manual {
   keywords: string | null;
   created_at: string;
   updated_at: string;
+}
+
+function rowToManual(row: Row): Manual {
+  return {
+    id: Number(row.id),
+    slug: row.slug as string,
+    title: row.title as string,
+    manual_number: row.manual_number as string | null,
+    category: row.category as string,
+    manufacturer: row.manufacturer as string,
+    subcategory: row.subcategory as string | null,
+    description: row.description as string | null,
+    pdf_url: row.pdf_url as string,
+    page_count: row.page_count != null ? Number(row.page_count) : null,
+    file_size_bytes: row.file_size_bytes != null ? Number(row.file_size_bytes) : null,
+    keywords: row.keywords as string | null,
+    created_at: row.created_at as string,
+    updated_at: row.updated_at as string,
+  };
 }
 
 export interface Category {
@@ -159,9 +178,9 @@ export async function searchManuals(filters: SearchFilters): Promise<SearchResul
       },
     ]);
 
-    const total = (batchResults[0].rows[0] as unknown as { count: number }).count;
+    const total = Number(batchResults[0].rows[0].count);
     const result = {
-      manuals: batchResults[1].rows as unknown as Manual[],
+      manuals: batchResults[1].rows.map(rowToManual),
       total,
       page,
       totalPages: Math.ceil(total / limit),
@@ -190,10 +209,10 @@ export async function searchManuals(filters: SearchFilters): Promise<SearchResul
     { sql: `SELECT COUNT(*) as count FROM manuals ${whereClause}`, args: params },
     { sql: `SELECT id, slug, title, manual_number, category, manufacturer, subcategory, pdf_url, file_size_bytes, page_count, search_priority FROM manuals ${whereClause} ORDER BY search_priority DESC, title ASC LIMIT ? OFFSET ?`, args: [...params, limit, offset] },
   ]);
-  const total = (batchResults[0].rows[0] as unknown as { count: number }).count;
+  const total = Number(batchResults[0].rows[0].count);
 
   const result = {
-    manuals: batchResults[1].rows as unknown as Manual[],
+    manuals: batchResults[1].rows.map(rowToManual),
     total,
     page,
     totalPages: Math.ceil(total / limit),
@@ -207,7 +226,7 @@ export async function getManualBySlug(slug: string): Promise<Manual | null> {
     args: [slug],
   });
   if (result.rows.length === 0) return null;
-  return result.rows[0] as unknown as Manual;
+  return rowToManual(result.rows[0]);
 }
 
 export async function getManualById(id: number): Promise<Manual | null> {
@@ -216,7 +235,7 @@ export async function getManualById(id: number): Promise<Manual | null> {
     args: [id],
   });
   if (result.rows.length === 0) return null;
-  return result.rows[0] as unknown as Manual;
+  return rowToManual(result.rows[0]);
 }
 
 export async function getCategories(): Promise<Category[]> {
@@ -294,7 +313,7 @@ export async function getRelatedManuals(manual: Manual, limit = 4): Promise<Manu
     args: [manual.manufacturer, manual.id, manual.category, limit],
   });
 
-  let results = sameManufacturer.rows as unknown as Manual[];
+  let results = sameManufacturer.rows.map(rowToManual);
 
   // Fill remaining slots from same category if needed
   if (results.length < limit) {
@@ -304,7 +323,7 @@ export async function getRelatedManuals(manual: Manual, limit = 4): Promise<Manu
       sql: `SELECT * FROM manuals WHERE category = ? AND id NOT IN (${placeholders}) ORDER BY title ASC LIMIT ?`,
       args: [manual.category, ...ids, limit - results.length],
     });
-    results = results.concat(sameCategory.rows as unknown as Manual[]);
+    results = results.concat(sameCategory.rows.map(rowToManual));
   }
 
   return setCache(cacheKey, results, CACHE_5MIN);
@@ -315,7 +334,7 @@ export async function getTotalManualCount(): Promise<number> {
   if (cached !== null) return cached;
 
   const result = await getDb().execute("SELECT COUNT(*) as count FROM manuals WHERE pdf_url != '' AND pdf_url IS NOT NULL");
-  const count = (result.rows[0] as unknown as { count: number }).count;
+  const count = Number(result.rows[0].count);
   return setCache('totalCount', count, CACHE_1HR);
 }
 
@@ -343,7 +362,7 @@ export async function getFeaturedManuals(limit = 8): Promise<Manual[]> {
           LIMIT ?`,
     args: [...featuredSlugs, ...featuredSlugs, limit],
   });
-  const manuals = result.rows as unknown as Manual[];
+  const manuals = result.rows.map(rowToManual);
   return setCache('featured', manuals, CACHE_1HR);
 }
 

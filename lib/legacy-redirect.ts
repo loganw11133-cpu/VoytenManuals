@@ -36,11 +36,9 @@ async function ensureCache(): Promise<void> {
   const normMap = new Map<string, string>();
 
   for (const row of result.rows) {
-    const { slug, manual_number, pdf_url } = row as unknown as {
-      slug: string;
-      manual_number: string | null;
-      pdf_url: string;
-    };
+    const slug = row.slug as string;
+    const manual_number = row.manual_number as string | null;
+    const pdf_url = row.pdf_url as string;
 
     // Extract the path after the domain for full-path matching
     // e.g., "http://www.electricalpartmanuals.com/part_manuals/pdf/transformer/Westinghouse/Bushings/TD33-360.pdf"

@@ -12,7 +12,9 @@ function getDb() {
 }
 
 function hashIp(ip: string): string {
-  return createHash('sha256').update(ip + (process.env.IP_SALT || 'voyten')).digest('hex').slice(0, 16);
+  const salt = process.env.IP_SALT;
+  if (!salt) throw new Error('IP_SALT environment variable is required');
+  return createHash('sha256').update(ip + salt).digest('hex').slice(0, 16);
 }
 
 // POST /api/downloads — track a download event
@@ -57,7 +59,7 @@ export async function GET(request: NextRequest) {
       sql: 'SELECT COUNT(*) as count FROM download_events WHERE manual_id = ?',
       args: [parseInt(manualId)],
     });
-    return NextResponse.json({ downloads: (result.rows[0] as unknown as { count: number }).count });
+    return NextResponse.json({ downloads: Number(result.rows[0].count) });
   }
 
   // Stats overview — admin only
@@ -76,7 +78,7 @@ export async function GET(request: NextRequest) {
   const totalResult = await db.execute('SELECT COUNT(*) as count FROM download_events');
 
   return NextResponse.json({
-    total_downloads: (totalResult.rows[0] as unknown as { count: number }).count,
+    total_downloads: Number(totalResult.rows[0].count),
     top_manuals: result.rows,
   });
 }

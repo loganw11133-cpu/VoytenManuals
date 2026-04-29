@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Cpu, ArrowRight, Zap } from 'lucide-react';
+import { Cpu, ArrowRight } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Breaker Decoder Tools',
@@ -13,10 +13,17 @@ export const metadata: Metadata = {
 
 const tools = [
   {
-    slug: 'pxr-pdsb',
-    name: 'Magnum PXR / Power Defense SB',
-    description: 'Decode 25-character Magnum PXR and 15-character Power Defense SB catalog numbers. Identifies frame size, ampere rating, trip unit, and accessories.',
-    frames: 'Magnum DS (PXR) · Power Defense SB',
+    slug: 'spb',
+    name: 'SPB',
+    description: 'Decode both SPB catalog numbers (14 prefix variants) and 30-digit edge-stamped numbers. Frame-dependent mount codes and trip unit identification.',
+    frames: 'SPB 50 / SPB 65 / SPB 100',
+    ratings: '800A – 4,000A',
+  },
+  {
+    slug: 'mds-sbs',
+    name: 'MDS / SBS',
+    description: 'Decode Magnum DS (MDS) and SBS-series catalog numbers. Identifies frame, rating, interrupting capacity, trip unit type, and mounting.',
+    frames: 'Magnum DS (MDS) · SBS',
     ratings: '800A – 6,000A',
   },
   {
@@ -34,17 +41,10 @@ const tools = [
     ratings: '800A – 6,300A',
   },
   {
-    slug: 'spb',
-    name: 'SPB',
-    description: 'Decode both SPB catalog numbers (14 prefix variants) and 30-digit edge-stamped numbers. Frame-dependent mount codes and trip unit identification.',
-    frames: 'SPB 50 / SPB 65 / SPB 100',
-    ratings: '800A – 4,000A',
-  },
-  {
-    slug: 'mds-sbs',
-    name: 'MDS / SBS',
-    description: 'Decode Magnum DS (MDS) and SBS-series catalog numbers. Identifies frame, rating, interrupting capacity, trip unit type, and mounting.',
-    frames: 'Magnum DS (MDS) · SBS',
+    slug: 'pxr-pdsb',
+    name: 'Magnum PXR / Power Defense SB',
+    description: 'Decode 25-character Magnum PXR and 15-character Power Defense SB catalog numbers. Identifies frame size, ampere rating, trip unit, and accessories.',
+    frames: 'Magnum DS (PXR) · Power Defense SB',
     ratings: '800A – 6,000A',
   },
 ];
@@ -55,10 +55,6 @@ export default function ToolsPage() {
       {/* Header */}
       <div className="bg-[#1a1a1a] text-white">
         <div className="max-w-5xl mx-auto px-4 py-12 text-center">
-          <div className="inline-flex items-center gap-2 bg-white/10 px-4 py-1.5 rounded-full text-sm font-medium mb-4">
-            <Zap size={14} className="text-[#dc2626]" />
-            Free Decoder Tools
-          </div>
           <h1 className="text-3xl md:text-4xl font-bold mb-3">
             Eaton Circuit Breaker Decoders
           </h1>

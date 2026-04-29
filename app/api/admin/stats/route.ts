@@ -43,11 +43,11 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({
       overview: {
-        total_manuals: (totalManuals.rows[0] as unknown as { count: number }).count,
-        total_downloads: (totalDownloads.rows[0] as unknown as { count: number }).count,
-        total_leads: (totalLeads.rows[0] as unknown as { count: number }).count,
-        downloads_today: (downloadsToday.rows[0] as unknown as { count: number }).count,
-        leads_this_week: (leadsThisWeek.rows[0] as unknown as { count: number }).count,
+        total_manuals: Number(totalManuals.rows[0].count),
+        total_downloads: Number(totalDownloads.rows[0].count),
+        total_leads: Number(totalLeads.rows[0].count),
+        downloads_today: Number(downloadsToday.rows[0].count),
+        leads_this_week: Number(leadsThisWeek.rows[0].count),
       },
       categories: categoryBreakdown.rows,
       recent_leads: recentLeads.rows,

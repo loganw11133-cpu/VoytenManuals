@@ -71,7 +71,8 @@ export async function checkRateLimit(
       args: [key],
     });
 
-    const entry = result.rows[0] as unknown as { count: number; reset_at: number } | undefined;
+    const row = result.rows[0];
+    const entry = row ? { count: Number(row.count), reset_at: Number(row.reset_at) } : undefined;
 
     if (!entry || now > entry.reset_at) {
       // New window — upsert with count=1
