@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="description" content="Free Eaton RD (R-Frame) circuit breaker catalog number decoder. Identify frame type, trip unit, ratings, and factory-installed accessories for RD, RDC, CRD, and CRDC 1600A–2500A breakers. Call Voyten Electric at 1-800-458-4001 for pricing and availability.">
+<meta name="description" content="Eaton RD (R-Frame) circuit breaker catalog number decoder. Identify frame type, trip unit, ratings, and factory-installed accessories for RD, RDC, CRD, and CRDC 1600A–2500A breakers.">
 <title>Eaton RD (R-Frame) Decoder — Voyten Electric</title>
 <style>
 :root {
@@ -55,21 +55,6 @@ body {
 .header h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: 0.5px; }
 .header h1 .accent { color: var(--red); }
 .header .subtitle { font-size: 0.85rem; color: var(--gray-300); margin-top: 4px; }
-.header-cta {
-  display: flex; align-items: center; justify-content: center; gap: 12px;
-  flex-wrap: wrap; margin-top: 10px;
-}
-.header-phone {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: var(--red); color: var(--white); text-decoration: none;
-  font-size: 0.85rem; font-weight: 700; padding: 6px 14px;
-  border-radius: 999px; transition: background 0.2s;
-}
-.header-phone:hover, .header-phone:focus-visible {
-  background: var(--dark-red); outline: none;
-}
-.header-phone:focus-visible { box-shadow: 0 0 0 3px rgba(220,38,38,0.4); }
-
 .container { max-width: 960px; margin: 0 auto; padding: 16px; }
 
 /* Input Section */
@@ -204,32 +189,6 @@ body {
 .btn-copy:hover { background: var(--gray-200); }
 .btn-copy.copied { background: var(--green-light); color: var(--green); border-color: var(--green); }
 
-.cta-banner {
-  background: linear-gradient(135deg, var(--red) 0%, var(--dark-red) 100%);
-  color: var(--white); border-radius: 10px; padding: 16px 20px;
-  margin-bottom: 16px; display: flex; align-items: center;
-  justify-content: space-between; gap: 16px; flex-wrap: wrap;
-  box-shadow: 0 2px 8px rgba(220,38,38,0.25);
-}
-.cta-banner .cta-text { flex: 1 1 260px; font-size: 0.9rem; line-height: 1.4; }
-.cta-banner .cta-actions { display: flex; gap: 8px; flex-wrap: wrap; }
-.cta-btn {
-  display: inline-block; padding: 10px 18px; border-radius: 6px;
-  font-weight: 700; font-size: 0.85rem; text-decoration: none;
-  transition: all 0.15s; white-space: nowrap;
-}
-.cta-primary { background: var(--white); color: var(--red); }
-.cta-primary:hover, .cta-primary:focus-visible {
-  background: var(--gray-100); outline: none; transform: translateY(-1px);
-}
-.cta-secondary { background: transparent; color: var(--white); border: 2px solid var(--white); }
-.cta-secondary:hover, .cta-secondary:focus-visible {
-  background: var(--white); color: var(--red); outline: none;
-}
-.cta-primary:focus-visible, .cta-secondary:focus-visible {
-  box-shadow: 0 0 0 3px rgba(255,255,255,0.5);
-}
-
 .ex-btn:focus-visible {
   outline: 2px solid var(--red); outline-offset: 2px;
 }
@@ -256,12 +215,6 @@ noscript .ns-msg {
 <div class="header">
   <h1>Eaton <span class="accent">RD (R-Frame)</span> Decoder</h1>
   <div class="subtitle">1600A &middot; 2000A &middot; 2500A Series C Molded Case Circuit Breakers</div>
-  <div class="header-cta">
-    <a class="header-phone" href="tel:+18004584001" aria-label="Call Voyten Electric at 1-800-458-4001">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.24.2 2.45.57 3.57a1 1 0 01-.24 1.02l-2.21 2.2z"/></svg>
-      1-800-458-4001
-    </a>
-  </div>
 </div>
 
 <div class="container">
@@ -333,7 +286,6 @@ noscript .ns-msg {
 <div class="footer">
   Eaton RD (R-Frame) Decoder &mdash; Voyten Electric &amp; Electronics, Inc.<br>
   Data sourced from Eaton TD012038EN (trip curves), CA08100014E (aftermarket / cross-reference), and the R-Frame internal-accessory reference. Factory-installed accessory codes marked &ldquo;undocumented&rdquo; are genuine Eaton SKU components without public specification.<br>
-  Sales &amp; technical support: <a href="tel:+18004584001" style="color:var(--red);text-decoration:none;font-weight:700;">1-800-458-4001</a> &middot; <a href="mailto:info@voytenelectric.com" style="color:var(--red);text-decoration:none;">info@voytenelectric.com</a>
 </div>
 
 <script>
@@ -1170,15 +1122,6 @@ function renderResults(p) {
   html += '<button class="btn-copy" id="btnCopyCat" type="button">Copy Catalog Number</button>';
   html += '</div>';
 
-  // Lead-gen CTA
-  html += '<div class="cta-banner">';
-  html += '<div class="cta-text"><strong>Need pricing or stock on this breaker?</strong><br>';
-  html += 'Voyten stocks Eaton R-Frame breakers, parts, and accessories &mdash; call or email for same-day response.</div>';
-  html += '<div class="cta-actions">';
-  html += '<a class="cta-btn cta-primary" href="tel:+18004584001">Call 1-800-458-4001</a>';
-  html += '<a class="cta-btn cta-secondary" href="mailto:info@voytenelectric.com?subject=Eaton%20RD%20Quote%20-%20' + encodeURIComponent(p.raw) + '">Request Quote</a>';
-  html += '</div>';
-  html += '</div>';
 
   // Warnings
   if (allWarnings.length > 0) {
@@ -1279,7 +1222,7 @@ function renderResults(p) {
     if (hasUndoc) {
       html += '<div style="margin-top:8px;font-size:0.75rem;color:var(--gray-600);">';
       html += 'Some accessory codes (P##, Y##, X##, Z##) appear on genuine Eaton SKUs but are not defined in any public R-Frame reference located. ';
-      html += 'These represent factory-installed options — contact Eaton or Voyten with the full catalog number to confirm exact configuration.';
+      html += 'These represent factory-installed options — verify with the full catalog number to confirm exact configuration.';
       html += '</div>';
     }
     html += '</div>';

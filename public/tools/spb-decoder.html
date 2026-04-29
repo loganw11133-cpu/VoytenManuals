@@ -314,6 +314,14 @@
     .result-grid { grid-template-columns: 1fr; }
   }
 
+  .btn-copy {
+    background: var(--gray-100); color: var(--gray-600); border: 1px solid var(--gray-300);
+    padding: 6px 14px; border-radius: 6px; font-size: 0.75rem; font-weight: 600;
+    cursor: pointer; transition: all 0.2s; margin-top: 8px;
+  }
+  .btn-copy:hover { background: var(--gray-200); }
+  .btn-copy.copied { background: var(--green-light); color: var(--green); border-color: var(--green); }
+
   @supports (-webkit-touch-callout: none) {
     button {
       -webkit-tap-highlight-color: rgba(220, 38, 38, 0.2);
@@ -348,7 +356,6 @@
     <h1>Eaton <span>SPB</span> Decoder</h1>
     <div class="subtitle">Systems Pow-R Breaker Catalog Number Breakdown</div>
   </div>
-  <div class="badge">Offline Tool</div>
 </header>
 
 <div class="container">
@@ -1172,7 +1179,7 @@ function decodeAccessory(s) {
     html += '<div class="result-card error-card full-width"><h3>Not Found</h3>';
     html += item('Part Number', s);
     html += item('Status', 'Not found in the accessory database');
-    html += '<div class="result-item"><span class="label">Suggestion</span><span class="value info-val" style="font-size:0.8rem;">Contact Voyten Electric at 1-800-458-4001 for assistance</span></div>';
+    html += '<div class="result-item"><span class="label">Suggestion</span><span class="value info-val" style="font-size:0.8rem;">Verify the part number and try again</span></div>';
     html += '</div>';
   }
 
@@ -1861,6 +1868,8 @@ function renderResults(style, trip, plug) {
   html += item('G', 'Ground Fault Protection');
   html += '</div>';
 
+  html += '<button class="btn-copy" onclick="copyCatalog(\'' + style.raw + '\', this)">Copy Catalog Number</button>';
+
   el.innerHTML = html;
 }
 
@@ -2481,6 +2490,8 @@ function renderEdgeResults(edge) {
   html += '<div class="result-item"><span class="label">Tip</span><span class="value info-val" style="font-size:0.78rem;">The edge number is stamped on the breaker frame. The catalog number (e.g., SPBR330C) is on the nameplate label. Both identify the same breaker \u2014 enter the catalog number for style-based decoding.</span></div>';
   html += '</div>';
 
+  html += '<button class="btn-copy" onclick="copyCatalog(\'' + edge.raw + '\', this)">Copy Edge Number</button>';
+
   el.innerHTML = html;
 }
 
@@ -2545,6 +2556,22 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   quickInput.addEventListener('input', updateQuickDetect);
 });
+
+function copyCatalog(cat, btn) {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(cat).then(function() {
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(function() { btn.textContent = btn.dataset.label || 'Copy Catalog Number'; btn.classList.remove('copied'); }, 2000);
+    });
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = cat; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(function() { btn.textContent = btn.dataset.label || 'Copy Catalog Number'; btn.classList.remove('copied'); }, 2000);
+  }
+}
 </script>
 
 </body>

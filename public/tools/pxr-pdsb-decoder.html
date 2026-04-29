@@ -54,21 +54,6 @@ body {
 .header h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: 0.5px; }
 .header h1 .accent { color: var(--red); }
 .header .subtitle { font-size: 0.85rem; color: var(--gray-300); margin-top: 4px; }
-.header-cta {
-  display: flex; align-items: center; justify-content: center; gap: 12px;
-  flex-wrap: wrap; margin-top: 10px;
-}
-.header-phone {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: var(--red); color: var(--white); text-decoration: none;
-  font-size: 0.85rem; font-weight: 700; padding: 6px 14px;
-  border-radius: 999px; transition: background 0.2s;
-}
-.header-phone:hover, .header-phone:focus-visible {
-  background: var(--dark-red); outline: none;
-}
-.header-phone:focus-visible { box-shadow: 0 0 0 3px rgba(220,38,38,0.4); }
-
 .container { max-width: 960px; margin: 0 auto; padding: 16px; }
 
 /* Input Section */
@@ -222,12 +207,6 @@ noscript .ns-msg {
 <div class="header">
   <h1>Eaton <span class="accent">Magnum PXR / PD-SB</span> Decoder</h1>
   <div class="subtitle">Catalog Number Breakdown — Breakers &amp; Cassettes</div>
-  <div class="header-cta">
-    <a class="header-phone" href="tel:+18004584001" aria-label="Call Voyten Electric at 1-800-458-4001">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.24.2 2.45.57 3.57a1 1 0 01-.24 1.02l-2.21 2.2z"/></svg>
-      1-800-458-4001
-    </a>
-  </div>
 </div>
 
 <div class="container">
@@ -292,7 +271,7 @@ noscript .ns-msg {
 
 <div class="footer">
   Eaton Magnum PXR / PD-SB Decoder &mdash; Voyten Electric &amp; Electronics, Inc.<br>
-  Data sourced from Eaton PA013006EN (August 2025). Contact Voyten at <strong>1-800-458-4001</strong> for assistance.
+  Data sourced from Eaton PA013006EN (August 2025).
 </div>
 
 <script>
@@ -1515,7 +1494,7 @@ function decode() {
         { label: 'ST/Mot/SR/UVR/Aux/Bell', size: 6 },
         { label: 'PB/Cnt/LCS/Ship/Fut', size: 5 }
       ], 25, d.defaulted, d.errorPositions);
-    var warn = '<div class="result-card warn wide" style="margin-bottom:12px;"><div class="card-title">Input Not Recognized</div><div class="card-row"><span class="card-label">Tip</span><span class="card-value">Breaker numbers start with MP or SP. Cassettes start with AN or BN. Contact Voyten at 1-800-458-4001 for assistance.</span></div></div>';
+    var warn = '<div class="result-card warn wide" style="margin-bottom:12px;"><div class="card-title">Input Not Recognized</div><div class="card-row"><span class="card-label">Tip</span><span class="card-value">Breaker numbers start with MP or SP. Cassettes start with AN or BN.</span></div></div>';
     resultsEl.innerHTML = warn + renderBreakerResults(d);
     resultsEl.style.display = 'block';
   }

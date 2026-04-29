@@ -51,21 +51,6 @@
     margin-top: 4px;
   }
 
-  .header-cta {
-    display: flex; align-items: center; justify-content: center; gap: 12px;
-    flex-wrap: wrap; margin-top: 10px;
-  }
-  .header-phone {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: var(--red); color: var(--white); text-decoration: none;
-    font-size: 0.85rem; font-weight: 700; padding: 6px 14px;
-    border-radius: 999px; transition: background 0.2s;
-  }
-  .header-phone:hover, .header-phone:focus-visible {
-    background: var(--dark-red); outline: none;
-  }
-  .header-phone:focus-visible { box-shadow: 0 0 0 3px rgba(220,38,38,0.4); }
-
   .container {
     max-width: 1100px;
     margin: 0 auto;
@@ -424,6 +409,14 @@
       font-size: 16px; /* prevents iOS auto-zoom on focus */
     }
   }
+
+  .btn-copy {
+    background: var(--gray-100); color: var(--gray-600); border: 1px solid var(--gray-300);
+    padding: 6px 14px; border-radius: 6px; font-size: 0.75rem; font-weight: 600;
+    cursor: pointer; transition: all 0.2s; margin-top: 8px;
+  }
+  .btn-copy:hover { background: var(--gray-200); }
+  .btn-copy.copied { background: var(--green-light); color: var(--green); border-color: var(--green); }
 </style>
 </head>
 <body>
@@ -445,12 +438,6 @@
 <div class="header">
   <h1>Eaton <span class="accent">Magnum DS / SB</span> Decoder</h1>
   <div class="subtitle">MDS &amp; SBS Catalog Number Breakdown Tool</div>
-  <div class="header-cta">
-    <a class="header-phone" href="tel:+18004584001" aria-label="Call Voyten Electric at 1-800-458-4001">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.24.2 2.45.57 3.57a1 1 0 01-.24 1.02l-2.21 2.2z"/></svg>
-      1-800-458-4001
-    </a>
-  </div>
 </div>
 
 <div class="container">
@@ -1353,6 +1340,8 @@ function renderResults(chars, r, errors, renewalParts, isDefault, isPartial, ent
   html += item('A', 'Arc-Flash / Ammeter Display');
   html += '</div>';
 
+  html += '<button class="btn-copy" onclick="copyCatalog(\'' + chars + '\', this)">Copy Catalog Number</button>';
+
   el.innerHTML = html;
 }
 
@@ -1401,6 +1390,22 @@ document.getElementById('catInput').addEventListener('keydown', function(e) {
 });
 
 renderCharMap('', [], 0, new Set());
+
+function copyCatalog(cat, btn) {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(cat).then(function() {
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(function() { btn.textContent = 'Copy Catalog Number'; btn.classList.remove('copied'); }, 2000);
+    });
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = cat; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(function() { btn.textContent = 'Copy Catalog Number'; btn.classList.remove('copied'); }, 2000);
+  }
+}
 </script>
 
 </body>
