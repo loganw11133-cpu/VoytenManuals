@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Eaton SPB (Systems Pow-R Breaker) Decoder</title>
+<title>Eaton SPB Decoder — Voyten Electric</title>
 <style>
   :root {
     --red: #dc2626;
@@ -36,22 +36,15 @@
   header {
     background: linear-gradient(135deg, var(--deep-black), var(--black));
     color: var(--white);
-    padding: 20px 30px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    padding: 24px 20px 20px;
+    text-align: center;
+    border-bottom: 4px solid var(--red);
     box-shadow: 0 2px 10px rgba(0,0,0,0.3);
   }
 
-  header h1 { font-size: 1.6rem; font-weight: 700; letter-spacing: 0.5px; }
-  header h1 span { color: var(--red); }
-  header .subtitle { font-size: 0.85rem; color: var(--gray-400); margin-top: 2px; }
-
-  .badge {
-    background: var(--red); color: white; padding: 6px 14px;
-    border-radius: 6px; font-size: 0.75rem; font-weight: 600;
-    letter-spacing: 1px; text-transform: uppercase;
-  }
+  header h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: 0.5px; }
+  header h1 .accent { color: var(--red); }
+  header .subtitle { font-size: 0.85rem; color: var(--gray-300); margin-top: 4px; }
 
   .container { max-width: 1100px; margin: 0 auto; padding: 25px 20px; }
 
@@ -352,10 +345,8 @@
 </noscript>
 
 <header>
-  <div>
-    <h1>Eaton <span>SPB</span> Decoder</h1>
-    <div class="subtitle">Systems Pow-R Breaker Catalog Number Breakdown</div>
-  </div>
+  <h1>Eaton <span class="accent">SPB</span> Decoder</h1>
+  <div class="subtitle">Systems Pow-R Breaker Catalog Number Breakdown</div>
 </header>
 
 <div class="container">
@@ -369,7 +360,7 @@
         <input type="text" id="quickInput" placeholder="e.g. SPBR316D56, SPBMR330C, 8702C34G01..., 8SPB400" maxlength="40" autocomplete="off" spellcheck="false">
         <div id="quickDetect"></div>
       </div>
-      <button class="btn-decode" onclick="quickDecode()" style="height:48px;">Decode</button>
+      <button class="btn-decode" onclick="quickDecode()" style="height:48px;">DECODE</button>
     </div>
     <div class="examples-bar">
       <span class="examples-label">Try:</span>
@@ -408,8 +399,8 @@
       </div>
     </div>
     <div class="btn-row">
-      <button class="btn-decode" onclick="decode()">Decode</button>
-      <button class="btn-clear" onclick="clearAll()">Clear</button>
+      <button class="btn-decode" onclick="decode()">DECODE</button>
+      <button class="btn-clear" onclick="clearAll()">CLEAR</button>
     </div>
     <div class="examples-bar">
       <span class="examples-label">Examples:</span>

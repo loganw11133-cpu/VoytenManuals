@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Eaton Magnum IEC (MW) Circuit Breaker Decoder</title>
+<title>Eaton Magnum MW IEC Decoder — Voyten Electric</title>
 <style>
   :root {
     --red: #dc2626;
@@ -477,8 +477,8 @@
     <label for="catInput">Enter MW Breaker or IEC Cassette Number <span id="detectBadge"></span></label>
     <div class="input-row">
       <input type="text" id="catInput" placeholder="MWI8203LEA or EN324HANNSNNNWC" maxlength="30" autocomplete="off" spellcheck="false" oninput="updateDetectBadge()">
-      <button onclick="decode()">Decode</button>
-      <button class="btn-clear" onclick="clearAll()">Clear</button>
+      <button onclick="decode()">DECODE</button>
+      <button class="btn-clear" onclick="clearAll()">CLEAR</button>
     </div>
     <div class="hint">
       Breaker: <code>MW + 23 chars (25 total)</code> &nbsp;|&nbsp; Cassette: <code>15 chars starting with E or N</code> &nbsp;|&nbsp; Partial input accepted.
