@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { Zap, Shield, Settings, ToggleLeft, Flame, Building2, Cable, BookOpen, Phone, ArrowRight } from 'lucide-react';
+import Image from 'next/image';
+import { BookOpen, Phone, ArrowRight } from 'lucide-react';
 import { getCategories, getTotalManualCount } from '@/lib/manuals-db';
 import type { Metadata } from 'next';
 
@@ -21,15 +22,15 @@ export const metadata: Metadata = {
   },
 };
 
-const CATEGORY_META: Record<string, { icon: typeof Zap; longDesc: string }> = {
-  'Circuit Breakers': { icon: Zap, longDesc: 'Air breakers, insulated case breakers, molded case breakers, trip units, retrofit kits, vacuum interrupters, renewal parts, and accessories.' },
-  'Relays and Meters': { icon: Shield, longDesc: 'Overcurrent relays, protective relays, metering equipment, and related documentation.' },
-  'Motor Controls': { icon: Settings, longDesc: 'Motor control centers, starters, contactors, overloads, and MCC bucket replacement guides.' },
-  'Switches': { icon: ToggleLeft, longDesc: 'Disconnect switches, transfer switches, safety switches, and operating manuals.' },
-  'Fuses': { icon: Flame, longDesc: 'Fuse links, fuse holders, fuse catalogs, and rating documentation.' },
-  'Transformers': { icon: Building2, longDesc: 'Dry-type transformers, oil-filled transformers, pad-mounted, and instrument transformers.' },
-  'Bus Products': { icon: Cable, longDesc: 'Bus duct, busway systems, bus plugs, insulators, and installation manuals.' },
-  'Miscellaneous': { icon: BookOpen, longDesc: 'Communications modules, accessories, field testing documentation, and other equipment.' },
+const CATEGORY_META: Record<string, { icon?: string; fallbackIcon?: typeof BookOpen; longDesc: string }> = {
+  'Circuit Breakers': { icon: '/icons/circuit-breakers.png', longDesc: 'Air breakers, insulated case breakers, molded case breakers, trip units, retrofit kits, vacuum interrupters, renewal parts, and accessories.' },
+  'Relays and Meters': { icon: '/icons/relays-meters.png', longDesc: 'Overcurrent relays, protective relays, metering equipment, and related documentation.' },
+  'Motor Controls': { icon: '/icons/motor-controls.png', longDesc: 'Motor control centers, starters, contactors, overloads, and MCC bucket replacement guides.' },
+  'Switches': { icon: '/icons/switches.png', longDesc: 'Disconnect switches, transfer switches, safety switches, and operating manuals.' },
+  'Fuses': { icon: '/icons/fuses.png', longDesc: 'Fuse links, fuse holders, fuse catalogs, and rating documentation.' },
+  'Transformers': { icon: '/icons/transformers.png', longDesc: 'Dry-type transformers, oil-filled transformers, pad-mounted, and instrument transformers.' },
+  'Bus Products': { icon: '/icons/bus-products.png', longDesc: 'Bus duct, busway systems, bus plugs, insulators, and installation manuals.' },
+  'Miscellaneous': { fallbackIcon: BookOpen, longDesc: 'Communications modules, accessories, field testing documentation, and other equipment.' },
 };
 
 export const revalidate = 3600;
@@ -72,8 +73,8 @@ export default async function CategoriesPage() {
       <div className="max-w-7xl mx-auto px-4 py-10">
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {categories.map((cat) => {
-            const meta = CATEGORY_META[cat.name] || { icon: BookOpen, longDesc: '' };
-            const Icon = meta.icon;
+            const meta = CATEGORY_META[cat.name] || { fallbackIcon: BookOpen, longDesc: '' };
+            const FallbackIcon = meta.fallbackIcon;
             return (
               <Link
                 key={cat.name}
@@ -81,8 +82,18 @@ export default async function CategoriesPage() {
                 className="group bg-white rounded-xl border border-slate-200 p-6 hover:border-[#1a1a1a]/30 hover:shadow-lg transition-all"
               >
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 bg-[#1a1a1a]/10 group-hover:bg-[#1a1a1a] rounded-xl flex items-center justify-center transition-colors">
-                    <Icon className="w-6 h-6 text-[#1a1a1a] group-hover:text-white transition-colors" />
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center overflow-hidden bg-[#1a1a1a]/5">
+                    {meta.icon ? (
+                      <Image
+                        src={meta.icon}
+                        alt={cat.name}
+                        width={48}
+                        height={48}
+                        className="w-full h-full object-contain"
+                      />
+                    ) : FallbackIcon ? (
+                      <FallbackIcon className="w-6 h-6 text-[#1a1a1a]" />
+                    ) : null}
                   </div>
                   <span className="text-sm font-semibold text-[#1a1a1a] bg-[#1a1a1a]/5 px-3 py-1 rounded-full">
                     {cat.count.toLocaleString()} manuals
