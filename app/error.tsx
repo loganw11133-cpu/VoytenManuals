@@ -48,7 +48,7 @@ export default function Error({
           </Link>
         </div>
         <p className="text-slate-400 text-xs mt-8">
-          If this keeps happening, call us at 1-800-458-4001 or email info@voytenelectric.com
+          If this keeps happening, call us at 1-800-458-4001 or email sales@voyten.com
         </p>
       </div>
     </div>

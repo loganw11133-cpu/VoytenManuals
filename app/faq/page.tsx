@@ -49,8 +49,8 @@ const faqs = [
     answer: 'This is one of our specialties. Voyten Electric has been supplying hard-to-find parts for legacy and discontinued equipment since 1953. Whether you need a renewal part for a Westinghouse DS circuit breaker, a GE Magne-Blast component, or an obsolete Square D relay, we likely have it in stock or can source it. We maintain one of the largest inventories of remanufactured legacy electrical equipment in the country.',
   },
   {
-    question: 'Can I get emergency or after-hours support for critical equipment failures?',
-    answer: 'Yes — Voyten Electric offers emergency service 24 hours a day, 7 days a week, 365 days a year. If you have a critical equipment failure and need parts or technical support urgently, call us at 1-800-458-4001. We understand that downtime in industrial and utility environments is extremely costly, and we prioritize emergency orders.',
+    question: 'What are your business hours?',
+    answer: 'Voyten Electric is available Monday through Friday, 8:00 AM to 4:30 PM EST. If you have a critical equipment need, call us at 1-800-458-4001 or email sales@voyten.com. We understand that downtime in industrial and utility environments is extremely costly, and we prioritize urgent orders.',
   },
   {
     question: 'How do I know which parts I need from a manual?',
@@ -58,7 +58,7 @@ const faqs = [
   },
   {
     question: 'Can I request a quote for multiple parts at once?',
-    answer: 'Yes. You can submit a quote request through our contact page or email us at info@voytenelectric.com with a list of part numbers, equipment model numbers, or manual references. Our sales team will respond with pricing and availability, typically within one business day.',
+    answer: 'Yes. You can submit a quote request through our contact page or email us at sales@voyten.com with a list of part numbers, equipment model numbers, or manual references. Our sales team will respond with pricing and availability, typically within one business day.',
   },
   {
     question: 'Are the electrical equipment manuals on Voyten Manuals really free?',

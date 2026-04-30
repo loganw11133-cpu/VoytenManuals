@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
     };
 
     await sendEmail({
-      to: process.env.LEAD_NOTIFICATION_EMAIL || 'info@voytenelectric.com',
+      to: process.env.LEAD_NOTIFICATION_EMAIL || 'sales@voyten.com',
       subject: `[Voyten Manuals] New ${typeLabels[type] || 'Lead'} from ${name}`,
       html: `
         <div style="font-family: -apple-system, sans-serif; max-width: 600px; margin: 0 auto;">

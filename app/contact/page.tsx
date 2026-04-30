@@ -72,8 +72,8 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                   <p className="text-slate-500 text-sm">We respond within 24 hours</p>
                 </div>
               </div>
-              <a href="mailto:info@voytenelectric.com" className="text-[#1a1a1a] font-medium hover:underline">
-                info@voytenelectric.com
+              <a href="mailto:sales@voyten.com" className="text-[#1a1a1a] font-medium hover:underline">
+                sales@voyten.com
               </a>
             </div>
 

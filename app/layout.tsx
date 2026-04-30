@@ -137,7 +137,7 @@ const jsonLd = {
   "logo": "https://voytenmanuals.com/icon.svg",
   "description": "Free searchable library of 8,400+ electrical equipment manuals and technical documentation. Backed by Voyten Electric & Electronics, Inc. — a third-generation family owned electrical equipment wholesaler since 1953.",
   "telephone": "+1-800-458-4001",
-  "email": "info@voytenelectric.com",
+  "email": "sales@voyten.com",
   "foundingDate": "1953",
   "numberOfEmployees": {
     "@type": "QuantitativeValue",

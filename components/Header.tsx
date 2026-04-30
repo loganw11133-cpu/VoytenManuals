@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Phone, Mail, Menu, X, Search, ChevronDown, Zap } from 'lucide-react';
+import { Phone, Mail, Menu, X, Search, ChevronDown } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 
 export default function Header() {
@@ -22,12 +22,12 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 bg-white shadow-sm">
-      {/* Emergency service banner */}
+      {/* Hours banner */}
       <div className="bg-[#dc2626] text-white">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-center gap-2 h-8 text-xs sm:text-sm font-semibold tracking-wide">
-            <Zap size={13} className="flex-shrink-0" />
-            <span>Emergency Service Available 24/7/365</span>
+            <Phone size={13} className="flex-shrink-0" />
+            <span>Mon–Fri 8:00 AM – 4:30 PM EST</span>
           </div>
         </div>
       </div>
@@ -42,9 +42,9 @@ export default function Header() {
                 <span className="font-medium">1-800-458-4001</span>
               </a>
               <span className="hidden sm:block w-px h-3.5 bg-white/30"></span>
-              <a href="mailto:info@voytenelectric.com" className="hidden sm:flex items-center gap-1.5 text-white/70 hover:text-white transition-colors">
+              <a href="mailto:sales@voyten.com" className="hidden sm:flex items-center gap-1.5 text-white/70 hover:text-white transition-colors">
                 <Mail size={12} />
-                <span>info@voytenelectric.com</span>
+                <span>sales@voyten.com</span>
               </a>
             </div>
             <div className="flex items-center gap-3">
@@ -140,7 +140,7 @@ export default function Header() {
                       </div>
                     </a>
                     <a
-                      href="mailto:info@voytenelectric.com?subject=Parts Inquiry from Voyten Manuals"
+                      href="mailto:sales@voyten.com?subject=Parts Inquiry from Voyten Manuals"
                       className="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-50 transition-colors group"
                     >
                       <span className="flex items-center justify-center w-10 h-10 rounded-full bg-[#1a1a1a]/10 group-hover:bg-[#1a1a1a] transition-colors">
@@ -148,7 +148,7 @@ export default function Header() {
                       </span>
                       <div>
                         <p className="font-semibold text-slate-800">Email Us</p>
-                        <p className="text-slate-500 text-xs">info@voytenelectric.com</p>
+                        <p className="text-slate-500 text-xs">sales@voyten.com</p>
                       </div>
                     </a>
                     <Link
@@ -209,7 +209,7 @@ export default function Header() {
                 </div>
               </a>
               <a
-                href="mailto:info@voytenelectric.com"
+                href="mailto:sales@voyten.com"
                 className="flex items-center justify-center gap-2 border-2 border-[#1a1a1a] text-[#1a1a1a] p-3 rounded-xl hover:bg-[#1a1a1a] hover:text-white transition-colors"
               >
                 <Mail size={18} />

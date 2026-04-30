@@ -100,9 +100,9 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="mailto:info@voytenelectric.com" className="text-slate-400 hover:text-white flex items-center gap-2">
+                <a href="mailto:sales@voyten.com" className="text-slate-400 hover:text-white flex items-center gap-2">
                   <Mail size={14} />
-                  info@voytenelectric.com
+                  sales@voyten.com
                 </a>
               </li>
               <li>
