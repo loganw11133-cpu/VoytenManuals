@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Phone, Mail, Menu, X, Search, ChevronDown } from 'lucide-react';
+import { Phone, Mail, Menu, X, Search, ChevronDown, Zap } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 
 export default function Header() {
@@ -22,12 +22,12 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 bg-white shadow-sm">
-      {/* Hours banner */}
+      {/* Emergency services banner */}
       <div className="bg-[#dc2626] text-white">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-center gap-2 h-8 text-xs sm:text-sm font-semibold tracking-wide">
-            <Phone size={13} className="flex-shrink-0" />
-            <span>Mon–Fri 8:00 AM – 4:30 PM EST</span>
+            <Zap size={13} className="flex-shrink-0" />
+            <span>24/7 Emergency Services</span>
           </div>
         </div>
       </div>

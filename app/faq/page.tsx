@@ -49,8 +49,8 @@ const faqs = [
     answer: 'This is one of our specialties. Voyten Electric has been supplying hard-to-find parts for legacy and discontinued equipment since 1953. Whether you need a renewal part for a Westinghouse DS circuit breaker, a GE Magne-Blast component, or an obsolete Square D relay, we likely have it in stock or can source it. We maintain one of the largest inventories of remanufactured legacy electrical equipment in the country.',
   },
   {
-    question: 'What are your business hours?',
-    answer: 'Voyten Electric is available Monday through Friday, 8:00 AM to 4:30 PM EST. If you have a critical equipment need, call us at 1-800-458-4001 or email sales@voyten.com. We understand that downtime in industrial and utility environments is extremely costly, and we prioritize urgent orders.',
+    question: 'What are your business hours and do you offer emergency support?',
+    answer: 'Standard business hours are Monday through Friday, 8:00 AM to 4:30 PM EST. For emergency or after-hours support for critical equipment failures, call us at 1-800-458-4001. We understand that downtime in industrial and utility environments is extremely costly, and we prioritize emergency orders.',
   },
   {
     question: 'How do I know which parts I need from a manual?',

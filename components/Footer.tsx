@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Phone, Mail, MapPin, BookOpen } from 'lucide-react';
+import { Phone, Mail, MapPin, BookOpen, Clock } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -109,6 +109,12 @@ export default function Footer() {
                 <span className="text-slate-400 flex items-start gap-2">
                   <MapPin size={14} className="mt-0.5 flex-shrink-0" />
                   <span>173 Voyten Blvd, Polk, PA 16342</span>
+                </span>
+              </li>
+              <li>
+                <span className="text-slate-400 flex items-center gap-2">
+                  <Clock size={14} className="flex-shrink-0" />
+                  <span>Mon–Fri 8:00 AM – 4:30 PM EST</span>
                 </span>
               </li>
             </ul>
