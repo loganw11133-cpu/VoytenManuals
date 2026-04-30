@@ -653,9 +653,8 @@ var TRIP_FEATURES = {
   }
 };
 
-/* ============================================================
-   CROSS-REFERENCE — PB/PC/PCC → RD/CRD
-   ============================================================ */
+// [HIDDEN FOR LATER DEPLOYMENT] Cross-reference and brand data
+/*
 var CROSS_REF = [
   { old: 'PB31000', oldDesc: 'PB 3P 1000A', new: 'RD316T33W/16RES10T', newDesc: 'RD 3P 1600A frame, 1000A plug' },
   { old: 'PB31200', oldDesc: 'PB 3P 1200A', new: 'RD316T33W/16RES12T', newDesc: 'RD 3P 1600A frame, 1200A plug' },
@@ -672,19 +671,16 @@ var CROSS_REF = [
   { old: 'PCCGA32000F', oldDesc: 'PCC + GF + Adj SD 3P 2000A', new: 'CRD320T36W', newDesc: 'CRD 3P 2000A, LSIG trip' }
 ];
 
-/* ============================================================
-   BRAND CROSS-REFERENCE
-   ============================================================ */
 var BRAND_XREF = {
   'RD':   { westinghouse: 'RD', challenger: 'CR', cutlerHammer: 'RD' },
   'RDC':  { westinghouse: 'RDC', challenger: 'CRV', cutlerHammer: 'RDC' },
   'CRD':  { westinghouse: 'CRD', challenger: 'CRC', cutlerHammer: 'CRD' },
   'CRDC': { westinghouse: 'CRDC', challenger: 'CRVC', cutlerHammer: 'CRDC' }
 };
+*/
 
-/* ============================================================
-   ACCESSORY CATALOG NUMBERS
-   ============================================================ */
+// [HIDDEN FOR LATER DEPLOYMENT] Accessory catalog numbers
+/*
 var ACCESSORIES = {
   shuntTrips: [
     { cat: '1372D35G22', desc: 'Shunt Trip — 32–120 Vdc, 60 Hz' },
@@ -725,10 +721,10 @@ var ACCESSORIES = {
     { cat: '765A767G01', desc: 'Racking Crank — 0.50-inch hex socket (drawout frames)' }
   ]
 };
+*/
 
-/* ============================================================
-   PROTECTION FUNCTION LEGEND
-   ============================================================ */
+// [HIDDEN FOR LATER DEPLOYMENT] Protection Function Legend
+/*
 var PROTECTION_LEGEND = {
   'L': { name: 'Long-Time (L)', desc: 'Overload protection — adjustable pickup and time delay' },
   'S': { name: 'Short-Time (S)', desc: 'Short-circuit protection — adjustable pickup and time delay, enables selective coordination' },
@@ -736,6 +732,7 @@ var PROTECTION_LEGEND = {
   'G': { name: 'Ground Fault (G)', desc: 'Ground fault protection — adjustable pickup and time delay' },
   'A': { name: 'Alarm (A)', desc: 'Ground fault alarm — signals fault condition without tripping breaker' }
 };
+*/
 
 /* ============================================================
    DIMENSIONS & WEIGHTS
@@ -1279,7 +1276,8 @@ function renderResults(p) {
     }
   }
 
-  // Protection function legend
+  // [HIDDEN FOR LATER DEPLOYMENT] Protection legend, brand cross-ref, obsolete cross-ref, accessories
+  /*
   if (trip && trip.protection && trip.protection !== 'N/A') {
     html += '<div class="result-card wide" style="margin-top:12px;">';
     html += '<div class="card-title">Protection Function Legend</div>';
@@ -1293,7 +1291,6 @@ function renderResults(p) {
     html += '</div>';
   }
 
-  // Brand cross-reference
   if (p.frameTypeCode && BRAND_XREF[p.frameTypeCode]) {
     var bx = BRAND_XREF[p.frameTypeCode];
     html += '<div class="result-card wide" style="margin-top:12px;">';
@@ -1304,7 +1301,6 @@ function renderResults(p) {
     html += '</div>';
   }
 
-  // Cross-reference: obsolete → RD (collapsed)
   html += '<div class="result-card wide" style="margin-top:12px;">';
   html += '<div class="card-title" style="cursor:pointer;" onclick="var t=this.nextElementSibling;t.style.display=t.style.display===\'none\'?\'block\':\'none\';">Obsolete Breaker Cross-Reference — PB / PC / PCC → RD (click to expand)</div>';
   html += '<div style="display:none;">';
@@ -1318,7 +1314,6 @@ function renderResults(p) {
   html += '</div>';
   html += '</div>';
 
-  // Accessories (collapsed)
   html += '<div class="result-card wide" style="margin-top:12px;">';
   html += '<div class="card-title" style="cursor:pointer;" onclick="var t=this.nextElementSibling;t.style.display=t.style.display===\'none\'?\'block\':\'none\';">Accessories &amp; Renewal Parts (click to expand)</div>';
   html += '<div style="display:none;">';
@@ -1373,6 +1368,7 @@ function renderResults(p) {
 
   html += '</div>';
   html += '</div>';
+  */
 
   return html;
 }
@@ -1406,7 +1402,7 @@ function decode() {
     for (var i = 0; i < parsed.errors.length; i++) {
       warn += '<div class="card-row"><span class="card-label">' + esc(parsed.errors[i].label) + '</span><span class="card-value" style="color:#dc2626">' + esc(parsed.errors[i].msg) + '</span></div>';
     }
-    warn += '<div class="card-row"><span class="card-label">Tip</span><span class="card-value">Catalog numbers start with RD, RDC, CRD, or CRDC (e.g. RD316T56W)</span></div>';
+    warn += '<div class="card-row"><span class="card-label">Format</span><span class="card-value">Catalog numbers start with RD, RDC, CRD, or CRDC (e.g. RD316T56W)</span></div>';
     warn += '</div>';
     resultsEl.innerHTML = warn;
     resultsEl.style.display = 'block';

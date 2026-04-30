@@ -1009,13 +1009,15 @@ function decodeSingleTrip(raw) {
   if (trip.protectionDesc) html += item('Protection Functions', trip.protectionDesc);
   html += '</div>';
 
-  // Protection legend
+  // [HIDDEN FOR LATER DEPLOYMENT] Protection Function Legend
+  /*
   html += '<div class="result-card full-width"><h3>Protection Function Legend</h3>';
   html += item('L', 'Long-Time (Overload Protection)');
   html += item('S', 'Short-Time (Short Circuit Delay)');
   html += item('I', 'Instantaneous (Instantaneous Trip)');
   html += item('G', 'Ground Fault Protection');
   html += '</div>';
+  */
 
   el.innerHTML = html;
 }
@@ -1136,10 +1138,9 @@ function decodeAccessory(s) {
     html += item('For Breaker', 'SPB (Systems Pow-R Breaker)');
     html += '</div>';
 
-    // Show cross-reference (WH style ↔ kit P/N)
+    // [HIDDEN FOR LATER DEPLOYMENT] Cross-reference (WH style ↔ kit P/N)
+    /*
     html += '<div class="result-card info-card"><h3>Cross-Reference</h3>';
-
-    // If this is a WH style, find equivalent kits
     if (/^\d{4}[CD]\d{2}G\d{2}$/.test(s)) {
       var equivKits = findEquivKits(found);
       if (equivKits.length > 0) {
@@ -1150,8 +1151,6 @@ function decodeAccessory(s) {
         html += item('Eaton Kit P/N', 'No direct kit equivalent found');
       }
     }
-
-    // If this is a kit, find equivalent WH styles
     if (/^SPB/.test(s)) {
       var equivWH = findEquivWH(found);
       if (equivWH.length > 0) {
@@ -1160,8 +1159,8 @@ function decodeAccessory(s) {
         }
       }
     }
-
     html += '</div>';
+    */
   } else {
     html += '<div class="summary-banner">';
     html += '<h2>SPB Accessory Lookup</h2>';
@@ -1748,7 +1747,8 @@ function renderResults(style, trip, plug) {
   html += item('Operation', 'Manual (M/O) or Electrically Operated (E/O)');
   html += '</div>';
 
-  // Common Accessories Reference
+  // [HIDDEN FOR LATER DEPLOYMENT] Common Accessories Reference
+  /*
   html += '<div class="result-card valid full-width"><h3>Common Accessories Reference</h3>';
   html += '<table class="renewal-table"><thead><tr><th>Accessory</th><th>Kit Part Number</th><th>Westinghouse Style</th></tr></thead><tbody>';
 
@@ -1850,14 +1850,17 @@ function renderResults(style, trip, plug) {
 
     html += '</tbody></table></div>';
   }
+  */
 
-  // Protection legend
+  // [HIDDEN FOR LATER DEPLOYMENT] Protection Function Legend (edge decode)
+  /*
   html += '<div class="result-card full-width"><h3>Protection Function Legend</h3>';
   html += item('L', 'Long-Time (Overload Protection)');
   html += item('S', 'Short-Time (Short Circuit Delay)');
   html += item('I', 'Instantaneous (Instantaneous Trip)');
   html += item('G', 'Ground Fault Protection');
   html += '</div>';
+  */
 
   html += '<button class="btn-copy" onclick="copyCatalog(\'' + style.raw + '\', this)">Copy Catalog Number</button>';
 
@@ -2476,10 +2479,12 @@ function renderEdgeResults(edge) {
   html += item('Marine', edge.marine + ' \u2014 ' + edge.marineDesc);
   html += '</div>';
 
-  // Cross-reference info
+  // [HIDDEN FOR LATER DEPLOYMENT] Cross-reference info
+  /*
   html += '<div class="result-card info-card full-width"><h3>Cross-Reference</h3>';
   html += '<div class="result-item"><span class="label">Tip</span><span class="value info-val" style="font-size:0.78rem;">The edge number is stamped on the breaker frame. The catalog number (e.g., SPBR330C) is on the nameplate label. Both identify the same breaker \u2014 enter the catalog number for style-based decoding.</span></div>';
   html += '</div>';
+  */
 
   html += '<button class="btn-copy" onclick="copyCatalog(\'' + edge.raw + '\', this)">Copy Edge Number</button>';
 

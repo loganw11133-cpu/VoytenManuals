@@ -752,9 +752,8 @@ var RENEWAL_PARTS = {
   ]
 };
 
-/* ============================================================
-   PROTECTION FUNCTION LEGEND
-   ============================================================ */
+// [HIDDEN FOR LATER DEPLOYMENT] Protection Function Legend
+/*
 var PROTECTION_LEGEND = {
   'L': { name: 'Long-Time', desc: 'Overload protection — adjustable pickup and time delay' },
   'S': { name: 'Short-Time', desc: 'Short-circuit protection — adjustable pickup and time delay, enables selective coordination' },
@@ -762,6 +761,7 @@ var PROTECTION_LEGEND = {
   'G': { name: 'Ground Fault', desc: 'Ground fault protection — adjustable pickup and time delay' },
   'A': { name: 'ARMS', desc: 'Arcflash Reduction Maintenance System — reduces incident energy when armed' }
 };
+*/
 
 /* ============================================================
    FRAME SIZE DETERMINATION
@@ -1331,7 +1331,8 @@ function renderBreakerResults(d) {
     html += '</div>';
   }
 
-  // Renewal parts — only show relevant kits based on configured accessories
+  // [HIDDEN FOR LATER DEPLOYMENT] Renewal parts, cross-references, protection legend
+  /*
   var relevantParts = getRelevantParts(d);
   if (relevantParts.length > 0) {
     html += '<div class="result-card wide access" style="margin-top:12px;">';
@@ -1345,7 +1346,6 @@ function renderBreakerResults(d) {
     html += '</div>';
   }
 
-  // Full renewal parts reference (collapsed)
   html += '<div class="result-card wide" style="margin-top:12px;">';
   html += '<div class="card-title" style="cursor:pointer;" onclick="var t=this.nextElementSibling;t.style.display=t.style.display===\'none\'?\'block\':\'none\';">All Renewal Part Kits (click to expand)</div>';
   html += '<div style="display:none;">';
@@ -1358,7 +1358,6 @@ function renderBreakerResults(d) {
   html += '</tbody></table></div>';
   html += '</div>';
 
-  // Protection legend
   if (d.protectionStr && d.protectionStr !== 'N/A' && d.protectionStr !== 'None') {
     html += '<div class="result-card wide" style="margin-top:12px;">';
     html += '<div class="card-title">Protection Function Legend</div>';
@@ -1371,6 +1370,7 @@ function renderBreakerResults(d) {
     }
     html += '</div>';
   }
+  */
 
   return html;
 }
@@ -1494,7 +1494,7 @@ function decode() {
         { label: 'ST/Mot/SR/UVR/Aux/Bell', size: 6 },
         { label: 'PB/Cnt/LCS/Ship/Fut', size: 5 }
       ], 25, d.defaulted, d.errorPositions);
-    var warn = '<div class="result-card warn wide" style="margin-bottom:12px;"><div class="card-title">Input Not Recognized</div><div class="card-row"><span class="card-label">Tip</span><span class="card-value">Breaker numbers start with MP or SP. Cassettes start with AN or BN.</span></div></div>';
+    var warn = '<div class="result-card warn wide" style="margin-bottom:12px;"><div class="card-title">Input Not Recognized</div><div class="card-row"><span class="card-label">Format</span><span class="card-value">Breaker numbers start with MP or SP. Cassettes start with AN or BN.</span></div></div>';
     resultsEl.innerHTML = warn + renderBreakerResults(d);
     resultsEl.style.display = 'block';
   }
