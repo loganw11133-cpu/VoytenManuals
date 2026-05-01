@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Phone, ChevronRight, BookOpen, Shield, Zap, FileText, Building2, ArrowRight, Clock, Truck, Download } from 'lucide-react';
+import { Phone, ChevronRight, BookOpen, ArrowRight, Clock, Truck, Download } from 'lucide-react';
 import Image from 'next/image';
 import ManualSearchBar from '@/components/ManualSearchBar';
 import { getTotalManualCount, getCategories, getManufacturers, getFeaturedManuals } from '@/lib/manuals-db';
@@ -7,15 +7,15 @@ import ManualCard from '@/components/ManualCard';
 import YouTubeEmbed from '@/components/YouTubeEmbed';
 
 const CATEGORIES = [
-  { name: 'Circuit Breakers', icon: Zap, description: 'Air breakers, insulated case, molded case, trip units, retrofit kits' },
-  { name: 'Relays and Meters', icon: Shield, description: 'Overcurrent relays, protective relays, metering equipment' },
-  { name: 'Motor Controls', icon: Building2, description: 'Motor control centers, starters, contactors, overloads' },
-  { name: 'Switches', icon: FileText, description: 'Disconnect switches, transfer switches, safety switches' },
-  { name: 'Fuses', icon: Zap, description: 'Fuse links, fuse holders, fuse catalogs' },
-  { name: 'Transformers', icon: Building2, description: 'Dry-type, oil-filled, pad-mounted, instrument transformers' },
-  { name: 'Bus Products', icon: FileText, description: 'Bus duct, busway, bus plugs, insulators' },
-  { name: 'Miscellaneous', icon: BookOpen, description: 'Communications, accessories, field testing, and more' },
-];
+  { name: 'Circuit Breakers', iconSrc: '/icons/circuit-breakers.png', description: 'Air breakers, insulated case, molded case, trip units, retrofit kits' },
+  { name: 'Relays and Meters', iconSrc: '/icons/relays-meters.png', description: 'Overcurrent relays, protective relays, metering equipment' },
+  { name: 'Motor Controls', iconSrc: '/icons/motor-controls.png', description: 'Motor control centers, starters, contactors, overloads' },
+  { name: 'Switches', iconSrc: '/icons/switches.png', description: 'Disconnect switches, transfer switches, safety switches' },
+  { name: 'Fuses', iconSrc: '/icons/fuses.png', description: 'Fuse links, fuse holders, fuse catalogs' },
+  { name: 'Transformers', iconSrc: '/icons/transformers.png', description: 'Dry-type, oil-filled, pad-mounted, instrument transformers' },
+  { name: 'Bus Products', iconSrc: '/icons/bus-products.png', description: 'Bus duct, busway, bus plugs, insulators' },
+  { name: 'Miscellaneous', fallbackIcon: BookOpen, description: 'Communications, accessories, field testing, and more' },
+] as const;
 
 export const revalidate = 3600;
 
@@ -104,8 +104,8 @@ export default async function Home() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {CATEGORIES.map((cat) => {
-              const Icon = cat.icon;
               const dbCat = categories.find(c => c.name === cat.name);
+              const FallbackIcon = 'fallbackIcon' in cat ? cat.fallbackIcon : null;
               return (
                 <Link
                   key={cat.name}
@@ -113,8 +113,12 @@ export default async function Home() {
                   className="group bg-slate-50 hover:bg-[#1a1a1a] rounded-xl p-5 transition-all hover:shadow-lg"
                 >
                   <div className="flex items-center justify-between mb-3">
-                    <div className="w-10 h-10 bg-[#1a1a1a]/10 group-hover:bg-white/20 rounded-lg flex items-center justify-center transition-colors">
-                      <Icon className="w-5 h-5 text-[#1a1a1a] group-hover:text-white transition-colors" />
+                    <div className="w-10 h-10 bg-[#1a1a1a]/5 group-hover:bg-white/20 rounded-lg flex items-center justify-center overflow-hidden transition-colors">
+                      {'iconSrc' in cat ? (
+                        <Image src={cat.iconSrc} alt={cat.name} width={40} height={40} className="w-full h-full object-contain" />
+                      ) : FallbackIcon ? (
+                        <FallbackIcon className="w-5 h-5 text-[#1a1a1a] group-hover:text-white transition-colors" />
+                      ) : null}
                     </div>
                     {dbCat && (
                       <span className="text-xs font-medium text-slate-400 group-hover:text-white/50 bg-slate-100 group-hover:bg-white/10 px-2 py-0.5 rounded-full transition-colors">
