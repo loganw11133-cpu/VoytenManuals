@@ -82,13 +82,13 @@ export default async function CategoriesPage() {
                 className="group bg-white rounded-xl border border-slate-200 p-6 hover:border-[#1a1a1a]/30 hover:shadow-lg transition-all"
               >
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center overflow-hidden bg-[#1a1a1a]/5">
+                  <div className={`rounded-xl flex items-center justify-center overflow-hidden ${meta.icon ? 'w-16 h-16 bg-[#1a1a1a]/5' : 'w-12 h-12 bg-[#1a1a1a]/10'}`}>
                     {meta.icon ? (
                       <Image
                         src={meta.icon}
                         alt={cat.name}
-                        width={48}
-                        height={48}
+                        width={64}
+                        height={64}
                         className="w-full h-full object-contain"
                       />
                     ) : FallbackIcon ? (
