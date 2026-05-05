@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="description" content="Siemens RL 600V LVPCB circuit breaker catalog number decoder. Identify connection, interrupting type, frame size, operation, sensors, system wiring, trip unit, and optional devices.">
+<title>Siemens RL LVPCB Decoder — Voyten Electric</title>
+<style>
+:root {
+  --red: #dc2626;
+  --dark-red: #b91c1c;
+  --deep-red: #991b1b;
+  --black: #1a1a1a;
+  --deep-black: #111111;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --white: #ffffff;
+  --blue: #2563eb;
+  --blue-light: #dbeafe;
+  --green: #16a34a;
+  --green-light: #dcfce7;
+  --yellow: #ca8a04;
+  --yellow-light: #fef9c3;
+  --purple: #7c3aed;
+  --purple-light: #ede9fe;
+  --teal: #0d9488;
+  --teal-light: #ccfbf1;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--gray-100);
+  color: var(--gray-800);
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+
+.header {
+  background: linear-gradient(135deg, var(--deep-black), var(--black));
+  color: var(--white);
+  padding: 24px 20px 20px;
+  text-align: center;
+  border-bottom: 4px solid var(--red);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+.header h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: 0.5px; }
+.header h1 .accent { color: var(--red); }
+.header .subtitle { font-size: 0.85rem; color: var(--gray-300); margin-top: 4px; }
+.container { max-width: 960px; margin: 0 auto; padding: 16px; }
+
+/* Input Section */
+.input-section {
+  background: var(--white); border-radius: 12px; padding: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 16px;
+  border: 2px solid var(--red);
+}
+.input-section label {
+  display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 6px; color: var(--gray-700);
+}
+.input-row { display: flex; gap: 8px; margin-bottom: 8px; }
+.input-row input {
+  flex: 1; padding: 12px 14px; font-size: 16px; font-family: 'Consolas', 'Monaco', monospace;
+  border: 2px solid var(--gray-200); border-radius: 8px; text-transform: uppercase;
+  letter-spacing: 1.5px; -webkit-appearance: none; transition: border-color 0.2s;
+}
+.input-row input:focus { outline: none; border-color: var(--red); }
+.hint { font-size: 0.75rem; color: var(--gray-500); margin-bottom: 10px; }
+
+.btn-row { display: flex; gap: 8px; margin-bottom: 12px; }
+.btn {
+  padding: 10px 20px; border: none; border-radius: 8px; font-weight: 700;
+  font-size: 0.9rem; cursor: pointer; transition: background 0.2s; touch-action: manipulation;
+}
+.btn-decode { background: var(--red); color: var(--white); flex: 1; }
+.btn-decode:hover { background: var(--dark-red); }
+.btn-clear { background: var(--gray-200); color: var(--gray-700); }
+.btn-clear:hover { background: var(--gray-300); }
+
+.examples-label { font-size: 0.75rem; font-weight: 600; color: var(--gray-500); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+.examples { display: flex; flex-wrap: wrap; gap: 6px; }
+.ex-btn {
+  padding: 4px 10px; font-size: 0.72rem; font-family: 'Consolas', monospace;
+  background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 6px;
+  cursor: pointer; transition: all 0.15s; color: var(--gray-700); touch-action: manipulation;
+}
+.ex-btn:hover { background: var(--red); color: var(--white); border-color: var(--red); }
+
+/* Char Map */
+.charmap-wrap { margin: 16px 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.charmap-inner { min-width: 400px; }
+.group-labels { display: flex; gap: 2px; margin-bottom: 2px; }
+.group-label {
+  font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--gray-500); text-align: center; padding: 2px 0;
+  border-bottom: 2px solid var(--gray-300);
+}
+.char-boxes { display: flex; gap: 2px; }
+.char-box {
+  width: 32px; height: 38px; display: flex; align-items: center; justify-content: center;
+  font-family: 'Consolas', monospace; font-size: 0.85rem; font-weight: 700;
+  background: var(--gray-100); border: 2px solid var(--gray-200); border-radius: 6px;
+  transition: all 0.2s;
+}
+.char-box.active { background: var(--white); border-color: var(--red); color: var(--red); }
+.char-box.g-connection { border-color: var(--blue); color: var(--blue); background: var(--blue-light); }
+.char-box.g-interrupting { border-color: var(--purple); color: var(--purple); background: var(--purple-light); }
+.char-box.g-frame { border-color: var(--green); color: var(--green); background: var(--green-light); }
+.char-box.g-operation { border-color: var(--yellow); color: var(--yellow); background: var(--yellow-light); }
+.char-box.g-sensor { border-color: var(--teal); color: var(--teal); background: var(--teal-light); }
+.char-box.g-system { border-color: #e11d48; color: #e11d48; background: #fff1f2; }
+.char-box.g-trip { border-color: #7c3aed; color: #7c3aed; background: #ede9fe; }
+.char-box.g-options { border-color: var(--gray-600); color: var(--gray-600); background: var(--gray-50); }
+
+.pos-labels { display: flex; gap: 2px; margin-top: 2px; }
+.pos-label { width: 32px; text-align: center; font-size: 0.55rem; color: var(--gray-400); }
+
+/* Result Cards */
+.results { display: none; }
+.results.visible { display: block; }
+.card {
+  background: var(--white); border-radius: 12px; padding: 16px;
+  margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  border-left: 4px solid var(--gray-200);
+}
+.card h3 {
+  font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--gray-500); margin-bottom: 8px;
+}
+.field { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--gray-100); }
+.field:last-child { border-bottom: none; }
+.field-label { font-size: 0.8rem; color: var(--gray-500); }
+.field-value { font-size: 0.8rem; font-weight: 600; color: var(--gray-800); text-align: right; max-width: 60%; }
+
+.card.c-connection { border-left-color: var(--blue); }
+.card.c-interrupting { border-left-color: var(--purple); }
+.card.c-frame { border-left-color: var(--green); }
+.card.c-operation { border-left-color: var(--yellow); }
+.card.c-sensor { border-left-color: var(--teal); }
+.card.c-system { border-left-color: #e11d48; }
+.card.c-trip { border-left-color: #7c3aed; }
+.card.c-options { border-left-color: var(--gray-600); }
+
+.copy-row { margin-top: 12px; text-align: center; }
+.btn-copy {
+  padding: 8px 20px; border: 2px solid var(--gray-200); border-radius: 8px;
+  background: var(--white); color: var(--gray-700); font-weight: 600; font-size: 0.8rem;
+  cursor: pointer; transition: all 0.2s;
+}
+.btn-copy:hover { border-color: var(--red); color: var(--red); }
+.btn-copy.copied { background: var(--green-light); border-color: var(--green); color: var(--green); }
+
+/* Error */
+.error {
+  background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px;
+  padding: 12px 16px; margin-bottom: 12px; display: none;
+}
+.error.visible { display: block; }
+.error-title { font-weight: 700; color: #991b1b; font-size: 0.85rem; margin-bottom: 2px; }
+.error-text { font-size: 0.8rem; color: #b91c1c; }
+.error-hint { font-size: 0.75rem; color: var(--gray-500); margin-top: 6px; }
+
+@media (max-width: 600px) {
+  .header h1 { font-size: 1.25rem; }
+  .char-box { width: 26px; height: 32px; font-size: 0.75rem; }
+  .pos-label { width: 26px; }
+  .container { padding: 10px; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Siemens <span class="accent">RL LVPCB</span> Decoder</h1>
+  <div class="subtitle">RL 600V Low Voltage Power Circuit Breaker — Catalog Number Decoder</div>
+</div>
+
+<div class="container">
+  <!-- Input -->
+  <div class="input-section">
+    <label>Enter Catalog Number</label>
+    <div class="input-row">
+      <input type="text" id="catInput" placeholder="e.g. RLA2MEAA58" maxlength="40" autocomplete="off" autocorrect="off" spellcheck="false">
+    </div>
+    <div class="hint" id="formatHint">Format: RL + Connection + Interrupting + Frame + Operation + Sensor + System + Trip Unit + Options</div>
+    <div class="btn-row">
+      <button class="btn btn-decode" onclick="decode()">DECODE</button>
+      <button class="btn btn-clear" onclick="clearAll()">CLEAR</button>
+    </div>
+    <div class="examples-label">Examples</div>
+    <div class="examples">
+      <button class="ex-btn" onclick="loadExample(this)">RLA2MEAA58</button>
+      <button class="ex-btn" onclick="loadExample(this)">RLB5EAHB59</button>
+      <button class="ex-btn" onclick="loadExample(this)">RLAS1MAB1C58</button>
+      <button class="ex-btn" onclick="loadExample(this)">RLFA5EAPA3A59</button>
+    </div>
+  </div>
+
+  <!-- Char Map -->
+  <div class="charmap-wrap"><div class="charmap-inner">
+    <div class="group-labels" id="groupLabels"></div>
+    <div class="char-boxes" id="charBoxes"></div>
+    <div class="pos-labels" id="posLabels"></div>
+  </div></div>
+
+  <!-- Error -->
+  <div class="error" id="errorBox">
+    <div class="error-title" id="errorTitle">Invalid Input</div>
+    <div class="error-text" id="errorText"></div>
+    <div class="error-hint" id="errorHint">Format: RL + A/B + S/E/I/F + 0-5 + M/E + sensor + system + trip + options</div>
+  </div>
+
+  <!-- Results -->
+  <div class="results" id="results"></div>
+
+  <!-- Copy -->
+  <div class="copy-row" id="copyRow" style="display:none;">
+    <button class="btn-copy" id="copyBtn" onclick="copyCatalog()">Copy Catalog #</button>
+  </div>
+</div>
+
+<script>
+/* ===== Siemens RL 600V LVPCB Catalog Nomenclature Data ===== */
+
+const CONNECTION = {
+  'A': 'Drawout',
+  'B': 'Stationary',
+};
+
+const INTERRUPTING = {
+  'S': 'RL (Standard) — 800 thru 5000A',
+  'E': 'RLE (High) — 800 thru 4000A',
+  'I': 'RLI — 800A Only',
+  'F': 'RLF — 800 thru 5000A Drawout Only',
+};
+
+const FRAME = {
+  '0': '800A Frame',
+  '1': '1600A Frame',
+  '2': '2000A Frame',
+  '3': '3200A Frame',
+  '4': '4000A Frame',
+  '5': '5000A Frame',
+};
+
+const FRAME_AMPS = {
+  '0': 800,
+  '1': 1600,
+  '2': 2000,
+  '3': 3200,
+  '4': 4000,
+  '5': 5000,
+};
+
+const OPERATION = {
+  'M': 'Manual',
+  'E': 'Electric / Manual (60Hz)',
+};
+
+/* Tripping Sensors: code -> { label, frames[] }
+   From the selection diagram table. Sensor code is 2 chars. */
+const SENSORS = {
+  'AA': { label: '800/.5 Sensor', frames: ['0','1','2'] },
+  'AB': { label: '150/.5 Sensor', frames: ['0','1','2'] },
+  'AC': { label: '200/.5 Sensor', frames: ['0','1','2'] },
+  'AD': { label: '300/.5 Sensor', frames: ['0','1','2'] },
+  'AE': { label: '400/.5 Sensor', frames: ['0','1','2'] },
+  'AF': { label: '600/.5 Sensor', frames: ['0','1','2'] },
+  'AG': { label: '800/.5 Sensor', frames: ['0','1','2','3','4','5'] },
+  'AH': { label: '1000/.5 Sensor', frames: ['0','1','2','3','4','5'] },
+  'AI': { label: '1200/.5 Sensor', frames: ['1','2','3','4','5'] },
+  'AJ': { label: '1600/.5 Sensor', frames: ['1','2','3','4','5'] },
+  'AK': { label: '2000/.5 Sensor', frames: ['2','3','4','5'] },
+  'AL': { label: '2400/.5 Sensor', frames: ['3','4','5'] },
+  'AM': { label: '2500/.5 Sensor', frames: ['3','4','5'] },
+  'AN': { label: '3000/.5 Sensor', frames: ['3','4','5'] },
+  'AO': { label: '3200/.5 Sensor', frames: ['3','4','5'] },
+  'AP': { label: '4000/.5 Sensor', frames: ['4','5'] },
+  'AQ': { label: '5000/.5 Sensor', frames: ['5'] },
+  'XX': { label: 'Non-Automatic (No Sensor)', frames: ['0','1','2','3','4','5'] },
+};
+
+/* Dual-wound sensors (1200A max per MCT) */
+const DUAL_SENSORS = {
+  '2A': { label: '2000/.5 Dual-Wound Sensor', frames: ['2','3','4','5'] },
+  '2B': { label: '2500/.5 Dual-Wound Sensor', frames: ['3','4','5'] },
+  '2C': { label: '3000/.5 Dual-Wound Sensor', frames: ['3','4','5'] },
+  '2D': { label: '3200/.5 Dual-Wound Sensor', frames: ['3','4','5'] },
+  '2E': { label: '4000/.5 Dual-Wound Sensor', frames: ['4','5'] },
+  '2F': { label: '5000/.5 Dual-Wound Sensor', frames: ['5'] },
+};
+
+/* System (3 Phase) */
+const SYSTEM = {
+  'A': { wires: 3, grd: '', nec: '', neut: '', bwd: '', plt: 'FIG 1A', desc: '3-Wire' },
+  'B': { wires: 3, grd: 'G', nec: '', neut: '', bwd: '', plt: 'FIG 1A', desc: '3-Wire, Ground Fault' },
+  'C': { wires: 3, grd: 'G', nec: 'E', neut: '', bwd: '', plt: 'FIG 1C', desc: '3-Wire, Ground + NEC' },
+  'D': { wires: 4, grd: 'R', nec: '', neut: 'E', bwd: '', plt: '', desc: '4-Wire, Residual' },
+  'E': { wires: 4, grd: 'R', nec: 'E', neut: '', bwd: '', plt: 'FIG 1E', desc: '4-Wire, Residual + NEC' },
+  'F': { wires: 4, grd: '', nec: '', neut: '', bwd: '', plt: 'FIG 1F', desc: '4-Wire' },
+  'G': { wires: 4, grd: 'R', nec: '', neut: 'N', bwd: '', plt: 'FIG 1B', desc: '4-Wire, Residual + Neutral' },
+  'H': { wires: 4, grd: 'R', nec: 'E', neut: 'N', bwd: '', plt: 'FIG 20A', desc: '4-Wire, Residual + NEC + Neutral' },
+  'I': { wires: 4, grd: 'D', nec: '', neut: 'N', bwd: '', plt: 'FIG 20B', desc: '4-Wire, Direct + Neutral' },
+  'J': { wires: 4, grd: '', nec: '', neut: '', bwd: '', plt: 'FIG 3A', desc: '4-Wire' },
+};
+
+const SYSTEM_NOTES = {
+  'R': 'Residual',
+  'D': 'Direct',
+  'N': 'NEC',
+  'X': 'Non-Auto',
+};
+
+/* Static Trip III — Trip Unit Codes */
+const TRIP_UNIT = {
+  '58': { label: 'AC Pro II', type: 'Electronic' },
+  '59': { label: 'AC Pro II VDM', type: 'Electronic' },
+};
+
+/* Build trip code lookup from the diagram grid.
+   The grid maps trip codes 04-56 to combinations of T/S/I/G/Z/C/N/P features.
+   We'll represent these as known valid codes. */
+const STATIC_TRIP_III = {};
+(function() {
+  /* Trip codes 04-56 from the Static Trip III table.
+     Each code maps to features present: T=Time, S=Short-time, I=Instantaneous,
+     G=Ground, T=Thermal, Z=Zone Selective, C=Communications, N=Neutral, P=Power */
+  const codes = {
+    '04': 'T',
+    '05': 'T, S',
+    '06': 'T, S, I',
+    '07': 'T, I, G',
+    '08': 'T',
+    '09': 'T, S, I, G, T, Z',
+    '10': 'T, I, C',
+    '11': 'T, S, Z, C',
+    '12': 'T, S, I',
+    '13': 'T, S, I, G, T, Z, C',
+    '14': 'T, S, G, T, Z, C',
+    '15': 'T, S, I, G, T, Z, C, N',
+    '16': 'T, S, I, G, T, Z, C, N',
+    '17': 'T, S, I, T, Z, C, N',
+    '18': 'T, S',
+    '19': 'T, S, G, T, Z, C, N',
+    '20': 'T, S, G, T, Z, C, N, P',
+    '21': 'T, S',
+    '22': 'T, S, I',
+    '23': 'T, S, I',
+    '24': 'T, S, I, G',
+    '25': 'T, S',
+    '26': 'T, S, G',
+    '27': 'T, S, I',
+    '28': 'T, S, I',
+    '29': 'T, S, I',
+    '30': 'T, S, I',
+    '31': 'T, S, I, G, T, Z, C, N',
+    '32': 'T, S',
+    '33': 'T, S, I, G, T, Z, C, N',
+    '34': 'T, S',
+    '35': 'T, S, I',
+    '36': 'T, S',
+    '37': 'T, S, I',
+    '38': 'T, S, I',
+    '39': 'T, S, I',
+    '40': 'T, S',
+    '41': 'T, S, I',
+    '42': 'T, S',
+    '43': 'T, S, I',
+    '44': 'T, S, I',
+    '45': 'T, S',
+    '46': 'T, S, I, G, T, Z, C, N, P',
+    '47': 'T, S, I, G, T, Z, C, N, P',
+    '48': 'T, S, I',
+    '49': 'T, S, I, G, T, Z, C, N',
+    '50': 'T, S, I',
+    '51': 'T, S, I, G, T, Z, C, N, P',
+    '52': 'T, S',
+    '53': 'T, S, I',
+    '54': 'T, S, I',
+    '55': 'T, S, I',
+    '56': 'T, S, I, G, T, Z, C, N, P',
+  };
+  for (const [k, v] of Object.entries(codes)) {
+    STATIC_TRIP_III[k] = { label: 'Static Trip III — Code ' + k, features: v, type: 'Static Trip III' };
+  }
+})();
+
+/* All valid trip unit codes */
+function getTripUnit(code) {
+  if (TRIP_UNIT[code]) return TRIP_UNIT[code];
+  if (STATIC_TRIP_III[code]) return STATIC_TRIP_III[code];
+  return null;
+}
+
+/* Optional Devices */
+const OPTIONAL_DEVICES = {
+  'A1': 'Breaker Display Unit (BDU)',
+  'C':  'Customized Wiring (Must Consult Factory)',
+  'E':  'Blown Fuse Trip Contact (For Fused Breaker)',
+  'G':  'Close Hood Cover (For E.O. Breaker)',
+  'H':  'Static Trip Setting Cover',
+  'I':  'Operation Counter',
+  'J':  'Remove Charging Handle',
+  'K':  'No MOC Operator',
+  'L':  'Spring Charge Light',
+  'N':  'Fungus Proofing',
+  'P':  'Mechanical Lock Out',
+  'R':  '50 Hertz Application Rating',
+  'V':  'Charge Handle Extension',
+};
+
+/* Special Fuses */
+const SPECIAL_FUSES = {
+  'F1': 'Shawmut Welder Fuse',
+};
+
+/* Dual Shunt Trip (4C) — Unfused breakers only */
+const DUAL_SHUNT = {
+  'T1': '48VDC/120VAC Dual Shunt Trip',
+  'T2': '240VAC/125VDC Dual Shunt Trip',
+  'T3': '250VDC Dual Shunt Trip',
+  'T4': '24VDC Dual Shunt Trip',
+  'T5': '65VAC/28VDC Dual Shunt Trip',
+  'T6': '32VDC Dual Shunt Trip',
+};
+
+/* Undervoltage / Interlock Devices */
+const UV_DEVICES = {
+  'U2': '24VDC Undervoltage Trip Device (Delay)',
+  'U3': '48VDC Undervoltage Trip Device (Delay)',
+  'U4': '120VAC Undervoltage Trip Device (Delay)',
+  'U5': '125VDC Undervoltage Trip Device (Delay)',
+  'U6': '48VDC Undervoltage Trip Device (Instant)',
+  'U7': '120VAC Undervoltage Trip Device (Instant)',
+  'U8': '125VDC Undervoltage Trip Device (Instant)',
+  'U9': '24VDC Undervoltage Trip Device (Instant)',
+  'M1': '48VDC Electro-Mechanical Interlock',
+  'M2': '120VAC/125VDC Electro-Mechanical Interlock',
+  'M3': '240VAC/250VDC Electro-Mechanical Interlock',
+};
+
+/* Special E.O. Breaker Circuitry (replace 6D wiring figure) */
+const EO_WIRING = {
+  'W1': 'Separate Motor and Close Circuit (21A)',
+  'W2': 'Bell Alarm in Close Circuit (21B)',
+  'W3': 'Green Light Parallel Trip Coil (21C)',
+  'W4': 'Green Light Monitors Trip Coil (21D)',
+  'W5': 'Green Light and Tap (21E)',
+  'W6': 'Separate Green Light Circuit (21G)',
+  'W7': 'Close Coil Monitor Circuit (21F)',
+  'W8': 'Motor Disconnect in Motor Circuit Only (21H)',
+  'W9': 'Latch Check Switch (21I)',
+};
+
+/* Current Limiting Fuses — frame availability */
+const FUSE_OPTIONS = {
+  '200A':  ['0','1','2'],
+  '300A':  ['0','1','2'],
+  '400A':  ['0','1','2','3','4'],
+  '600A':  ['0','1','2','3','4'],
+  '800A':  ['0','1','2','3','4'],
+  '1200A': ['1','2','3','4','5'],
+  '1600A': ['1','2','3','4','5'],
+  '2000A': ['2','3','4','5'],
+  '3000A': ['3','4','5'],
+  '3200A': ['3','4','5'],
+  '4000A': ['4','5'],
+  '5000A': ['5'],
+};
+
+/* Additional Auxiliary Contacts (for customer use) */
+const AUX_CONTACTS = {
+  '1A/3B': 'Manual Breaker Without Shunt',
+  '4A/5B': 'Manual Breaker Without Shunt',
+  '2A/2B': 'Manual Breaker With Shunt',
+  '3A/3B': 'Electric or Manual Breaker With Shunt',
+};
+
+/* ===== DECODER LOGIC ===== */
+
+function decode() {
+  const raw = document.getElementById('catInput').value.trim().toUpperCase();
+  hideError();
+  document.getElementById('results').innerHTML = '';
+  document.getElementById('results').classList.remove('visible');
+  document.getElementById('copyRow').style.display = 'none';
+
+  if (!raw) { showError('Empty Input', 'Please enter a Siemens RL catalog number.'); return; }
+
+  // Must start with RL
+  if (!raw.startsWith('RL')) {
+    showError('Invalid Prefix', 'Siemens RL catalog numbers must start with "RL".');
+    return;
+  }
+
+  const cat = raw.substring(2); // strip "RL" prefix
+  if (cat.length < 5) {
+    showError('Too Short', 'Catalog number is too short. Expected at least 7 characters total (RL + 5).');
+    return;
+  }
+
+  let pos = 0;
+  const decoded = {};
+
+  // Position 1: Connection (A or B)
+  const connCode = cat[pos];
+  if (!CONNECTION[connCode]) {
+    showError('Invalid Connection', `Position 3: "${connCode}" is not valid. Expected A (Drawout) or B (Stationary).`);
+    return;
+  }
+  decoded.connection = { code: connCode, value: CONNECTION[connCode] };
+  pos++;
+
+  // Position 2: Interrupting Type (S, E, I, F)
+  const intCode = cat[pos];
+  if (!INTERRUPTING[intCode]) {
+    showError('Invalid Interrupting Type', `Position 4: "${intCode}" is not valid. Expected S, E, I, or F.`);
+    return;
+  }
+  decoded.interrupting = { code: intCode, value: INTERRUPTING[intCode] };
+
+  // Validate constraints
+  if (intCode === 'I' && false) { /* 800A only — checked later with frame */ }
+  if (intCode === 'F' && connCode !== 'A') {
+    showError('Invalid Combination', 'RLF is only available in Drawout (A) connection.');
+    return;
+  }
+  pos++;
+
+  // Position 3: Frame (0-5)
+  const frameCode = cat[pos];
+  if (!FRAME[frameCode]) {
+    showError('Invalid Frame', `Position 5: "${frameCode}" is not valid. Expected 0-5.`);
+    return;
+  }
+  decoded.frame = { code: frameCode, value: FRAME[frameCode], amps: FRAME_AMPS[frameCode] };
+
+  // Validate interrupting vs frame
+  if (intCode === 'I' && frameCode !== '0') {
+    showError('Invalid Combination', 'RLI is only available in 800A frame (code 0).');
+    return;
+  }
+  if (intCode === 'E' && frameCode === '5') {
+    showError('Invalid Combination', 'RLE is only available through 4000A (frames 0-4).');
+    return;
+  }
+  pos++;
+
+  // Position 4: Operation (M or E)
+  const opCode = cat[pos];
+  if (!OPERATION[opCode]) {
+    showError('Invalid Operation', `Position 6: "${opCode}" is not valid. Expected M (Manual) or E (Electric/Manual).`);
+    return;
+  }
+  decoded.operation = { code: opCode, value: OPERATION[opCode] };
+  pos++;
+
+  // Position 5-6: Tripping Sensor (2 chars)
+  const sensorCode = cat.substring(pos, pos + 2);
+  let sensorInfo = null;
+
+  if (SENSORS[sensorCode]) {
+    sensorInfo = SENSORS[sensorCode];
+  } else if (DUAL_SENSORS[sensorCode]) {
+    sensorInfo = DUAL_SENSORS[sensorCode];
+    sensorInfo.dual = true;
+  }
+
+  if (!sensorInfo) {
+    showError('Invalid Sensor', `Position 7-8: "${sensorCode}" is not a valid tripping sensor code.`);
+    return;
+  }
+
+  // Validate sensor vs frame
+  if (!sensorInfo.frames.includes(frameCode)) {
+    showError('Sensor/Frame Mismatch', `Sensor ${sensorCode} (${sensorInfo.label}) is not available for the ${FRAME[frameCode]}.`);
+    return;
+  }
+
+  decoded.sensor = { code: sensorCode, value: sensorInfo.label, dual: sensorInfo.dual || false };
+  pos += 2;
+
+  // Position 7: System (A-J)
+  let systemCode = '';
+  if (pos < cat.length) {
+    systemCode = cat[pos];
+    if (SYSTEM[systemCode]) {
+      const sys = SYSTEM[systemCode];
+      decoded.system = {
+        code: systemCode,
+        wires: sys.wires,
+        desc: sys.desc,
+        wiring: sys.plt,
+        grd: sys.grd,
+        nec: sys.nec,
+        neut: sys.neut,
+      };
+      pos++;
+    } else if (/[0-9]/.test(systemCode)) {
+      // Might be trip unit code — system omitted
+      decoded.system = null;
+    } else {
+      showError('Invalid System', `Position ${pos + 3}: "${systemCode}" is not a valid system code (A-J).`);
+      return;
+    }
+  }
+
+  // Position 8-9: Trip Unit (2 digits)
+  if (pos + 1 < cat.length) {
+    const tripCode = cat.substring(pos, pos + 2);
+    const tripInfo = getTripUnit(tripCode);
+    if (tripInfo) {
+      decoded.trip = { code: tripCode, label: tripInfo.label, type: tripInfo.type, features: tripInfo.features || '' };
+      pos += 2;
+    } else if (/^\d{2}$/.test(tripCode)) {
+      decoded.trip = { code: tripCode, label: 'Unknown Trip Code ' + tripCode, type: 'Unknown' };
+      pos += 2;
+    }
+  }
+
+  // Remaining: Optional devices (parse known codes)
+  decoded.options = [];
+  const remaining = cat.substring(pos);
+  if (remaining.length > 0) {
+    let optPos = 0;
+    while (optPos < remaining.length) {
+      // Try 2-char codes first
+      const twoChar = remaining.substring(optPos, optPos + 2);
+      if (OPTIONAL_DEVICES[twoChar]) {
+        decoded.options.push({ code: twoChar, value: OPTIONAL_DEVICES[twoChar] });
+        optPos += 2;
+      } else if (DUAL_SHUNT[twoChar]) {
+        decoded.options.push({ code: twoChar, value: DUAL_SHUNT[twoChar] });
+        optPos += 2;
+      } else if (UV_DEVICES[twoChar]) {
+        decoded.options.push({ code: twoChar, value: UV_DEVICES[twoChar] });
+        optPos += 2;
+      } else if (EO_WIRING[twoChar]) {
+        decoded.options.push({ code: twoChar, value: EO_WIRING[twoChar] });
+        optPos += 2;
+      } else if (SPECIAL_FUSES[twoChar]) {
+        decoded.options.push({ code: twoChar, value: SPECIAL_FUSES[twoChar] });
+        optPos += 2;
+      } else {
+        // Try 1-char codes
+        const oneChar = remaining[optPos];
+        if (OPTIONAL_DEVICES[oneChar]) {
+          decoded.options.push({ code: oneChar, value: OPTIONAL_DEVICES[oneChar] });
+          optPos += 1;
+        } else {
+          decoded.options.push({ code: remaining.substring(optPos), value: 'Unknown option code: ' + remaining.substring(optPos) });
+          break;
+        }
+      }
+    }
+  }
+
+  renderResults(raw, decoded);
+}
+
+function renderResults(raw, d) {
+  const el = document.getElementById('results');
+  let html = '';
+
+  // Build charmap
+  renderCharMap(raw, d);
+
+  // Connection card
+  if (d.connection) {
+    html += card('Connection', 'c-connection', [
+      field('Code', d.connection.code),
+      field('Type', d.connection.value),
+    ]);
+  }
+
+  // Interrupting card
+  if (d.interrupting) {
+    const intType = d.interrupting.code === 'S' ? 'RL' : d.interrupting.code === 'E' ? 'RLE' : d.interrupting.code === 'I' ? 'RLI' : 'RLF';
+    html += card('Interrupting Type', 'c-interrupting', [
+      field('Code', d.interrupting.code),
+      field('Series', intType),
+      field('Description', d.interrupting.value),
+    ]);
+  }
+
+  // Frame card
+  if (d.frame) {
+    html += card('Frame Size', 'c-frame', [
+      field('Code', d.frame.code),
+      field('Frame', d.frame.value),
+      field('Max Amperes', d.frame.amps + 'A'),
+    ]);
+  }
+
+  // Operation card
+  if (d.operation) {
+    html += card('Operation', 'c-operation', [
+      field('Code', d.operation.code),
+      field('Type', d.operation.value),
+    ]);
+  }
+
+  // Sensor card
+  if (d.sensor) {
+    const sensorFields = [
+      field('Code', d.sensor.code),
+      field('Rating', d.sensor.value),
+    ];
+    if (d.sensor.dual) sensorFields.push(field('Type', 'Dual-Wound (1200A max per MCT)'));
+    if (d.sensor.code === 'XX') sensorFields.push(field('Note', 'Non-Automatic — No tripping sensor installed'));
+    html += card('Tripping Sensor', 'c-sensor', sensorFields);
+  }
+
+  // System card
+  if (d.system) {
+    const sysFields = [
+      field('Code', d.system.code),
+      field('Configuration', d.system.desc),
+      field('Wires', d.system.wires + '-Wire'),
+    ];
+    if (d.system.grd) sysFields.push(field('Ground', d.system.grd === 'R' ? 'Residual' : d.system.grd === 'D' ? 'Direct' : d.system.grd));
+    if (d.system.nec) sysFields.push(field('NEC', 'Yes'));
+    if (d.system.neut) sysFields.push(field('Neutral', d.system.neut === 'N' ? 'Neutral Metering' : d.system.neut));
+    if (d.system.wiring) sysFields.push(field('Wiring Diagram', d.system.wiring));
+    html += card('System (3 Phase)', 'c-system', sysFields);
+  }
+
+  // Trip Unit card
+  if (d.trip) {
+    const tripFields = [
+      field('Code', d.trip.code),
+      field('Trip Unit', d.trip.label),
+      field('Type', d.trip.type),
+    ];
+    if (d.trip.features) tripFields.push(field('Features', d.trip.features));
+    html += card('Trip Unit', 'c-trip', tripFields);
+  }
+
+  // Options card
+  if (d.options && d.options.length > 0) {
+    const optFields = d.options.map(o => field(o.code, o.value));
+    html += card('Optional Devices', 'c-options', optFields);
+  }
+
+  el.innerHTML = html;
+  el.classList.add('visible');
+
+  document.getElementById('copyRow').style.display = 'block';
+}
+
+function renderCharMap(raw, d) {
+  const chars = raw.split('');
+  const boxes = document.getElementById('charBoxes');
+  const labels = document.getElementById('groupLabels');
+  const posLbls = document.getElementById('posLabels');
+  boxes.innerHTML = '';
+  labels.innerHTML = '';
+  posLbls.innerHTML = '';
+
+  // Define groups with positions
+  const groups = [];
+  let p = 0;
+
+  // RL prefix (2 chars)
+  groups.push({ label: 'PREFIX', len: 2, cls: 'active' });
+  p += 2;
+
+  // Connection (1)
+  if (d.connection) { groups.push({ label: 'CONN', len: 1, cls: 'g-connection' }); p += 1; }
+  // Interrupting (1)
+  if (d.interrupting) { groups.push({ label: 'INT', len: 1, cls: 'g-interrupting' }); p += 1; }
+  // Frame (1)
+  if (d.frame) { groups.push({ label: 'FRAME', len: 1, cls: 'g-frame' }); p += 1; }
+  // Operation (1)
+  if (d.operation) { groups.push({ label: 'OPER', len: 1, cls: 'g-operation' }); p += 1; }
+  // Sensor (2)
+  if (d.sensor) { groups.push({ label: 'SENSOR', len: 2, cls: 'g-sensor' }); p += 2; }
+  // System (1)
+  if (d.system) { groups.push({ label: 'SYS', len: 1, cls: 'g-system' }); p += 1; }
+  // Trip (2)
+  if (d.trip) { groups.push({ label: 'TRIP', len: 2, cls: 'g-trip' }); p += 2; }
+  // Options (remaining)
+  if (p < chars.length) { groups.push({ label: 'OPTIONS', len: chars.length - p, cls: 'g-options' }); }
+
+  // Render group labels
+  for (const g of groups) {
+    const lbl = document.createElement('div');
+    lbl.className = 'group-label';
+    lbl.style.flex = '0 0 ' + (g.len * 34 - 2) + 'px';
+    lbl.textContent = g.label;
+    labels.appendChild(lbl);
+  }
+
+  // Render char boxes
+  let gi = 0, gc = 0;
+  for (let i = 0; i < chars.length; i++) {
+    const box = document.createElement('div');
+    box.className = 'char-box ' + (groups[gi] ? groups[gi].cls : '');
+    box.textContent = chars[i];
+    boxes.appendChild(box);
+
+    const pl = document.createElement('div');
+    pl.className = 'pos-label';
+    pl.textContent = i + 1;
+    posLbls.appendChild(pl);
+
+    gc++;
+    if (groups[gi] && gc >= groups[gi].len) { gi++; gc = 0; }
+  }
+}
+
+function card(title, cls, fields) {
+  return `<div class="card ${cls}"><h3>${title}</h3>${fields.join('')}</div>`;
+}
+
+function field(label, value) {
+  return `<div class="field"><span class="field-label">${label}</span><span class="field-value">${value}</span></div>`;
+}
+
+function showError(title, text) {
+  const el = document.getElementById('errorBox');
+  document.getElementById('errorTitle').textContent = title;
+  document.getElementById('errorText').textContent = text;
+  el.classList.add('visible');
+  clearCharMap();
+}
+
+function hideError() {
+  document.getElementById('errorBox').classList.remove('visible');
+}
+
+function clearCharMap() {
+  document.getElementById('charBoxes').innerHTML = '';
+  document.getElementById('groupLabels').innerHTML = '';
+  document.getElementById('posLabels').innerHTML = '';
+}
+
+function clearAll() {
+  document.getElementById('catInput').value = '';
+  document.getElementById('results').innerHTML = '';
+  document.getElementById('results').classList.remove('visible');
+  document.getElementById('copyRow').style.display = 'none';
+  hideError();
+  clearCharMap();
+  document.getElementById('catInput').focus();
+}
+
+function loadExample(btn) {
+  document.getElementById('catInput').value = btn.textContent;
+  decode();
+}
+
+function copyCatalog() {
+  const val = document.getElementById('catInput').value.trim().toUpperCase();
+  if (!val) return;
+  navigator.clipboard.writeText(val).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy Catalog #'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+// Enter key to decode
+document.getElementById('catInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') decode();
+});
+</script>
+</body>
+</html>
