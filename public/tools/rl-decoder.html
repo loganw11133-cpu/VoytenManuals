@@ -206,6 +206,7 @@ body {
       <button class="ex-btn" onclick="loadExample(this)">RLAS4EANXBA06X</button>
       <button class="ex-btn" onclick="loadExample(this)">RLAS2MAJXXA068</button>
       <button class="ex-btn" onclick="loadExample(this)">RLAE2MAIXXD15A</button>
+      <button class="ex-btn" onclick="loadExample(this)">RLAS1EXXXBAXXE</button>
     </div>
   </div>
 
@@ -354,16 +355,16 @@ const CONTROL_VOLTAGE = {
   'EB': { label: '48VDC Motor/Close, 120VAC Trip/Shunt', mo: false, eo: true },
   'EC': { label: '48VDC Motor/Close, 125VDC Trip/Shunt', mo: false, eo: true },
   'ED': { label: '48VDC Motor/Close, 24VDC Trip/Shunt', mo: false, eo: true },
-  /* MO breaker trip/shunt trip voltages (first char X = no motor) */
-  'XA': { label: '48VDC Trip/Shunt (Manual)', mo: true, eo: false },
-  'XB': { label: '120VAC Trip/Shunt (Manual)', mo: true, eo: true },
-  'XC': { label: '125VDC Trip/Shunt (Manual)', mo: true, eo: false },
-  'XD': { label: '24VDC Trip/Shunt (Manual)', mo: true, eo: false },
-  'XE': { label: '240VAC Trip/Shunt (Manual)', mo: true, eo: false },
-  'XF': { label: '250VDC Trip/Shunt (Manual)', mo: true, eo: false },
-  'XG': { label: '65VAC Trip/Shunt (Manual)', mo: true, eo: false },
-  'XH': { label: '28VDC Trip/Shunt (Manual)', mo: true, eo: false },
-  'XI': { label: '32VDC Trip/Shunt (Manual)', mo: true, eo: false },
+  /* X_ codes: For MO = trip/shunt voltage only. For EO = motor, close, and trip at same voltage */
+  'XA': { label: '48VDC', mo: true, eo: true, moDesc: '48VDC Trip/Shunt', eoDesc: '48VDC Motor/Close/Trip' },
+  'XB': { label: '120VAC', mo: true, eo: true, moDesc: '120VAC Trip/Shunt', eoDesc: '120VAC Motor/Close/Trip' },
+  'XC': { label: '125VDC', mo: true, eo: true, moDesc: '125VDC Trip/Shunt', eoDesc: '125VDC Motor/Close/Trip' },
+  'XD': { label: '24VDC', mo: true, eo: true, moDesc: '24VDC Trip/Shunt', eoDesc: '24VDC Motor/Close/Trip' },
+  'XE': { label: '240VAC', mo: true, eo: true, moDesc: '240VAC Trip/Shunt', eoDesc: '240VAC Motor/Close/Trip' },
+  'XF': { label: '250VDC', mo: true, eo: true, moDesc: '250VDC Trip/Shunt', eoDesc: '250VDC Motor/Close/Trip' },
+  'XG': { label: '65VAC', mo: true, eo: false, moDesc: '65VAC Trip/Shunt', eoDesc: '65VAC Trip/Shunt' },
+  'XH': { label: '28VDC', mo: true, eo: false, moDesc: '28VDC Trip/Shunt', eoDesc: '28VDC Trip/Shunt' },
+  'XI': { label: '32VDC', mo: true, eo: false, moDesc: '32VDC Trip/Shunt', eoDesc: '32VDC Trip/Shunt' },
 };
 
 /* System (3 Phase) */
@@ -461,10 +462,16 @@ const FEATURE_LEGEND = {
   'P': 'Power Metering',
 };
 
+/* Non-automatic trip code */
+const NON_AUTO_TRIP = {
+  'XX': { label: 'Non-Automatic (No Trip Unit)', type: 'Non-Automatic', features: '' },
+};
+
 /* All valid trip unit codes */
 function getTripUnit(code) {
   if (TRIP_UNIT[code]) return TRIP_UNIT[code];
   if (STATIC_TRIP_III[code]) return STATIC_TRIP_III[code];
+  if (NON_AUTO_TRIP[code]) return NON_AUTO_TRIP[code];
   return null;
 }
 
@@ -659,10 +666,13 @@ function decode() {
     return;
   }
   const voltCode = cat.substring(pos, pos + 2);
+  const isEO = opCode === 'E';
   if (CONTROL_VOLTAGE[voltCode]) {
-    decoded.voltage = { code: voltCode, value: CONTROL_VOLTAGE[voltCode].label };
+    const cv = CONTROL_VOLTAGE[voltCode];
+    /* Use operation-aware description if available */
+    const desc = isEO && cv.eoDesc ? cv.eoDesc : cv.moDesc ? cv.moDesc : cv.label;
+    decoded.voltage = { code: voltCode, value: desc };
   } else {
-    /* Accept unknown control voltage codes gracefully */
     decoded.voltage = { code: voltCode, value: 'Control Voltage Code ' + voltCode };
   }
   pos += 2;
@@ -770,8 +780,9 @@ function renderResults(raw, d) {
   if (d.interrupting) summaryFields.push(field('Series', d.interrupting.value));
   html += card('Breaker Summary', 'valid', summaryFields);
 
-  /* 2. Interrupting & Short-Time Ratings — prominent kA display */
-  if (d.interrupting && d.frame) {
+  /* 2. Interrupting & Short-Time Ratings — skip for non-automatic (sensor XX) */
+  var isNonAuto = d.sensor && d.sensor.code === 'XX';
+  if (d.interrupting && d.frame && !isNonAuto) {
     const ratingKey = d.interrupting.code + d.frame.code;
     const ratings = INT_RATINGS[ratingKey];
     if (ratings) {
@@ -786,6 +797,10 @@ function renderResults(raw, d) {
         field('254V', ratings.st.v254 + ' kA'),
       ]);
     }
+  } else if (isNonAuto) {
+    html += card('Interrupting Capacity', 'valid', [
+      field('Rating', 'N/A \u2014 Non-Automatic Breaker'),
+    ]);
   }
 
   /* 3. Sensor & Control Voltage — merged */
