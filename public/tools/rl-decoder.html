@@ -24,18 +24,8 @@
   --gray-700: #374151;
   --gray-800: #1f2937;
   --white: #ffffff;
-  --blue: #2563eb;
-  --blue-light: #dbeafe;
   --green: #16a34a;
   --green-light: #dcfce7;
-  --yellow: #ca8a04;
-  --yellow-light: #fef9c3;
-  --purple: #7c3aed;
-  --purple-light: #ede9fe;
-  --teal: #0d9488;
-  --teal-light: #ccfbf1;
-  --orange: #ea580c;
-  --orange-light: #fff7ed;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -114,19 +104,13 @@ body {
   background: var(--gray-100); border: 2px solid var(--gray-200); border-radius: 6px;
   transition: all 0.2s;
 }
-.char-box.active { background: var(--white); border-color: var(--red); color: var(--red); }
-.char-box.g-connection { border-color: var(--blue); color: var(--blue); background: var(--blue-light); }
-.char-box.g-interrupting { border-color: var(--purple); color: var(--purple); background: var(--purple-light); }
-.char-box.g-frame { border-color: var(--green); color: var(--green); background: var(--green-light); }
-.char-box.g-operation { border-color: var(--yellow); color: var(--yellow); background: var(--yellow-light); }
-.char-box.g-sensor { border-color: var(--teal); color: var(--teal); background: var(--teal-light); }
-.char-box.g-voltage { border-color: var(--orange); color: var(--orange); background: var(--orange-light); }
-.char-box.g-system { border-color: #e11d48; color: #e11d48; background: #fff1f2; }
-.char-box.g-trip { border-color: #7c3aed; color: #7c3aed; background: #ede9fe; }
-.char-box.g-options { border-color: var(--gray-600); color: var(--gray-600); background: var(--gray-50); }
+.char-box.entered { background: var(--black); color: var(--white); border-color: var(--black); }
+.char-box.error { background: #fecaca; color: #dc2626; border-color: #f87171; }
+.char-box.separator { width: 8px; border: none; background: transparent; }
 
-.pos-labels { display: flex; gap: 2px; margin-top: 2px; }
+.pos-labels { display: flex; gap: 2px; margin-top: 1px; }
 .pos-label { width: 32px; text-align: center; font-size: 0.55rem; color: var(--gray-400); }
+.pos-label.sep { width: 8px; }
 
 /* Result Cards */
 .results { display: none; }
@@ -145,15 +129,7 @@ body {
 .field-label { font-size: 0.8rem; color: var(--gray-500); }
 .field-value { font-size: 0.8rem; font-weight: 600; color: var(--gray-800); text-align: right; max-width: 60%; }
 
-.card.c-connection { border-left-color: var(--blue); }
-.card.c-interrupting { border-left-color: var(--purple); }
-.card.c-frame { border-left-color: var(--green); }
-.card.c-operation { border-left-color: var(--yellow); }
-.card.c-sensor { border-left-color: var(--teal); }
-.card.c-voltage { border-left-color: var(--orange); }
-.card.c-system { border-left-color: #e11d48; }
-.card.c-trip { border-left-color: #7c3aed; }
-.card.c-options { border-left-color: var(--gray-600); }
+.card.valid { border-left-color: var(--red); }
 
 .copy-row { margin-top: 12px; text-align: center; }
 .btn-copy {
@@ -161,7 +137,7 @@ body {
   background: var(--white); color: var(--gray-700); font-weight: 600; font-size: 0.8rem;
   cursor: pointer; transition: all 0.2s;
 }
-.btn-copy:hover { border-color: var(--red); color: var(--red); }
+.btn-copy:hover { background: var(--gray-200); }
 .btn-copy.copied { background: var(--green-light); border-color: var(--green); color: var(--green); }
 
 /* Error */
@@ -252,7 +228,7 @@ body {
 
   <!-- Copy -->
   <div class="copy-row" id="copyRow" style="display:none;">
-    <button class="btn-copy" id="copyBtn" onclick="copyCatalog()">Copy Catalog #</button>
+    <button class="btn-copy" id="copyBtn" onclick="copyCatalog()">Copy Catalog Number</button>
   </div>
 </div>
 
@@ -766,12 +742,12 @@ function renderResults(raw, d) {
   if (d.connection) summaryFields.push(field('Connection', d.connection.value));
   if (d.operation) summaryFields.push(field('Operation', d.operation.value));
   if (d.frame) summaryFields.push(field('Frame', d.frame.amps + 'A'));
-  html += card('Breaker Summary', 'c-connection', summaryFields);
+  html += card('Breaker Summary', 'valid', summaryFields);
 
   /* Interrupting card */
   if (d.interrupting) {
     const intType = d.interrupting.code === 'S' ? 'RL' : d.interrupting.code === 'E' ? 'RLE' : d.interrupting.code === 'I' ? 'RLI' : 'RLF';
-    html += card('Interrupting Type', 'c-interrupting', [
+    html += card('Interrupting Type', 'valid', [
       field('Code', d.interrupting.code),
       field('Series', intType),
       field('Description', d.interrupting.value),
@@ -780,7 +756,7 @@ function renderResults(raw, d) {
 
   /* Frame card */
   if (d.frame) {
-    html += card('Frame Size', 'c-frame', [
+    html += card('Frame Size', 'valid', [
       field('Code', d.frame.code),
       field('Frame', d.frame.value),
       field('Max Amperes', d.frame.amps + 'A'),
@@ -795,12 +771,12 @@ function renderResults(raw, d) {
     ];
     if (d.sensor.dual) sensorFields.push(field('Type', 'Dual-Wound (1200A max per MCT)'));
     if (d.sensor.code === 'XX') sensorFields.push(field('Note', 'Non-Automatic \u2014 No tripping sensor installed'));
-    html += card('Tripping Sensor', 'c-sensor', sensorFields);
+    html += card('Tripping Sensor', 'valid', sensorFields);
   }
 
   /* Control Voltage card */
   if (d.voltage) {
-    html += card('Control Voltage', 'c-voltage', [
+    html += card('Control Voltage', 'valid', [
       field('Code', d.voltage.code),
       field('Description', d.voltage.value),
     ]);
@@ -817,7 +793,7 @@ function renderResults(raw, d) {
     if (d.system.nec) sysFields.push(field('NEC', 'Yes'));
     if (d.system.neut) sysFields.push(field('Neutral', d.system.neut === 'N' ? 'Neutral Metering' : d.system.neut));
     if (d.system.wiring) sysFields.push(field('Wiring Diagram', d.system.wiring));
-    html += card('System (3 Phase)', 'c-system', sysFields);
+    html += card('System (3 Phase)', 'valid', sysFields);
   }
 
   /* Trip Unit card */
@@ -828,18 +804,18 @@ function renderResults(raw, d) {
       field('Type', d.trip.type),
     ];
     if (d.trip.features) tripFields.push(field('Features', d.trip.features));
-    html += card('Trip Unit', 'c-trip', tripFields);
+    html += card('Trip Unit', 'valid', tripFields);
   }
 
   /* Options card */
   if (d.options && d.options.length > 0) {
     const optFields = d.options.map(function(o) { return field(o.code, o.value); });
-    html += card('Optional Devices', 'c-options', optFields);
+    html += card('Optional Devices', 'valid', optFields);
   }
 
   /* Suffix card */
   if (d.suffix) {
-    html += card('Suffix', 'c-options', [
+    html += card('Suffix', 'valid', [
       field('Code', '-' + d.suffix),
       field('Description', 'Factory modification / revision suffix'),
     ]);
@@ -863,48 +839,59 @@ function renderCharMap(raw, d) {
   const groups = [];
   let p = 0;
 
-  /* RL prefix (2 chars) */
-  groups.push({ label: 'PREFIX', len: 2, cls: 'active' });
+  groups.push({ label: 'PREFIX', start: 0, len: 2 });
   p += 2;
+  if (d.connection) { groups.push({ label: 'CONN', start: p, len: 1 }); p += 1; }
+  if (d.interrupting) { groups.push({ label: 'INT', start: p, len: 1 }); p += 1; }
+  if (d.frame) { groups.push({ label: 'FRAME', start: p, len: 1 }); p += 1; }
+  if (d.operation) { groups.push({ label: 'OPER', start: p, len: 1 }); p += 1; }
+  if (d.sensor) { groups.push({ label: 'SENSOR', start: p, len: 2 }); p += 2; }
+  if (d.voltage) { groups.push({ label: 'CTRL V', start: p, len: 2 }); p += 2; }
+  if (d.system) { groups.push({ label: 'SYS', start: p, len: 1 }); p += 1; }
+  if (d.trip) { groups.push({ label: 'TRIP', start: p, len: 2 }); p += 2; }
+  /* Remaining chars (options + dash suffix) */
+  const baseLen = raw.replace(/-.*$/, '').length;
+  if (p < baseLen) { groups.push({ label: 'OPTIONS', start: p, len: baseLen - p }); p = baseLen; }
+  if (d.suffix) { groups.push({ label: 'SUFFIX', start: p, len: raw.length - p }); }
 
-  if (d.connection) { groups.push({ label: 'CONN', len: 1, cls: 'g-connection' }); p += 1; }
-  if (d.interrupting) { groups.push({ label: 'INT', len: 1, cls: 'g-interrupting' }); p += 1; }
-  if (d.frame) { groups.push({ label: 'FRAME', len: 1, cls: 'g-frame' }); p += 1; }
-  if (d.operation) { groups.push({ label: 'OPER', len: 1, cls: 'g-operation' }); p += 1; }
-  if (d.sensor) { groups.push({ label: 'SENSOR', len: 2, cls: 'g-sensor' }); p += 2; }
-  if (d.voltage) { groups.push({ label: 'CTRL V', len: 2, cls: 'g-voltage' }); p += 2; }
-  if (d.system) { groups.push({ label: 'SYS', len: 1, cls: 'g-system' }); p += 1; }
-  if (d.trip) { groups.push({ label: 'TRIP', len: 2, cls: 'g-trip' }); p += 2; }
-  if (p < chars.length) { groups.push({ label: 'OPTIONS', len: chars.length - p, cls: 'g-options' }); }
+  for (let g = 0; g < groups.length; g++) {
+    const seg = groups[g];
 
-  for (const g of groups) {
-    const lbl = document.createElement('div');
-    lbl.className = 'group-label';
-    lbl.style.flex = '0 0 ' + (g.len * 34 - 2) + 'px';
-    lbl.textContent = g.label;
-    labels.appendChild(lbl);
-  }
+    /* Group label */
+    const gl = document.createElement('div');
+    gl.className = 'group-label';
+    gl.style.width = (seg.len * 34 - 2) + 'px';
+    gl.textContent = seg.label;
+    labels.appendChild(gl);
 
-  let gi = 0, gc = 0;
-  for (let i = 0; i < chars.length; i++) {
-    const box = document.createElement('div');
-    /* Dash character gets neutral styling */
-    if (chars[i] === '-') {
-      box.className = 'char-box g-options';
-    } else {
-      box.className = 'char-box ' + (groups[gi] ? groups[gi].cls : 'g-options');
+    /* Char boxes */
+    for (let i = 0; i < seg.len; i++) {
+      const ch = chars[seg.start + i] || '';
+      const box = document.createElement('div');
+      box.className = 'char-box';
+      if (ch && ch !== '-') box.classList.add('entered');
+      box.textContent = ch;
+      boxes.appendChild(box);
+
+      const pl = document.createElement('div');
+      pl.className = 'pos-label';
+      pl.textContent = seg.start + i + 1;
+      posLbls.appendChild(pl);
     }
-    box.textContent = chars[i];
-    boxes.appendChild(box);
 
-    const pl = document.createElement('div');
-    pl.className = 'pos-label';
-    pl.textContent = i + 1;
-    posLbls.appendChild(pl);
-
-    if (chars[i] !== '-') {
-      gc++;
-      if (groups[gi] && gc >= groups[gi].len) { gi++; gc = 0; }
+    /* Separator between groups */
+    if (g < groups.length - 1) {
+      const sep = document.createElement('div');
+      sep.className = 'char-box separator';
+      boxes.appendChild(sep);
+      const sepL = document.createElement('div');
+      sepL.className = 'pos-label sep';
+      posLbls.appendChild(sepL);
+      const gs = document.createElement('div');
+      gs.className = 'group-label';
+      gs.style.width = '8px';
+      gs.style.borderBottom = 'none';
+      labels.appendChild(gs);
     }
   }
 }
@@ -972,7 +959,7 @@ function showCopied() {
   var btn = document.getElementById('copyBtn');
   btn.textContent = 'Copied!';
   btn.classList.add('copied');
-  setTimeout(function() { btn.textContent = 'Copy Catalog #'; btn.classList.remove('copied'); }, 2000);
+  setTimeout(function() { btn.textContent = 'Copy Catalog Number'; btn.classList.remove('copied'); }, 2000);
 }
 
 /* Enter key to decode */
