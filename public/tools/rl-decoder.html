@@ -270,6 +270,30 @@ const OPERATION = {
   'E': 'Electric / Manual (60Hz)',
 };
 
+/* Interrupting Ratings (kA RMS Symmetrical)
+   Key: interrupting code + frame code → { v635, v508, v254 }
+   Sources: Siemens SG-3061/SG-3068, Quality Switchgear specs */
+const INT_RATINGS = {
+  'S0': { v635: 30, v508: 30, v254: 30 },
+  'S1': { v635: 50, v508: 65, v254: 65 },
+  'S2': { v635: 65, v508: 65, v254: 65 },
+  'S3': { v635: 65, v508: 65, v254: 65 },
+  'S4': { v635: 85, v508: 85, v254: 85 },
+  'S5': { v635: 100, v508: 100, v254: 100 },
+  'E0': { v635: 42, v508: 42, v254: 42 },
+  'E1': { v635: 65, v508: 65, v254: 65 },
+  'E2': { v635: 85, v508: 85, v254: 85 },
+  'E3': { v635: 85, v508: 100, v254: 100 },
+  'E4': { v635: 85, v508: 100, v254: 100 },
+  'I0': { v635: 65, v508: 85, v254: 85 },
+  'F0': { v635: 200, v508: 200, v254: 200 },
+  'F1': { v635: 200, v508: 200, v254: 200 },
+  'F2': { v635: 200, v508: 200, v254: 200 },
+  'F3': { v635: 200, v508: 200, v254: 200 },
+  'F4': { v635: 200, v508: 200, v254: 200 },
+  'F5': { v635: 200, v508: 200, v254: 200 },
+};
+
 /* Tripping Sensors: code -> { label, frames[] }
    From the selection diagram table. Sensor code is 2 chars. */
 const SENSORS = {
@@ -729,63 +753,50 @@ function renderResults(raw, d) {
   renderCharMap(raw, d);
 
   /* Build breaker designation */
-  let designation = 'RL';
+  let series = 'RL';
   if (d.interrupting) {
-    if (d.interrupting.code === 'E') designation = 'RLE';
-    else if (d.interrupting.code === 'I') designation = 'RLI';
-    else if (d.interrupting.code === 'F') designation = 'RLF';
+    if (d.interrupting.code === 'E') series = 'RLE';
+    else if (d.interrupting.code === 'I') series = 'RLI';
+    else if (d.interrupting.code === 'F') series = 'RLF';
   }
-  if (d.frame) designation += '-' + d.frame.amps;
+  const designation = d.frame ? series + '-' + d.frame.amps : series;
 
-  /* Summary card */
+  /* 1. Breaker Summary — top card with designation, frame, connection, operation */
   const summaryFields = [field('Designation', designation)];
+  if (d.frame) summaryFields.push(field('Frame', d.frame.amps + 'A'));
   if (d.connection) summaryFields.push(field('Connection', d.connection.value));
   if (d.operation) summaryFields.push(field('Operation', d.operation.value));
-  if (d.frame) summaryFields.push(field('Frame', d.frame.amps + 'A'));
+  if (d.interrupting) summaryFields.push(field('Series', d.interrupting.value));
   html += card('Breaker Summary', 'valid', summaryFields);
 
-  /* Interrupting card */
-  if (d.interrupting) {
-    const intType = d.interrupting.code === 'S' ? 'RL' : d.interrupting.code === 'E' ? 'RLE' : d.interrupting.code === 'I' ? 'RLI' : 'RLF';
-    html += card('Interrupting Type', 'valid', [
-      field('Code', d.interrupting.code),
-      field('Series', intType),
-      field('Description', d.interrupting.value),
-    ]);
+  /* 2. Interrupting Ratings — prominent kA display */
+  if (d.interrupting && d.frame) {
+    const ratingKey = d.interrupting.code + d.frame.code;
+    const ratings = INT_RATINGS[ratingKey];
+    if (ratings) {
+      html += card('Interrupting Capacity', 'valid', [
+        field('635V', ratings.v635 + ' kA RMS Sym.'),
+        field('508V', ratings.v508 + ' kA RMS Sym.'),
+        field('254V', ratings.v254 + ' kA RMS Sym.'),
+      ]);
+    }
   }
 
-  /* Frame card */
-  if (d.frame) {
-    html += card('Frame Size', 'valid', [
-      field('Code', d.frame.code),
-      field('Frame', d.frame.value),
-      field('Max Amperes', d.frame.amps + 'A'),
-    ]);
+  /* 3. Sensor & Control Voltage — merged */
+  if (d.sensor || d.voltage) {
+    const sFields = [];
+    if (d.sensor) {
+      sFields.push(field('Tripping Sensor', d.sensor.value));
+      if (d.sensor.dual) sFields.push(field('Sensor Type', 'Dual-Wound (1200A max per MCT)'));
+      if (d.sensor.code === 'XX') sFields.push(field('Note', 'Non-Automatic \u2014 No tripping sensor installed'));
+    }
+    if (d.voltage) sFields.push(field('Control Voltage', d.voltage.value));
+    html += card('Sensor & Control', 'valid', sFields);
   }
 
-  /* Sensor card */
-  if (d.sensor) {
-    const sensorFields = [
-      field('Code', d.sensor.code),
-      field('Rating', d.sensor.value),
-    ];
-    if (d.sensor.dual) sensorFields.push(field('Type', 'Dual-Wound (1200A max per MCT)'));
-    if (d.sensor.code === 'XX') sensorFields.push(field('Note', 'Non-Automatic \u2014 No tripping sensor installed'));
-    html += card('Tripping Sensor', 'valid', sensorFields);
-  }
-
-  /* Control Voltage card */
-  if (d.voltage) {
-    html += card('Control Voltage', 'valid', [
-      field('Code', d.voltage.code),
-      field('Description', d.voltage.value),
-    ]);
-  }
-
-  /* System card */
+  /* 4. System Wiring */
   if (d.system) {
     const sysFields = [
-      field('Code', d.system.code),
       field('Configuration', d.system.desc),
       field('Wires', d.system.wires + '-Wire'),
     ];
@@ -793,13 +804,12 @@ function renderResults(raw, d) {
     if (d.system.nec) sysFields.push(field('NEC', 'Yes'));
     if (d.system.neut) sysFields.push(field('Neutral', d.system.neut === 'N' ? 'Neutral Metering' : d.system.neut));
     if (d.system.wiring) sysFields.push(field('Wiring Diagram', d.system.wiring));
-    html += card('System (3 Phase)', 'valid', sysFields);
+    html += card('System Wiring', 'valid', sysFields);
   }
 
-  /* Trip Unit card */
+  /* 5. Trip Unit */
   if (d.trip) {
     const tripFields = [
-      field('Code', d.trip.code),
       field('Trip Unit', d.trip.label),
       field('Type', d.trip.type),
     ];
@@ -807,17 +817,16 @@ function renderResults(raw, d) {
     html += card('Trip Unit', 'valid', tripFields);
   }
 
-  /* Options card */
+  /* 6. Optional Devices */
   if (d.options && d.options.length > 0) {
     const optFields = d.options.map(function(o) { return field(o.code, o.value); });
     html += card('Optional Devices', 'valid', optFields);
   }
 
-  /* Suffix card */
+  /* 7. Suffix */
   if (d.suffix) {
     html += card('Suffix', 'valid', [
-      field('Code', '-' + d.suffix),
-      field('Description', 'Factory modification / revision suffix'),
+      field('-' + d.suffix, 'Factory modification / revision suffix'),
     ]);
   }
 
