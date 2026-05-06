@@ -270,28 +270,29 @@ const OPERATION = {
   'E': 'Electric / Manual (60Hz)',
 };
 
-/* Interrupting Ratings (kA RMS Symmetrical)
-   Key: interrupting code + frame code → { v635, v508, v254 }
-   Sources: Siemens SG-3061/SG-3068, Quality Switchgear specs */
+/* Interrupting & Short-Time Ratings (kA RMS Symmetrical)
+   Key: interrupting code + frame code → { int: {}, st: {} }
+   int = interrupting capacity, st = short-time withstand
+   Sources: Siemens SG-3061/SG-3068, verified against eBay nameplate photos */
 const INT_RATINGS = {
-  'S0': { v635: 30, v508: 30, v254: 30 },
-  'S1': { v635: 50, v508: 65, v254: 65 },
-  'S2': { v635: 65, v508: 65, v254: 65 },
-  'S3': { v635: 65, v508: 65, v254: 65 },
-  'S4': { v635: 85, v508: 85, v254: 85 },
-  'S5': { v635: 100, v508: 100, v254: 100 },
-  'E0': { v635: 42, v508: 42, v254: 42 },
-  'E1': { v635: 65, v508: 65, v254: 65 },
-  'E2': { v635: 85, v508: 85, v254: 85 },
-  'E3': { v635: 85, v508: 100, v254: 100 },
-  'E4': { v635: 85, v508: 100, v254: 100 },
-  'I0': { v635: 65, v508: 85, v254: 85 },
-  'F0': { v635: 200, v508: 200, v254: 200 },
-  'F1': { v635: 200, v508: 200, v254: 200 },
-  'F2': { v635: 200, v508: 200, v254: 200 },
-  'F3': { v635: 200, v508: 200, v254: 200 },
-  'F4': { v635: 200, v508: 200, v254: 200 },
-  'F5': { v635: 200, v508: 200, v254: 200 },
+  'S0': { int: { v635: 30, v508: 30, v254: 30 }, st: { v635: 30, v508: 30, v254: 30 } },
+  'S1': { int: { v635: 65, v508: 65, v254: 65 }, st: { v635: 50, v508: 50, v254: 50 } },
+  'S2': { int: { v635: 65, v508: 65, v254: 65 }, st: { v635: 65, v508: 65, v254: 65 } },
+  'S3': { int: { v635: 65, v508: 65, v254: 65 }, st: { v635: 65, v508: 65, v254: 65 } },
+  'S4': { int: { v635: 85, v508: 85, v254: 85 }, st: { v635: 85, v508: 85, v254: 85 } },
+  'S5': { int: { v635: 100, v508: 100, v254: 100 }, st: { v635: 100, v508: 100, v254: 100 } },
+  'E0': { int: { v635: 42, v508: 42, v254: 42 }, st: { v635: 42, v508: 42, v254: 42 } },
+  'E1': { int: { v635: 65, v508: 65, v254: 65 }, st: { v635: 65, v508: 65, v254: 65 } },
+  'E2': { int: { v635: 85, v508: 85, v254: 85 }, st: { v635: 85, v508: 85, v254: 85 } },
+  'E3': { int: { v635: 100, v508: 100, v254: 100 }, st: { v635: 85, v508: 85, v254: 85 } },
+  'E4': { int: { v635: 100, v508: 100, v254: 100 }, st: { v635: 85, v508: 85, v254: 85 } },
+  'I0': { int: { v635: 85, v508: 85, v254: 85 }, st: { v635: 65, v508: 65, v254: 65 } },
+  'F0': { int: { v635: 200, v508: 200, v254: 200 }, st: { v635: 200, v508: 200, v254: 200 } },
+  'F1': { int: { v635: 200, v508: 200, v254: 200 }, st: { v635: 200, v508: 200, v254: 200 } },
+  'F2': { int: { v635: 200, v508: 200, v254: 200 }, st: { v635: 200, v508: 200, v254: 200 } },
+  'F3': { int: { v635: 200, v508: 200, v254: 200 }, st: { v635: 200, v508: 200, v254: 200 } },
+  'F4': { int: { v635: 200, v508: 200, v254: 200 }, st: { v635: 200, v508: 200, v254: 200 } },
+  'F5': { int: { v635: 200, v508: 200, v254: 200 }, st: { v635: 200, v508: 200, v254: 200 } },
 };
 
 /* Tripping Sensors: code -> { label, frames[] }
@@ -769,15 +770,20 @@ function renderResults(raw, d) {
   if (d.interrupting) summaryFields.push(field('Series', d.interrupting.value));
   html += card('Breaker Summary', 'valid', summaryFields);
 
-  /* 2. Interrupting Ratings — prominent kA display */
+  /* 2. Interrupting & Short-Time Ratings — prominent kA display */
   if (d.interrupting && d.frame) {
     const ratingKey = d.interrupting.code + d.frame.code;
     const ratings = INT_RATINGS[ratingKey];
     if (ratings) {
-      html += card('Interrupting Capacity', 'valid', [
-        field('635V', ratings.v635 + ' kA RMS Sym.'),
-        field('508V', ratings.v508 + ' kA RMS Sym.'),
-        field('254V', ratings.v254 + ' kA RMS Sym.'),
+      html += card('Interrupting Capacity (kA RMS Sym.)', 'valid', [
+        field('635V', ratings.int.v635 + ' kA'),
+        field('508V', ratings.int.v508 + ' kA'),
+        field('254V', ratings.int.v254 + ' kA'),
+      ]);
+      html += card('Short-Time Withstand (kA RMS Sym.)', 'valid', [
+        field('635V', ratings.st.v635 + ' kA'),
+        field('508V', ratings.st.v508 + ' kA'),
+        field('254V', ratings.st.v254 + ' kA'),
       ]);
     }
   }
