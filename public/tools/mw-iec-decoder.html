@@ -391,6 +391,12 @@
   }
   .btn-copy:hover { background: var(--gray-200); }
   .btn-copy.copied { background: var(--green-light); color: var(--green); border-color: var(--green); }
+  .btn-pdf {
+    padding: 8px 20px; border: 2px solid var(--red); border-radius: 8px;
+    background: var(--white); color: var(--red); font-weight: 600; font-size: 0.8rem;
+    cursor: pointer; transition: all 0.2s; margin-left: 8px;
+  }
+  .btn-pdf:hover { background: var(--red); color: var(--white); }
 
   /* iOS / Mobile notice for Quick Look (no JS) */
   .ios-notice {
@@ -1578,6 +1584,7 @@ function renderBreakerResults(chars, r, errors, warnings, isDefault, isPartial, 
   }
 
   html += '<button class="btn-copy" onclick="copyCatalog(\'' + chars + '\', this)">Copy Catalog Number</button>';
+  html += ' <button class="btn-pdf" onclick="downloadDecoderPDF()">Download PDF</button>';
 
   el.innerHTML = html;
 }
@@ -1648,6 +1655,7 @@ function renderCassetteResults(chars, r, errors, isDefault, isPartial, enteredLe
   html += '</div>';
 
   html += '<button class="btn-copy" onclick="copyCatalog(\'' + chars + '\', this)">Copy Catalog Number</button>';
+  html += ' <button class="btn-pdf" onclick="downloadDecoderPDF()">Download PDF</button>';
 
   el.innerHTML = html;
 }
@@ -1704,7 +1712,7 @@ document.getElementById('catInput').addEventListener('keydown', function(e) {
   if (e.key === 'Enter') { e.preventDefault(); decode(); }
 });
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js" defer></script>
-<script src="/tools/decoder-pdf.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+<script src="/tools/decoder-pdf.js"></script>
 </body>
 </html>

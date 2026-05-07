@@ -188,6 +188,12 @@ body {
 }
 .btn-copy:hover { background: var(--gray-200); }
 .btn-copy.copied { background: var(--green-light); color: var(--green); border-color: var(--green); }
+.btn-pdf {
+  padding: 8px 20px; border: 2px solid var(--red); border-radius: 8px;
+  background: var(--white); color: var(--red); font-weight: 600; font-size: 0.8rem;
+  cursor: pointer; transition: all 0.2s; margin-left: 8px;
+}
+.btn-pdf:hover { background: var(--red); color: var(--white); }
 
 .ex-btn:focus-visible {
   outline: 2px solid var(--red); outline-offset: 2px;
@@ -1117,6 +1123,7 @@ function renderResults(p) {
   // NOTE: event listener is attached AFTER innerHTML is set (see decode()).
   // Do NOT use inline onclick — that would allow attribute injection via p.raw.
   html += '<button class="btn-copy" id="btnCopyCat" type="button">Copy Catalog Number</button>';
+  html += ' <button class="btn-pdf" onclick="downloadDecoderPDF()">Download PDF</button>';
   html += '</div>';
 
 
@@ -1475,8 +1482,8 @@ document.getElementById('catInput').addEventListener('keydown', function(e) {
 // Init
 renderCharMap(null);
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js" defer></script>
-<script src="/tools/decoder-pdf.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+<script src="/tools/decoder-pdf.js"></script>
 
 </body>
 </html>

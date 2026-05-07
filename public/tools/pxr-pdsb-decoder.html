@@ -184,6 +184,12 @@ body {
 }
 .btn-copy:hover { background: var(--gray-200); }
 .btn-copy.copied { background: var(--green-light); color: var(--green); border-color: var(--green); }
+.btn-pdf {
+  padding: 8px 20px; border: 2px solid var(--red); border-radius: 8px;
+  background: var(--white); color: var(--red); font-weight: 600; font-size: 0.8rem;
+  cursor: pointer; transition: all 0.2s; margin-left: 8px;
+}
+.btn-pdf:hover { background: var(--red); color: var(--white); }
 
 .footer {
   text-align: center; padding: 20px; font-size: 0.7rem; color: var(--gray-400); margin-top: 20px;
@@ -1212,6 +1218,7 @@ function renderBreakerResults(d) {
     html += '<div class="partial-tag">Partial &mdash; ' + d.enteredLen + ' of 25 chars entered</div>';
   }
   html += '<button class="btn-copy" onclick="copyCatalog(\'' + d.catalog + '\', this)">Copy Full Catalog Number</button>';
+  html += ' <button class="btn-pdf" onclick="downloadDecoderPDF()">Download PDF</button>';
   html += '</div>';
 
   // Warnings
@@ -1387,6 +1394,7 @@ function renderCassetteResults(d) {
     html += '<div class="partial-tag">Partial &mdash; ' + d.enteredLen + ' of 15 chars entered</div>';
   }
   html += '<button class="btn-copy" onclick="copyCatalog(\'' + d.catalog + '\', this)">Copy Full Catalog Number</button>';
+  html += ' <button class="btn-pdf" onclick="downloadDecoderPDF()">Download PDF</button>';
   html += '</div>';
 
   if (d.errors.length > 0) {
@@ -1565,8 +1573,8 @@ document.getElementById('catInput').addEventListener('keydown', function(e) {
 // Init
 renderCharMap('', [], 0, new Set(), new Set());
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js" defer></script>
-<script src="/tools/decoder-pdf.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+<script src="/tools/decoder-pdf.js"></script>
 
 </body>
 </html>
