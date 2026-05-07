@@ -250,7 +250,7 @@ const CONNECTION = {
 
 const INTERRUPTING = {
   'S': 'RL (Standard) — 800 thru 5000A',
-  'E': 'RLE (High) — 800, 2000 & 4000A Only',
+  'E': 'RLE (High) — 800 thru 4000A',
   'I': 'RLI — 800A Only',
   'F': 'RLF — 800 thru 5000A Drawout Only',
 };
@@ -667,8 +667,8 @@ function decode() {
     showError('Invalid Combination', 'RLI is only available in 800A frame (code 0).');
     return;
   }
-  if (intCode === 'E' && !['0','2','4'].includes(frameCode)) {
-    showError('Invalid Combination', 'RLE is only available in 800A (0), 2000A (2), and 4000A (4) frames.');
+  if (intCode === 'E' && frameCode === '5') {
+    showError('Invalid Combination', 'RLE is only available through 4000A (frames 0-4).');
     return;
   }
   pos++;
