@@ -71,7 +71,8 @@ export default async function ManualPage({ params }: ManualPageProps) {
   const manual = await getManualBySlug(slug);
   if (!manual) notFound();
 
-  const relatedManuals = await getRelatedManuals(manual, 4);
+  // Fire related manuals query immediately — don't block on it until we need it
+  const relatedManualsPromise = getRelatedManuals(manual, 4);
 
   // Rich JSON-LD: TechArticle with part numbers, manufacturer, category
   const techArticleJsonLd = {
@@ -137,6 +138,8 @@ export default async function ManualPage({ params }: ManualPageProps) {
       { "@type": "ListItem", "position": 5, "name": manual.title },
     ],
   };
+
+  const relatedManuals = await relatedManualsPromise;
 
   return (
     <div className="bg-slate-50 min-h-screen">

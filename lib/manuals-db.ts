@@ -221,12 +221,16 @@ export async function searchManuals(filters: SearchFilters): Promise<SearchResul
 }
 
 export async function getManualBySlug(slug: string): Promise<Manual | null> {
+  const cacheKey = `manual:${slug}`;
+  const cached = getCached<Manual>(cacheKey);
+  if (cached) return cached;
+
   const result = await getDb().execute({
     sql: 'SELECT * FROM manuals WHERE slug = ?',
     args: [slug],
   });
   if (result.rows.length === 0) return null;
-  return rowToManual(result.rows[0]);
+  return setCache(cacheKey, rowToManual(result.rows[0]), CACHE_5MIN);
 }
 
 export async function getManualById(id: number): Promise<Manual | null> {
@@ -341,32 +345,28 @@ export async function getManufacturerManuals(manufacturer: string, limit = 12): 
   return setCache(cacheKey, manuals, CACHE_5MIN);
 }
 
+const RELATED_COLS = 'id, slug, title, manual_number, category, manufacturer, subcategory, description, pdf_url, page_count, file_size_bytes, keywords, created_at, updated_at';
+
 export async function getRelatedManuals(manual: Manual, limit = 4): Promise<Manual[]> {
   const cacheKey = `related:${manual.id}`;
   const cached = getCached<Manual[]>(cacheKey);
   if (cached) return cached;
 
-  // Two fast indexed queries instead of one broad scan
-  const sameManufacturer = await getDb().execute({
-    sql: `SELECT * FROM manuals WHERE manufacturer = ? AND id != ? ORDER BY
-            CASE WHEN category = ? THEN 0 ELSE 1 END, title ASC LIMIT ?`,
-    args: [manual.manufacturer, manual.id, manual.category, limit],
+  // Single query: same manufacturer (prefer same category) UNION same category different manufacturer
+  const result = await getDb().execute({
+    sql: `SELECT ${RELATED_COLS} FROM (
+            SELECT ${RELATED_COLS}, 0 as sort_group,
+              CASE WHEN category = ? THEN 0 ELSE 1 END as sort_rank
+            FROM manuals WHERE manufacturer = ? AND id != ?
+            UNION ALL
+            SELECT ${RELATED_COLS}, 1 as sort_group, 0 as sort_rank
+            FROM manuals WHERE category = ? AND manufacturer != ? AND id != ?
+          ) ORDER BY sort_group, sort_rank, title ASC LIMIT ?`,
+    args: [manual.category, manual.manufacturer, manual.id,
+           manual.category, manual.manufacturer, manual.id, limit],
   });
 
-  let results = sameManufacturer.rows.map(rowToManual);
-
-  // Fill remaining slots from same category if needed
-  if (results.length < limit) {
-    const ids = [manual.id, ...results.map(r => r.id)];
-    const placeholders = ids.map(() => '?').join(',');
-    const sameCategory = await getDb().execute({
-      sql: `SELECT * FROM manuals WHERE category = ? AND id NOT IN (${placeholders}) ORDER BY title ASC LIMIT ?`,
-      args: [manual.category, ...ids, limit - results.length],
-    });
-    results = results.concat(sameCategory.rows.map(rowToManual));
-  }
-
-  return setCache(cacheKey, results, CACHE_5MIN);
+  return setCache(cacheKey, result.rows.map(rowToManual), CACHE_5MIN);
 }
 
 export async function getTotalManualCount(): Promise<number> {
