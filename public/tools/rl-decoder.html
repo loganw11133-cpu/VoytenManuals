@@ -569,9 +569,10 @@ function decode() {
     dashSuffix = rawInput.substring(dashIdx + 1);
   }
 
+  /* Auto-prepend RL prefix if missing — technicians often omit it */
   if (!raw.startsWith('RL')) {
-    showError('Invalid Prefix', 'Siemens RL catalog numbers must start with "RL".');
-    return;
+    raw = 'RL' + raw;
+    document.getElementById('catInput').value = dashSuffix ? raw + '-' + dashSuffix : raw;
   }
 
   const cat = raw.substring(2);
