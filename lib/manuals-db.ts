@@ -301,6 +301,46 @@ export async function getSubcategories(category?: string, manufacturer?: string)
   return setCache(cacheKey, subcategories, CACHE_1HR);
 }
 
+export async function getManufacturerBySlug(slug: string): Promise<Manufacturer | null> {
+  const manufacturers = await getManufacturers();
+  return manufacturers.find(m => m.slug === slug) || null;
+}
+
+export interface ManufacturerCategoryBreakdown {
+  category: string;
+  count: number;
+}
+
+export async function getManufacturerCategories(manufacturer: string): Promise<ManufacturerCategoryBreakdown[]> {
+  const cacheKey = `mfr-cats:${manufacturer}`;
+  const cached = getCached<ManufacturerCategoryBreakdown[]>(cacheKey);
+  if (cached) return cached;
+
+  const result = await getDb().execute({
+    sql: 'SELECT category, COUNT(*) as count FROM manuals WHERE manufacturer = ? GROUP BY category ORDER BY count DESC',
+    args: [manufacturer],
+  });
+  const breakdown = result.rows.map(row => ({
+    category: row.category as string,
+    count: Number(row.count),
+  }));
+  return setCache(cacheKey, breakdown, CACHE_1HR);
+}
+
+export async function getManufacturerManuals(manufacturer: string, limit = 12): Promise<Manual[]> {
+  const cacheKey = `mfr-manuals:${manufacturer}:${limit}`;
+  const cached = getCached<Manual[]>(cacheKey);
+  if (cached) return cached;
+
+  const result = await getDb().execute({
+    sql: `SELECT * FROM manuals WHERE manufacturer = ? AND pdf_url != '' AND pdf_url IS NOT NULL
+          ORDER BY search_priority DESC, title ASC LIMIT ?`,
+    args: [manufacturer, limit],
+  });
+  const manuals = result.rows.map(rowToManual);
+  return setCache(cacheKey, manuals, CACHE_5MIN);
+}
+
 export async function getRelatedManuals(manual: Manual, limit = 4): Promise<Manual[]> {
   const cacheKey = `related:${manual.id}`;
   const cached = getCached<Manual[]>(cacheKey);

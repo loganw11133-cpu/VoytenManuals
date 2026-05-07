@@ -39,7 +39,7 @@ export default async function ManufacturersPage() {
       '@type': 'ListItem',
       position: i + 1,
       name: mfr.name,
-      url: `https://voytenmanuals.com/search?manufacturer=${encodeURIComponent(mfr.name)}`,
+      url: `https://voytenmanuals.com/manufacturers/${mfr.slug}`,
     })),
   };
 
@@ -63,7 +63,7 @@ export default async function ManufacturersPage() {
           {manufacturers.map((mfr, i) => (
             <Link
               key={mfr.name}
-              href={`/search?manufacturer=${encodeURIComponent(mfr.name)}`}
+              href={`/manufacturers/${mfr.slug}`}
               className="group bg-white rounded-xl border border-slate-200 p-5 hover:border-[#1a1a1a]/30 hover:shadow-lg transition-all flex items-center justify-between"
             >
               <div>

@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Phone, ChevronRight, BookOpen, ArrowRight, Clock, Truck, Download } from 'lucide-react';
 import Image from 'next/image';
 import ManualSearchBar from '@/components/ManualSearchBar';
-import { getTotalManualCount, getCategories, getManufacturers, getFeaturedManuals } from '@/lib/manuals-db';
+import { getTotalManualCount, getCategories, getManufacturers, getFeaturedManuals, toSlug } from '@/lib/manuals-db';
 import ManualCard from '@/components/ManualCard';
 import YouTubeEmbed from '@/components/YouTubeEmbed';
 
@@ -166,7 +166,7 @@ export default async function Home() {
             {topManufacturers.map((mfr) => (
               <Link
                 key={mfr.name}
-                href={`/search?manufacturer=${encodeURIComponent(mfr.name)}`}
+                href={`/manufacturers/${toSlug(mfr.name)}`}
                 className="px-5 py-2.5 bg-white border border-slate-200 rounded-lg text-slate-700 font-medium text-sm hover:border-[#1a1a1a] hover:text-[#1a1a1a] hover:shadow-sm transition-all"
               >
                 {mfr.name}

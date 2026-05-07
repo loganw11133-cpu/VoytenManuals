@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next';
-import { searchManuals, getCategories, getManufacturers } from '@/lib/manuals-db';
+import { searchManuals, getCategories, getManufacturers, toSlug } from '@/lib/manuals-db';
 
 const baseUrl = 'https://www.voytenmanuals.com';
 const MANUALS_PER_SITEMAP = 1000;
@@ -102,7 +102,7 @@ async function generateStaticAndFilterSitemap(): Promise<MetadataRoute.Sitemap> 
     }));
 
     manufacturerPages = manufacturers.map(mfr => ({
-      url: `${baseUrl}/search?manufacturer=${encodeURIComponent(mfr.name)}`,
+      url: `${baseUrl}/manufacturers/${toSlug(mfr.name)}`,
       lastModified: new Date(),
       changeFrequency: 'weekly' as const,
       priority: 0.7,

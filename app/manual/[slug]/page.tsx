@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { FileText, ChevronRight, Phone, Building2, Tag, BookOpen, ArrowLeft, Layers, Download, Shield, Wrench } from 'lucide-react';
-import { getManualBySlug, getRelatedManuals, formatFileSize } from '@/lib/manuals-db';
+import { getManualBySlug, getRelatedManuals, formatFileSize, toSlug } from '@/lib/manuals-db';
 import ManualCard from '@/components/ManualCard';
 import LeadCaptureForm from '@/components/LeadCaptureForm';
 import DownloadButton from '@/components/DownloadButton';
@@ -133,7 +133,7 @@ export default async function ManualPage({ params }: ManualPageProps) {
       { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://voytenmanuals.com" },
       { "@type": "ListItem", "position": 2, "name": "Manuals", "item": "https://voytenmanuals.com/search" },
       { "@type": "ListItem", "position": 3, "name": manual.category, "item": `https://voytenmanuals.com/search?category=${encodeURIComponent(manual.category)}` },
-      { "@type": "ListItem", "position": 4, "name": manual.manufacturer, "item": `https://voytenmanuals.com/search?manufacturer=${encodeURIComponent(manual.manufacturer)}` },
+      { "@type": "ListItem", "position": 4, "name": manual.manufacturer, "item": `https://voytenmanuals.com/manufacturers/${toSlug(manual.manufacturer)}` },
       { "@type": "ListItem", "position": 5, "name": manual.title },
     ],
   };
@@ -195,7 +195,7 @@ export default async function ManualPage({ params }: ManualPageProps) {
                 {/* Meta info */}
                 <div className="flex flex-wrap gap-3 mb-6">
                   <Link
-                    href={`/search?manufacturer=${encodeURIComponent(manual.manufacturer)}`}
+                    href={`/manufacturers/${toSlug(manual.manufacturer)}`}
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-[#1a1a1a]/10 rounded-lg text-sm text-slate-700 transition-colors"
                   >
                     <Building2 size={14} aria-hidden="true" />
@@ -319,7 +319,7 @@ export default async function ManualPage({ params }: ManualPageProps) {
               <h3 className="font-bold text-slate-900 mb-3">Browse More</h3>
               <div className="space-y-2">
                 <Link
-                  href={`/search?manufacturer=${encodeURIComponent(manual.manufacturer)}`}
+                  href={`/manufacturers/${toSlug(manual.manufacturer)}`}
                   className="block text-sm text-[#1a1a1a] hover:underline"
                 >
                   All {manual.manufacturer} manuals
