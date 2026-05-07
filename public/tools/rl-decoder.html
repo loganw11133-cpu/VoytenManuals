@@ -250,7 +250,7 @@ const CONNECTION = {
 
 const INTERRUPTING = {
   'S': 'RL (Standard) — 800 thru 5000A',
-  'E': 'RLE (High) — 800 thru 4000A',
+  'E': 'RLE (High) — 800, 2000 & 4000A Only',
   'I': 'RLI — 800A Only',
   'F': 'RLF — 800 thru 5000A Drawout Only',
 };
@@ -305,6 +305,11 @@ const INT_RATINGS = {
 
 /* Tripping Sensors: code -> { label, frames[] }
    From the selection diagram table. Sensor code is 2 chars. */
+/* Sensor table corrected 2026-05-07 per cross-reference against dealer listings:
+   - NASWGR RLAS1EAIXLA06X-GB1: AI = 1600A sensor on RL-1600
+   - IPS RLAS2MAJXXG33X-A1HI: AJ = 2000A sensor on RL-2000
+   - NASWGR RLAS4EANXBA06X-G: AN = 4000A sensor on RL-4000
+   Original table was shifted by one position from AI onwards. */
 const SENSORS = {
   'AA': { label: '800/.5 Sensor', frames: ['0','1','2'] },
   'AB': { label: '150/.5 Sensor', frames: ['0','1','2'] },
@@ -314,26 +319,23 @@ const SENSORS = {
   'AF': { label: '600/.5 Sensor', frames: ['0','1','2'] },
   'AG': { label: '800/.5 Sensor', frames: ['0','1','2','3','4','5'] },
   'AH': { label: '1000/.5 Sensor', frames: ['0','1','2','3','4','5'] },
-  'AI': { label: '1200/.5 Sensor', frames: ['1','2','3','4','5'] },
-  'AJ': { label: '1600/.5 Sensor', frames: ['1','2','3','4','5'] },
-  'AK': { label: '2000/.5 Sensor', frames: ['2','3','4','5'] },
-  'AL': { label: '2400/.5 Sensor', frames: ['3','4','5'] },
-  'AM': { label: '2500/.5 Sensor', frames: ['3','4','5'] },
-  'AN': { label: '3000/.5 Sensor', frames: ['3','4','5'] },
-  'AO': { label: '3200/.5 Sensor', frames: ['3','4','5'] },
-  'AP': { label: '4000/.5 Sensor', frames: ['4','5'] },
-  'AQ': { label: '5000/.5 Sensor', frames: ['5'] },
+  'AI': { label: '1600/.5 Sensor', frames: ['1','2','3','4','5'] },
+  'AJ': { label: '2000/.5 Sensor', frames: ['2','3','4','5'] },
+  'AK': { label: '2500/.5 Sensor', frames: ['3','4','5'] },
+  'AL': { label: '3000/.5 Sensor', frames: ['3','4','5'] },
+  'AM': { label: '3200/.5 Sensor', frames: ['3','4','5'] },
+  'AN': { label: '4000/.5 Sensor', frames: ['4','5'] },
+  'AO': { label: '5000/.5 Sensor', frames: ['5'] },
   'XX': { label: 'Non-Automatic (No Sensor)', frames: ['0','1','2','3','4','5'] },
 };
 
-/* Dual-wound sensors (1200A max per MCT) */
+/* Dual-wound sensors (1300A max per NEC) */
 const DUAL_SENSORS = {
-  '2A': { label: '2000/.5 Dual-Wound Sensor', frames: ['2','3','4','5'] },
-  '2B': { label: '2500/.5 Dual-Wound Sensor', frames: ['3','4','5'] },
-  '2C': { label: '3000/.5 Dual-Wound Sensor', frames: ['3','4','5'] },
-  '2D': { label: '3200/.5 Dual-Wound Sensor', frames: ['3','4','5'] },
-  '2E': { label: '4000/.5 Dual-Wound Sensor', frames: ['4','5'] },
-  '2F': { label: '5000/.5 Dual-Wound Sensor', frames: ['5'] },
+  '2A': { label: '2500/.5 Dual-Wound Sensor', frames: ['3','4','5'] },
+  '2B': { label: '3000/.5 Dual-Wound Sensor', frames: ['3','4','5'] },
+  '2C': { label: '3200/.5 Dual-Wound Sensor', frames: ['3','4','5'] },
+  '2D': { label: '4000/.5 Dual-Wound Sensor', frames: ['4','5'] },
+  '2E': { label: '5000/.5 Dual-Wound Sensor', frames: ['5'] },
 };
 
 /* Control Voltage (2 chars after sensor)
@@ -626,8 +628,8 @@ function decode() {
     showError('Invalid Combination', 'RLI is only available in 800A frame (code 0).');
     return;
   }
-  if (intCode === 'E' && frameCode === '5') {
-    showError('Invalid Combination', 'RLE is only available through 4000A (frames 0-4).');
+  if (intCode === 'E' && !['0','2','4'].includes(frameCode)) {
+    showError('Invalid Combination', 'RLE is only available in 800A (0), 2000A (2), and 4000A (4) frames.');
     return;
   }
   pos++;
