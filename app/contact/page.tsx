@@ -28,8 +28,47 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
   const params = await searchParams;
   const formType = (params.type === 'manual-request' ? 'manual-request' : params.type === 'quote' ? 'quote' : 'contact') as 'contact' | 'quote' | 'manual-request';
 
+  const localBusinessJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Voyten Electric & Electronics, Inc.",
+    "description": "Commercial electrical wholesaler specializing in new, surplus, and reconditioned circuit breakers, switchgear, motor controls, and electrical equipment. Family owned since 1953.",
+    "url": "https://voytenmanuals.com/contact",
+    "telephone": "+1-800-458-4001",
+    "email": "sales@voyten.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "173 Voyten Blvd",
+      "addressLocality": "Polk",
+      "addressRegion": "PA",
+      "postalCode": "16342",
+      "addressCountry": "US",
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 41.3685,
+      "longitude": -79.9285,
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "08:00",
+      "closes": "17:00",
+    },
+    "sameAs": [
+      "https://www.voyten.com",
+      "https://www.voytenelectric.com",
+    ],
+    "image": "https://voytenmanuals.com/images/aerial-facility.png",
+    "priceRange": "$$",
+  };
+
   return (
     <div className="bg-slate-50 min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
+      />
       {/* Header */}
       <div className="bg-[#1a1a1a] text-white">
         <div className="max-w-7xl mx-auto px-4 py-12 lg:py-16">

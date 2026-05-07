@@ -30,8 +30,28 @@ export default async function Home() {
   // Top manufacturers by manual count
   const topManufacturers = manufacturers.slice(0, 10);
 
+  const videoJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": "Voyten Electric Capabilities — Facility Tour",
+    "description": "Tour of Voyten Electric & Electronics' 200,000 sq ft facility in Polk, PA. Specializing in new, surplus, and reconditioned electrical equipment — circuit breakers, switchgear, motor controls, and more. Family owned since 1953.",
+    "thumbnailUrl": "https://img.youtube.com/vi/pf5XGcExiM0/maxresdefault.jpg",
+    "uploadDate": "2025-02-25",
+    "contentUrl": "https://www.youtube.com/watch?v=pf5XGcExiM0",
+    "embedUrl": "https://www.youtube.com/embed/pf5XGcExiM0",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Voyten Electric & Electronics, Inc.",
+      "url": "https://voytenmanuals.com",
+    },
+  };
+
   return (
     <div className="bg-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(videoJsonLd) }}
+      />
       {/* Hero Section */}
       <section className="bg-[#1a1a1a] relative overflow-hidden">
         {/* Aerial facility photo background */}
