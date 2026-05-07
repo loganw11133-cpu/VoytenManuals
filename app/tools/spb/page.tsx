@@ -48,7 +48,7 @@ export default function SpbDecoderPage() {
           display: 'block',
         }}
         title="Eaton SPB Circuit Breaker Decoder"
-        sandbox="allow-scripts allow-same-origin"
+        sandbox="allow-scripts allow-same-origin allow-downloads"
       />
     </div>
   );

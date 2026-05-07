@@ -70,7 +70,7 @@ export default function MwIecDecoderPage() {
           display: 'block',
         }}
         title="Eaton Magnum IEC (MW) Circuit Breaker Decoder"
-        sandbox="allow-scripts allow-same-origin"
+        sandbox="allow-scripts allow-same-origin allow-downloads"
       />
     </div>
   );

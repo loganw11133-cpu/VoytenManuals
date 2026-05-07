@@ -49,7 +49,7 @@ export default function PxrPdsbDecoderPage() {
           display: 'block',
         }}
         title="Eaton Magnum PXR / Power Defense SB Circuit Breaker Decoder"
-        sandbox="allow-scripts allow-same-origin"
+        sandbox="allow-scripts allow-same-origin allow-downloads"
       />
     </div>
   );

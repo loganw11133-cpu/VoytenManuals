@@ -48,7 +48,7 @@ export default function RlDecoderPage() {
           display: 'block',
         }}
         title="Siemens RL LVPCB Circuit Breaker Decoder"
-        sandbox="allow-scripts allow-same-origin"
+        sandbox="allow-scripts allow-same-origin allow-downloads"
       />
     </div>
   );

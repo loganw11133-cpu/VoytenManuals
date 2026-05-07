@@ -49,7 +49,7 @@ export default function MdsSbsDecoderPage() {
           display: 'block',
         }}
         title="Eaton MDS/SBS Circuit Breaker Decoder"
-        sandbox="allow-scripts allow-same-origin"
+        sandbox="allow-scripts allow-same-origin allow-downloads"
       />
     </div>
   );

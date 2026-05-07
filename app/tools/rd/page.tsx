@@ -72,7 +72,7 @@ export default function RdDecoderPage() {
           display: 'block',
         }}
         title="Eaton RD (R-Frame) Circuit Breaker Decoder"
-        sandbox="allow-scripts allow-same-origin"
+        sandbox="allow-scripts allow-same-origin allow-downloads"
       />
     </div>
   );
