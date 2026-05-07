@@ -898,8 +898,8 @@ function renderResults(raw, d) {
     html += card('Trip Unit', 'valid', tripFields);
   }
 
-  /* 6. Additional Auxiliary Contacts (Position 12) */
-  if (d.auxContacts) {
+  /* 6. Additional Auxiliary Contacts (Position 12) — hide when X (not required) */
+  if (d.auxContacts && d.auxContacts.code !== 'X') {
     html += card('Additional Auxiliary Contacts', 'valid', [
       field(d.auxContacts.code, d.auxContacts.value),
     ]);
@@ -953,7 +953,16 @@ function renderCharMap(raw, d) {
   /* Remaining pre-dash options */
   const baseLen = raw.replace(/-.*$/, '').length;
   if (p < baseLen) { groups.push({ label: 'OPTIONS', start: p, len: baseLen - p }); p = baseLen; }
-  if (d.suffix) { groups.push({ label: 'ACCESSORIES', start: p, len: raw.length - p }); }
+  /* Dash separator gets its own box, then suffix accessories follow */
+  if (d.suffix) {
+    const dashPos = raw.indexOf('-');
+    if (dashPos >= 0) {
+      groups.push({ label: '—', start: dashPos, len: 1 });
+      if (dashPos + 1 < raw.length) {
+        groups.push({ label: 'ACCESSORIES', start: dashPos + 1, len: raw.length - dashPos - 1 });
+      }
+    }
+  }
 
   for (let g = 0; g < groups.length; g++) {
     const seg = groups[g];
