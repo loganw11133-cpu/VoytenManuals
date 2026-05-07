@@ -755,7 +755,7 @@ function decode() {
     decoded.suffix = dashSuffix;
   }
 
-  renderResults(rawInput, decoded);
+  renderResults(dashSuffix ? raw + '-' + dashSuffix : raw, decoded);
 }
 
 function renderResults(raw, d) {
