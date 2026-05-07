@@ -305,23 +305,23 @@ const INT_RATINGS = {
 
 /* Tripping Sensors: code -> { label, frames[] }
    From the selection diagram table. Sensor code is 2 chars. */
-/* Sensor table corrected 2026-05-07 per cross-reference against dealer listings:
-   - NASWGR RLAS1EAIXLA06X-GB1: AI = 1600A sensor on RL-1600
-   - IPS RLAS2MAJXXG33X-A1HI: AJ = 2000A sensor on RL-2000
-   - NASWGR RLAS4EANXBA06X-G: AN = 4000A sensor on RL-4000
-   Original table was shifted by one position from AI onwards. */
+/* Sensor table corrected 2026-05-07 per Siemens catalog selection diagram + dealer cross-refs:
+   - AA = 80/.5 (not 800), AH = 1200/.5 (not 1000), AK = 2400/.5 (not 2500)
+   - AI = 1600 (NASWGR RLAS1EAIXLA06X-GB1), AJ = 2000 (IPS RLAS2MAJXXG33X-A1HI)
+   - AN = 4000 (NASWGR RLAS4EANXBA06X-G)
+   Original table was shifted by one position from AH onwards. */
 const SENSORS = {
-  'AA': { label: '800/.5 Sensor', frames: ['0','1','2'] },
+  'AA': { label: '80/.5 Sensor', frames: ['0','1','2'] },
   'AB': { label: '150/.5 Sensor', frames: ['0','1','2'] },
   'AC': { label: '200/.5 Sensor', frames: ['0','1','2'] },
   'AD': { label: '300/.5 Sensor', frames: ['0','1','2'] },
   'AE': { label: '400/.5 Sensor', frames: ['0','1','2'] },
   'AF': { label: '600/.5 Sensor', frames: ['0','1','2'] },
   'AG': { label: '800/.5 Sensor', frames: ['0','1','2','3','4','5'] },
-  'AH': { label: '1000/.5 Sensor', frames: ['0','1','2','3','4','5'] },
+  'AH': { label: '1200/.5 Sensor', frames: ['1','2','3','4','5'] },
   'AI': { label: '1600/.5 Sensor', frames: ['1','2','3','4','5'] },
   'AJ': { label: '2000/.5 Sensor', frames: ['2','3','4','5'] },
-  'AK': { label: '2500/.5 Sensor', frames: ['3','4','5'] },
+  'AK': { label: '2400/.5 Sensor', frames: ['3','4','5'] },
   'AL': { label: '3000/.5 Sensor', frames: ['3','4','5'] },
   'AM': { label: '3200/.5 Sensor', frames: ['3','4','5'] },
   'AN': { label: '4000/.5 Sensor', frames: ['4','5'] },
@@ -329,7 +329,7 @@ const SENSORS = {
   'XX': { label: 'Non-Automatic (No Sensor)', frames: ['0','1','2','3','4','5'] },
 };
 
-/* Dual-wound sensors (1300A max per NEC) */
+/* Dual-wound sensors (1200A max per NEC) */
 const DUAL_SENSORS = {
   '2A': { label: '2500/.5 Dual-Wound Sensor', frames: ['3','4','5'] },
   '2B': { label: '3000/.5 Dual-Wound Sensor', frames: ['3','4','5'] },
@@ -505,6 +505,8 @@ const OPTIONAL_DEVICES = {
 /* Special Fuses */
 const SPECIAL_FUSES = {
   'F1': 'Shawmut Welder Fuse',
+  'F2': 'Reliance Fuse',
+  'F4': 'Carbone-Farraz Fuse',
 };
 
 /* Dual Shunt Trip (4C) — Unfused breakers only */
@@ -545,18 +547,55 @@ const EO_WIRING = {
   'W9': 'Latch Check Switch (21I)',
 };
 
-/* Suffix codes after dash */
-const SUFFIX_CODES = {
-  'A': 'Modification A',
-  'B': 'Modification B',
-  'C': 'Modification C',
-  'D': 'Modification D',
-  'E': 'Modification E',
-  'F': 'Modification F',
-  'G': 'Modification G',
-  'H': 'Modification H',
-  'K': 'Modification K',
+/* Bell Alarm Contacts — from selection diagram table */
+const BELL_ALARM = {
+  'B1': '1a & 1b Bell Alarm, Manual Reset [5B]',
+  'B2': '1 Form C Bell Alarm, Manual Reset [5A]',
+  'B3': '2a Bell Alarm, Manual Reset [5D]',
+  'B4': '2b Bell Alarm, Manual Reset [5C]',
+  'B5': '1a Bell Alarm, 24VDC Reset [5F]',
+  'B6': '1a Bell Alarm, 48VDC Reset [5F]',
+  'B7': '1a Bell Alarm, 120VAC Reset [5F]',
+  'B8': '1a Bell Alarm, 125VDC Reset [5F]',
+  'B9': '1a Bell Alarm, 240VAC Reset [5F]',
+  'D1': '1a Bell Alarm, 250VDC Reset [5F]',
+  'D2': '1b Bell Alarm, 24VDC Reset [5E]',
+  'D3': '1b Bell Alarm, 48VDC Reset [5E]',
+  'D4': '1b Bell Alarm, 120VAC Reset [5E]',
+  'D5': '1b Bell Alarm, 125VDC Reset [5E]',
+  'D6': '1b Bell Alarm, 240VAC Reset [5E]',
+  'D7': '1b Bell Alarm, 250VDC Reset [5E]',
+  'D8': '2 Form C Bell Alarm, Manual Reset [5G]',
 };
+
+/* Additional Auxiliary Contacts — Position 12
+   Source: Siemens catalog selection diagram (RLAdditionalAux)
+   A/B = NO shunt trip contacts, C = max aux (no shunt trip)
+   D/E = WITH shunt trip contacts */
+const AUX_CONTACTS = {
+  'A': '1A/2B — Manual Breaker Without Shunt Trip [6A]',
+  'B': '3A/4B — Manual Breaker Without Shunt Trip [6A,7A]',
+  'C': '4A/5B — Manual Breaker Without Shunt Trip [6A,7B]',
+  'D': '2A/2B — Electric or Manual With Shunt Trip [7A]',
+  'E': '3A/3B — Electric or Manual With Shunt Trip [7B]',
+  'X': 'Not Required (Standard Auxiliary Contacts Only)',
+};
+
+/* Unified suffix accessory lookup — combines all device dictionaries for dash-suffix parsing */
+function lookupSuffixCode(twoChar, oneChar) {
+  /* Try 2-char codes first */
+  if (twoChar.length === 2) {
+    if (OPTIONAL_DEVICES[twoChar]) return { code: twoChar, value: OPTIONAL_DEVICES[twoChar], len: 2 };
+    if (BELL_ALARM[twoChar]) return { code: twoChar, value: BELL_ALARM[twoChar], len: 2 };
+    if (DUAL_SHUNT[twoChar]) return { code: twoChar, value: DUAL_SHUNT[twoChar], len: 2 };
+    if (UV_DEVICES[twoChar]) return { code: twoChar, value: UV_DEVICES[twoChar], len: 2 };
+    if (EO_WIRING[twoChar]) return { code: twoChar, value: EO_WIRING[twoChar], len: 2 };
+    if (SPECIAL_FUSES[twoChar]) return { code: twoChar, value: SPECIAL_FUSES[twoChar], len: 2 };
+  }
+  /* Fall back to 1-char */
+  if (OPTIONAL_DEVICES[oneChar]) return { code: oneChar, value: OPTIONAL_DEVICES[oneChar], len: 1 };
+  return null;
+}
 
 /* ===== DECODER LOGIC ===== */
 
@@ -724,44 +763,55 @@ function decode() {
     }
   }
 
-  /* Remaining: Optional devices */
+  /* Position 12: Additional Auxiliary Contacts */
+  if (pos < cat.length) {
+    const auxCode = cat[pos];
+    if (AUX_CONTACTS[auxCode]) {
+      decoded.auxContacts = { code: auxCode, value: AUX_CONTACTS[auxCode] };
+    } else if (OPTIONAL_DEVICES[auxCode]) {
+      decoded.auxContacts = { code: auxCode, value: OPTIONAL_DEVICES[auxCode] };
+    } else {
+      decoded.auxContacts = { code: auxCode, value: 'Auxiliary Contact Code ' + auxCode };
+    }
+    pos++;
+  }
+
+  /* Remaining pre-dash: Optional devices */
   decoded.options = [];
   const remaining = cat.substring(pos);
   if (remaining.length > 0) {
     let optPos = 0;
     while (optPos < remaining.length) {
       const twoChar = remaining.substring(optPos, optPos + 2);
-      if (twoChar.length === 2 && OPTIONAL_DEVICES[twoChar]) {
-        decoded.options.push({ code: twoChar, value: OPTIONAL_DEVICES[twoChar] });
-        optPos += 2;
-      } else if (twoChar.length === 2 && DUAL_SHUNT[twoChar]) {
-        decoded.options.push({ code: twoChar, value: DUAL_SHUNT[twoChar] });
-        optPos += 2;
-      } else if (twoChar.length === 2 && UV_DEVICES[twoChar]) {
-        decoded.options.push({ code: twoChar, value: UV_DEVICES[twoChar] });
-        optPos += 2;
-      } else if (twoChar.length === 2 && EO_WIRING[twoChar]) {
-        decoded.options.push({ code: twoChar, value: EO_WIRING[twoChar] });
-        optPos += 2;
-      } else if (twoChar.length === 2 && SPECIAL_FUSES[twoChar]) {
-        decoded.options.push({ code: twoChar, value: SPECIAL_FUSES[twoChar] });
-        optPos += 2;
+      const oneChar = remaining[optPos];
+      const match = lookupSuffixCode(twoChar, oneChar);
+      if (match) {
+        decoded.options.push({ code: match.code, value: match.value });
+        optPos += match.len;
       } else {
-        const oneChar = remaining[optPos];
-        if (OPTIONAL_DEVICES[oneChar]) {
-          decoded.options.push({ code: oneChar, value: OPTIONAL_DEVICES[oneChar] });
-          optPos += 1;
-        } else {
-          decoded.options.push({ code: remaining.substring(optPos), value: 'Option code: ' + remaining.substring(optPos) });
-          break;
-        }
+        decoded.options.push({ code: remaining.substring(optPos), value: 'Option code: ' + remaining.substring(optPos) });
+        break;
       }
     }
   }
 
-  /* Dash suffix */
+  /* Dash suffix: Parse as tokenized accessory codes */
+  decoded.suffixItems = [];
   if (dashSuffix) {
     decoded.suffix = dashSuffix;
+    let sPos = 0;
+    while (sPos < dashSuffix.length) {
+      const sTwoChar = dashSuffix.substring(sPos, sPos + 2);
+      const sOneChar = dashSuffix[sPos];
+      const sMatch = lookupSuffixCode(sTwoChar, sOneChar);
+      if (sMatch) {
+        decoded.suffixItems.push({ code: sMatch.code, value: sMatch.value });
+        sPos += sMatch.len;
+      } else {
+        decoded.suffixItems.push({ code: dashSuffix.substring(sPos), value: 'Accessory code: ' + dashSuffix.substring(sPos) });
+        break;
+      }
+    }
   }
 
   renderResults(dashSuffix ? raw + '-' + dashSuffix : raw, decoded);
@@ -848,14 +898,24 @@ function renderResults(raw, d) {
     html += card('Trip Unit', 'valid', tripFields);
   }
 
-  /* 6. Optional Devices */
+  /* 6. Additional Auxiliary Contacts (Position 12) */
+  if (d.auxContacts) {
+    html += card('Additional Auxiliary Contacts', 'valid', [
+      field(d.auxContacts.code, d.auxContacts.value),
+    ]);
+  }
+
+  /* 7. Optional Devices (pre-dash) */
   if (d.options && d.options.length > 0) {
     const optFields = d.options.map(function(o) { return field(o.code, o.value); });
     html += card('Optional Devices', 'valid', optFields);
   }
 
-  /* 7. Suffix */
-  if (d.suffix) {
+  /* 8. Suffix Accessories (after dash) */
+  if (d.suffixItems && d.suffixItems.length > 0) {
+    const sfxFields = d.suffixItems.map(function(s) { return field(s.code, s.value); });
+    html += card('Factory-Installed Accessories (Suffix)', 'valid', sfxFields);
+  } else if (d.suffix) {
     html += card('Suffix', 'valid', [
       field('-' + d.suffix, 'Factory modification / revision suffix'),
     ]);
@@ -889,10 +949,11 @@ function renderCharMap(raw, d) {
   if (d.voltage) { groups.push({ label: 'CTRL V', start: p, len: 2 }); p += 2; }
   if (d.system) { groups.push({ label: 'SYS', start: p, len: 1 }); p += 1; }
   if (d.trip) { groups.push({ label: 'TRIP', start: p, len: 2 }); p += 2; }
-  /* Remaining chars (options + dash suffix) */
+  if (d.auxContacts) { groups.push({ label: 'AUX', start: p, len: 1 }); p += 1; }
+  /* Remaining pre-dash options */
   const baseLen = raw.replace(/-.*$/, '').length;
   if (p < baseLen) { groups.push({ label: 'OPTIONS', start: p, len: baseLen - p }); p = baseLen; }
-  if (d.suffix) { groups.push({ label: 'SUFFIX', start: p, len: raw.length - p }); }
+  if (d.suffix) { groups.push({ label: 'ACCESSORIES', start: p, len: raw.length - p }); }
 
   for (let g = 0; g < groups.length; g++) {
     const seg = groups[g];
