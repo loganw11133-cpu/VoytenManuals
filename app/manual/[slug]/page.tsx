@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { FileText, ChevronRight, Phone, Building2, Tag, BookOpen, ArrowLeft, Layers, Download, Shield, Wrench } from 'lucide-react';
-import { getManualBySlug, getRelatedManuals, formatFileSize, toSlug } from '@/lib/manuals-db';
+import { getManualBySlug, getManualWithRelated, formatFileSize, toSlug } from '@/lib/manuals-db';
 import ManualCard from '@/components/ManualCard';
 import LeadCaptureForm from '@/components/LeadCaptureForm';
 import DownloadButton from '@/components/DownloadButton';
@@ -68,11 +68,11 @@ export const revalidate = 3600;
 
 export default async function ManualPage({ params }: ManualPageProps) {
   const { slug } = await params;
-  const manual = await getManualBySlug(slug);
-  if (!manual) notFound();
-
-  // Fire related manuals query immediately — don't block on it until we need it
-  const relatedManualsPromise = getRelatedManuals(manual, 4);
+  // Single entry point — getManualBySlug is deduped with generateMetadata via React cache,
+  // so the slug lookup is already resolved. Only the related query hits Turso.
+  const data = await getManualWithRelated(slug);
+  if (!data) notFound();
+  const { manual, related: relatedManuals } = data;
 
   // Rich JSON-LD: TechArticle with part numbers, manufacturer, category
   const techArticleJsonLd = {
@@ -138,8 +138,6 @@ export default async function ManualPage({ params }: ManualPageProps) {
       { "@type": "ListItem", "position": 5, "name": manual.title },
     ],
   };
-
-  const relatedManuals = await relatedManualsPromise;
 
   return (
     <div className="bg-slate-50 min-h-screen">

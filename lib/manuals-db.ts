@@ -1,4 +1,5 @@
 import { createClient, Client, type Row } from '@libsql/client';
+import { cache as reactCache } from 'react';
 
 let _db: Client | null = null;
 
@@ -220,7 +221,10 @@ export async function searchManuals(filters: SearchFilters): Promise<SearchResul
   return setCache(cacheKey, result, CACHE_5MIN);
 }
 
-export async function getManualBySlug(slug: string): Promise<Manual | null> {
+// React cache() deduplicates within a single server request —
+// generateMetadata and page component share the same DB call.
+// In-memory cache covers repeated requests within the 5-min TTL.
+export const getManualBySlug = reactCache(async (slug: string): Promise<Manual | null> => {
   const cacheKey = `manual:${slug}`;
   const cached = getCached<Manual>(cacheKey);
   if (cached) return cached;
@@ -231,7 +235,7 @@ export async function getManualBySlug(slug: string): Promise<Manual | null> {
   });
   if (result.rows.length === 0) return null;
   return setCache(cacheKey, rowToManual(result.rows[0]), CACHE_5MIN);
-}
+});
 
 export async function getManualById(id: number): Promise<Manual | null> {
   const result = await getDb().execute({
@@ -345,8 +349,6 @@ export async function getManufacturerManuals(manufacturer: string, limit = 12): 
   return setCache(cacheKey, manuals, CACHE_5MIN);
 }
 
-const RELATED_COLS = 'id, slug, title, manual_number, category, manufacturer, subcategory, description, pdf_url, page_count, file_size_bytes, keywords, created_at, updated_at';
-
 export async function getRelatedManuals(manual: Manual, limit = 4): Promise<Manual[]> {
   const cacheKey = `related:${manual.id}`;
   const cached = getCached<Manual[]>(cacheKey);
@@ -354,12 +356,14 @@ export async function getRelatedManuals(manual: Manual, limit = 4): Promise<Manu
 
   // Single query: same manufacturer (prefer same category) UNION same category different manufacturer
   const result = await getDb().execute({
-    sql: `SELECT ${RELATED_COLS} FROM (
-            SELECT ${RELATED_COLS}, 0 as sort_group,
+    sql: `SELECT id, slug, title, manual_number, category, manufacturer, subcategory,
+                 description, pdf_url, page_count, file_size_bytes, keywords, created_at, updated_at
+          FROM (
+            SELECT *, 0 as sort_group,
               CASE WHEN category = ? THEN 0 ELSE 1 END as sort_rank
             FROM manuals WHERE manufacturer = ? AND id != ?
             UNION ALL
-            SELECT ${RELATED_COLS}, 1 as sort_group, 0 as sort_rank
+            SELECT *, 1 as sort_group, 0 as sort_rank
             FROM manuals WHERE category = ? AND manufacturer != ? AND id != ?
           ) ORDER BY sort_group, sort_rank, title ASC LIMIT ?`,
     args: [manual.category, manual.manufacturer, manual.id,
@@ -368,6 +372,53 @@ export async function getRelatedManuals(manual: Manual, limit = 4): Promise<Manu
 
   return setCache(cacheKey, result.rows.map(rowToManual), CACHE_5MIN);
 }
+
+/**
+ * Fetch a manual and its related manuals in a single SQL query (one network round-trip).
+ * The related manuals are derived via a self-join on the slug-matched row's manufacturer/category.
+ */
+export const getManualWithRelated = reactCache(async (slug: string, relatedLimit = 4): Promise<{ manual: Manual; related: Manual[] } | null> => {
+  // Check caches first
+  const cachedManual = getCached<Manual>(`manual:${slug}`);
+  if (cachedManual) {
+    const cachedRelated = getCached<Manual[]>(`related:${cachedManual.id}`);
+    if (cachedRelated) return { manual: cachedManual, related: cachedRelated };
+    const related = await getRelatedManuals(cachedManual, relatedLimit);
+    return { manual: cachedManual, related };
+  }
+
+  // Single batch — both queries in one HTTP round-trip to Turso.
+  // Query 1: fetch the manual by slug.
+  // Query 2: fetch related manuals using a subquery to resolve manufacturer/category from slug.
+  const batchResults = await getDb().batch([
+    {
+      sql: 'SELECT * FROM manuals WHERE slug = ?',
+      args: [slug],
+    },
+    {
+      sql: `SELECT r.id, r.slug, r.title, r.manual_number, r.category, r.manufacturer,
+                   r.subcategory, r.description, r.pdf_url, r.page_count, r.file_size_bytes,
+                   r.keywords, r.created_at, r.updated_at
+            FROM manuals r, manuals m
+            WHERE m.slug = ?
+              AND r.id != m.id
+              AND (r.manufacturer = m.manufacturer OR r.category = m.category)
+            ORDER BY
+              CASE WHEN r.manufacturer = m.manufacturer AND r.category = m.category THEN 0
+                   WHEN r.manufacturer = m.manufacturer THEN 1
+                   ELSE 2 END,
+              r.title ASC
+            LIMIT ?`,
+      args: [slug, relatedLimit],
+    },
+  ]);
+
+  if (batchResults[0].rows.length === 0) return null;
+
+  const manual = setCache(`manual:${slug}`, rowToManual(batchResults[0].rows[0]), CACHE_5MIN);
+  const related = setCache(`related:${manual.id}`, batchResults[1].rows.map(rowToManual), CACHE_5MIN);
+  return { manual, related };
+});
 
 export async function getTotalManualCount(): Promise<number> {
   const cached = getCached<number>('totalCount');
