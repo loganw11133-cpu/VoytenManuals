@@ -125,6 +125,7 @@ export const metadata: Metadata = {
   },
   other: {
     'google-site-verification': 'Jw_q01212LegO8F79GblirnWi7HprIK46shkmyiiwzU',
+    'msvalidate.01': '04190107F6AE48CECE893B2CB8943248',
   },
 };
 
