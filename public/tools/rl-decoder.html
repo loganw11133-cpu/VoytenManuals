@@ -221,7 +221,7 @@ body {
   <div class="error" id="errorBox">
     <div class="error-title" id="errorTitle">Invalid Input</div>
     <div class="error-text" id="errorText"></div>
-    <div class="error-hint" id="errorHint">Format: RL + A/B + S/E/I/F + 0-5 + M/E + sensor(2) + ctrl voltage(2) + system + trip(2) + options</div>
+    <div class="error-hint" id="errorHint">Format: RL + [1] Connection + [2] Interrupting + [3] Frame + [4] Operation + [5-6] Sensor + [7-8] Ctrl Voltage + [9] System + [10-11] Trip + Options</div>
   </div>
 
   <!-- Results -->
@@ -586,7 +586,7 @@ function decode() {
   /* Position 1: Connection (A or B) */
   const connCode = cat[pos];
   if (!CONNECTION[connCode]) {
-    showError('Invalid Connection', 'Position 3: "' + connCode + '" is not valid. Expected A (Drawout) or B (Stationary).');
+    showError('Invalid Connection', 'Position 1: "' + connCode + '" is not valid. Expected A (Drawout) or B (Stationary).');
     return;
   }
   decoded.connection = { code: connCode, value: CONNECTION[connCode] };
@@ -595,7 +595,7 @@ function decode() {
   /* Position 2: Interrupting Type (S, E, I, F) */
   const intCode = cat[pos];
   if (!INTERRUPTING[intCode]) {
-    showError('Invalid Interrupting Type', 'Position 4: "' + intCode + '" is not valid. Expected S (Standard), E (High), I (800A Only), or F (Fused).');
+    showError('Invalid Interrupting Type', 'Position 2: "' + intCode + '" is not valid. Expected S (Standard), E (High), I (800A Only), or F (Fused).');
     return;
   }
   decoded.interrupting = { code: intCode, value: INTERRUPTING[intCode] };
@@ -609,7 +609,7 @@ function decode() {
   /* Position 3: Frame (0-5) */
   const frameCode = cat[pos];
   if (!FRAME[frameCode]) {
-    showError('Invalid Frame', 'Position 5: "' + frameCode + '" is not valid. Expected 0 (800A) through 5 (5000A).');
+    showError('Invalid Frame', 'Position 3: "' + frameCode + '" is not valid. Expected 0 (800A) through 5 (5000A).');
     return;
   }
   decoded.frame = { code: frameCode, value: FRAME[frameCode], amps: FRAME_AMPS[frameCode] };
@@ -627,7 +627,7 @@ function decode() {
   /* Position 4: Operation (M or E) */
   const opCode = cat[pos];
   if (!OPERATION[opCode]) {
-    showError('Invalid Operation', 'Position 6: "' + opCode + '" is not valid. Expected M (Manual) or E (Electric/Manual).');
+    showError('Invalid Operation', 'Position 4: "' + opCode + '" is not valid. Expected M (Manual) or E (Electric/Manual).');
     return;
   }
   decoded.operation = { code: opCode, value: OPERATION[opCode] };
@@ -635,7 +635,7 @@ function decode() {
 
   /* Position 5-6: Tripping Sensor (2 chars) */
   if (pos + 1 >= cat.length) {
-    showError('Too Short', 'Missing tripping sensor code at positions 7-8.');
+    showError('Too Short', 'Missing tripping sensor code at positions 5-6.');
     return;
   }
   const sensorCode = cat.substring(pos, pos + 2);
@@ -648,7 +648,7 @@ function decode() {
   }
 
   if (!sensorInfo) {
-    showError('Invalid Sensor', 'Positions 7-8: "' + sensorCode + '" is not a valid tripping sensor code.');
+    showError('Invalid Sensor', 'Positions 5-6: "' + sensorCode + '" is not a valid tripping sensor code.');
     return;
   }
 
@@ -662,7 +662,7 @@ function decode() {
 
   /* Position 7-8: Control Voltage (2 chars) */
   if (pos + 1 >= cat.length) {
-    showError('Too Short', 'Missing control voltage code at positions 9-10.');
+    showError('Too Short', 'Missing control voltage code at positions 7-8.');
     return;
   }
   const voltCode = cat.substring(pos, pos + 2);
@@ -696,7 +696,7 @@ function decode() {
     } else if (/[0-9]/.test(systemCode)) {
       decoded.system = null;
     } else {
-      showError('Invalid System', 'Position ' + (pos + 3) + ': "' + systemCode + '" is not a valid system code (A-J).');
+      showError('Invalid System', 'Position ' + (pos + 1) + ': "' + systemCode + '" is not a valid system code (A-J).');
       return;
     }
   }
@@ -905,7 +905,9 @@ function renderCharMap(raw, d) {
 
       const pl = document.createElement('div');
       pl.className = 'pos-label';
-      pl.textContent = seg.start + i + 1;
+      /* RL prefix doesn't count — position 1 starts at Connection */
+      const absIdx = seg.start + i;
+      pl.textContent = absIdx < 2 ? '' : (absIdx - 1);
       posLbls.appendChild(pl);
     }
 
