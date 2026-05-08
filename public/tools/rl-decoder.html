@@ -201,7 +201,7 @@ body {
     <div class="input-row">
       <input type="text" id="catInput" placeholder="e.g. RLAS2EAJXCA05X-IJW3D8" maxlength="40" autocomplete="off" autocorrect="off" spellcheck="false">
     </div>
-    <div class="hint" id="formatHint">Format: RL + Connection + Interrupting + Frame + Operation + Sensor + Control Voltage + System + Trip Unit + Options</div>
+    <div class="hint" id="formatHint">Format: RL + Connection + Interrupting + Frame + Operation + Sensor + Fuse + Control Voltage + System + Trip + Aux Contacts</div>
     <div class="btn-row">
       <button class="btn btn-decode" onclick="decode()">DECODE</button>
       <button class="btn btn-clear" onclick="clearAll()">CLEAR</button>
@@ -338,42 +338,59 @@ const DUAL_SENSORS = {
   '2E': { label: '5000/.5 Dual-Wound Sensor', frames: ['5'] },
 };
 
-/* Control Voltage (2 chars after sensor)
-   For MO breakers: XX = not applicable (no motor/close circuits)
-   For EO breakers: 2 chars encode motor/close and trip/shunt trip voltages
-   Row codes from selection diagram */
+/* Current Limiting Fuses — Position 7 (1 char)
+   Source: Siemens catalog selection diagram (RLCharacterMap7)
+   STD = standard fuse for that frame size. S = Special (see note 4). */
+const FUSES = {
+  'A': { label: '200A Current Limiting Fuse', frames: ['0'] },
+  'B': { label: '250A Current Limiting Fuse', frames: ['0'] },
+  'C': { label: '400A Current Limiting Fuse', frames: ['0'] },
+  'D': { label: '600A Current Limiting Fuse', frames: ['0'] },
+  'E': { label: '800A Current Limiting Fuse', frames: ['0','1'] },
+  'F': { label: '1000A Current Limiting Fuse', frames: ['0','1'] },
+  'G': { label: '1200A Current Limiting Fuse', frames: ['0','1'] },
+  'H': { label: '1600A Current Limiting Fuse (STD 800A Frame)', frames: ['0','1'] },
+  'I': { label: '2000A Current Limiting Fuse', frames: ['1','2','3','4'] },
+  'J': { label: '2500A Current Limiting Fuse', frames: ['1','3','4'] },
+  'K': { label: '3000A Current Limiting Fuse (STD 1600A Frame)', frames: ['1','3','4'] },
+  'L': { label: '4000A Current Limiting Fuse (STD 2000A Frame)', frames: ['2','3','4'] },
+  'M': { label: '5000A Current Limiting Fuse (STD 3200A Frame)', frames: ['3','4'] },
+  'N': { label: '6000A Current Limiting Fuse (STD 4000A & 5000A)', frames: ['4','5'] },
+  'S': { label: 'Special Current Limiting Fuse', frames: ['0','1','2','3','4','5'] },
+  'X': { label: 'Unfused', frames: ['0','1','2','3','4','5'] },
+};
+
+/* Control Voltage — Position 8 (1 char)
+   Source: Siemens catalog selection diagram
+   EO breakers: motor/close/trip/shunt voltages
+   MO breakers: trip/shunt voltages only */
 const CONTROL_VOLTAGE = {
-  'XX': { label: 'Not Applicable (Manual Operation)', mo: true, eo: false },
-  'AA': { label: '120VAC Motor/Close, 48VDC Trip/Shunt', mo: false, eo: true },
-  'AB': { label: '120VAC Motor/Close, 120VAC Trip/Shunt', mo: false, eo: true },
-  'AC': { label: '120VAC Motor/Close, 125VDC Trip/Shunt', mo: false, eo: true },
-  'AD': { label: '120VAC Motor/Close, 24VDC Trip/Shunt', mo: false, eo: true },
-  'BA': { label: '240VAC Motor/Close, 48VDC Trip/Shunt', mo: false, eo: true },
-  'BB': { label: '240VAC Motor/Close, 120VAC Trip/Shunt', mo: false, eo: true },
-  'BC': { label: '240VAC Motor/Close, 125VDC Trip/Shunt', mo: false, eo: true },
-  'BD': { label: '240VAC Motor/Close, 24VDC Trip/Shunt', mo: false, eo: true },
-  'CA': { label: '125VDC Motor/Close, 48VDC Trip/Shunt', mo: false, eo: true },
-  'CB': { label: '125VDC Motor/Close, 120VAC Trip/Shunt', mo: false, eo: true },
-  'CC': { label: '125VDC Motor/Close, 125VDC Trip/Shunt', mo: false, eo: true },
-  'CD': { label: '125VDC Motor/Close, 24VDC Trip/Shunt', mo: false, eo: true },
-  'DA': { label: '250VDC Motor/Close, 48VDC Trip/Shunt', mo: false, eo: true },
-  'DB': { label: '250VDC Motor/Close, 120VAC Trip/Shunt', mo: false, eo: true },
-  'DC': { label: '250VDC Motor/Close, 125VDC Trip/Shunt', mo: false, eo: true },
-  'DD': { label: '250VDC Motor/Close, 24VDC Trip/Shunt', mo: false, eo: true },
-  'EA': { label: '48VDC Motor/Close, 48VDC Trip/Shunt', mo: false, eo: true },
-  'EB': { label: '48VDC Motor/Close, 120VAC Trip/Shunt', mo: false, eo: true },
-  'EC': { label: '48VDC Motor/Close, 125VDC Trip/Shunt', mo: false, eo: true },
-  'ED': { label: '48VDC Motor/Close, 24VDC Trip/Shunt', mo: false, eo: true },
-  /* X_ codes: For MO = trip/shunt voltage only. For EO = motor, close, and trip at same voltage */
-  'XA': { label: '48VDC', mo: true, eo: true, moDesc: '48VDC Trip/Shunt', eoDesc: '48VDC Motor/Close/Trip' },
-  'XB': { label: '120VAC', mo: true, eo: true, moDesc: '120VAC Trip/Shunt', eoDesc: '120VAC Motor/Close/Trip' },
-  'XC': { label: '125VDC', mo: true, eo: true, moDesc: '125VDC Trip/Shunt', eoDesc: '125VDC Motor/Close/Trip' },
-  'XD': { label: '24VDC', mo: true, eo: true, moDesc: '24VDC Trip/Shunt', eoDesc: '24VDC Motor/Close/Trip' },
-  'XE': { label: '240VAC', mo: true, eo: true, moDesc: '240VAC Trip/Shunt', eoDesc: '240VAC Motor/Close/Trip' },
-  'XF': { label: '250VDC', mo: true, eo: true, moDesc: '250VDC Trip/Shunt', eoDesc: '250VDC Motor/Close/Trip' },
-  'XG': { label: '65VAC', mo: true, eo: false, moDesc: '65VAC Trip/Shunt', eoDesc: '65VAC Trip/Shunt' },
-  'XH': { label: '28VDC', mo: true, eo: false, moDesc: '28VDC Trip/Shunt', eoDesc: '28VDC Trip/Shunt' },
-  'XI': { label: '32VDC', mo: true, eo: false, moDesc: '32VDC Trip/Shunt', eoDesc: '32VDC Trip/Shunt' },
+  'A': { eo: '48VDC Motor/Close, 48VDC Trip/Shunt', mo: '48VDC Trip/Shunt' },
+  'B': { eo: '120VAC Motor/Close, 120VAC Trip/Shunt', mo: '120VAC Trip/Shunt' },
+  'C': { eo: '125VDC Motor/Close, 125VDC Trip/Shunt', mo: '125VDC Trip/Shunt' },
+  'D': { eo: '240VAC Motor/Close, 240VAC Trip/Shunt', mo: '240VAC Trip/Shunt' },
+  'E': { eo: '250VDC Motor/Close, 250VDC Trip/Shunt', mo: '250VDC Trip/Shunt' },
+  'F': { eo: '120VAC Motor/Close, 48VDC Trip', mo: null },
+  'G': { eo: '120VAC Motor/Close, 125VDC Trip/Shunt', mo: null },
+  'H': { eo: '240VAC Motor/Close, 48VDC Trip', mo: null },
+  'I': { eo: '240VAC Motor/Close, 125VDC Trip/Shunt', mo: null },
+  'J': { eo: '24VDC Motor/Close, 24VDC Trip/Shunt', mo: '24VDC Trip/Shunt' },
+  'K': { eo: '48VDC Motor/Close, 24VDC Trip', mo: '24VDC Trip' },
+  'L': { eo: '120VAC Motor/Close, 24VDC Trip', mo: '24VDC Trip, 65VAC/28VDC Shunt' },
+  'M': { eo: '120VAC Motor/Close, 32VDC Trip', mo: '32VDC Trip' },
+  'N': { eo: '120VAC Motor/Close, 5VAC Trip', mo: null },
+  'O': { eo: '125VDC Motor/Close, 28VDC Trip', mo: null },
+  'P': { eo: '125VDC Motor/Close, 28VDC Trip', mo: '125VDC Trip, 28VDC Shunt' },
+  'Q': { eo: '125VDC Motor/Close, 48VDC Trip', mo: '125VDC Trip, 48VDC Shunt' },
+  'R': { eo: '125VDC Motor/Close, 120VAC Trip', mo: '125VDC Trip, 120VAC Shunt' },
+  'S': { eo: '250VDC Motor/Close, 48VDC Trip', mo: '250VDC Trip, 48VDC Shunt' },
+  'T': { eo: '24VDC Motor/Close, 24VDC Trip', mo: '24VDC Trip, 24VDC Shunt' },
+  'U': { eo: '240VAC Motor/Close, 120VAC Trip', mo: '240VAC Trip, 120VAC Shunt' },
+  'V': { eo: '240VAC Motor/Close, 48VDC Trip', mo: '240VAC Trip, 48VDC Shunt' },
+  'W': { eo: '120VAC Motor/Close, 120VAC Trip', mo: null },
+  'Y': { eo: '120VAC Motor/Close, 125VDC Trip', mo: null },
+  'Z': { eo: '24VDC Motor/Close, 48VDC Trip', mo: '48VDC Trip, 48VDC Shunt' },
+  'X': { eo: null, mo: null, label: 'Not Required' },
 };
 
 /* System (3 Phase) */
@@ -709,22 +726,35 @@ function decode() {
   decoded.sensor = { code: sensorCode, value: sensorInfo.label, dual: sensorInfo.dual || false };
   pos += 2;
 
-  /* Position 7-8: Control Voltage (2 chars) */
-  if (pos + 1 >= cat.length) {
-    showError('Too Short', 'Missing control voltage code at positions 7-8.');
+  /* Position 7: Current Limiting Fuses (1 char) */
+  if (pos >= cat.length) {
+    showError('Too Short', 'Missing current limiting fuse code at position 7.');
     return;
   }
-  const voltCode = cat.substring(pos, pos + 2);
+  const fuseCode = cat[pos];
+  if (FUSES[fuseCode]) {
+    decoded.fuse = { code: fuseCode, value: FUSES[fuseCode].label };
+  } else {
+    decoded.fuse = { code: fuseCode, value: 'Fuse Code ' + fuseCode };
+  }
+  pos++;
+
+  /* Position 8: Control Voltage (1 char) */
+  if (pos >= cat.length) {
+    showError('Too Short', 'Missing control voltage code at position 8.');
+    return;
+  }
+  const voltCode = cat[pos];
   const isEO = opCode === 'E';
   if (CONTROL_VOLTAGE[voltCode]) {
     const cv = CONTROL_VOLTAGE[voltCode];
-    /* Use operation-aware description if available */
-    const desc = isEO && cv.eoDesc ? cv.eoDesc : cv.moDesc ? cv.moDesc : cv.label;
+    const desc = isEO ? (cv.eo || cv.label || 'EO Voltage ' + voltCode)
+                      : (cv.mo || cv.label || 'MO Voltage ' + voltCode);
     decoded.voltage = { code: voltCode, value: desc };
   } else {
     decoded.voltage = { code: voltCode, value: 'Control Voltage Code ' + voltCode };
   }
-  pos += 2;
+  pos++;
 
   /* Position 9: System (A-J) */
   let systemCode = '';
@@ -863,19 +893,29 @@ function renderResults(raw, d) {
     ]);
   }
 
-  /* 3. Sensor & Control Voltage — merged */
-  if (d.sensor || d.voltage) {
-    const sFields = [];
-    if (d.sensor) {
-      sFields.push(field('Tripping Sensor', d.sensor.value));
-      if (d.sensor.dual) sFields.push(field('Sensor Type', 'Dual-Wound (1200A max per MCT)'));
-      if (d.sensor.code === 'XX') sFields.push(field('Note', 'Non-Automatic \u2014 No tripping sensor installed'));
-    }
-    if (d.voltage) sFields.push(field('Control Voltage', d.voltage.value));
-    html += card('Sensor & Control', 'valid', sFields);
+  /* 3. Tripping Sensor */
+  if (d.sensor) {
+    const sFields = [field('Tripping Sensor', d.sensor.value)];
+    if (d.sensor.dual) sFields.push(field('Sensor Type', 'Dual-Wound (1200A max per NEC)'));
+    if (d.sensor.code === 'XX') sFields.push(field('Note', 'Non-Automatic \u2014 No tripping sensor installed'));
+    html += card('Tripping Sensor', 'valid', sFields);
   }
 
-  /* 4. System Wiring */
+  /* 4. Current Limiting Fuses (Position 7) */
+  if (d.fuse) {
+    html += card('Current Limiting Fuses', 'valid', [
+      field(d.fuse.code, d.fuse.value),
+    ]);
+  }
+
+  /* 5. Control Voltage (Position 8) */
+  if (d.voltage) {
+    html += card('Control Voltage', 'valid', [
+      field(d.voltage.code, d.voltage.value),
+    ]);
+  }
+
+  /* 6. System Wiring */
   if (d.system) {
     const sysFields = [
       field('Configuration', d.system.desc),
@@ -888,7 +928,7 @@ function renderResults(raw, d) {
     html += card('System Wiring', 'valid', sysFields);
   }
 
-  /* 5. Trip Unit */
+  /* 7. Trip Unit */
   if (d.trip) {
     const tripFields = [
       field('Trip Unit', d.trip.label),
@@ -898,14 +938,14 @@ function renderResults(raw, d) {
     html += card('Trip Unit', 'valid', tripFields);
   }
 
-  /* 6. Additional Auxiliary Contacts (Position 12) — hide when X (not required) */
-  if (d.auxContacts && d.auxContacts.code !== 'X') {
+  /* 8. Additional Auxiliary Contacts (Position 12) */
+  if (d.auxContacts) {
     html += card('Additional Auxiliary Contacts', 'valid', [
       field(d.auxContacts.code, d.auxContacts.value),
     ]);
   }
 
-  /* 7. Optional Devices (pre-dash) */
+  /* 9. Optional Devices (pre-dash) */
   if (d.options && d.options.length > 0) {
     const optFields = d.options.map(function(o) { return field(o.code, o.value); });
     html += card('Optional Devices', 'valid', optFields);
@@ -946,7 +986,8 @@ function renderCharMap(raw, d) {
   if (d.frame) { groups.push({ label: 'FRAME', start: p, len: 1 }); p += 1; }
   if (d.operation) { groups.push({ label: 'OPER', start: p, len: 1 }); p += 1; }
   if (d.sensor) { groups.push({ label: 'SENSOR', start: p, len: 2 }); p += 2; }
-  if (d.voltage) { groups.push({ label: 'CTRL V', start: p, len: 2 }); p += 2; }
+  if (d.fuse) { groups.push({ label: 'FUSE', start: p, len: 1 }); p += 1; }
+  if (d.voltage) { groups.push({ label: 'CTRL V', start: p, len: 1 }); p += 1; }
   if (d.system) { groups.push({ label: 'SYS', start: p, len: 1 }); p += 1; }
   if (d.trip) { groups.push({ label: 'TRIP', start: p, len: 2 }); p += 2; }
   if (d.auxContacts) { groups.push({ label: 'AUX', start: p, len: 1 }); p += 1; }
