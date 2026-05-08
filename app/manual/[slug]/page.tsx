@@ -23,7 +23,9 @@ export async function generateMetadata({ params }: ManualPageProps): Promise<Met
   const title = titleBase.length > 42 ? titleBase : `${titleBase} — ${manual.manufacturer}`;
   const description = `Free PDF: ${manual.title}${partNum} by ${manual.manufacturer}. ${manual.category}${subcatStr} — instruction guides, parts lists, and wiring diagrams.`;
 
-  const keywords = [
+  // Merge DB-stored keywords (curated, SEO-optimized) with generated fallbacks
+  const dbKeywords = manual.keywords ? manual.keywords.split(', ').filter(Boolean) : [];
+  const generatedKeywords = [
     manual.title,
     manual.manufacturer,
     manual.category,
@@ -41,6 +43,7 @@ export async function generateMetadata({ params }: ManualPageProps): Promise<Met
     `${manual.manufacturer} discontinued`,
     `${manual.manufacturer} replacement parts`,
   ].filter(Boolean) as string[];
+  const keywords = [...new Set([...dbKeywords, ...generatedKeywords])];
 
   return {
     title,
@@ -114,7 +117,7 @@ export default async function ManualPage({ params }: ManualPageProps) {
         "description": "Replacement parts available — call for pricing and availability",
       },
     },
-    "keywords": [
+    "keywords": manual.keywords || [
       manual.manufacturer,
       manual.category,
       manual.subcategory,
