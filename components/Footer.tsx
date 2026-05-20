@@ -45,14 +45,39 @@ export default function Footer() {
             <p className="text-slate-400 text-sm mb-4">
               A free resource by Voyten Electric. Searchable library of electrical equipment manuals, instruction guides, and technical documentation.
             </p>
-            <a
-              href="https://voytenelectric.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[#dc2626] hover:text-[#ef4444] text-sm font-medium"
-            >
-              Visit VoytenElectric.com
-            </a>
+            <p className="text-slate-300 text-sm font-semibold mb-2">Our Family of Sites</p>
+            <ul className="space-y-1 text-sm">
+              <li>
+                <a
+                  href="https://voytenelectric.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#dc2626] hover:text-[#ef4444] font-medium"
+                >
+                  VoytenElectric.com
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://spbbreakers.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#dc2626] hover:text-[#ef4444] font-medium"
+                >
+                  SPBBreakers.com
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://rlbreakers.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#dc2626] hover:text-[#ef4444] font-medium"
+                >
+                  RLBreakers.com
+                </a>
+              </li>
+            </ul>
           </div>
 
           {/* Manual Categories */}
@@ -80,6 +105,8 @@ export default function Footer() {
               <li><Link href="/faq" className="text-slate-400 hover:text-white">FAQ</Link></li>
               <li><Link href="/contact" className="text-slate-400 hover:text-white">Contact / Request a Part</Link></li>
               <li><a href="https://voytenelectric.com" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white">Voyten Electric</a></li>
+              <li><a href="https://spbbreakers.com" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white">SPB Breakers</a></li>
+              <li><a href="https://rlbreakers.com" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white">RL Breakers</a></li>
             </ul>
           </div>
 
