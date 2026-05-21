@@ -112,6 +112,22 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* Product Line Links */}
+      <section className="bg-white border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 py-3">
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-1 text-sm">
+            <span className="text-slate-400 font-medium">New Surplus Inventory:</span>
+            <Link href="/products/rl-breakers" className="text-[#dc2626] hover:text-[#b91c1c] font-medium transition-colors">
+              RL Breakers — New Surplus
+            </Link>
+            <span className="text-slate-300 hidden sm:inline">|</span>
+            <Link href="/products/spb-breakers" className="text-[#dc2626] hover:text-[#b91c1c] font-medium transition-colors">
+              SPB Breakers — New Surplus
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Category Quick Links */}
       <section className="py-14 lg:py-18 bg-white">
         <div className="max-w-7xl mx-auto px-4">
