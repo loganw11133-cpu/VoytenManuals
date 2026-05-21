@@ -457,6 +457,65 @@ export async function getFeaturedManuals(limit = 8): Promise<Manual[]> {
   return setCache('featured', manuals, CACHE_1HR);
 }
 
+// ── Product Line Queries ──
+
+export async function getManualsBySubcategory(manufacturer: string, subcategory: string, limit = 50): Promise<Manual[]> {
+  const cacheKey = `subcat-manuals:${manufacturer}:${subcategory}:${limit}`;
+  const cached = getCached<Manual[]>(cacheKey);
+  if (cached) return cached;
+
+  const result = await getDb().execute({
+    sql: `SELECT * FROM manuals WHERE manufacturer = ? AND subcategory = ?
+          ORDER BY search_priority DESC, title ASC LIMIT ?`,
+    args: [manufacturer, subcategory, limit],
+  });
+  return setCache(cacheKey, result.rows.map(rowToManual), CACHE_5MIN);
+}
+
+export async function getRLProductLine(): Promise<{
+  breakers: Manual[];
+  accessories: Manual[];
+  laBreakers: Manual[];
+  laAccessories: Manual[];
+}> {
+  const cacheKey = 'rl-product-line';
+  const cached = getCached<{ breakers: Manual[]; accessories: Manual[]; laBreakers: Manual[]; laAccessories: Manual[] }>(cacheKey);
+  if (cached) return cached;
+
+  const batchResults = await getDb().batch([
+    {
+      sql: `SELECT * FROM manuals WHERE manufacturer = 'Siemens' AND subcategory = 'Insulated Case Breakers'
+            AND (title LIKE '%Type RL%' OR title LIKE '%Type RLE%' OR title LIKE '%Type RLI%' OR title LIKE '%Type RLF%')
+            ORDER BY search_priority DESC, title ASC`,
+      args: [],
+    },
+    {
+      sql: `SELECT * FROM manuals WHERE manufacturer = 'Siemens' AND subcategory = 'RL Accessories'
+            ORDER BY title ASC`,
+      args: [],
+    },
+    {
+      sql: `SELECT * FROM manuals WHERE manufacturer = 'Siemens' AND subcategory = 'Air Circuit Breakers'
+            AND title LIKE '%Type LA%'
+            ORDER BY search_priority DESC, title ASC`,
+      args: [],
+    },
+    {
+      sql: `SELECT * FROM manuals WHERE manufacturer = 'Siemens' AND subcategory = 'LA Accessories'
+            ORDER BY title ASC`,
+      args: [],
+    },
+  ]);
+
+  const data = {
+    breakers: batchResults[0].rows.map(rowToManual),
+    accessories: batchResults[1].rows.map(rowToManual),
+    laBreakers: batchResults[2].rows.map(rowToManual),
+    laAccessories: batchResults[3].rows.map(rowToManual),
+  };
+  return setCache(cacheKey, data, CACHE_5MIN);
+}
+
 // ── Admin: Create/Update ──
 
 export async function createManual(data: Omit<Manual, 'id' | 'created_at' | 'updated_at'>): Promise<number> {

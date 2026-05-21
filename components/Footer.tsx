@@ -103,6 +103,7 @@ export default function Footer() {
               <li><Link href="/manufacturers" className="text-slate-400 hover:text-white">By Manufacturer</Link></li>
               <li><Link href="/about" className="text-slate-400 hover:text-white">About Voyten Manuals</Link></li>
               <li><Link href="/faq" className="text-slate-400 hover:text-white">FAQ</Link></li>
+              <li><Link href="/products/rl-breakers" className="text-slate-400 hover:text-white">RL Breakers &amp; Parts</Link></li>
               <li><Link href="/contact" className="text-slate-400 hover:text-white">Contact / Request a Part</Link></li>
               <li><a href="https://voytenelectric.com" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white">Voyten Electric</a></li>
               <li><a href="https://spbbreakers.com" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white">SPB Breakers</a></li>
