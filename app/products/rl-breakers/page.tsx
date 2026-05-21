@@ -12,7 +12,7 @@ export const revalidate = 3600;
 const CDN = 'https://cdn4.volusion.store/jhkcv-upqrn/v/vspfiles';
 const IMG_BREAKER_HERO = `${CDN}/assets/images/breaker%20white.png`;
 const IMG_PARTS = `${CDN}/assets/images/white%20background%20parts.png`;
-const IMG_STATIC_TRIP = `${CDN}/photos/18-483-905-546-1.png`;
+
 
 // ── SEO Metadata ──
 
@@ -353,11 +353,11 @@ export default async function RLBreakersPage() {
               </div>
               <div className="lg:col-span-2 bg-slate-50 flex items-center justify-center p-8">
                 <Image
-                  src={IMG_STATIC_TRIP}
-                  alt="Siemens Static Trip III electronic trip unit for RL circuit breakers — front panel showing LSIG adjustment dials"
-                  width={300}
-                  height={300}
-                  className="w-full max-w-[280px] h-auto rounded-lg"
+                  src="/images/static-trip-iii-diagram.png"
+                  alt="Siemens Static Trip III power flow diagram — TSIG/CP unit with forward and reverse kW/kVAR metering"
+                  width={400}
+                  height={260}
+                  className="w-full max-w-[360px] h-auto rounded-lg"
                 />
               </div>
             </div>

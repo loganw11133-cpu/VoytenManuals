@@ -105,9 +105,6 @@ export default function Footer() {
               <li><Link href="/faq" className="text-slate-400 hover:text-white">FAQ</Link></li>
               <li><Link href="/products/rl-breakers" className="text-slate-400 hover:text-white">RL Breakers &amp; Parts</Link></li>
               <li><Link href="/contact" className="text-slate-400 hover:text-white">Contact / Request a Part</Link></li>
-              <li><a href="https://voytenelectric.com" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white">Voyten Electric</a></li>
-              <li><a href="https://spbbreakers.com" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white">SPB Breakers</a></li>
-              <li><a href="https://rlbreakers.com" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white">RL Breakers</a></li>
             </ul>
           </div>
 
