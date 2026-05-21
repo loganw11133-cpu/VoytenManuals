@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Metadata } from 'next';
-import { Phone, ArrowRight, ChevronRight, Wrench, Shield, Download, Zap, ExternalLink, BookOpen } from 'lucide-react';
+import { Phone, ArrowRight, ChevronRight, Wrench, Shield, Download, ExternalLink, BookOpen } from 'lucide-react';
 import ManualCard from '@/components/ManualCard';
 import { getRLProductLine } from '@/lib/manuals-db';
 
@@ -50,43 +50,29 @@ export const metadata: Metadata = {
 const VOLUSION = 'https://jhkcv-upqrn.volusion.store/category-s';
 
 const ACCESSORY_GRID = [
-  { name: 'Anti-Pump Y Relay', catId: '175', icon: Zap },
-  { name: 'Auxiliary Switch', catId: '164', icon: Wrench },
-  { name: 'Bell Alarm Switch', catId: '158', icon: Shield },
-  { name: 'Blown Fuse Trip Assembly', catId: '159', icon: Zap },
-  { name: 'Breaker Assembly Part 1', catId: '147', icon: Wrench },
-  { name: 'Breaker Assembly Part 2', catId: '148', icon: Wrench },
-  { name: 'Close Solenoid', catId: '154', icon: Zap },
-  { name: 'Communications Options', catId: '167', icon: ExternalLink },
-  { name: 'Contacts (800–2000A)', catId: '151', icon: Wrench },
-  { name: 'Contacts (3200–5000A)', catId: '150', icon: Wrench },
-  { name: 'Integrally Fused Breakers', catId: '168', icon: Shield },
-  { name: 'Key Interlock & Fuse Carriage', catId: '170', icon: Shield },
-  { name: 'Motor Operator', catId: '153', icon: Zap },
-  { name: 'Open Fuse Indicator', catId: '160', icon: Zap },
-  { name: 'Open Fuse Sensor', catId: '171', icon: Zap },
-  { name: 'Operator Mechanism', catId: '152', icon: Wrench },
-  { name: 'Secondary Disconnect', catId: '162', icon: Wrench },
-  { name: 'Shunt Trip', catId: '157', icon: Zap },
-  { name: 'Static Trip Unit', catId: '165', icon: Shield },
-  { name: 'Tapped Sensor', catId: '181', icon: Wrench },
-  { name: 'Trigger Fuse Assembly', catId: '161', icon: Zap },
-  { name: 'Tripping Transformer', catId: '166', icon: Zap },
-  { name: 'Undervoltage Trip Device', catId: '163', icon: Shield },
-];
-
-// ── Interrupting ratings table ──
-
-const RATINGS_TABLE = [
-  { frame: '800A', rl: '42', rle: '42', rlf: '65', rli: '100+' },
-  { frame: '1200A', rl: '42', rle: '—', rlf: '65', rli: '—' },
-  { frame: '1600A', rl: '42', rle: '—', rlf: '65', rli: '—' },
-  { frame: '2000A', rl: '42', rle: '42', rlf: '65', rli: '—' },
-  { frame: '2500A', rl: '42', rle: '—', rlf: '65', rli: '—' },
-  { frame: '3000A', rl: '42', rle: '—', rlf: '65', rli: '—' },
-  { frame: '3200A', rl: '50', rle: '—', rlf: '65', rli: '—' },
-  { frame: '4000A', rl: '65', rle: '65', rlf: '65', rli: '—' },
-  { frame: '5000A', rl: '65', rle: '—', rlf: '65', rli: '—' },
+  { name: 'Anti-Pump Y Relay', catId: '175' },
+  { name: 'Auxiliary Switch', catId: '164' },
+  { name: 'Bell Alarm Switch', catId: '158' },
+  { name: 'Blown Fuse Trip Assembly', catId: '159' },
+  { name: 'Breaker Assembly Part 1', catId: '147' },
+  { name: 'Breaker Assembly Part 2', catId: '148' },
+  { name: 'Close Solenoid', catId: '154' },
+  { name: 'Communications Options', catId: '167' },
+  { name: 'Contacts (800–2000A)', catId: '151' },
+  { name: 'Contacts (3200–5000A)', catId: '150' },
+  { name: 'Integrally Fused Breakers', catId: '168' },
+  { name: 'Key Interlock & Fuse Carriage', catId: '170' },
+  { name: 'Motor Operator', catId: '153' },
+  { name: 'Open Fuse Indicator', catId: '160' },
+  { name: 'Open Fuse Sensor', catId: '171' },
+  { name: 'Operator Mechanism', catId: '152' },
+  { name: 'Secondary Disconnect', catId: '162' },
+  { name: 'Shunt Trip', catId: '157' },
+  { name: 'Static Trip Unit', catId: '165' },
+  { name: 'Tapped Sensor', catId: '181' },
+  { name: 'Trigger Fuse Assembly', catId: '161' },
+  { name: 'Tripping Transformer', catId: '166' },
+  { name: 'Undervoltage Trip Device', catId: '163' },
 ];
 
 // ── Page ──
@@ -281,9 +267,7 @@ export default async function RLBreakersPage() {
 
           {/* 23 accessory category grid */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
-            {ACCESSORY_GRID.map(acc => {
-              const Icon = acc.icon;
-              return (
+            {ACCESSORY_GRID.map(acc => (
                 <a
                   key={acc.catId}
                   href={`${VOLUSION}/${acc.catId}.htm`}
@@ -292,7 +276,7 @@ export default async function RLBreakersPage() {
                   className="group flex items-center gap-3 bg-white rounded-xl border border-slate-200 p-4 hover:border-[#dc2626]/30 hover:shadow-md transition-all"
                 >
                   <div className="w-9 h-9 bg-slate-100 group-hover:bg-[#dc2626]/10 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors">
-                    <Icon size={16} className="text-slate-500 group-hover:text-[#dc2626] transition-colors" />
+                    <Wrench size={16} className="text-slate-500 group-hover:text-[#dc2626] transition-colors" />
                   </div>
                   <div className="min-w-0">
                     <p className="text-sm font-semibold text-slate-900 group-hover:text-[#dc2626] transition-colors truncate">
@@ -302,8 +286,7 @@ export default async function RLBreakersPage() {
                   </div>
                   <ExternalLink size={14} className="text-slate-300 group-hover:text-[#dc2626] flex-shrink-0 ml-auto transition-colors" />
                 </a>
-              );
-            })}
+            ))}
           </div>
         </section>
 
@@ -336,38 +319,6 @@ export default async function RLBreakersPage() {
               </Link>
             </div>
           )}
-        </section>
-
-        {/* ═══════════════ INTERRUPTING RATINGS TABLE ═══════════════ */}
-        <section className="mb-16">
-          <h2 className="text-2xl font-bold text-slate-900 mb-2">Interrupting Ratings</h2>
-          <p className="text-slate-500 mb-6">kA RMS Symmetrical at 480V — per Siemens SG-3068</p>
-          <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="bg-[#1a1a1a] text-white">
-                    <th className="px-4 py-3 text-left font-semibold">Frame</th>
-                    <th className="px-4 py-3 text-center font-semibold">RL (Standard)</th>
-                    <th className="px-4 py-3 text-center font-semibold">RLE (Economical)</th>
-                    <th className="px-4 py-3 text-center font-semibold">RLF (Fully Rated)</th>
-                    <th className="px-4 py-3 text-center font-semibold">RLI (Integrally Fused)</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {RATINGS_TABLE.map((row, i) => (
-                    <tr key={row.frame} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50'}>
-                      <td className="px-4 py-2.5 font-semibold text-slate-900">{row.frame}</td>
-                      <td className="px-4 py-2.5 text-center text-slate-700">{row.rl} kA</td>
-                      <td className="px-4 py-2.5 text-center text-slate-700">{row.rle === '—' ? <span className="text-slate-300">—</span> : `${row.rle} kA`}</td>
-                      <td className="px-4 py-2.5 text-center text-slate-700">{row.rlf} kA</td>
-                      <td className="px-4 py-2.5 text-center text-slate-700">{row.rli === '—' ? <span className="text-slate-300">—</span> : `${row.rli} kA`}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
         </section>
 
         {/* ═══════════════ STATIC TRIP III ═══════════════ */}
@@ -412,53 +363,6 @@ export default async function RLBreakersPage() {
             </div>
           </div>
         </section>
-
-        {/* ═══════════════ LA BREAKERS ═══════════════ */}
-        {laBreakers.length > 0 && (
-          <section className="mb-16">
-            <div className="mb-6">
-              <h2 className="text-2xl font-bold text-slate-900">LA Breaker &amp; Accessories</h2>
-              <p className="text-slate-500 mt-1">
-                Originally manufactured by Allis-Chalmers, now supported by Siemens. Voyten stocks LA breakers and renewal parts.
-              </p>
-            </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {[...laBreakers, ...laAccessories].slice(0, 9).map(manual => (
-                <ManualCard key={manual.id} manual={manual} />
-              ))}
-            </div>
-            {(laBreakers.length + laAccessories.length) > 9 && (
-              <div className="mt-4 text-center">
-                <Link
-                  href="/search?manufacturer=Siemens&q=LA+breaker"
-                  className="text-sm text-[#dc2626] hover:text-[#b91c1c] font-medium"
-                >
-                  View all {laBreakers.length + laAccessories.length} LA documents
-                </Link>
-              </div>
-            )}
-          </section>
-        )}
-
-        {/* ═══════════════ ALL RL MANUALS GRID ═══════════════ */}
-        {accessories.length > 0 && (
-          <section className="mb-16">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-slate-900">All RL Accessory Manuals</h2>
-              <Link
-                href="/search?manufacturer=Siemens&subcategory=RL+Accessories"
-                className="hidden sm:flex items-center gap-1 text-sm text-[#dc2626] hover:text-[#b91c1c] font-medium"
-              >
-                Search all <ArrowRight size={14} />
-              </Link>
-            </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {accessories.map(manual => (
-                <ManualCard key={manual.id} manual={manual} />
-              ))}
-            </div>
-          </section>
-        )}
 
         {/* ═══════════════ BOTTOM CTA ═══════════════ */}
         <section>
