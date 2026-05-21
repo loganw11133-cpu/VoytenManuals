@@ -47,30 +47,32 @@ export const metadata: Metadata = {
 
 // ── Accessory category data for grid ──
 
+const VOLUSION = 'https://jhkcv-upqrn.volusion.store/category-s';
+
 const ACCESSORY_GRID = [
-  { name: 'Anti-Pump Y Relay', slug: 'siemens-rl-anti-pump-y-relay-parts-manual', icon: Zap },
-  { name: 'Auxiliary Switch', slug: 'siemens-rl-auxiliary-switch-parts-manual', icon: Wrench },
-  { name: 'Bell Alarm Switch', slug: 'siemens-rl-bell-alarm-switch-parts-manual', icon: Shield },
-  { name: 'Blown Fuse Trip Assembly', slug: 'siemens-rl-blown-fuse-trip-assembly-parts-manual', icon: Zap },
-  { name: 'Breaker Assembly Part 1', slug: 'siemens-rl-breaker-assembly-part-1-parts-manual', icon: Wrench },
-  { name: 'Breaker Assembly Part 2', slug: 'siemens-rl-breaker-assembly-part-2-parts-manual', icon: Wrench },
-  { name: 'Close Solenoid', slug: 'siemens-rl-close-solenoid-parts-manual', icon: Zap },
-  { name: 'Communications Options', slug: 'siemens-rl-communications-options-parts-manual', icon: ExternalLink },
-  { name: 'Contacts (800–2000A)', slug: 'siemens-rl-contacts-rl-800-thru-rle-2000-parts-manual', icon: Wrench },
-  { name: 'Contacts (3200–5000A)', slug: 'siemens-rl-contacts-rl-3200-thru-rl-5000-parts-manual', icon: Wrench },
-  { name: 'Integrally Fused Breakers', slug: 'siemens-rl-integrally-fused-breakers-parts-manual', icon: Shield },
-  { name: 'Key Interlock & Fuse Carriage', slug: 'siemens-rl-key-interlock-mounting-fuse-carriage-parts-manual', icon: Shield },
-  { name: 'Motor Operator', slug: 'siemens-rl-motor-operator-parts-manual', icon: Zap },
-  { name: 'Open Fuse Indicator', slug: 'siemens-rl-open-fuse-indicator-parts-manual', icon: Zap },
-  { name: 'Open Fuse Sensor', slug: 'siemens-rl-open-fuse-sensor-parts-manual', icon: Zap },
-  { name: 'Operator Mechanism', slug: 'siemens-rl-operator-mechanism-parts-manual', icon: Wrench },
-  { name: 'Secondary Disconnect', slug: 'siemens-rl-secondary-disconnect-parts-manual', icon: Wrench },
-  { name: 'Shunt Trip', slug: 'siemens-rl-shunt-trip-parts-manual', icon: Zap },
-  { name: 'Static Trip Unit', slug: 'siemens-rl-static-trip-unit-parts-manual', icon: Shield },
-  { name: 'Tapped Sensor', slug: 'siemens-rl-tapped-sensor-parts-manual', icon: Wrench },
-  { name: 'Trigger Fuse Assembly', slug: 'siemens-rl-trigger-fuse-assembly-parts-manual', icon: Zap },
-  { name: 'Tripping Transformer', slug: 'siemens-rl-tripping-transformer-parts-manual', icon: Zap },
-  { name: 'Undervoltage Trip Device', slug: 'siemens-rl-undervoltage-trip-device-parts-manual', icon: Shield },
+  { name: 'Anti-Pump Y Relay', catId: '175', icon: Zap },
+  { name: 'Auxiliary Switch', catId: '164', icon: Wrench },
+  { name: 'Bell Alarm Switch', catId: '158', icon: Shield },
+  { name: 'Blown Fuse Trip Assembly', catId: '159', icon: Zap },
+  { name: 'Breaker Assembly Part 1', catId: '147', icon: Wrench },
+  { name: 'Breaker Assembly Part 2', catId: '148', icon: Wrench },
+  { name: 'Close Solenoid', catId: '154', icon: Zap },
+  { name: 'Communications Options', catId: '167', icon: ExternalLink },
+  { name: 'Contacts (800–2000A)', catId: '151', icon: Wrench },
+  { name: 'Contacts (3200–5000A)', catId: '150', icon: Wrench },
+  { name: 'Integrally Fused Breakers', catId: '168', icon: Shield },
+  { name: 'Key Interlock & Fuse Carriage', catId: '170', icon: Shield },
+  { name: 'Motor Operator', catId: '153', icon: Zap },
+  { name: 'Open Fuse Indicator', catId: '160', icon: Zap },
+  { name: 'Open Fuse Sensor', catId: '171', icon: Zap },
+  { name: 'Operator Mechanism', catId: '152', icon: Wrench },
+  { name: 'Secondary Disconnect', catId: '162', icon: Wrench },
+  { name: 'Shunt Trip', catId: '157', icon: Zap },
+  { name: 'Static Trip Unit', catId: '165', icon: Shield },
+  { name: 'Tapped Sensor', catId: '181', icon: Wrench },
+  { name: 'Trigger Fuse Assembly', catId: '161', icon: Zap },
+  { name: 'Tripping Transformer', catId: '166', icon: Zap },
+  { name: 'Undervoltage Trip Device', catId: '163', icon: Shield },
 ];
 
 // ── Interrupting ratings table ──
@@ -282,9 +284,11 @@ export default async function RLBreakersPage() {
             {ACCESSORY_GRID.map(acc => {
               const Icon = acc.icon;
               return (
-                <Link
-                  key={acc.slug}
-                  href={`/manual/${acc.slug}`}
+                <a
+                  key={acc.catId}
+                  href={`${VOLUSION}/${acc.catId}.htm`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="group flex items-center gap-3 bg-white rounded-xl border border-slate-200 p-4 hover:border-[#dc2626]/30 hover:shadow-md transition-all"
                 >
                   <div className="w-9 h-9 bg-slate-100 group-hover:bg-[#dc2626]/10 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors">
@@ -294,9 +298,10 @@ export default async function RLBreakersPage() {
                     <p className="text-sm font-semibold text-slate-900 group-hover:text-[#dc2626] transition-colors truncate">
                       {acc.name}
                     </p>
-                    <p className="text-xs text-slate-400">Parts &amp; Manual</p>
+                    <p className="text-xs text-slate-400">View Parts &amp; Inventory</p>
                   </div>
-                </Link>
+                  <ExternalLink size={14} className="text-slate-300 group-hover:text-[#dc2626] flex-shrink-0 ml-auto transition-colors" />
+                </a>
               );
             })}
           </div>
