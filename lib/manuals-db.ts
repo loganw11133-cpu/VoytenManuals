@@ -484,8 +484,20 @@ export async function getRLProductLine(): Promise<{
 
   const batchResults = await getDb().batch([
     {
-      sql: `SELECT * FROM manuals WHERE manufacturer = 'Siemens' AND subcategory = 'Insulated Case Breakers'
-            AND (title LIKE '%Type RL%' OR title LIKE '%Type RLE%' OR title LIKE '%Type RLI%' OR title LIKE '%Type RLF%')
+      sql: `SELECT * FROM manuals WHERE manufacturer = 'Siemens'
+            AND (
+              (slug IN (
+                'siemens-rl-renewal-parts-catalog',
+                'siemens-rl-wiring-diagrams-control-power',
+                'siemens-rl-static-trip-iii-unit-manual',
+                'siemens-rl-switchgear-installation-manual',
+                'instructionssgim-3068',
+                'sgim-3068e'
+              ))
+              OR (title LIKE '%Static Trip III%' AND subcategory IN ('Trip Units', 'Trip Units & Accessories'))
+              OR (title LIKE '%Static Trip II %' AND subcategory = 'Trip Units & Accessories')
+            )
+            GROUP BY COALESCE(pdf_url, slug)
             ORDER BY search_priority DESC, title ASC`,
       args: [],
     },

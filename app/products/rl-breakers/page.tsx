@@ -294,8 +294,8 @@ export default async function RLBreakersPage() {
         <section className="mb-16">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h2 className="text-2xl font-bold text-slate-900">RL Breaker Manuals</h2>
-              <p className="text-slate-500 mt-1">RL, RLE, RLI, and RLF variants — installation, maintenance, and renewal parts</p>
+              <h2 className="text-2xl font-bold text-slate-900">RL Technical Documentation</h2>
+              <p className="text-slate-500 mt-1">Installation guides, renewal parts catalogs, wiring diagrams, and trip unit manuals</p>
             </div>
             <Link
               href="/search?manufacturer=Siemens&subcategory=Insulated+Case+Breakers"
@@ -343,7 +343,7 @@ export default async function RLBreakersPage() {
                 </ul>
                 <div className="flex flex-wrap gap-3">
                   <Link
-                    href="/manual/siemens-rl-static-trip-iii-unit-manual"
+                    href="/manual/static-trip-iii-information-and-instruction-guide"
                     className="inline-flex items-center gap-2 bg-[#1a1a1a] hover:bg-[#111111] text-white px-5 py-2.5 rounded-lg font-semibold text-sm transition-colors"
                   >
                     <Download size={16} />
