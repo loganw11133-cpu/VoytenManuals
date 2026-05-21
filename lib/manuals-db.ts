@@ -490,7 +490,6 @@ export async function getRLProductLine(): Promise<{
                 'siemens-rl-renewal-parts-catalog',
                 'siemens-rl-wiring-diagrams-control-power',
                 'siemens-rl-static-trip-iii-unit-manual',
-                'siemens-rl-switchgear-installation-manual',
                 'instructionssgim-3068',
                 'sgim-3068e'
               ))
