@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Metadata } from 'next';
-import { Phone, ArrowRight, ChevronRight, Wrench, Shield, Download, Zap, ExternalLink } from 'lucide-react';
+import { Phone, ArrowRight, ChevronRight, Wrench, Shield, Download, Zap, ExternalLink, BookOpen } from 'lucide-react';
 import ManualCard from '@/components/ManualCard';
 import { getRLProductLine } from '@/lib/manuals-db';
 
@@ -174,11 +174,11 @@ export default async function RLBreakersPage() {
                   1-800-458-4001
                 </a>
                 <Link
-                  href="/tools/rl-decoder"
+                  href="/contact?type=quote"
                   className="flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white px-6 py-3.5 rounded-lg font-medium border border-white/20 transition-colors"
                 >
-                  <Wrench size={16} />
-                  RL Catalog Decoder Tool
+                  <BookOpen size={16} />
+                  Request a Quote
                 </Link>
               </div>
             </div>
@@ -230,6 +230,78 @@ export default async function RLBreakersPage() {
       </section>
 
       <div className="max-w-7xl mx-auto px-4 py-12">
+        {/* ═══════════════ RL ACCESSORIES (22 categories) ═══════════════ */}
+        <section className="mb-16">
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold text-slate-900">RL Accessories &amp; Renewal Parts</h2>
+            <p className="text-slate-500 mt-1">
+              22 accessory categories — every component for the RL product line, from anti-pump relays to undervoltage trip devices.
+            </p>
+          </div>
+
+          {/* Parts overview image */}
+          <div className="bg-white rounded-2xl border border-slate-200 p-6 mb-8">
+            <div className="grid lg:grid-cols-3 gap-6 items-center">
+              <div className="lg:col-span-1 flex justify-center">
+                <Image
+                  src={IMG_PARTS}
+                  alt="Siemens RL breaker accessories and renewal parts — technical drawing showing component assemblies"
+                  width={400}
+                  height={300}
+                  className="w-full max-w-sm h-auto rounded-lg"
+                />
+              </div>
+              <div className="lg:col-span-2">
+                <h3 className="text-lg font-bold text-slate-900 mb-2">Complete Parts Availability</h3>
+                <p className="text-slate-600 leading-relaxed mb-4">
+                  Voyten maintains the largest available inventory of Siemens RL renewal parts. From contact finger kits and
+                  arc chutes to complete breaker assemblies, every component is tested and ready to ship. Our inventory
+                  includes parts for all frame sizes from 800A through 5000A.
+                </p>
+                <div className="flex gap-3">
+                  <a
+                    href="tel:1-800-458-4001"
+                    className="inline-flex items-center gap-2 bg-[#dc2626] hover:bg-[#b91c1c] text-white px-5 py-2.5 rounded-lg font-bold text-sm transition-colors"
+                  >
+                    <Phone size={16} />
+                    Call for Parts
+                  </a>
+                  <Link
+                    href="/contact?type=quote"
+                    className="inline-flex items-center gap-2 border border-slate-300 hover:border-slate-400 text-slate-700 px-5 py-2.5 rounded-lg font-medium text-sm transition-colors"
+                  >
+                    Request Quote
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* 23 accessory category grid */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+            {ACCESSORY_GRID.map(acc => {
+              const Icon = acc.icon;
+              return (
+                <Link
+                  key={acc.slug}
+                  href={`/manual/${acc.slug}`}
+                  className="group flex items-center gap-3 bg-white rounded-xl border border-slate-200 p-4 hover:border-[#dc2626]/30 hover:shadow-md transition-all"
+                >
+                  <div className="w-9 h-9 bg-slate-100 group-hover:bg-[#dc2626]/10 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors">
+                    <Icon size={16} className="text-slate-500 group-hover:text-[#dc2626] transition-colors" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-sm font-semibold text-slate-900 group-hover:text-[#dc2626] transition-colors truncate">
+                      {acc.name}
+                    </p>
+                    <p className="text-xs text-slate-400">Parts &amp; Manual</p>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </section>
+
         {/* ═══════════════ RL BREAKER VARIANTS ═══════════════ */}
         <section className="mb-16">
           <div className="flex items-center justify-between mb-6">
@@ -321,13 +393,6 @@ export default async function RLBreakersPage() {
                     <Download size={16} />
                     Download Manual
                   </Link>
-                  <Link
-                    href="/tools/rl-decoder"
-                    className="inline-flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 px-5 py-2.5 rounded-lg font-medium text-sm transition-colors"
-                  >
-                    <Wrench size={16} />
-                    Decode Catalog Number
-                  </Link>
                 </div>
               </div>
               <div className="lg:col-span-2 bg-slate-50 flex items-center justify-center p-8">
@@ -340,78 +405,6 @@ export default async function RLBreakersPage() {
                 />
               </div>
             </div>
-          </div>
-        </section>
-
-        {/* ═══════════════ RL ACCESSORIES (22 categories) ═══════════════ */}
-        <section className="mb-16">
-          <div className="mb-6">
-            <h2 className="text-2xl font-bold text-slate-900">RL Accessories &amp; Renewal Parts</h2>
-            <p className="text-slate-500 mt-1">
-              22 accessory categories — every component for the RL product line, from anti-pump relays to undervoltage trip devices.
-            </p>
-          </div>
-
-          {/* Parts overview image */}
-          <div className="bg-white rounded-2xl border border-slate-200 p-6 mb-8">
-            <div className="grid lg:grid-cols-3 gap-6 items-center">
-              <div className="lg:col-span-1 flex justify-center">
-                <Image
-                  src={IMG_PARTS}
-                  alt="Siemens RL breaker accessories and renewal parts — technical drawing showing component assemblies"
-                  width={400}
-                  height={300}
-                  className="w-full max-w-sm h-auto rounded-lg"
-                />
-              </div>
-              <div className="lg:col-span-2">
-                <h3 className="text-lg font-bold text-slate-900 mb-2">Complete Parts Availability</h3>
-                <p className="text-slate-600 leading-relaxed mb-4">
-                  Voyten maintains the largest available inventory of Siemens RL renewal parts. From contact finger kits and
-                  arc chutes to complete breaker assemblies, every component is tested and ready to ship. Our inventory
-                  includes parts for all frame sizes from 800A through 5000A.
-                </p>
-                <div className="flex gap-3">
-                  <a
-                    href="tel:1-800-458-4001"
-                    className="inline-flex items-center gap-2 bg-[#dc2626] hover:bg-[#b91c1c] text-white px-5 py-2.5 rounded-lg font-bold text-sm transition-colors"
-                  >
-                    <Phone size={16} />
-                    Call for Parts
-                  </a>
-                  <Link
-                    href="/contact?type=quote"
-                    className="inline-flex items-center gap-2 border border-slate-300 hover:border-slate-400 text-slate-700 px-5 py-2.5 rounded-lg font-medium text-sm transition-colors"
-                  >
-                    Request Quote
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* 23 accessory category grid */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
-            {ACCESSORY_GRID.map(acc => {
-              const Icon = acc.icon;
-              return (
-                <Link
-                  key={acc.slug}
-                  href={`/manual/${acc.slug}`}
-                  className="group flex items-center gap-3 bg-white rounded-xl border border-slate-200 p-4 hover:border-[#dc2626]/30 hover:shadow-md transition-all"
-                >
-                  <div className="w-9 h-9 bg-slate-100 group-hover:bg-[#dc2626]/10 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors">
-                    <Icon size={16} className="text-slate-500 group-hover:text-[#dc2626] transition-colors" />
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-sm font-semibold text-slate-900 group-hover:text-[#dc2626] transition-colors truncate">
-                      {acc.name}
-                    </p>
-                    <p className="text-xs text-slate-400">Parts &amp; Manual</p>
-                  </div>
-                </Link>
-              );
-            })}
           </div>
         </section>
 
@@ -441,35 +434,6 @@ export default async function RLBreakersPage() {
             )}
           </section>
         )}
-
-        {/* ═══════════════ RL DECODER TOOL CTA ═══════════════ */}
-        <section className="mb-16">
-          <div className="bg-gradient-to-br from-[#1a1a1a] to-[#111111] rounded-2xl p-8 lg:p-10 text-white">
-            <div className="grid lg:grid-cols-2 gap-8 items-center">
-              <div>
-                <h2 className="text-2xl font-bold mb-3">RL Catalog Number Decoder</h2>
-                <p className="text-slate-300 leading-relaxed mb-4">
-                  Identify any RL breaker from its catalog number. Our decoder parses all 12 positions of the Siemens RL
-                  catalog format — plus optional dash-suffix accessories. Supports RL, RLE, RLI, and RLF variants.
-                </p>
-                <Link
-                  href="/tools/rl-decoder"
-                  className="inline-flex items-center gap-2 bg-[#dc2626] hover:bg-[#b91c1c] text-white px-6 py-3 rounded-lg font-bold transition-colors"
-                >
-                  <Wrench size={18} />
-                  Open Decoder Tool
-                  <ArrowRight size={16} />
-                </Link>
-              </div>
-              <div className="hidden lg:block text-center">
-                <div className="inline-block bg-white/5 rounded-xl p-6 border border-white/10">
-                  <p className="font-mono text-2xl tracking-widest text-[#dc2626] mb-2">RLAS2EAJXCA05X</p>
-                  <p className="text-sm text-slate-400">Example: RL Standard, 2000A, Electric, Tapped 2000/.5</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* ═══════════════ ALL RL MANUALS GRID ═══════════════ */}
         {accessories.length > 0 && (
