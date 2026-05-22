@@ -21,6 +21,11 @@ const nextConfig: NextConfig = {
         hostname: 'cdn4.volusion.store',
         pathname: '/jhkcv-upqrn/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'www.spbbreakers.com',
+        pathname: '/v/vspfiles/**',
+      },
     ],
   },
   async redirects() {
@@ -40,6 +45,12 @@ const nextConfig: NextConfig = {
       {
         source: '/rl-breakers',
         destination: '/products/rl-breakers',
+        permanent: true,
+      },
+      // SPBBreakers.com content now lives at /products/spb-breakers
+      {
+        source: '/spb-breakers',
+        destination: '/products/spb-breakers',
         permanent: true,
       },
     ];

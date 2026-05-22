@@ -19,7 +19,7 @@ const IMG_PARTS = `${CDN}/assets/images/white%20background%20parts.png`;
 export const metadata: Metadata = {
   title: 'Siemens RL Breakers & Accessories — Exclusive Inventory | Voyten Manuals',
   description:
-    'Voyten Electric acquired all remaining Siemens Type RL & LA breaker inventory from Siemens Wendell, NC. Browse manuals, parts catalogs, and technical documentation for RL, RLE, RLI, RLF breakers (800–5000A), Static Trip III units, and 22 accessory categories. Your exclusive source for new-surplus RL parts.',
+    'Voyten Electric acquired all remaining Siemens Type RL & LA breaker inventory from Siemens Wendell, NC. Browse manuals, parts catalogs, and technical documentation for RL, RLE, RLI, RLF breakers (800–5000A), Static Trip III units, and 23 accessory categories. Your exclusive source for new-surplus RL parts.',
   keywords: [
     'Siemens RL breaker', 'RL circuit breaker', 'RLE breaker', 'RLI integrally fused',
     'RLF fully rated', 'Static Trip III', 'RL accessories', 'RL parts',
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Siemens RL Breakers — Exclusive Inventory from Voyten Electric',
     description:
-      'Complete RL product line: breakers 800–5000A, Static Trip III, 22 accessory categories, and LA breakers. Free manuals + parts available.',
+      'Complete RL product line: breakers 800–5000A, Static Trip III, 23 accessory categories, and LA breakers. Free manuals + parts available.',
     url: 'https://voytenmanuals.com/products/rl-breakers',
     type: 'website',
   },
@@ -206,7 +206,7 @@ export default async function RLBreakersPage() {
               <p className="text-sm text-slate-500">Frame Range</p>
             </div>
             <div>
-              <p className="text-2xl font-extrabold text-[#1a1a1a]">22</p>
+              <p className="text-2xl font-extrabold text-[#1a1a1a]">23</p>
               <p className="text-sm text-slate-500">Accessory Categories</p>
             </div>
             <div>
@@ -223,7 +223,7 @@ export default async function RLBreakersPage() {
           <div className="mb-6">
             <h2 className="text-2xl font-bold text-slate-900">RL Accessories &amp; Renewal Parts</h2>
             <p className="text-slate-500 mt-1">
-              22 accessory categories — every component for the RL product line, from anti-pump relays to undervoltage trip devices.
+              23 accessory categories — every component for the RL product line, from anti-pump relays to undervoltage trip devices.
             </p>
           </div>
 

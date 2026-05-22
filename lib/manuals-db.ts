@@ -527,6 +527,45 @@ export async function getRLProductLine(): Promise<{
   return setCache(cacheKey, data, CACHE_5MIN);
 }
 
+/**
+ * SPB (Eaton/Cutler-Hammer/Westinghouse "Systems Pow-R Breaker") product line.
+ * Mirrors getRLProductLine. Splits the SPB manuals into the breakers themselves
+ * vs. supporting docs (trip units, wiring, switchgear). Deduped by PDF so identical
+ * amperage variants collapse to one card.
+ */
+export async function getSPBProductLine(): Promise<{
+  breakers: Manual[];
+  docs: Manual[];
+}> {
+  const cacheKey = 'spb-product-line';
+  const cached = getCached<{ breakers: Manual[]; docs: Manual[] }>(cacheKey);
+  if (cached) return cached;
+
+  const SPB_MATCH = "(title LIKE '%SPB%' OR title LIKE '%Systems Pow-R%')";
+  const batchResults = await getDb().batch([
+    {
+      sql: `SELECT * FROM manuals WHERE ${SPB_MATCH}
+            AND subcategory IN ('Insulated Case Breakers', 'Air Circuit Breakers')
+            GROUP BY COALESCE(pdf_url, slug)
+            ORDER BY search_priority DESC, title ASC`,
+      args: [],
+    },
+    {
+      sql: `SELECT * FROM manuals WHERE ${SPB_MATCH}
+            AND subcategory NOT IN ('Insulated Case Breakers', 'Air Circuit Breakers')
+            GROUP BY COALESCE(pdf_url, slug)
+            ORDER BY search_priority DESC, title ASC`,
+      args: [],
+    },
+  ]);
+
+  const data = {
+    breakers: batchResults[0].rows.map(rowToManual),
+    docs: batchResults[1].rows.map(rowToManual),
+  };
+  return setCache(cacheKey, data, CACHE_5MIN);
+}
+
 // ── Admin: Create/Update ──
 
 export async function createManual(data: Omit<Manual, 'id' | 'created_at' | 'updated_at'>): Promise<number> {
