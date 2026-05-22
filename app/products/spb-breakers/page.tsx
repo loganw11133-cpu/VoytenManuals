@@ -77,9 +77,9 @@ const ACCESSORY_GRID = [
 // ── Interrupting / short-time ratings (Table 1) ──
 
 const SPB_RATINGS = [
-  { series: 'SPB-50',  frames: '250A, 800A', shortTime: '25 kA',    delay: '18 cycles', v240: '65',  v480: '50',  v600: '25' },
-  { series: 'SPB-65',  frames: '1600A',      shortTime: '35 kA',    delay: '18 cycles', v240: '85',  v480: '65',  v600: '65' },
-  { series: 'SPB-100', frames: '250–3000A',  shortTime: '25–35 kA', delay: '18 cycles', v240: '100', v480: '100', v600: '85' },
+  { series: 'SPB-50',  frames: '250A, 800A', shortTime: '25 kA',    delay: '18 cycles', v240: '65',  v480: '50',  v600: '42' },
+  { series: 'SPB-65',  frames: '1600A',      shortTime: '35 kA',    delay: '18 cycles', v240: '85',  v480: '65',  v600: '50' },
+  { series: 'SPB-100', frames: '250–3000A',  shortTime: '25–35 kA', delay: '18 cycles', v240: '100', v480: '100', v600: '65–85' },
   { series: 'SPB-150', frames: '250–3000A',  shortTime: '25–51 kA', delay: '18 cycles', v240: '200', v480: '150', v600: '100' },
 ];
 
