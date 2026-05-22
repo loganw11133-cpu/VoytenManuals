@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     'Voyten Electric provides aftermarket life-extension support for the Eaton, Cutler-Hammer & Westinghouse Type SPB (Systems Pow-R) breaker installed base. Complete breakers new and Eaton-reconditioned, rating plugs, operators, and renewal parts — 800–5000A, 50–150 kA. Backed by Eaton factory warranty and stocked for immediate shipment.',
   keywords: [
     'Eaton SPB breaker', 'Systems Pow-R Breaker', 'SPB circuit breaker', 'SPBR', 'SPBSR', 'SPBHR',
-    'Cutler-Hammer SPB', 'Westinghouse SPB', 'insulated case circuit breaker', 'Digitrip RMS',
+    'Cutler-Hammer SPB', 'Westinghouse SPB', 'insulated case circuit breaker', 'Pow-R Trip 7', 'Digitrip RMS',
     'SPB rating plug', 'SPB renewal parts', 'SPB trip unit', 'SPBN', 'SPBNH', 'non-automatic switch',
     'Voyten Electric', 'SPBBreakers.com', 'reconditioned breaker', 'new surplus breaker',
     'shunt trip', 'auxiliary switch', 'undervoltage release', 'drawout stabs',
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Eaton Type SPB Breakers — New & Reconditioned from Voyten Electric',
     description:
-      'Complete SPB product line: breakers 800–5000A (50–150 kA), Digitrip RMS trip units, rating plugs, and 12 accessory categories. Free manuals + parts available.',
+      'Complete SPB product line: breakers 800–5000A (50–150 kA), Pow-R Trip 7 trip units, rating plugs, and 12 accessory categories. Free manuals + parts available.',
     url: 'https://voytenmanuals.com/products/spb-breakers',
     type: 'website',
   },
@@ -72,6 +72,15 @@ const ACCESSORY_GRID = [
   { name: 'Terminals / Drawout Stabs', catId: '219' },
   { name: 'Undervoltage Release', catId: '221' },
   { name: 'Breaker Cover', catId: '187' },
+];
+
+// ── Interrupting / short-time ratings (Table 1) ──
+
+const SPB_RATINGS = [
+  { series: 'SPB-50',  frames: '250A, 800A', shortTime: '25 kA',    delay: '18 cycles', v240: '65',  v480: '50',  v600: '25' },
+  { series: 'SPB-65',  frames: '1600A',      shortTime: '35 kA',    delay: '18 cycles', v240: '85',  v480: '65',  v600: '65' },
+  { series: 'SPB-100', frames: '250–3000A',  shortTime: '35 kA',    delay: '18 cycles', v240: '100', v480: '100', v600: '85' },
+  { series: 'SPB-150', frames: '250–3000A',  shortTime: '25–51 kA', delay: '18 cycles', v240: '200', v480: '150', v600: '100' },
 ];
 
 // ── Page ──
@@ -176,7 +185,7 @@ export default async function SPBBreakersPage() {
                 <div className="bg-white/5 rounded-2xl p-6 backdrop-blur-sm border border-white/10">
                   <Image
                     src={IMG_BREAKER_HERO}
-                    alt="Eaton Type SPB Systems Pow-R low voltage insulated case circuit breaker — drawout construction with Digitrip RMS trip unit"
+                    alt="Eaton Type SPB Systems Pow-R low voltage insulated case circuit breaker — drawout construction with Pow-R Trip 7 trip unit"
                     width={480}
                     height={360}
                     className="w-full h-auto rounded-lg"
@@ -218,40 +227,7 @@ export default async function SPBBreakersPage() {
       </section>
 
       <div className="max-w-7xl mx-auto px-4 py-12">
-        {/* ═══════════════ SPB MODELS / INTERRUPTING TIERS ═══════════════ */}
-        <section className="mb-16">
-          <div className="mb-6">
-            <h2 className="text-2xl font-bold text-slate-900">SPB Breaker Models &amp; Interrupting Tiers</h2>
-            <p className="text-slate-500 mt-1">
-              The Systems Pow-R family spans 50–150 kA interrupting — SPBSR, SPBR, and SPBHR ratings — plus SPBN/SPBNH
-              non-automatic switches. Browse current inventory by model.
-            </p>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {SPB_MODELS.map(m => (
-              <a
-                key={m.catId}
-                href={`${SPB_STORE}/${m.catId}.htm`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center gap-3 bg-white rounded-xl border border-slate-200 p-4 hover:border-[#dc2626]/30 hover:shadow-md transition-all"
-              >
-                <div className="w-9 h-9 bg-slate-100 group-hover:bg-[#dc2626]/10 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors">
-                  <Zap size={16} className="text-slate-500 group-hover:text-[#dc2626] transition-colors" />
-                </div>
-                <div className="min-w-0">
-                  <p className="text-sm font-semibold text-slate-900 group-hover:text-[#dc2626] transition-colors truncate">
-                    {m.name}
-                  </p>
-                  <p className="text-xs text-slate-400">{m.note}</p>
-                </div>
-                <ExternalLink size={14} className="text-slate-300 group-hover:text-[#dc2626] flex-shrink-0 ml-auto transition-colors" />
-              </a>
-            ))}
-          </div>
-        </section>
-
-        {/* ═══════════════ SPB ACCESSORIES (12 categories) ═══════════════ */}
+        {/* ═══════════════ SPB ACCESSORIES (12 categories) — FIRST ═══════════════ */}
         <section className="mb-16">
           <div className="mb-6">
             <h2 className="text-2xl font-bold text-slate-900">SPB Accessories &amp; Renewal Parts</h2>
@@ -277,7 +253,7 @@ export default async function SPBBreakersPage() {
               <div className="lg:col-span-2">
                 <h3 className="text-lg font-bold text-slate-900 mb-2">Complete Parts Availability</h3>
                 <p className="text-slate-600 leading-relaxed mb-4">
-                  Voyten stocks high-demand SPB components for immediate shipment — from rating plugs, Digitrip RMS trip
+                  Voyten stocks high-demand SPB components for immediate shipment — from rating plugs, Pow-R Trip 7 trip
                   units, and electrical operators to spring release kits, drawout stabs, and complete breaker covers.
                   New parts and Eaton-reconditioned breakers are backed by Eaton&rsquo;s factory warranty.
                 </p>
@@ -325,6 +301,87 @@ export default async function SPBBreakersPage() {
           </div>
         </section>
 
+        {/* ═══════════════ SPB BREAKER MODELS ═══════════════ */}
+        <section className="mb-16">
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold text-slate-900">SPB Breaker Models</h2>
+            <p className="text-slate-500 mt-1">
+              The Systems Pow-R family spans 50–150 kA interrupting — SPBSR, SPBR, and SPBHR ratings — plus SPBN/SPBNH
+              non-automatic switches. Browse current inventory by model.
+            </p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {SPB_MODELS.map(m => (
+              <a
+                key={m.catId}
+                href={`${SPB_STORE}/${m.catId}.htm`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-3 bg-white rounded-xl border border-slate-200 p-4 hover:border-[#dc2626]/30 hover:shadow-md transition-all"
+              >
+                <div className="w-9 h-9 bg-slate-100 group-hover:bg-[#dc2626]/10 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors">
+                  <Zap size={16} className="text-slate-500 group-hover:text-[#dc2626] transition-colors" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-sm font-semibold text-slate-900 group-hover:text-[#dc2626] transition-colors truncate">
+                    {m.name}
+                  </p>
+                  <p className="text-xs text-slate-400">{m.note}</p>
+                </div>
+                <ExternalLink size={14} className="text-slate-300 group-hover:text-[#dc2626] flex-shrink-0 ml-auto transition-colors" />
+              </a>
+            ))}
+          </div>
+        </section>
+
+        {/* ═══════════════ INTERRUPTING / SHORT-TIME RATINGS (Table 1) ═══════════════ */}
+        <section className="mb-16">
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold text-slate-900">Interrupting &amp; Short-Time Ratings</h2>
+            <p className="text-slate-500 mt-1">
+              Table 1 — interrupting capacity (kA RMS symmetrical) by series and system voltage.
+            </p>
+          </div>
+          <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="bg-[#1a1a1a] text-white text-left">
+                    <th className="px-4 py-3 font-semibold">Series</th>
+                    <th className="px-4 py-3 font-semibold">Frame Cont. Amps</th>
+                    <th className="px-4 py-3 font-semibold">Short-Time Rating</th>
+                    <th className="px-4 py-3 font-semibold">Max S-T Delay</th>
+                    <th className="px-4 py-3 font-semibold text-center" colSpan={3}>Interrupting kA RMS Sym @ Volts</th>
+                  </tr>
+                  <tr className="bg-slate-100 text-slate-600 text-xs">
+                    <th className="px-4 py-2" colSpan={4}></th>
+                    <th className="px-4 py-2 text-center font-semibold">240 V</th>
+                    <th className="px-4 py-2 text-center font-semibold">480 V</th>
+                    <th className="px-4 py-2 text-center font-semibold">600 V</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-200">
+                  {SPB_RATINGS.map(r => (
+                    <tr key={r.series} className="hover:bg-slate-50">
+                      <td className="px-4 py-3 font-bold text-[#dc2626] whitespace-nowrap">{r.series}</td>
+                      <td className="px-4 py-3 text-slate-700 whitespace-nowrap">{r.frames}</td>
+                      <td className="px-4 py-3 text-slate-700 whitespace-nowrap">{r.shortTime}</td>
+                      <td className="px-4 py-3 text-slate-700 whitespace-nowrap">{r.delay}</td>
+                      <td className="px-4 py-3 text-center font-semibold text-slate-900">{r.v240}</td>
+                      <td className="px-4 py-3 text-center font-semibold text-slate-900">{r.v480}</td>
+                      <td className="px-4 py-3 text-center font-semibold text-slate-900">{r.v600}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="px-4 py-3 text-xs text-slate-400 border-t border-slate-100 space-y-1">
+              <p>Short-Time Rating (RMS symmetrical amps) @ 600 V, 50/60 Hz system with X/R ratio of 6.6.</p>
+              <p>All Systems Pow-R breakers equipped with Pow-R Trip 7 trip devices.</p>
+            </div>
+          </div>
+        </section>
+
         {/* ═══════════════ SPB TECHNICAL DOCUMENTATION ═══════════════ */}
         {totalCount > 0 && (
           <section className="mb-16">
@@ -361,7 +418,7 @@ export default async function SPBBreakersPage() {
             <h2 className="text-2xl lg:text-3xl font-bold mb-3">Need an SPB Part?</h2>
             <p className="text-white/90 mb-6 max-w-2xl mx-auto">
               Voyten Electric supports the full Eaton/Cutler-Hammer/Westinghouse SPB installed base — new and reconditioned
-              breakers, Digitrip RMS trip units, rating plugs, and every renewal part — tested, in stock, and backed by
+              breakers, Pow-R Trip 7 trip units, rating plugs, and every renewal part — tested, in stock, and backed by
               Eaton&rsquo;s factory warranty.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
