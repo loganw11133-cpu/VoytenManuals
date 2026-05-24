@@ -74,15 +74,6 @@ const ACCESSORY_GRID = [
   { name: 'Breaker Cover', catId: '187' },
 ];
 
-// ── Interrupting / short-time ratings (Table 1) ──
-
-const SPB_RATINGS = [
-  { series: 'SPB-50',  frames: '250A, 800A', shortTime: '25 kA',    delay: '18 cycles', v240: '65',  v480: '50',  v600: '42' },
-  { series: 'SPB-65',  frames: '1600A',      shortTime: '35 kA',    delay: '18 cycles', v240: '85',  v480: '65',  v600: '50' },
-  { series: 'SPB-100', frames: '250–3000A',  shortTime: '25–35 kA', delay: '18 cycles', v240: '100', v480: '100', v600: '65–85' },
-  { series: 'SPB-150', frames: '250–3000A',  shortTime: '25–51 kA', delay: '18 cycles', v240: '200', v480: '150', v600: '100' },
-];
-
 // ── Page ──
 
 export default async function SPBBreakersPage() {
@@ -343,37 +334,15 @@ export default async function SPBBreakersPage() {
             </p>
           </div>
           <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="bg-[#1a1a1a] text-white text-left">
-                    <th className="px-4 py-3 font-semibold">Series</th>
-                    <th className="px-4 py-3 font-semibold">Frame Cont. Amps</th>
-                    <th className="px-4 py-3 font-semibold">Short-Time Rating</th>
-                    <th className="px-4 py-3 font-semibold">Max S-T Delay</th>
-                    <th className="px-4 py-3 font-semibold text-center" colSpan={3}>Interrupting kA RMS Sym @ Volts</th>
-                  </tr>
-                  <tr className="bg-slate-100 text-slate-600 text-xs">
-                    <th className="px-4 py-2" colSpan={4}></th>
-                    <th className="px-4 py-2 text-center font-semibold">240 V</th>
-                    <th className="px-4 py-2 text-center font-semibold">480 V</th>
-                    <th className="px-4 py-2 text-center font-semibold">600 V</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-200">
-                  {SPB_RATINGS.map(r => (
-                    <tr key={r.series} className="hover:bg-slate-50">
-                      <td className="px-4 py-3 font-bold text-[#dc2626] whitespace-nowrap">{r.series}</td>
-                      <td className="px-4 py-3 text-slate-700 whitespace-nowrap">{r.frames}</td>
-                      <td className="px-4 py-3 text-slate-700 whitespace-nowrap">{r.shortTime}</td>
-                      <td className="px-4 py-3 text-slate-700 whitespace-nowrap">{r.delay}</td>
-                      <td className="px-4 py-3 text-center font-semibold text-slate-900">{r.v240}</td>
-                      <td className="px-4 py-3 text-center font-semibold text-slate-900">{r.v480}</td>
-                      <td className="px-4 py-3 text-center font-semibold text-slate-900">{r.v600}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div className="p-4 sm:p-6">
+              <Image
+                src="/images/spb-table.png"
+                alt="Table 1: Interrupting and Short-Time Ratings for Eaton SPB-50, SPB-65, SPB-100, and SPB-150 series Systems Pow-R breakers — frame continuous ampere ratings (250A–3000A), short-time ratings (25–51 kA), max short-time delay (18 cycles), and interrupting capacity in kA RMS symmetrical at 240 V, 480 V, and 600 V system voltages."
+                width={2195}
+                height={889}
+                className="w-full h-auto rounded-lg"
+                sizes="(max-width: 1280px) 100vw, 1280px"
+              />
             </div>
             <div className="px-4 py-3 text-xs text-slate-400 border-t border-slate-100 space-y-1">
               <p>Short-Time Rating (RMS symmetrical amps) @ 600 V, 50/60 Hz system with X/R ratio of 6.6.</p>
