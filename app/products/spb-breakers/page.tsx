@@ -344,9 +344,43 @@ export default async function SPBBreakersPage() {
                 sizes="(max-width: 1280px) 100vw, 1280px"
               />
             </div>
-            <div className="px-4 py-3 text-xs text-slate-400 border-t border-slate-100 space-y-1">
-              <p>Short-Time Rating (RMS symmetrical amps) @ 600 V, 50/60 Hz system with X/R ratio of 6.6.</p>
-              <p>All Systems Pow-R breakers equipped with Pow-R Trip 7 trip devices.</p>
+          </div>
+        </section>
+
+        {/* ═══════════════ SPB-50/65 → SPB-100 UPGRADE PATH ═══════════════ */}
+        <section className="mb-16">
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold text-slate-900">SPB-50 / SPB-65 &rarr; SPB-100 Upgrade Path</h2>
+            <p className="text-slate-500 mt-1">
+              How to step up from 50 or 65 kA to 100 kA without modifying the existing cubicle.
+            </p>
+          </div>
+          <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+            <div className="grid lg:grid-cols-[auto_1fr] gap-6 p-6 lg:p-8">
+              <div className="flex lg:flex-col items-center gap-4 lg:gap-3 lg:pr-6 lg:border-r lg:border-slate-200">
+                <div className="w-14 h-14 bg-[#dc2626]/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <Zap size={28} className="text-[#dc2626]" />
+                </div>
+                <div className="text-center">
+                  <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Drop-in</p>
+                  <p className="text-2xl font-extrabold text-slate-900">100 kA</p>
+                  <p className="text-xs text-slate-500">No structural mods</p>
+                </div>
+              </div>
+              <div>
+                <p className="text-slate-700 leading-relaxed mb-3">
+                  The SPB-50, SPB-65, and SPB-100 are{' '}
+                  <strong className="text-slate-900">electrically and mechanically identical</strong> except for the interrupting
+                  rating. The 100 kA capability is achieved through different arc chutes, moving contacts, and stationary contacts &mdash;
+                  internal modifications that have{' '}
+                  <strong className="text-slate-900">no effect on breaker dimensions or electrical performance</strong>.
+                </p>
+                <p className="text-slate-700 leading-relaxed">
+                  Because the SPB-100 and SPB-65 share identical dimensions, an SPB-100 will slide directly into an existing SPB-50 or
+                  SPB-65 cubicle with no modifications to the surrounding structure &mdash; a clean upgrade path for facilities whose
+                  available fault current has grown past their original 50 or 65 kA rating.
+                </p>
+              </div>
             </div>
           </div>
         </section>
