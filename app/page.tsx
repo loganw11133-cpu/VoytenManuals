@@ -1,9 +1,8 @@
 import Link from 'next/link';
-import { Phone, ChevronRight, BookOpen, ArrowRight, Clock, Truck, Download } from 'lucide-react';
+import { Phone, BookOpen, ArrowRight, Clock, Truck, Download } from 'lucide-react';
 import Image from 'next/image';
 import ManualSearchBar from '@/components/ManualSearchBar';
-import { getTotalManualCount, getCategories, getManufacturers, getFeaturedManuals, toSlug } from '@/lib/manuals-db';
-import ManualCard from '@/components/ManualCard';
+import { getTotalManualCount, getCategories, getManufacturers, toSlug } from '@/lib/manuals-db';
 import YouTubeEmbed from '@/components/YouTubeEmbed';
 
 const CATEGORIES = [
@@ -20,11 +19,10 @@ const CATEGORIES = [
 export const revalidate = 3600;
 
 export default async function Home() {
-  const [totalCount, categories, manufacturers, featuredManuals] = await Promise.all([
+  const [totalCount, categories, manufacturers] = await Promise.all([
     getTotalManualCount(),
     getCategories(),
     getManufacturers(),
-    getFeaturedManuals(8),
   ]);
 
   // Top manufacturers by manual count
@@ -200,32 +198,6 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Recently Added Manuals */}
-      {featuredManuals.length > 0 && (
-        <section className="py-14 lg:py-18 bg-white">
-          <div className="max-w-7xl mx-auto px-4">
-            <div className="flex items-center justify-between mb-8">
-              <div>
-                <h2 className="text-2xl font-bold text-slate-900 mb-1">Browse by Relevance</h2>
-                <p className="text-slate-500 text-sm">In stock at our PA facility</p>
-              </div>
-              <Link
-                href="/search"
-                className="text-sm font-medium text-[#dc2626] hover:text-[#b91c1c] flex items-center gap-1"
-              >
-                View all
-                <ArrowRight size={14} />
-              </Link>
-            </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {featuredManuals.map((manual) => (
-                <ManualCard key={manual.id} manual={manual} />
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
       {/* Facility Video + CTA */}
       <section className="py-14 lg:py-20 bg-[#1a1a1a]">
         <div className="max-w-6xl mx-auto px-4">
@@ -274,25 +246,6 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Can't Find Section */}
-      <section className="py-14 lg:py-18 bg-slate-50">
-        <div className="max-w-3xl mx-auto px-4 text-center">
-          <h2 className="text-2xl font-bold text-slate-900 mb-3">
-            Can&#39;t Find the Manual You Need?
-          </h2>
-          <p className="text-slate-500 mb-6">
-            Our library is continually growing. If you can&#39;t find a specific manual,
-            let us know and we&#39;ll do our best to track it down for you.
-          </p>
-          <Link
-            href="/contact?type=manual-request"
-            className="inline-flex items-center gap-2 bg-[#1a1a1a] hover:bg-[#111111] text-white px-6 py-3 rounded-lg font-semibold transition-colors"
-          >
-            Request a Manual
-            <ChevronRight size={18} />
-          </Link>
-        </div>
-      </section>
     </div>
   );
 }
