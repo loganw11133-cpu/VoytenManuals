@@ -93,8 +93,34 @@ export default function Header() {
             </Link>
             <Link href="/categories" className="text-slate-600 hover:text-slate-900 font-medium">Browse Categories</Link>
             <Link href="/manufacturers" className="text-slate-600 hover:text-slate-900 font-medium">Manufacturers</Link>
+            <div className="relative group">
+              <button
+                type="button"
+                className="text-slate-600 hover:text-slate-900 font-medium flex items-center gap-1"
+              >
+                New SPB/RL
+                <ChevronDown size={14} className="transition-transform group-hover:rotate-180" />
+              </button>
+              <div className="absolute left-0 top-full pt-2 w-56 invisible opacity-0 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100 transition-opacity z-50">
+                <div className="bg-white rounded-lg shadow-xl border border-slate-200 overflow-hidden">
+                  <Link
+                    href="/products/spb-breakers"
+                    className="block px-4 py-3 hover:bg-slate-50 border-b border-slate-100"
+                  >
+                    <p className="font-semibold text-slate-900 text-sm">SPB Breakers</p>
+                    <p className="text-xs text-slate-500 mt-0.5">Eaton/Cutler-Hammer Systems Pow-R</p>
+                  </Link>
+                  <Link
+                    href="/products/rl-breakers"
+                    className="block px-4 py-3 hover:bg-slate-50"
+                  >
+                    <p className="font-semibold text-slate-900 text-sm">RL Breakers</p>
+                    <p className="text-xs text-slate-500 mt-0.5">Siemens RL New Surplus</p>
+                  </Link>
+                </div>
+              </div>
+            </div>
             <Link href="/about" className="text-slate-600 hover:text-slate-900 font-medium">About</Link>
-            <Link href="/faq" className="text-slate-600 hover:text-slate-900 font-medium">FAQ</Link>
             <Link href="/contact" className="text-slate-600 hover:text-slate-900 font-medium">Contact</Link>
           </nav>
 
@@ -191,8 +217,24 @@ export default function Header() {
             </Link>
             <Link href="/categories" onClick={() => setMobileMenuOpen(false)} className="block py-2.5 text-slate-700 hover:text-slate-900">Browse Categories</Link>
             <Link href="/manufacturers" onClick={() => setMobileMenuOpen(false)} className="block py-2.5 text-slate-700 hover:text-slate-900">Manufacturers</Link>
+            <div className="py-2.5">
+              <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">New SPB/RL</p>
+              <Link
+                href="/products/spb-breakers"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block pl-3 py-1.5 text-slate-700 hover:text-slate-900"
+              >
+                SPB Breakers
+              </Link>
+              <Link
+                href="/products/rl-breakers"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block pl-3 py-1.5 text-slate-700 hover:text-slate-900"
+              >
+                RL Breakers
+              </Link>
+            </div>
             <Link href="/about" onClick={() => setMobileMenuOpen(false)} className="block py-2.5 text-slate-700 hover:text-slate-900">About</Link>
-            <Link href="/faq" onClick={() => setMobileMenuOpen(false)} className="block py-2.5 text-slate-700 hover:text-slate-900">FAQ</Link>
             <Link href="/contact" onClick={() => setMobileMenuOpen(false)} className="block py-2.5 text-slate-700 hover:text-slate-900">Contact</Link>
 
             <div className="pt-4 mt-4 border-t border-slate-200">
