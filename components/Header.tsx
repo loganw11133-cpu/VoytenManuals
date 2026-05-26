@@ -108,7 +108,7 @@ export default function Header() {
                     className="block px-4 py-3 hover:bg-slate-50 border-b border-slate-100"
                   >
                     <p className="font-semibold text-slate-900 text-sm">SPB Breakers</p>
-                    <p className="text-xs text-slate-500 mt-0.5">Eaton/Cutler-Hammer Systems Pow-R</p>
+                    <p className="text-xs text-slate-500 mt-0.5">Eaton/Cutler-Hammer Systems Pow-R Accessories</p>
                   </Link>
                   <Link
                     href="/products/rl-breakers"

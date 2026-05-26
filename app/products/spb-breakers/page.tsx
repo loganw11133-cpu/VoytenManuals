@@ -20,7 +20,7 @@ const SPB_STORE = 'https://www.spbbreakers.com/category-s';
 export const metadata: Metadata = {
   title: 'Eaton Type SPB Breakers & Parts — New & Reconditioned | Voyten Manuals',
   description:
-    'Voyten Electric provides aftermarket life-extension support for the Eaton, Cutler-Hammer & Westinghouse Type SPB (Systems Pow-R) breaker installed base. Complete breakers new and Eaton-reconditioned, rating plugs, operators, and renewal parts — 800–5000A, 50–150 kA. Backed by Eaton factory warranty and stocked for immediate shipment.',
+    'Voyten Electric provides aftermarket life-extension support for the Eaton, Cutler-Hammer & Westinghouse Type SPB (Systems Pow-R) breaker installed base. Complete breakers new and Eaton-reconditioned, rating plugs, operators, and renewal parts — 800–5000A, 50–150 kA. Backed by 1 year warranty and stocked for immediate shipment.',
   keywords: [
     'Eaton SPB breaker', 'Systems Pow-R Breaker', 'SPB circuit breaker', 'SPBR', 'SPBSR', 'SPBHR',
     'Cutler-Hammer SPB', 'Westinghouse SPB', 'insulated case circuit breaker', 'Pow-R Trip 7', 'Digitrip RMS',
@@ -149,7 +149,7 @@ export default async function SPBBreakersPage() {
                 Voyten Electric provides aftermarket <strong className="text-white">life-extension support</strong> for the
                 installed base of Eaton, Cutler-Hammer &amp; Westinghouse Type SPB breakers. Complete breakers — new and
                 Eaton-reconditioned — plus rating plugs, operators, and every renewal part, stocked for immediate shipment
-                and backed by Eaton&rsquo;s factory warranty.
+                and backed by 1 year warranty.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3">
@@ -246,7 +246,7 @@ export default async function SPBBreakersPage() {
                 <p className="text-slate-600 leading-relaxed mb-4">
                   Voyten stocks high-demand SPB components for immediate shipment — from rating plugs, Pow-R Trip 7 trip
                   units, and electrical operators to spring release kits, drawout stabs, and complete breaker covers.
-                  New parts and Eaton-reconditioned breakers are backed by Eaton&rsquo;s factory warranty.
+                  New parts and Eaton-reconditioned breakers are backed by 1 year warranty.
                 </p>
                 <div className="flex gap-3">
                   <a
@@ -422,7 +422,7 @@ export default async function SPBBreakersPage() {
             <p className="text-white/90 mb-6 max-w-2xl mx-auto">
               Voyten Electric supports the full Eaton/Cutler-Hammer/Westinghouse SPB installed base — new and reconditioned
               breakers, Pow-R Trip 7 trip units, rating plugs, and every renewal part — tested, in stock, and backed by
-              Eaton&rsquo;s factory warranty.
+              1 year warranty.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <a
