@@ -135,7 +135,7 @@ export default async function SPBBreakersPage() {
 
               <div className="inline-flex items-center gap-2 bg-[#dc2626] text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-4">
                 <Shield size={12} />
-                New &amp; Reconditioned · Eaton Warranty
+                New &amp; Reconditioned · 1 Year Warranty
               </div>
 
               <h1 className="text-3xl lg:text-5xl font-extrabold leading-tight mb-4">
