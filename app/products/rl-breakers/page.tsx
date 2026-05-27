@@ -218,7 +218,7 @@ export default async function RLBreakersPage() {
       </section>
 
       <div className="max-w-7xl mx-auto px-4 py-12">
-        {/* ═══════════════ RL ACCESSORIES (22 categories) ═══════════════ */}
+        {/* ═══════════════ RL ACCESSORIES (23 categories) ═══════════════ */}
         <section className="mb-16">
           <div className="mb-6">
             <h2 className="text-2xl font-bold text-slate-900">RL Accessories &amp; Renewal Parts</h2>
