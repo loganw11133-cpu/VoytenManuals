@@ -146,8 +146,10 @@ export default async function SPBBreakersPage() {
               </h1>
 
               <p className="text-slate-300 text-lg leading-relaxed mb-6 max-w-xl">
-                Voyten Electric is your <strong className="text-white">exclusive factory-authorized source</strong> for
-                Cutler-Hammer/Eaton Type SPB breakers.
+                Voyten Electric is your <strong className="text-white">exclusive authorized source</strong> for
+                Cutler-Hammer/Eaton Type SPB breakers. Complete breakers — new and
+                Eaton-reconditioned — plus rating plugs, operators, and every renewal part, backed by 1 year warranty
+                and stocked for immediate shipment.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3">
