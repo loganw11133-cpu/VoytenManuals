@@ -147,9 +147,9 @@ export default async function Home() {
                   className="group bg-slate-50 hover:bg-[#1a1a1a] rounded-xl p-5 transition-all hover:shadow-lg"
                 >
                   <div className="flex items-center justify-between mb-3">
-                    <div className={`rounded-lg flex items-center justify-center overflow-hidden transition-colors ${'iconSrc' in cat ? 'w-14 h-14 bg-[#1a1a1a]/5 group-hover:bg-white/20' : 'w-10 h-10 bg-[#1a1a1a]/10 group-hover:bg-white/20'}`}>
+                    <div className={`rounded-lg flex items-center justify-center overflow-hidden transition-colors ${'iconSrc' in cat ? 'w-16 h-16 bg-[#1a1a1a]/5 group-hover:bg-white/20' : 'w-10 h-10 bg-[#1a1a1a]/10 group-hover:bg-white/20'}`}>
                       {'iconSrc' in cat ? (
-                        <Image src={cat.iconSrc} alt={cat.name} width={56} height={56} className="w-full h-full object-contain" />
+                        <Image src={cat.iconSrc} alt={cat.name} width={64} height={64} className="w-full h-full object-contain" />
                       ) : FallbackIcon ? (
                         <FallbackIcon className="w-5 h-5 text-[#1a1a1a] group-hover:text-white transition-colors" />
                       ) : null}
