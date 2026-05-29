@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: 'Free circuit breaker catalog number decoders. Decode Eaton and Siemens model numbers for Magnum DS, SPB, RD, MW IEC, MDS, SBS, and RL breakers instantly.',
   robots: { index: true, follow: true },
   alternates: {
-    canonical: 'https://voytenmanuals.com/tools',
+    canonical: 'https://www.voytenmanuals.com/tools',
   },
 };
 

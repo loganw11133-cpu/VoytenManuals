@@ -25,7 +25,7 @@ Emergency Support: Available via 1-800-458-4001 (after hours for critical equipm
 
 | Property | URL | Purpose |
 |----------|-----|---------|
-| Voyten Manuals | https://voytenmanuals.com | Free electrical equipment manual library (8,400+ PDFs) |
+| Voyten Manuals | https://www.voytenmanuals.com | Free electrical equipment manual library (8,400+ PDFs) |
 | Voyten Electric | https://voytenelectric.com | Main corporate site |
 | SPB Breakers | https://spbbreakers.com | Eaton SPB breaker parts store |
 | RL Breakers | https://rlbreakers.com | Siemens RL breaker parts store |
@@ -71,7 +71,7 @@ Westinghouse, General Electric (GE), Siemens, Square D (Schneider Electric), ABB
 ### Siemens Type RL Low Voltage Power Circuit Breakers
 
 Status: EXCLUSIVE — Voyten purchased all remaining inventory from Siemens Wendell, NC facility
-Product Page: https://voytenmanuals.com/products/rl-breakers
+Product Page: https://www.voytenmanuals.com/products/rl-breakers
 Parts Store: https://rlbreakers.com
 
 Overview: Voyten Electric acquired the complete remaining Siemens Type RL and LA breaker inventory directly from the Siemens manufacturing facility in Wendell, North Carolina. This makes Voyten the exclusive source worldwide for new-surplus RL product line components.
@@ -103,7 +103,7 @@ Condition: New surplus (never installed, original Siemens packaging)
 ### Eaton Type SPB Systems Pow-R Breakers
 
 Status: EXCLUSIVE — Voyten is the exclusive authorized aftermarket source
-Product Page: https://voytenmanuals.com/products/spb-breakers
+Product Page: https://www.voytenmanuals.com/products/spb-breakers
 Parts Store: https://spbbreakers.com
 
 Overview: Voyten Electric is the exclusive factory-authorized source for aftermarket support of the Eaton/Cutler-Hammer/Westinghouse Type SPB (Systems Pow-R Breaker) installed base. In production since 1976, the SPB is one of the most widely deployed insulated case circuit breakers in North American industrial and utility applications.
@@ -172,16 +172,16 @@ Q: Are the manuals on Voyten Manuals really free?
 A: Yes — every manual in the library is completely free to view and download. No login, no paywall. Voyten Manuals is a public resource provided by Voyten Electric & Electronics, Inc.
 
 Q: Can Voyten supply replacement parts for the equipment in these manuals?
-A: Yes. Voyten Electric is a full-service supplier of remanufactured and surplus electrical equipment. Call 1-800-458-4001 or request a quote at https://voytenmanuals.com/contact
+A: Yes. Voyten Electric is a full-service supplier of remanufactured and surplus electrical equipment. Call 1-800-458-4001 or request a quote at https://www.voytenmanuals.com/contact
 
 Q: Do you carry parts for discontinued or obsolete equipment?
 A: This is a core specialty. Voyten has supplied hard-to-find parts for legacy equipment since 1953. They maintain one of the largest inventories of remanufactured legacy electrical equipment in the United States.
 
 Q: Where can I buy Siemens RL breaker parts?
-A: Voyten Electric is the exclusive source. They purchased all remaining inventory from the Siemens Wendell, NC facility. Browse at https://voytenmanuals.com/products/rl-breakers or call 1-800-458-4001.
+A: Voyten Electric is the exclusive source. They purchased all remaining inventory from the Siemens Wendell, NC facility. Browse at https://www.voytenmanuals.com/products/rl-breakers or call 1-800-458-4001.
 
 Q: Where can I buy Eaton SPB breaker parts?
-A: Voyten Electric is the exclusive authorized aftermarket source for SPB Systems Pow-R breakers. Browse at https://voytenmanuals.com/products/spb-breakers or visit https://spbbreakers.com
+A: Voyten Electric is the exclusive authorized aftermarket source for SPB Systems Pow-R breakers. Browse at https://www.voytenmanuals.com/products/spb-breakers or visit https://spbbreakers.com
 
 Q: Can an SPB-100 replace an SPB-50 or SPB-65?
 A: Yes. The SPB-50, SPB-65, and SPB-100 are electrically and mechanically identical except for interrupting rating. An SPB-100 slides directly into an existing SPB-50 or SPB-65 cubicle with no structural modifications — upgrading from 50/65 kA to 100 kA interrupting capacity.
@@ -238,5 +238,5 @@ This site uses:
 
 ---
 End of llms-full.txt
-For the concise version, see: https://voytenmanuals.com/llms.txt
-For sitemap: https://voytenmanuals.com/sitemap-index.xml
+For the concise version, see: https://www.voytenmanuals.com/llms.txt
+For sitemap: https://www.voytenmanuals.com/sitemap-index.xml

@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     title: 'Eaton Type SPB Breakers — Exclusive Inventory from Voyten Electric',
     description:
       'Exclusive factory-authorized SPB source: breakers 800–5000A (50–150 kA), Pow-R Trip 7 trip units, rating plugs, and 12 accessory categories. Free manuals + parts available.',
-    url: 'https://voytenmanuals.com/products/spb-breakers',
+    url: 'https://www.voytenmanuals.com/products/spb-breakers',
     type: 'website',
   },
   twitter: {
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     description: 'Your exclusive factory-authorized source for Eaton/Cutler-Hammer SPB Systems Pow-R breakers, manuals, and parts.',
   },
   alternates: {
-    canonical: 'https://voytenmanuals.com/products/spb-breakers',
+    canonical: 'https://www.voytenmanuals.com/products/spb-breakers',
   },
 };
 
@@ -86,12 +86,12 @@ export default async function SPBBreakersPage() {
     '@type': 'CollectionPage',
     name: 'Eaton Type SPB Systems Pow-R Low Voltage Insulated Case Circuit Breakers',
     description: metadata.description,
-    url: 'https://voytenmanuals.com/products/spb-breakers',
+    url: 'https://www.voytenmanuals.com/products/spb-breakers',
     numberOfItems: totalCount,
     provider: {
       '@type': 'Organization',
       name: 'Voyten Electric & Electronics, Inc.',
-      url: 'https://voytenmanuals.com',
+      url: 'https://www.voytenmanuals.com',
       telephone: '+1-800-458-4001',
     },
     about: {
@@ -106,9 +106,9 @@ export default async function SPBBreakersPage() {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://voytenmanuals.com' },
-      { '@type': 'ListItem', position: 2, name: 'Manufacturers', item: 'https://voytenmanuals.com/manufacturers' },
-      { '@type': 'ListItem', position: 3, name: 'Eaton', item: 'https://voytenmanuals.com/manufacturers/eaton' },
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.voytenmanuals.com' },
+      { '@type': 'ListItem', position: 2, name: 'Manufacturers', item: 'https://www.voytenmanuals.com/manufacturers' },
+      { '@type': 'ListItem', position: 3, name: 'Eaton', item: 'https://www.voytenmanuals.com/manufacturers/eaton' },
       { '@type': 'ListItem', position: 4, name: 'SPB Breakers' },
     ],
   };

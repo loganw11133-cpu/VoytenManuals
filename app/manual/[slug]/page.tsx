@@ -53,7 +53,7 @@ export async function generateMetadata({ params }: ManualPageProps): Promise<Met
       title: `${manual.title}${partNum} — Free PDF Download`,
       description: `Free ${manual.manufacturer} ${manual.category} manual: ${manual.title}. Download PDF with instruction guides, parts lists, and technical data.`,
       type: 'article',
-      url: `https://voytenmanuals.com/manual/${manual.slug}`,
+      url: `https://www.voytenmanuals.com/manual/${manual.slug}`,
     },
     twitter: {
       card: 'summary',
@@ -61,7 +61,7 @@ export async function generateMetadata({ params }: ManualPageProps): Promise<Met
       description: `Free PDF download: ${manual.title} by ${manual.manufacturer}. ${manual.category} documentation.`,
     },
     alternates: {
-      canonical: `https://voytenmanuals.com/manual/${manual.slug}`,
+      canonical: `https://www.voytenmanuals.com/manual/${manual.slug}`,
     },
     robots: { index: true, follow: true },
   };
@@ -88,11 +88,11 @@ export default async function ManualPage({ params }: ManualPageProps) {
     "publisher": {
       "@type": "Organization",
       "name": "Voyten Electric & Electronics, Inc.",
-      "url": "https://voytenmanuals.com",
-      "logo": "https://voytenmanuals.com/images/voyten-logo.png",
+      "url": "https://www.voytenmanuals.com",
+      "logo": "https://www.voytenmanuals.com/images/voyten-logo.png",
     },
-    "url": `https://voytenmanuals.com/manual/${manual.slug}`,
-    "mainEntityOfPage": `https://voytenmanuals.com/manual/${manual.slug}`,
+    "url": `https://www.voytenmanuals.com/manual/${manual.slug}`,
+    "mainEntityOfPage": `https://www.voytenmanuals.com/manual/${manual.slug}`,
     "encodingFormat": "application/pdf",
     "articleSection": manual.category,
     ...(manual.manual_number && { "identifier": manual.manual_number }),
@@ -134,10 +134,10 @@ export default async function ManualPage({ params }: ManualPageProps) {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://voytenmanuals.com" },
-      { "@type": "ListItem", "position": 2, "name": "Manuals", "item": "https://voytenmanuals.com/search" },
-      { "@type": "ListItem", "position": 3, "name": manual.category, "item": `https://voytenmanuals.com/search?category=${encodeURIComponent(manual.category)}` },
-      { "@type": "ListItem", "position": 4, "name": manual.manufacturer, "item": `https://voytenmanuals.com/manufacturers/${toSlug(manual.manufacturer)}` },
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.voytenmanuals.com" },
+      { "@type": "ListItem", "position": 2, "name": "Manuals", "item": "https://www.voytenmanuals.com/search" },
+      { "@type": "ListItem", "position": 3, "name": manual.category, "item": `https://www.voytenmanuals.com/search?category=${encodeURIComponent(manual.category)}` },
+      { "@type": "ListItem", "position": 4, "name": manual.manufacturer, "item": `https://www.voytenmanuals.com/manufacturers/${toSlug(manual.manufacturer)}` },
       { "@type": "ListItem", "position": 5, "name": manual.title },
     ],
   };

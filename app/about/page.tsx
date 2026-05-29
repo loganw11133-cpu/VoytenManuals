@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'About Voyten Electric — Family Owned Since 1953',
     description: 'Third-generation family business powering 8,400+ free electrical equipment manuals. 200,000 sq ft facilities, 45+ employees, serving the industry since 1953.',
-    url: 'https://voytenmanuals.com/about',
+    url: 'https://www.voytenmanuals.com/about',
   },
   twitter: {
     card: 'summary_large_image',
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     description: 'Third-generation family business since 1953. 8,400+ free electrical equipment manuals. Polk, PA.',
   },
   alternates: {
-    canonical: 'https://voytenmanuals.com/about',
+    canonical: 'https://www.voytenmanuals.com/about',
   },
   keywords: [
     'Voyten Electric',

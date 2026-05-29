@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Browse by Manufacturer — Westinghouse, GE & More',
     description: 'Browse free electrical equipment manuals by manufacturer. Westinghouse, GE, Siemens, Square D, Cutler-Hammer, ABB, and 120+ more.',
-    url: 'https://voytenmanuals.com/manufacturers',
+    url: 'https://www.voytenmanuals.com/manufacturers',
   },
   twitter: {
     card: 'summary_large_image',
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     description: 'Free electrical equipment manuals from 130+ manufacturers. Westinghouse, GE, Siemens, Square D, and more.',
   },
   alternates: {
-    canonical: 'https://voytenmanuals.com/manufacturers',
+    canonical: 'https://www.voytenmanuals.com/manufacturers',
   },
 };
 
@@ -39,7 +39,7 @@ export default async function ManufacturersPage() {
       '@type': 'ListItem',
       position: i + 1,
       name: mfr.name,
-      url: `https://voytenmanuals.com/manufacturers/${mfr.slug}`,
+      url: `https://www.voytenmanuals.com/manufacturers/${mfr.slug}`,
     })),
   };
 

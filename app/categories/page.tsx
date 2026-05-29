@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Browse Manual Categories — Breakers, Relays & More',
     description: 'Browse 8,400+ free electrical equipment manuals by category. Circuit breakers, relays, motor controls, switches, fuses, transformers, and bus products.',
-    url: 'https://voytenmanuals.com/categories',
+    url: 'https://www.voytenmanuals.com/categories',
   },
   twitter: {
     card: 'summary_large_image',
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     description: 'Browse 8,400+ free electrical equipment manuals by category. Circuit breakers, relays, motor controls, and more.',
   },
   alternates: {
-    canonical: 'https://voytenmanuals.com/categories',
+    canonical: 'https://www.voytenmanuals.com/categories',
   },
 };
 
@@ -51,7 +51,7 @@ export default async function CategoriesPage() {
       '@type': 'ListItem',
       position: i + 1,
       name: cat.name,
-      url: `https://voytenmanuals.com/search?category=${encodeURIComponent(cat.name)}`,
+      url: `https://www.voytenmanuals.com/search?category=${encodeURIComponent(cat.name)}`,
     })),
   };
 

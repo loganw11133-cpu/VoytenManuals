@@ -56,7 +56,7 @@ export async function generateMetadata({ params }: ManufacturerPageProps): Promi
     openGraph: {
       title,
       description,
-      url: `https://voytenmanuals.com/manufacturers/${slug}`,
+      url: `https://www.voytenmanuals.com/manufacturers/${slug}`,
       type: 'website',
     },
     twitter: {
@@ -65,7 +65,7 @@ export async function generateMetadata({ params }: ManufacturerPageProps): Promi
       description,
     },
     alternates: {
-      canonical: `https://voytenmanuals.com/manufacturers/${slug}`,
+      canonical: `https://www.voytenmanuals.com/manufacturers/${slug}`,
     },
   };
 }
@@ -90,12 +90,12 @@ export default async function ManufacturerDetailPage({ params }: ManufacturerPag
     '@type': 'CollectionPage',
     'name': `${manufacturer.name} Electrical Equipment Manuals`,
     'description': description,
-    'url': `https://voytenmanuals.com/manufacturers/${slug}`,
+    'url': `https://www.voytenmanuals.com/manufacturers/${slug}`,
     'numberOfItems': manufacturer.count,
     'provider': {
       '@type': 'Organization',
       'name': 'Voyten Electric & Electronics, Inc.',
-      'url': 'https://voytenmanuals.com',
+      'url': 'https://www.voytenmanuals.com',
     },
     'about': {
       '@type': 'Organization',
@@ -109,7 +109,7 @@ export default async function ManufacturerDetailPage({ params }: ManufacturerPag
         '@type': 'ListItem',
         'position': i + 1,
         'name': m.title,
-        'url': `https://voytenmanuals.com/manual/${m.slug}`,
+        'url': `https://www.voytenmanuals.com/manual/${m.slug}`,
       })),
     },
   };
@@ -119,8 +119,8 @@ export default async function ManufacturerDetailPage({ params }: ManufacturerPag
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     'itemListElement': [
-      { '@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': 'https://voytenmanuals.com' },
-      { '@type': 'ListItem', 'position': 2, 'name': 'Manufacturers', 'item': 'https://voytenmanuals.com/manufacturers' },
+      { '@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': 'https://www.voytenmanuals.com' },
+      { '@type': 'ListItem', 'position': 2, 'name': 'Manufacturers', 'item': 'https://www.voytenmanuals.com/manufacturers' },
       { '@type': 'ListItem', 'position': 3, 'name': manufacturer.name },
     ],
   };

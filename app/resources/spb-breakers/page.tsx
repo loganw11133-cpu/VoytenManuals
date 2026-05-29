@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     title: 'Eaton SPB Systems Pow-R Breaker — Complete Technical Reference',
     description:
       'Definitive guide to Eaton/Cutler-Hammer/Westinghouse SPB breakers: models, specifications, trip units, upgrade paths, and parts sourcing. By Voyten Electric.',
-    url: 'https://voytenmanuals.com/resources/spb-breakers',
+    url: 'https://www.voytenmanuals.com/resources/spb-breakers',
     type: 'article',
   },
   twitter: {
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     description: 'Complete technical reference for SPB Systems Pow-R breakers: all models, specs, trip units, and parts.',
   },
   alternates: {
-    canonical: 'https://voytenmanuals.com/resources/spb-breakers',
+    canonical: 'https://www.voytenmanuals.com/resources/spb-breakers',
   },
   robots: {
     index: true,
@@ -49,16 +49,16 @@ export default function SPBBreakersGuide() {
     '@type': 'TechArticle',
     headline: 'Eaton SPB Systems Pow-R Breaker — Complete Technical Reference',
     description: metadata.description,
-    url: 'https://voytenmanuals.com/resources/spb-breakers',
+    url: 'https://www.voytenmanuals.com/resources/spb-breakers',
     author: {
       '@type': 'Organization',
       name: 'Voyten Electric & Electronics, Inc.',
-      url: 'https://voytenmanuals.com',
+      url: 'https://www.voytenmanuals.com',
     },
     publisher: {
       '@type': 'Organization',
       name: 'Voyten Electric & Electronics, Inc.',
-      url: 'https://voytenmanuals.com',
+      url: 'https://www.voytenmanuals.com',
       telephone: '+1-800-458-4001',
     },
     datePublished: '2026-05-29',
@@ -75,8 +75,8 @@ export default function SPBBreakersGuide() {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://voytenmanuals.com' },
-      { '@type': 'ListItem', position: 2, name: 'Resources', item: 'https://voytenmanuals.com/resources' },
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.voytenmanuals.com' },
+      { '@type': 'ListItem', position: 2, name: 'Resources', item: 'https://www.voytenmanuals.com/resources' },
       { '@type': 'ListItem', position: 3, name: 'SPB Breakers Guide' },
     ],
   };

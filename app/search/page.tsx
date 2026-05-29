@@ -26,8 +26,8 @@ export async function generateMetadata({ searchParams }: SearchPageProps): Promi
   if (manufacturer) canonicalParams.set('manufacturer', manufacturer);
   if (subcategory) canonicalParams.set('subcategory', subcategory);
   const canonicalUrl = canonicalParams.toString()
-    ? `https://voytenmanuals.com/search?${canonicalParams.toString()}`
-    : 'https://voytenmanuals.com/search';
+    ? `https://www.voytenmanuals.com/search?${canonicalParams.toString()}`
+    : 'https://www.voytenmanuals.com/search';
 
   const desc = `${descParts} library of 8,400+ free electrical equipment manuals. Download PDF guides, parts catalogs, and technical docs.`;
 

@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'FAQ — Electrical Equipment Manuals & Parts',
     description: 'Answers about free manual downloads, discontinued parts, legacy breaker support, and EOL equipment documentation.',
-    url: 'https://voytenmanuals.com/faq',
+    url: 'https://www.voytenmanuals.com/faq',
   },
   twitter: {
     card: 'summary_large_image',
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     description: 'Answers about free manual downloads, discontinued parts, and legacy equipment support.',
   },
   alternates: {
-    canonical: 'https://voytenmanuals.com/faq',
+    canonical: 'https://www.voytenmanuals.com/faq',
   },
   keywords: [
     'electrical equipment manuals FAQ',

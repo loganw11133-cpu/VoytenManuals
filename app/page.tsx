@@ -40,7 +40,7 @@ export default async function Home() {
     "publisher": {
       "@type": "Organization",
       "name": "Voyten Electric & Electronics, Inc.",
-      "url": "https://voytenmanuals.com",
+      "url": "https://www.voytenmanuals.com",
     },
   };
 

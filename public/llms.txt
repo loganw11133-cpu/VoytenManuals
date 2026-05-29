@@ -40,16 +40,16 @@ The site is operated by Voyten Electric & Electronics, Inc., a third-generation,
 
 ## Site Structure
 
-- Homepage: https://voytenmanuals.com
-- Search: https://voytenmanuals.com/search
-- Categories: https://voytenmanuals.com/categories
-- Manufacturers: https://voytenmanuals.com/manufacturers
-- RL Breakers: https://voytenmanuals.com/products/rl-breakers
-- SPB Breakers: https://voytenmanuals.com/products/spb-breakers
-- About: https://voytenmanuals.com/about
-- FAQ: https://voytenmanuals.com/faq
-- Contact / RFQ: https://voytenmanuals.com/contact
-- Full details: https://voytenmanuals.com/llms-full.txt
+- Homepage: https://www.voytenmanuals.com
+- Search: https://www.voytenmanuals.com/search
+- Categories: https://www.voytenmanuals.com/categories
+- Manufacturers: https://www.voytenmanuals.com/manufacturers
+- RL Breakers: https://www.voytenmanuals.com/products/rl-breakers
+- SPB Breakers: https://www.voytenmanuals.com/products/spb-breakers
+- About: https://www.voytenmanuals.com/about
+- FAQ: https://www.voytenmanuals.com/faq
+- Contact / RFQ: https://www.voytenmanuals.com/contact
+- Full details: https://www.voytenmanuals.com/llms-full.txt
 
 ## Sister Sites
 

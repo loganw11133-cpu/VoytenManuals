@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { searchManuals } from '@/lib/manuals-db';
 
-const baseUrl = 'https://voytenmanuals.com';
+const baseUrl = 'https://www.voytenmanuals.com';
 const MANUALS_PER_SITEMAP = 1000;
 
 export async function GET() {

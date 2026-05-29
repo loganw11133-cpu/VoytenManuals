@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Contact Us — Request Parts, Quotes & Manuals',
     description: 'Contact Voyten Electric for parts, quotes, and manual requests. Call 1-800-458-4001 or submit online. Polk, PA.',
-    url: 'https://voytenmanuals.com/contact',
+    url: 'https://www.voytenmanuals.com/contact',
   },
   twitter: {
     card: 'summary_large_image',
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     description: 'Request parts, quotes, and manuals. Call 1-800-458-4001 or submit a request online.',
   },
   alternates: {
-    canonical: 'https://voytenmanuals.com/contact',
+    canonical: 'https://www.voytenmanuals.com/contact',
   },
 };
 
@@ -33,7 +33,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
     "@type": "LocalBusiness",
     "name": "Voyten Electric & Electronics, Inc.",
     "description": "Commercial electrical wholesaler specializing in new, surplus, and reconditioned circuit breakers, switchgear, motor controls, and electrical equipment. Family owned since 1953.",
-    "url": "https://voytenmanuals.com/contact",
+    "url": "https://www.voytenmanuals.com/contact",
     "telephone": "+1-800-458-4001",
     "email": "sales@voyten.com",
     "address": {
@@ -59,7 +59,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
       "https://www.voyten.com",
       "https://www.voytenelectric.com",
     ],
-    "image": "https://voytenmanuals.com/images/aerial-facility.png",
+    "image": "https://www.voytenmanuals.com/images/aerial-facility.png",
     "priceRange": "$$",
   };
 

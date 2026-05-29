@@ -15,7 +15,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://voytenmanuals.com'),
+  metadataBase: new URL('https://www.voytenmanuals.com'),
   title: {
     default: "Free Electrical Equipment Manual Library — PDF Downloads | Voyten Manuals",
     template: "%s | Voyten Manuals"
@@ -99,7 +99,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://voytenmanuals.com",
+    url: "https://www.voytenmanuals.com",
     siteName: "Voyten Manuals",
     title: "Voyten Manuals | Free Electrical Equipment Manual Library — 8,400+ PDFs",
     description: "Free library of 8,400+ electrical equipment manuals. Download PDFs for circuit breakers, relays, motor controls, and more from Westinghouse, GE, Siemens, Square D. Powered by Voyten Electric.",
@@ -121,7 +121,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "https://voytenmanuals.com",
+    canonical: "https://www.voytenmanuals.com",
   },
   other: {
     'google-site-verification': 'Jw_q01212LegO8F79GblirnWi7HprIK46shkmyiiwzU',
@@ -134,8 +134,8 @@ const jsonLd = {
   "@type": "Organization",
   "name": "Voyten Electric & Electronics, Inc.",
   "alternateName": ["Voyten Electric", "Voyten Manuals"],
-  "url": "https://voytenmanuals.com",
-  "logo": "https://voytenmanuals.com/icon.svg",
+  "url": "https://www.voytenmanuals.com",
+  "logo": "https://www.voytenmanuals.com/icon.svg",
   "description": "Free searchable library of 8,400+ electrical equipment manuals and technical documentation. Backed by Voyten Electric & Electronics, Inc. — a third-generation family owned electrical equipment wholesaler since 1953.",
   "telephone": "+1-800-458-4001",
   "email": "sales@voyten.com",
@@ -209,13 +209,13 @@ const webSiteJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   "name": "Voyten Manuals",
-  "url": "https://voytenmanuals.com",
+  "url": "https://www.voytenmanuals.com",
   "description": "Free searchable library of electrical equipment manuals and technical documentation",
   "potentialAction": {
     "@type": "SearchAction",
     "target": {
       "@type": "EntryPoint",
-      "urlTemplate": "https://voytenmanuals.com/search?q={search_term_string}"
+      "urlTemplate": "https://www.voytenmanuals.com/search?q={search_term_string}"
     },
     "query-input": "required name=search_term_string"
   }

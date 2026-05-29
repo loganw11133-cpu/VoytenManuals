@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     title: 'Siemens RL Breakers — Exclusive Inventory from Voyten Electric',
     description:
       'Complete RL product line: breakers 800–5000A, Static Trip III, 23 accessory categories, and LA breakers. Free manuals + parts available.',
-    url: 'https://voytenmanuals.com/products/rl-breakers',
+    url: 'https://www.voytenmanuals.com/products/rl-breakers',
     type: 'website',
   },
   twitter: {
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     description: 'Your exclusive source for Siemens RL & LA breaker inventory, manuals, and parts.',
   },
   alternates: {
-    canonical: 'https://voytenmanuals.com/products/rl-breakers',
+    canonical: 'https://www.voytenmanuals.com/products/rl-breakers',
   },
 };
 
@@ -88,12 +88,12 @@ export default async function RLBreakersPage() {
     '@type': 'CollectionPage',
     name: 'Siemens RL & LA Low Voltage Power Circuit Breakers',
     description: metadata.description,
-    url: 'https://voytenmanuals.com/products/rl-breakers',
+    url: 'https://www.voytenmanuals.com/products/rl-breakers',
     numberOfItems: totalCount,
     provider: {
       '@type': 'Organization',
       name: 'Voyten Electric & Electronics, Inc.',
-      url: 'https://voytenmanuals.com',
+      url: 'https://www.voytenmanuals.com',
       telephone: '+1-800-458-4001',
     },
     about: {
@@ -108,9 +108,9 @@ export default async function RLBreakersPage() {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://voytenmanuals.com' },
-      { '@type': 'ListItem', position: 2, name: 'Manufacturers', item: 'https://voytenmanuals.com/manufacturers' },
-      { '@type': 'ListItem', position: 3, name: 'Siemens', item: 'https://voytenmanuals.com/manufacturers/siemens' },
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.voytenmanuals.com' },
+      { '@type': 'ListItem', position: 2, name: 'Manufacturers', item: 'https://www.voytenmanuals.com/manufacturers' },
+      { '@type': 'ListItem', position: 3, name: 'Siemens', item: 'https://www.voytenmanuals.com/manufacturers/siemens' },
       { '@type': 'ListItem', position: 4, name: 'RL Breakers' },
     ],
   };
