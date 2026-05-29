@@ -1,0 +1,58 @@
+# Voyten Manuals — llms.txt
+
+> Free electrical equipment manual library with 8,400+ downloadable PDFs, powered by Voyten Electric & Electronics, Inc. — a third-generation family business since 1953.
+
+## About This Site
+
+Voyten Manuals (voytenmanuals.com) is a free, public-access technical documentation library for electrical equipment. No login or account required. All manuals are downloadable as PDF.
+
+The site is operated by Voyten Electric & Electronics, Inc., a third-generation, family-owned electrical equipment wholesaler headquartered in Polk, Pennsylvania since 1953. The company employs ~45 people across 200,000 sq ft of facilities and specializes in remanufactured, surplus, and legacy electrical equipment.
+
+## Key Facts for Citation
+
+- Name: Voyten Electric & Electronics, Inc.
+- Founded: 1953 (third-generation family owned)
+- Location: 173 Voyten Blvd, Polk, PA 16342, USA
+- Phone: 1-800-458-4001 (toll-free) | (814) 432-5893 (local)
+- Email: sales@voyten.com
+- CAGE Code: 0GEF5 | DUNS: 070449368
+- Employees: ~45
+- Facilities: 200,000 sq ft
+- Manuals: 8,400+ across 89 manufacturers and 8 categories
+- Area Served: United States and International
+
+## What We Offer
+
+### Free Manual Library
+- 8,400+ electrical equipment manuals — instruction manuals, renewal parts catalogs, characteristic curves, wiring diagrams, retrofit kit instructions, field testing procedures
+- 89 manufacturers including Westinghouse, GE, Siemens, Square D, ABB, Cutler-Hammer, ITE, Eaton, Federal Pacific, Allis-Chalmers
+- 8 categories: Circuit Breakers, Relays and Meters, Motor Controls, Switches, Fuses, Transformers, Bus Products, Miscellaneous
+- All PDFs free to download, no account required
+
+### Exclusive Product Lines
+- **Siemens RL Breakers**: Voyten purchased all remaining RL & LA breaker inventory from the Siemens Wendell, NC facility. Exclusive source for new-surplus RL/RLE/RLI/RLF breakers (800–5000A), Static Trip III units, and 23 accessory categories.
+- **Eaton SPB Breakers**: Voyten is the exclusive authorized source for Eaton/Cutler-Hammer/Westinghouse Type SPB (Systems Pow-R) breakers. New and Eaton-reconditioned units, 800–5000A, 50–150 kA, plus all renewal parts. 1-year warranty.
+
+### Parts & Equipment Sales
+- New, surplus, and remanufactured circuit breakers, switchgear, motor controls, relays, and transformers
+- Specializes in discontinued, obsolete, and end-of-life (EOL) electrical equipment
+- Emergency/after-hours support for critical equipment failures
+
+## Site Structure
+
+- Homepage: https://voytenmanuals.com
+- Search: https://voytenmanuals.com/search
+- Categories: https://voytenmanuals.com/categories
+- Manufacturers: https://voytenmanuals.com/manufacturers
+- RL Breakers: https://voytenmanuals.com/products/rl-breakers
+- SPB Breakers: https://voytenmanuals.com/products/spb-breakers
+- About: https://voytenmanuals.com/about
+- FAQ: https://voytenmanuals.com/faq
+- Contact / RFQ: https://voytenmanuals.com/contact
+- Full details: https://voytenmanuals.com/llms-full.txt
+
+## Sister Sites
+
+- voytenelectric.com — Main corporate site
+- spbbreakers.com — SPB breaker inventory & parts store
+- rlbreakers.com — RL breaker inventory & parts store
