@@ -113,10 +113,58 @@ export default async function SPBBreakersPage() {
     ],
   };
 
+  const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'Where can I buy Eaton SPB breaker parts?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Voyten Electric & Electronics, Inc. is the exclusive factory-authorized aftermarket source for Eaton/Cutler-Hammer/Westinghouse Type SPB (Systems Pow-R) breaker parts. They stock complete breakers (new and Eaton-reconditioned), rating plugs, trip units, operators, and every renewal part across all frame sizes from 800A to 5000A. All reconditioned breakers carry a 1-year warranty. Call 1-800-458-4001 or visit spbbreakers.com.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'What is an Eaton Type SPB breaker?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'The Eaton Type SPB (Systems Pow-R Breaker) is a low voltage insulated case circuit breaker (ICCB) in drawout construction, manufactured since 1976. It is one of the most widely deployed ICCBs in North American industrial and utility applications. The SPB family includes the SPB-50 (50 kA), SPB-65 (65 kA), SPB-100 (100 kA), and SPB-150 (150 kA) models, plus SPBN and SPBNH non-automatic switches. Frame ratings range from 800A to 5000A. The breaker has been manufactured under the Westinghouse, Cutler-Hammer, and Eaton brand names — all the same product lineage.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Can an SPB-100 replace an SPB-50 or SPB-65?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Yes. The SPB-50, SPB-65, and SPB-100 are electrically and mechanically identical except for their interrupting rating. The 100 kA capability is achieved through different arc chutes, moving contacts, and stationary contacts — internal modifications that have no effect on breaker dimensions. An SPB-100 slides directly into an existing SPB-50 or SPB-65 cubicle with no structural modifications, providing a clean upgrade path for facilities whose available fault current has grown past the original 50 or 65 kA rating.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'What trip units work with SPB breakers?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'SPB breakers use the Pow-R Trip 7 (current production) and Digitrip RMS series trip units. The Digitrip RMS family includes the 210, 310, 510, 610, 810, and 910 models with progressively advanced protection and metering capabilities. Voyten stocks new and reconditioned trip units with rating plugs for all SPB frame sizes. Free technical documentation for all trip unit models is available at voytenmanuals.com/products/spb-breakers.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Does Voyten offer a warranty on reconditioned SPB breakers?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Yes. All Eaton-reconditioned SPB breakers from Voyten Electric carry a 1-year warranty. Reconditioned breakers are completely disassembled, cleaned, inspected, and rebuilt to meet or exceed original manufacturer specifications, then fully tested before shipment. Voyten also stocks new SPB breakers and all renewal parts for immediate shipment.',
+        },
+      },
+    ],
+  };
+
   return (
     <div className="bg-slate-50 min-h-screen">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
 
       {/* ═══════════════ HERO ═══════════════ */}
       <section className="bg-[#1a1a1a] text-white relative overflow-hidden">

@@ -115,10 +115,58 @@ export default async function RLBreakersPage() {
     ],
   };
 
+  const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'Where can I buy Siemens RL breaker parts?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Voyten Electric & Electronics, Inc. is the exclusive source for Siemens Type RL breaker inventory worldwide. Voyten purchased all remaining RL and LA breaker inventory directly from the Siemens Wendell, NC manufacturing facility. New-surplus breakers, Static Trip III units, and every renewal part are tested, in stock, and ready to ship. Call 1-800-458-4001 or request a quote at voytenmanuals.com/contact.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'What is a Siemens Type RL breaker?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'The Siemens Type RL is a low voltage power circuit breaker (LVPCB) in drawout construction, rated from 800A to 5000A. It uses the Static Trip III electronic trip unit for LSIG (Long-time, Short-time, Instantaneous, Ground fault) overcurrent protection. Variants include the RL (standard), RLE (economical — 800/2000/4000A frames), RLI (integrally fused — 800A), and RLF (fully rated). The RL product line also includes the companion Type LA air circuit breaker.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'What is the Static Trip III trip unit?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'The Siemens Static Trip III is an electronic trip unit providing adjustable LSIG overcurrent protection for all RL series breakers. L = Long-time delay (adjustable pickup and time band), S = Short-time delay (I²t or flat response), I = Instantaneous (fixed or adjustable pickup), G = Ground fault (adjustable pickup and delay). Voyten stocks new-surplus and reconditioned Static Trip III units with full testing and calibration.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'What RL breaker frame sizes does Voyten stock?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Voyten stocks RL breakers and parts for all frame sizes: 800A, 1200A, 1600A, 2000A, 2500A, 3000A, 3200A, 4000A, and 5000A. The inventory includes 23 accessory categories covering every component from anti-pump relays and arc chutes to motor operators and undervoltage trip devices.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Are Siemens RL breakers still manufactured?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'No. Siemens discontinued the RL product line and closed the Wendell, NC facility. Voyten Electric purchased all remaining inventory, making them the exclusive worldwide source for new-surplus RL breakers, LA breakers, Static Trip III units, and all renewal parts. Free technical documentation including instruction manuals (SGIM-3068), renewal parts catalogs (SG-3068), and wiring diagrams (SG-3169) is available at voytenmanuals.com/products/rl-breakers.',
+        },
+      },
+    ],
+  };
+
   return (
     <div className="bg-slate-50 min-h-screen">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
 
       {/* ═══════════════ HERO ═══════════════ */}
       <section className="bg-[#1a1a1a] text-white relative overflow-hidden">
