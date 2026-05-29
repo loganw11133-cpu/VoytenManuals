@@ -106,16 +106,6 @@ export default async function ManualPage({ params }: ManualPageProps) {
       ...(manual.manual_number && { "mpn": manual.manual_number }),
       ...(manual.manual_number && { "sku": manual.manual_number }),
       "description": `${manual.manufacturer} ${manual.category}${manual.subcategory ? ' — ' + manual.subcategory : ''}. EOL and legacy replacement parts available from Voyten Electric.`,
-      "offers": {
-        "@type": "Offer",
-        "availability": "https://schema.org/InStock",
-        "seller": {
-          "@type": "Organization",
-          "name": "Voyten Electric & Electronics, Inc.",
-          "telephone": "+1-800-458-4001",
-        },
-        "description": "Replacement parts available — call for pricing and availability",
-      },
     },
     "keywords": manual.keywords || [
       manual.manufacturer,
