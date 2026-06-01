@@ -185,9 +185,29 @@ export default function SPBBreakersGuide() {
               parts interchangeability.
             </p>
             <p>
-              SPB breakers use <strong>drawout construction</strong>, allowing the breaker to be removed from its cubicle
-              for maintenance without disconnecting power bus connections. Frame ratings span 800A to 5000A with
-              interrupting capacities from 50 kA to 150 kA RMS symmetrical at 480V.
+              SPB breakers ship in a <strong>drawout cassette</strong> that racks between Connected, Test, and
+              Disconnected without disturbing primary bus connections &mdash; the cell stays wired while the breaker is
+              pulled for testing or renewal-part work. Frames span <strong>800&ndash;5000A</strong>, with interrupting
+              capacities from <strong>50 kA to 150 kA RMS symmetrical at 480V</strong>. Two cassette/door interfaces are
+              offered from the factory:
+            </p>
+            <ul>
+              <li>
+                <strong>Behind-the-Door (BTD)</strong> &mdash; breaker and cassette are fully enclosed by the cell door;
+                operating, racking, and trip-unit access all require opening the door. Cleanest gear face and maximum
+                environmental protection for the operating mechanism and trip unit.
+              </li>
+              <li>
+                <strong>Through-the-Door (TTD)</strong> &mdash; the trip unit display and manual operators project
+                through an escutcheon in the cell door, letting operators read Digitrip / Pow-R Trip 7 settings, check
+                trip status, and rack with the door <strong>closed and latched</strong>. Typically specified where
+                arc-flash mitigation and routine diagnostic access drive the design.
+              </li>
+            </ul>
+            <p className="text-sm text-slate-500">
+              The fitted style is encoded in positions 12&ndash;13 of the edge number &mdash; use the{' '}
+              <Link href="/tools/spb" className="text-[#dc2626] hover:text-[#b91c1c] underline font-medium">SPB Decoder</Link>{' '}
+              to identify it.
             </p>
           </div>
         </section>
