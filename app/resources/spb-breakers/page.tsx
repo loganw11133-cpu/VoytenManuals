@@ -114,7 +114,7 @@ export default function SPBBreakersGuide() {
         name: 'Which Digitrip RMS trip units are compatible with SPB breakers?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'SPB breakers are compatible with the full Digitrip RMS family: RMS 210 (basic LI protection), RMS 310 (LSI + metering), RMS 510 (LSIG + zone interlocking), RMS 610 (advanced metering + communications), RMS 810 (full protection suite), and RMS 910 (top-tier with power quality monitoring). The current-production equivalent is the Pow-R Trip 7. All trip units require a matching rating plug sized to the breaker frame and sensor. Voyten stocks all models and rating plugs.',
+          text: 'SPB breakers are compatible with the full Digitrip RMS family: RMS 210 (basic LI protection), RMS 310 (available in LS, LSI, LSG, and LSIG variants per IL 29C883E), RMS 510 (LSIG + zone interlocking), RMS 610 (advanced metering + communications), RMS 810 (full protection suite), and RMS 910 (top-tier with power quality monitoring). The current-production equivalent is the Pow-R Trip 7. All trip units require a matching rating plug sized to the breaker frame and sensor. Voyten stocks all models and rating plugs.',
         },
       },
       {
@@ -365,7 +365,7 @@ export default function SPBBreakersGuide() {
                 <tr className="border-b border-slate-100"><td className="p-3 font-semibold">Digitrip RMS 810</td><td className="p-3">LSIG</td><td className="p-3">Full protection suite</td></tr>
                 <tr className="border-b border-slate-100"><td className="p-3 font-semibold">Digitrip RMS 610</td><td className="p-3">LSIG</td><td className="p-3">Advanced metering, communications</td></tr>
                 <tr className="border-b border-slate-100"><td className="p-3 font-semibold">Digitrip RMS 510</td><td className="p-3">LSIG</td><td className="p-3">Ground fault, zone interlocking</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-semibold">Digitrip RMS 310</td><td className="p-3">LSI</td><td className="p-3">Basic metering</td></tr>
+                <tr className="border-b border-slate-100"><td className="p-3 font-semibold">Digitrip RMS 310</td><td className="p-3">LS / LSI / LSG / LSIG</td><td className="p-3">4 variants by catalog suffix (IL 29C883E)</td></tr>
                 <tr><td className="p-3 font-semibold">Digitrip RMS 210</td><td className="p-3">LI</td><td className="p-3">Basic overcurrent protection</td></tr>
               </tbody>
             </table>
