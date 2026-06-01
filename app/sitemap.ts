@@ -83,6 +83,18 @@ async function generateStaticAndFilterSitemap(): Promise<MetadataRoute.Sitemap> 
       priority: 0.9,
     },
     {
+      url: `${baseUrl}/products/spb-breakers`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/resources/spb-breakers`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
       url: `${baseUrl}/faq`,
       lastModified: new Date(),
       changeFrequency: 'monthly',

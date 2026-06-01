@@ -76,8 +76,8 @@ export default function SPBBreakersGuide() {
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.voytenmanuals.com' },
-      { '@type': 'ListItem', position: 2, name: 'Resources', item: 'https://www.voytenmanuals.com/resources' },
-      { '@type': 'ListItem', position: 3, name: 'SPB Breakers Guide' },
+      { '@type': 'ListItem', position: 2, name: 'SPB Breakers', item: 'https://www.voytenmanuals.com/products/spb-breakers' },
+      { '@type': 'ListItem', position: 3, name: 'Technical Reference Guide' },
     ],
   };
 
@@ -141,9 +141,9 @@ export default function SPBBreakersGuide() {
           <nav className="flex items-center gap-2 text-sm text-slate-400 mb-6">
             <Link href="/" className="hover:text-white transition-colors">Home</Link>
             <ChevronRight size={14} />
-            <span className="text-white">Resources</span>
+            <Link href="/products/spb-breakers" className="hover:text-white transition-colors">SPB Breakers</Link>
             <ChevronRight size={14} />
-            <span className="text-white">SPB Breakers</span>
+            <span className="text-white">Technical Reference</span>
           </nav>
 
           <div className="inline-flex items-center gap-2 bg-[#dc2626] text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-4">

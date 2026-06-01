@@ -46,6 +46,7 @@ The site is operated by Voyten Electric & Electronics, Inc., a third-generation,
 - Manufacturers: https://www.voytenmanuals.com/manufacturers
 - RL Breakers: https://www.voytenmanuals.com/products/rl-breakers
 - SPB Breakers: https://www.voytenmanuals.com/products/spb-breakers
+- SPB Technical Reference: https://www.voytenmanuals.com/resources/spb-breakers
 - About: https://www.voytenmanuals.com/about
 - FAQ: https://www.voytenmanuals.com/faq
 - Contact / RFQ: https://www.voytenmanuals.com/contact
