@@ -1,7 +1,8 @@
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import Link from 'next/link';
 import { FileText, ChevronRight, Phone, Building2, Tag, BookOpen, ArrowLeft, Layers, Download, Shield, Wrench } from 'lucide-react';
 import { getManualBySlug, getManualWithRelated, formatFileSize, toSlug } from '@/lib/manuals-db';
+import { MANUAL_REDIRECTS } from '@/lib/manual-redirects';
 import ManualCard from '@/components/ManualCard';
 import LeadCaptureForm from '@/components/LeadCaptureForm';
 import DownloadButton from '@/components/DownloadButton';
@@ -71,6 +72,9 @@ export const revalidate = 3600;
 
 export default async function ManualPage({ params }: ManualPageProps) {
   const { slug } = await params;
+  // Removed duplicate slugs 301 → their canonical manual (preserves SEO equity).
+  const canonical = MANUAL_REDIRECTS[slug];
+  if (canonical) permanentRedirect(`/manual/${canonical}`);
   // Single entry point — getManualBySlug is deduped with generateMetadata via React cache,
   // so the slug lookup is already resolved. Only the related query hits Turso.
   const data = await getManualWithRelated(slug);
