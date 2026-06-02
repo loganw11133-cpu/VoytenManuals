@@ -185,11 +185,16 @@ export default function SPBBreakersGuide() {
               parts interchangeability.
             </p>
             <p>
-              SPB breakers ship in a <strong>drawout cassette</strong> that racks between Connected, Test, and
-              Disconnected without disturbing primary bus connections &mdash; the cell stays wired while the breaker is
-              pulled for testing or renewal-part work. Frames span <strong>800&ndash;5000A</strong>, with interrupting
-              capacities from <strong>50 kA to 150 kA RMS symmetrical at 480V</strong>. Two cassette/door interfaces are
-              offered from the factory:
+              SPB breakers are offered in two mounting families. In <strong>drawout</strong> form, the breaker rides a
+              cassette that racks between Connected, Test, and Disconnected without disturbing primary bus connections
+              &mdash; the cell stays wired while the breaker is pulled for testing or renewal-part work. In{' '}
+              <strong>fixed-mount</strong> form (also called bolt-in or stationary), the breaker is bolted directly to
+              the bus with front- or rear-connected terminals &mdash; typical in feeder applications where racking
+              access isn&apos;t required. Frames span <strong>800&ndash;5000A</strong>, with interrupting capacities
+              from <strong>50 kA to 150 kA RMS symmetrical at 480V</strong>.
+            </p>
+            <p>
+              Drawout breakers ship with one of two factory door interfaces:
             </p>
             <ul>
               <li>
@@ -204,11 +209,6 @@ export default function SPBBreakersGuide() {
                 arc-flash mitigation and routine diagnostic access drive the design.
               </li>
             </ul>
-            <p className="text-sm text-slate-500">
-              The fitted style is encoded in positions 12&ndash;13 of the edge number &mdash; use the{' '}
-              <Link href="/tools/spb" className="text-[#dc2626] hover:text-[#b91c1c] underline font-medium">SPB Decoder</Link>{' '}
-              to identify it.
-            </p>
           </div>
         </section>
 

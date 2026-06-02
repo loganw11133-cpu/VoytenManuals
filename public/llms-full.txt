@@ -118,7 +118,7 @@ Breaker Models:
 
 Frame Ratings: 800A, 1200A, 1600A, 2000A, 2500A, 3000A, 3200A, 4000A, 5000A
 Interrupting Ratings: 50 kA to 150 kA RMS symmetrical (at 480V)
-Construction: Drawout, insulated case circuit breaker (ICCB)
+Construction: Insulated case circuit breaker (ICCB) — offered as drawout (Behind-the-Door or Through-the-Door cassette) and as fixed-mount (front- or rear-connected)
 Trip Units: Pow-R Trip 7, Digitrip RMS 210/310/510/610/810/910
 Manufacturers: Eaton, Cutler-Hammer, Westinghouse (all same product lineage)
 
