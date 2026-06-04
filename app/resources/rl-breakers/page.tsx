@@ -62,7 +62,7 @@ export default function RLBreakersGuide() {
       telephone: '+1-800-458-4001',
     },
     datePublished: '2026-06-03',
-    dateModified: '2026-06-03',
+    dateModified: '2026-06-04',
     about: {
       '@type': 'Product',
       name: 'Siemens Type RL Low Voltage Power Circuit Breaker',
@@ -106,7 +106,7 @@ export default function RLBreakersGuide() {
         name: 'What is the Siemens Static Trip III trip unit?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'The Static Trip III is an electronic trip unit that provides adjustable overcurrent protection for all RL series breakers. It supports up to 8 protection functions: T (Thermal/Long-Time), S (Short-Time), I (Instantaneous), G (Ground Fault), Z (Zone Selective Interlocking), C (Communications), N (Neutral protection), and P (Power Metering). There are 53 distinct Static Trip III configuration codes (04 through 56), each offering a different combination of these features. The newer AC Pro II (codes 58, 59) is also compatible as a direct replacement. All trip units require a matching rating plug sized to the breaker sensor.',
+          text: 'The Static Trip III is an electronic trip unit that provides adjustable overcurrent protection for all RL series breakers. It supports up to 8 protection functions: T (Thermal/Long-Time), S (Short-Time), I (Instantaneous), G (Ground Fault), Z (Zone Selective Interlocking), C (Communications), N (Neutral protection), and P (Power Metering). There are 53 distinct Static Trip III configuration codes (04 through 56), each offering a different combination of these features. The AC Pro II (codes 58, 59) is an aftermarket retrofit trip unit manufactured by Utility Relay Company (URC), not original Siemens factory production. The physical hardware comes in variants: III (base), IIIC (communications), IIICP (communications + power metering), and IIICPX (full feature set). All trip units require a matching rating plug sized to the breaker sensor.',
         },
       },
       {
@@ -122,7 +122,7 @@ export default function RLBreakersGuide() {
         name: 'What sensor do I need for my RL breaker?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'RL breakers use current transformer (CT) sensors rated in amps with a /.5 secondary. There are 15 single-wound sensors from 80A to 5000A and 5 dual-wound sensors from 2500A to 5000A. Sensor availability depends on frame size — for example, an 80A sensor (code AA) fits frames 0–2 (800A–2000A), while a 4000A sensor (code AN) only fits frames 4–5 (4000A–5000A). Dual-wound sensors are limited to 1200A maximum per NEC requirements. The sensor code occupies positions 5–6 of the catalog number. Contact Voyten at 1-800-458-4001 with your catalog or edge number for exact sensor identification.',
+          text: 'RL breakers use current transformer (CT) sensors rated in amps with a /.5 secondary. There are 15 single-wound sensors from 80A to 5000A and 5 dual-wound sensors from 2500A to 5000A. Sensor availability depends on frame size — for example, an 80A sensor (code AA) fits frames 0–2 (800A–2000A), while a 4000A sensor (code AN) only fits frames 4–5 (4000A–5000A). Dual-wound sensors provide enhanced ground fault sensitivity; the ground fault protection pickup is limited to 1200A maximum per NEC 230.95 for solidly-grounded wye services. The sensor code occupies positions 5–6 of the catalog number. Contact Voyten at 1-800-458-4001 with your catalog or edge number for exact sensor identification.',
         },
       },
       {
@@ -269,8 +269,9 @@ export default function RLBreakersGuide() {
           <h2 className="text-2xl font-bold text-slate-900 mb-4">Interrupting &amp; Short-Time Ratings</h2>
           <div className="text-slate-700 leading-relaxed space-y-4 mb-6">
             <p>
-              All ratings are in <strong>kA RMS symmetrical</strong> per UL 1066 / IEEE C37.50. Ratings are
-              uniform across 635V, 508V, and 254V for the RL product line.
+              All ratings are in <strong>kA RMS symmetrical</strong> per UL 1066 / IEEE C37.50. The values
+              below reflect ratings at maximum design voltage per Siemens SG-3061 / SG-3068.
+              Always consult the breaker nameplate for voltage-specific ratings in your application.
             </p>
           </div>
           <div className="overflow-x-auto">
@@ -309,7 +310,7 @@ export default function RLBreakersGuide() {
             </table>
           </div>
           <p className="text-sm text-slate-500 mt-3">
-            Sources: Siemens SG-3061 / SG-3068. Ratings are identical at 635V, 508V, and 254V for all RL variants.
+            Sources: Siemens SG-3061 / SG-3068. Consult breaker nameplate for application-specific voltage ratings.
           </p>
         </section>
 
@@ -434,8 +435,8 @@ export default function RLBreakersGuide() {
             <table className="w-full border-collapse text-sm">
               <thead>
                 <tr className="bg-slate-50 border-b border-slate-200">
-                  <th className="text-left p-3 font-bold text-slate-900">Feature</th>
                   <th className="text-left p-3 font-bold text-slate-900">Code</th>
+                  <th className="text-left p-3 font-bold text-slate-900">Feature</th>
                   <th className="text-left p-3 font-bold text-slate-900">Function</th>
                 </tr>
               </thead>
@@ -462,10 +463,13 @@ export default function RLBreakersGuide() {
               <div><span className="font-mono font-semibold text-slate-700">13</span> <span className="text-slate-500">T, S, I, G, Z, C</span></div>
               <div><span className="font-mono font-semibold text-slate-700">15</span> <span className="text-slate-500">T, S, I, G, Z, C, N</span></div>
               <div><span className="font-mono font-semibold text-slate-700">46</span> <span className="text-slate-500">T, S, I, G, Z, C, N, P (full suite)</span></div>
-              <div><span className="font-mono font-semibold text-slate-700">58</span> <span className="text-slate-500">AC Pro II (electronic replacement)</span></div>
+              <div><span className="font-mono font-semibold text-slate-700">58</span> <span className="text-slate-500">AC Pro II (aftermarket retrofit by Utility Relay Co.)</span></div>
             </div>
             <p className="text-xs text-slate-400 mt-3">
               53 Static Trip III codes (04&ndash;56) plus 2 AC Pro II codes (58, 59). Code XX = non-automatic (no trip unit).
+              The physical trip unit hardware varies by feature set: <strong>Static Trip III</strong> (base),
+              <strong>IIIC</strong> (with communications), <strong>IIICP</strong> (communications + power metering),
+              and <strong>IIICPX</strong> (full feature set). Higher codes require the corresponding hardware variant.
             </p>
           </div>
 
@@ -547,7 +551,9 @@ export default function RLBreakersGuide() {
             </table>
           </div>
           <p className="text-sm text-slate-500 mt-3">
-            Dual-wound sensors are limited to <strong>1200A maximum per NEC</strong> requirements.
+            Dual-wound sensors provide enhanced ground fault sensitivity on large frames. The ground fault
+            protection pickup is limited to <strong>1200A maximum per NEC 230.95</strong> for solidly-grounded
+            wye services, regardless of the sensor&apos;s primary current rating.
             Sensor code XX = Non-Automatic (no tripping sensor installed).
           </p>
         </section>
@@ -631,7 +637,7 @@ export default function RLBreakersGuide() {
                 <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">D</td><td className="p-3">4-Wire, Residual Ground</td><td className="p-3">&mdash;</td></tr>
                 <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">E</td><td className="p-3">4-Wire, Residual Ground + NEC</td><td className="p-3">FIG 1E</td></tr>
                 <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">F</td><td className="p-3">4-Wire</td><td className="p-3">FIG 1F</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">G</td><td className="p-3">4-Wire, Residual + Neutral Metering</td><td className="p-3">FIG 1B</td></tr>
+                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">G</td><td className="p-3">4-Wire, Residual + Neutral</td><td className="p-3">FIG 1B</td></tr>
                 <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">H</td><td className="p-3">4-Wire, Residual + NEC + Neutral</td><td className="p-3">FIG 20A</td></tr>
                 <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">I</td><td className="p-3">4-Wire, Direct Ground + Neutral</td><td className="p-3">FIG 20B</td></tr>
                 <tr><td className="p-3 font-mono font-semibold">J</td><td className="p-3">4-Wire</td><td className="p-3">FIG 3A</td></tr>
@@ -671,7 +677,7 @@ export default function RLBreakersGuide() {
               </div>
               <div className="flex items-start gap-3">
                 <Shield size={16} className="text-[#dc2626] flex-shrink-0 mt-1" />
-                <p><strong>Dual-wound sensors</strong> &mdash; Limited to <strong>1200A maximum per NEC</strong>. Available only in frames 3200A and above (codes 3&ndash;5).</p>
+                <p><strong>Dual-wound sensors</strong> &mdash; Ground fault protection pickup limited to <strong>1200A maximum per NEC 230.95</strong> for solidly-grounded wye services. Available only in frames 3200A and above (codes 3&ndash;5).</p>
               </div>
               <div className="flex items-start gap-3">
                 <Shield size={16} className="text-[#dc2626] flex-shrink-0 mt-1" />

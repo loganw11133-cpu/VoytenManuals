@@ -338,6 +338,27 @@ export default async function RLBreakersPage() {
           </div>
         </section>
 
+        {/* ═══════════════ TECHNICAL REFERENCE LINK ═══════════════ */}
+        <section className="mb-16">
+          <Link
+            href="/resources/rl-breakers"
+            className="group flex items-center gap-4 bg-white rounded-2xl border border-slate-200 p-6 hover:border-[#dc2626]/30 hover:shadow-md transition-all"
+          >
+            <div className="w-12 h-12 bg-[#dc2626]/10 rounded-xl flex items-center justify-center flex-shrink-0">
+              <BookOpen size={24} className="text-[#dc2626]" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="text-lg font-bold text-slate-900 group-hover:text-[#dc2626] transition-colors">
+                RL Complete Technical Reference Guide
+              </p>
+              <p className="text-sm text-slate-500 mt-0.5">
+                Catalog number decoding, interrupting ratings, Static Trip III configurations, sensor tables, control voltage codes, and detailed specifications
+              </p>
+            </div>
+            <ArrowRight size={20} className="text-slate-300 group-hover:text-[#dc2626] flex-shrink-0 transition-colors" />
+          </Link>
+        </section>
+
         {/* ═══════════════ RL BREAKER VARIANTS ═══════════════ */}
         <section className="mb-16">
           <div className="flex items-center justify-between mb-6">
