@@ -114,7 +114,7 @@ export default function RLBreakersGuide() {
         name: 'What replaced the Siemens RL breaker?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Siemens discontinued the RL product line and closed the manufacturing facility in Wendell, NC. For new installations, Siemens offers the WL series air circuit breaker as the current-production successor. However, the WL is not a drop-in replacement for existing RL installations — it uses a different frame geometry, trip unit platform, and cell interface. For facilities with existing RL switchgear, Voyten Electric purchased all remaining RL inventory (breakers, Static Trip III units, and every renewal part) directly from Siemens Wendell, making them the exclusive worldwide source for the RL product line.',
+          text: 'Siemens discontinued the RL product line and closed its Wendell, NC manufacturing facility. For existing RL switchgear, nothing needs to "replace" the RL — Voyten Electric purchased all remaining RL inventory (breakers, Static Trip III units, drawings, tooling, and every renewal part) directly from Siemens Wendell, making Voyten the exclusive worldwide source for genuine RL breakers and parts. Existing installations are fully supported with original Siemens-sourced equipment, with no need to modify or replace the switchgear. Siemens current-production air circuit breakers are not drop-in compatible with RL cells — they use a different frame geometry, trip unit platform, and cell interface — so any retrofit would require all-new switchgear. That is why facilities with installed RL equipment source genuine RL replacements and renewal parts from Voyten.',
         },
       },
       {
@@ -199,9 +199,6 @@ export default function RLBreakersGuide() {
               Siemens discontinued the RL product line and closed the Wendell, NC manufacturing facility. In 2023,
               Voyten Electric purchased all remaining RL and LA breaker inventory &mdash; including breakers,
               Static Trip III units, drawings, tooling, and vendor relationships &mdash; directly from Siemens.
-              For new installations, Siemens offers the <strong>WL series</strong> air circuit breaker as the
-              current-production successor, though the WL uses a different frame geometry and is not a
-              drop-in replacement for existing RL switchgear.
             </p>
           </div>
         </section>
@@ -696,16 +693,11 @@ export default function RLBreakersGuide() {
               the Type RL was manufactured exclusively under the <strong>Siemens</strong> name throughout its
               entire production life at the Wendell, NC facility.
             </p>
-            <div className="grid sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4">
               <div className="bg-slate-50 rounded-xl p-4 border border-slate-200">
                 <p className="font-bold text-slate-900 mb-1">Siemens Type RL</p>
                 <p className="text-sm text-slate-500">Original &amp; sole manufacturer</p>
                 <p className="text-xs text-slate-400 mt-2">Production: Wendell, NC facility</p>
-              </div>
-              <div className="bg-slate-50 rounded-xl p-4 border border-slate-200">
-                <p className="font-bold text-slate-900 mb-1">Siemens WL Series</p>
-                <p className="text-sm text-slate-500">Current-production successor</p>
-                <p className="text-xs text-slate-400 mt-2">Different frame geometry; not a drop-in replacement</p>
               </div>
             </div>
             <p>
