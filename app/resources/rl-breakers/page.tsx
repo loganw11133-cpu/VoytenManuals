@@ -197,8 +197,9 @@ export default function RLBreakersGuide() {
             </p>
             <p>
               Siemens discontinued the RL product line and closed the Wendell, NC manufacturing facility. In 2023,
-              Voyten Electric purchased all remaining RL and LA breaker inventory &mdash; including breakers,
-              Static Trip III units, drawings, tooling, and vendor relationships &mdash; directly from Siemens.
+              Voyten Electric acquired all remaining RL and LA inventory directly from Siemens &mdash; the complete
+              stock of breakers, Static Trip III units, renewal parts, drawings, and tooling &mdash; establishing
+              Voyten as the exclusive worldwide source for the RL product line.
             </p>
           </div>
         </section>
@@ -686,7 +687,7 @@ export default function RLBreakersGuide() {
 
         {/* ── Brand History ── */}
         <section className="mb-14">
-          <h2 className="text-2xl font-bold text-slate-900 mb-4">Product History &amp; Successor</h2>
+          <h2 className="text-2xl font-bold text-slate-900 mb-4">Product History</h2>
           <div className="text-slate-700 leading-relaxed space-y-4">
             <p>
               Unlike the SPB breaker (which transitioned across Westinghouse, Cutler-Hammer, and Eaton branding),
