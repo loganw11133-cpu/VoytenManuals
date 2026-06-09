@@ -157,7 +157,84 @@ export default async function SPBBreakersPage() {
           text: 'Yes. All Eaton-reconditioned SPB breakers from Voyten Electric carry a 1-year warranty. Reconditioned breakers are completely disassembled, cleaned, inspected, and rebuilt to meet or exceed original manufacturer specifications, then fully tested before shipment. Voyten also stocks new SPB breakers and all renewal parts for immediate shipment.',
         },
       },
+      {
+        '@type': 'Question',
+        name: 'My SPB breaker failed — who do I call for an emergency replacement?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Call Voyten Electric at 1-800-458-4001 for 24/7 emergency support. As the exclusive factory-authorized SPB source, Voyten identifies your breaker from its nameplate catalog number or 30-digit edge number, pulls an exact-match new or Eaton-reconditioned SPB breaker, Digitrip RMS trip unit, rating plug, or renewal part from stock, tests it, and expedites shipment to minimize downtime.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Can I upgrade an aging SPB-50 or SPB-65 without replacing the switchgear?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Yes. The SPB-50, SPB-65, and SPB-100 share identical external dimensions, so an SPB-100 drops directly into an existing SPB-50 or SPB-65 cubicle with no structural, bus, or control-wiring changes — a clean 100 kA upgrade when the available fault current at a site has grown past the original rating. Voyten supplies the drop-in SPB-100 and all renewal parts. Call 1-800-458-4001.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'How do I identify my SPB breaker to order a replacement?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Provide the nameplate catalog number, the 30-digit edge number stamped on the breaker frame, and the trip-unit model. Voyten cross-references these to the exact replacement breaker and parts across all frames (800–5000A). Call 1-800-458-4001 or request a quote at voytenmanuals.com/contact.',
+        },
+      },
     ],
+  };
+
+  const offerJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: 'Eaton Type SPB (Systems Pow-R) Insulated Case Circuit Breaker',
+    category: 'Insulated Case Circuit Breakers',
+    description: 'New and Eaton-reconditioned Eaton/Cutler-Hammer/Westinghouse Type SPB breakers (800–5000A, 50–150 kA), Digitrip RMS trip units, rating plugs, and renewal parts — from Voyten Electric, the exclusive factory-authorized SPB source. 1-year warranty on reconditioned units.',
+    brand: { '@type': 'Brand', name: 'Eaton' },
+    manufacturer: { '@type': 'Organization', name: 'Eaton' },
+    url: 'https://www.voytenmanuals.com/products/spb-breakers',
+    offers: {
+      '@type': 'Offer',
+      availability: 'https://schema.org/InStock',
+      itemCondition: 'https://schema.org/RefurbishedCondition',
+      priceCurrency: 'USD',
+      url: 'https://www.voytenmanuals.com/products/spb-breakers',
+      areaServed: { '@type': 'Place', name: 'Worldwide' },
+      warranty: { '@type': 'WarrantyPromise', durationOfWarranty: { '@type': 'QuantitativeValue', value: 1, unitCode: 'ANN' } },
+      seller: {
+        '@type': 'Organization',
+        name: 'Voyten Electric & Electronics, Inc.',
+        url: 'https://www.voytenmanuals.com',
+        telephone: '+1-800-458-4001',
+      },
+    },
+  };
+
+  const serviceJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: '24/7 Emergency Eaton SPB Breaker & Parts Sourcing',
+    serviceType: 'Emergency insulated-case circuit breaker and renewal-parts sourcing',
+    description: 'Emergency sourcing, testing, and expedited shipment of exact-match Eaton/Cutler-Hammer/Westinghouse Type SPB breakers, Digitrip RMS trip units, rating plugs, and renewal parts for failed or aging SPB switchgear — including the drop-in SPB-100 upgrade for under-rated SPB-50/65 cubicles. Voyten is the exclusive factory-authorized SPB source.',
+    areaServed: { '@type': 'Place', name: 'Worldwide' },
+    provider: {
+      '@type': 'Organization',
+      name: 'Voyten Electric & Electronics, Inc.',
+      url: 'https://www.voytenmanuals.com',
+      telephone: '+1-800-458-4001',
+      contactPoint: {
+        '@type': 'ContactPoint',
+        contactType: 'emergency',
+        telephone: '+1-800-458-4001',
+        availableLanguage: 'English',
+        hoursAvailable: {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+          opens: '00:00',
+          closes: '23:59',
+        },
+      },
+    },
   };
 
   return (
@@ -165,6 +242,8 @@ export default async function SPBBreakersPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(offerJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }} />
 
       {/* ═══════════════ HERO ═══════════════ */}
       <section className="bg-[#1a1a1a] text-white relative overflow-hidden">

@@ -156,10 +156,86 @@ export default async function RLBreakersPage() {
         name: 'Are Siemens RL breakers still manufactured?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'No. Siemens discontinued the RL product line and closed the Wendell, NC facility. Voyten Electric purchased all remaining inventory, making them the exclusive worldwide source for new-surplus RL breakers, LA breakers, Static Trip III units, and all renewal parts. Free technical documentation including instruction manuals (SGIM-3068), renewal parts catalogs (SG-3068), and wiring diagrams (SG-3169) is available at voytenmanuals.com/products/rl-breakers.',
+          text: 'No. Siemens discontinued the RL product line and closed the Wendell, NC facility. Voyten Electric purchased all remaining inventory, making them the exclusive worldwide source for new-surplus RL breakers, LA breakers, Static Trip III units, and all renewal parts. Free technical documentation including instruction manuals (SGIM-3068), renewal parts catalogs (SG-3068), and wiring diagrams (SGIM-3068D) is available at voytenmanuals.com/products/rl-breakers.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'My Siemens RL breaker failed — who do I call for an emergency replacement?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Call Voyten Electric at 1-800-458-4001 for 24/7 emergency support. As the exclusive worldwide source for Siemens Type RL inventory, Voyten identifies your breaker from its catalog or edge number, pulls an exact-match new-surplus or reconditioned RL/RLE/RLI/RLF breaker, Static Trip III unit, or renewal part from stock, tests it, and expedites shipment to minimize downtime in plants and critical facilities.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'How do I extend the life of aging RL switchgear instead of replacing it?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Because Voyten holds the complete Siemens RL inventory, aging RL switchgear can stay in service with genuine new-surplus and reconditioned RL breakers, Static Trip III trip units, and renewal parts — no need to replace the switchgear lineup. Voyten supplies exact-match components across all frames (800–5000A) so existing cells, bus, and wiring stay intact. Call 1-800-458-4001.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'How do I identify my Siemens RL breaker to order a replacement?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Provide the catalog number or the edge number stamped on the breaker frame, plus the frame size (800–5000A) and trip-unit model. Voyten cross-references these to the exact replacement breaker and parts. Call 1-800-458-4001 or request a quote at voytenmanuals.com/contact.',
         },
       },
     ],
+  };
+
+  const offerJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: 'Siemens Type RL Low Voltage Power Circuit Breaker',
+    category: 'Low Voltage Power Circuit Breakers',
+    description: 'New-surplus and reconditioned Siemens Type RL/RLE/RLI/RLF power circuit breakers (800–5000A), Static Trip III trip units, and renewal parts — from Voyten Electric, the exclusive worldwide source for the discontinued Siemens RL line.',
+    brand: { '@type': 'Brand', name: 'Siemens' },
+    manufacturer: { '@type': 'Organization', name: 'Siemens' },
+    url: 'https://www.voytenmanuals.com/products/rl-breakers',
+    offers: {
+      '@type': 'Offer',
+      availability: 'https://schema.org/InStock',
+      itemCondition: 'https://schema.org/RefurbishedCondition',
+      priceCurrency: 'USD',
+      url: 'https://www.voytenmanuals.com/products/rl-breakers',
+      areaServed: { '@type': 'Place', name: 'Worldwide' },
+      seller: {
+        '@type': 'Organization',
+        name: 'Voyten Electric & Electronics, Inc.',
+        url: 'https://www.voytenmanuals.com',
+        telephone: '+1-800-458-4001',
+      },
+    },
+  };
+
+  const serviceJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: '24/7 Emergency Siemens RL Breaker & Parts Sourcing',
+    serviceType: 'Emergency obsolete circuit breaker and renewal-parts sourcing',
+    description: 'Emergency sourcing, testing, and expedited shipment of exact-match Siemens Type RL breakers, Static Trip III trip units, and renewal parts for failed or aging RL switchgear. Voyten holds the exclusive worldwide RL inventory acquired from the Siemens Wendell, NC facility.',
+    areaServed: { '@type': 'Place', name: 'Worldwide' },
+    provider: {
+      '@type': 'Organization',
+      name: 'Voyten Electric & Electronics, Inc.',
+      url: 'https://www.voytenmanuals.com',
+      telephone: '+1-800-458-4001',
+      contactPoint: {
+        '@type': 'ContactPoint',
+        contactType: 'emergency',
+        telephone: '+1-800-458-4001',
+        availableLanguage: 'English',
+        hoursAvailable: {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+          opens: '00:00',
+          closes: '23:59',
+        },
+      },
+    },
   };
 
   return (
@@ -167,6 +243,8 @@ export default async function RLBreakersPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(offerJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }} />
 
       {/* ═══════════════ HERO ═══════════════ */}
       <section className="bg-[#1a1a1a] text-white relative overflow-hidden">
