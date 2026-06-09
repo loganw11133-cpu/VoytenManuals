@@ -675,7 +675,7 @@ export default function RLBreakersGuide() {
             </table>
           </div>
           <p className="text-sm text-slate-500 mt-3">
-            Wiring diagram figures reference the Siemens RL Wiring Diagrams &amp; Control Power Manual (SGIM-3068D / SG-3169).
+            Wiring diagram figures reference the Siemens RL Installation &amp; Wiring Diagrams Manual (SGIM-3068D).
           </p>
             </div>
           </div>
@@ -800,7 +800,7 @@ export default function RLBreakersGuide() {
                 </tr>
                 <tr className="border-b border-slate-100">
                   <td className="p-3 font-semibold">Wiring Diagrams &amp; Control Power</td>
-                  <td className="p-3 font-mono">SG-3169</td>
+                  <td className="p-3 font-mono">SGIM-3068D</td>
                   <td className="p-3">System wiring diagrams (FIG 1A through FIG 20B)</td>
                 </tr>
                 <tr>
