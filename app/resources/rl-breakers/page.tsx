@@ -10,7 +10,7 @@ export const revalidate = 3600;
 export const metadata: Metadata = {
   title: 'Siemens RL Low Voltage Power Circuit Breaker Guide — Complete Technical Reference | Voyten',
   description:
-    'Comprehensive technical guide for the Siemens Type RL low voltage power circuit breaker (LVPCB). Covers all models (RL, RLE, RLI, RLF), frame sizes 800–5000A, Static Trip III trip units, catalog number structure, interrupting ratings, and the companion Type LA air circuit breaker. From Voyten Electric — your exclusive RL source.',
+    'Comprehensive technical guide for the Siemens Type RL low voltage power circuit breaker (LVPCB). Covers all models (RL, RLE, RLI, RLF), frame sizes 800–5000A, Static Trip III trip units, catalog number structure, interrupting ratings, and the companion Type LA air circuit breaker. From Voyten Electric — your Siemens New Surplus RL source.',
   keywords: [
     'Siemens RL breaker guide', 'RL LVPCB technical reference', 'RL breaker specifications',
     'RL vs RLE vs RLF', 'RL catalog number structure', 'RL breaker interrupting rating',
@@ -115,7 +115,7 @@ export default function RLBreakersGuide() {
         name: 'What replaced the Siemens RL breaker?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Siemens discontinued the RL product line and closed its Wendell, NC manufacturing facility. For existing RL switchgear, nothing needs to "replace" the RL — Voyten Electric purchased all remaining RL inventory (breakers, Static Trip III units, drawings, tooling, and every renewal part) directly from Siemens Wendell, making Voyten the exclusive worldwide source for genuine RL breakers and parts. Existing installations are fully supported with original Siemens-sourced equipment, with no need to modify or replace the switchgear. Siemens current-production air circuit breakers are not drop-in compatible with RL cells — they use a different frame geometry, trip unit platform, and cell interface — so any retrofit would require all-new switchgear. That is why facilities with installed RL equipment source genuine RL replacements and renewal parts from Voyten.',
+          text: 'Siemens discontinued the RL product line and closed its Wendell, NC manufacturing facility. For existing RL switchgear, nothing needs to "replace" the RL — Voyten Electric purchased all remaining RL inventory (breakers, Static Trip III units, drawings, tooling, and every renewal part) directly from Siemens Wendell, making Voyten the Siemens New Surplus source for genuine RL breakers and parts. Existing installations are fully supported with original Siemens-sourced equipment, with no need to modify or replace the switchgear. Siemens current-production air circuit breakers are not drop-in compatible with RL cells — they use a different frame geometry, trip unit platform, and cell interface — so any retrofit would require all-new switchgear. That is why facilities with installed RL equipment source genuine RL replacements and renewal parts from Voyten.',
         },
       },
       {
@@ -195,7 +195,7 @@ export default function RLBreakersGuide() {
               Siemens discontinued the RL product line and closed the Wendell, NC manufacturing facility. In 2023,
               Voyten Electric acquired all remaining RL and LA inventory directly from Siemens &mdash; the complete
               stock of breakers, Static Trip III units, renewal parts, drawings, and tooling &mdash; establishing
-              Voyten as the exclusive worldwide source for the RL product line.
+              Voyten as the Siemens New Surplus source for the RL product line.
             </p>
           </div>
             </div>
@@ -649,7 +649,7 @@ export default function RLBreakersGuide() {
           <div className="bg-[#dc2626] rounded-2xl p-8 lg:p-10 text-center text-white">
             <h2 className="text-2xl lg:text-3xl font-bold mb-3">Need RL Parts or Technical Support?</h2>
             <p className="text-white/90 mb-6 max-w-2xl mx-auto">
-              Voyten Electric is the exclusive worldwide source for the complete Siemens RL product line.
+              Voyten Electric is the Siemens New Surplus source for the complete Siemens RL product line.
               New-surplus breakers, Static Trip III units, sensors, and every renewal part &mdash; tested,
               in stock, and ready to ship.
             </p>

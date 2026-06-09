@@ -74,8 +74,8 @@ const EXISTING_SLUGS = new Set([
   'low-voltage-circuit-breakers-type-rl',
 ]);
 
-// Exclusive acquisition note for descriptions
-const VOYTEN_EXCLUSIVE = 'Voyten Electric purchased all remaining RL & LA breaker inventory from Siemens Wendell, NC — your exclusive source for new-surplus and reconditioned RL parts.';
+// Siemens New Surplus acquisition note for descriptions
+const VOYTEN_EXCLUSIVE = 'Voyten Electric purchased all remaining RL & LA breaker inventory from Siemens Wendell, NC — your source for Siemens New Surplus and reconditioned RL parts.';
 
 // ──────────────────────────────────────────────────────
 // 1. RL BREAKER VARIANTS (missing amp ratings + types)

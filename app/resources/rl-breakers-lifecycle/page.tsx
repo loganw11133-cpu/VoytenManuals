@@ -19,7 +19,7 @@ const SERVICES = {
 export const metadata: Metadata = {
   title: 'Siemens RL Breaker: Repair, Recondition, Retrofit, or Replace? — Decision Guide | Voyten',
   description:
-    'Decision guide for aging or failed Siemens Type RL switchgear: when to recondition, retrofit/retrofill, replace from exclusive surplus, repair, rent, or swap out. Voyten Electric is the exclusive RL source and a PEARL founding member — 24/7 emergency support at 1-800-458-4001.',
+    'Decision guide for aging or failed Siemens Type RL switchgear: when to recondition, retrofit/retrofill, replace from Siemens New Surplus stock, repair, rent, or swap out. Voyten Electric is a Siemens New Surplus RL source and a PEARL founding member — 24/7 emergency support at 1-800-458-4001.',
   keywords: [
     'Siemens RL breaker replacement', 'RL switchgear life extension', 'RL breaker retrofit',
     'recondition vs replace circuit breaker', 'aging switchgear options', 'obsolete breaker decision',
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Siemens RL Breaker — Repair, Recondition, Retrofit, or Replace?',
     description:
-      'A decision guide for aging or failed Siemens RL switchgear, mapped to Voyten Electric lifecycle services. Exclusive RL source; 24/7 emergency support.',
+      'A decision guide for aging or failed Siemens RL switchgear, mapped to Voyten Electric lifecycle services. Siemens New Surplus RL source; 24/7 emergency support.',
     url: 'https://www.voytenmanuals.com/resources/rl-breakers-lifecycle',
     type: 'article',
   },
@@ -82,8 +82,8 @@ export default function RLBreakersLifecyclePage() {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     mainEntity: [
-      { '@type': 'Question', name: 'Should I repair, recondition, retrofit, or replace my aging Siemens RL breaker?', acceptedAnswer: { '@type': 'Answer', text: 'It depends on condition and goal. If the breaker is operational but aging, reconditioning / apparatus life extension keeps your existing RL switchgear in service. If protection is outdated or the lineup is under-rated, an upgrade/retrofit/retrofill adds modern trip units and protection without replacing the switchgear. If a breaker has failed, Voyten replaces it from the exclusive RL surplus inventory. Voyten Electric — the exclusive worldwide RL source and a PEARL founding member — performs all four. Call 1-800-458-4001.' } },
-      { '@type': 'Question', name: 'My Siemens RL breaker failed in a critical facility — what now?', acceptedAnswer: { '@type': 'Answer', text: 'Call Voyten Electric 24/7 at 1-800-458-4001. As the exclusive worldwide source for Siemens RL inventory, Voyten can pull an exact-match new-surplus or reconditioned RL breaker, Static Trip III unit, or part from stock, test it, and expedite shipment — and can provide a rental or swap-out to restore power while a permanent fix is arranged.' } },
+      { '@type': 'Question', name: 'Should I repair, recondition, retrofit, or replace my aging Siemens RL breaker?', acceptedAnswer: { '@type': 'Answer', text: 'It depends on condition and goal. If the breaker is operational but aging, reconditioning / apparatus life extension keeps your existing RL switchgear in service. If protection is outdated or the lineup is under-rated, an upgrade/retrofit/retrofill adds modern trip units and protection without replacing the switchgear. If a breaker has failed, Voyten replaces it from Siemens New Surplus RL stock. Voyten Electric — a Siemens New Surplus RL source and a PEARL founding member — performs all four. Call 1-800-458-4001.' } },
+      { '@type': 'Question', name: 'My Siemens RL breaker failed in a critical facility — what now?', acceptedAnswer: { '@type': 'Answer', text: 'Call Voyten Electric 24/7 at 1-800-458-4001. As the Siemens New Surplus source for Siemens RL inventory, Voyten can pull an exact-match new-surplus or reconditioned RL breaker, Static Trip III unit, or part from stock, test it, and expedite shipment — and can provide a rental or swap-out to restore power while a permanent fix is arranged.' } },
       { '@type': 'Question', name: 'Is it worth extending the life of old RL switchgear instead of replacing the lineup?', acceptedAnswer: { '@type': 'Answer', text: 'Usually yes. You cannot simply accept that an electrical product is out of production and replace it all — full switchgear replacement is costly and disruptive. Because Voyten holds the complete Siemens RL inventory, aging RL gear can be reconditioned and modernized (adding today’s technology to yesterday’s equipment) at a fraction of the cost. Remanufactured equipment is always worth the investment.' } },
       { '@type': 'Question', name: 'Can Voyten keep my plant running while I decide?', acceptedAnswer: { '@type': 'Answer', text: 'Yes — Voyten offers rental services and swap-out programs so a tested RL breaker or assembly keeps the plant energized while reconditioning, retrofit, or sourcing is completed.' } },
     ],
@@ -118,7 +118,7 @@ export default function RLBreakersLifecyclePage() {
             </span>
           </h1>
           <p className="text-slate-300 text-lg leading-relaxed max-w-3xl">
-            Siemens discontinued the Type RL line, but your switchgear doesn&apos;t have to be replaced. As the exclusive
+            Siemens discontinued the Type RL line, but your switchgear doesn&apos;t have to be replaced. As the Siemens New Surplus
             worldwide source for RL inventory and a founding member of PEARL, Voyten Electric can extend, modernize, or
             replace RL equipment &mdash; with 24/7 emergency support for failures in critical facilities.
           </p>
@@ -144,7 +144,7 @@ export default function RLBreakersLifecyclePage() {
               <p className="text-slate-600 mb-6 max-w-3xl">Pick the scenario that fits your RL equipment. Each routes to the Voyten service path that resolves it.</p>
               <div className="grid sm:grid-cols-2 gap-4">
                 {[
-                  { icon: AlertTriangle, t: 'A breaker has failed or won’t reset', p: 'Emergency: get an exact-match RL replacement from exclusive surplus, plus diagnostic testing to confirm root cause. Rental/swap-out available to restore power immediately.', cta: 'Call 24/7: 1-800-458-4001', href: 'tel:1-800-458-4001' },
+                  { icon: AlertTriangle, t: 'A breaker has failed or won’t reset', p: 'Emergency: get an exact-match RL replacement from Siemens New Surplus stock, plus diagnostic testing to confirm root cause. Rental/swap-out available to restore power immediately.', cta: 'Call 24/7: 1-800-458-4001', href: 'tel:1-800-458-4001' },
                   { icon: Activity, t: 'Aging but still running — reliability worry', p: 'Recondition the breaker and refresh Static Trip III units and renewal parts. Apparatus life extension keeps your switchgear in service for years.', cta: 'Apparatus Life Extension', href: SERVICES.lifeExt },
                   { icon: RefreshCw, t: 'Under-rated or outdated protection', p: 'Upgrade, retrofit, or retrofill — add today’s trip-unit technology and protection to existing RL gear without replacing the lineup.', cta: 'Upgrades / Retrofit / Retrofill', href: SERVICES.retrofit },
                   { icon: Wrench, t: 'Damaged or needs a custom rebuild', p: 'Repair & remodification or a full custom rebuild/remanufacture to OEM (or better) spec, tested before shipment.', cta: 'Custom Rebuilds & Repairs', href: SERVICES.rebuild },
