@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Phone, Mail, MapPin, BookOpen, Clock } from 'lucide-react';
 
 export default function Footer() {
@@ -78,6 +79,20 @@ export default function Footer() {
                 </a>
               </li>
             </ul>
+
+            <a
+              href="https://pearl1.org/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group mt-5 inline-flex flex-col gap-1.5"
+            >
+              <span className="inline-flex w-fit rounded bg-white px-2.5 py-1.5">
+                <Image src="/pearl-logo.png" alt="PEARL — Professional Electrical Apparatus Recyclers League" width={110} height={25} />
+              </span>
+              <span className="text-xs text-slate-400 group-hover:text-white transition-colors">
+                Founding member, PEARL — quality &amp; safety standards for remanufactured apparatus
+              </span>
+            </a>
           </div>
 
           {/* Manual Categories */}

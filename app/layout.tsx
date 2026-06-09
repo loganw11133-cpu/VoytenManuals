@@ -166,6 +166,12 @@ const jsonLd = {
     "https://voytenelectric.com",
     "https://www.voyten.com"
   ],
+  "memberOf": {
+    "@type": "Organization",
+    "name": "PEARL — Professional Electrical Apparatus Recyclers League",
+    "url": "https://pearl1.org/",
+    "description": "Trade organization (founded 1997) setting quality, safety, and reconditioning standards for surplus and remanufactured electrical apparatus."
+  },
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
     "name": "Electrical Equipment Manuals",

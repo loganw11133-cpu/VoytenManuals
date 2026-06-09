@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Phone, BookOpen, Shield, Users, Zap, ArrowRight, MapPin, Factory, Award, Globe } from 'lucide-react';
 import type { Metadata } from 'next';
 
@@ -197,6 +198,42 @@ export default function AboutPage() {
                 <p className="text-slate-500 text-sm mt-1">{stat.label}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* PEARL Quality Assurance */}
+      <section className="py-14 lg:py-18 bg-[#1a1a1a]">
+        <div className="max-w-5xl mx-auto px-4">
+          <div className="flex flex-col md:flex-row items-center gap-8">
+            <a href="https://pearl1.org/" target="_blank" rel="noopener noreferrer" className="flex-shrink-0">
+              <span className="inline-flex rounded-lg bg-white px-5 py-4">
+                <Image src="/pearl-logo.png" alt="PEARL — Professional Electrical Apparatus Recyclers League" width={220} height={50} />
+              </span>
+            </a>
+            <div>
+              <p className="text-[#dc2626] font-semibold mb-2 text-sm tracking-wide uppercase">Quality &amp; Safety Assurance</p>
+              <h2 className="text-2xl lg:text-3xl font-bold text-white mb-4">Founding Member of PEARL</h2>
+              <div className="space-y-3 text-slate-300 leading-relaxed">
+                <p>
+                  Voyten Electric is one of the founding members of <strong className="text-white">PEARL — the Professional
+                  Electrical Apparatus Recyclers League</strong>. Founded in 1997, PEARL is the professional trade organization
+                  of companies that supply quality surplus and remanufactured electrical equipment and apparatus.
+                </p>
+                <p>
+                  PEARL&#39;s mission is to create a marketable distinction in <strong className="text-white">quality, safety,
+                  and integrity</strong> for its members. Safety of the product user is the highest priority — the driving
+                  motivation behind PEARL&#39;s standards. Members must meet strict technical, safety, and operational requirements
+                  and commit to the safe reconditioning and remanufacturing of electrical apparatus that has previously been in service.
+                </p>
+                <p className="text-sm text-slate-400">
+                  Every breaker, trip unit, and component Voyten reconditions is held to these independently-set standards.{' '}
+                  <a href="https://pearl1.org/" target="_blank" rel="noopener noreferrer" className="text-[#dc2626] hover:text-[#ef4444] font-medium">
+                    Learn more about PEARL &rarr;
+                  </a>
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
