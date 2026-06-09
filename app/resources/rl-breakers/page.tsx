@@ -10,11 +10,11 @@ export const revalidate = 3600;
 export const metadata: Metadata = {
   title: 'Siemens RL Low Voltage Power Circuit Breaker Guide — Complete Technical Reference | Voyten',
   description:
-    'Comprehensive technical guide for the Siemens Type RL low voltage power circuit breaker (LVPCB). Covers all models (RL, RLE, RLI, RLF), frame sizes 800–5000A, Static Trip III trip units, catalog number structure, sensor configurations, interrupting ratings, and the companion Type LA air circuit breaker. From Voyten Electric — your exclusive RL source.',
+    'Comprehensive technical guide for the Siemens Type RL low voltage power circuit breaker (LVPCB). Covers all models (RL, RLE, RLI, RLF), frame sizes 800–5000A, Static Trip III trip units, catalog number structure, interrupting ratings, and the companion Type LA air circuit breaker. From Voyten Electric — your exclusive RL source.',
   keywords: [
     'Siemens RL breaker guide', 'RL LVPCB technical reference', 'RL breaker specifications',
     'RL vs RLE vs RLF', 'RL catalog number structure', 'RL breaker interrupting rating',
-    'Static Trip III trip unit', 'RL sensor table', 'RL control voltage codes',
+    'Static Trip III trip unit',
     'RL frame sizes', 'RL breaker discontinued', 'Siemens Wendell NC',
     'RLE economical breaker', 'RLI integrally fused', 'RLF fully rated',
     'Siemens LA breaker', 'RL renewal parts guide',
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Siemens RL Breaker — Complete Technical Reference',
     description:
-      'Definitive guide to the Siemens Type RL LVPCB: all models, specifications, catalog nomenclature, trip units, sensors, and parts sourcing. By Voyten Electric.',
+      'Definitive guide to the Siemens Type RL LVPCB: all models, specifications, catalog nomenclature, trip units, and parts sourcing. By Voyten Electric.',
     url: 'https://www.voytenmanuals.com/resources/rl-breakers',
     type: 'article',
   },
@@ -116,14 +116,6 @@ export default function RLBreakersGuide() {
         acceptedAnswer: {
           '@type': 'Answer',
           text: 'Siemens discontinued the RL product line and closed its Wendell, NC manufacturing facility. For existing RL switchgear, nothing needs to "replace" the RL — Voyten Electric purchased all remaining RL inventory (breakers, Static Trip III units, drawings, tooling, and every renewal part) directly from Siemens Wendell, making Voyten the exclusive worldwide source for genuine RL breakers and parts. Existing installations are fully supported with original Siemens-sourced equipment, with no need to modify or replace the switchgear. Siemens current-production air circuit breakers are not drop-in compatible with RL cells — they use a different frame geometry, trip unit platform, and cell interface — so any retrofit would require all-new switchgear. That is why facilities with installed RL equipment source genuine RL replacements and renewal parts from Voyten.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'What sensor do I need for my RL breaker?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'RL breakers use current transformer (CT) sensors rated in amps with a /.5 secondary. There are 15 single-wound sensors from 80A to 5000A and 5 dual-wound sensors from 2500A to 5000A. Sensor availability depends on frame size — for example, an 80A sensor (code AA) fits frames 0–2 (800A–2000A), while a 4000A sensor (code AN) only fits frames 4–5 (4000A–5000A). Dual-wound sensors provide enhanced ground fault sensitivity; the ground fault protection pickup is limited to 1200A maximum per NEC 230.95 for solidly-grounded wye services. The sensor code occupies positions 5–6 of the catalog number. Contact Voyten at 1-800-458-4001 with your catalog or edge number for exact sensor identification.',
         },
       },
       {
@@ -502,221 +494,6 @@ export default function RLBreakersGuide() {
                 to the breaker&apos;s sensor. The rating plug sets the long-time pickup range and must match
                 the installed CT sensor. When replacing a trip unit, always verify the rating plug compatibility.
               </p>
-            </div>
-          </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── Sensor Configurations ── */}
-        <section className="even:bg-slate-100 py-10 lg:py-14">
-          <div className="mx-auto max-w-7xl px-4">
-            <div className="lg:pl-[228px]">
-          <h2 className="text-2xl font-bold text-slate-900 mb-4">Sensor Configurations</h2>
-          <div className="text-slate-700 leading-relaxed space-y-4 mb-6">
-            <p>
-              RL breakers use current transformer (CT) sensors with a /.5 secondary output. The sensor code
-              occupies positions 5&ndash;6 of the catalog number. Sensor availability is frame-dependent &mdash;
-              larger sensors physically require larger frames.
-            </p>
-          </div>
-
-          {/* Single-wound sensors */}
-          <h3 className="text-lg font-bold text-slate-900 mb-3">Single-Wound Sensors</h3>
-          <div className="overflow-x-auto mb-6">
-            <table className="w-full border-collapse text-sm">
-              <thead>
-                <tr className="bg-slate-50 border-b border-slate-200">
-                  <th className="text-left p-3 font-bold text-slate-900">Code</th>
-                  <th className="text-left p-3 font-bold text-slate-900">Rating</th>
-                  <th className="text-left p-3 font-bold text-slate-900">Compatible Frames</th>
-                </tr>
-              </thead>
-              <tbody className="text-slate-700">
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">AA</td><td className="p-3">80/.5</td><td className="p-3">800A, 1600A, 2000A</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">AB</td><td className="p-3">150/.5</td><td className="p-3">800A, 1600A, 2000A</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">AC</td><td className="p-3">200/.5</td><td className="p-3">800A, 1600A, 2000A</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">AD</td><td className="p-3">300/.5</td><td className="p-3">800A, 1600A, 2000A</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">AE</td><td className="p-3">400/.5</td><td className="p-3">800A, 1600A, 2000A</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">AF</td><td className="p-3">600/.5</td><td className="p-3">800A, 1600A, 2000A</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">AG</td><td className="p-3">800/.5</td><td className="p-3">800A, 1600A, 2000A, 3200A, 4000A, 5000A</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">AH</td><td className="p-3">1200/.5</td><td className="p-3">1600A, 2000A, 3200A, 4000A, 5000A</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">AI</td><td className="p-3">1600/.5</td><td className="p-3">1600A, 2000A, 3200A, 4000A, 5000A</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">AJ</td><td className="p-3">2000/.5</td><td className="p-3">2000A, 3200A, 4000A, 5000A</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">AK</td><td className="p-3">2400/.5</td><td className="p-3">3200A, 4000A, 5000A</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">AL</td><td className="p-3">3000/.5</td><td className="p-3">3200A, 4000A, 5000A</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">AM</td><td className="p-3">3200/.5</td><td className="p-3">3200A, 4000A, 5000A</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">AN</td><td className="p-3">4000/.5</td><td className="p-3">4000A, 5000A</td></tr>
-                <tr><td className="p-3 font-mono font-semibold">AO</td><td className="p-3">5000/.5</td><td className="p-3">5000A</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          {/* Dual-wound sensors */}
-          <h3 className="text-lg font-bold text-slate-900 mb-3">Dual-Wound Sensors</h3>
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse text-sm">
-              <thead>
-                <tr className="bg-slate-50 border-b border-slate-200">
-                  <th className="text-left p-3 font-bold text-slate-900">Code</th>
-                  <th className="text-left p-3 font-bold text-slate-900">Rating</th>
-                  <th className="text-left p-3 font-bold text-slate-900">Compatible Frames</th>
-                </tr>
-              </thead>
-              <tbody className="text-slate-700">
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">2A</td><td className="p-3">2500/.5 Dual-Wound</td><td className="p-3">3200A, 4000A, 5000A</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">2B</td><td className="p-3">3000/.5 Dual-Wound</td><td className="p-3">3200A, 4000A, 5000A</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">2C</td><td className="p-3">3200/.5 Dual-Wound</td><td className="p-3">3200A, 4000A, 5000A</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">2D</td><td className="p-3">4000/.5 Dual-Wound</td><td className="p-3">4000A, 5000A</td></tr>
-                <tr><td className="p-3 font-mono font-semibold">2E</td><td className="p-3">5000/.5 Dual-Wound</td><td className="p-3">5000A</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <p className="text-sm text-slate-500 mt-3">
-            Dual-wound sensors provide enhanced ground fault sensitivity on large frames. The ground fault
-            protection pickup is limited to <strong>1200A maximum per NEC 230.95</strong> for solidly-grounded
-            wye services, regardless of the sensor&apos;s primary current rating.
-            Sensor code XX = Non-Automatic (no tripping sensor installed).
-          </p>
-            </div>
-          </div>
-        </section>
-
-        {/* ── Control Voltage ── */}
-        <section className="even:bg-slate-100 py-10 lg:py-14">
-          <div className="mx-auto max-w-7xl px-4">
-            <div className="lg:pl-[228px]">
-          <h2 className="text-2xl font-bold text-slate-900 mb-4">Control Voltage Options</h2>
-          <div className="text-slate-700 leading-relaxed space-y-4 mb-6">
-            <p>
-              Position 8 of the catalog number specifies the control voltage. Electric-operated (EO) breakers
-              use the voltage for motor/close and trip circuits. Manual-operated (MO) breakers use it for
-              trip and shunt only. There are <strong>26 voltage codes</strong> (A&ndash;Z).
-            </p>
-          </div>
-
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse text-sm">
-              <thead>
-                <tr className="bg-slate-50 border-b border-slate-200">
-                  <th className="text-left p-3 font-bold text-slate-900">Code</th>
-                  <th className="text-left p-3 font-bold text-slate-900">Electric-Operated (EO)</th>
-                  <th className="text-left p-3 font-bold text-slate-900">Manual-Operated (MO)</th>
-                </tr>
-              </thead>
-              <tbody className="text-slate-700">
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">A</td><td className="p-3">48VDC Motor/Close, 48VDC Trip/Shunt</td><td className="p-3">48VDC Trip/Shunt</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">B</td><td className="p-3">120VAC Motor/Close, 120VAC Trip/Shunt</td><td className="p-3">120VAC Trip/Shunt</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">C</td><td className="p-3">125VDC Motor/Close, 125VDC Trip/Shunt</td><td className="p-3">125VDC Trip/Shunt</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">D</td><td className="p-3">240VAC Motor/Close, 240VAC Trip/Shunt</td><td className="p-3">240VAC Trip/Shunt</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">E</td><td className="p-3">250VDC Motor/Close, 250VDC Trip/Shunt</td><td className="p-3">250VDC Trip/Shunt</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">F</td><td className="p-3">120VAC Motor/Close, 48VDC Trip</td><td className="p-3 text-slate-400">&mdash;</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">G</td><td className="p-3">120VAC Motor/Close, 125VDC Trip/Shunt</td><td className="p-3 text-slate-400">&mdash;</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">H</td><td className="p-3">240VAC Motor/Close, 48VDC Trip</td><td className="p-3 text-slate-400">&mdash;</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">I</td><td className="p-3">240VAC Motor/Close, 125VDC Trip/Shunt</td><td className="p-3 text-slate-400">&mdash;</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">J</td><td className="p-3">24VDC Motor/Close, 24VDC Trip/Shunt</td><td className="p-3">24VDC Trip/Shunt</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">K</td><td className="p-3">48VDC Motor/Close, 24VDC Trip</td><td className="p-3">24VDC Trip</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">L</td><td className="p-3">120VAC Motor/Close, 24VDC Trip</td><td className="p-3">24VDC Trip, 65VAC/28VDC Shunt</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">M</td><td className="p-3">120VAC Motor/Close, 32VDC Trip</td><td className="p-3">32VDC Trip</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">N</td><td className="p-3">120VAC Motor/Close, 5VAC Trip</td><td className="p-3 text-slate-400">&mdash;</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">O</td><td className="p-3">125VDC Motor/Close, 28VDC Trip</td><td className="p-3 text-slate-400">&mdash;</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">P</td><td className="p-3">125VDC Motor/Close, 28VDC Trip</td><td className="p-3">125VDC Trip, 28VDC Shunt</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">Q</td><td className="p-3">125VDC Motor/Close, 48VDC Trip</td><td className="p-3">125VDC Trip, 48VDC Shunt</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">R</td><td className="p-3">125VDC Motor/Close, 120VAC Trip</td><td className="p-3">125VDC Trip, 120VAC Shunt</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">S</td><td className="p-3">250VDC Motor/Close, 48VDC Trip</td><td className="p-3">250VDC Trip, 48VDC Shunt</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">T</td><td className="p-3">24VDC Motor/Close, 24VDC Trip</td><td className="p-3">24VDC Trip, 24VDC Shunt</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">U</td><td className="p-3">240VAC Motor/Close, 120VAC Trip</td><td className="p-3">240VAC Trip, 120VAC Shunt</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">V</td><td className="p-3">240VAC Motor/Close, 48VDC Trip</td><td className="p-3">240VAC Trip, 48VDC Shunt</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">W</td><td className="p-3">120VAC Motor/Close, 120VAC Trip</td><td className="p-3 text-slate-400">&mdash;</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">Y</td><td className="p-3">120VAC Motor/Close, 125VDC Trip</td><td className="p-3 text-slate-400">&mdash;</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">Z</td><td className="p-3">24VDC Motor/Close, 48VDC Trip</td><td className="p-3">48VDC Trip, 48VDC Shunt</td></tr>
-                <tr><td className="p-3 font-mono font-semibold">X</td><td className="p-3 text-slate-400">Not Required</td><td className="p-3 text-slate-400">Not Required</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <p className="text-sm text-slate-500 mt-3">
-            Codes F, G, H, I, N, O, W, Y are EO-only configurations (no MO equivalent). Most common: B (120VAC), C (125VDC), G (120VAC motor / 125VDC trip).
-          </p>
-            </div>
-          </div>
-        </section>
-
-        {/* ── System Wiring ── */}
-        <section className="even:bg-slate-100 py-10 lg:py-14">
-          <div className="mx-auto max-w-7xl px-4">
-            <div className="lg:pl-[228px]">
-          <h2 className="text-2xl font-bold text-slate-900 mb-4">System Wiring Configurations</h2>
-          <div className="text-slate-700 leading-relaxed mb-6">
-            <p>
-              Position 9 specifies the 3-phase system wiring and ground fault sensing method:
-            </p>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse text-sm">
-              <thead>
-                <tr className="bg-slate-50 border-b border-slate-200">
-                  <th className="text-left p-3 font-bold text-slate-900">Code</th>
-                  <th className="text-left p-3 font-bold text-slate-900">Configuration</th>
-                  <th className="text-left p-3 font-bold text-slate-900">Wiring Diagram</th>
-                </tr>
-              </thead>
-              <tbody className="text-slate-700">
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">A</td><td className="p-3">3-Wire</td><td className="p-3">FIG 1A</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">B</td><td className="p-3">3-Wire, Ground Fault</td><td className="p-3">FIG 1A</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">C</td><td className="p-3">3-Wire, Ground Fault + NEC</td><td className="p-3">FIG 1C</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">D</td><td className="p-3">4-Wire, Residual Ground</td><td className="p-3">&mdash;</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">E</td><td className="p-3">4-Wire, Residual Ground + NEC</td><td className="p-3">FIG 1E</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">F</td><td className="p-3">4-Wire</td><td className="p-3">FIG 1F</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">G</td><td className="p-3">4-Wire, Residual + Neutral</td><td className="p-3">FIG 1B</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">H</td><td className="p-3">4-Wire, Residual + NEC + Neutral</td><td className="p-3">FIG 20A</td></tr>
-                <tr className="border-b border-slate-100"><td className="p-3 font-mono font-semibold">I</td><td className="p-3">4-Wire, Direct Ground + Neutral</td><td className="p-3">FIG 20B</td></tr>
-                <tr><td className="p-3 font-mono font-semibold">J</td><td className="p-3">4-Wire</td><td className="p-3">FIG 3A</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <p className="text-sm text-slate-500 mt-3">
-            Wiring diagram figures reference the Siemens RL Installation &amp; Wiring Diagrams Manual (SGIM-3068D).
-          </p>
-            </div>
-          </div>
-        </section>
-
-        {/* ── Variant Restrictions ── */}
-        <section className="even:bg-slate-100 py-10 lg:py-14">
-          <div className="mx-auto max-w-7xl px-4">
-            <div className="lg:pl-[228px]">
-          <h2 className="text-2xl font-bold text-slate-900 mb-4">Variant Restrictions &amp; Compatibility</h2>
-          <div className="bg-slate-50 rounded-2xl border border-slate-200 p-6 lg:p-8">
-            <div className="flex items-start gap-4 mb-6">
-              <div className="w-12 h-12 bg-[#dc2626]/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                <Zap size={24} className="text-[#dc2626]" />
-              </div>
-              <div>
-                <h3 className="text-lg font-bold text-slate-900">Key Configuration Constraints</h3>
-                <p className="text-sm text-slate-500 mt-1">Per Siemens catalog selection diagram</p>
-              </div>
-            </div>
-            <div className="space-y-4 text-slate-700">
-              <div className="flex items-start gap-3">
-                <Shield size={16} className="text-[#dc2626] flex-shrink-0 mt-1" />
-                <p><strong>RLF (Fully Rated)</strong> &mdash; Available in <strong>drawout (A) connection only</strong>. Not available in stationary (B) mount.</p>
-              </div>
-              <div className="flex items-start gap-3">
-                <Shield size={16} className="text-[#dc2626] flex-shrink-0 mt-1" />
-                <p><strong>RLI (Integrally Fused)</strong> &mdash; Available in <strong>800A frame (code 0) only</strong>. Includes integral current-limiting fuses.</p>
-              </div>
-              <div className="flex items-start gap-3">
-                <Shield size={16} className="text-[#dc2626] flex-shrink-0 mt-1" />
-                <p><strong>RLE (Economical)</strong> &mdash; Available in frames <strong>800A through 4000A</strong> (codes 0&ndash;4). Not available in the 5000A frame.</p>
-              </div>
-              <div className="flex items-start gap-3">
-                <Shield size={16} className="text-[#dc2626] flex-shrink-0 mt-1" />
-                <p><strong>Dual-wound sensors</strong> &mdash; Ground fault protection pickup limited to <strong>1200A maximum per NEC 230.95</strong> for solidly-grounded wye services. Available only in frames 3200A and above (codes 3&ndash;5).</p>
-              </div>
-              <div className="flex items-start gap-3">
-                <Shield size={16} className="text-[#dc2626] flex-shrink-0 mt-1" />
-                <p><strong>Dual shunt trip (T1&ndash;T6)</strong> &mdash; Available on <strong>unfused breakers only</strong> (fuse code X).</p>
-              </div>
             </div>
           </div>
             </div>
