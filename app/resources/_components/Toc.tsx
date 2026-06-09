@@ -27,28 +27,38 @@ export default function Toc() {
     const root = document.getElementById('resource-content');
     if (!root) return;
 
-    const headings = (Array.from(root.querySelectorAll('h2')) as HTMLHeadingElement[]).filter(
-      h => !h.closest('[data-no-toc]')
-    );
-    const next: Item[] = headings.map(h => {
-      const text = (h.textContent || '').trim();
-      if (!h.id) h.id = slugify(text);
-      h.classList.add('scroll-mt-24');
-      return { id: h.id, text };
-    });
-    setItems(next);
+    let observer: IntersectionObserver | undefined;
 
-    const observer = new IntersectionObserver(
-      entries => {
-        const visible = entries
-          .filter(e => e.isIntersecting)
-          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-        if (visible[0]) setActive((visible[0].target as HTMLElement).id);
-      },
-      { rootMargin: '-80px 0px -70% 0px', threshold: 0 }
-    );
-    headings.forEach(h => observer.observe(h));
-    return () => observer.disconnect();
+    // Defer the DOM scan one frame so we don't call setState synchronously
+    // inside the effect body (avoids react-hooks/set-state-in-effect).
+    const raf = requestAnimationFrame(() => {
+      const headings = (Array.from(root.querySelectorAll('h2')) as HTMLHeadingElement[]).filter(
+        h => !h.closest('[data-no-toc]')
+      );
+      const next: Item[] = headings.map(h => {
+        const text = (h.textContent || '').trim();
+        if (!h.id) h.id = slugify(text);
+        h.classList.add('scroll-mt-24');
+        return { id: h.id, text };
+      });
+      setItems(next);
+
+      observer = new IntersectionObserver(
+        entries => {
+          const visible = entries
+            .filter(e => e.isIntersecting)
+            .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+          if (visible[0]) setActive((visible[0].target as HTMLElement).id);
+        },
+        { rootMargin: '-80px 0px -70% 0px', threshold: 0 }
+      );
+      headings.forEach(h => observer!.observe(h));
+    });
+
+    return () => {
+      cancelAnimationFrame(raf);
+      observer?.disconnect();
+    };
   }, []);
 
   if (items.length === 0) return null;
