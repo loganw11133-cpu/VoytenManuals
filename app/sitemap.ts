@@ -95,6 +95,18 @@ async function generateStaticAndFilterSitemap(): Promise<MetadataRoute.Sitemap> 
       priority: 0.8,
     },
     {
+      url: `${baseUrl}/resources/rl-breakers`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/resources/rl-breakers-lifecycle`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.85,
+    },
+    {
       url: `${baseUrl}/faq`,
       lastModified: new Date(),
       changeFrequency: 'monthly',

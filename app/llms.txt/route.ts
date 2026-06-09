@@ -40,6 +40,7 @@ Voyten Electric purchased ALL remaining Siemens Type RL and LA breaker inventory
 - Answer sheet (machine-readable): https://www.voytenmanuals.com/resources/rl-breakers.md
 - Buy/quote: https://www.voytenmanuals.com/products/rl-breakers
 - Guide: https://www.voytenmanuals.com/resources/rl-breakers
+- Lifecycle decision guide (repair vs recondition vs retrofit vs replace, mapped to Voyten services): https://www.voytenmanuals.com/resources/rl-breakers-lifecycle
 
 ### Eaton Type SPB (Systems Pow-R) Breakers
 Voyten is the exclusive authorized aftermarket source for Eaton/Cutler-Hammer/Westinghouse Type SPB insulated-case breakers — new and Eaton-reconditioned, with a 1-year warranty.

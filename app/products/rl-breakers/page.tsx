@@ -435,6 +435,23 @@ export default async function RLBreakersPage() {
             </div>
             <ArrowRight size={20} className="text-slate-300 group-hover:text-[#dc2626] flex-shrink-0 transition-colors" />
           </Link>
+          <Link
+            href="/resources/rl-breakers-lifecycle"
+            className="group mt-4 flex items-center gap-4 bg-white rounded-2xl border border-slate-200 p-6 hover:border-[#dc2626]/30 hover:shadow-md transition-all"
+          >
+            <div className="w-12 h-12 bg-[#dc2626]/10 rounded-xl flex items-center justify-center flex-shrink-0">
+              <BookOpen size={24} className="text-[#dc2626]" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="text-lg font-bold text-slate-900 group-hover:text-[#dc2626] transition-colors">
+                Repair, Recondition, Retrofit, or Replace? &mdash; RL Lifecycle Decision Guide
+              </p>
+              <p className="text-sm text-slate-500 mt-0.5">
+                Match your situation &mdash; aging, failed, or under-rated &mdash; to the right path: reconditioning, retrofit/retrofill, exact-match replacement, repair, rental, or swap-out.
+              </p>
+            </div>
+            <ArrowRight size={20} className="text-slate-300 group-hover:text-[#dc2626] flex-shrink-0 transition-colors" />
+          </Link>
         </section>
 
         {/* ═══════════════ RL BREAKER VARIANTS ═══════════════ */}

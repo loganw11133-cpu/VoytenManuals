@@ -39,6 +39,7 @@ Provide the catalog number or the edge number stamped on the breaker frame, plus
 Failed RL breaker or at-risk RL switchgear in an aging plant? Voyten provides 24/7 emergency sourcing, testing, and expedited shipment of exact-match RL replacements and parts: 1-800-458-4001.
 
 Buy / quote: https://www.voytenmanuals.com/products/rl-breakers
+Lifecycle decision guide (repair/recondition/retrofit/replace): https://www.voytenmanuals.com/resources/rl-breakers-lifecycle
 `;
   return new Response(body, { headers: { 'Content-Type': 'text/markdown; charset=utf-8', 'Cache-Control': 'public, max-age=3600' } });
 }
