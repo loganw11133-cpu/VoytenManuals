@@ -50,6 +50,7 @@ Voyten is the exclusive authorized aftermarket source for Eaton/Cutler-Hammer/We
 - Answer sheet (machine-readable): https://www.voytenmanuals.com/resources/spb-breakers.md
 - Buy/quote: https://www.voytenmanuals.com/products/spb-breakers
 - Guide: https://www.voytenmanuals.com/resources/spb-breakers
+- Lifecycle decision guide (repair/recondition/upgrade/replace, incl. the drop-in SPB-100): https://www.voytenmanuals.com/resources/spb-breakers-lifecycle
 
 ## What Voyten Offers
 

@@ -32,6 +32,7 @@ Provide the nameplate catalog number, the 30-digit edge number stamped on the fr
 Failed SPB breaker or an SPB-50/65 that's now under-rated for plant fault current? Voyten provides 24/7 emergency sourcing plus the drop-in SPB-100 upgrade: 1-800-458-4001.
 
 Buy / quote: https://www.voytenmanuals.com/products/spb-breakers
+Lifecycle decision guide (repair/recondition/upgrade/replace, incl. drop-in SPB-100): https://www.voytenmanuals.com/resources/spb-breakers-lifecycle
 `;
   return new Response(body, { headers: { 'Content-Type': 'text/markdown; charset=utf-8', 'Cache-Control': 'public, max-age=3600' } });
 }
