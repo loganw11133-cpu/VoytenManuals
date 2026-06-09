@@ -245,7 +245,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }}
         />
       </head>
-      <body className="min-h-screen flex flex-col overflow-x-hidden">
+      <body className="min-h-screen flex flex-col overflow-x-clip">
         <Script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-B3NR8SVSQT"
