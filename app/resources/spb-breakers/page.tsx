@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { Phone, ChevronRight, BookOpen, Zap, Shield, ArrowRight } from 'lucide-react';
+import Toc from '../_components/Toc';
 
 export const revalidate = 3600;
 
@@ -167,10 +168,13 @@ export default function SPBBreakersGuide() {
       </section>
 
       {/* ═══════════════ CONTENT ═══════════════ */}
-      <div className="max-w-4xl mx-auto px-4 py-12">
+      {/* Hybrid layout: full-bleed alternating bands + sticky TOC rail (desktop) */}
+      <div id="resource-content" className="relative w-full">
 
         {/* ── Overview ── */}
-        <section className="mb-14">
+        <section className="even:bg-slate-100 py-10 lg:py-14">
+          <div className="mx-auto max-w-7xl px-4">
+            <div className="lg:pl-[228px]">
           <h2 className="text-2xl font-bold text-slate-900 mb-4">What Is the SPB Breaker?</h2>
           <div className="prose prose-slate max-w-none text-slate-700 leading-relaxed space-y-4">
             <p>
@@ -210,10 +214,14 @@ export default function SPBBreakersGuide() {
               </li>
             </ul>
           </div>
+            </div>
+          </div>
         </section>
 
         {/* ── Model Breakdown ── */}
-        <section className="mb-14">
+        <section className="even:bg-slate-100 py-10 lg:py-14">
+          <div className="mx-auto max-w-7xl px-4">
+            <div className="lg:pl-[228px]">
           <h2 className="text-2xl font-bold text-slate-900 mb-4">SPB Model Lineup</h2>
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-sm">
@@ -272,10 +280,14 @@ export default function SPBBreakersGuide() {
               </tbody>
             </table>
           </div>
+            </div>
+          </div>
         </section>
 
         {/* ── Upgrade Path ── */}
-        <section className="mb-14">
+        <section className="even:bg-slate-100 py-10 lg:py-14">
+          <div className="mx-auto max-w-7xl px-4">
+            <div className="lg:pl-[228px]">
           <h2 className="text-2xl font-bold text-slate-900 mb-4">SPB-50/65 to SPB-100 Upgrade Path</h2>
           <div className="bg-slate-50 rounded-2xl border border-slate-200 p-6 lg:p-8">
             <div className="flex items-start gap-4 mb-4">
@@ -304,10 +316,14 @@ export default function SPBBreakersGuide() {
               </p>
             </div>
           </div>
+            </div>
+          </div>
         </section>
 
         {/* ── Catalog Number Structure ── */}
-        <section className="mb-14">
+        <section className="even:bg-slate-100 py-10 lg:py-14">
+          <div className="mx-auto max-w-7xl px-4">
+            <div className="lg:pl-[228px]">
           <h2 className="text-2xl font-bold text-slate-900 mb-4">Catalog Number Prefixes</h2>
           <div className="text-slate-700 leading-relaxed space-y-4 mb-6">
             <p>
@@ -337,10 +353,14 @@ export default function SPBBreakersGuide() {
           <p className="text-sm text-slate-500 mt-3">
             &ldquo;M&rdquo; prefix variants (MSR, MHR, etc.) indicate metric construction for IEC applications.
           </p>
+            </div>
+          </div>
         </section>
 
         {/* ── Edge Number ── */}
-        <section className="mb-14">
+        <section className="even:bg-slate-100 py-10 lg:py-14">
+          <div className="mx-auto max-w-7xl px-4">
+            <div className="lg:pl-[228px]">
           <h2 className="text-2xl font-bold text-slate-900 mb-4">Understanding the SPB Edge Number</h2>
           <div className="text-slate-700 leading-relaxed space-y-4">
             <p>
@@ -359,10 +379,14 @@ export default function SPBBreakersGuide() {
               specific configuration — including the correct mounting style, connection type, and factory-installed accessories.
             </p>
           </div>
+            </div>
+          </div>
         </section>
 
         {/* ── Trip Units ── */}
-        <section className="mb-14">
+        <section className="even:bg-slate-100 py-10 lg:py-14">
+          <div className="mx-auto max-w-7xl px-4">
+            <div className="lg:pl-[228px]">
           <h2 className="text-2xl font-bold text-slate-900 mb-4">Trip Units &amp; Rating Plugs</h2>
           <div className="text-slate-700 leading-relaxed space-y-4 mb-6">
             <p>
@@ -393,10 +417,14 @@ export default function SPBBreakersGuide() {
           <p className="text-sm text-slate-500 mt-3">
             L = Long-time, S = Short-time, I = Instantaneous, G = Ground fault. All trip units require a matching rating plug.
           </p>
+            </div>
+          </div>
         </section>
 
         {/* ── Brand History ── */}
-        <section className="mb-14">
+        <section className="even:bg-slate-100 py-10 lg:py-14">
+          <div className="mx-auto max-w-7xl px-4">
+            <div className="lg:pl-[228px]">
           <h2 className="text-2xl font-bold text-slate-900 mb-4">Brand History &amp; Nameplate Cross-Reference</h2>
           <div className="text-slate-700 leading-relaxed space-y-4">
             <p>
@@ -425,10 +453,14 @@ export default function SPBBreakersGuide() {
               as an Eaton-branded SPB-100 of the same frame size.
             </p>
           </div>
+            </div>
+          </div>
         </section>
 
         {/* ── Renewal Parts Categories ── */}
-        <section className="mb-14">
+        <section className="even:bg-slate-100 py-10 lg:py-14">
+          <div className="mx-auto max-w-7xl px-4">
+            <div className="lg:pl-[228px]">
           <h2 className="text-2xl font-bold text-slate-900 mb-4">Renewal Parts Categories</h2>
           <div className="text-slate-700 leading-relaxed mb-6">
             <p>
@@ -456,10 +488,14 @@ export default function SPBBreakersGuide() {
               </div>
             ))}
           </div>
+            </div>
+          </div>
         </section>
 
         {/* ── Sourcing ── */}
-        <section className="mb-14">
+        <section className="even:bg-slate-100 py-10 lg:py-14">
+          <div className="mx-auto max-w-7xl px-4">
+            <div className="lg:pl-[228px]">
           <div className="bg-[#dc2626] rounded-2xl p-8 lg:p-10 text-center text-white">
             <h2 className="text-2xl lg:text-3xl font-bold mb-3">Need SPB Parts or Technical Support?</h2>
             <p className="text-white/90 mb-6 max-w-2xl mx-auto">
@@ -487,7 +523,18 @@ export default function SPBBreakersGuide() {
               Mon–Fri 8:00 AM – 4:30 PM EST | Emergency support available | sales@voyten.com
             </p>
           </div>
+            </div>
+          </div>
         </section>
+
+        {/* Sticky TOC rail — desktop only; placed last so it doesn't shift band parity */}
+        <div className="pointer-events-none absolute inset-0 hidden lg:block">
+          <div className="mx-auto h-full max-w-7xl px-4">
+            <div className="pointer-events-auto sticky top-24 w-[200px] pt-10">
+              <Toc />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

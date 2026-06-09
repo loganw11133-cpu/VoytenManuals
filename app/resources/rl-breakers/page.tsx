@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { Phone, ChevronRight, BookOpen, Zap, Shield, ArrowRight, Info } from 'lucide-react';
+import Toc from '../_components/Toc';
 
 export const revalidate = 3600;
 
@@ -175,10 +176,13 @@ export default function RLBreakersGuide() {
       </section>
 
       {/* ═══════════════ CONTENT ═══════════════ */}
-      <div className="max-w-4xl mx-auto px-4 py-12">
+      {/* Hybrid layout: full-bleed alternating bands + sticky TOC rail (desktop) */}
+      <div id="resource-content" className="relative w-full">
 
         {/* ── Overview ── */}
-        <section className="mb-14">
+        <section className="even:bg-slate-100 py-10 lg:py-14">
+          <div className="mx-auto max-w-7xl px-4">
+            <div className="lg:pl-[228px]">
           <h2 className="text-2xl font-bold text-slate-900 mb-4">What Is the RL Breaker?</h2>
           <div className="prose prose-slate max-w-none text-slate-700 leading-relaxed space-y-4">
             <p>
@@ -202,10 +206,14 @@ export default function RLBreakersGuide() {
               Voyten as the exclusive worldwide source for the RL product line.
             </p>
           </div>
+            </div>
+          </div>
         </section>
 
         {/* ── Model Lineup ── */}
-        <section className="mb-14">
+        <section className="even:bg-slate-100 py-10 lg:py-14">
+          <div className="mx-auto max-w-7xl px-4">
+            <div className="lg:pl-[228px]">
           <h2 className="text-2xl font-bold text-slate-900 mb-4">RL Model Lineup</h2>
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-sm">
@@ -260,10 +268,14 @@ export default function RLBreakersGuide() {
           <p className="text-sm text-slate-500 mt-3">
             Frame codes: 0 = 800A, 1 = 1600A, 2 = 2000A, 3 = 3200A, 4 = 4000A, 5 = 5000A.
           </p>
+            </div>
+          </div>
         </section>
 
         {/* ── Interrupting & Short-Time Ratings ── */}
-        <section className="mb-14">
+        <section className="even:bg-slate-100 py-10 lg:py-14">
+          <div className="mx-auto max-w-7xl px-4">
+            <div className="lg:pl-[228px]">
           <h2 className="text-2xl font-bold text-slate-900 mb-4">Interrupting &amp; Short-Time Ratings</h2>
           <div className="text-slate-700 leading-relaxed space-y-4 mb-6">
             <p>
@@ -310,10 +322,14 @@ export default function RLBreakersGuide() {
           <p className="text-sm text-slate-500 mt-3">
             Sources: Siemens SG-3061 / SG-3068. Consult breaker nameplate for application-specific voltage ratings.
           </p>
+            </div>
+          </div>
         </section>
 
         {/* ── Catalog Number Structure ── */}
-        <section className="mb-14">
+        <section className="even:bg-slate-100 py-10 lg:py-14">
+          <div className="mx-auto max-w-7xl px-4">
+            <div className="lg:pl-[228px]">
           <h2 className="text-2xl font-bold text-slate-900 mb-4">Catalog Number Structure</h2>
           <div className="text-slate-700 leading-relaxed space-y-4 mb-6">
             <p>
@@ -415,10 +431,14 @@ export default function RLBreakersGuide() {
               <div><span className="font-mono font-semibold text-slate-700">F1–F4</span> <span className="text-slate-500">Special Fuses (Shawmut, etc.)</span></div>
             </div>
           </div>
+            </div>
+          </div>
         </section>
 
         {/* ── Static Trip III ── */}
-        <section className="mb-14">
+        <section className="even:bg-slate-100 py-10 lg:py-14">
+          <div className="mx-auto max-w-7xl px-4">
+            <div className="lg:pl-[228px]">
           <h2 className="text-2xl font-bold text-slate-900 mb-4">Static Trip III Trip Unit</h2>
           <div className="text-slate-700 leading-relaxed space-y-4 mb-6">
             <p>
@@ -484,10 +504,14 @@ export default function RLBreakersGuide() {
               </p>
             </div>
           </div>
+            </div>
+          </div>
         </section>
 
         {/* ── Sensor Configurations ── */}
-        <section className="mb-14">
+        <section className="even:bg-slate-100 py-10 lg:py-14">
+          <div className="mx-auto max-w-7xl px-4">
+            <div className="lg:pl-[228px]">
           <h2 className="text-2xl font-bold text-slate-900 mb-4">Sensor Configurations</h2>
           <div className="text-slate-700 leading-relaxed space-y-4 mb-6">
             <p>
@@ -554,10 +578,14 @@ export default function RLBreakersGuide() {
             wye services, regardless of the sensor&apos;s primary current rating.
             Sensor code XX = Non-Automatic (no tripping sensor installed).
           </p>
+            </div>
+          </div>
         </section>
 
         {/* ── Control Voltage ── */}
-        <section className="mb-14">
+        <section className="even:bg-slate-100 py-10 lg:py-14">
+          <div className="mx-auto max-w-7xl px-4">
+            <div className="lg:pl-[228px]">
           <h2 className="text-2xl font-bold text-slate-900 mb-4">Control Voltage Options</h2>
           <div className="text-slate-700 leading-relaxed space-y-4 mb-6">
             <p>
@@ -609,10 +637,14 @@ export default function RLBreakersGuide() {
           <p className="text-sm text-slate-500 mt-3">
             Codes F, G, H, I, N, O, W, Y are EO-only configurations (no MO equivalent). Most common: B (120VAC), C (125VDC), G (120VAC motor / 125VDC trip).
           </p>
+            </div>
+          </div>
         </section>
 
         {/* ── System Wiring ── */}
-        <section className="mb-14">
+        <section className="even:bg-slate-100 py-10 lg:py-14">
+          <div className="mx-auto max-w-7xl px-4">
+            <div className="lg:pl-[228px]">
           <h2 className="text-2xl font-bold text-slate-900 mb-4">System Wiring Configurations</h2>
           <div className="text-slate-700 leading-relaxed mb-6">
             <p>
@@ -645,10 +677,14 @@ export default function RLBreakersGuide() {
           <p className="text-sm text-slate-500 mt-3">
             Wiring diagram figures reference the Siemens RL Wiring Diagrams &amp; Control Power Manual (SGIM-3068D / SG-3169).
           </p>
+            </div>
+          </div>
         </section>
 
         {/* ── Variant Restrictions ── */}
-        <section className="mb-14">
+        <section className="even:bg-slate-100 py-10 lg:py-14">
+          <div className="mx-auto max-w-7xl px-4">
+            <div className="lg:pl-[228px]">
           <h2 className="text-2xl font-bold text-slate-900 mb-4">Variant Restrictions &amp; Compatibility</h2>
           <div className="bg-slate-50 rounded-2xl border border-slate-200 p-6 lg:p-8">
             <div className="flex items-start gap-4 mb-6">
@@ -683,10 +719,14 @@ export default function RLBreakersGuide() {
               </div>
             </div>
           </div>
+            </div>
+          </div>
         </section>
 
         {/* ── Brand History ── */}
-        <section className="mb-14">
+        <section className="even:bg-slate-100 py-10 lg:py-14">
+          <div className="mx-auto max-w-7xl px-4">
+            <div className="lg:pl-[228px]">
           <h2 className="text-2xl font-bold text-slate-900 mb-4">Product History</h2>
           <div className="text-slate-700 leading-relaxed space-y-4">
             <p>
@@ -708,10 +748,14 @@ export default function RLBreakersGuide() {
               Siemens origin and parts compatibility across its full production run.
             </p>
           </div>
+            </div>
+          </div>
         </section>
 
         {/* ── Technical Documentation ── */}
-        <section className="mb-14">
+        <section className="even:bg-slate-100 py-10 lg:py-14">
+          <div className="mx-auto max-w-7xl px-4">
+            <div className="lg:pl-[228px]">
           <h2 className="text-2xl font-bold text-slate-900 mb-4">Technical Documentation</h2>
           <div className="text-slate-700 leading-relaxed mb-6">
             <p>
@@ -772,10 +816,14 @@ export default function RLBreakersGuide() {
               View all Siemens RL manuals &rarr;
             </Link>
           </p>
+            </div>
+          </div>
         </section>
 
         {/* ── Renewal Parts Categories ── */}
-        <section className="mb-14">
+        <section className="even:bg-slate-100 py-10 lg:py-14">
+          <div className="mx-auto max-w-7xl px-4">
+            <div className="lg:pl-[228px]">
           <h2 className="text-2xl font-bold text-slate-900 mb-4">Renewal Parts Categories</h2>
           <div className="text-slate-700 leading-relaxed mb-6">
             <p>
@@ -813,10 +861,14 @@ export default function RLBreakersGuide() {
               </div>
             ))}
           </div>
+            </div>
+          </div>
         </section>
 
         {/* ── Sourcing CTA ── */}
-        <section className="mb-14">
+        <section className="even:bg-slate-100 py-10 lg:py-14">
+          <div className="mx-auto max-w-7xl px-4">
+            <div className="lg:pl-[228px]">
           <div className="bg-[#dc2626] rounded-2xl p-8 lg:p-10 text-center text-white">
             <h2 className="text-2xl lg:text-3xl font-bold mb-3">Need RL Parts or Technical Support?</h2>
             <p className="text-white/90 mb-6 max-w-2xl mx-auto">
@@ -844,7 +896,18 @@ export default function RLBreakersGuide() {
               Mon&ndash;Fri 8:00 AM &ndash; 4:30 PM EST | sales@voyten.com
             </p>
           </div>
+            </div>
+          </div>
         </section>
+
+        {/* Sticky TOC rail — desktop only; placed last so it doesn't shift band parity */}
+        <div className="pointer-events-none absolute inset-0 hidden lg:block">
+          <div className="mx-auto h-full max-w-7xl px-4">
+            <div className="pointer-events-auto sticky top-24 w-[200px] pt-10">
+              <Toc />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
