@@ -165,33 +165,33 @@ export default function RLBreakersLifecyclePage() {
           </div>
         </section>
 
-        {/* ── Decision Matrix ── */}
+        {/* ── Lead Times ── */}
         <section className="even:bg-slate-100 py-10 lg:py-14">
           <div className="mx-auto max-w-7xl px-4">
             <div className="lg:pl-[228px]">
-              <h2 className="text-2xl font-bold text-slate-900 mb-4">Repair vs. Recondition vs. Retrofit vs. Replace</h2>
-              <div className="overflow-x-auto">
-                <table className="w-full border-collapse text-sm">
-                  <thead>
-                    <tr className="bg-slate-50 border-b border-slate-200">
-                      <th className="text-left p-3 font-bold text-slate-900">Path</th>
-                      <th className="text-left p-3 font-bold text-slate-900">Best when</th>
-                      <th className="text-left p-3 font-bold text-slate-900">Downtime</th>
-                      <th className="text-left p-3 font-bold text-slate-900">Relative cost</th>
-                      <th className="text-left p-3 font-bold text-slate-900">Outcome</th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-slate-700">
-                    <tr className="border-b border-slate-100"><td className="p-3 font-semibold">Recondition / Life Extension</td><td className="p-3">Aging but serviceable; want to keep the lineup</td><td className="p-3">Low</td><td className="p-3">$</td><td className="p-3">Restored, tested RL gear; years of added life</td></tr>
-                    <tr className="border-b border-slate-100"><td className="p-3 font-semibold">Upgrade / Retrofit / Retrofill</td><td className="p-3">Outdated protection or under-rated for present fault current</td><td className="p-3">Low&ndash;Med</td><td className="p-3">$$</td><td className="p-3">Modern trip units &amp; protection in existing switchgear</td></tr>
-                    <tr className="border-b border-slate-100"><td className="p-3 font-semibold">Replace (exclusive RL surplus)</td><td className="p-3">Breaker failed or beyond economical repair</td><td className="p-3">Low (in stock)</td><td className="p-3">$$</td><td className="p-3">Exact-match new-surplus/reconditioned RL breaker</td></tr>
-                    <tr className="border-b border-slate-100"><td className="p-3 font-semibold">Repair &amp; Remodification</td><td className="p-3">Specific fault or modification need</td><td className="p-3">Med</td><td className="p-3">$&ndash;$$</td><td className="p-3">Targeted fix, tested to spec</td></tr>
-                    <tr className="border-b border-slate-100"><td className="p-3 font-semibold">Rental / Swap-Out</td><td className="p-3">Need power restored now, decision pending</td><td className="p-3">Immediate</td><td className="p-3">$</td><td className="p-3">Interim tested unit keeps plant energized</td></tr>
-                    <tr><td className="p-3 font-semibold">Full switchgear replacement</td><td className="p-3">Rarely necessary for RL &mdash; usually last resort</td><td className="p-3">High</td><td className="p-3">$$$$</td><td className="p-3">New lineup; highest cost &amp; disruption</td></tr>
-                  </tbody>
-                </table>
+              <h2 className="text-2xl font-bold text-slate-900 mb-4">Lead Times &amp; Availability</h2>
+              <p className="text-slate-600 mb-6 max-w-3xl">
+                Because Voyten holds the complete Siemens RL inventory, exact-match breakers and parts ship fast &mdash;
+                an advantage most obsolete equipment can&apos;t offer.
+              </p>
+              <div className="grid sm:grid-cols-2 gap-4 max-w-3xl">
+                <div className="bg-white rounded-xl border border-[#dc2626]/30 p-6">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 bg-[#dc2626]/10 rounded-lg flex items-center justify-center flex-shrink-0"><AlertTriangle size={20} className="text-[#dc2626]" /></div>
+                    <h3 className="font-bold text-slate-900">Emergency</h3>
+                  </div>
+                  <p className="text-2xl font-extrabold text-[#dc2626] mb-1">Next-Day Air</p>
+                  <p className="text-sm text-slate-600">For breaker failures and active downtime — same-day processing with overnight shipment of an exact-match RL breaker, Static Trip III unit, or part. 24/7 at 1-800-458-4001.</p>
+                </div>
+                <div className="bg-white rounded-xl border border-slate-200 p-6">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 bg-[#1a1a1a]/5 rounded-lg flex items-center justify-center flex-shrink-0"><Truck size={20} className="text-[#1a1a1a]" /></div>
+                    <h3 className="font-bold text-slate-900">Standard</h3>
+                  </div>
+                  <p className="text-2xl font-extrabold text-slate-900 mb-1">2&ndash;7 Day Lead Time</p>
+                  <p className="text-sm text-slate-600">For planned reconditioning, retrofit/retrofill, custom rebuilds, and stocked replacements. Contact Voyten to confirm availability and a firm lead time for your configuration.</p>
+                </div>
               </div>
-              <p className="text-sm text-slate-500 mt-3">Because Voyten holds the complete Siemens RL inventory, the lower-cost paths stay open far longer than they would for most obsolete equipment.</p>
             </div>
           </div>
         </section>
@@ -250,22 +250,7 @@ export default function RLBreakersLifecyclePage() {
           </div>
         </section>
 
-        {/* ── FAQ ── */}
-        <section className="even:bg-slate-100 py-10 lg:py-14">
-          <div className="mx-auto max-w-7xl px-4">
-            <div className="lg:pl-[228px]">
-              <h2 className="text-2xl font-bold text-slate-900 mb-4">Common Questions</h2>
-              <div className="space-y-4 max-w-3xl">
-                {faqJsonLd.mainEntity.map((q) => (
-                  <div key={q.name} className="bg-slate-50 rounded-xl border border-slate-200 p-5">
-                    <h3 className="font-bold text-slate-900 mb-2">{q.name}</h3>
-                    <p className="text-sm text-slate-700 leading-relaxed">{q.acceptedAnswer.text}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* ── FAQ kept as JSON-LD only (faqJsonLd script above) for SEO; visible section removed per request ── */}
 
         {/* ── CTA ── */}
         <section className="even:bg-slate-100 py-10 lg:py-14">
