@@ -293,24 +293,26 @@ export default async function ManualPage({ params }: ManualPageProps) {
                 />
               </div>
 
-              {/* Conversion CTA - Below download */}
-              <div className="bg-[#dc2626]/10 border-t border-[#dc2626]/20 p-6">
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                  <div>
-                    <h3 className="font-bold text-slate-900">Need the replacement part?</h3>
-                    <p className="text-slate-600 text-sm">
-                      Voyten Electric stocks parts for this equipment — including EOL and discontinued models.
-                    </p>
+              {/* Conversion CTA — hidden on RL/SPB listings (the Buy/Quote module below replaces it) */}
+              {!productLine && (
+                <div className="bg-[#dc2626]/10 border-t border-[#dc2626]/20 p-6">
+                  <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div>
+                      <h3 className="font-bold text-slate-900">Need the replacement part?</h3>
+                      <p className="text-slate-600 text-sm">
+                        Voyten Electric stocks parts for this equipment — including EOL and discontinued models.
+                      </p>
+                    </div>
+                    <a
+                      href="tel:1-800-458-4001"
+                      className="flex items-center gap-2 bg-[#dc2626] hover:bg-[#b91c1c] text-white px-6 py-3 rounded-lg font-bold transition-colors flex-shrink-0"
+                    >
+                      <Phone size={18} aria-hidden="true" />
+                      1-800-458-4001
+                    </a>
                   </div>
-                  <a
-                    href="tel:1-800-458-4001"
-                    className="flex items-center gap-2 bg-[#dc2626] hover:bg-[#b91c1c] text-white px-6 py-3 rounded-lg font-bold transition-colors flex-shrink-0"
-                  >
-                    <Phone size={18} aria-hidden="true" />
-                    1-800-458-4001
-                  </a>
                 </div>
-              </div>
+              )}
             </div>
 
             {productLine && (
