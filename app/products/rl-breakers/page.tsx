@@ -462,7 +462,7 @@ export default async function RLBreakersPage() {
               <p className="text-slate-500 mt-1">Installation guides, renewal parts catalogs, wiring diagrams, and trip unit manuals</p>
             </div>
             <Link
-              href="/search?manufacturer=Siemens&subcategory=Insulated+Case+Breakers"
+              href="/search?manufacturer=Siemens&q=RL"
               className="hidden sm:flex items-center gap-1 text-sm text-[#dc2626] hover:text-[#b91c1c] font-medium"
             >
               View all <ArrowRight size={14} />
@@ -476,7 +476,7 @@ export default async function RLBreakersPage() {
           {breakers.length > 12 && (
             <div className="mt-4 text-center">
               <Link
-                href="/search?manufacturer=Siemens&subcategory=Insulated+Case+Breakers"
+                href="/search?manufacturer=Siemens&q=RL"
                 className="text-sm text-[#dc2626] hover:text-[#b91c1c] font-medium"
               >
                 View all {breakers.length} breaker manuals

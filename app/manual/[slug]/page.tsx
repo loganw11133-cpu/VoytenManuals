@@ -81,20 +81,36 @@ export default async function ManualPage({ params }: ManualPageProps) {
   if (!data) notFound();
   const { manual, related: relatedManuals } = data;
 
-  // RL product-line manuals double as transactional listings — Voyten supplies
-  // Siemens New Surplus & reconditioned RL breakers and parts (quote-based).
-  const isRL = manual.manufacturer === 'Siemens' && /\bRL[EIF]?\b/.test(manual.title || '');
-  const rlModel = (manual.title || '').replace(/\s*Manual$/i, '');
-  const rlOfferJsonLd = isRL ? {
+  // Some manual pages double as transactional listings for the product lines
+  // Voyten supplies (Siemens New Surplus RL air breakers; Eaton New Surplus SPB
+  // insulated-case breakers). Pricing is quote-based — no public list price.
+  const mTitle = manual.title || '';
+  const productLine =
+    (manual.manufacturer === 'Siemens' && /\bRL[EIF]?\b/.test(mTitle)) ? {
+      brand: 'Siemens',
+      label: 'Siemens RL breaker',
+      blurb: 'Siemens New Surplus and reconditioned RL breakers, Static Trip III units, and renewal parts',
+      store: 'https://rlbreakers.com',
+      storeLabel: 'RLBreakers.com',
+    } :
+    (/\bSPB\d*\b/.test(mTitle) || /Systems Pow-R/i.test(mTitle)) ? {
+      brand: 'Eaton',
+      label: 'Eaton SPB breaker',
+      blurb: 'Eaton New Surplus and reconditioned SPB (Systems Pow-R) breakers, trip units, and renewal parts',
+      store: 'https://spbbreakers.com',
+      storeLabel: 'SPBBreakers.com',
+    } : null;
+  const productModel = mTitle.replace(/\s*Manual$/i, '');
+  const productOfferJsonLd = productLine ? {
     "@context": "https://schema.org",
     "@type": "Product",
-    "name": rlModel,
+    "name": productModel,
     "category": manual.subcategory || manual.category,
-    "brand": { "@type": "Brand", "name": "Siemens" },
-    "manufacturer": { "@type": "Organization", "name": "Siemens" },
+    "brand": { "@type": "Brand", "name": productLine.brand },
+    "manufacturer": { "@type": "Organization", "name": productLine.brand },
     ...(manual.manual_number && { "mpn": manual.manual_number }),
     "url": `https://www.voytenmanuals.com/manual/${manual.slug}`,
-    "description": `Siemens New Surplus and reconditioned ${rlModel} from Voyten Electric — tested, in stock, quote on request. 24/7 emergency: 1-800-458-4001.`,
+    "description": `${productLine.brand} New Surplus and reconditioned ${productModel} from Voyten Electric — tested, in stock, quote on request. 24/7 emergency: 1-800-458-4001.`,
     "offers": {
       "@type": "Offer",
       "availability": "https://schema.org/InStock",
@@ -175,10 +191,10 @@ export default async function ManualPage({ params }: ManualPageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
-      {rlOfferJsonLd && (
+      {productOfferJsonLd && (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(rlOfferJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(productOfferJsonLd) }}
         />
       )}
 
@@ -297,23 +313,23 @@ export default async function ManualPage({ params }: ManualPageProps) {
               </div>
             </div>
 
-            {isRL && (
+            {productLine && (
               <div className="mt-6 bg-white rounded-xl border border-[#dc2626]/30 p-6">
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                   <div>
-                    <h3 className="font-bold text-slate-900">Buy or quote this Siemens RL breaker</h3>
+                    <h3 className="font-bold text-slate-900">Buy or quote this {productLine.label}</h3>
                     <p className="text-slate-600 text-sm">
-                      Voyten Electric supplies Siemens New Surplus and reconditioned RL breakers, Static Trip III units, and renewal parts &mdash; tested and in stock. Pricing on request.
+                      Voyten Electric supplies {productLine.blurb} &mdash; tested and in stock. Pricing on request.
                     </p>
                   </div>
                   <div className="flex flex-col sm:flex-row gap-2 flex-shrink-0">
                     <a
-                      href="https://rlbreakers.com"
+                      href={productLine.store}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center justify-center gap-2 bg-[#1a1a1a] hover:bg-[#111111] text-white px-5 py-3 rounded-lg font-bold transition-colors"
                     >
-                      Shop RLBreakers.com <ExternalLink size={16} aria-hidden="true" />
+                      Shop {productLine.storeLabel} <ExternalLink size={16} aria-hidden="true" />
                     </a>
                     <Link
                       href={`/contact?type=quote&manual=${manual.id}`}

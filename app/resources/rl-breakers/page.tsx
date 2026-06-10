@@ -589,7 +589,7 @@ export default function RLBreakersGuide() {
             </table>
           </div>
           <p className="text-sm text-slate-500 mt-3">
-            <Link href="/search?manufacturer=Siemens&subcategory=Insulated+Case+Breakers" className="text-[#dc2626] hover:text-[#b91c1c] font-medium">
+            <Link href="/search?manufacturer=Siemens&q=RL" className="text-[#dc2626] hover:text-[#b91c1c] font-medium">
               View all Siemens RL manuals &rarr;
             </Link>
           </p>
