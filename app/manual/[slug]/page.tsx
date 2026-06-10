@@ -1,6 +1,6 @@
 import { notFound, permanentRedirect } from 'next/navigation';
 import Link from 'next/link';
-import { FileText, ChevronRight, Phone, Building2, Tag, BookOpen, ArrowLeft, Layers, Download, Shield, Wrench } from 'lucide-react';
+import { FileText, ChevronRight, Phone, Building2, Tag, BookOpen, ArrowLeft, Layers, Download, Shield, Wrench, ArrowRight, ExternalLink } from 'lucide-react';
 import { getManualBySlug, getManualWithRelated, formatFileSize, toSlug } from '@/lib/manuals-db';
 import { MANUAL_REDIRECTS } from '@/lib/manual-redirects';
 import ManualCard from '@/components/ManualCard';
@@ -81,6 +81,35 @@ export default async function ManualPage({ params }: ManualPageProps) {
   if (!data) notFound();
   const { manual, related: relatedManuals } = data;
 
+  // RL product-line manuals double as transactional listings — Voyten supplies
+  // Siemens New Surplus & reconditioned RL breakers and parts (quote-based).
+  const isRL = manual.manufacturer === 'Siemens' && /\bRL[EIF]?\b/.test(manual.title || '');
+  const rlModel = (manual.title || '').replace(/\s*Manual$/i, '');
+  const rlOfferJsonLd = isRL ? {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": rlModel,
+    "category": manual.subcategory || manual.category,
+    "brand": { "@type": "Brand", "name": "Siemens" },
+    "manufacturer": { "@type": "Organization", "name": "Siemens" },
+    ...(manual.manual_number && { "mpn": manual.manual_number }),
+    "url": `https://www.voytenmanuals.com/manual/${manual.slug}`,
+    "description": `Siemens New Surplus and reconditioned ${rlModel} from Voyten Electric — tested, in stock, quote on request. 24/7 emergency: 1-800-458-4001.`,
+    "offers": {
+      "@type": "Offer",
+      "availability": "https://schema.org/InStock",
+      "itemCondition": "https://schema.org/RefurbishedCondition",
+      "url": `https://www.voytenmanuals.com/manual/${manual.slug}`,
+      "areaServed": { "@type": "Place", "name": "Worldwide" },
+      "seller": {
+        "@type": "Organization",
+        "name": "Voyten Electric & Electronics, Inc.",
+        "url": "https://www.voytenmanuals.com",
+        "telephone": "+1-800-458-4001",
+      },
+    },
+  } : null;
+
   // Rich JSON-LD: TechArticle with part numbers, manufacturer, category
   const techArticleJsonLd = {
     "@context": "https://schema.org",
@@ -146,6 +175,12 @@ export default async function ManualPage({ params }: ManualPageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
+      {rlOfferJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(rlOfferJsonLd) }}
+        />
+      )}
 
       {/* Breadcrumb */}
       <div className="bg-white border-b border-slate-200">
@@ -261,6 +296,35 @@ export default async function ManualPage({ params }: ManualPageProps) {
                 </div>
               </div>
             </div>
+
+            {isRL && (
+              <div className="mt-6 bg-white rounded-xl border border-[#dc2626]/30 p-6">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <div>
+                    <h3 className="font-bold text-slate-900">Buy or quote this Siemens RL breaker</h3>
+                    <p className="text-slate-600 text-sm">
+                      Voyten Electric supplies Siemens New Surplus and reconditioned RL breakers, Static Trip III units, and renewal parts &mdash; tested and in stock. Pricing on request.
+                    </p>
+                  </div>
+                  <div className="flex flex-col sm:flex-row gap-2 flex-shrink-0">
+                    <a
+                      href="https://rlbreakers.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-2 bg-[#1a1a1a] hover:bg-[#111111] text-white px-5 py-3 rounded-lg font-bold transition-colors"
+                    >
+                      Shop RLBreakers.com <ExternalLink size={16} aria-hidden="true" />
+                    </a>
+                    <Link
+                      href={`/contact?type=quote&manual=${manual.id}`}
+                      className="flex items-center justify-center gap-2 bg-[#dc2626] hover:bg-[#b91c1c] text-white px-5 py-3 rounded-lg font-bold transition-colors"
+                    >
+                      Request a Quote <ArrowRight size={16} aria-hidden="true" />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* EOL / Legacy Equipment Banner */}
             <div className="mt-6 bg-[#1a1a1a] rounded-xl p-6 text-white">
