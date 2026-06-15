@@ -27,7 +27,51 @@ const CONFIG = {
       'Am','Sodh','Soaxu','Soxu','Fp','Mol','Oem'],
     pre: [],
   },
-  // Westinghouse: { codes: [...352 curated...], pre: [...] }  // next pass
+  Westinghouse: {
+    // WH relay/equipment/breaker/fuse type codes (350), curated from every
+    // title-cased Type/Frame token minus real-word false positives (Transformers,
+    // Distribution, Current, Voltage, Non, All, Unit, Drawout, Adjustable, ...).
+    // `anchored` = only uppercase in a CODE context (after Type/Types, before
+    // Frame, or before a model number) — so 2-letter codes that are also English
+    // words (It→IT, Re→RE) can never corrupt prose.
+    anchored: true,
+    pre: [],
+    codes: [
+      'Tcf','Cls','Ba','Jy','Ca','Cle','Hkb','Ta','Dba','Co','Tc','Tt',
+      'Rba','Sk','Su','Mm','Vcp','Sv','Cj','Hz','Kd','Rc','Sg','Td',
+      'Wl','Crn','Skbu','Tso','Asl','Sl','Dhp','Os','Kr','Cn','Dt','Rb',
+      'Rr','Stu','Lcb','Dbu','Urs','Ur','Jz','Dr','Drc','Hi','Hrz','Ks',
+      'Rs','Sgr','Tr','Mmd','Bal','Cs','Apt','Clt','Wsb','Mg','Cvr','Pr',
+      'Gca','Tro','Ar','Bl','Cod','Cve','Cwp','Ha','Hcb','Fd','Hl','Hzm',
+      'Ka','Kc','Tm','Rf','Sdg','Si','Skdu','Dn','Gp','Nf','Act','Cltb',
+      'Rsl','Lbf','Ra','Pba','Ab','Ft','Da','Svs','Cl','Kf','Kp','Idn',
+      'Cbu','Cf','Cm','Cov','Cvq','Cw','Cwk','Hqs','Hr','Irv','Kh','Klf',
+      'Ko','Mn','Pm','Poq','Sbf','Sco','Siu','Skd','Tf','Tg','Th','Ti',
+      'Tsp','Sx','Md','Gcd','Lf','Gc','Gs','Lbu','Cas','Gw','Sf','Cltx',
+      'Cx','Rdb','Saf','Gfr','Ir','Im','Px','Pa','Ak','Esv','Dv','Ivs',
+      'Crw','Ivl','Vlb','Dbl','Rmx','Url','Amd','Awp','Smx','Dp','Svc','Svr',
+      'Sc','Nl','Rk','Hin','Amb','Am','Ars','Av','Az','Bn','Cam','Cgr',
+      'Ch','Cko','Coj','Com','Crq','Cv','Cvd','Cvm','Cvn','Cwo','Dgf','Ffa',
+      'Hcrd','Hcz','Hd','Hlf','Hrd','Hrk','Hvs','Hzhz','Irq','Jd','Jl','Jm',
+      'Kab','Kdtg','Kdxg','Ki','Kn','Kqs','Krd','Krq','Krt','Krv','Kst','Lc',
+      'Mp','Mpr','Ms','Nd','Pg','Ps','Psa','Pvr','Rcd','Re','Rkm','Rx',
+      'Sar','Scc','Sd','Sdb','Sdbu','Sdf','Sdgu','Sgru','Shu','Ska','Sksu','Skvu',
+      'Slb','Sr','Src','Srcu','Srgu','Sru','Tj','Tk','Trc','Tsi','Tw','Sjs',
+      'Coq','Ith','Sjo','Nr','Nrd','Gpd','Dsl','Ldx','Lox','Ncx','Avr','Hle',
+      'Lpt','Mf','Msv','Ptom','Pvt','Rob','Urt','Sw','Ut','Wfs','Ow','Lco',
+      'Srd','Vrt','Trb','Arm','Cb','Mtp','Oa','Rh','Ro','Tct','It','Wli',
+      'Sfp','Smp','Gr','Caf','Utr','Dfs','Mvb','Wsl','Wss','Dvp','Prc','Urf',
+      'Ot','El','Dx','Rj','Cwc','Sci','Hnc','Cpl','Hmx','Dsf','Wlm','Ss',
+      'Es','Lb','Ai','Bj','Oj','Cgrs','Clss','Clv','Cso','Csr','Dk','Dkn',
+      'Dwe','Fop','Fs','Grs','Hsx','Hwp','Hxs','Ict','Icx','Imx','Iw','Kca',
+      'Kor','Krc','Kx','Lbor','Lg','Lr','Mfb','Mtr','Nrl','Rd','Rm','Skb',
+      'Skl','Sta','Tp','Chm','Cp','Pca','Rfw','Ezc','Aibia','Ci','Gfm','Sbr',
+      'Xt','Vp',
+      // sibling codes that only ever appear in "<code> and <code>" lists
+      'Rsn','Hrp','Rv','Hrc','Wvb','Tmr','St','Sti','Coh','Coa','Clto','Cxn',
+      'Esm','Rbo','Prcb','Hcls','Efd','Pt','Cip',
+    ],
+  },
 };
 
 const mfr = process.argv[2];
@@ -36,13 +80,34 @@ if (!mfr || !CONFIG[mfr]) {
   console.error(`Usage: node scripts/fix-mfr-title-casing.mjs <${Object.keys(CONFIG).join('|')}> [--live]`);
   process.exit(1);
 }
-const { codes, pre } = CONFIG[mfr];
+const { codes, pre, anchored } = CONFIG[mfr];
 const db = createClient({ url: process.env.TURSO_DATABASE_URL, authToken: process.env.TURSO_AUTH_TOKEN });
+
+// Precompile once. In anchored mode a code is uppercased ONLY in a code context:
+// after Type/Types, before Frame, before a model number, or directly after an
+// already-known code (the list case "Cls 1 and Cls 2 Cle ..."). The last rule
+// uses a lookbehind over the KNOWN code alternation, so it never fires on prose.
+const UP = codes.map(c => c.toUpperCase());
+const KNOWN = `(?:${UP.join('|')})`;
+const RULES = codes.map((c, i) => {
+  const U = UP[i];
+  if (!anchored) return [[new RegExp(`\\b${c}\\b`, 'g'), U]];
+  return [
+    [new RegExp(`\\b(Types?)\\s+${c}\\b`, 'g'), `$1 ${U}`],
+    [new RegExp(`\\b${c}(\\s+Frame\\b)`, 'g'), `${U}$1`],
+    [new RegExp(`\\b${c}(\\s+\\d)`, 'g'), `${U}$1`],
+    [new RegExp(`(?<=\\b${KNOWN}\\s(?:\\d+\\s)?(?:(?:and|or)\\s)?)${c}\\b`, 'g'), U],
+  ];
+});
 
 function fix(title) {
   let t = String(title);
   for (const [re, rep] of pre) t = t.replace(re, rep);
-  for (const c of codes) t = t.replace(new RegExp(`\\b${c}\\b`, 'g'), c.toUpperCase());
+  let prev;
+  do {                                  // fixpoint so list-runs propagate left→right
+    prev = t;
+    for (const rules of RULES) for (const [re, rep] of rules) t = t.replace(re, rep);
+  } while (anchored && t !== prev);
   return t;
 }
 
