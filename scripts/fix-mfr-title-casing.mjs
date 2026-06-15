@@ -72,6 +72,58 @@ const CONFIG = {
       'Esm','Rbo','Prcb','Hcls','Efd','Pt','Cip',
     ],
   },
+  // ── Batched remaining manufacturers (2026-06-15). All anchored (safe default).
+  //    Curated from _rest-inspect token inventory minus real words + OCR garble.
+  'General Electric': {
+    anchored: true, pre: [],
+    // GE relay/switchgear codes (the 2026-06-09 GE pass only did breaker frames).
+    // Dropped OCR garble (Hmalll/Tmclla/Akakr) + words (Distance/Model/Overcurrent/Rackout).
+    codes: ['Am','Iac','Akr','Pjc','Cey','Hga','Iav','Hfa','Jas','Kso','Fk','Ak','Ab','Akd',
+      'Al','Ag','Et','Ms','Ej','Sb','Hea','Sam','Gcy','Naa','Hka','Icr','Pjg','Ip','Tg','Ch',
+      'Sbm','Amf','Gmv','Ml','Ek','Fkd','Hpc','Szl'],
+  },
+  ABB: {
+    anchored: true, pre: [],
+    codes: ['Ft','Hk','Kf','Klf','Rel','Lk','Lkd','Mps','Vhk','Cod','Ar','Ca','Co','Com','Cp',
+      'Crn','Cw','Dgf','Gpu','Hcb','Hi','Kc','Krd','Mg','Mrc','Rc','Sbf','Soq','Srw','Ssc','Ssv',
+      'Svsv','Svv','Grd','Hpl','Blg','Esv','Grc','Jm','Lcb','Vkd','Sg','Vhkx'],
+  },
+  'Square D': {
+    anchored: true, pre: [],
+    codes: ['Vad','Dse','Vr','Vav','Fvb','Nlc','Te','Tf','Tfb','Gp','Fvr','Gtgp','Av','Zha'],
+  },
+  Siemens: {
+    anchored: true, pre: [],
+    codes: ['Gmi','Sdv','Qr','Fsv','Fm','Cle','Clf','Cn','Cp','Sr','Cpv','Hvr','Amr','Sp','Vv'],
+  },
+  'Allis-Chalmers': {
+    anchored: true, pre: [],
+    codes: ['Mb','Ph','Tm','Hd','Am','Ic','Tj','Mct'],
+  },
+  'Other Manufacturers': {
+    anchored: true, pre: [],
+    codes: ['Sm','Gr','Lk','Smd','Smu','Vcp'],
+  },
+  'Federal Pacific': {
+    anchored: true, pre: [],
+    codes: ['Dst','Hl','Sd','Is'],
+  },
+  'Brown Boveri': {
+    anchored: true, pre: [],
+    codes: ['Lss','Hk','Ksp','Lk','Lkd'],
+  },
+  'Siemens-Allis': {
+    anchored: true, pre: [],
+    codes: ['Pts','Me','Ome','Tls'],
+  },
+  'Basler Electric': {
+    anchored: true, pre: [],
+    codes: ['Ess','Sse'],
+  },
+  'Cooper Power Systems': {
+    anchored: true, pre: [],
+    codes: ['Met','Vcs'],
+  },
 };
 
 const mfr = process.argv[2];
