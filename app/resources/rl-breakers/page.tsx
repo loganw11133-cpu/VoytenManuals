@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import { Phone, ChevronRight, BookOpen, Zap, Shield, ArrowRight, Info } from 'lucide-react';
+import { Phone, ChevronRight, BookOpen, Zap, Shield, ArrowRight, Info, Hash, Tag, Wrench, AlertTriangle } from 'lucide-react';
 import Toc from '../_components/Toc';
 
 export const revalidate = 3600;
@@ -264,6 +264,51 @@ export default function RLBreakersGuide() {
           </div>
         </section>
 
+        {/* ── Renewal Parts Categories ── */}
+        <section className="even:bg-slate-100 py-10 lg:py-14">
+          <div className="mx-auto max-w-7xl px-4">
+            <div className="lg:pl-[228px]">
+          <h2 className="text-2xl font-bold text-slate-900 mb-4">Renewal Parts Categories</h2>
+          <div className="text-slate-700 leading-relaxed mb-6">
+            <p>
+              Voyten Electric stocks the following RL renewal part categories for immediate shipment:
+            </p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {[
+              'Anti-Pump Y Relay',
+              'Auxiliary Switch',
+              'Bell Alarm Switch',
+              'Blown Fuse Trip Assembly',
+              'Breaker Assemblies',
+              'Close Solenoid',
+              'Communications Options',
+              'Contacts (800–2000A)',
+              'Contacts (3200–5000A)',
+              'Integrally Fused Breakers',
+              'Key Interlock & Fuse Carriage',
+              'Motor Operator',
+              'Open Fuse Indicator',
+              'Open Fuse Sensor',
+              'Operator Mechanism',
+              'Secondary Disconnect',
+              'Shunt Trip',
+              'Static Trip III Unit',
+              'Tapped Sensor',
+              'Trigger Fuse Assembly',
+              'Tripping Transformer',
+              'Undervoltage Trip Device',
+            ].map(part => (
+              <div key={part} className="flex items-center gap-3 bg-slate-50 rounded-lg border border-slate-200 p-3">
+                <Shield size={14} className="text-[#dc2626] flex-shrink-0" />
+                <p className="text-sm font-medium text-slate-900">{part}</p>
+              </div>
+            ))}
+          </div>
+            </div>
+          </div>
+        </section>
+
         {/* ── Interrupting & Short-Time Ratings ── */}
         <section className="even:bg-slate-100 py-10 lg:py-14">
           <div className="mx-auto max-w-7xl px-4">
@@ -318,110 +363,39 @@ export default function RLBreakersGuide() {
           </div>
         </section>
 
-        {/* ── Catalog Number Structure ── */}
+        {/* ── Identify Your RL Breaker (decode CTA — decoders are internal-only) ── */}
         <section className="even:bg-slate-100 py-10 lg:py-14">
           <div className="mx-auto max-w-7xl px-4">
             <div className="lg:pl-[228px]">
-          <h2 className="text-2xl font-bold text-slate-900 mb-4">Catalog Number Structure</h2>
-          <div className="text-slate-700 leading-relaxed space-y-4 mb-6">
+          <h2 className="text-2xl font-bold text-slate-900 mb-4">Identify Your RL Breaker</h2>
+          <div className="text-slate-700 leading-relaxed space-y-4 mb-6 max-w-3xl">
             <p>
-              Every RL breaker is identified by a structured catalog number beginning with the <strong>RL</strong> prefix.
-              Each position encodes a specific configuration parameter:
+              Every RL breaker is identified by a structured catalog (edge) number that encodes its exact
+              frame size, interrupting type, operation, tripping sensor, current-limiting fuses, control
+              voltage, system wiring, Static Trip III code, and accessories. Reading it correctly is what
+              guarantees an <strong>exact-match replacement</strong> &mdash; so rather than risk a mis-decode
+              on an emergency part, send us the number and our team will decode it for you, fast.
             </p>
           </div>
 
-          <div className="bg-slate-50 rounded-2xl border border-slate-200 p-6 lg:p-8 mb-6">
-            <h3 className="text-lg font-bold text-slate-900 mb-4">
-              RL<span className="text-[#dc2626]">[1]</span><span className="text-blue-600">[2]</span><span className="text-emerald-600">[3]</span><span className="text-amber-600">[4]</span><span className="text-purple-600">[5-6]</span><span className="text-pink-600">[7]</span><span className="text-cyan-600">[8]</span><span className="text-orange-600">[9]</span><span className="text-indigo-600">[10-11]</span><span className="text-rose-600">[12]</span>
-            </h3>
-            <div className="grid sm:grid-cols-2 gap-3 text-sm">
-              <div className="flex items-start gap-3">
-                <span className="font-mono font-bold text-[#dc2626] w-10 flex-shrink-0">Pos 1</span>
-                <div>
-                  <p className="font-semibold text-slate-900">Connection</p>
-                  <p className="text-slate-500">A = Drawout, B = Stationary</p>
+          <div className="grid sm:grid-cols-2 gap-4">
+            {[
+              { icon: Hash, t: 'Decode a catalog number', p: 'Send us the full RL catalog/edge number and our team decodes the exact frame, trip unit, sensor, fuse, and accessory configuration.', cta: 'Contact for Decode', href: '/contact?type=quote' },
+              { icon: Tag, t: 'Read the nameplate', p: 'Not sure which RL variant you have? Send a photo of the breaker nameplate and we’ll identify it for an exact-match replacement.', cta: 'Contact Us', href: '/contact?type=quote' },
+              { icon: Wrench, t: 'Find the right renewal parts', p: 'Match the exact frame, Static Trip III, tripping sensor, and accessories to in-stock Siemens New Surplus inventory.', cta: 'Shop RLBreakers.com', href: 'https://rlbreakers.com' },
+              { icon: AlertTriangle, t: 'Emergency identification', p: 'Breaker down right now? Our team identifies and sources the correct RL part 24/7 to get you back online fast.', cta: 'Call 1-800-458-4001', href: 'tel:1-800-458-4001' },
+            ].map((c) => (
+              <a key={c.t} href={c.href} target={c.href.startsWith('http') ? '_blank' : undefined} rel={c.href.startsWith('http') ? 'noopener noreferrer' : undefined} className="group block bg-white rounded-xl border border-slate-200 p-5 hover:border-[#dc2626]/40 hover:shadow-md transition-all">
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 bg-[#dc2626]/10 rounded-lg flex items-center justify-center flex-shrink-0"><c.icon size={20} className="text-[#dc2626]" /></div>
+                  <div>
+                    <h3 className="font-bold text-slate-900 mb-1">{c.t}</h3>
+                    <p className="text-sm text-slate-600 mb-2">{c.p}</p>
+                    <span className="text-sm font-semibold text-[#dc2626] inline-flex items-center gap-1">{c.cta} <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" /></span>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <span className="font-mono font-bold text-blue-600 w-10 flex-shrink-0">Pos 2</span>
-                <div>
-                  <p className="font-semibold text-slate-900">Interrupting Type</p>
-                  <p className="text-slate-500">S = Standard, E = Economical, I = Integrally Fused, F = Fully Rated</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <span className="font-mono font-bold text-emerald-600 w-10 flex-shrink-0">Pos 3</span>
-                <div>
-                  <p className="font-semibold text-slate-900">Frame Size</p>
-                  <p className="text-slate-500">0 = 800A, 1 = 1600A, 2 = 2000A, 3 = 3200A, 4 = 4000A, 5 = 5000A</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <span className="font-mono font-bold text-amber-600 w-10 flex-shrink-0">Pos 4</span>
-                <div>
-                  <p className="font-semibold text-slate-900">Operation</p>
-                  <p className="text-slate-500">M = Manual, E = Electric/Manual (60Hz)</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <span className="font-mono font-bold text-purple-600 w-10 flex-shrink-0">5&ndash;6</span>
-                <div>
-                  <p className="font-semibold text-slate-900">Tripping Sensor</p>
-                  <p className="text-slate-500">2-char code (e.g., AG = 800/.5, AJ = 2000/.5)</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <span className="font-mono font-bold text-pink-600 w-10 flex-shrink-0">Pos 7</span>
-                <div>
-                  <p className="font-semibold text-slate-900">Current Limiting Fuses</p>
-                  <p className="text-slate-500">A&ndash;N = fuse rating, S = special, X = unfused</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <span className="font-mono font-bold text-cyan-600 w-10 flex-shrink-0">Pos 8</span>
-                <div>
-                  <p className="font-semibold text-slate-900">Control Voltage</p>
-                  <p className="text-slate-500">A&ndash;Z = voltage configuration (26 codes)</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <span className="font-mono font-bold text-orange-600 w-10 flex-shrink-0">Pos 9</span>
-                <div>
-                  <p className="font-semibold text-slate-900">System Wiring</p>
-                  <p className="text-slate-500">A&ndash;J = 3-wire/4-wire configuration</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <span className="font-mono font-bold text-indigo-600 w-10 flex-shrink-0">10&ndash;11</span>
-                <div>
-                  <p className="font-semibold text-slate-900">Trip Unit Code</p>
-                  <p className="text-slate-500">04&ndash;56 = Static Trip III, 58/59 = AC Pro II</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <span className="font-mono font-bold text-rose-600 w-10 flex-shrink-0">Pos 12</span>
-                <div>
-                  <p className="font-semibold text-slate-900">Additional Auxiliary Contacts</p>
-                  <p className="text-slate-500">A&ndash;E = contact config, X = standard only</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Suffix accessories */}
-          <div className="bg-slate-50 rounded-xl border border-slate-200 p-5">
-            <h4 className="font-bold text-slate-900 mb-3">Dash-Suffix Accessories</h4>
-            <p className="text-sm text-slate-600 mb-3">
-              Codes after a dash (&ldquo;-&rdquo;) indicate factory-installed accessories:
-            </p>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-2 text-sm">
-              <div><span className="font-mono font-semibold text-slate-700">B1–D8</span> <span className="text-slate-500">Bell Alarm contacts (17 variants)</span></div>
-              <div><span className="font-mono font-semibold text-slate-700">T1–T6</span> <span className="text-slate-500">Dual Shunt Trip (unfused only)</span></div>
-              <div><span className="font-mono font-semibold text-slate-700">U2–U9</span> <span className="text-slate-500">Undervoltage Trip Device</span></div>
-              <div><span className="font-mono font-semibold text-slate-700">M1–M3</span> <span className="text-slate-500">Electro-Mechanical Interlock</span></div>
-              <div><span className="font-mono font-semibold text-slate-700">W1–W9</span> <span className="text-slate-500">E.O. Breaker Wiring Circuits</span></div>
-              <div><span className="font-mono font-semibold text-slate-700">F1–F4</span> <span className="text-slate-500">Special Fuses (Shawmut, etc.)</span></div>
-            </div>
+              </a>
+            ))}
           </div>
             </div>
           </div>
@@ -593,51 +567,6 @@ export default function RLBreakersGuide() {
               View all Siemens RL manuals &rarr;
             </Link>
           </p>
-            </div>
-          </div>
-        </section>
-
-        {/* ── Renewal Parts Categories ── */}
-        <section className="even:bg-slate-100 py-10 lg:py-14">
-          <div className="mx-auto max-w-7xl px-4">
-            <div className="lg:pl-[228px]">
-          <h2 className="text-2xl font-bold text-slate-900 mb-4">Renewal Parts Categories</h2>
-          <div className="text-slate-700 leading-relaxed mb-6">
-            <p>
-              Voyten Electric stocks the following RL renewal part categories for immediate shipment:
-            </p>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {[
-              'Anti-Pump Y Relay',
-              'Auxiliary Switch',
-              'Bell Alarm Switch',
-              'Blown Fuse Trip Assembly',
-              'Breaker Assemblies',
-              'Close Solenoid',
-              'Communications Options',
-              'Contacts (800–2000A)',
-              'Contacts (3200–5000A)',
-              'Integrally Fused Breakers',
-              'Key Interlock & Fuse Carriage',
-              'Motor Operator',
-              'Open Fuse Indicator',
-              'Open Fuse Sensor',
-              'Operator Mechanism',
-              'Secondary Disconnect',
-              'Shunt Trip',
-              'Static Trip III Unit',
-              'Tapped Sensor',
-              'Trigger Fuse Assembly',
-              'Tripping Transformer',
-              'Undervoltage Trip Device',
-            ].map(part => (
-              <div key={part} className="flex items-center gap-3 bg-slate-50 rounded-lg border border-slate-200 p-3">
-                <Shield size={14} className="text-[#dc2626] flex-shrink-0" />
-                <p className="text-sm font-medium text-slate-900">{part}</p>
-              </div>
-            ))}
-          </div>
             </div>
           </div>
         </section>
