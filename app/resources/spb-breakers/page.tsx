@@ -10,7 +10,7 @@ export const revalidate = 3600;
 export const metadata: Metadata = {
   title: 'Eaton SPB Systems Pow-R Breaker Guide — Complete Technical Reference | Voyten',
   description:
-    'Comprehensive technical guide for Eaton/Cutler-Hammer/Westinghouse Type SPB (Systems Pow-R) circuit breakers. Covers all models (SPB-50, SPB-65, SPB-100, SPB-150), frame sizes 800–5000A, trip units (Digitrip RMS, Pow-R Trip 7), upgrade paths, and renewal parts. From Voyten Electric — your Eaton New Surplus authorized SPB source.',
+    'Comprehensive technical guide for Eaton/Cutler-Hammer/Westinghouse Type SPB (Systems Pow-R) circuit breakers. Covers all models (SPB-50, SPB-65, SPB-100, SPB-150), frame sizes 800–5000A, trip units (Digitrip RMS, Pow-R Trip 7), upgrade paths, and renewal parts. From Voyten Electric — your New Surplus authorized SPB source.',
   keywords: [
     'SPB breaker guide', 'Systems Pow-R Breaker reference', 'SPB technical guide',
     'SPB-50 vs SPB-100', 'SPB upgrade path', 'SPB breaker specifications',
@@ -499,7 +499,7 @@ export default function SPBBreakersGuide() {
           <div className="bg-[#dc2626] rounded-2xl p-8 lg:p-10 text-center text-white">
             <h2 className="text-2xl lg:text-3xl font-bold mb-3">Need SPB Parts or Technical Support?</h2>
             <p className="text-white/90 mb-6 max-w-2xl mx-auto">
-              Voyten Electric is the Eaton New Surplus authorized aftermarket source for the complete SPB product line.
+              Voyten Electric is the New Surplus authorized aftermarket source for the complete SPB product line.
               New and reconditioned breakers, trip units, rating plugs, and every renewal part — tested, in stock,
               and backed by 1 year warranty.
             </p>

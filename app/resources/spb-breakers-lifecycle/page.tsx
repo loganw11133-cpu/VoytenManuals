@@ -19,7 +19,7 @@ const SERVICES = {
 export const metadata: Metadata = {
   title: 'Eaton SPB Breaker: Repair, Recondition, Upgrade, or Replace? — Decision Guide | Voyten',
   description:
-    'Decision guide for aging or failed Eaton/Cutler-Hammer/Westinghouse Type SPB switchgear: when to recondition, upgrade (incl. the drop-in SPB-50/65→SPB-100), replace, repair, rent, or swap out. Voyten is the Eaton New Surplus factory-authorized SPB source and a PEARL founding member — 24/7 emergency support at 1-800-458-4001.',
+    'Decision guide for aging or failed Eaton/Cutler-Hammer/Westinghouse Type SPB switchgear: when to recondition, upgrade (incl. the drop-in SPB-50/65→SPB-100), replace, repair, rent, or swap out. Voyten is the New Surplus authorized SPB source and a PEARL founding member — 24/7 emergency support at 1-800-458-4001.',
   keywords: [
     'Eaton SPB breaker replacement', 'SPB switchgear life extension', 'SPB-100 drop-in upgrade',
     'SPB-50 to SPB-100', 'recondition vs replace SPB', 'aging insulated case breaker options',
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Eaton SPB Breaker — Repair, Recondition, Upgrade, or Replace?',
     description:
-      'A decision guide for aging or failed Eaton SPB switchgear, mapped to Voyten Electric lifecycle services — including the drop-in SPB-100 upgrade. Eaton New Surplus authorized SPB source; 24/7 emergency support.',
+      'A decision guide for aging or failed Eaton SPB switchgear, mapped to Voyten Electric lifecycle services — including the drop-in SPB-100 upgrade. New Surplus authorized SPB source; 24/7 emergency support.',
     url: 'https://www.voytenmanuals.com/resources/spb-breakers-lifecycle',
     type: 'article',
   },
@@ -82,8 +82,8 @@ export default function SPBBreakersLifecyclePage() {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     mainEntity: [
-      { '@type': 'Question', name: 'Should I repair, recondition, upgrade, or replace my Eaton SPB breaker?', acceptedAnswer: { '@type': 'Answer', text: 'It depends on condition and goal. If the breaker is aging but serviceable, reconditioning / apparatus life extension keeps your SPB switchgear in service. If an SPB-50 or SPB-65 is now under-rated for the site’s available fault current, the drop-in SPB-100 upgrade adds 100 kA with no structural changes. If a breaker has failed, Voyten replaces it from stock — new or Eaton-reconditioned with a 1-year warranty. Voyten Electric, the Eaton New Surplus factory-authorized SPB source and a PEARL founding member, performs all of these. Call 1-800-458-4001.' } },
-      { '@type': 'Question', name: 'My Eaton SPB breaker failed in a critical facility — what now?', acceptedAnswer: { '@type': 'Answer', text: 'Call Voyten Electric 24/7 at 1-800-458-4001. As the Eaton New Surplus factory-authorized SPB source, Voyten can pull an exact-match new or Eaton-reconditioned SPB breaker, Digitrip RMS trip unit, rating plug, or part from stock, test it, and ship next-day air — and can provide a rental or swap-out to restore power while a permanent fix is arranged.' } },
+      { '@type': 'Question', name: 'Should I repair, recondition, upgrade, or replace my Eaton SPB breaker?', acceptedAnswer: { '@type': 'Answer', text: 'It depends on condition and goal. If the breaker is aging but serviceable, reconditioning / apparatus life extension keeps your SPB switchgear in service. If an SPB-50 or SPB-65 is now under-rated for the site’s available fault current, the drop-in SPB-100 upgrade adds 100 kA with no structural changes. If a breaker has failed, Voyten replaces it from stock — new or reconditioned with a 1-year warranty. Voyten Electric, the New Surplus authorized SPB source and a PEARL founding member, performs all of these. Call 1-800-458-4001.' } },
+      { '@type': 'Question', name: 'My Eaton SPB breaker failed in a critical facility — what now?', acceptedAnswer: { '@type': 'Answer', text: 'Call Voyten Electric 24/7 at 1-800-458-4001. As the New Surplus authorized SPB source, Voyten can pull an exact-match new or reconditioned SPB breaker, Digitrip RMS trip unit, rating plug, or part from stock, test it, and ship next-day air — and can provide a rental or swap-out to restore power while a permanent fix is arranged.' } },
       { '@type': 'Question', name: 'Can I upgrade an under-rated SPB-50 or SPB-65 without replacing the switchgear?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. The SPB-50, SPB-65, and SPB-100 share identical external dimensions, so an SPB-100 drops directly into an existing SPB-50 or SPB-65 cubicle with no structural, bus, or control-wiring changes — a clean 100 kA upgrade when the available fault current at a site has grown past the original rating. Voyten supplies the drop-in SPB-100 and all renewal parts.' } },
       { '@type': 'Question', name: 'Can Voyten keep my plant running while I decide?', acceptedAnswer: { '@type': 'Answer', text: 'Yes — Voyten offers rental services and swap-out programs so a tested SPB breaker keeps the plant energized while reconditioning, an upgrade, or sourcing is completed.' } },
     ],
@@ -119,7 +119,7 @@ export default function SPBBreakersLifecyclePage() {
           </h1>
           <p className="text-slate-300 text-lg leading-relaxed max-w-3xl">
             The Eaton/Cutler-Hammer/Westinghouse Type SPB is one of the most widely deployed insulated-case breakers in
-            North American switchgear &mdash; and it stays serviceable. As the Eaton New Surplus factory-authorized SPB source and
+            North American switchgear &mdash; and it stays serviceable. As the New Surplus authorized SPB source and
             a founding member of PEARL, Voyten Electric can recondition, upgrade (including the drop-in SPB-100), or replace
             SPB equipment, with 24/7 emergency support for failures in critical facilities.
           </p>
@@ -145,7 +145,7 @@ export default function SPBBreakersLifecyclePage() {
               <p className="text-slate-600 mb-6 max-w-3xl">Pick the scenario that fits your SPB equipment. Each routes to the Voyten service path that resolves it.</p>
               <div className="grid sm:grid-cols-2 gap-4">
                 {[
-                  { icon: AlertTriangle, t: 'A breaker has failed or won’t reset', p: 'Emergency: get an exact-match new or Eaton-reconditioned SPB breaker (1-yr warranty) plus diagnostic testing. Rental/swap-out available to restore power immediately.', cta: 'Call 24/7: 1-800-458-4001', href: 'tel:1-800-458-4001' },
+                  { icon: AlertTriangle, t: 'A breaker has failed or won’t reset', p: 'Emergency: get an exact-match new or reconditioned SPB breaker (1-yr warranty) plus diagnostic testing. Rental/swap-out available to restore power immediately.', cta: 'Call 24/7: 1-800-458-4001', href: 'tel:1-800-458-4001' },
                   { icon: RefreshCw, t: 'SPB-50/65 now under-rated for fault current', p: 'Drop in an SPB-100 — identical external dimensions, zero structural/bus/wiring changes. A clean 100 kA upgrade without replacing the switchgear.', cta: 'Upgrades / Retrofit / Retrofill', href: SERVICES.retrofit },
                   { icon: Recycle, t: 'Aging but still running — reliability worry', p: 'Recondition the breaker and refresh Digitrip RMS trip units, rating plugs, and renewal parts. Apparatus life extension keeps your switchgear in service for years.', cta: 'Apparatus Life Extension', href: SERVICES.lifeExt },
                   { icon: Wrench, t: 'Damaged or needs a custom rebuild', p: 'Repair & remodification or a full custom rebuild/remanufacture to OEM (or better) spec, tested before shipment.', cta: 'Custom Rebuilds & Repairs', href: SERVICES.rebuild },
@@ -172,8 +172,8 @@ export default function SPBBreakersLifecyclePage() {
             <div className="lg:pl-[228px]">
               <h2 className="text-2xl font-bold text-slate-900 mb-4">Lead Times &amp; Availability</h2>
               <p className="text-slate-600 mb-6 max-w-3xl">
-                As the Eaton New Surplus factory-authorized SPB source, Voyten stocks complete breakers and parts for immediate
-                shipment &mdash; new or Eaton-reconditioned, backed by a 1-year warranty.
+                As the New Surplus authorized SPB source, Voyten stocks complete breakers and parts for immediate
+                shipment &mdash; new or reconditioned, backed by a 1-year warranty.
               </p>
               <div className="grid sm:grid-cols-2 gap-4 max-w-3xl">
                 <div className="bg-white rounded-xl border border-[#dc2626]/30 p-6">
@@ -230,7 +230,7 @@ export default function SPBBreakersLifecyclePage() {
               <div className="text-slate-700 leading-relaxed space-y-4 max-w-3xl">
                 <p>In current manufacturing industries, you cannot simply accept that an electrical product is out of production and decide you need to change it all. Full switchgear replacement is among the costliest and most disruptive options &mdash; and rarely necessary for SPB, which has been manufactured continuously since 1976 and remains fully supportable.</p>
                 <p>Voyten Electric adds today&apos;s technology to yesterday&apos;s electrical equipment, giving you the most for your investment. Aging SPB gear can be reconditioned, fitted with modern Digitrip RMS trip units, and &mdash; where fault current has outgrown the rating &mdash; upgraded to 100 kA with a drop-in SPB-100. <strong>Remanufactured equipment is always worth the investment.</strong></p>
-                <p>As the Eaton New Surplus factory-authorized aftermarket source for the Eaton/Cutler-Hammer/Westinghouse SPB line, Voyten keeps complete breakers, Digitrip RMS units, rating plugs, and renewal parts available &mdash; so the recondition, upgrade, and replace options stay open for decades-old installations.</p>
+                <p>As the New Surplus authorized aftermarket source for the Eaton/Cutler-Hammer/Westinghouse SPB line, Voyten keeps complete breakers, Digitrip RMS units, rating plugs, and renewal parts available &mdash; so the recondition, upgrade, and replace options stay open for decades-old installations.</p>
               </div>
             </div>
           </div>

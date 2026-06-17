@@ -82,21 +82,21 @@ export default async function ManualPage({ params }: ManualPageProps) {
   const { manual, related: relatedManuals } = data;
 
   // Some manual pages double as transactional listings for the product lines
-  // Voyten supplies (Siemens New Surplus RL air breakers; Eaton New Surplus SPB
+  // Voyten supplies (New Surplus RL air breakers; New Surplus SPB
   // insulated-case breakers). Pricing is quote-based — no public list price.
   const mTitle = manual.title || '';
   const productLine =
     (manual.manufacturer === 'Siemens' && /\bRL[EIF]?\b/.test(mTitle)) ? {
       brand: 'Siemens',
       label: 'Siemens RL breaker',
-      blurb: 'Siemens New Surplus and reconditioned RL breakers, Static Trip III units, and renewal parts',
+      blurb: 'New Surplus and reconditioned RL breakers, Static Trip III units, and renewal parts',
       store: 'https://rlbreakers.com',
       storeLabel: 'RLBreakers.com',
     } :
     (/\bSPB\d*\b/.test(mTitle) || /Systems Pow-R/i.test(mTitle)) ? {
       brand: 'Eaton',
       label: 'Eaton SPB breaker',
-      blurb: 'Eaton New Surplus and reconditioned SPB (Systems Pow-R) breakers, trip units, and renewal parts',
+      blurb: 'New Surplus and reconditioned SPB (Systems Pow-R) breakers, trip units, and renewal parts',
       store: 'https://spbbreakers.com',
       storeLabel: 'SPBBreakers.com',
     } : null;
@@ -110,7 +110,7 @@ export default async function ManualPage({ params }: ManualPageProps) {
     "manufacturer": { "@type": "Organization", "name": productLine.brand },
     ...(manual.manual_number && { "mpn": manual.manual_number }),
     "url": `https://www.voytenmanuals.com/manual/${manual.slug}`,
-    "description": `${productLine.brand} New Surplus and reconditioned ${productModel} from Voyten Electric — tested, in stock, quote on request. 24/7 emergency: 1-800-458-4001.`,
+    "description": `New Surplus and reconditioned ${productModel} from Voyten Electric — tested, in stock, quote on request. 24/7 emergency: 1-800-458-4001.`,
     "offers": {
       "@type": "Offer",
       "availability": "https://schema.org/InStock",

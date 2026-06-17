@@ -18,9 +18,9 @@ const SPB_STORE = 'https://www.spbbreakers.com/category-s';
 // ── SEO Metadata ──
 
 export const metadata: Metadata = {
-  title: 'Eaton Type SPB Breakers & Parts — Eaton New Surplus Inventory | Voyten Manuals',
+  title: 'Eaton Type SPB Breakers & Parts — New Surplus Inventory | Voyten Manuals',
   description:
-    'Voyten Electric is your Eaton New Surplus factory-authorized source for Eaton, Cutler-Hammer & Westinghouse Type SPB (Systems Pow-R) breakers. Complete breakers new and Eaton-reconditioned, rating plugs, operators, and renewal parts — 800–5000A, 50–150 kA. Backed by 1 year warranty and stocked for immediate shipment.',
+    'Voyten Electric is your New Surplus authorized source for Eaton, Cutler-Hammer & Westinghouse Type SPB (Systems Pow-R) breakers. Complete breakers new and reconditioned, rating plugs, operators, and renewal parts — 800–5000A, 50–150 kA. Backed by 1 year warranty and stocked for immediate shipment.',
   keywords: [
     'Eaton SPB breaker', 'Systems Pow-R Breaker', 'SPB circuit breaker', 'SPBR', 'SPBSR', 'SPBHR',
     'Cutler-Hammer SPB', 'Westinghouse SPB', 'insulated case circuit breaker', 'Pow-R Trip 7', 'Digitrip RMS',
@@ -29,16 +29,16 @@ export const metadata: Metadata = {
     'shunt trip', 'auxiliary switch', 'undervoltage release', 'drawout stabs',
   ],
   openGraph: {
-    title: 'Eaton Type SPB Breakers — Eaton New Surplus Inventory from Voyten Electric',
+    title: 'Eaton Type SPB Breakers — New Surplus Inventory from Voyten Electric',
     description:
-      'Eaton New Surplus factory-authorized SPB source: breakers 800–5000A (50–150 kA), Pow-R Trip 7 trip units, rating plugs, and 12 accessory categories. Free manuals + parts available.',
+      'New Surplus authorized SPB source: breakers 800–5000A (50–150 kA), Pow-R Trip 7 trip units, rating plugs, and 12 accessory categories. Free manuals + parts available.',
     url: 'https://www.voytenmanuals.com/products/spb-breakers',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Eaton Type SPB Breakers — Voyten Eaton New Surplus',
-    description: 'Your Eaton New Surplus factory-authorized source for Eaton/Cutler-Hammer SPB Systems Pow-R breakers, manuals, and parts.',
+    title: 'Eaton Type SPB Breakers — Voyten New Surplus',
+    description: 'Your New Surplus authorized source for Eaton/Cutler-Hammer SPB Systems Pow-R breakers, manuals, and parts.',
   },
   alternates: {
     canonical: 'https://www.voytenmanuals.com/products/spb-breakers',
@@ -122,7 +122,7 @@ export default async function SPBBreakersPage() {
         name: 'Where can I buy Eaton SPB breaker parts?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Voyten Electric & Electronics, Inc. is the Eaton New Surplus factory-authorized aftermarket source for Eaton/Cutler-Hammer/Westinghouse Type SPB (Systems Pow-R) breaker parts. They stock complete breakers (new and Eaton-reconditioned), rating plugs, trip units, operators, and every renewal part across all frame sizes from 800A to 5000A. All reconditioned breakers carry a 1-year warranty. Call 1-800-458-4001 or visit spbbreakers.com.',
+          text: 'Voyten Electric & Electronics, Inc. is the New Surplus authorized aftermarket source for Eaton/Cutler-Hammer/Westinghouse Type SPB (Systems Pow-R) breaker parts. They stock complete breakers (new and reconditioned), rating plugs, trip units, operators, and every renewal part across all frame sizes from 800A to 5000A. All reconditioned breakers carry a 1-year warranty. Call 1-800-458-4001 or visit spbbreakers.com.',
         },
       },
       {
@@ -154,7 +154,7 @@ export default async function SPBBreakersPage() {
         name: 'Does Voyten offer a warranty on reconditioned SPB breakers?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Yes. All Eaton-reconditioned SPB breakers from Voyten Electric carry a 1-year warranty. Reconditioned breakers are completely disassembled, cleaned, inspected, and rebuilt to meet or exceed original manufacturer specifications, then fully tested before shipment. Voyten also stocks new SPB breakers and all renewal parts for immediate shipment.',
+          text: 'Yes. All reconditioned SPB breakers from Voyten Electric carry a 1-year warranty. Reconditioned breakers are completely disassembled, cleaned, inspected, and rebuilt to meet or exceed original manufacturer specifications, then fully tested before shipment. Voyten also stocks new SPB breakers and all renewal parts for immediate shipment.',
         },
       },
       {
@@ -162,7 +162,7 @@ export default async function SPBBreakersPage() {
         name: 'My SPB breaker failed — who do I call for an emergency replacement?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Call Voyten Electric at 1-800-458-4001 for 24/7 emergency support. As the Eaton New Surplus factory-authorized SPB source, Voyten identifies your breaker from its nameplate catalog number or 30-digit edge number, pulls an exact-match new or Eaton-reconditioned SPB breaker, Digitrip RMS trip unit, rating plug, or renewal part from stock, tests it, and expedites shipment to minimize downtime.',
+          text: 'Call Voyten Electric at 1-800-458-4001 for 24/7 emergency support. As the New Surplus authorized SPB source, Voyten identifies your breaker from its nameplate catalog number or 30-digit edge number, pulls an exact-match new or reconditioned SPB breaker, Digitrip RMS trip unit, rating plug, or renewal part from stock, tests it, and expedites shipment to minimize downtime.',
         },
       },
       {
@@ -189,7 +189,7 @@ export default async function SPBBreakersPage() {
     '@type': 'Product',
     name: 'Eaton Type SPB (Systems Pow-R) Insulated Case Circuit Breaker',
     category: 'Insulated Case Circuit Breakers',
-    description: 'New and Eaton-reconditioned Eaton/Cutler-Hammer/Westinghouse Type SPB breakers (800–5000A, 50–150 kA), Digitrip RMS trip units, rating plugs, and renewal parts — from Voyten Electric, the Eaton New Surplus factory-authorized SPB source. 1-year warranty on reconditioned units.',
+    description: 'New and reconditioned Eaton/Cutler-Hammer/Westinghouse Type SPB breakers (800–5000A, 50–150 kA), Digitrip RMS trip units, rating plugs, and renewal parts — from Voyten Electric, the New Surplus authorized SPB source. 1-year warranty on reconditioned units.',
     brand: { '@type': 'Brand', name: 'Eaton' },
     manufacturer: { '@type': 'Organization', name: 'Eaton' },
     url: 'https://www.voytenmanuals.com/products/spb-breakers',
@@ -215,7 +215,7 @@ export default async function SPBBreakersPage() {
     '@type': 'Service',
     name: '24/7 Emergency Eaton SPB Breaker & Parts Sourcing',
     serviceType: 'Emergency insulated-case circuit breaker and renewal-parts sourcing',
-    description: 'Emergency sourcing, testing, and expedited shipment of exact-match Eaton/Cutler-Hammer/Westinghouse Type SPB breakers, Digitrip RMS trip units, rating plugs, and renewal parts for failed or aging SPB switchgear — including the drop-in SPB-100 upgrade for under-rated SPB-50/65 cubicles. Voyten is the Eaton New Surplus factory-authorized SPB source.',
+    description: 'Emergency sourcing, testing, and expedited shipment of exact-match Eaton/Cutler-Hammer/Westinghouse Type SPB breakers, Digitrip RMS trip units, rating plugs, and renewal parts for failed or aging SPB switchgear — including the drop-in SPB-100 upgrade for under-rated SPB-50/65 cubicles. Voyten is the New Surplus authorized SPB source.',
     areaServed: { '@type': 'Place', name: 'Worldwide' },
     provider: {
       '@type': 'Organization',
@@ -262,7 +262,7 @@ export default async function SPBBreakersPage() {
 
               <div className="inline-flex items-center gap-2 bg-[#dc2626] text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-4">
                 <Shield size={12} />
-                Eaton New Surplus Inventory
+                New Surplus Inventory
               </div>
 
               <h1 className="text-3xl lg:text-5xl font-extrabold leading-tight mb-4">
@@ -273,7 +273,7 @@ export default async function SPBBreakersPage() {
               </h1>
 
               <p className="text-slate-300 text-lg leading-relaxed mb-6 max-w-xl">
-                Voyten Electric is your <strong className="text-white">Eaton New Surplus authorized source</strong> for
+                Voyten Electric is your <strong className="text-white">New Surplus authorized source</strong> for
                 Cutler-Hammer/Eaton Type SPB breakers. Complete breakers — new and
                 reconditioned — plus rating plugs, operators, and every renewal part, backed by 1 year warranty
                 and stocked for immediate shipment.
@@ -373,7 +373,7 @@ export default async function SPBBreakersPage() {
                 <p className="text-slate-600 leading-relaxed mb-4">
                   Voyten stocks high-demand SPB components for immediate shipment — from rating plugs, Pow-R Trip 7 trip
                   units, and electrical operators to spring release kits, drawout stabs, and complete breaker covers.
-                  New parts and Eaton-reconditioned breakers are backed by 1 year warranty.
+                  New parts and reconditioned breakers are backed by 1 year warranty.
                 </p>
                 <div className="flex gap-3">
                   <a
@@ -585,7 +585,7 @@ export default async function SPBBreakersPage() {
           <div className="bg-[#dc2626] rounded-2xl p-8 lg:p-10 text-center text-white">
             <h2 className="text-2xl lg:text-3xl font-bold mb-3">Need an SPB Part?</h2>
             <p className="text-white/90 mb-6 max-w-2xl mx-auto">
-              Voyten Electric is your Eaton New Surplus factory-authorized source for the full Eaton/Cutler-Hammer/Westinghouse SPB
+              Voyten Electric is your New Surplus authorized source for the full Eaton/Cutler-Hammer/Westinghouse SPB
               product line — new and reconditioned breakers, Pow-R Trip 7 trip units, rating plugs, and every renewal
               part — tested, in stock, and backed by 1 year warranty.
             </p>
