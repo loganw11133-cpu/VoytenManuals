@@ -3,7 +3,7 @@ import Image from 'next/image';
 import type { Metadata } from 'next';
 import { Phone, ArrowRight, ChevronRight, Wrench, Shield, Download, ExternalLink, BookOpen } from 'lucide-react';
 import ManualCard from '@/components/ManualCard';
-import { getRLProductLine } from '@/lib/manuals-db';
+import { getRLProductLine, type Manual } from '@/lib/manuals-db';
 
 export const revalidate = 3600;
 
@@ -78,7 +78,19 @@ const ACCESSORY_GRID = [
 // ── Page ──
 
 export default async function RLBreakersPage() {
-  const { breakers, accessories, laBreakers, laAccessories } = await getRLProductLine();
+  // The DB layer already retries transient Turso failures. This is the last line
+  // of defense: if Turso is fully down during a build/prerender, degrade to the
+  // static page (hero, phone, CTAs, accessory grid) rather than failing the whole
+  // emergency-funnel deploy. ISR (revalidate) self-heals once the DB is reachable.
+  let breakers: Manual[] = [];
+  let accessories: Manual[] = [];
+  let laBreakers: Manual[] = [];
+  let laAccessories: Manual[] = [];
+  try {
+    ({ breakers, accessories, laBreakers, laAccessories } = await getRLProductLine());
+  } catch (err) {
+    console.error('[rl-breakers] getRLProductLine failed; rendering static fallback:', err);
+  }
 
   const totalCount = breakers.length + accessories.length + laBreakers.length + laAccessories.length;
 
@@ -199,7 +211,6 @@ export default async function RLBreakersPage() {
       '@type': 'Offer',
       availability: 'https://schema.org/InStock',
       itemCondition: 'https://schema.org/RefurbishedCondition',
-      priceCurrency: 'USD',
       url: 'https://www.voytenmanuals.com/products/rl-breakers',
       areaServed: { '@type': 'Place', name: 'Worldwide' },
       seller: {

@@ -138,7 +138,7 @@ export default async function ManualPage({ params }: ManualPageProps) {
       "@type": "Organization",
       "name": "Voyten Electric & Electronics, Inc.",
       "url": "https://www.voytenmanuals.com",
-      "logo": "https://www.voytenmanuals.com/images/voyten-logo.png",
+      "logo": "https://www.voytenmanuals.com/voyten-logo.png",
     },
     "url": `https://www.voytenmanuals.com/manual/${manual.slug}`,
     "mainEntityOfPage": `https://www.voytenmanuals.com/manual/${manual.slug}`,

@@ -1,4 +1,4 @@
-import { createClient, Client, type Row } from '@libsql/client';
+import { createClient, Client, type Row, type InStatement } from '@libsql/client';
 import { cache as reactCache } from 'react';
 
 let _db: Client | null = null;
@@ -11,6 +11,44 @@ function getDb(): Client {
     });
   }
   return _db;
+}
+
+// ── Transient-failure resilience ──
+// Turso (libsql over HTTP) occasionally drops a stream mid-response
+// (ERR_STREAM_PREMATURE_CLOSE, fetch failed, ECONNRESET …). A single such
+// hiccup during `next build`'s prerender of a DB-backed page would otherwise
+// fail the entire Vercel deploy. We retry with backoff and reset the pooled
+// client so the next attempt reconnects fresh instead of reusing a poisoned one.
+
+function isTransientDbError(err: unknown): boolean {
+  const e = err as { message?: string; code?: string; cause?: unknown } | undefined;
+  const haystack = [e?.message, e?.code, String(e?.cause ?? '')].join(' ');
+  return /PREMATURE_CLOSE|ECONNRESET|ETIMEDOUT|EPIPE|socket hang up|fetch failed|terminated|stream|network|503|502|429/i.test(
+    haystack,
+  );
+}
+
+async function withRetry<T>(fn: (c: Client) => Promise<T>, attempts = 3): Promise<T> {
+  let lastErr: unknown;
+  for (let i = 0; i < attempts; i++) {
+    try {
+      return await fn(getDb());
+    } catch (err) {
+      lastErr = err;
+      if (i === attempts - 1 || !isTransientDbError(err)) throw err;
+      _db = null; // drop the poisoned client; next getDb() reconnects
+      await new Promise((r) => setTimeout(r, 200 * 2 ** i)); // 200ms, 400ms
+    }
+  }
+  throw lastErr;
+}
+
+function dbExecute(stmt: InStatement) {
+  return withRetry((c) => c.execute(stmt));
+}
+
+function dbBatch(stmts: InStatement[]) {
+  return withRetry((c) => c.batch(stmts));
 }
 
 // ── Types ──
@@ -164,7 +202,7 @@ export async function searchManuals(filters: SearchFilters): Promise<SearchResul
       filterArgs.push(filters.subcategory);
     }
 
-    const batchResults = await getDb().batch([
+    const batchResults = await dbBatch([
       {
         sql: `SELECT COUNT(*) as count FROM manuals_fts f JOIN manuals m ON m.id = f.rowid WHERE manuals_fts MATCH ?${filterClause}`,
         args: [ftsQuery, ...filterArgs],
@@ -206,7 +244,7 @@ export async function searchManuals(filters: SearchFilters): Promise<SearchResul
     params.push(filters.subcategory);
   }
 
-  const batchResults = await getDb().batch([
+  const batchResults = await dbBatch([
     { sql: `SELECT COUNT(*) as count FROM manuals ${whereClause}`, args: params },
     { sql: `SELECT id, slug, title, manual_number, category, manufacturer, subcategory, pdf_url, file_size_bytes, page_count, search_priority FROM manuals ${whereClause} ORDER BY search_priority DESC, title ASC LIMIT ? OFFSET ?`, args: [...params, limit, offset] },
   ]);
@@ -229,7 +267,7 @@ export const getManualBySlug = reactCache(async (slug: string): Promise<Manual |
   const cached = getCached<Manual>(cacheKey);
   if (cached) return cached;
 
-  const result = await getDb().execute({
+  const result = await dbExecute({
     sql: 'SELECT * FROM manuals WHERE slug = ?',
     args: [slug],
   });
@@ -238,7 +276,7 @@ export const getManualBySlug = reactCache(async (slug: string): Promise<Manual |
 });
 
 export async function getManualById(id: number): Promise<Manual | null> {
-  const result = await getDb().execute({
+  const result = await dbExecute({
     sql: 'SELECT * FROM manuals WHERE id = ?',
     args: [id],
   });
@@ -250,7 +288,7 @@ export async function getCategories(): Promise<Category[]> {
   const cached = getCached<Category[]>('categories');
   if (cached) return cached;
 
-  const result = await getDb().execute(
+  const result = await dbExecute(
     'SELECT category as name, COUNT(*) as count FROM manuals GROUP BY category ORDER BY count DESC'
   );
   const categories = result.rows.map(row => ({
@@ -276,7 +314,7 @@ export async function getManufacturers(category?: string): Promise<Manufacturer[
 
   sql += ' GROUP BY manufacturer ORDER BY count DESC, name ASC';
 
-  const result = await getDb().execute({ sql, args });
+  const result = await dbExecute({ sql, args });
   const manufacturers = result.rows.map(row => ({
     name: row.name as string,
     count: row.count as number,
@@ -304,7 +342,7 @@ export async function getSubcategories(category?: string, manufacturer?: string)
 
   sql += ' ORDER BY subcategory ASC';
 
-  const result = await getDb().execute({ sql, args });
+  const result = await dbExecute({ sql, args });
   const subcategories = result.rows.map(row => row.subcategory as string);
   return setCache(cacheKey, subcategories, CACHE_1HR);
 }
@@ -324,7 +362,7 @@ export async function getManufacturerCategories(manufacturer: string): Promise<M
   const cached = getCached<ManufacturerCategoryBreakdown[]>(cacheKey);
   if (cached) return cached;
 
-  const result = await getDb().execute({
+  const result = await dbExecute({
     sql: 'SELECT category, COUNT(*) as count FROM manuals WHERE manufacturer = ? GROUP BY category ORDER BY count DESC',
     args: [manufacturer],
   });
@@ -340,7 +378,7 @@ export async function getManufacturerManuals(manufacturer: string, limit = 12): 
   const cached = getCached<Manual[]>(cacheKey);
   if (cached) return cached;
 
-  const result = await getDb().execute({
+  const result = await dbExecute({
     sql: `SELECT * FROM manuals WHERE manufacturer = ? AND pdf_url != '' AND pdf_url IS NOT NULL
           ORDER BY search_priority DESC, title ASC LIMIT ?`,
     args: [manufacturer, limit],
@@ -355,7 +393,7 @@ export async function getRelatedManuals(manual: Manual, limit = 4): Promise<Manu
   if (cached) return cached;
 
   // Single query: same manufacturer (prefer same category) UNION same category different manufacturer
-  const result = await getDb().execute({
+  const result = await dbExecute({
     sql: `SELECT id, slug, title, manual_number, category, manufacturer, subcategory,
                  description, pdf_url, page_count, file_size_bytes, keywords, created_at, updated_at
           FROM (
@@ -390,7 +428,7 @@ export const getManualWithRelated = reactCache(async (slug: string, relatedLimit
   // Single batch — both queries in one HTTP round-trip to Turso.
   // Query 1: fetch the manual by slug.
   // Query 2: fetch related manuals using a subquery to resolve manufacturer/category from slug.
-  const batchResults = await getDb().batch([
+  const batchResults = await dbBatch([
     {
       sql: 'SELECT * FROM manuals WHERE slug = ?',
       args: [slug],
@@ -424,7 +462,7 @@ export async function getTotalManualCount(): Promise<number> {
   const cached = getCached<number>('totalCount');
   if (cached !== null) return cached;
 
-  const result = await getDb().execute("SELECT COUNT(*) as count FROM manuals WHERE pdf_url != '' AND pdf_url IS NOT NULL");
+  const result = await dbExecute("SELECT COUNT(*) as count FROM manuals WHERE pdf_url != '' AND pdf_url IS NOT NULL");
   const count = Number(result.rows[0].count);
   return setCache('totalCount', count, CACHE_1HR);
 }
@@ -446,7 +484,7 @@ export async function getFeaturedManuals(limit = 8): Promise<Manual[]> {
   ];
 
   const placeholders = featuredSlugs.map(() => '?').join(', ');
-  const result = await getDb().execute({
+  const result = await dbExecute({
     sql: `SELECT * FROM manuals
           WHERE slug IN (${placeholders}) AND pdf_url != '' AND pdf_url IS NOT NULL
           ORDER BY CASE ${featuredSlugs.map((s, i) => `WHEN slug = ? THEN ${i}`).join(' ')} ELSE ${featuredSlugs.length} END
@@ -464,7 +502,7 @@ export async function getManualsBySubcategory(manufacturer: string, subcategory:
   const cached = getCached<Manual[]>(cacheKey);
   if (cached) return cached;
 
-  const result = await getDb().execute({
+  const result = await dbExecute({
     sql: `SELECT * FROM manuals WHERE manufacturer = ? AND subcategory = ?
           ORDER BY search_priority DESC, title ASC LIMIT ?`,
     args: [manufacturer, subcategory, limit],
@@ -482,7 +520,7 @@ export async function getRLProductLine(): Promise<{
   const cached = getCached<{ breakers: Manual[]; accessories: Manual[]; laBreakers: Manual[]; laAccessories: Manual[] }>(cacheKey);
   if (cached) return cached;
 
-  const batchResults = await getDb().batch([
+  const batchResults = await dbBatch([
     {
       sql: `SELECT * FROM manuals WHERE manufacturer = 'Siemens'
             AND (
@@ -542,7 +580,7 @@ export async function getSPBProductLine(): Promise<{
   if (cached) return cached;
 
   const SPB_MATCH = "(title LIKE '%SPB%' OR title LIKE '%Systems Pow-R%')";
-  const batchResults = await getDb().batch([
+  const batchResults = await dbBatch([
     {
       sql: `SELECT * FROM manuals WHERE ${SPB_MATCH}
             AND subcategory IN ('Insulated Case Breakers', 'Air Circuit Breakers')
@@ -569,7 +607,7 @@ export async function getSPBProductLine(): Promise<{
 // ── Admin: Create/Update ──
 
 export async function createManual(data: Omit<Manual, 'id' | 'created_at' | 'updated_at'>): Promise<number> {
-  const result = await getDb().execute({
+  const result = await dbExecute({
     sql: `INSERT INTO manuals (slug, title, manual_number, category, manufacturer, subcategory, description, pdf_url, page_count, file_size_bytes, keywords)
           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     args: [
@@ -599,14 +637,14 @@ export async function updateManual(id: number, data: Partial<Manual>): Promise<v
   fields.push('updated_at = CURRENT_TIMESTAMP');
   values.push(id);
 
-  await getDb().execute({
+  await dbExecute({
     sql: `UPDATE manuals SET ${fields.join(', ')} WHERE id = ?`,
     args: values,
   });
 }
 
 export async function deleteManual(id: number): Promise<void> {
-  await getDb().execute({
+  await dbExecute({
     sql: 'DELETE FROM manuals WHERE id = ?',
     args: [id],
   });

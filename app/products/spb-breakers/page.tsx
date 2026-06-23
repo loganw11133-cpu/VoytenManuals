@@ -197,7 +197,6 @@ export default async function SPBBreakersPage() {
       '@type': 'Offer',
       availability: 'https://schema.org/InStock',
       itemCondition: 'https://schema.org/RefurbishedCondition',
-      priceCurrency: 'USD',
       url: 'https://www.voytenmanuals.com/products/spb-breakers',
       areaServed: { '@type': 'Place', name: 'Worldwide' },
       warranty: { '@type': 'WarrantyPromise', durationOfWarranty: { '@type': 'QuantitativeValue', value: 1, unitCode: 'ANN' } },
