@@ -1556,33 +1556,6 @@ function renderBreakerResults(chars, r, errors, warnings, isDefault, isPartial, 
     html += '</div>';
   }
 
-  // Related ratings table (same frame size)
-  if (r.amps) {
-    var relatedRatings = RATINGS.filter(function(rt) { return rt.frame === r.amps; });
-    if (relatedRatings.length > 1) {
-      html += '<div class="result-card full-width"><h3>All ' + r.amps + 'A IEC Ratings</h3>';
-      html += '<table class="ratings-table">';
-      html += '<tr><th>Type</th><th>Frame</th><th>Icu@240V</th><th>Icu@440V</th><th>Icu@690V</th><th>Icw 1s</th><th>Icw 3s</th><th>KEMA</th><th>CCC</th></tr>';
-      for (var ri = 0; ri < relatedRatings.length; ri++) {
-        var rt = relatedRatings[ri];
-        var isMatch = rating && rt.type === rating.type;
-        html += '<tr' + (isMatch ? ' class="highlight"' : '') + '>';
-        html += '<td><strong>' + esc(rt.type) + '</strong></td>';
-        html += '<td>' + esc(rt.frameType) + '</td>';
-        html += '<td>' + rt.icu240 + '</td>';
-        html += '<td>' + rt.icu440 + '</td>';
-        html += '<td>' + rt.icu690 + '</td>';
-        html += '<td>' + rt.icw1s + '</td>';
-        html += '<td>' + (rt.icw3s !== null ? rt.icw3s : '\u2014') + '</td>';
-        html += '<td>' + (rt.kema ? '\u2713' : '\u2014') + '</td>';
-        html += '<td>' + (rt.ccc ? '\u2713' : '\u2014') + '</td>';
-        html += '</tr>';
-      }
-      html += '</table>';
-      html += '</div>';
-    }
-  }
-
   html += '<button class="btn-copy" onclick="copyCatalog(\'' + chars + '\', this)">Copy Catalog Number</button>';
   html += ' <button class="btn-pdf" onclick="downloadDecoderPDF()">Download PDF</button>';
 
