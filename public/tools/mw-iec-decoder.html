@@ -809,6 +809,10 @@ var CASSETTE_DATA = {
   },
   cassetteAmps: {
     '20': 'Up to 2000A',
+    // CA013002EN's cassette table prints "2500-3000A", but that is an Eaton typo:
+    // the "32" frame = 3200A (CA013002EN breaker table p.34: 32=3200A; Eaton SKU
+    // page EN324HADNNNNNWC = "Up to 3200A"). A "32" cassette houses both the 2500A
+    // and 3200A standard-frame breakers, so 2500-3200A is correct. Do not revert.
     '32': '2500\u20133200A',
     '41': '4000A (Standard Frame)',
     '40': '4000A',
@@ -881,12 +885,12 @@ var RATINGS = [
   { frame: 2000, type: 'MWI-C20', frameType: 'Standard', icu240: 100, icu440: 100, icu690: 85, icw1s: 85, icw3s: 85, kema: true, ccc: true },
   { frame: 2500, type: 'MWI-625', frameType: 'Standard', icu240: 65, icu440: 65, icu690: 65, icw1s: 65, icw3s: null, kema: true, ccc: true },
   { frame: 2500, type: 'MWI-825', frameType: 'Standard', icu240: 85, icu440: 85, icu690: 85, icw1s: 85, icw3s: 65, kema: true, ccc: true },
-  { frame: 2500, type: 'MWI-C25', frameType: 'Standard', icu240: 100, icu440: 100, icu690: 85, icw1s: 85, icw3s: 85, kema: false, ccc: false },
+  { frame: 2500, type: 'MWI-C25', frameType: 'Standard', icu240: 100, icu440: 100, icu690: 85, icw1s: 85, icw3s: 65, kema: false, ccc: false },
   { frame: 2500, type: 'MWI-H25', frameType: 'Standard', icu240: 125, icu440: 125, icu690: 125, icw1s: 85, icw3s: 65, kema: true, ccc: true },
   { frame: 3200, type: 'MWK-232', frameType: 'Standard', icu240: 85, icu440: 85, icu690: 85, icw1s: 85, icw3s: 65, kema: false, ccc: false },
   { frame: 3200, type: 'MWI-632', frameType: 'Standard', icu240: 65, icu440: 65, icu690: 65, icw1s: 65, icw3s: 50, kema: true, ccc: true },
   { frame: 3200, type: 'MWI-832', frameType: 'Standard', icu240: 85, icu440: 85, icu690: 85, icw1s: 85, icw3s: 65, kema: true, ccc: true },
-  { frame: 3200, type: 'MWI-C32', frameType: 'Standard', icu240: 100, icu440: 100, icu690: 85, icw1s: 85, icw3s: 85, kema: true, ccc: true },
+  { frame: 3200, type: 'MWI-C32', frameType: 'Standard', icu240: 100, icu440: 100, icu690: 85, icw1s: 85, icw3s: 65, kema: true, ccc: true },
   { frame: 3200, type: 'MWI-H32', frameType: 'Standard', icu240: 125, icu440: 125, icu690: 125, icw1s: 85, icw3s: 65, kema: false, ccc: false },
   { frame: 4000, type: 'MWI-64N', frameType: 'Double', icu240: 65, icu440: 65, icu690: 65, icw1s: 65, icw3s: null, kema: true, ccc: true },
   { frame: 4000, type: 'MWN-64N', frameType: 'Double Narrow', icu240: 66, icu440: 66, icu690: 66, icw1s: 66, icw3s: null, kema: true, ccc: true },
