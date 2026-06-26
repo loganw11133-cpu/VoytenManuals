@@ -280,21 +280,28 @@ const OPERATION = {
 
 /* Interrupting & Short-Time Ratings (kA RMS Symmetrical)
    Key: interrupting code + frame code → { int: {}, st: {} }
-   int = interrupting capacity, st = short-time withstand
-   Sources: Siemens SG-3061/SG-3068, verified against eBay nameplate photos */
+   int = interrupting capacity (with instantaneous trip), st = short-time withstand
+   Source: Siemens SGSA-3061C Selection & Application Guide, Table 4.14 (Type RL
+   Ratings @ 50/60Hz). Audited 2026-06-26 against that table read directly:
+   - S5 st 100→85, E4 st 85→100, E3 int 100→85 (overstatement), I0 int 85→42/100/100
+     & st 65→22 corrected.
+   NOTE/open item: int here = "With Instantaneous Trip" AIC for most rows, but
+   S3/S4/E0 still carry the lower "Without Instantaneous" figures (S3 int 65 vs 85,
+   S4 85 vs 100, E0 42 vs 65) — a convention inconsistency, left conservative pending
+   review. Per-voltage variation is only fully captured for I0 (RLI is current-limiting). */
 const INT_RATINGS = {
   'S0': { int: { v635: 30, v508: 30, v254: 30 }, st: { v635: 30, v508: 30, v254: 30 } },
   'S1': { int: { v635: 65, v508: 65, v254: 65 }, st: { v635: 50, v508: 50, v254: 50 } },
   'S2': { int: { v635: 65, v508: 65, v254: 65 }, st: { v635: 65, v508: 65, v254: 65 } },
   'S3': { int: { v635: 65, v508: 65, v254: 65 }, st: { v635: 65, v508: 65, v254: 65 } },
   'S4': { int: { v635: 85, v508: 85, v254: 85 }, st: { v635: 85, v508: 85, v254: 85 } },
-  'S5': { int: { v635: 100, v508: 100, v254: 100 }, st: { v635: 100, v508: 100, v254: 100 } },
+  'S5': { int: { v635: 100, v508: 100, v254: 100 }, st: { v635: 85, v508: 85, v254: 85 } },
   'E0': { int: { v635: 42, v508: 42, v254: 42 }, st: { v635: 42, v508: 42, v254: 42 } },
   'E1': { int: { v635: 65, v508: 65, v254: 65 }, st: { v635: 65, v508: 65, v254: 65 } },
   'E2': { int: { v635: 85, v508: 85, v254: 85 }, st: { v635: 85, v508: 85, v254: 85 } },
-  'E3': { int: { v635: 100, v508: 100, v254: 100 }, st: { v635: 85, v508: 85, v254: 85 } },
-  'E4': { int: { v635: 100, v508: 100, v254: 100 }, st: { v635: 85, v508: 85, v254: 85 } },
-  'I0': { int: { v635: 85, v508: 85, v254: 85 }, st: { v635: 65, v508: 65, v254: 65 } },
+  'E3': { int: { v635: 85, v508: 85, v254: 85 }, st: { v635: 85, v508: 85, v254: 85 } },
+  'E4': { int: { v635: 100, v508: 100, v254: 100 }, st: { v635: 100, v508: 100, v254: 100 } },
+  'I0': { int: { v635: 42, v508: 100, v254: 100 }, st: { v635: 22, v508: 22, v254: 22 } },
   'F0': { int: { v635: 200, v508: 200, v254: 200 }, st: { v635: 200, v508: 200, v254: 200 } },
   'F1': { int: { v635: 200, v508: 200, v254: 200 }, st: { v635: 200, v508: 200, v254: 200 } },
   'F2': { int: { v635: 200, v508: 200, v254: 200 }, st: { v635: 200, v508: 200, v254: 200 } },
