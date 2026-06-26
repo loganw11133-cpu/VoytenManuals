@@ -21,6 +21,16 @@ const tools = [
     ratings: '800A – 5,000A',
   },
   {
+    slug: 'spb',
+    name: 'SPB',
+    manufacturer: 'Eaton',
+    href: '/products/spb-breakers',
+    landing: true,
+    description: 'Looking for an Eaton SPB (Systems Pow-R)? Get SPB availability and a quote — our team identifies your SPB-50 / 65 / 100 and sources the new-surplus or reconditioned replacement.',
+    frames: 'SPB 50 / SPB 65 / SPB 100',
+    ratings: '800A – 4,000A',
+  },
+  {
     slug: 'mds-sbs',
     name: 'MDS / SBS',
     manufacturer: 'Eaton',
@@ -72,10 +82,13 @@ export default function ToolsPage() {
       {/* Tool Cards */}
       <div className="max-w-5xl mx-auto px-4 py-10">
         <div className="grid gap-5">
-          {tools.map((tool) => (
+          {tools.map((tool) => {
+            const isLanding = 'landing' in tool && tool.landing;
+            const href = 'href' in tool && tool.href ? tool.href : `/tools/${tool.slug}`;
+            return (
             <Link
               key={tool.slug}
-              href={`/tools/${tool.slug}`}
+              href={href}
               className="group bg-white border border-slate-200 rounded-xl p-6 hover:border-[#1a1a1a]/30 hover:shadow-lg transition-all"
             >
               <div className="flex items-start gap-5">
@@ -85,11 +98,16 @@ export default function ToolsPage() {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3 mb-1">
                     <h2 className="text-lg font-bold text-slate-900 group-hover:text-[#dc2626] transition-colors">
-                      {tool.name} Decoder
+                      {isLanding ? tool.name : `${tool.name} Decoder`}
                     </h2>
                     {'manufacturer' in tool && (
                       <span className="text-[0.65rem] font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-500 uppercase tracking-wide">
                         {tool.manufacturer}
+                      </span>
+                    )}
+                    {isLanding && (
+                      <span className="text-[0.65rem] font-bold px-2 py-0.5 rounded bg-[#dc2626]/10 text-[#dc2626] uppercase tracking-wide">
+                        Availability &amp; Quote
                       </span>
                     )}
                     <ArrowRight size={16} className="text-slate-400 group-hover:text-[#dc2626] group-hover:translate-x-1 transition-all flex-shrink-0" />
@@ -102,7 +120,8 @@ export default function ToolsPage() {
                 </div>
               </div>
             </Link>
-          ))}
+            );
+          })}
         </div>
 
         {/* CTA */}
@@ -117,12 +136,6 @@ export default function ToolsPage() {
           >
             Contact Our Team
           </Link>
-          <p className="text-slate-500 text-xs mt-5">
-            Looking for an Eaton <span className="font-semibold text-slate-700">SPB</span> (Systems Pow-R)?{' '}
-            <Link href="/products/spb-breakers" className="text-[#dc2626] font-medium hover:underline">
-              Get SPB availability &amp; a quote &rarr;
-            </Link>
-          </p>
         </div>
       </div>
     </div>

@@ -92,8 +92,33 @@ export default function Header() {
               Search Manuals
             </Link>
             <Link href="/categories" className="text-slate-600 hover:text-slate-900 font-medium">Browse Categories</Link>
-            <Link href="/manufacturers" className="text-slate-600 hover:text-slate-900 font-medium">Manufacturers</Link>
-            <Link href="/tools" className="text-slate-600 hover:text-slate-900 font-medium">Decoders</Link>
+            <div className="relative group">
+              <button
+                type="button"
+                className="text-slate-600 hover:text-slate-900 font-medium flex items-center gap-1"
+              >
+                Manufacturers &amp; Decoders
+                <ChevronDown size={14} className="transition-transform group-hover:rotate-180" />
+              </button>
+              <div className="absolute left-0 top-full pt-2 w-60 invisible opacity-0 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100 transition-opacity z-50">
+                <div className="bg-white rounded-lg shadow-xl border border-slate-200 overflow-hidden">
+                  <Link
+                    href="/manufacturers"
+                    className="block px-4 py-3 hover:bg-slate-50 border-b border-slate-100"
+                  >
+                    <p className="font-semibold text-slate-900 text-sm">Manufacturers</p>
+                    <p className="text-xs text-slate-500 mt-0.5">Browse the manual library by brand</p>
+                  </Link>
+                  <Link
+                    href="/tools"
+                    className="block px-4 py-3 hover:bg-slate-50"
+                  >
+                    <p className="font-semibold text-slate-900 text-sm">Breaker Decoders</p>
+                    <p className="text-xs text-slate-500 mt-0.5">Free catalog-number decoder tools</p>
+                  </Link>
+                </div>
+              </div>
+            </div>
             <div className="relative group">
               <button
                 type="button"
@@ -217,8 +242,23 @@ export default function Header() {
               Search Manuals
             </Link>
             <Link href="/categories" onClick={() => setMobileMenuOpen(false)} className="block py-2.5 text-slate-700 hover:text-slate-900">Browse Categories</Link>
-            <Link href="/manufacturers" onClick={() => setMobileMenuOpen(false)} className="block py-2.5 text-slate-700 hover:text-slate-900">Manufacturers</Link>
-            <Link href="/tools" onClick={() => setMobileMenuOpen(false)} className="block py-2.5 text-slate-700 hover:text-slate-900">Decoders</Link>
+            <div className="py-2.5">
+              <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Manufacturers &amp; Decoders</p>
+              <Link
+                href="/manufacturers"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block pl-3 py-1.5 text-slate-700 hover:text-slate-900"
+              >
+                Manufacturers
+              </Link>
+              <Link
+                href="/tools"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block pl-3 py-1.5 text-slate-700 hover:text-slate-900"
+              >
+                Breaker Decoders
+              </Link>
+            </div>
             <div className="py-2.5">
               <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">New SPB/RL</p>
               <Link
