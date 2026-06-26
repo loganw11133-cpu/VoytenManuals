@@ -1,42 +1,49 @@
 import { MetadataRoute } from 'next';
 
+// AI/LLM crawlers given broader access than generic bots (GEO strategy).
+// They may crawl everything EXCEPT api/admin and the internal SPB decoder.
+const AI_CRAWLERS = [
+  // OpenAI
+  'GPTBot', 'ChatGPT-User', 'OAI-SearchBot',
+  // Anthropic (Claude)
+  'ClaudeBot', 'anthropic-ai',
+  // Google (Gemini / AI Overviews)
+  'Google-Extended', 'GoogleOther',
+  // Perplexity
+  'PerplexityBot',
+  // xAI (Grok)
+  'xAI-Grok',
+  // Apple (Siri / Apple Intelligence)
+  'Applebot', 'Applebot-Extended',
+  // Meta
+  'FacebookBot', 'meta-externalagent',
+  // Microsoft (Copilot / Bing Chat)
+  'Bingbot',
+  // Cohere
+  'cohere-ai',
+  // Amazon
+  'Amazonbot',
+  // ByteDance (Doubao)
+  'Bytespider',
+];
+
+// The Eaton SPB decoder is internal-only — block it for every crawler.
+const SPB_DECODER = '/tools/spb';
+
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/api/', '/admin/', '/tools/', '/part_manuals/', '/pdf/'],
+        disallow: ['/api/', '/admin/', SPB_DECODER, '/part_manuals/', '/pdf/'],
       },
-      // ── Top-tier AI/LLM crawlers — broader access than generic bots ──
-      // OpenAI
-      { userAgent: 'GPTBot', allow: '/', disallow: ['/api/', '/admin/'] },
-      { userAgent: 'ChatGPT-User', allow: '/', disallow: ['/api/', '/admin/'] },
-      { userAgent: 'OAI-SearchBot', allow: '/', disallow: ['/api/', '/admin/'] },
-      // Anthropic (Claude)
-      { userAgent: 'ClaudeBot', allow: '/', disallow: ['/api/', '/admin/'] },
-      { userAgent: 'anthropic-ai', allow: '/', disallow: ['/api/', '/admin/'] },
-      // Google (Gemini / AI Overviews)
-      { userAgent: 'Google-Extended', allow: '/', disallow: ['/api/', '/admin/'] },
-      { userAgent: 'GoogleOther', allow: '/', disallow: ['/api/', '/admin/'] },
-      // Perplexity
-      { userAgent: 'PerplexityBot', allow: '/', disallow: ['/api/', '/admin/'] },
-      // xAI (Grok)
-      { userAgent: 'xAI-Grok', allow: '/', disallow: ['/api/', '/admin/'] },
-      // Apple (Siri / Apple Intelligence)
-      { userAgent: 'Applebot', allow: '/', disallow: ['/api/', '/admin/'] },
-      { userAgent: 'Applebot-Extended', allow: '/', disallow: ['/api/', '/admin/'] },
-      // Meta
-      { userAgent: 'FacebookBot', allow: '/', disallow: ['/api/', '/admin/'] },
-      { userAgent: 'meta-externalagent', allow: '/', disallow: ['/api/', '/admin/'] },
-      // Microsoft (Copilot / Bing Chat)
-      { userAgent: 'Bingbot', allow: '/', disallow: ['/api/', '/admin/'] },
-      // Cohere
-      { userAgent: 'cohere-ai', allow: '/', disallow: ['/api/', '/admin/'] },
-      // Amazon
-      { userAgent: 'Amazonbot', allow: '/', disallow: ['/api/', '/admin/'] },
-      // ByteDance (Doubao)
-      { userAgent: 'Bytespider', allow: '/', disallow: ['/api/', '/admin/'] },
+      // ── Top-tier AI/LLM crawlers — broader access, but never the SPB decoder ──
+      ...AI_CRAWLERS.map((userAgent) => ({
+        userAgent,
+        allow: '/',
+        disallow: ['/api/', '/admin/', SPB_DECODER],
+      })),
     ],
     sitemap: 'https://www.voytenmanuals.com/sitemap-index.xml',
   };

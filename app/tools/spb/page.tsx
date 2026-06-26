@@ -1,55 +1,13 @@
-'use client';
+import type { Metadata } from 'next';
+import { redirect } from 'next/navigation';
 
-import { useEffect, useRef } from 'react';
+// The Eaton SPB decoder is intentionally NOT public — its 30-digit edge-stamped
+// encoding is competitively/accuracy-sensitive and is maintained internally only.
+// Customers who reach this route are funneled to the SPB product landing page.
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
 
 export default function SpbDecoderPage() {
-  const iframeRef = useRef<HTMLIFrameElement>(null);
-
-  useEffect(() => {
-    const resize = () => {
-      const iframe = iframeRef.current;
-      if (!iframe) return;
-      try {
-        const body = iframe.contentDocument?.body;
-        const html = iframe.contentDocument?.documentElement;
-        if (body && html) {
-          const height = Math.max(
-            body.scrollHeight,
-            body.offsetHeight,
-            html.scrollHeight,
-            html.offsetHeight
-          );
-          iframe.style.height = height + 40 + 'px';
-        }
-      } catch {
-        // cross-origin safety fallback
-      }
-    };
-
-    const iframe = iframeRef.current;
-    if (iframe) {
-      iframe.addEventListener('load', () => {
-        resize();
-        const interval = setInterval(resize, 500);
-        setTimeout(() => clearInterval(interval), 30000);
-      });
-    }
-  }, []);
-
-  return (
-    <div style={{ width: '100%', background: '#f3f4f6' }}>
-      <iframe
-        ref={iframeRef}
-        src="/tools/spb-decoder.html"
-        style={{
-          width: '100%',
-          minHeight: '100vh',
-          border: 'none',
-          display: 'block',
-        }}
-        title="Eaton SPB Circuit Breaker Decoder"
-        sandbox="allow-scripts allow-same-origin allow-downloads"
-      />
-    </div>
-  );
+  redirect('/products/spb-breakers');
 }

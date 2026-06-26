@@ -4,7 +4,7 @@ import { Cpu, ArrowRight } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Breaker Decoder Tools',
-  description: 'Free circuit breaker catalog number decoders. Decode Eaton and Siemens model numbers for Magnum DS, SPB, RD, MW IEC, MDS, SBS, and RL breakers instantly.',
+  description: 'Free circuit breaker catalog number decoders. Decode Eaton and Siemens model numbers for Siemens RL, Eaton RD R-Frame, Magnum DS (MDS/SBS), Magnum MW IEC, and Magnum PXR / Power Defense SB breakers instantly.',
   robots: { index: true, follow: true },
   alternates: {
     canonical: 'https://www.voytenmanuals.com/tools',
@@ -19,14 +19,6 @@ const tools = [
     description: 'Decode Siemens RL 600V Low Voltage Power Circuit Breaker catalog numbers. Identifies connection, interrupting type, frame, sensors, system wiring, trip unit, and optional devices.',
     frames: 'RL / RLE / RLI / RLF',
     ratings: '800A – 5,000A',
-  },
-  {
-    slug: 'spb',
-    name: 'SPB',
-    manufacturer: 'Eaton',
-    description: 'Decode both SPB catalog numbers (14 prefix variants) and 30-digit edge-stamped numbers. Frame-dependent mount codes and trip unit identification.',
-    frames: 'SPB 50 / SPB 65 / SPB 100',
-    ratings: '800A – 4,000A',
   },
   {
     slug: 'mds-sbs',
@@ -125,6 +117,12 @@ export default function ToolsPage() {
           >
             Contact Our Team
           </Link>
+          <p className="text-slate-500 text-xs mt-5">
+            Looking for an Eaton <span className="font-semibold text-slate-700">SPB</span> (Systems Pow-R)?{' '}
+            <Link href="/products/spb-breakers" className="text-[#dc2626] font-medium hover:underline">
+              Get SPB availability &amp; a quote &rarr;
+            </Link>
+          </p>
         </div>
       </div>
     </div>

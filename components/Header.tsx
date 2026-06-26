@@ -93,6 +93,7 @@ export default function Header() {
             </Link>
             <Link href="/categories" className="text-slate-600 hover:text-slate-900 font-medium">Browse Categories</Link>
             <Link href="/manufacturers" className="text-slate-600 hover:text-slate-900 font-medium">Manufacturers</Link>
+            <Link href="/tools" className="text-slate-600 hover:text-slate-900 font-medium">Decoders</Link>
             <div className="relative group">
               <button
                 type="button"
@@ -217,6 +218,7 @@ export default function Header() {
             </Link>
             <Link href="/categories" onClick={() => setMobileMenuOpen(false)} className="block py-2.5 text-slate-700 hover:text-slate-900">Browse Categories</Link>
             <Link href="/manufacturers" onClick={() => setMobileMenuOpen(false)} className="block py-2.5 text-slate-700 hover:text-slate-900">Manufacturers</Link>
+            <Link href="/tools" onClick={() => setMobileMenuOpen(false)} className="block py-2.5 text-slate-700 hover:text-slate-900">Decoders</Link>
             <div className="py-2.5">
               <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">New SPB/RL</p>
               <Link

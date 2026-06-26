@@ -118,6 +118,19 @@ async function generateStaticAndFilterSitemap(): Promise<MetadataRoute.Sitemap> 
       changeFrequency: 'monthly',
       priority: 0.7,
     },
+    {
+      url: `${baseUrl}/tools`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    // Public breaker decoders (SPB is internal-only — intentionally excluded)
+    ...['rl', 'rd', 'mds-sbs', 'mw-iec', 'pxr-pdsb'].map((slug) => ({
+      url: `${baseUrl}/tools/${slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.75,
+    })),
   ];
 
   let categoryPages: MetadataRoute.Sitemap = [];
