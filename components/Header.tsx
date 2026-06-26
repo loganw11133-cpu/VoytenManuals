@@ -86,28 +86,34 @@ export default function Header() {
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-7">
+          <nav className="hidden lg:flex items-center gap-6">
             <Link href="/search" className="text-slate-600 hover:text-slate-900 font-medium flex items-center gap-1.5">
               <Search size={15} />
-              Search Manuals
+              Search
             </Link>
-            <Link href="/categories" className="text-slate-600 hover:text-slate-900 font-medium">Browse Categories</Link>
             <div className="relative group">
               <button
                 type="button"
                 className="text-slate-600 hover:text-slate-900 font-medium flex items-center gap-1"
               >
-                Manufacturers &amp; Decoders
+                Browse
                 <ChevronDown size={14} className="transition-transform group-hover:rotate-180" />
               </button>
               <div className="absolute left-0 top-full pt-2 w-60 invisible opacity-0 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100 transition-opacity z-50">
                 <div className="bg-white rounded-lg shadow-xl border border-slate-200 overflow-hidden">
                   <Link
+                    href="/categories"
+                    className="block px-4 py-3 hover:bg-slate-50 border-b border-slate-100"
+                  >
+                    <p className="font-semibold text-slate-900 text-sm">Categories</p>
+                    <p className="text-xs text-slate-500 mt-0.5">Browse manuals by equipment type</p>
+                  </Link>
+                  <Link
                     href="/manufacturers"
                     className="block px-4 py-3 hover:bg-slate-50 border-b border-slate-100"
                   >
                     <p className="font-semibold text-slate-900 text-sm">Manufacturers</p>
-                    <p className="text-xs text-slate-500 mt-0.5">Browse the manual library by brand</p>
+                    <p className="text-xs text-slate-500 mt-0.5">Browse the library by brand</p>
                   </Link>
                   <Link
                     href="/tools"
@@ -239,11 +245,17 @@ export default function Header() {
           <nav className="max-w-7xl mx-auto px-4 py-4 space-y-1">
             <Link href="/search" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-2 py-2.5 text-slate-700 hover:text-slate-900 font-medium">
               <Search size={16} />
-              Search Manuals
+              Search
             </Link>
-            <Link href="/categories" onClick={() => setMobileMenuOpen(false)} className="block py-2.5 text-slate-700 hover:text-slate-900">Browse Categories</Link>
             <div className="py-2.5">
-              <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Manufacturers &amp; Decoders</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Browse</p>
+              <Link
+                href="/categories"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block pl-3 py-1.5 text-slate-700 hover:text-slate-900"
+              >
+                Categories
+              </Link>
               <Link
                 href="/manufacturers"
                 onClick={() => setMobileMenuOpen(false)}
