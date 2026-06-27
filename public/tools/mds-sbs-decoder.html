@@ -1198,8 +1198,10 @@ function renderCharMap(chars, isDefault, enteredLen, errorPositions) {
   const container = document.getElementById('charBoxes');
   const labelsContainer = document.getElementById('groupLabels');
   const legend = document.getElementById('charLegend');
-  const groups = [10, 5, 5, 5];
-  const groupNames = ['Breaker Config', 'Sensor / Trip', 'Accessories', 'Options'];
+  // Per-field position map — one label per logical field, matching the
+  // RL and PXR/PD-SB decoders (MDS/SBS uses the standard Magnum 25-char scheme).
+  const groups =     [2,       1,      1,    2,     1,      1,      2,         2,       2,     6,                       5];
+  const groupNames = ['Family','Frame','Int','Amps','Poles','Mount','Lang/DSL','Sensor','Trip','ST/Mot/SR/UVR/Aux/Bell','PB/Cnt/LCS/Ship/Fut'];
   let html = '';
   let labelHtml = '';
   let idx = 0;
@@ -1211,7 +1213,7 @@ function renderCharMap(chars, isDefault, enteredLen, errorPositions) {
       html += '<div class="char-box space"></div>';
       labelHtml += '<div class="group-label-spacer"></div>';
     }
-    labelHtml += '<div class="group-label" style="width:' + (groups[g] * 40) + 'px">' + groupNames[g] + '</div>';
+    labelHtml += '<div class="group-label" style="width:' + (groups[g] * 40 - 2) + 'px">' + groupNames[g] + '</div>';
 
     for (let i = 0; i < groups[g]; i++) {
       const ch = idx < chars.length ? chars[idx] : '';
