@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Phone, Mail, MapPin, BookOpen, Clock } from 'lucide-react';
+import ObfuscatedEmail from './ObfuscatedEmail';
 
 export default function Footer() {
   return (
@@ -140,10 +141,11 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="mailto:sales@voyten.com" className="text-slate-400 hover:text-white flex items-center gap-2">
-                  <Mail size={14} />
-                  sales@voyten.com
-                </a>
+                <ObfuscatedEmail
+                  encoded="c2FsZXNAdm95dGVuLmNvbQ=="
+                  className="text-slate-400 hover:text-white flex items-center gap-2"
+                  icon={<Mail size={14} />}
+                />
               </li>
               <li>
                 <span className="text-slate-400 flex items-start gap-2">

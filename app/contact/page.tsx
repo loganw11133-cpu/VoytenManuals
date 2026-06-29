@@ -1,5 +1,6 @@
 import { Phone, Mail, MapPin, Clock } from 'lucide-react';
 import LeadCaptureForm from '@/components/LeadCaptureForm';
+import ObfuscatedEmail from '@/components/ObfuscatedEmail';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -111,9 +112,10 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                   <p className="text-slate-500 text-sm">We respond within 24 hours</p>
                 </div>
               </div>
-              <a href="mailto:sales@voyten.com" className="text-[#1a1a1a] font-medium hover:underline">
-                sales@voyten.com
-              </a>
+              <ObfuscatedEmail
+                encoded="c2FsZXNAdm95dGVuLmNvbQ=="
+                className="text-[#1a1a1a] font-medium hover:underline"
+              />
             </div>
 
             <div className="bg-white rounded-xl border border-slate-200 p-6">

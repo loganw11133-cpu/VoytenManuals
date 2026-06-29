@@ -4,6 +4,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Phone, Mail, Menu, X, Search, ChevronDown, Zap } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
+import ObfuscatedEmail from './ObfuscatedEmail';
+
+// base64 of the Voyten sales address — never stored as plaintext (anti-harvesting)
+const SALES_EMAIL_B64 = 'c2FsZXNAdm95dGVuLmNvbQ==';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -42,10 +46,11 @@ export default function Header() {
                 <span className="font-medium">1-800-458-4001</span>
               </a>
               <span className="hidden sm:block w-px h-3.5 bg-white/30"></span>
-              <a href="mailto:sales@voyten.com" className="hidden sm:flex items-center gap-1.5 text-white/70 hover:text-white transition-colors">
-                <Mail size={12} />
-                <span>sales@voyten.com</span>
-              </a>
+              <ObfuscatedEmail
+                encoded={SALES_EMAIL_B64}
+                className="hidden sm:flex items-center gap-1.5 text-white/70 hover:text-white transition-colors"
+                icon={<Mail size={12} />}
+              />
             </div>
             <div className="flex items-center gap-3">
               <span className="text-white/60 text-xs hidden sm:inline">Powered by</span>
@@ -197,18 +202,22 @@ export default function Header() {
                         <p className="text-slate-500 text-xs">Talk to an expert now</p>
                       </div>
                     </a>
-                    <a
-                      href="mailto:sales@voyten.com?subject=Parts Inquiry from Voyten Manuals"
+                    <ObfuscatedEmail
+                      encoded={SALES_EMAIL_B64}
+                      subject="Parts Inquiry from Voyten Manuals"
                       className="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-50 transition-colors group"
-                    >
-                      <span className="flex items-center justify-center w-10 h-10 rounded-full bg-[#1a1a1a]/10 group-hover:bg-[#1a1a1a] transition-colors">
-                        <Mail size={18} className="text-[#1a1a1a] group-hover:text-white transition-colors" />
-                      </span>
-                      <div>
-                        <p className="font-semibold text-slate-800">Email Us</p>
-                        <p className="text-slate-500 text-xs">sales@voyten.com</p>
-                      </div>
-                    </a>
+                      icon={
+                        <span className="flex items-center justify-center w-10 h-10 rounded-full bg-[#1a1a1a]/10 group-hover:bg-[#1a1a1a] transition-colors">
+                          <Mail size={18} className="text-[#1a1a1a] group-hover:text-white transition-colors" />
+                        </span>
+                      }
+                      label={
+                        <div>
+                          <p className="font-semibold text-slate-800">Email Us</p>
+                          <p className="text-slate-500 text-xs">Send a parts inquiry</p>
+                        </div>
+                      }
+                    />
                     <Link
                       href="/contact"
                       onClick={() => setContactOpen(false)}
@@ -304,13 +313,12 @@ export default function Header() {
                   <p className="text-xs text-white/70">Need a part? Call Voyten Electric</p>
                 </div>
               </a>
-              <a
-                href="mailto:sales@voyten.com"
+              <ObfuscatedEmail
+                encoded={SALES_EMAIL_B64}
                 className="flex items-center justify-center gap-2 border-2 border-[#1a1a1a] text-[#1a1a1a] p-3 rounded-xl hover:bg-[#1a1a1a] hover:text-white transition-colors"
-              >
-                <Mail size={18} />
-                <span className="font-semibold">Email Us</span>
-              </a>
+                icon={<Mail size={18} />}
+                label={<span className="font-semibold">Email Us</span>}
+              />
             </div>
           </nav>
         </div>

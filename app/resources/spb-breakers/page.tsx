@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { Phone, ChevronRight, BookOpen, Zap, Shield, ArrowRight } from 'lucide-react';
+import ObfuscatedEmail from '@/components/ObfuscatedEmail';
 import Toc from '../_components/Toc';
 
 export const revalidate = 3600;
@@ -520,7 +521,8 @@ export default function SPBBreakersGuide() {
               </Link>
             </div>
             <p className="text-white/60 text-sm mt-4">
-              Mon–Fri 8:00 AM – 4:30 PM EST | Emergency support available | sales@voyten.com
+              Mon–Fri 8:00 AM – 4:30 PM EST | Emergency support available |{' '}
+              <ObfuscatedEmail encoded="c2FsZXNAdm95dGVuLmNvbQ==" className="underline hover:text-white" />
             </p>
           </div>
             </div>

@@ -58,7 +58,7 @@ const faqs = [
   },
   {
     question: 'Can I request a quote for multiple parts at once?',
-    answer: 'Yes. You can submit a quote request through our contact page or email us at sales@voyten.com with a list of part numbers, equipment model numbers, or manual references. Our sales team will respond with pricing and availability, typically within one business day.',
+    answer: 'Yes. You can submit a quote request through our contact page with a list of part numbers, equipment model numbers, or manual references. Our sales team will respond with pricing and availability, typically within one business day.',
   },
   {
     question: 'Are the electrical equipment manuals on Voyten Manuals really free?',

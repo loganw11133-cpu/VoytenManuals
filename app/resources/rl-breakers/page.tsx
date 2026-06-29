@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { Phone, ChevronRight, BookOpen, Zap, Shield, ArrowRight, Info, Hash, Tag, Wrench, AlertTriangle } from 'lucide-react';
+import ObfuscatedEmail from '@/components/ObfuscatedEmail';
 import Toc from '../_components/Toc';
 
 export const revalidate = 3600;
@@ -599,7 +600,8 @@ export default function RLBreakersGuide() {
               </Link>
             </div>
             <p className="text-white/60 text-sm mt-4">
-              Mon&ndash;Fri 8:00 AM &ndash; 4:30 PM EST | sales@voyten.com
+              Mon&ndash;Fri 8:00 AM &ndash; 4:30 PM EST |{' '}
+              <ObfuscatedEmail encoded="c2FsZXNAdm95dGVuLmNvbQ==" className="underline hover:text-white" />
             </p>
           </div>
             </div>

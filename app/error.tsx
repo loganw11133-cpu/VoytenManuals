@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import Link from 'next/link';
 import { AlertTriangle, Search, ArrowLeft, RefreshCw } from 'lucide-react';
+import ObfuscatedEmail from '@/components/ObfuscatedEmail';
 
 export default function Error({
   error,
@@ -48,7 +49,12 @@ export default function Error({
           </Link>
         </div>
         <p className="text-slate-400 text-xs mt-8">
-          If this keeps happening, call us at 1-800-458-4001 or email sales@voyten.com
+          If this keeps happening, call us at 1-800-458-4001 or{' '}
+          <ObfuscatedEmail
+            encoded="c2FsZXNAdm95dGVuLmNvbQ=="
+            className="underline hover:text-slate-200"
+            label="email us"
+          />
         </p>
       </div>
     </div>
