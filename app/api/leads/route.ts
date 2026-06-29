@@ -50,28 +50,29 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Store lead
+    // Store lead — ALL types are persisted to Turso (admin dashboard / analytics).
     const db = getDb();
-    await db.execute({
+    const insert = await db.execute({
       sql: `INSERT INTO lead_submissions (type, name, email, phone, company, message, manual_id, manual_title, source_page)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       args: [type, name, email, phone || null, company || null, message || null, manual_id || null, manual_title || null, source_page || null],
     });
+    const leadId = insert.lastInsertRowid?.toString() ?? 'unknown';
 
-    // Send notification email
-    const typeLabels: Record<string, string> = {
-      'quote': 'Quote Request',
-      'manual-request': 'Manual Request',
-      'contact': 'Contact Form',
-    };
-
-    await sendEmail({
-      to: process.env.LEAD_NOTIFICATION_EMAIL || 'sales@voyten.com',
-      subject: `[Voyten Manuals] New ${typeLabels[type] || 'Lead'} from ${name}`,
-      html: `
+    // Forward to sales ONLY for RFQ / Quote requests. Other lead types
+    // (manual-request, contact) are captured in the DB but do not notify sales.
+    if (type === 'quote') {
+      // Recipient is env-only — no email address is hardcoded in this public repo
+      // (prevents address-harvesting / spam). If unset, the lead is still safely
+      // stored in Turso; we log loudly rather than send to a placeholder.
+      const to = process.env.LEAD_NOTIFICATION_EMAIL;
+      const sent = to ? await sendEmail({
+        to,
+        subject: `[Voyten Manuals] New Quote Request (RFQ) from ${name}`,
+        html: `
         <div style="font-family: -apple-system, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: #1a1a1a; color: white; padding: 20px; border-radius: 8px 8px 0 0;">
-            <h1 style="margin: 0; font-size: 18px;">New ${typeLabels[type] || 'Lead'} — Voyten Manuals</h1>
+            <h1 style="margin: 0; font-size: 18px;">New Quote Request (RFQ) — Voyten Manuals</h1>
           </div>
           <div style="background: #f8fafc; padding: 20px; border: 1px solid #e2e8f0; border-top: 0;">
             <table style="width: 100%; border-collapse: collapse;">
@@ -86,8 +87,24 @@ export async function POST(request: NextRequest) {
           </div>
         </div>
       `,
-      text: `New ${typeLabels[type]} from ${name}\nEmail: ${email}\nPhone: ${phone}\nCompany: ${company}\nManual: ${manual_title}\nMessage: ${message}`,
-    });
+        text: `New Quote Request (RFQ) from ${name}\nEmail: ${email}\nPhone: ${phone || '—'}\nCompany: ${company || '—'}\nManual: ${manual_title || '—'}\nMessage: ${message || '—'}\nSource: ${source_page || 'Unknown'}`,
+      }) : false;
+
+      if (!sent) {
+        // Lead is safely stored; only the notification failed (or no recipient is
+        // configured). Make it visible in the Vercel logs so it can be recovered
+        // from the DB / admin dashboard.
+        console.error(
+          to
+            ? `[leads] Quote lead #${leadId} STORED but email forward to recipient FAILED ` +
+              `(check RESEND_API_KEY or EMAIL_HOST/EMAIL_USER/EMAIL_PASS in Vercel env). ` +
+              `name="${name}" email="${email}"`
+            : `[leads] Quote lead #${leadId} STORED but NOT forwarded: ` +
+              `LEAD_NOTIFICATION_EMAIL is not set in the Vercel environment. ` +
+              `name="${name}" email="${email}"`
+        );
+      }
+    }
 
     return NextResponse.json({ success: true });
   } catch (error) {
