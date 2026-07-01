@@ -4,7 +4,7 @@ import { Cpu, ArrowRight } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Breaker Decoder Tools',
-  description: 'Free circuit breaker catalog number decoders. Decode Eaton and Siemens model numbers for Siemens RL, Eaton RD R-Frame, Magnum DS (MDS/SBS), Magnum MW IEC, and Magnum PXR / Power Defense SB breakers instantly.',
+  description: 'Free circuit breaker catalog number decoders. Decode Eaton and Siemens model numbers for Siemens RL, Eaton RD (R-Frame), Magnum DS (MDS) / SBS, Magnum MW (IEC), and Magnum PXR / Power Defense SB breakers instantly.',
   robots: { index: true, follow: true },
   alternates: {
     canonical: 'https://www.voytenmanuals.com/tools',
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 const tools = [
   {
     slug: 'rl',
-    name: 'Siemens RL LVPCB',
+    name: 'RL',
     manufacturer: 'Siemens',
     description: 'Decode Siemens RL 600V Low Voltage Power Circuit Breaker catalog numbers. Identifies connection, interrupting type, frame, sensors, system wiring, trip unit, and optional devices.',
     frames: 'RL / RLE / RLI / RLF',
@@ -32,7 +32,7 @@ const tools = [
   },
   {
     slug: 'mds-sbs',
-    name: 'MDS / SBS',
+    name: 'Magnum DS (MDS) / SBS',
     manufacturer: 'Eaton',
     description: 'Decode Magnum DS (MDS) and SBS-series catalog numbers. Identifies frame, rating, interrupting capacity, trip unit type, and mounting.',
     frames: 'Magnum DS (MDS) · SBS',
@@ -48,7 +48,7 @@ const tools = [
   },
   {
     slug: 'mw-iec',
-    name: 'Magnum MW IEC',
+    name: 'Magnum MW (IEC)',
     manufacturer: 'Eaton',
     description: 'Decode IEC 60947-2 Magnum MW catalog numbers. Supports 49 ampere ratings with fixed/draw-out mounting and motorized/manual operation.',
     frames: 'Magnum MW (IEC)',

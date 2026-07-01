@@ -28,7 +28,7 @@ export default function MwIecDecoderPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <DecoderFrame src="/tools/mw-iec-decoder.html" title="Eaton Magnum IEC (MW) Circuit Breaker Decoder" />
+      <DecoderFrame src="/tools/mw-iec-decoder.html" title="Eaton Magnum MW (IEC) Circuit Breaker Decoder" />
     </>
   );
 }

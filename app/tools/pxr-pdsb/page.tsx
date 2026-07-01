@@ -4,7 +4,7 @@ import DecoderFrame from '../_components/DecoderFrame';
 const URL = 'https://www.voytenmanuals.com/tools/pxr-pdsb';
 
 export const metadata: Metadata = {
-  title: 'Eaton Magnum PXR / Power Defense SB Decoder | Free Catalog Tool',
+  title: 'Eaton Magnum PXR / Power Defense SB Breaker Decoder | Free Catalog Number Tool',
   description:
     'Free decoder for 25-character Eaton Magnum PXR and 15-character Power Defense SB catalog numbers. Identify frame size, ampere rating, trip unit, and accessories. 800A–6,000A.',
   robots: { index: true, follow: true },

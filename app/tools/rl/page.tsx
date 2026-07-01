@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
-  name: 'Siemens RL Breaker Catalog Number Decoder',
+  name: 'Siemens RL Catalog Number Decoder',
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'Web',
   url: URL,
@@ -28,7 +28,7 @@ export default function RlDecoderPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <DecoderFrame src="/tools/rl-decoder.html" title="Siemens RL LVPCB Circuit Breaker Decoder" />
+      <DecoderFrame src="/tools/rl-decoder.html" title="Siemens RL Circuit Breaker Decoder" />
     </>
   );
 }
