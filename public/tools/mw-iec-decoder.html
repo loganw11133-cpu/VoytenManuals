@@ -12,10 +12,12 @@
     --dark-red: #b91c1c;
     --black: #1a1a1a;
     --deep-black: #111111;
+    --gray-50: #f9fafb;
     --gray-100: #f3f4f6;
     --gray-200: #e5e7eb;
     --gray-300: #d1d5db;
     --gray-400: #9ca3af;
+    --gray-500: #6b7280;
     --gray-600: #4b5563;
     --gray-700: #374151;
     --gray-800: #1f2937;
@@ -139,7 +141,6 @@
     padding: 20px 30px 30px;
     box-shadow: 0 1px 4px rgba(0,0,0,0.08);
     margin-bottom: 20px;
-    overflow-x: auto;
   }
 
   .char-map h3 {
@@ -150,63 +151,40 @@
     letter-spacing: 1px;
   }
 
-  .char-boxes {
-    display: flex;
-    gap: 2px;
-    flex-wrap: nowrap;
-  }
+  /* Character position map — unified format (matches PXR/PD-SB & RL/RD).
+     Fixed 32px boxes with horizontal scroll; group labels above, position
+     numbers in a separate aligned row below. Constant 34px pitch keeps the
+     three rows aligned at every viewport width. */
+  .charmap-wrap { margin: 8px 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .charmap-inner { min-width: 600px; }
 
-  .char-box {
-    width: 38px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Consolas', monospace;
-    font-size: 1.2rem;
-    font-weight: 700;
-    border-radius: 4px;
-    background: var(--gray-200);
-    color: var(--gray-600);
-    position: relative;
-    flex-shrink: 0;
-  }
-
-  .char-box.filled { background: var(--deep-black); color: var(--white); }
-  .char-box.defaulted { background: var(--blue); color: var(--white); opacity: 0.7; }
-  .char-box.error { background: #fecaca; color: var(--red); }
-  .char-box.space { background: transparent; width: 14px; }
-
-  .char-box .pos-label {
-    position: absolute;
-    bottom: -16px;
-    font-size: 0.55rem;
-    color: var(--gray-400);
-    font-weight: 400;
-  }
-
-  .group-labels {
-    display: flex;
-    gap: 2px;
-    margin-top: 24px;
-  }
-
+  .group-labels { display: flex; gap: 2px; margin-bottom: 2px; }
   .group-label {
-    font-size: 0.6rem;
-    color: var(--red);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    text-align: center;
-    flex-shrink: 0;
+    font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+    color: var(--gray-500); text-align: center; padding: 2px 0;
+    border-bottom: 2px solid var(--gray-300); flex-shrink: 0;
   }
 
-  .group-label-spacer { width: 14px; flex-shrink: 0; }
+  .char-boxes { display: flex; gap: 2px; flex-wrap: nowrap; }
+  .char-box {
+    width: 32px; height: 38px; display: flex; align-items: center; justify-content: center;
+    font-family: 'Consolas', monospace; font-size: 0.85rem; font-weight: 700;
+    border-radius: 4px; border: 1px solid var(--gray-300);
+    background: var(--gray-50); color: var(--gray-700); flex-shrink: 0;
+  }
+  .char-box.entered { background: var(--deep-black); color: var(--white); border-color: var(--deep-black); }
+  .char-box.assumed { background: var(--blue-light); color: var(--blue); border-color: #93c5fd; }
+  .char-box.error { background: #fecaca; color: #dc2626; border-color: #f87171; }
+  .char-box.separator { width: 8px; border: none; background: transparent; }
+
+  .pos-labels { display: flex; gap: 2px; margin-top: 1px; }
+  .pos-label { width: 32px; text-align: center; font-size: 0.55rem; color: var(--gray-400); flex-shrink: 0; }
+  .pos-label.sep { width: 8px; }
 
   .char-legend {
     display: flex;
     gap: 16px;
-    margin-top: 14px;
+    margin-top: 10px;
     font-size: 0.7rem;
     color: var(--gray-600);
   }
@@ -218,8 +196,8 @@
   }
 
   .char-legend-swatch {
-    width: 14px;
-    height: 14px;
+    width: 12px;
+    height: 12px;
     border-radius: 3px;
     flex-shrink: 0;
   }
@@ -232,7 +210,6 @@
 
   @media (max-width: 768px) {
     .results-section { grid-template-columns: 1fr; }
-    .char-box { width: 28px; height: 38px; font-size: 0.95rem; }
   }
 
   .result-card {
@@ -437,7 +414,6 @@
     }
     .examples-bar { gap: 6px; }
     .example-btn { font-size: 0.65rem; padding: 4px 7px; }
-    .char-box { width: 28px; height: 38px; font-size: 0.9rem; }
     .char-map { padding: 14px 12px 20px; }
     .results-section { grid-template-columns: 1fr; }
     .summary-banner h2 { font-size: 1rem; }
@@ -510,12 +486,17 @@
 
   <div class="char-map" id="charMap">
     <h3>Character Position Map</h3>
-    <div class="char-boxes" id="charBoxes"></div>
-    <div class="group-labels" id="groupLabels"></div>
+    <div class="charmap-wrap">
+      <div class="charmap-inner">
+        <div class="group-labels" id="groupLabels"></div>
+        <div class="char-boxes" id="charBoxes"></div>
+        <div class="pos-labels" id="posLabels"></div>
+      </div>
+    </div>
     <div class="char-legend" id="charLegend" style="display:none;">
       <div class="char-legend-item"><div class="char-legend-swatch" style="background:var(--deep-black)"></div> Entered</div>
-      <div class="char-legend-item"><div class="char-legend-swatch" style="background:var(--blue);opacity:0.7"></div> Assumed Default</div>
-      <div class="char-legend-item"><div class="char-legend-swatch" style="background:#fecaca;border:1px solid #fca5a5"></div> Unrecognized</div>
+      <div class="char-legend-item"><div class="char-legend-swatch" style="background:var(--blue-light);border:1px solid #93c5fd"></div> Assumed (default)</div>
+      <div class="char-legend-item"><div class="char-legend-swatch" style="background:#fecaca;border:1px solid #f87171"></div> Unrecognized</div>
     </div>
   </div>
 
@@ -1361,25 +1342,23 @@ function decode() {
 // ============================================================
 
 function renderBreakerCharMap(chars, isDefault, enteredLen, errorPositions) {
-  var container = document.getElementById('charBoxes');
-  var labelsContainer = document.getElementById('groupLabels');
+  var boxesEl = document.getElementById('charBoxes');
+  var labelsEl = document.getElementById('groupLabels');
+  var posEl = document.getElementById('posLabels');
   var legend = document.getElementById('charLegend');
   // Per-field position map — one label per logical field, matching the
   // RL and PXR/PD-SB decoders (standard Magnum 25-char scheme).
   var groups =     [2,       1,      1,    2,     1,      1,      2,            2,       2,     6,                       5];
   var groupNames = ['Family','Frame','Int','Amps','Poles','Mount','Lang/Config','Sensor','Trip','ST/Mot/SR/UVR/Aux/Bell','PB/Cnt/LCS/Ship/Fut'];
-  var html = '';
+  var boxHtml = '';
   var labelHtml = '';
+  var posHtml = '';
   var idx = 0;
   var hasDefaults = isDefault && isDefault.some(function(d) { return d; });
   var errSet = errorPositions || new Set();
 
   for (var g = 0; g < groups.length; g++) {
-    if (g > 0) {
-      html += '<div class="char-box space"></div>';
-      labelHtml += '<div class="group-label-spacer"></div>';
-    }
-    labelHtml += '<div class="group-label" style="width:' + (groups[g] * 40 - 2) + 'px">' + esc(groupNames[g]) + '</div>';
+    labelHtml += '<div class="group-label" style="width:' + (groups[g] * 34 - 2) + 'px">' + esc(groupNames[g]) + '</div>';
 
     for (var i = 0; i < groups[g]; i++) {
       var ch = idx < chars.length ? chars[idx] : '';
@@ -1388,18 +1367,26 @@ function renderBreakerCharMap(chars, isDefault, enteredLen, errorPositions) {
         if (errSet.has(idx) && !(isDefault && isDefault[idx])) {
           cls = 'char-box error';
         } else if (isDefault && isDefault[idx]) {
-          cls = 'char-box defaulted';
+          cls = 'char-box assumed';
         } else {
-          cls = 'char-box filled';
+          cls = 'char-box entered';
         }
       }
-      html += '<div class="' + cls + '">' + esc(ch) + '<span class="pos-label">' + (idx + 1) + '</span></div>';
+      boxHtml += '<div class="' + cls + '">' + esc(ch) + '</div>';
+      posHtml += '<div class="pos-label">' + (idx + 1) + '</div>';
       idx++;
+    }
+
+    if (g < groups.length - 1) {
+      boxHtml += '<div class="char-box separator"></div>';
+      posHtml += '<div class="pos-label sep"></div>';
+      labelHtml += '<div class="group-label" style="width:8px;border-bottom:none"></div>';
     }
   }
 
-  container.innerHTML = html;
-  labelsContainer.innerHTML = labelHtml;
+  boxesEl.innerHTML = boxHtml;
+  labelsEl.innerHTML = labelHtml;
+  posEl.innerHTML = posHtml;
   legend.style.display = hasDefaults ? 'flex' : 'none';
 }
 
@@ -1408,24 +1395,22 @@ function renderBreakerCharMap(chars, isDefault, enteredLen, errorPositions) {
 // ============================================================
 
 function renderCassetteCharMap(chars, isDefault, enteredLen, errorPositions) {
-  var container = document.getElementById('charBoxes');
-  var labelsContainer = document.getElementById('groupLabels');
+  var boxesEl = document.getElementById('charBoxes');
+  var labelsEl = document.getElementById('groupLabels');
+  var posEl = document.getElementById('posLabels');
   var legend = document.getElementById('charLegend');
   // Per-field position map — one label per logical field (matches PXR/PD-SB cassette map).
   var groups =     [1,    1,    2,     1,      1,     1,    1,     1,    1,     3,       1,     1];
   var groupNames = ['Fam','Int','Amps','Poles','Term','Arc','Door','Fut','Shut','Future','Wire','Ship'];
-  var html = '';
+  var boxHtml = '';
   var labelHtml = '';
+  var posHtml = '';
   var idx = 0;
   var hasDefaults = isDefault && isDefault.some(function(d) { return d; });
   var errSet = errorPositions || new Set();
 
   for (var g = 0; g < groups.length; g++) {
-    if (g > 0) {
-      html += '<div class="char-box space"></div>';
-      labelHtml += '<div class="group-label-spacer"></div>';
-    }
-    labelHtml += '<div class="group-label" style="width:' + (groups[g] * 40 - 2) + 'px">' + esc(groupNames[g]) + '</div>';
+    labelHtml += '<div class="group-label" style="width:' + (groups[g] * 34 - 2) + 'px">' + esc(groupNames[g]) + '</div>';
 
     for (var i = 0; i < groups[g]; i++) {
       var ch = idx < chars.length ? chars[idx] : '';
@@ -1434,18 +1419,26 @@ function renderCassetteCharMap(chars, isDefault, enteredLen, errorPositions) {
         if (errSet.has(idx) && !(isDefault && isDefault[idx])) {
           cls = 'char-box error';
         } else if (isDefault && isDefault[idx]) {
-          cls = 'char-box defaulted';
+          cls = 'char-box assumed';
         } else {
-          cls = 'char-box filled';
+          cls = 'char-box entered';
         }
       }
-      html += '<div class="' + cls + '">' + esc(ch) + '<span class="pos-label">' + (idx + 1) + '</span></div>';
+      boxHtml += '<div class="' + cls + '">' + esc(ch) + '</div>';
+      posHtml += '<div class="pos-label">' + (idx + 1) + '</div>';
       idx++;
+    }
+
+    if (g < groups.length - 1) {
+      boxHtml += '<div class="char-box separator"></div>';
+      posHtml += '<div class="pos-label sep"></div>';
+      labelHtml += '<div class="group-label" style="width:8px;border-bottom:none"></div>';
     }
   }
 
-  container.innerHTML = html;
-  labelsContainer.innerHTML = labelHtml;
+  boxesEl.innerHTML = boxHtml;
+  labelsEl.innerHTML = labelHtml;
+  posEl.innerHTML = posHtml;
   legend.style.display = hasDefaults ? 'flex' : 'none';
 }
 
@@ -1651,6 +1644,7 @@ function showError(msg) {
 function clearCharMap() {
   document.getElementById('charBoxes').innerHTML = '';
   document.getElementById('groupLabels').innerHTML = '';
+  document.getElementById('posLabels').innerHTML = '';
   document.getElementById('charLegend').style.display = 'none';
 }
 
