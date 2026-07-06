@@ -4,7 +4,7 @@ import { Cpu, ArrowRight } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Breaker Decoder Tools',
-  description: 'Free circuit breaker catalog number decoders. Decode Eaton and Siemens model numbers for Siemens RL, Eaton RD (R-Frame), Magnum DS (MDS) / SBS, Magnum MW (IEC), and Magnum PXR / Power Defense SB breakers instantly.',
+  description: 'Free circuit breaker catalog number decoders. Decode Eaton, Siemens, and GE model numbers for Siemens RL, GE WavePro, Eaton RD (R-Frame), Magnum DS (MDS) / SBS, Magnum MW (IEC), and Magnum PXR / Power Defense SB breakers instantly.',
   robots: { index: true, follow: true },
   alternates: {
     canonical: 'https://www.voytenmanuals.com/tools',
@@ -18,6 +18,14 @@ const tools = [
     manufacturer: 'Siemens',
     description: 'Decode Siemens RL 600V Low Voltage Power Circuit Breaker catalog numbers. Identifies connection, interrupting type, frame, sensors, system wiring, trip unit, and optional devices.',
     frames: 'RL / RLE / RLI / RLF',
+    ratings: '800A – 5,000A',
+  },
+  {
+    slug: 'wavepro',
+    name: 'WavePro',
+    manufacturer: 'GE',
+    description: 'Decode GE WavePro low-voltage power air circuit breaker catalog numbers. Identifies equipment usage, interrupting/fuse rating, frame & sensor, MVT / Power+ trip unit, trip function, rating plug, operation voltages, and mounted accessories.',
+    frames: 'WavePro (AKD-10 / PowerBreak II / AV-3)',
     ratings: '800A – 5,000A',
   },
   {

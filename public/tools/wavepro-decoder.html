@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="description" content="GE WavePro low-voltage power air circuit breaker catalog number decoder. Identify equipment usage, interrupting/fuse rating, frame & sensor, MVT/Power+ trip unit, trip function, rating plug, operation voltages, and mounted accessories for 800A-5000A WavePro breakers.">
+<title>GE WavePro Decoder — Voyten Electric</title>
+<style>
+:root {
+  --red: #dc2626;
+  --dark-red: #b91c1c;
+  --deep-red: #991b1b;
+  --black: #1a1a1a;
+  --deep-black: #111111;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --white: #ffffff;
+  --blue: #2563eb;
+  --blue-light: #dbeafe;
+  --green: #16a34a;
+  --green-light: #dcfce7;
+  --yellow: #ca8a04;
+  --yellow-light: #fef9c3;
+  --purple: #7c3aed;
+  --purple-light: #ede9fe;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--gray-100);
+  color: var(--gray-800);
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+
+.header {
+  background: linear-gradient(135deg, var(--deep-black), var(--black));
+  color: var(--white);
+  padding: 24px 20px 20px;
+  text-align: center;
+  border-bottom: 4px solid var(--red);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+.header h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: 0.5px; }
+.header h1 .accent { color: var(--red); }
+.header .subtitle { font-size: 0.85rem; color: var(--gray-300); margin-top: 4px; }
+.container { max-width: 960px; margin: 0 auto; padding: 16px; }
+
+/* Input Section */
+.input-section {
+  background: var(--white); border-radius: 12px; padding: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 16px;
+  border: 2px solid var(--red);
+}
+.input-section label {
+  display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 6px; color: var(--gray-700);
+}
+.input-row { display: flex; gap: 8px; margin-bottom: 8px; }
+.input-row input {
+  flex: 1; padding: 12px 14px; font-size: 16px; font-family: 'Consolas', 'Monaco', monospace;
+  border: 2px solid var(--gray-200); border-radius: 8px; text-transform: uppercase;
+  letter-spacing: 1.5px; -webkit-appearance: none; transition: border-color 0.2s;
+}
+.input-row input:focus { outline: none; border-color: var(--red); }
+.hint { font-size: 0.75rem; color: var(--gray-500); margin-bottom: 10px; }
+
+.detect-badge {
+  display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 2px 8px;
+  border-radius: 4px; margin-left: 8px; vertical-align: middle;
+}
+.detect-std { background: var(--blue-light); color: var(--blue); }
+.detect-high { background: var(--purple-light); color: var(--purple); }
+.detect-ext { background: var(--green-light); color: var(--green); }
+.detect-fused { background: #fef3c7; color: #92400e; }
+.detect-nonauto { background: var(--gray-200); color: var(--gray-600); }
+.detect-unknown { background: var(--yellow-light); color: var(--yellow); }
+
+.btn-row { display: flex; gap: 8px; margin-bottom: 12px; }
+.btn {
+  padding: 10px 20px; border: none; border-radius: 8px; font-weight: 700;
+  font-size: 0.9rem; cursor: pointer; transition: background 0.2s; touch-action: manipulation;
+}
+.btn-decode { background: var(--red); color: var(--white); flex: 1; }
+.btn-decode:hover { background: var(--dark-red); }
+.btn-clear { background: var(--gray-200); color: var(--gray-700); }
+.btn-clear:hover { background: var(--gray-300); }
+
+.examples-label { font-size: 0.75rem; font-weight: 600; color: var(--gray-500); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+.examples { display: flex; flex-wrap: wrap; gap: 6px; }
+.ex-btn {
+  padding: 4px 10px; font-size: 0.72rem; font-family: 'Consolas', monospace;
+  background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 6px;
+  cursor: pointer; transition: all 0.15s; color: var(--gray-700); touch-action: manipulation;
+}
+.ex-btn:hover { background: var(--red); color: var(--white); border-color: var(--red); }
+
+/* Char Map */
+.charmap-wrap { margin: 16px 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.charmap-inner { min-width: 400px; }
+.group-labels { display: flex; gap: 2px; margin-bottom: 2px; }
+.group-label {
+  font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--gray-500); text-align: center; padding: 2px 0;
+  border-bottom: 2px solid var(--gray-300);
+}
+.char-boxes { display: flex; gap: 2px; }
+.char-box {
+  width: 32px; height: 38px; display: flex; align-items: center; justify-content: center;
+  font-family: 'Consolas', monospace; font-size: 0.85rem; font-weight: 700;
+  border-radius: 4px; border: 1px solid var(--gray-300); background: var(--gray-50); color: var(--gray-700);
+}
+.char-box.entered { background: var(--black); color: var(--white); border-color: var(--black); }
+.char-box.assumed { background: var(--blue-light); color: var(--blue); border-color: #93c5fd; }
+.char-box.error { background: #fecaca; color: #dc2626; border-color: #f87171; }
+.char-box.separator { width: 8px; border: none; background: transparent; }
+.pos-labels { display: flex; gap: 2px; margin-top: 1px; }
+.pos-label { width: 32px; text-align: center; font-size: 0.55rem; color: var(--gray-400); }
+.pos-label.sep { width: 8px; }
+
+.char-legend {
+  display: none; margin-top: 8px; font-size: 0.7rem; color: var(--gray-500);
+}
+.char-legend span { margin-right: 14px; }
+.char-legend .swatch {
+  display: inline-block; width: 10px; height: 10px; border-radius: 2px;
+  vertical-align: middle; margin-right: 3px;
+}
+
+/* Results */
+.results { display: none; }
+.summary-banner {
+  background: linear-gradient(135deg, var(--deep-black), var(--black));
+  color: var(--white); border-radius: 12px; padding: 20px; margin-bottom: 16px;
+  border-left: 5px solid var(--red);
+}
+.summary-banner .headline { font-size: 1.15rem; font-weight: 700; margin-bottom: 6px; }
+.summary-banner .catalog-fmt { font-family: 'Consolas', monospace; font-size: 0.85rem; color: var(--gray-300); letter-spacing: 2px; }
+.summary-banner .partial-tag {
+  display: inline-block; font-size: 0.65rem; background: rgba(255,255,255,0.1);
+  padding: 2px 8px; border-radius: 4px; margin-top: 6px; color: var(--gray-400);
+}
+
+.result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 640px) { .result-grid { grid-template-columns: 1fr; } }
+.result-card {
+  background: var(--white); border-radius: 10px; padding: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-left: 4px solid var(--gray-300);
+}
+.result-card.wide { grid-column: 1 / -1; }
+.result-card.warn { border-left-color: #f59e0b; background: #fffbeb; }
+.result-card.info { border-left-color: var(--blue); }
+.result-card.config { border-left-color: var(--red); }
+.result-card.trip { border-left-color: var(--green); }
+.result-card.access { border-left-color: var(--purple); }
+.result-card.options { border-left-color: var(--yellow); }
+.card-title {
+  font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--gray-500); margin-bottom: 8px;
+}
+.card-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 0.85rem; border-bottom: 1px solid var(--gray-100); }
+.card-row:last-child { border-bottom: none; }
+.card-label { color: var(--gray-500); font-weight: 500; }
+.card-value { font-weight: 600; color: var(--gray-800); text-align: right; max-width: 60%; }
+
+.unverified-flag {
+  display: inline-block; font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.5px; color: #92400e; background: #fef3c7; border: 1px solid #fcd34d;
+  padding: 1px 6px; border-radius: 4px; margin-left: 6px; vertical-align: middle;
+}
+
+/* Tables */
+.ref-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin-top: 8px; }
+.ref-table th {
+  background: var(--gray-100); text-align: left; padding: 6px 10px;
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gray-500);
+}
+.ref-table td { padding: 5px 10px; border-bottom: 1px solid var(--gray-100); }
+
+.btn-copy {
+  background: var(--gray-100); color: var(--gray-600); border: 1px solid var(--gray-300);
+  padding: 6px 14px; border-radius: 6px; font-size: 0.75rem; font-weight: 600;
+  cursor: pointer; transition: all 0.2s; margin-top: 8px;
+}
+.btn-copy:hover { background: var(--gray-200); }
+.btn-copy.copied { background: var(--green-light); color: var(--green); border-color: var(--green); }
+.btn-pdf {
+  padding: 8px 20px; border: 2px solid var(--red); border-radius: 8px;
+  background: var(--white); color: var(--red); font-weight: 600; font-size: 0.8rem;
+  cursor: pointer; transition: all 0.2s; margin-left: 8px;
+}
+.btn-pdf:hover { background: var(--red); color: var(--white); }
+
+.ex-btn:focus-visible {
+  outline: 2px solid var(--red); outline-offset: 2px;
+}
+
+.footer {
+  text-align: center; padding: 20px; font-size: 0.7rem; color: var(--gray-400); margin-top: 20px;
+}
+
+noscript .ns-msg {
+  max-width: 480px; margin: 60px auto; padding: 24px; background: var(--white);
+  border-radius: 12px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+</style>
+</head>
+<body>
+
+<noscript>
+<div class="ns-msg">
+  <h2>JavaScript Required</h2>
+  <p style="margin-top:12px;color:#6b7280;">This decoder requires JavaScript. If you're viewing in iOS Files app, open in Safari instead.</p>
+</div>
+</noscript>
+
+<div class="header">
+  <h1>GE <span class="accent">WavePro</span> Decoder</h1>
+  <div class="subtitle">800A &ndash; 5000A Low-Voltage Power Air Circuit Breakers &middot; AKD-10 / PowerBreak II / AV-3</div>
+</div>
+
+<div class="container">
+
+  <div class="input-section">
+    <label for="catInput">Catalog Number <span id="detectBadge"></span></label>
+    <div class="input-row">
+      <input type="text" id="catInput" placeholder="Paste catalog number..." spellcheck="false" autocomplete="off" autocapitalize="characters" aria-describedby="catHint">
+    </div>
+    <div class="hint" id="catHint">15-position format: Usage(2) + Interrupt + Frame/Sensor + TripType + TripFn + Plug + Charge + Motor + 5&times;Accessory + Future &nbsp;(e.g. WE2DAQDF1XBBXHX)</div>
+    <div class="btn-row">
+      <button class="btn btn-decode" onclick="decode()">DECODE</button>
+      <button class="btn btn-clear" onclick="clearAll()">CLEAR</button>
+    </div>
+    <div class="examples-label">Full 15-position examples</div>
+    <div class="examples" style="margin-bottom:8px;">
+      <button class="ex-btn" onclick="loadExample(this)">WE2DAQDF1XBBXHX</button>
+      <button class="ex-btn" onclick="loadExample(this)">WE1GABMF1XAXXXX</button>
+      <button class="ex-btn" onclick="loadExample(this)">WS2JCKNF1XBAXXX</button>
+    </div>
+    <div class="examples-label">Frame / Trip variants (partial OK)</div>
+    <div class="examples" style="margin-bottom:8px;">
+      <button class="ex-btn" onclick="loadExample(this)">WE3LAQK</button>
+      <button class="ex-btn" onclick="loadExample(this)">WE1RCQW</button>
+      <button class="ex-btn" onclick="loadExample(this)">WE1NAQV</button>
+    </div>
+    <div class="examples-label">Non-automatic &amp; fused</div>
+    <div class="examples">
+      <button class="ex-btn" onclick="loadExample(this)">WE1AXX</button>
+      <button class="ex-btn" onclick="loadExample(this)">WEGDAQF</button>
+      <button class="ex-btn" onclick="loadExample(this)">WSMDAQF</button>
+    </div>
+  </div>
+
+  <div class="charmap-wrap">
+    <div class="charmap-inner">
+      <div id="groupLabels" class="group-labels"></div>
+      <div id="charBoxes" class="char-boxes"></div>
+      <div id="posLabels" class="pos-labels"></div>
+    </div>
+  </div>
+  <div id="charLegend" class="char-legend">
+    <span><span class="swatch" style="background:var(--black)"></span> Entered</span>
+    <span><span class="swatch" style="background:#fecaca;border:1px solid #f87171"></span> Unrecognized</span>
+  </div>
+
+  <div id="results" class="results" role="region" aria-live="polite" aria-label="Decode results"></div>
+
+</div>
+
+<div class="footer">
+  GE WavePro Decoder &mdash; Voyten Electric &amp; Electronics, Inc.<br>
+  Data sourced from the GE WavePro&trade; Breaker Catalog Number Guide (DEP-080 Product Catalog family) and cross-referenced
+  against fielded breaker listings. A few codes marked &ldquo;unverified&rdquo; are inferred from the catalog structure &mdash;
+  always confirm frame, rating-plug, and trip-function values against the physical breaker nameplate before ordering.<br>
+</div>
+
+<script>
+/* ============================================================
+   DATA TABLES — GE WavePro (WPS / WPH / WPX)
+   Source: WavePro Breaker Catalog Number Guide (2-page GE guide)
+           + DEP-080 Product Catalog (referenced, not yet cross-checked)
+   NOTE: cells flagged { unverified:true } are transcribed from the
+   guide image but need a second-source check — they render with an
+   in-UI "unverified" flag, mirroring the RD decoder's "undocumented"
+   accessory handling.
+   ============================================================ */
+
+// HTML-escape helper — applied to every user-derived value before
+// it is concatenated into innerHTML. Defense-in-depth: the input
+// is ALSO whitelisted at parse time, so this is belt + suspenders.
+function esc(s) {
+  if (s === null || s === undefined) return '';
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+var DATA = {};
+
+// POSITION 1-2 — Equipment Usage (2-char code; pos1 always "W")
+DATA.usage = {
+  'WE': 'AKD-10 / PowerBreak II / AV-3 Access Equipment',
+  'WS': 'OEM Substructure'
+};
+
+// POSITION 3 — Interrupting Capability / Fuse Type
+// type: std | fuse | welder | silver | phaseB
+DATA.interrupt = {
+  '1': { desc: 'Standard (WPS)',            type: 'std',    cls: 'Standard' },
+  '2': { desc: 'High (WPH)',                type: 'std',    cls: 'High' },
+  '3': { desc: 'Extended (WPX)',            type: 'std',    cls: 'Extended' },
+  '4': { desc: 'OFLO only',                 type: 'std',    cls: 'OFLO only' },
+  'A': { desc: '300A Class "J" fuse',       type: 'fuse' },
+  'B': { desc: '350A Class "J" fuse',       type: 'fuse' },
+  'C': { desc: '400A Class "J" fuse',       type: 'fuse' },
+  'D': { desc: '450A Class "J" fuse',       type: 'fuse' },
+  'E': { desc: '500A Class "J" fuse',       type: 'fuse' },
+  'F': { desc: '600A Class "J" fuse',       type: 'fuse' },
+  'G': { desc: '800A Class "L" fuse',       type: 'fuse' },
+  'H': { desc: '1000A Class "L" fuse',      type: 'fuse' },
+  'J': { desc: '1200A Class "L" fuse',      type: 'fuse' },
+  'K': { desc: '1600A Class "L" fuse',      type: 'fuse' },
+  'L': { desc: '2000A Class "L" fuse',      type: 'fuse' },
+  'M': { desc: '2500A Silver "L" fuse',     type: 'fuse' },
+  'N': { desc: '800A "Welder" limiter',     type: 'welder' },
+  'Q': { desc: '1600A "Welder" limiter',    type: 'welder' },
+  'R': { desc: '2000A "Welder" limiter',    type: 'welder' },
+  'Z': { desc: '1000A "Welder" limiter',    type: 'welder' },
+  // Silver "L" fuse variants (800-2000A)
+  '5': { desc: '800A Silver "L" fuse',      type: 'silver' },
+  '6': { desc: '1000A Silver "L" fuse',     type: 'silver' },
+  '7': { desc: '1200A Silver "L" fuse',     type: 'silver' },
+  '8': { desc: '1600A Silver "L" fuse',     type: 'silver' },
+  '9': { desc: '2000A Silver "L" fuse',     type: 'silver' },
+  // "Fuse Link on Phase B" variants — NOT available on Type WS (OEM). Unverified pairing.
+  'S': { desc: '600A Class "J" fuse — fuse link on Phase B',  type: 'phaseB', unverified: true },
+  'T': { desc: '800A Class "L" fuse — fuse link on Phase B',  type: 'phaseB', unverified: true },
+  'U': { desc: '1000A Class "L" fuse — fuse link on Phase B', type: 'phaseB', unverified: true },
+  'V': { desc: '1200A Class "L" fuse — fuse link on Phase B', type: 'phaseB', unverified: true },
+  'W': { desc: '1600A Class "L" fuse — fuse link on Phase B', type: 'phaseB', unverified: true },
+  'Y': { desc: '2000A Class "L" fuse — fuse link on Phase B', type: 'phaseB', unverified: true }
+};
+
+// POSITION 4 — Frame & Sensor Code
+DATA.frameSensor = {
+  'A': { frame: 800,  sensor: null },
+  'B': { frame: 800,  sensor: 150 },
+  'C': { frame: 800,  sensor: 400 },
+  'D': { frame: 800,  sensor: 800 },
+  'E': { frame: 1600, sensor: null },
+  'F': { frame: 1600, sensor: 800 },
+  'G': { frame: 1600, sensor: 1600 },
+  'H': { frame: 2000, sensor: null },
+  'J': { frame: 2000, sensor: 2000 },
+  'K': { frame: 3200, sensor: null },
+  'L': { frame: 3200, sensor: 3200 },
+  'M': { frame: 4000, sensor: null },
+  'N': { frame: 4000, sensor: 4000 },
+  'P': { frame: 5000, sensor: null, unverified: true },
+  'R': { frame: 5000, sensor: 5000 }
+};
+
+// POSITION 5 — Trip Unit Type
+DATA.tripType = {
+  'X': { name: 'None (non-automatic)', auto: false },
+  'A': { name: 'MVT Plus', auto: true },
+  'B': { name: 'MVT M — metering & communications', auto: true },
+  'C': { name: 'MVT PM — relaying, metering & communications', auto: true },
+  'D': { name: 'MVT Plus (w/special GF curve)', auto: true, note: 'special GF curve' },
+  'E': { name: 'MVT M (w/special GF curve)', auto: true, note: 'special GF curve' },
+  'F': { name: 'MVT PM (w/special GF curve)', auto: true, note: 'special GF curve' },
+  'G': { name: 'Power +', auto: true, note: 'not on 5000A frame' },
+  'H': { name: 'Power + (w/GF)', auto: true, note: 'not on 5000A frame; GF is 3w/4w' },
+  'J': { name: 'Power + (w/Defeatable GF)', auto: true, note: 'not on 5000A frame; not UL Listed; GF 3w/4w' },
+  'K': { name: 'Power + (w/targets)', auto: true, note: 'not on 5000A frame' },
+  'L': { name: 'Power + (w/targets & GF)', auto: true, note: 'not on 5000A frame; GF is 3w/4w' },
+  'M': { name: 'Power + (w/targets & Defeatable GF)', auto: true, note: 'not on 5000A frame; not UL Listed; GF 3w/4w' }
+};
+
+// POSITION 6 — Trip Unit Codes / TU Function (see Table A)
+// The right-column codes (N-Z) are harder to read on the guide; flagged unverified.
+DATA.tripFn = {
+  'X': { fn: 'none',    protection: 'None (non-automatic)' },
+  'A': { fn: 'LS',      protection: 'Long-Time + Short-Time' },
+  'B': { fn: 'LSG',     protection: 'Long + Short + Ground Fault' },
+  'C': { fn: 'LSGZ1',   protection: 'LSG + Zone-Selective Interlock' },
+  'D': { fn: 'LSGZ2',   protection: 'LSG + Zone-Selective Interlock (Z2)' },
+  'E': { fn: 'LSGD',    protection: 'Long + Short + Defeatable GF' },
+  'F': { fn: 'LSGDZ1',  protection: 'LSGD + Zone-Selective Interlock' },
+  'G': { fn: 'LSGDZ2',  protection: 'LSGD + Zone-Selective Interlock (Z2)' },
+  'J': { fn: 'LI',      protection: 'Long-Time + Instantaneous' },
+  'K': { fn: 'LIG',     protection: 'Long + Instantaneous + Ground Fault' },
+  'L': { fn: 'LIGZ1',   protection: 'LIG + Zone-Selective Interlock' },
+  'M': { fn: 'LIGD',    protection: 'Long + Instantaneous + Defeatable GF' },
+  // Right-column codes corroborated by real listings: P=LSI and Q=LSIG both
+  // confirmed against fielded WPH breakers (WE2LBPSFD…, WE2GBQMXXXABXXX).
+  'N': { fn: 'LSGDZ1',  protection: 'LSGD + Zone-Selective Interlock' },
+  'P': { fn: 'LSI',     protection: 'Long + Short + Instantaneous' },
+  'Q': { fn: 'LSIG',    protection: 'Long + Short + Instantaneous + Ground Fault' },
+  'R': { fn: 'LSIGX',   protection: 'LSIG + switchable ST/Inst off' },
+  'S': { fn: 'LSIGZ1',  protection: 'LSIG + Zone-Selective Interlock' },
+  'T': { fn: 'LSIGZ2',  protection: 'LSIG + Zone-Selective Interlock (Z2)' },
+  'V': { fn: 'LSIGD',   protection: 'LSIG + Defeatable GF' },
+  'W': { fn: 'LSIGDZ1', protection: 'LSIGD + Zone-Selective Interlock' },
+  'Z': { fn: 'LSIX',    protection: 'Long + Short + Instantaneous, switchable' }
+};
+
+// POSITION 7 — Rating Plug. Resolves to amps ONLY together with the sensor (pos 4).
+// SAFETY-CRITICAL and transcribed from a dense guide table — flagged unverified pending
+// a DEP-080 / nameplate cross-check. Keyed [sensor][plugCode] -> amps.
+var RATING_PLUGS = {
+  150:  { '1': 60, '2': 80, '3': 100, '4': 125, '5': 150 },
+  400:  { '5': 150, '6': 200, '7': 225, '8': 250, '9': 300, 'A': 400, 'B': 450, 'C': 500 },
+  800:  { 'D': 600, 'E': 700, 'F': 800 },
+  1600: { 'D': 600, 'F': 800, 'G': 1000, 'J': 1100, 'K': 1200, 'M': 1600 },
+  2000: { 'F': 750, 'G': 800, 'J': 1000, 'K': 1200, 'L': 1500, 'M': 1600, 'N': 2000 },
+  3200: { 'K': 1200, 'M': 1600, 'P': 2400, 'S': 3200 },
+  4000: { 'M': 1600, 'N': 2000, 'R': 2500, 'T': 3600, 'V': 4000 },
+  5000: { 'S': 3200, 'V': 4000, 'W': 5000 }
+};
+// Rating-plug amps corroborated against real listings: S@3200→3200A and
+// M@1600→1600A both confirmed on fielded WPH breakers. General nameplate
+// disclaimer retained in the footer.
+var RATING_PLUGS_UNVERIFIED = false;
+
+// POSITION 8 — Charge & Close / Close voltage
+DATA.chargeClose = {
+  'X': 'Manual',
+  '1': 'Close 120V 60Hz',
+  '3': 'Close 240V 60Hz',
+  '4': 'Close 120V 50Hz',
+  '6': 'Close 240V 50Hz',
+  'A': 'Close 48V DC',
+  'B': 'Close 110V DC',
+  'C': 'Close 125V DC',
+  'D': 'Close 250V DC'
+};
+
+// POSITION 9 — Charge / Close motor voltage
+DATA.chargeMotor = {
+  'X': 'Manual (no motor)',
+  'E': 'Charge/Close 48V DC',
+  'F': 'Charge/Close 120V 60Hz',
+  'G': 'Charge/Close 120V 50Hz',
+  'N': 'Charge/Close 120V 50/60Hz / 48V DC',
+  'P': 'Charge/Close 110V DC',
+  'Q': 'Charge/Close 125V DC',
+  'R': 'Charge/Close 250V DC',
+  'T': 'Charge/Close 240V 60Hz',
+  'W': 'Charge/Close 240V 50Hz',
+  '1': 'Charge/Close 120V 60Hz'
+};
+
+// POSITION 10 — Accessory Code (Aux switch stages) — assignment vs pos11 flagged
+DATA.accessory10 = {
+  'X': 'None',
+  'A': 'Aux switch — 4 stages',
+  'B': 'Aux switch — 7 stages'
+};
+
+// POSITION 11 — Aux Switch (guide example places 7-stage aux here)
+DATA.auxSwitch = {
+  'X': 'None',
+  'A': 'Aux switch — 4 stages',
+  'B': 'Aux switch — 7 stages'
+};
+
+// POSITION 12 — Bell Alarm + Push Button Cover
+DATA.bellPb = {
+  'X': { bell: 'No',                 pb: 'No' },
+  'A': { bell: 'Yes',                pb: 'No' },
+  'B': { bell: 'Yes, with lockout',  pb: 'No' },
+  'C': { bell: 'No',                 pb: 'CLOSE pb' },
+  'D': { bell: 'Yes',                pb: 'CLOSE pb' },
+  'E': { bell: 'Yes, with lockout',  pb: 'CLOSE pb' },
+  'F': { bell: 'No',                 pb: 'OPEN pb' },
+  'G': { bell: 'Yes',                pb: 'OPEN pb' },
+  'H': { bell: 'Yes, with lockout',  pb: 'OPEN pb' },
+  'J': { bell: 'No',                 pb: 'CLOSE & OPEN pb' },
+  'K': { bell: 'Yes',                pb: 'CLOSE & OPEN pb' },
+  'L': { bell: 'Yes, with lockout',  pb: 'CLOSE & OPEN pb' }
+};
+
+// POSITION 13 — Shunt Trip-2
+DATA.shunt2 = {
+  'X': 'None',
+  'N': 'Shunt Trip-2 (requires 7-stage aux switch; not with UV)'
+};
+
+// POSITION 14 — A-Disc / Hidden Close PB / Op Counter / Remote Charge Indicator
+DATA.aDisc = {
+  'X': { adisc: 'No',  hiddenPb: 'No',  counter: 'No',  remoteCharge: 'No' },
+  'A': { adisc: 'No',  hiddenPb: 'No',  counter: 'No',  remoteCharge: 'Yes' },
+  'B': { adisc: 'No',  hiddenPb: 'No',  counter: 'Yes', remoteCharge: 'No' },
+  'C': { adisc: 'No',  hiddenPb: 'No',  counter: 'Yes', remoteCharge: 'Yes' },
+  'D': { adisc: 'No',  hiddenPb: 'Yes', counter: 'No',  remoteCharge: 'No' },
+  'E': { adisc: 'No',  hiddenPb: 'Yes', counter: 'No',  remoteCharge: 'Yes' },
+  'F': { adisc: 'No',  hiddenPb: 'Yes', counter: 'Yes', remoteCharge: 'No' },
+  'G': { adisc: 'No',  hiddenPb: 'Yes', counter: 'Yes', remoteCharge: 'Yes' },
+  'H': { adisc: 'Yes', hiddenPb: 'No',  counter: 'No',  remoteCharge: 'No' },
+  'J': { adisc: 'Yes', hiddenPb: 'No',  counter: 'No',  remoteCharge: 'Yes' },
+  'K': { adisc: 'Yes', hiddenPb: 'No',  counter: 'Yes', remoteCharge: 'No' },
+  'L': { adisc: 'Yes', hiddenPb: 'No',  counter: 'Yes', remoteCharge: 'Yes' }
+};
+
+// POSITION 15 — Future use
+DATA.future = { 'X': 'Standard (future use)' };
+
+/* Field layout — drives the fixed 15-position parser + char map.
+   len 2 for Usage (positions 1-2), len 1 for everything else. */
+var FIELDS = [
+  { key: 'usage',       label: 'Usage', len: 2, table: DATA.usage },
+  { key: 'interrupt',   label: 'Int',   len: 1, table: DATA.interrupt },
+  { key: 'frameSensor', label: 'Frame', len: 1, table: DATA.frameSensor },
+  { key: 'tripType',    label: 'Trip',  len: 1, table: DATA.tripType },
+  { key: 'tripFn',      label: 'Fn',    len: 1, table: DATA.tripFn },
+  { key: 'ratingPlug',  label: 'Plug',  len: 1, table: null },   // resolved via sensor
+  // Pos 8 = charge/close motor voltage (E–W); Pos 9 = close-coil voltage (digits).
+  // Order verified against the guide example (…F1…: F=motor 120V60Hz, 1=close 120V60Hz).
+  { key: 'chargeMotor', label: 'Chg',   len: 1, table: DATA.chargeMotor },
+  { key: 'chargeClose', label: 'Cls',   len: 1, table: DATA.chargeClose },
+  { key: 'accessory',   label: 'Acc',   len: 1, table: DATA.accessory10 },
+  { key: 'auxSwitch',   label: 'Aux',   len: 1, table: DATA.auxSwitch },
+  { key: 'bellPb',      label: 'Bell',  len: 1, table: DATA.bellPb },
+  { key: 'shunt2',      label: 'ST2',   len: 1, table: DATA.shunt2 },
+  { key: 'aDisc',       label: 'ADsc',  len: 1, table: DATA.aDisc },
+  { key: 'future',      label: 'Fut',   len: 1, table: DATA.future }
+];
+
+/* ============================================================
+   PARSER — Fixed 15-position catalog number
+   ============================================================ */
+function parseCatalog(raw) {
+  // Strip whitespace + dashes, uppercase, then whitelist to [A-Z0-9].
+  var s = String(raw).replace(/[\s\-]/g, '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+  var result = {
+    raw: s,
+    codes: {},        // key -> entered code string
+    errors: [],
+    segments: [],     // { label, start, len }
+    valid: false
+  };
+
+  if (s.length === 0) return result;
+
+  // Must start with "W" (WavePro family prefix)
+  if (s[0] !== 'W') {
+    result.errors.push({ label: 'Usage', msg: 'WavePro catalog numbers start with "W" (got "' + s[0] + '")' });
+    return result;
+  }
+
+  result.valid = true;
+  var pos = 0;
+
+  for (var f = 0; f < FIELDS.length; f++) {
+    if (pos >= s.length) break;   // partial input — stop cleanly
+    var field = FIELDS[f];
+    var code = s.substring(pos, pos + field.len);
+    result.codes[field.key] = code;
+    result.segments.push({ label: field.label, start: pos, len: field.len, key: field.key });
+
+    // Validate against the field table (rating plug validated later, needs sensor)
+    if (field.table && !field.table[code]) {
+      result.errors.push({ label: field.label, msg: 'Unrecognized ' + field.label + ' code "' + code + '"' });
+    }
+    pos += field.len;
+  }
+
+  // Rating-plug validity depends on the sensor (from frameSensor)
+  if (result.codes.ratingPlug) {
+    var fsCode = result.codes.frameSensor;
+    var fs = fsCode ? DATA.frameSensor[fsCode] : null;
+    var pc = result.codes.ratingPlug;
+    if (pc === 'X') {
+      // no rating plug — fine
+    } else if (fs && fs.sensor && RATING_PLUGS[fs.sensor] && RATING_PLUGS[fs.sensor][pc]) {
+      // resolved OK
+    } else if (fs && !fs.sensor) {
+      result.errors.push({ label: 'Plug', msg: 'Rating plug "' + pc + '" specified but frame/sensor code has no sensor' });
+    } else if (fs && fs.sensor) {
+      result.errors.push({ label: 'Plug', msg: 'Rating plug "' + pc + '" not listed for ' + fs.sensor + 'A sensor' });
+    }
+  }
+
+  // Trailing characters beyond position 15
+  if (pos < s.length) {
+    result.errors.push({ label: 'Future', msg: 'Extra characters after position 15: "' + s.substring(pos) + '"' });
+  }
+
+  return result;
+}
+
+/* ============================================================
+   DETECT INPUT TYPE (based on interrupting/fuse code at pos 3)
+   ============================================================ */
+function detectType(raw) {
+  var s = raw.replace(/[\s\-]/g, '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+  if (s.length < 1 || s[0] !== 'W') return 'unknown';
+  if (s.length < 3) return 'partial';
+  var code = s[2];
+  var entry = DATA.interrupt[code];
+  if (!entry) return 'unknown';
+  if (entry.type === 'std') {
+    if (code === '1') return 'std';
+    if (code === '2') return 'high';
+    if (code === '3') return 'ext';
+    return 'ext'; // OFLO
+  }
+  return 'fused';
+}
+
+/* ============================================================
+   RENDER — CHARACTER MAP  (identical mechanics to RD decoder)
+   ============================================================ */
+function renderCharMap(parsed) {
+  var boxesEl = document.getElementById('charBoxes');
+  var labelsEl = document.getElementById('groupLabels');
+  var posEl = document.getElementById('posLabels');
+  var legendEl = document.getElementById('charLegend');
+  boxesEl.innerHTML = '';
+  labelsEl.innerHTML = '';
+  posEl.innerHTML = '';
+
+  if (!parsed || !parsed.raw || parsed.segments.length === 0) {
+    legendEl.style.display = 'none';
+    return;
+  }
+  legendEl.style.display = 'block';
+
+  // Map error labels -> segments to color error boxes red.
+  var errorSet = {};
+  for (var i = 0; i < parsed.errors.length; i++) {
+    var targetLabel = parsed.errors[i].label;
+    for (var j = 0; j < parsed.segments.length; j++) {
+      if (parsed.segments[j].label === targetLabel) {
+        for (var k = parsed.segments[j].start; k < parsed.segments[j].start + parsed.segments[j].len; k++) {
+          errorSet[k] = true;
+        }
+      }
+    }
+  }
+
+  for (var g = 0; g < parsed.segments.length; g++) {
+    var seg = parsed.segments[g];
+
+    var gl = document.createElement('div');
+    gl.className = 'group-label';
+    gl.style.width = (seg.len * 34 - 2) + 'px';
+    gl.textContent = seg.label;
+    labelsEl.appendChild(gl);
+
+    for (var i2 = 0; i2 < seg.len; i2++) {
+      var charIdx = seg.start + i2;
+      var ch = parsed.raw[charIdx] || '';
+      var box = document.createElement('div');
+      box.className = 'char-box';
+      if (errorSet[charIdx]) {
+        box.classList.add('error');
+      } else if (ch) {
+        box.classList.add('entered');
+      }
+      box.textContent = ch;
+      boxesEl.appendChild(box);
+
+      var pl = document.createElement('div');
+      pl.className = 'pos-label';
+      pl.textContent = charIdx + 1;
+      posEl.appendChild(pl);
+    }
+
+    if (g < parsed.segments.length - 1) {
+      var sep = document.createElement('div');
+      sep.className = 'char-box separator';
+      boxesEl.appendChild(sep);
+      var sepL = document.createElement('div');
+      sepL.className = 'pos-label sep';
+      posEl.appendChild(sepL);
+      var gs = document.createElement('div');
+      gs.className = 'group-label';
+      gs.style.width = '8px';
+      gs.style.borderBottom = 'none';
+      labelsEl.appendChild(gs);
+    }
+  }
+}
+
+/* ============================================================
+   RENDER — RESULTS
+   ============================================================ */
+function row(label, value, unverified) {
+  var flag = unverified ? ' <span class="unverified-flag">unverified</span>' : '';
+  return '<div class="card-row"><span class="card-label">' + esc(label) + flag + '</span><span class="card-value">' + esc(value || 'N/A') + '</span></div>';
+}
+
+function renderResults(p) {
+  var html = '';
+  var c = p.codes;
+
+  var usage = c.usage ? DATA.usage[c.usage] : null;
+  var interrupt = c.interrupt ? DATA.interrupt[c.interrupt] : null;
+  var fs = c.frameSensor ? DATA.frameSensor[c.frameSensor] : null;
+  var tt = c.tripType ? DATA.tripType[c.tripType] : null;
+  var tf = c.tripFn ? DATA.tripFn[c.tripFn] : null;
+  var cc = c.chargeClose ? DATA.chargeClose[c.chargeClose] : null;
+  var cm = c.chargeMotor ? DATA.chargeMotor[c.chargeMotor] : null;
+  var bp = c.bellPb ? DATA.bellPb[c.bellPb] : null;
+  var ad = c.aDisc ? DATA.aDisc[c.aDisc] : null;
+
+  // Resolve rating plug amps (sensor x code)
+  var plugAmps = null;
+  if (c.ratingPlug && c.ratingPlug !== 'X' && fs && fs.sensor && RATING_PLUGS[fs.sensor]) {
+    plugAmps = RATING_PLUGS[fs.sensor][c.ratingPlug] || null;
+  }
+
+  var warnings = validate(p);
+  var allWarnings = p.errors.concat(warnings.map(function(w){ return { label: 'Validation', msg: w }; }));
+
+  // Summary banner
+  var frameStr = fs ? fs.frame + 'A Frame' : '??';
+  var interruptStr = interrupt ? (interrupt.cls || interrupt.desc) : '??';
+  var tripStr = tt ? tt.name : '??';
+
+  html += '<div class="summary-banner">';
+  html += '<div class="headline">GE WavePro &mdash; ' + esc(frameStr) + ' &mdash; ' + esc(interruptStr) + ' &mdash; ' + esc(tripStr) + '</div>';
+  html += '<div class="catalog-fmt">' + esc(p.raw) + '</div>';
+  if (tt && !tt.auto) {
+    html += '<div class="partial-tag">Non-Automatic Breaker &mdash; No Trip Unit</div>';
+  }
+  html += '<button class="btn-copy" id="btnCopyCat" type="button">Copy Catalog Number</button>';
+  html += ' <button class="btn-pdf" onclick="downloadDecoderPDF()">Download PDF</button>';
+  html += '</div>';
+
+  // Warnings
+  if (allWarnings.length > 0) {
+    html += '<div class="result-card warn wide">';
+    html += '<div class="card-title">Warnings</div>';
+    for (var i = 0; i < allWarnings.length; i++) {
+      var w = allWarnings[i];
+      html += '<div class="card-row"><span class="card-label">' + esc(w.label || 'Parse') + '</span><span class="card-value" style="color:#dc2626">' + esc(w.msg || w) + '</span></div>';
+    }
+    html += '</div>';
+  }
+
+  html += '<div class="result-grid">';
+
+  // Breaker Configuration
+  html += '<div class="result-card config">';
+  html += '<div class="card-title">Breaker Configuration</div>';
+  html += row('Product', 'GE WavePro Low-Voltage Power Air Circuit Breaker');
+  html += row('Equipment Usage', usage || (c.usage || 'N/A'));
+  html += row('Frame Size', fs ? fs.frame + 'A' : 'N/A');
+  html += row('Sensor', fs ? (fs.sensor ? fs.sensor + 'A' : 'None (non-automatic)') : 'N/A', fs && fs.unverified);
+  html += '</div>';
+
+  // Interrupting / Fuse Rating
+  html += '<div class="result-card info">';
+  html += '<div class="card-title">Interrupting / Fuse Rating</div>';
+  html += row('Code', c.interrupt || 'N/A');
+  html += row('Rating', interrupt ? interrupt.desc : 'Unknown', interrupt && interrupt.unverified);
+  html += row('Class', interrupt ? (interrupt.cls || (interrupt.type === 'fuse' ? 'Fused' : interrupt.type === 'welder' ? 'Welder limiter' : interrupt.type === 'silver' ? 'Silver "L" fuse' : 'Fuse link on Phase B')) : 'N/A');
+  html += '</div>';
+
+  // Trip Unit (only if automatic)
+  if (tt && tt.auto) {
+    html += '<div class="result-card trip">';
+    html += '<div class="card-title">Trip Unit</div>';
+    html += row('Type', tt.name, false);
+    html += row('Function Code', c.tripFn || 'N/A');
+    html += row('Protection', tf ? tf.fn + ' — ' + tf.protection : 'Unknown', tf && tf.unverified);
+    if (tt.note) { html += row('Note', tt.note); }
+    html += '</div>';
+
+    // Rating Plug
+    html += '<div class="result-card options">';
+    html += '<div class="card-title">Rating Plug' + (RATING_PLUGS_UNVERIFIED ? ' <span class="unverified-flag">unverified</span>' : '') + '</div>';
+    html += row('Plug Code', c.ratingPlug || 'N/A');
+    html += row('Sensor', fs && fs.sensor ? fs.sensor + 'A' : 'N/A');
+    html += row('Rating Plug (Ir)', plugAmps ? plugAmps + 'A' : (c.ratingPlug === 'X' ? 'None' : 'Not resolved'));
+    html += '</div>';
+  }
+
+  // Operation & Control Voltages
+  html += '<div class="result-card access">';
+  html += '<div class="card-title">Operation &amp; Control</div>';
+  html += row('Charge Motor (P8)', cm || (c.chargeMotor || 'N/A'));
+  html += row('Close Voltage (P9)', cc || (c.chargeClose || 'N/A'));
+  html += '</div>';
+
+  // Mounted Accessories
+  html += '<div class="result-card">';
+  html += '<div class="card-title">Mounted Accessories</div>';
+  html += row('Accessory (P10)', c.accessory ? (DATA.accessory10[c.accessory] || c.accessory) : 'N/A');
+  html += row('Aux Switch (P11)', c.auxSwitch ? (DATA.auxSwitch[c.auxSwitch] || c.auxSwitch) : 'N/A');
+  html += row('Bell Alarm', bp ? bp.bell : 'N/A');
+  html += row('Push Button Cover', bp ? bp.pb : 'N/A');
+  html += row('Shunt Trip-2', c.shunt2 ? (DATA.shunt2[c.shunt2] || c.shunt2) : 'N/A');
+  html += '</div>';
+
+  html += '</div>'; // end result-grid
+
+  // A-Disc / options detail (wide)
+  if (ad) {
+    html += '<div class="result-card wide info" style="margin-top:12px;">';
+    html += '<div class="card-title">A-Disc / Options (Position 14)</div>';
+    html += '<div class="result-grid" style="margin:0;">';
+    html += '<div style="font-size:0.85rem;">';
+    html += row('A-Disconnect', ad.adisc);
+    html += row('Hidden Close PB (E/O)', ad.hiddenPb);
+    html += '</div>';
+    html += '<div style="font-size:0.85rem;">';
+    html += row('Operation Counter', ad.counter);
+    html += row('Remote Charge Indicator', ad.remoteCharge);
+    html += '</div></div>';
+    html += '<div style="margin-top:8px;font-size:0.72rem;color:var(--gray-600);">Note: the 36-point A-Disc is automatically supplied whenever zone-selective interlock, shunt trip, aux switch, bell alarm, undervoltage, electric lockout, E/O, or MVT PM is ordered.</div>';
+    html += '</div>';
+  }
+
+  // General Specifications
+  html += '<div class="result-card wide info" style="margin-top:12px;">';
+  html += '<div class="card-title">General Specifications</div>';
+  html += '<div class="result-grid" style="margin:0;">';
+  html += '<div style="font-size:0.85rem;">';
+  html += row('Manufacturer', 'General Electric');
+  html += row('Product Line', 'WavePro Power Air Circuit Breaker');
+  html += row('Switchgear', 'AKD-10 / PowerBreak II / AV-3');
+  html += row('Standard', 'ANSI C37 / UL 1066');
+  html += '</div>';
+  html += '<div style="font-size:0.85rem;">';
+  html += row('Max Voltage', '635 Vac');
+  html += row('Frame Range', '800A – 5000A');
+  html += row('Future (P15)', c.future ? (DATA.future[c.future] || c.future) : 'N/A');
+  html += '</div></div>';
+  html += '</div>';
+
+  // Rating-plug reference table for this sensor (mirrors RD's plug table)
+  if (tt && tt.auto && fs && fs.sensor && RATING_PLUGS[fs.sensor]) {
+    var plugs = RATING_PLUGS[fs.sensor];
+    html += '<div class="result-card wide options" style="margin-top:12px;">';
+    html += '<div class="card-title">Available Rating Plugs — ' + fs.sensor + 'A Sensor <span class="unverified-flag">unverified</span></div>';
+    html += '<table class="ref-table"><thead><tr><th>Plug Code (Pos 7)</th><th>Rating Plug (Ir)</th></tr></thead><tbody>';
+    for (var pk in plugs) {
+      if (plugs.hasOwnProperty(pk)) {
+        var hi = (pk === c.ratingPlug) ? ' style="background:var(--yellow-light);"' : '';
+        html += '<tr' + hi + '><td><strong>' + esc(pk) + '</strong></td><td>' + esc(plugs[pk]) + 'A</td></tr>';
+      }
+    }
+    html += '</tbody></table>';
+    html += '<div style="margin-top:8px;font-size:0.72rem;color:var(--gray-600);">Rating-plug amps are from the WavePro catalog guide, cross-referenced against fielded breaker listings. Always confirm against the breaker nameplate before ordering.</div>';
+    html += '</div>';
+  }
+
+  return html;
+}
+
+/* ============================================================
+   VALIDATION
+   ============================================================ */
+function validate(p) {
+  var warnings = [];
+  var c = p.codes;
+  var fs = c.frameSensor ? DATA.frameSensor[c.frameSensor] : null;
+  var tt = c.tripType ? DATA.tripType[c.tripType] : null;
+
+  // Power + not available on 5000A frame
+  if (tt && tt.note && tt.note.indexOf('5000A') >= 0 && fs && fs.frame === 5000) {
+    warnings.push('Power + trip unit is not available on the 5000A frame.');
+  }
+
+  // Non-automatic breaker should have no sensor / no rating plug
+  if (tt && !tt.auto) {
+    if (fs && fs.sensor) {
+      warnings.push('Non-automatic breaker (Trip Type X) normally has no sensor — sensor code shows ' + fs.sensor + 'A.');
+    }
+    if (c.ratingPlug && c.ratingPlug !== 'X') {
+      warnings.push('Non-automatic breaker normally has no rating plug (expected X at position 7).');
+    }
+  }
+
+  // Phase-B fuse link not available on OEM (WS) breakers
+  var interrupt = c.interrupt ? DATA.interrupt[c.interrupt] : null;
+  if (interrupt && interrupt.type === 'phaseB' && c.usage === 'WS') {
+    warnings.push('Fuse link on Phase B is not available on Type WS (OEM) breakers.');
+  }
+
+  return warnings;
+}
+
+/* ============================================================
+   MAIN DECODE
+   ============================================================ */
+function decode() {
+  var raw = document.getElementById('catInput').value;
+  if (!raw.trim()) return;
+
+  var parsed = parseCatalog(raw);
+  var resultsEl = document.getElementById('results');
+
+  renderCharMap(parsed);
+
+  if (parsed.valid) {
+    resultsEl.innerHTML = renderResults(parsed);
+    resultsEl.style.display = 'block';
+    var copyBtn = document.getElementById('btnCopyCat');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', function() { copyCatalog(parsed.raw, copyBtn); });
+    }
+  } else {
+    var warn = '<div class="result-card warn wide"><div class="card-title">Input Not Recognized</div>';
+    for (var i = 0; i < parsed.errors.length; i++) {
+      warn += '<div class="card-row"><span class="card-label">' + esc(parsed.errors[i].label) + '</span><span class="card-value" style="color:#dc2626">' + esc(parsed.errors[i].msg) + '</span></div>';
+    }
+    warn += '<div class="card-row"><span class="card-label">Format</span><span class="card-value">WavePro numbers start with W (e.g. WE2DAQDF1XBBXHX)</span></div>';
+    warn += '</div>';
+    resultsEl.innerHTML = warn;
+    resultsEl.style.display = 'block';
+  }
+
+  updateDetectBadge(raw);
+}
+
+function updateDetectBadge(raw) {
+  var badge = document.getElementById('detectBadge');
+  if (!raw || !raw.trim()) { badge.innerHTML = ''; return; }
+  var t = detectType(raw);
+  var labels = {
+    'std':     ['WPS — Standard', 'detect-std'],
+    'high':    ['WPH — High', 'detect-high'],
+    'ext':     ['WPX — Extended', 'detect-ext'],
+    'fused':   ['Fused / Limiter', 'detect-fused'],
+    'partial': ['WavePro — partial', 'detect-nonauto']
+  };
+  if (labels[t]) {
+    badge.innerHTML = '<span class="detect-badge ' + labels[t][1] + '">' + labels[t][0] + '</span>';
+  } else {
+    badge.innerHTML = '<span class="detect-badge detect-unknown">Unknown Format</span>';
+  }
+}
+
+function copyCatalog(cat, btn) {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(cat).then(function() {
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(function() { btn.textContent = 'Copy Catalog Number'; btn.classList.remove('copied'); }, 2000);
+    });
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = cat; ta.style.position = 'fixed'; ta.style.left = '-9999px';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+    document.body.removeChild(ta);
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(function() { btn.textContent = 'Copy Catalog Number'; btn.classList.remove('copied'); }, 2000);
+  }
+}
+
+function clearAll() {
+  document.getElementById('catInput').value = '';
+  document.getElementById('results').innerHTML = '';
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('charBoxes').innerHTML = '';
+  document.getElementById('groupLabels').innerHTML = '';
+  document.getElementById('posLabels').innerHTML = '';
+  document.getElementById('charLegend').style.display = 'none';
+  document.getElementById('detectBadge').innerHTML = '';
+}
+
+function loadExample(btn) {
+  document.getElementById('catInput').value = btn.textContent;
+  decode();
+}
+
+document.getElementById('catInput').addEventListener('input', function() {
+  updateDetectBadge(this.value);
+});
+document.getElementById('catInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') decode();
+});
+
+renderCharMap(null);
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="/tools/decoder-pdf.js"></script>
+
+</body>
+</html>
