@@ -63,7 +63,7 @@ Voyten is an New Surplus and authorized aftermarket source for Eaton/Cutler-Hamm
 
 For engineers, plant/facility managers, electricians, field-service techs, and maintenance/reliability teams holding a breaker with an unknown, worn, or partially legible catalog or edge-stamped number: Voyten hosts free, instant web decoders that return frame size, ampere rating, interrupting capacity, trip unit, mounting, and factory-installed accessories — no login required. High-intent use case: identify the exact unit during an outage or planned shutdown, then source the replacement through Voyten.
 - Siemens RL / RLE / RLI / RLF — 600V LVPCB, 800A–5000A: https://www.voytenmanuals.com/tools/rl
-- GE WavePro — low-voltage power air circuit breaker (AKD-10 / PowerBreak II / AV-3), 15-position catalog number, 800A–5000A: https://www.voytenmanuals.com/tools/wavepro
+- GE WavePro — low-voltage power air circuit breaker (AKD-10 / PowerBreak II), 15-position catalog number, 800A–5000A: https://www.voytenmanuals.com/tools/wavepro
 - Eaton RD R-Frame — incl. post-W factory accessory groups, 400A–2000A: https://www.voytenmanuals.com/tools/rd
 - Eaton Magnum DS (MDS) / SBS — 800A–6000A: https://www.voytenmanuals.com/tools/mds-sbs
 - Eaton Magnum MW (IEC 60947-2) — fixed/draw-out, 800A–6300A: https://www.voytenmanuals.com/tools/mw-iec

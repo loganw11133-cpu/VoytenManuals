@@ -226,7 +226,7 @@ noscript .ns-msg {
 
 <div class="header">
   <h1>GE <span class="accent">WavePro</span> Decoder</h1>
-  <div class="subtitle">800A &ndash; 5000A Low-Voltage Power Air Circuit Breakers &middot; AKD-10 / PowerBreak II / AV-3</div>
+  <div class="subtitle">800A &ndash; 5000A Low-Voltage Power Air Circuit Breakers &middot; AKD-10 / PowerBreak II</div>
 </div>
 
 <div class="container">
@@ -312,7 +312,7 @@ var DATA = {};
 
 // POSITION 1-2 — Equipment Usage (2-char code; pos1 always "W")
 DATA.usage = {
-  'WE': 'AKD-10 / PowerBreak II / AV-3 Access Equipment',
+  'WE': 'AKD-10 / PowerBreak II Access Equipment',
   'WS': 'OEM Substructure'
 };
 
@@ -435,6 +435,39 @@ var RATING_PLUGS = {
 // M@1600→1600A both confirmed on fielded WPH breakers. General nameplate
 // disclaimer retained in the footer.
 var RATING_PLUGS_UNVERIFIED = false;
+
+/* ============================================================
+   INTERRUPTING RATINGS (kAIC) — WavePro Selection Guide, Table 2-1
+   "Breaker interruption ratings" — Short-Circuit RMS Symmetrical kA.
+   Breaker type = WP + class(S/H/X) + frame(08/16/20).
+   Each voltage entry = [Short-Time Withstand, With Inst. Trip, Without Inst. Trip].
+   Voltage keys: nominal 600 (635 max) / 480 (508 max) / 240 (254 max).
+   ============================================================ */
+var KAIC = {
+  'WPS-08': { 600: [30, 30, 30], 480: [30, 30, 30], 240: [30, 42, 30] },
+  'WPH-08': { 600: [42, 42, 42], 480: [42, 42, 42], 240: [42, 50, 42] },
+  'WPX-08': { 600: [50, 50, 50], 480: [65, 65, 65], 240: [65, 65, 65] },
+  'WPS-16': { 600: [42, 42, 42], 480: [50, 50, 50], 240: [50, 65, 50] },
+  'WPH-16': { 600: [65, 65, 65], 480: [65, 65, 65], 240: [65, 65, 65] },
+  'WPS-20': { 600: [65, 65, 65], 480: [65, 65, 65], 240: [65, 65, 65] }
+};
+// pos-3 interrupt code -> breaker class letter (only standard classes have kAIC types)
+var INTERRUPT_CLASS = { '1': 'S', '2': 'H', '3': 'X' };
+// frame amps -> 2-digit type suffix
+var FRAME_SUFFIX = { 800: '08', 1600: '16', 2000: '20', 3200: '32', 4000: '40', 5000: '50' };
+var KAIC_VOLTS = [
+  { nominal: 600, max: 635 },
+  { nominal: 480, max: 508 },
+  { nominal: 240, max: 254 }
+];
+
+// Build the WavePro breaker type (e.g. "WPH-16") from interrupt code + frame amps.
+function waveproType(interruptCode, frameAmps) {
+  var cls = INTERRUPT_CLASS[interruptCode];
+  var suf = FRAME_SUFFIX[frameAmps];
+  if (!cls || !suf) return null;
+  return 'WP' + cls + '-' + suf;
+}
 
 // POSITION 8 — Charge & Close / Close voltage
 DATA.chargeClose = {
@@ -719,6 +752,10 @@ function renderResults(p) {
   var bp = c.bellPb ? DATA.bellPb[c.bellPb] : null;
   var ad = c.aDisc ? DATA.aDisc[c.aDisc] : null;
 
+  // WavePro breaker type + interrupting (kAIC) ratings from Table 2-1
+  var wpType = (c.interrupt && fs) ? waveproType(c.interrupt, fs.frame) : null;
+  var kaic = wpType ? KAIC[wpType] : null;
+
   // Resolve rating plug amps (sensor x code)
   var plugAmps = null;
   if (c.ratingPlug && c.ratingPlug !== 'X' && fs && fs.sensor && RATING_PLUGS[fs.sensor]) {
@@ -771,6 +808,8 @@ function renderResults(p) {
   html += row('Code', c.interrupt || 'N/A');
   html += row('Rating', interrupt ? interrupt.desc : 'Unknown', interrupt && interrupt.unverified);
   html += row('Class', interrupt ? (interrupt.cls || (interrupt.type === 'fuse' ? 'Fused' : interrupt.type === 'welder' ? 'Welder limiter' : interrupt.type === 'silver' ? 'Silver "L" fuse' : 'Fuse link on Phase B')) : 'N/A');
+  if (wpType) { html += row('Breaker Type', wpType); }
+  if (kaic) { html += row('AIC @ 480V (w/inst)', kaic[480][1] + ' kA'); }
   html += '</div>';
 
   // Trip Unit (only if automatic)
@@ -811,6 +850,27 @@ function renderResults(p) {
 
   html += '</div>'; // end result-grid
 
+  // Interrupting Ratings (kAIC) — Table 2-1
+  if (kaic) {
+    html += '<div class="result-card wide info" style="margin-top:12px;">';
+    html += '<div class="card-title">Interrupting Ratings — ' + esc(wpType) + ' (Short-Circuit RMS Symmetrical kAIC)</div>';
+    html += '<table class="ref-table"><thead><tr><th>Rated AC Voltage (max)</th><th>Short-Time Withstand</th><th>With Inst. Trip</th><th>Without Inst. Trip</th></tr></thead><tbody>';
+    for (var vi = 0; vi < KAIC_VOLTS.length; vi++) {
+      var v = KAIC_VOLTS[vi];
+      var r = kaic[v.nominal];
+      if (!r) continue;
+      html += '<tr><td><strong>' + v.nominal + 'V</strong> <span style="color:var(--gray-500);">(' + v.max + ' max)</span></td><td>' + r[0] + ' kA</td><td>' + r[1] + ' kA</td><td>' + r[2] + ' kA</td></tr>';
+    }
+    html += '</tbody></table>';
+    html += '<div style="margin-top:8px;font-size:0.72rem;color:var(--gray-600);">Source: GE WavePro Selection Guide, Table 2-1. &ldquo;With/Without Inst. Trip&rdquo; depends on whether the trip unit provides an instantaneous element. Verify against the breaker nameplate before applying.</div>';
+    html += '</div>';
+  } else if (c.interrupt && INTERRUPT_CLASS[c.interrupt] && fs) {
+    html += '<div class="result-card wide warn" style="margin-top:12px;">';
+    html += '<div class="card-title">Interrupting Ratings</div>';
+    html += '<div style="font-size:0.8rem;color:var(--gray-700);">The ' + esc((wpType || ('WP' + INTERRUPT_CLASS[c.interrupt] + '-' + (fs.frame/100)))) + ' combination is not listed in WavePro Selection Guide Table 2-1 (which covers the 800A / 1600A / 2000A frames). Consult the full WavePro selection catalog for this frame&rsquo;s interrupting rating.</div>';
+    html += '</div>';
+  }
+
   // A-Disc / options detail (wide)
   if (ad) {
     html += '<div class="result-card wide info" style="margin-top:12px;">';
@@ -835,7 +895,7 @@ function renderResults(p) {
   html += '<div style="font-size:0.85rem;">';
   html += row('Manufacturer', 'General Electric');
   html += row('Product Line', 'WavePro Power Air Circuit Breaker');
-  html += row('Switchgear', 'AKD-10 / PowerBreak II / AV-3');
+  html += row('Switchgear', 'AKD-10 / PowerBreak II');
   html += row('Standard', 'ANSI C37 / UL 1066');
   html += '</div>';
   html += '<div style="font-size:0.85rem;">';

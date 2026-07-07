@@ -6,7 +6,7 @@ const URL = 'https://www.voytenmanuals.com/tools/wavepro';
 export const metadata: Metadata = {
   title: 'GE WavePro Breaker Decoder | Free Catalog Number Tool',
   description:
-    'Free GE WavePro low-voltage power air circuit breaker catalog number decoder. Identify equipment usage, interrupting/fuse rating, frame & sensor, MVT / Power+ trip unit, trip function, rating plug, operation voltages, and mounted accessories. 800A–5,000A (AKD-10 / PowerBreak II / AV-3).',
+    'Free GE WavePro low-voltage power air circuit breaker catalog number decoder. Identify equipment usage, interrupting/fuse rating, frame & sensor, MVT / Power+ trip unit, trip function, rating plug, operation voltages, and mounted accessories. 800A–5,000A (AKD-10 / PowerBreak II).',
   robots: { index: true, follow: true },
   alternates: { canonical: URL },
 };

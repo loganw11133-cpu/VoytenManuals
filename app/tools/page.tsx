@@ -25,7 +25,7 @@ const tools = [
     name: 'WavePro',
     manufacturer: 'GE',
     description: 'Decode GE WavePro low-voltage power air circuit breaker catalog numbers. Identifies equipment usage, interrupting/fuse rating, frame & sensor, MVT / Power+ trip unit, trip function, rating plug, operation voltages, and mounted accessories.',
-    frames: 'WavePro (AKD-10 / PowerBreak II / AV-3)',
+    frames: 'WavePro (AKD-10 / PowerBreak II)',
     ratings: '800A – 5,000A',
   },
   {
