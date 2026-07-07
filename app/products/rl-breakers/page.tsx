@@ -285,9 +285,10 @@ export default async function RLBreakersPage() {
               </h1>
 
               <p className="text-slate-300 text-lg leading-relaxed mb-6 max-w-xl">
-                Voyten Electric purchased <strong className="text-white">all remaining RL &amp; LA breaker inventory</strong> from
-                the Siemens Wendell, NC facility. We are your New Surplus authorized source for  breakers, Static Trip III units,
-                and every renewal part in the RL product line.
+                Voyten Electric is your <strong className="text-white">New Surplus authorized source</strong> for
+                Siemens Type RL &amp; LA breakers, acquired directly from the Siemens Wendell, NC facility. Complete
+                breakers — new and reconditioned — plus Static Trip III units, rating plugs, and every renewal part
+                in the RL product line, stocked for immediate shipment.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3">
