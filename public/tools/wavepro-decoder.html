@@ -336,9 +336,9 @@ DATA.interrupt = {
   'L': { desc: '2000A Class "L" fuse',      type: 'fuse' },
   'M': { desc: '2500A Silver "L" fuse',     type: 'fuse' },
   'N': { desc: '800A "Welder" limiter',     type: 'welder' },
+  'P': { desc: '1200A "Welder" limiter',    type: 'welder' },
   'Q': { desc: '1600A "Welder" limiter',    type: 'welder' },
   'R': { desc: '2000A "Welder" limiter',    type: 'welder' },
-  'Z': { desc: '1000A "Welder" limiter',    type: 'welder' },
   // Silver "L" fuse variants (800-2000A)
   '5': { desc: '800A Silver "L" fuse',      type: 'silver' },
   '6': { desc: '1000A Silver "L" fuse',     type: 'silver' },
@@ -405,17 +405,17 @@ DATA.tripFn = {
   'K': { fn: 'LIG',     protection: 'Long + Instantaneous + Ground Fault' },
   'L': { fn: 'LIGZ1',   protection: 'LIG + Zone-Selective Interlock' },
   'M': { fn: 'LIGD',    protection: 'Long + Instantaneous + Defeatable GF' },
-  // Right-column codes corroborated by real listings: P=LSI and Q=LSIG both
-  // confirmed against fielded WPH breakers (WE2LBPSFD…, WE2GBQMXXXABXXX).
-  'N': { fn: 'LSGDZ1',  protection: 'LSGD + Zone-Selective Interlock' },
+  // Right column verified against the full GE/BCS WavePro Catalog Number Guide
+  // (Table A). P=LSI and Q=LSIG additionally confirmed on fielded WPH breakers.
+  'N': { fn: 'LIGDZ1',  protection: 'Long + Instantaneous + GF + Defeatable + ZSI (GF)' },
   'P': { fn: 'LSI',     protection: 'Long + Short + Instantaneous' },
   'Q': { fn: 'LSIG',    protection: 'Long + Short + Instantaneous + Ground Fault' },
-  'R': { fn: 'LSIGX',   protection: 'LSIG + switchable ST/Inst off' },
-  'S': { fn: 'LSIGZ1',  protection: 'LSIG + Zone-Selective Interlock' },
-  'T': { fn: 'LSIGZ2',  protection: 'LSIG + Zone-Selective Interlock (Z2)' },
+  'R': { fn: 'LSIGX',   protection: 'LSIG + switchable ST or Inst & GF' },
+  'S': { fn: 'LSIGZ1',  protection: 'LSIG + Zone-Selective Interlock (GF)' },
+  'T': { fn: 'LSIGZ2',  protection: 'LSIG + Zone-Selective Interlock (GF & ST)' },
   'V': { fn: 'LSIGD',   protection: 'LSIG + Defeatable GF' },
-  'W': { fn: 'LSIGDZ1', protection: 'LSIGD + Zone-Selective Interlock' },
-  'Z': { fn: 'LSIX',    protection: 'Long + Short + Instantaneous, switchable' }
+  'W': { fn: 'LSIGDZ1', protection: 'LSIGD + Zone-Selective Interlock (GF)' },
+  'Y': { fn: 'LSIGDZ2', protection: 'LSIGD + Zone-Selective Interlock (GF & ST)' }
 };
 
 // POSITION 7 — Rating Plug. Resolves to amps ONLY together with the sensor (pos 4).
@@ -809,7 +809,14 @@ function renderResults(p) {
   html += row('Rating', interrupt ? interrupt.desc : 'Unknown', interrupt && interrupt.unverified);
   html += row('Class', interrupt ? (interrupt.cls || (interrupt.type === 'fuse' ? 'Fused' : interrupt.type === 'welder' ? 'Welder limiter' : interrupt.type === 'silver' ? 'Silver "L" fuse' : 'Fuse link on Phase B')) : 'N/A');
   if (wpType) { html += row('Breaker Type', wpType); }
-  if (kaic) { html += row('AIC @ 480V (w/inst)', kaic[480][1] + ' kA'); }
+  if (kaic) {
+    html += row('kAIC @ 600V', kaic[600].join(' / ') + ' kA');
+    html += row('kAIC @ 480V', kaic[480].join(' / ') + ' kA');
+    html += row('kAIC @ 240V', kaic[240].join(' / ') + ' kA');
+    html += '<div style="font-size:0.68rem;color:var(--gray-500);margin-top:6px;line-height:1.4;">Short-Circuit RMS Sym. kA &mdash; Short-Time Withstand / With Inst. Trip / Without Inst. Trip (Selection Guide Table 2-1).</div>';
+  } else if (wpType) {
+    html += row('Interrupting Rating', 'Frame not in Table 2-1 — see WavePro Product Catalog (DEP-080)');
+  }
   html += '</div>';
 
   // Trip Unit (only if automatic)
@@ -850,27 +857,6 @@ function renderResults(p) {
 
   html += '</div>'; // end result-grid
 
-  // Interrupting Ratings (kAIC) — Table 2-1
-  if (kaic) {
-    html += '<div class="result-card wide info" style="margin-top:12px;">';
-    html += '<div class="card-title">Interrupting Ratings — ' + esc(wpType) + ' (Short-Circuit RMS Symmetrical kAIC)</div>';
-    html += '<table class="ref-table"><thead><tr><th>Rated AC Voltage (max)</th><th>Short-Time Withstand</th><th>With Inst. Trip</th><th>Without Inst. Trip</th></tr></thead><tbody>';
-    for (var vi = 0; vi < KAIC_VOLTS.length; vi++) {
-      var v = KAIC_VOLTS[vi];
-      var r = kaic[v.nominal];
-      if (!r) continue;
-      html += '<tr><td><strong>' + v.nominal + 'V</strong> <span style="color:var(--gray-500);">(' + v.max + ' max)</span></td><td>' + r[0] + ' kA</td><td>' + r[1] + ' kA</td><td>' + r[2] + ' kA</td></tr>';
-    }
-    html += '</tbody></table>';
-    html += '<div style="margin-top:8px;font-size:0.72rem;color:var(--gray-600);">Source: GE WavePro Selection Guide, Table 2-1. &ldquo;With/Without Inst. Trip&rdquo; depends on whether the trip unit provides an instantaneous element. Verify against the breaker nameplate before applying.</div>';
-    html += '</div>';
-  } else if (c.interrupt && INTERRUPT_CLASS[c.interrupt] && fs) {
-    html += '<div class="result-card wide warn" style="margin-top:12px;">';
-    html += '<div class="card-title">Interrupting Ratings</div>';
-    html += '<div style="font-size:0.8rem;color:var(--gray-700);">The ' + esc((wpType || ('WP' + INTERRUPT_CLASS[c.interrupt] + '-' + (fs.frame/100)))) + ' combination is not listed in WavePro Selection Guide Table 2-1 (which covers the 800A / 1600A / 2000A frames). Consult the full WavePro selection catalog for this frame&rsquo;s interrupting rating.</div>';
-    html += '</div>';
-  }
-
   // A-Disc / options detail (wide)
   if (ad) {
     html += '<div class="result-card wide info" style="margin-top:12px;">';
@@ -904,23 +890,6 @@ function renderResults(p) {
   html += row('Future (P15)', c.future ? (DATA.future[c.future] || c.future) : 'N/A');
   html += '</div></div>';
   html += '</div>';
-
-  // Rating-plug reference table for this sensor (mirrors RD's plug table)
-  if (tt && tt.auto && fs && fs.sensor && RATING_PLUGS[fs.sensor]) {
-    var plugs = RATING_PLUGS[fs.sensor];
-    html += '<div class="result-card wide options" style="margin-top:12px;">';
-    html += '<div class="card-title">Available Rating Plugs — ' + fs.sensor + 'A Sensor <span class="unverified-flag">unverified</span></div>';
-    html += '<table class="ref-table"><thead><tr><th>Plug Code (Pos 7)</th><th>Rating Plug (Ir)</th></tr></thead><tbody>';
-    for (var pk in plugs) {
-      if (plugs.hasOwnProperty(pk)) {
-        var hi = (pk === c.ratingPlug) ? ' style="background:var(--yellow-light);"' : '';
-        html += '<tr' + hi + '><td><strong>' + esc(pk) + '</strong></td><td>' + esc(plugs[pk]) + 'A</td></tr>';
-      }
-    }
-    html += '</tbody></table>';
-    html += '<div style="margin-top:8px;font-size:0.72rem;color:var(--gray-600);">Rating-plug amps are from the WavePro catalog guide, cross-referenced against fielded breaker listings. Always confirm against the breaker nameplate before ordering.</div>';
-    html += '</div>';
-  }
 
   return html;
 }
