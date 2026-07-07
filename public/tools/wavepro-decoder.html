@@ -908,13 +908,26 @@ function validate(p) {
     warnings.push('Power + trip unit is not available on the 5000A frame.');
   }
 
-  // Non-automatic breaker should have no sensor / no rating plug
+  // Non-automatic (Trip Type X) that nonetheless shows an active trip unit.
+  // A sensor (pos 4), a protection function (pos 6), and a rating plug (pos 7)
+  // only exist when there IS a trip unit — the guide's Note 1 even states
+  // "Sensor = none for non-automatic breakers." When one or more of these
+  // appear alongside a non-automatic pos-5, it is almost always a single
+  // mis-stamped character at position 5, not a real non-automatic breaker.
+  // Emit ONE consolidated, diagnostic warning instead of separate generic ones.
   if (tt && !tt.auto) {
-    if (fs && fs.sensor) {
-      warnings.push('Non-automatic breaker (Trip Type X) normally has no sensor — sensor code shows ' + fs.sensor + 'A.');
-    }
-    if (c.ratingPlug && c.ratingPlug !== 'X') {
-      warnings.push('Non-automatic breaker normally has no rating plug (expected X at position 7).');
+    var tfn = c.tripFn ? DATA.tripFn[c.tripFn] : null;
+    var signals = [];
+    if (fs && fs.sensor) { signals.push(fs.sensor + 'A sensor (pos 4)'); }
+    if (c.tripFn && c.tripFn !== 'X') { signals.push((tfn ? tfn.fn : c.tripFn) + ' protection (pos 6)'); }
+    if (c.ratingPlug && c.ratingPlug !== 'X') { signals.push('a rating plug (pos 7)'); }
+    if (signals.length > 0) {
+      var msg = 'Position 5 (X = non-automatic) conflicts with an active trip unit indicated by ' +
+                signals.join(', ') + '. Position 5 is likely mis-stamped — this appears to be an automatic breaker.';
+      if (fs && fs.frame === 5000) {
+        msg += ' On a 5000A frame the trip unit would be a MicroVersaTrip (MVT) type (Power + is not available at 5000A).';
+      }
+      warnings.push(msg);
     }
   }
 
