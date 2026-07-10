@@ -228,14 +228,14 @@ body {
     <div class="error-hint" id="errorHint">Format: RL + [1] Connection + [2] Interrupting + [3] Frame + [4] Operation + [5-6] Sensor + [7-8] Ctrl Voltage + [9] System + [10-11] Trip + Options</div>
   </div>
 
-  <!-- Results -->
-  <div class="results" id="results"></div>
-
-  <!-- Copy -->
+  <!-- Copy (top-of-results, matches rd/wavepro pattern) -->
   <div class="copy-row" id="copyRow" style="display:none;">
     <button class="btn-copy" id="copyBtn" onclick="copyCatalog()">Copy Catalog Number</button>
     <button class="btn-pdf" onclick="downloadDecoderPDF()">Download PDF</button>
   </div>
+
+  <!-- Results -->
+  <div class="results" id="results"></div>
 </div>
 
 <script>

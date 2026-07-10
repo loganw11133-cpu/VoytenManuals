@@ -1246,6 +1246,8 @@ function renderResults(chars, r, errors, renewalParts, isDefault, isPartial, ent
   if (wasExpanded) {
     html += '<p style="color:#93c5fd;margin-top:4px;font-size:0.8rem;">Short code "' + originalInput + '" expanded to "' + chars.substring(0, enteredLen) + '"</p>';
   }
+  html += '<button class="btn-copy" id="btnCopyCat" type="button">Copy Catalog Number</button>';
+  html += ' <button class="btn-pdf" onclick="downloadDecoderPDF()">Download PDF</button>';
   html += '</div>';
 
   // Short-code expansion info
@@ -1346,10 +1348,11 @@ function renderResults(chars, r, errors, renewalParts, isDefault, isPartial, ent
   html += '</div>';
   */
 
-  html += '<button class="btn-copy" onclick="copyCatalog(\'' + chars + '\', this)">Copy Catalog Number</button>';
-  html += ' <button class="btn-pdf" onclick="downloadDecoderPDF()">Download PDF</button>';
-
   el.innerHTML = html;
+  // Attach copy-button listener AFTER innerHTML is set (avoids passing the catalog
+  // string through an inline onclick attribute — matches rd/wavepro pattern).
+  var _cb = document.getElementById('btnCopyCat');
+  if (_cb) { _cb.addEventListener('click', function() { copyCatalog(chars, _cb); }); }
 }
 
 function item(label, value) {
