@@ -90,7 +90,7 @@ export default function ToolsPage() {
       {/* Tool Cards */}
       <div className="max-w-5xl mx-auto px-4 py-10">
         <div className="grid gap-5">
-          {tools.map((tool) => {
+          {[...tools].sort((a, b) => a.name.localeCompare(b.name)).map((tool) => {
             const isLanding = 'landing' in tool && tool.landing;
             const href = 'href' in tool && tool.href ? tool.href : `/tools/${tool.slug}`;
             return (

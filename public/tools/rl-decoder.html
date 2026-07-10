@@ -131,6 +131,14 @@ body {
 
 .card.valid { border-left-color: var(--red); }
 
+/* Summary banner (dark card holding catalog + Copy/Download, matches rd/wavepro) */
+.summary-banner {
+  background: var(--black); color: var(--white); border-radius: 12px;
+  padding: 20px; margin-bottom: 16px; border-left: 5px solid var(--red);
+}
+.summary-banner .headline { font-size: 1.15rem; font-weight: 700; margin-bottom: 6px; }
+.summary-banner .catalog-fmt { font-family: 'Consolas', monospace; font-size: 0.85rem; color: var(--gray-300); letter-spacing: 2px; margin-bottom: 12px; }
+
 .copy-row { margin-top: 12px; text-align: center; }
 .btn-copy {
   padding: 8px 20px; border: 2px solid var(--gray-200); border-radius: 8px;
@@ -228,13 +236,7 @@ body {
     <div class="error-hint" id="errorHint">Format: RL + [1] Connection + [2] Interrupting + [3] Frame + [4] Operation + [5-6] Sensor + [7-8] Ctrl Voltage + [9] System + [10-11] Trip + Options</div>
   </div>
 
-  <!-- Copy (top-of-results, matches rd/wavepro pattern) -->
-  <div class="copy-row" id="copyRow" style="display:none;">
-    <button class="btn-copy" id="copyBtn" onclick="copyCatalog()">Copy Catalog Number</button>
-    <button class="btn-pdf" onclick="downloadDecoderPDF()">Download PDF</button>
-  </div>
-
-  <!-- Results -->
+  <!-- Results (Copy/Download buttons render in the summary banner at the top) -->
   <div class="results" id="results"></div>
 </div>
 
@@ -626,7 +628,6 @@ function decode() {
   hideError();
   document.getElementById('results').innerHTML = '';
   document.getElementById('results').classList.remove('visible');
-  document.getElementById('copyRow').style.display = 'none';
 
   if (!rawInput) { showError('Empty Input', 'Please enter a Siemens RL catalog number.'); return; }
 
@@ -873,6 +874,19 @@ function renderResults(raw, d) {
   if (d.connection) summaryFields.push(field('Connection', d.connection.value));
   if (d.operation) summaryFields.push(field('Operation', d.operation.value));
   if (d.interrupting) summaryFields.push(field('Series', d.interrupting.value));
+
+  /* Summary banner (dark card: catalog + Copy/Download buttons, matches rd/wavepro) */
+  var bannerSpecs = [];
+  if (d.frame) bannerSpecs.push(d.frame.amps + 'A');
+  if (d.connection) bannerSpecs.push(d.connection.value);
+  if (d.operation) bannerSpecs.push(d.operation.value);
+  html += '<div class="summary-banner">';
+  html += '<div class="headline">Siemens ' + designation + (bannerSpecs.length ? ' — ' + bannerSpecs.join(' — ') : '') + '</div>';
+  html += '<div class="catalog-fmt">' + esc(raw) + '</div>';
+  html += '<button class="btn-copy" id="btnCopyCat" onclick="copyCatalog()">Copy Catalog Number</button>';
+  html += ' <button class="btn-pdf" onclick="downloadDecoderPDF()">Download PDF</button>';
+  html += '</div>';
+
   html += card('Breaker Summary', 'valid', summaryFields);
 
   /* 2. Interrupting & Short-Time Ratings — skip for non-automatic (sensor XX) */
@@ -968,7 +982,6 @@ function renderResults(raw, d) {
 
   el.innerHTML = html;
   el.classList.add('visible');
-  document.getElementById('copyRow').style.display = 'block';
 }
 
 function renderCharMap(raw, d) {
@@ -1084,7 +1097,6 @@ function clearAll() {
   document.getElementById('catInput').value = '';
   document.getElementById('results').innerHTML = '';
   document.getElementById('results').classList.remove('visible');
-  document.getElementById('copyRow').style.display = 'none';
   hideError();
   clearCharMap();
   document.getElementById('catInput').focus();
@@ -1094,6 +1106,8 @@ function loadExample(btn) {
   document.getElementById('catInput').value = btn.textContent;
   decode();
 }
+
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function(c) { return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]; }); }
 
 function copyCatalog() {
   var val = document.getElementById('catInput').value.trim().toUpperCase();
@@ -1114,7 +1128,8 @@ function copyCatalog() {
 }
 
 function showCopied() {
-  var btn = document.getElementById('copyBtn');
+  var btn = document.getElementById('btnCopyCat');
+  if (!btn) return;
   btn.textContent = 'Copied!';
   btn.classList.add('copied');
   setTimeout(function() { btn.textContent = 'Copy Catalog Number'; btn.classList.remove('copied'); }, 2000);
