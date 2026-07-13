@@ -720,9 +720,7 @@ var DATA = {
     'M': 'Metal (Block Close + Open)',
     'P': 'Plastic (Block Close + Open)',
     'C': 'Metal (Block Close Only)',
-    'H': 'Plastic (Block Close Only)',
-    'E': 'Block-Open Padlock Provisions',
-    'Y': 'Kirk Key Interlock Padlock'
+    'H': 'Plastic (Block Close Only)'
   },
 
   counterKeylock: {
@@ -753,12 +751,14 @@ var DATA = {
   },
 
   latchSwitch: {
-    'N': 'No Latch Check Switch',
-    'A': 'LCS Installed \u2014 Lower Terminals',
-    'M': 'LCS Wired \u2014 Lower Terminals',
-    'L': 'LCS Wired \u2014 Upper Terminals',
-    'E': 'External'
+    'N': 'No LCS — 1150 Metering @ Upper Terminals',
+    'M': 'No LCS — 1150 Metering @ Lower Terminals',
+    'L': 'LCS Wired to SRD — Upper Terminals',
+    'Y': 'LCS Wired to SRD — Lower Terminals',
+    'C': 'LCS Wired External — Upper Terminals',
+    'D': 'LCS Wired External — Lower Terminals'
   },
+
 
   shipping: {
     'A': 'Fixed Breaker + Door Kit',
@@ -841,29 +841,29 @@ var RATINGS = [
   { frame: 800, type: 'MWN-608', frameType: 'Narrow', icu240: 66, icu440: 66, icu690: 65, icw1s: 66, icw3s: 40, kema: true, ccc: true },
   { frame: 800, type: 'MWI-608', frameType: 'Standard', icu240: 65, icu440: 65, icu690: 65, icw1s: 65, icw3s: null, kema: true, ccc: true },
   { frame: 800, type: 'MWI-808', frameType: 'Standard', icu240: 85, icu440: 85, icu690: 85, icw1s: 85, icw3s: 65, kema: true, ccc: true },
-  { frame: 800, type: 'MWI-C08', frameType: 'Standard', icu240: 100, icu440: 100, icu690: 85, icw1s: 85, icw3s: 85, kema: true, ccc: true },
+  { frame: 800, type: 'MWI-C08', frameType: 'Standard', icu240: 100, icu440: 100, icu690: 85, icw1s: 85, icw3s: 65, kema: true, ccc: true },
   { frame: 1000, type: 'MWN-410', frameType: 'Narrow', icu240: 40, icu440: 40, icu690: 40, icw1s: 40, icw3s: null, kema: true, ccc: false },
   { frame: 1000, type: 'MWN-510', frameType: 'Narrow', icu240: 50, icu440: 50, icu690: 50, icw1s: 50, icw3s: null, kema: true, ccc: false },
   { frame: 1000, type: 'MWN-610', frameType: 'Narrow', icu240: 66, icu440: 66, icu690: 65, icw1s: 66, icw3s: 40, kema: true, ccc: false },
   { frame: 1000, type: 'MWI-610', frameType: 'Standard', icu240: 65, icu440: 65, icu690: 65, icw1s: 65, icw3s: null, kema: true, ccc: false },
   { frame: 1000, type: 'MWI-810', frameType: 'Standard', icu240: 85, icu440: 85, icu690: 85, icw1s: 85, icw3s: 65, kema: true, ccc: false },
-  { frame: 1000, type: 'MWI-C10', frameType: 'Standard', icu240: 100, icu440: 100, icu690: 85, icw1s: 85, icw3s: 85, kema: true, ccc: false },
+  { frame: 1000, type: 'MWI-C10', frameType: 'Standard', icu240: 100, icu440: 100, icu690: 85, icw1s: 85, icw3s: 65, kema: true, ccc: false },
   { frame: 1250, type: 'MWN-412', frameType: 'Narrow', icu240: 40, icu440: 40, icu690: 40, icw1s: 40, icw3s: null, kema: true, ccc: true },
   { frame: 1250, type: 'MWN-512', frameType: 'Narrow', icu240: 50, icu440: 50, icu690: 50, icw1s: 50, icw3s: null, kema: true, ccc: true },
   { frame: 1250, type: 'MWN-612', frameType: 'Narrow', icu240: 66, icu440: 66, icu690: 65, icw1s: 66, icw3s: 40, kema: true, ccc: true },
   { frame: 1250, type: 'MWI-612', frameType: 'Standard', icu240: 65, icu440: 65, icu690: 65, icw1s: 65, icw3s: null, kema: true, ccc: true },
   { frame: 1250, type: 'MWI-812', frameType: 'Standard', icu240: 85, icu440: 85, icu690: 85, icw1s: 85, icw3s: 65, kema: true, ccc: true },
-  { frame: 1250, type: 'MWI-C12', frameType: 'Standard', icu240: 100, icu440: 100, icu690: 85, icw1s: 85, icw3s: 85, kema: true, ccc: true },
+  { frame: 1250, type: 'MWI-C12', frameType: 'Standard', icu240: 100, icu440: 100, icu690: 85, icw1s: 85, icw3s: 65, kema: true, ccc: true },
   { frame: 1600, type: 'MWN-516', frameType: 'Narrow', icu240: 50, icu440: 50, icu690: 50, icw1s: 50, icw3s: null, kema: true, ccc: true },
   { frame: 1600, type: 'MWN-616', frameType: 'Narrow', icu240: 66, icu440: 66, icu690: 65, icw1s: 66, icw3s: 40, kema: true, ccc: true },
   { frame: 1600, type: 'MWI-616', frameType: 'Standard', icu240: 65, icu440: 65, icu690: 65, icw1s: 65, icw3s: null, kema: true, ccc: true },
   { frame: 1600, type: 'MWI-816', frameType: 'Standard', icu240: 85, icu440: 85, icu690: 85, icw1s: 85, icw3s: 65, kema: true, ccc: true },
-  { frame: 1600, type: 'MWI-C16', frameType: 'Standard', icu240: 100, icu440: 100, icu690: 85, icw1s: 85, icw3s: 85, kema: true, ccc: true },
+  { frame: 1600, type: 'MWI-C16', frameType: 'Standard', icu240: 100, icu440: 100, icu690: 85, icw1s: 85, icw3s: 65, kema: true, ccc: true },
   { frame: 2000, type: 'MWN-520', frameType: 'Narrow', icu240: 50, icu440: 50, icu690: 50, icw1s: 50, icw3s: 30, kema: true, ccc: true },
   { frame: 2000, type: 'MWN-620', frameType: 'Narrow', icu240: 66, icu440: 66, icu690: 65, icw1s: 66, icw3s: 40, kema: true, ccc: true },
   { frame: 2000, type: 'MWI-620', frameType: 'Standard', icu240: 65, icu440: 65, icu690: 65, icw1s: 65, icw3s: 50, kema: true, ccc: true },
   { frame: 2000, type: 'MWI-820', frameType: 'Standard', icu240: 85, icu440: 85, icu690: 85, icw1s: 85, icw3s: 65, kema: true, ccc: true },
-  { frame: 2000, type: 'MWI-C20', frameType: 'Standard', icu240: 100, icu440: 100, icu690: 85, icw1s: 85, icw3s: 85, kema: true, ccc: true },
+  { frame: 2000, type: 'MWI-C20', frameType: 'Standard', icu240: 100, icu440: 100, icu690: 85, icw1s: 85, icw3s: 65, kema: true, ccc: true },
   { frame: 2500, type: 'MWI-625', frameType: 'Standard', icu240: 65, icu440: 65, icu690: 65, icw1s: 65, icw3s: null, kema: true, ccc: true },
   { frame: 2500, type: 'MWI-825', frameType: 'Standard', icu240: 85, icu440: 85, icu690: 85, icw1s: 85, icw3s: 65, kema: true, ccc: true },
   { frame: 2500, type: 'MWI-C25', frameType: 'Standard', icu240: 100, icu440: 100, icu690: 85, icw1s: 85, icw3s: 65, kema: false, ccc: false },
