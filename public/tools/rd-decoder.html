@@ -194,6 +194,12 @@ body {
   cursor: pointer; transition: all 0.2s; margin-left: 8px;
 }
 .btn-pdf:hover { background: var(--red); color: var(--white); }
+.btn-quote {
+  padding: 8px 20px; border: 2px solid var(--red); border-radius: 8px;
+  background: var(--red); color: var(--white); font-weight: 700; font-size: 0.8rem;
+  cursor: pointer; transition: all 0.2s; margin-left: 8px;
+}
+.btn-quote:hover { background: #b91c1c; border-color: #b91c1c; }
 
 .ex-btn:focus-visible {
   outline: 2px solid var(--red); outline-offset: 2px;
@@ -1124,6 +1130,7 @@ function renderResults(p) {
   // Do NOT use inline onclick — that would allow attribute injection via p.raw.
   html += '<button class="btn-copy" id="btnCopyCat" type="button">Copy Catalog Number</button>';
   html += ' <button class="btn-pdf" onclick="downloadDecoderPDF()">Download PDF</button>';
+  html += ' <button class="btn-quote" onclick="openDecoderQuote()">Get Quote — Configured to Spec</button>';
   html += '</div>';
 
 
@@ -1484,6 +1491,7 @@ renderCharMap(null);
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="/tools/decoder-pdf.js"></script>
+<script src="/tools/decoder-quote.js"></script>
 
 </body>
 </html>
