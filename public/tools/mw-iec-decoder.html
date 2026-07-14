@@ -6,6 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Eaton Magnum MW IEC Decoder — Voyten Electric</title>
+<link rel="stylesheet" href="/tools/decoder-fonts.css">
 <style>
   :root {
     --red: #dc2626;
@@ -29,7 +30,7 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'IBM Plex Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: var(--gray-100);
     color: var(--gray-800);
     min-height: 100vh;
@@ -78,7 +79,7 @@
     flex: 1;
     padding: 14px 18px;
     font-size: 1.3rem;
-    font-family: 'Consolas', 'Courier New', monospace;
+    font-family: 'IBM Plex Mono', 'Consolas', 'Courier New', monospace;
     letter-spacing: 2px;
     text-transform: uppercase;
     border: 2px solid var(--gray-300);
@@ -117,7 +118,7 @@
     background: var(--gray-200);
     padding: 2px 6px;
     border-radius: 4px;
-    font-family: 'Consolas', monospace;
+    font-family: 'IBM Plex Mono', 'Consolas', monospace;
     font-size: 0.8rem;
   }
 
@@ -168,7 +169,7 @@
   .char-boxes { display: flex; gap: 2px; flex-wrap: nowrap; }
   .char-box {
     width: 32px; height: 38px; display: flex; align-items: center; justify-content: center;
-    font-family: 'Consolas', monospace; font-size: 0.85rem; font-weight: 700;
+    font-family: 'IBM Plex Mono', 'Consolas', monospace; font-size: 0.85rem; font-weight: 700;
     border-radius: 4px; border: 1px solid var(--gray-300);
     background: var(--gray-50); color: var(--gray-700); flex-shrink: 0;
   }
@@ -301,7 +302,7 @@
     background: var(--gray-200);
     border: 1px solid var(--gray-300);
     border-radius: 6px;
-    font-family: 'Consolas', monospace;
+    font-family: 'IBM Plex Mono', 'Consolas', monospace;
     font-size: 0.72rem;
     cursor: pointer;
     transition: all 0.15s;
