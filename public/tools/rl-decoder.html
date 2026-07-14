@@ -7,6 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="description" content="Siemens RL 600V LVPCB circuit breaker catalog number decoder. Identify connection, interrupting type, frame size, operation, sensors, control voltage, system wiring, trip unit, and optional devices.">
 <title>Siemens RL LVPCB Decoder — Voyten Electric</title>
+<link rel="stylesheet" href="/tools/decoder-fonts.css">
 <style>
 :root {
   --red: #dc2626;
@@ -31,7 +32,7 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background: var(--gray-100);
   color: var(--gray-800);
   line-height: 1.5;
@@ -62,7 +63,7 @@ body {
 }
 .input-row { display: flex; gap: 8px; margin-bottom: 8px; }
 .input-row input {
-  flex: 1; padding: 12px 14px; font-size: 16px; font-family: 'Consolas', 'Monaco', monospace;
+  flex: 1; padding: 12px 14px; font-size: 16px; font-family: 'IBM Plex Mono', 'Consolas', 'Monaco', monospace;
   border: 2px solid var(--gray-200); border-radius: 8px; text-transform: uppercase;
   letter-spacing: 1.5px; -webkit-appearance: none; transition: border-color 0.2s;
 }
@@ -82,7 +83,7 @@ body {
 .examples-label { font-size: 0.75rem; font-weight: 600; color: var(--gray-500); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
 .examples { display: flex; flex-wrap: wrap; gap: 6px; }
 .ex-btn {
-  padding: 4px 10px; font-size: 0.72rem; font-family: 'Consolas', monospace;
+  padding: 4px 10px; font-size: 0.72rem; font-family: 'IBM Plex Mono', 'Consolas', monospace;
   background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 6px;
   cursor: pointer; transition: all 0.15s; color: var(--gray-700); touch-action: manipulation;
 }
@@ -100,7 +101,7 @@ body {
 .char-boxes { display: flex; gap: 2px; }
 .char-box {
   width: 32px; height: 38px; display: flex; align-items: center; justify-content: center;
-  font-family: 'Consolas', monospace; font-size: 0.85rem; font-weight: 700;
+  font-family: 'IBM Plex Mono', 'Consolas', monospace; font-size: 0.85rem; font-weight: 700;
   background: var(--gray-100); border: 2px solid var(--gray-200); border-radius: 6px;
   transition: all 0.2s;
 }
@@ -137,7 +138,7 @@ body {
   padding: 20px; margin-bottom: 16px; border-left: 5px solid var(--red);
 }
 .summary-banner .headline { font-size: 1.15rem; font-weight: 700; margin-bottom: 6px; }
-.summary-banner .catalog-fmt { font-family: 'Consolas', monospace; font-size: 0.85rem; color: var(--gray-300); letter-spacing: 2px; margin-bottom: 12px; }
+.summary-banner .catalog-fmt { font-family: 'IBM Plex Mono', 'Consolas', monospace; font-size: 0.85rem; color: var(--gray-300); letter-spacing: 2px; margin-bottom: 12px; }
 
 .copy-row { margin-top: 12px; text-align: center; }
 .btn-copy {

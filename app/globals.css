@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+/* Site typeface: IBM Plex Sans (UI/body) + IBM Plex Mono (catalog numbers, codes).
+   The --font-plex-* vars are provided by next/font on <html> (see app/layout.tsx).
+   Wiring them here makes Tailwind's font-sans / font-mono utilities use Plex too. */
+@theme {
+  --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "SF Mono", "Consolas", monospace;
+}
+
 :root {
   --text-primary: #1a1a1a;
   --text-secondary: #525252;
@@ -24,7 +32,7 @@
 }
 
 body {
-  font-family: inherit;
+  font-family: var(--font-sans);
   color: var(--text-primary);
   line-height: 1.6;
   background: var(--bg-primary);
