@@ -8,6 +8,23 @@
    scrolls out of view. The parent renders the overlay against the real browser viewport and
    reuses the site's existing CSRF-protected LeadCaptureForm. */
 
+/* ── Launch flag ──────────────────────────────────────────────────────────────
+   The "Get Quote — Configured to Spec" button is committed but HIDDEN until launch.
+   To reveal it site-wide across all decoders, flip RFQ_ENABLED to true (one line,
+   one file) and redeploy. No per-decoder edits needed. */
+var RFQ_ENABLED = false;
+
+(function _rfqApplyLaunchFlag() {
+  if (RFQ_ENABLED) return;
+  // Hide any .btn-quote buttons (present now or rendered on later decodes) while disabled.
+  try {
+    var st = document.createElement('style');
+    st.setAttribute('data-rfq', 'disabled');
+    st.textContent = '.btn-quote{display:none !important;}';
+    (document.head || document.documentElement).appendChild(st);
+  } catch (e) { /* ignore */ }
+})();
+
 /* ── DOM readers (mirror decoder-pdf.js so this works on every decoder unchanged) ── */
 
 function _rfqGetCatalog() {
@@ -67,6 +84,7 @@ function _rfqBuildSummary(catalog, decoderName) {
 /* ── Public entry — called by each decoder's "Get Quote" button ── */
 
 function openDecoderQuote() {
+  if (!RFQ_ENABLED) return; // feature not launched yet — button is hidden
   var catalog = _rfqGetCatalog();
   var cards = _rfqReadCards();
   if (!catalog || !cards.length) {
