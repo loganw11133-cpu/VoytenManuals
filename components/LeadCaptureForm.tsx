@@ -10,15 +10,17 @@ interface LeadCaptureFormProps {
   manualId?: number;
   sourcePage?: string;
   compact?: boolean;
+  /** Pre-fills the message textarea (e.g. a decoder's configured-to-spec summary). */
+  initialMessage?: string;
 }
 
-export default function LeadCaptureForm({ type, manualTitle, manualId, sourcePage, compact = false }: LeadCaptureFormProps) {
+export default function LeadCaptureForm({ type, manualTitle, manualId, sourcePage, compact = false, initialMessage }: LeadCaptureFormProps) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
     company: '',
-    message: '',
+    message: initialMessage || '',
   });
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
 

@@ -190,6 +190,12 @@ body {
   cursor: pointer; transition: all 0.2s; margin-left: 8px;
 }
 .btn-pdf:hover { background: var(--red); color: var(--white); }
+.btn-quote {
+  padding: 8px 20px; border: 2px solid var(--red); border-radius: 8px;
+  background: var(--red); color: var(--white); font-weight: 700; font-size: 0.8rem;
+  cursor: pointer; transition: all 0.2s; margin-left: 8px;
+}
+.btn-quote:hover { background: #b91c1c; border-color: #b91c1c; }
 
 .footer {
   text-align: center; padding: 20px; font-size: 0.7rem; color: var(--gray-400); margin-top: 20px;
@@ -1219,6 +1225,7 @@ function renderBreakerResults(d) {
   }
   html += '<button class="btn-copy" onclick="copyCatalog(\'' + d.catalog + '\', this)">Copy Full Catalog Number</button>';
   html += ' <button class="btn-pdf" onclick="downloadDecoderPDF()">Download PDF</button>';
+  html += ' <button class="btn-quote" onclick="openDecoderQuote()">Get Quote — Configured to Spec</button>';
   html += '</div>';
 
   // Warnings
@@ -1395,6 +1402,7 @@ function renderCassetteResults(d) {
   }
   html += '<button class="btn-copy" onclick="copyCatalog(\'' + d.catalog + '\', this)">Copy Full Catalog Number</button>';
   html += ' <button class="btn-pdf" onclick="downloadDecoderPDF()">Download PDF</button>';
+  html += ' <button class="btn-quote" onclick="openDecoderQuote()">Get Quote — Configured to Spec</button>';
   html += '</div>';
 
   if (d.errors.length > 0) {
@@ -1575,6 +1583,7 @@ renderCharMap('', [], 0, new Set(), new Set());
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="/tools/decoder-pdf.js"></script>
+<script src="/tools/decoder-quote.js"></script>
 
 </body>
 </html>

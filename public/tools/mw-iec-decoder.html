@@ -374,6 +374,12 @@
     cursor: pointer; transition: all 0.2s; margin-left: 8px;
   }
   .btn-pdf:hover { background: var(--red); color: var(--white); }
+  .btn-quote {
+    padding: 8px 20px; border: 2px solid var(--red); border-radius: 8px;
+    background: var(--red); color: var(--white); font-weight: 700; font-size: 0.8rem;
+    cursor: pointer; transition: all 0.2s; margin-left: 8px;
+  }
+  .btn-quote:hover { background: #b91c1c; border-color: #b91c1c; }
 
   /* iOS / Mobile notice for Quick Look (no JS) */
   .ios-notice {
@@ -1465,6 +1471,7 @@ function renderBreakerResults(chars, r, errors, warnings, isDefault, isPartial, 
   html += '<p>Catalog: ' + esc(chars.substring(0,10)) + ' ' + esc(chars.substring(10,14)) + ' ' + esc(chars.substring(14,19)) + ' ' + esc(chars.substring(19,25)) + '</p>';
   html += '<button class="btn-copy" id="btnCopyCat" type="button">Copy Catalog Number</button>';
   html += ' <button class="btn-pdf" onclick="downloadDecoderPDF()">Download PDF</button>';
+  html += ' <button class="btn-quote" onclick="openDecoderQuote()">Get Quote — Configured to Spec</button>';
   html += '</div>';
 
   // Partial input info card
@@ -1583,6 +1590,7 @@ function renderCassetteResults(chars, r, errors, isDefault, isPartial, enteredLe
   html += '<p>Cassette: ' + esc(chars) + '</p>';
   html += '<button class="btn-copy" id="btnCopyCat" type="button">Copy Catalog Number</button>';
   html += ' <button class="btn-pdf" onclick="downloadDecoderPDF()">Download PDF</button>';
+  html += ' <button class="btn-quote" onclick="openDecoderQuote()">Get Quote — Configured to Spec</button>';
   html += '</div>';
 
   // Partial input
@@ -1688,5 +1696,6 @@ document.getElementById('catInput').addEventListener('keydown', function(e) {
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="/tools/decoder-pdf.js"></script>
+<script src="/tools/decoder-quote.js"></script>
 </body>
 </html>
