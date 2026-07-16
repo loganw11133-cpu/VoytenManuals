@@ -221,6 +221,32 @@ noscript .ns-msg {
   border-radius: 12px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 </style>
+  <style>
+  /* Compact hover-reveal examples — condensed, professional UI */
+  .ex-hover { position: relative; display: inline-block; margin-top: 10px; }
+  .ex-hover__trigger {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.4px; text-transform: uppercase;
+    color: var(--gray-500, #6b7280); cursor: pointer; user-select: none;
+    background: var(--gray-100, #f3f4f6);
+    border: 1px solid var(--gray-300, #d1d5db); border-radius: 6px; padding: 4px 10px;
+    transition: color .15s, border-color .15s;
+  }
+  .ex-hover__trigger::after { content: "\25BE"; font-size: 0.6rem; opacity: .7; }
+  .ex-hover:hover .ex-hover__trigger,
+  .ex-hover:focus-within .ex-hover__trigger { color: var(--red, #dc2626); border-color: var(--red, #dc2626); }
+  .ex-hover__panel {
+    position: absolute; z-index: 50; top: calc(100% + 6px); left: 0;
+    display: none; min-width: 240px; max-width: min(94vw, 560px);
+    padding: 12px 14px 4px;
+    background: #fff; border: 1px solid var(--gray-200, #e5e7eb); border-radius: 10px;
+    box-shadow: 0 12px 34px rgba(0,0,0,.14);
+  }
+  .ex-hover:hover .ex-hover__panel,
+  .ex-hover:focus-within .ex-hover__panel { display: block; }
+  .ex-hover__panel .examples-bar { margin-top: 0; }
+  .ex-hover__panel .examples-label:first-child { margin-top: 0; }
+  </style>
 </head>
 <body>
 
@@ -248,23 +274,28 @@ noscript .ns-msg {
       <button class="btn btn-decode" onclick="decode()">DECODE</button>
       <button class="btn btn-clear" onclick="clearAll()">CLEAR</button>
     </div>
-    <div class="examples-label">Full 15-position examples</div>
-    <div class="examples" style="margin-bottom:8px;">
-      <button class="ex-btn" onclick="loadExample(this)">WE2DAQDF1XBBXHX</button>
-      <button class="ex-btn" onclick="loadExample(this)">WE1GABMF1XAXXXX</button>
-      <button class="ex-btn" onclick="loadExample(this)">WS2JCKNF1XBAXXX</button>
-    </div>
-    <div class="examples-label">Frame / Trip variants (partial OK)</div>
-    <div class="examples" style="margin-bottom:8px;">
-      <button class="ex-btn" onclick="loadExample(this)">WE3LAQK</button>
-      <button class="ex-btn" onclick="loadExample(this)">WE1RCQW</button>
-      <button class="ex-btn" onclick="loadExample(this)">WE1NAQV</button>
-    </div>
-    <div class="examples-label">Non-automatic &amp; fused</div>
-    <div class="examples">
-      <button class="ex-btn" onclick="loadExample(this)">WE1AXX</button>
-      <button class="ex-btn" onclick="loadExample(this)">WEGDAQF</button>
-      <button class="ex-btn" onclick="loadExample(this)">WSMDAQF</button>
+    <div class="ex-hover" tabindex="0" role="button" aria-label="Show example catalog numbers">
+      <span class="ex-hover__trigger">Examples</span>
+      <div class="ex-hover__panel">
+        <div class="examples-label">Full 15-position examples</div>
+        <div class="examples" style="margin-bottom:8px;">
+          <button class="ex-btn" onclick="loadExample(this)">WE2DAQDF1XBBXHX</button>
+          <button class="ex-btn" onclick="loadExample(this)">WE1GABMF1XAXXXX</button>
+          <button class="ex-btn" onclick="loadExample(this)">WS2JCKNF1XBAXXX</button>
+        </div>
+        <div class="examples-label">Frame / Trip variants (partial OK)</div>
+        <div class="examples" style="margin-bottom:8px;">
+          <button class="ex-btn" onclick="loadExample(this)">WE3LAQK</button>
+          <button class="ex-btn" onclick="loadExample(this)">WE1RCQW</button>
+          <button class="ex-btn" onclick="loadExample(this)">WE1NAQV</button>
+        </div>
+        <div class="examples-label">Non-automatic &amp; fused</div>
+        <div class="examples">
+          <button class="ex-btn" onclick="loadExample(this)">WE1AXX</button>
+          <button class="ex-btn" onclick="loadExample(this)">WEGDAQF</button>
+          <button class="ex-btn" onclick="loadExample(this)">WSMDAQF</button>
+        </div>
+      </div>
     </div>
   </div>
 

@@ -409,6 +409,32 @@
   }
   .btn-quote:hover { background: #b91c1c; border-color: #b91c1c; }
 </style>
+  <style>
+  /* Compact hover-reveal examples — condensed, professional UI */
+  .ex-hover { position: relative; display: inline-block; margin-top: 10px; }
+  .ex-hover__trigger {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.4px; text-transform: uppercase;
+    color: var(--gray-500, #6b7280); cursor: pointer; user-select: none;
+    background: var(--gray-100, #f3f4f6);
+    border: 1px solid var(--gray-300, #d1d5db); border-radius: 6px; padding: 4px 10px;
+    transition: color .15s, border-color .15s;
+  }
+  .ex-hover__trigger::after { content: "\25BE"; font-size: 0.6rem; opacity: .7; }
+  .ex-hover:hover .ex-hover__trigger,
+  .ex-hover:focus-within .ex-hover__trigger { color: var(--red, #dc2626); border-color: var(--red, #dc2626); }
+  .ex-hover__panel {
+    position: absolute; z-index: 50; top: calc(100% + 6px); left: 0;
+    display: none; min-width: 240px; max-width: min(94vw, 560px);
+    padding: 12px 14px 4px;
+    background: #fff; border: 1px solid var(--gray-200, #e5e7eb); border-radius: 10px;
+    box-shadow: 0 12px 34px rgba(0,0,0,.14);
+  }
+  .ex-hover:hover .ex-hover__panel,
+  .ex-hover:focus-within .ex-hover__panel { display: block; }
+  .ex-hover__panel .examples-bar { margin-top: 0; }
+  .ex-hover__panel .examples-label:first-child { margin-top: 0; }
+  </style>
 </head>
 <body>
 
@@ -442,24 +468,29 @@
     <div class="hint">
       Full format: <code>XXXXXXXXXX XXXXX XXXXX XXXXX</code> &nbsp;|&nbsp; Partial input accepted — remaining positions assume default (base) build.
     </div>
-    <div class="examples-bar">
-      <span class="examples-label">MDS:</span>
-      <button class="example-btn" onclick="loadExample(this)">MDS6163WEA</button>
-      <button class="example-btn" onclick="loadExample(this)">MDSC183LEA 32MAA MNA2Y NNNAX</button>
-      <button class="example-btn" onclick="loadExample(this)">MDS6083WEA 061GA NAN6Y NANAX</button>
-      <button class="example-btn" onclick="loadExample(this)">MDS6123WEA 121GH NHN6Y NNMAX</button>
-      <button class="example-btn" onclick="loadExample(this)">MDS6203WEA 20CUA NAN4E PNNAX</button>
-      <span class="examples-label">SBS:</span>
-      <button class="example-btn" onclick="loadExample(this)">SBS6123WEA 121KN MNNNE PNNAX</button>
-      <button class="example-btn" onclick="loadExample(this)">SBS6303WEA 305GC NAN2Y NNNAX</button>
-      <button class="example-btn" onclick="loadExample(this)">SBSC083WEA 025GN MNNNE NNNAX</button>
-      <button class="example-btn" onclick="loadExample(this)">SBSC163WEA 165GC NAN2Y NNNAX</button>
-      <button class="example-btn" onclick="loadExample(this)">SBS6253WEA 25CMA NAC4E MKNAX</button>
-      <span class="examples-label">Short Codes:</span>
-      <button class="example-btn" onclick="loadExample(this)">SBS608</button>
-      <button class="example-btn" onclick="loadExample(this)">SBS4025</button>
-      <button class="example-btn" onclick="loadExample(this)">SBSC08</button>
-      <button class="example-btn" onclick="loadExample(this)">MDS608</button>
+    <div class="ex-hover" tabindex="0" role="button" aria-label="Show example catalog numbers">
+      <span class="ex-hover__trigger">Examples</span>
+      <div class="ex-hover__panel">
+        <div class="examples-bar">
+          <span class="examples-label">MDS:</span>
+          <button class="example-btn" onclick="loadExample(this)">MDS6163WEA</button>
+          <button class="example-btn" onclick="loadExample(this)">MDSC183LEA 32MAA MNA2Y NNNAX</button>
+          <button class="example-btn" onclick="loadExample(this)">MDS6083WEA 061GA NAN6Y NANAX</button>
+          <button class="example-btn" onclick="loadExample(this)">MDS6123WEA 121GH NHN6Y NNMAX</button>
+          <button class="example-btn" onclick="loadExample(this)">MDS6203WEA 20CUA NAN4E PNNAX</button>
+          <span class="examples-label">SBS:</span>
+          <button class="example-btn" onclick="loadExample(this)">SBS6123WEA 121KN MNNNE PNNAX</button>
+          <button class="example-btn" onclick="loadExample(this)">SBS6303WEA 305GC NAN2Y NNNAX</button>
+          <button class="example-btn" onclick="loadExample(this)">SBSC083WEA 025GN MNNNE NNNAX</button>
+          <button class="example-btn" onclick="loadExample(this)">SBSC163WEA 165GC NAN2Y NNNAX</button>
+          <button class="example-btn" onclick="loadExample(this)">SBS6253WEA 25CMA NAC4E MKNAX</button>
+          <span class="examples-label">Short Codes:</span>
+          <button class="example-btn" onclick="loadExample(this)">SBS608</button>
+          <button class="example-btn" onclick="loadExample(this)">SBS4025</button>
+          <button class="example-btn" onclick="loadExample(this)">SBSC08</button>
+          <button class="example-btn" onclick="loadExample(this)">MDS608</button>
+        </div>
+      </div>
     </div>
   </div>
 
