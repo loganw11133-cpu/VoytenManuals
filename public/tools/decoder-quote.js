@@ -1,4 +1,4 @@
-/* decoder-quote.js — Shared "Get Quote — Configured to Spec" action for all Voyten decoder tools.
+/* decoder-quote.js — Shared "Get a Quote for This Breaker" action for all Voyten decoder tools.
    Reads the decoded result cards from the DOM, then asks the parent page (the Next.js
    /tools/* wrapper) to open a quote modal pre-filled with the exact configuration.
    Each decoder adds its own button that calls openDecoderQuote().
@@ -9,10 +9,10 @@
    reuses the site's existing CSRF-protected LeadCaptureForm. */
 
 /* ── Launch flag ──────────────────────────────────────────────────────────────
-   The "Get Quote — Configured to Spec" button is committed but HIDDEN until launch.
+   The "Get a Quote for This Breaker" button is committed but HIDDEN until launch.
    To reveal it site-wide across all decoders, flip RFQ_ENABLED to true (one line,
    one file) and redeploy. No per-decoder edits needed. */
-var RFQ_ENABLED = false;
+var RFQ_ENABLED = true;
 
 (function _rfqApplyLaunchFlag() {
   if (RFQ_ENABLED) return;

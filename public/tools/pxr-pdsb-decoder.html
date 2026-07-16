@@ -1226,7 +1226,7 @@ function renderBreakerResults(d) {
   }
   html += '<button class="btn-copy" onclick="copyCatalog(\'' + d.catalog + '\', this)">Copy Full Catalog Number</button>';
   html += ' <button class="btn-pdf" onclick="downloadDecoderPDF()">Download PDF</button>';
-  html += ' <button class="btn-quote" onclick="openDecoderQuote()">Get Quote — Configured to Spec</button>';
+  html += ' <button class="btn-quote" onclick="openDecoderQuote()">Get a Quote for This Breaker</button>';
   html += '</div>';
 
   // Warnings
@@ -1403,7 +1403,7 @@ function renderCassetteResults(d) {
   }
   html += '<button class="btn-copy" onclick="copyCatalog(\'' + d.catalog + '\', this)">Copy Full Catalog Number</button>';
   html += ' <button class="btn-pdf" onclick="downloadDecoderPDF()">Download PDF</button>';
-  html += ' <button class="btn-quote" onclick="openDecoderQuote()">Get Quote — Configured to Spec</button>';
+  html += ' <button class="btn-quote" onclick="openDecoderQuote()">Get a Quote for This Breaker</button>';
   html += '</div>';
 
   if (d.errors.length > 0) {
