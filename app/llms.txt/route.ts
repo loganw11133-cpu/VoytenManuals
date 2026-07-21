@@ -68,6 +68,7 @@ For engineers, plant/facility managers, electricians, field-service techs, and m
 - Eaton Magnum DS (MDS) / SBS — 800A–6000A: https://www.voytenmanuals.com/tools/mds-sbs
 - Eaton Magnum MW (IEC 60947-2) — fixed/draw-out, 800A–6300A: https://www.voytenmanuals.com/tools/mw-iec
 - Eaton Magnum PXR / Power Defense SB — 800A–6000A: https://www.voytenmanuals.com/tools/pxr-pdsb
+- Square D / Schneider MasterPact NT / NW — universal power circuit breaker (T/W/Y-frame) + Micrologic trip unit, 800A–6300A: https://www.voytenmanuals.com/tools/sqd-ntnw
 - Decoder hub: https://www.voytenmanuals.com/tools
 - Eaton Type SPB (Systems Pow-R): SPB identification is handled directly by Voyten's team — request availability and a quote at https://www.voytenmanuals.com/products/spb-breakers or call 1-800-458-4001.
 

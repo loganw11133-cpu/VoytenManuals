@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="description" content="Square D / Schneider MasterPact NT and NW low-voltage power circuit breaker catalog number decoder. Identify frame construction, ampere rating, interrupting class, device type, sensor plugs, and Micrologic trip unit.">
+<title>Square D / MasterPact NT-NW Decoder — Voyten Electric</title>
+<link rel="stylesheet" href="/tools/decoder-fonts.css">
+<style>
+:root {
+  --red: #dc2626;
+  --dark-red: #b91c1c;
+  --deep-red: #991b1b;
+  --black: #1a1a1a;
+  --deep-black: #111111;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --white: #ffffff;
+  --green: #16a34a;
+  --green-light: #dcfce7;
+  --blue: #2563eb;
+  --blue-light: #dbeafe;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--gray-100);
+  color: var(--gray-800);
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+
+.header {
+  background: linear-gradient(135deg, var(--deep-black), var(--black));
+  color: var(--white);
+  padding: 24px 20px 20px;
+  text-align: center;
+  border-bottom: 4px solid var(--red);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+.header h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: 0.5px; }
+.header h1 .accent { color: var(--red); }
+.header .subtitle { font-size: 0.85rem; color: var(--gray-300); margin-top: 4px; }
+.container { max-width: 960px; margin: 0 auto; padding: 16px; }
+
+/* Input Section */
+.input-section {
+  background: var(--white); border-radius: 12px; padding: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 16px;
+  border: 2px solid var(--red);
+}
+.input-section label {
+  display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 6px; color: var(--gray-700);
+}
+.input-section label .opt { font-weight: 400; font-size: 0.78rem; color: var(--gray-400); text-transform: none; letter-spacing: 0; }
+.field-block { margin-bottom: 14px; }
+.field-block:last-of-type { margin-bottom: 0; }
+.input-row { display: flex; gap: 8px; margin-bottom: 6px; }
+.input-row input {
+  flex: 1; padding: 12px 14px; font-size: 16px; font-family: 'IBM Plex Mono', 'Consolas', 'Monaco', monospace;
+  border: 2px solid var(--gray-200); border-radius: 8px; text-transform: uppercase;
+  letter-spacing: 1.5px; -webkit-appearance: none; transition: border-color 0.2s;
+}
+.input-row input:focus { outline: none; border-color: var(--red); }
+.hint { font-size: 0.75rem; color: var(--gray-500); margin-bottom: 2px; }
+
+.btn-row { display: flex; gap: 8px; margin: 14px 0 12px; }
+.btn {
+  padding: 10px 20px; border: none; border-radius: 8px; font-weight: 700;
+  font-size: 0.9rem; cursor: pointer; transition: background 0.2s; touch-action: manipulation;
+}
+.btn-decode { background: var(--red); color: var(--white); flex: 1; }
+.btn-decode:hover { background: var(--dark-red); }
+.btn-clear { background: var(--gray-200); color: var(--gray-700); }
+.btn-clear:hover { background: var(--gray-300); }
+
+.examples-label { font-size: 0.75rem; font-weight: 600; color: var(--gray-500); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+.examples { display: flex; flex-wrap: wrap; gap: 6px; }
+.ex-btn {
+  padding: 4px 10px; font-size: 0.72rem; font-family: 'IBM Plex Mono', 'Consolas', monospace;
+  background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 6px;
+  cursor: pointer; transition: all 0.15s; color: var(--gray-700); touch-action: manipulation;
+}
+.ex-btn:hover { background: var(--red); color: var(--white); border-color: var(--red); }
+
+/* Compact hover-reveal examples */
+.ex-hover { position: relative; display: inline-block; margin-top: 4px; }
+.ex-hover__trigger {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.4px; text-transform: uppercase;
+  color: var(--gray-500); cursor: pointer; user-select: none;
+  background: var(--gray-100);
+  border: 1px solid var(--gray-300); border-radius: 6px; padding: 4px 10px;
+  transition: color .15s, border-color .15s;
+}
+.ex-hover__trigger::after { content: "\25BE"; font-size: 0.6rem; opacity: .7; }
+.ex-hover:hover .ex-hover__trigger,
+.ex-hover:focus-within .ex-hover__trigger { color: var(--red); border-color: var(--red); }
+.ex-hover__panel {
+  position: absolute; z-index: 50; top: calc(100% + 6px); left: 0;
+  display: none; min-width: 240px; max-width: min(94vw, 560px);
+  padding: 12px 14px 4px;
+  background: #fff; border: 1px solid var(--gray-200); border-radius: 10px;
+  box-shadow: 0 12px 34px rgba(0,0,0,.14);
+}
+.ex-hover:hover .ex-hover__panel,
+.ex-hover:focus-within .ex-hover__panel { display: block; }
+
+/* Char Map */
+.charmap-wrap { margin: 16px 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.charmap-inner { min-width: 300px; }
+.group-labels { display: flex; gap: 2px; margin-bottom: 2px; }
+.group-label {
+  font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--gray-500); text-align: center; padding: 2px 0;
+  border-bottom: 2px solid var(--gray-300);
+}
+.char-boxes { display: flex; gap: 2px; }
+.char-box {
+  width: 32px; height: 38px; display: flex; align-items: center; justify-content: center;
+  font-family: 'IBM Plex Mono', 'Consolas', monospace; font-size: 0.85rem; font-weight: 700;
+  background: var(--gray-100); border: 2px solid var(--gray-200); border-radius: 6px;
+  transition: all 0.2s;
+}
+.char-box.entered { background: var(--black); color: var(--white); border-color: var(--black); }
+.char-box.error { background: #fecaca; color: #dc2626; border-color: #f87171; }
+.char-box.separator { width: 8px; border: none; background: transparent; }
+.pos-labels { display: flex; gap: 2px; margin-top: 1px; }
+.pos-label { width: 32px; text-align: center; font-size: 0.55rem; color: var(--gray-400); }
+.pos-label.sep { width: 8px; }
+
+/* Result Cards */
+.results { display: none; }
+.results.visible { display: block; }
+.card {
+  background: var(--white); border-radius: 12px; padding: 16px;
+  margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  border-left: 4px solid var(--gray-200);
+}
+.card h3 {
+  font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--gray-500); margin-bottom: 8px;
+}
+.field { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--gray-100); gap: 12px; }
+.field:last-child { border-bottom: none; }
+.field-label { font-size: 0.8rem; color: var(--gray-500); }
+.field-value { font-size: 0.8rem; font-weight: 600; color: var(--gray-800); text-align: right; max-width: 62%; }
+.card.valid { border-left-color: var(--red); }
+.card.info { border-left-color: var(--blue); }
+.card.trip { border-left-color: var(--green); }
+
+/* Summary banner */
+.summary-banner {
+  background: var(--black); color: var(--white); border-radius: 12px;
+  padding: 20px; margin-bottom: 16px; border-left: 5px solid var(--red);
+}
+.summary-banner .headline { font-size: 1.15rem; font-weight: 700; margin-bottom: 6px; }
+.summary-banner .catalog-fmt { font-family: 'IBM Plex Mono', 'Consolas', monospace; font-size: 0.85rem; color: var(--gray-300); letter-spacing: 2px; margin-bottom: 12px; }
+
+.btn-copy {
+  padding: 8px 20px; border: 2px solid var(--gray-200); border-radius: 8px;
+  background: var(--white); color: var(--gray-700); font-weight: 600; font-size: 0.8rem;
+  cursor: pointer; transition: all 0.2s;
+}
+.btn-copy:hover { background: var(--gray-200); }
+.btn-copy.copied { background: var(--green-light); border-color: var(--green); color: var(--green); }
+.btn-pdf {
+  padding: 8px 20px; border: 2px solid var(--red); border-radius: 8px;
+  background: var(--white); color: var(--red); font-weight: 600; font-size: 0.8rem;
+  cursor: pointer; transition: all 0.2s; margin-left: 8px;
+}
+.btn-pdf:hover { background: var(--red); color: var(--white); }
+.btn-quote {
+  padding: 8px 20px; border: 2px solid var(--red); border-radius: 8px;
+  background: var(--red); color: var(--white); font-weight: 700; font-size: 0.8rem;
+  cursor: pointer; transition: all 0.2s; margin-left: 8px;
+}
+.btn-quote:hover { background: #b91c1c; border-color: #b91c1c; }
+
+/* Error */
+.error {
+  background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px;
+  padding: 12px 16px; margin-bottom: 12px; display: none;
+}
+.error.visible { display: block; }
+.error-title { font-weight: 700; color: #991b1b; font-size: 0.85rem; margin-bottom: 2px; }
+.error-text { font-size: 0.8rem; color: #b91c1c; }
+.error-hint { font-size: 0.75rem; color: var(--gray-500); margin-top: 6px; }
+
+.note-box { font-size: 0.75rem; color: var(--gray-500); margin-top: 8px; line-height: 1.5; }
+
+/* Noscript */
+.ios-notice {
+  max-width: 600px; margin: 40px auto; background: #fffbeb; border: 2px solid #f59e0b;
+  border-radius: 12px; padding: 24px; color: #92400e; font-size: 0.95rem; line-height: 1.6;
+}
+.ios-notice strong { color: #78350f; }
+.ios-notice .steps { margin: 12px 0; padding-left: 20px; }
+.ios-notice .steps li { margin-bottom: 6px; }
+
+@media (max-width: 600px) {
+  .header h1 { font-size: 1.25rem; }
+  .container { padding: 10px; }
+  .field-value { max-width: 58%; }
+}
+</style>
+</head>
+<body>
+
+<noscript>
+<div class="ios-notice">
+  <strong>Interactive Mode Required</strong><br><br>
+  This decoder requires JavaScript to run. If you are viewing this on an iPhone or iPad, the Files app preview does not support interactive content.
+  <ol class="steps">
+    <li>Tap the <strong>Share</strong> button (box with arrow)</li>
+    <li>Select <strong>"Open in Safari"</strong></li>
+    <li>The decoder will be fully interactive in Safari</li>
+  </ol>
+  On Mac: Right-click the file &rarr; Open With &rarr; Safari.<br>
+  On Android: Open with Chrome or any browser.
+</div>
+</noscript>
+
+<div class="header">
+  <h1>Square D <span class="accent">MasterPact NT / NW</span> Decoder</h1>
+  <div class="subtitle">Universal Power Circuit Breaker — Frame &amp; Micrologic Trip Unit Decoder</div>
+</div>
+
+<div class="container">
+  <!-- Input -->
+  <div class="input-section">
+    <div class="field-block">
+      <label>1 &mdash; Breaker Frame / Catalog Number</label>
+      <div class="input-row">
+        <input type="text" id="catInput" placeholder="e.g. NW20H1" maxlength="14" autocomplete="off" autocorrect="off" spellcheck="false">
+      </div>
+      <div class="hint" id="formatHint">Format: [NT | NW] + frame code (08&ndash;63) + interrupting class (N/H/L &plusmn; 1/2/3/F/10) + optional switch suffix (A/F/B/C)</div>
+      <div class="ex-hover" tabindex="0" role="button" aria-label="Show example frame numbers">
+        <span class="ex-hover__trigger">Frame examples</span>
+        <div class="ex-hover__panel">
+          <div class="examples">
+            <button class="ex-btn" onclick="loadExample(this)">NT08N1</button>
+            <button class="ex-btn" onclick="loadExample(this)">NW20H1</button>
+            <button class="ex-btn" onclick="loadExample(this)">NW08L1F</button>
+            <button class="ex-btn" onclick="loadExample(this)">NW40BH3</button>
+            <button class="ex-btn" onclick="loadExample(this)">NW63H2</button>
+            <button class="ex-btn" onclick="loadExample(this)">NW08HA</button>
+            <button class="ex-btn" onclick="loadExample(this)">NT16LF</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="field-block">
+      <label>2 &mdash; Micrologic Trip Unit <span class="opt">(optional &mdash; ordered separately)</span></label>
+      <div class="input-row">
+        <input type="text" id="tripInput" placeholder="e.g. 5.0P" maxlength="6" autocomplete="off" autocorrect="off" spellcheck="false">
+      </div>
+      <div class="hint">Base 2 / 3 / 5 / 6 + optional feature suffix A (ammeter) &middot; P (power) &middot; H (harmonic)</div>
+      <div class="ex-hover" tabindex="0" role="button" aria-label="Show example trip units">
+        <span class="ex-hover__trigger">Trip examples</span>
+        <div class="ex-hover__panel">
+          <div class="examples">
+            <button class="ex-btn" onclick="loadTrip(this)">3.0</button>
+            <button class="ex-btn" onclick="loadTrip(this)">5.0A</button>
+            <button class="ex-btn" onclick="loadTrip(this)">6.0P</button>
+            <button class="ex-btn" onclick="loadTrip(this)">6.0H</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-decode" onclick="decode()">DECODE</button>
+      <button class="btn btn-clear" onclick="clearAll()">CLEAR</button>
+    </div>
+  </div>
+
+  <!-- Char Map -->
+  <div class="charmap-wrap"><div class="charmap-inner">
+    <div class="group-labels" id="groupLabels"></div>
+    <div class="char-boxes" id="charBoxes"></div>
+    <div class="pos-labels" id="posLabels"></div>
+  </div></div>
+
+  <!-- Error -->
+  <div class="error" id="errorBox">
+    <div class="error-title" id="errorTitle">Invalid Input</div>
+    <div class="error-text" id="errorText"></div>
+    <div class="error-hint">Format: [NT | NW] + 2-digit frame code + interrupting class. Example: NW20H1</div>
+  </div>
+
+  <!-- Results -->
+  <div class="results" id="results"></div>
+</div>
+
+<script>
+/* ============================================================
+   Square D / Schneider MasterPact NT & NW — Nomenclature Data
+   Source: Square D / Schneider catalog 0613CT0001 (Selection),
+   Tables 69-95. NT/NW = Square D (North America) = Schneider
+   MasterPact (global): identical, dual-branded device.
+   ============================================================ */
+
+/* Frame code -> nominal ampere frame rating */
+var FRAME_AMPS = {
+  '08': 800, '10': 1000, '12': 1200, '16': 1600, '20': 2000, '25': 2500,
+  '30': 3000, '32': 3200, '40': 4000, '50': 5000, '60': 6000, '63': 6300
+};
+/* Codes whose amp rating differs by standard */
+var FRAME_DISPLAY = { '12': '1200 A (UL/ANSI) · 1250 A (IEC)' };
+
+/* Interrupting-class / device token -> meaning.
+   device: 'breaker' | 'switch-na' (non-automatic) | 'switch-auto' */
+var CLASS_MAP = {
+  'N':   { device: 'breaker', perf: 'N',   label: 'Standard interrupting (N)',              std: 'UL 489' },
+  'N1':  { device: 'breaker', perf: 'N1',  label: 'Standard interrupting (N1)',             std: 'ANSI / IEC' },
+  'H':   { device: 'breaker', perf: 'H',   label: 'High interrupting (H)',                  std: 'UL 489' },
+  'H1':  { device: 'breaker', perf: 'H1',  label: 'High interrupting (H1)',                 std: 'ANSI / IEC' },
+  'H2':  { device: 'breaker', perf: 'H2',  label: 'Very-high interrupting (H2)' },
+  'H3':  { device: 'breaker', perf: 'H3',  label: 'Extra-high interrupting (H3)' },
+  'H10': { device: 'breaker', perf: 'H10', label: '1150 V rated (H10)',                     std: 'IEC 60947-2' },
+  'L':   { device: 'breaker', perf: 'L',   label: 'Current-limiting (L)',                   std: 'UL 489' },
+  'L1':  { device: 'breaker', perf: 'L1',  label: 'Current-limiting (L1)',                  std: 'ANSI / IEC' },
+  'LF':  { device: 'breaker', perf: 'LF',  label: 'Current-limiting, arc-flash tested (LF)', std: 'UL 489', arc: true },
+  'L1F': { device: 'breaker', perf: 'L1F', label: 'Current-limiting, arc-flash tested (L1F)', std: 'ANSI / IEC', arc: true },
+  'BH1': { device: 'breaker', perf: 'H1',  label: 'High interrupting (H1) — 4000 A W-frame build' },
+  'BH2': { device: 'breaker', perf: 'H2',  label: 'Very-high interrupting (H2) — 4000 A W-frame build' },
+  'BH3': { device: 'breaker', perf: 'H3',  label: 'Extra-high interrupting (H3) — 4000 A W-frame build' },
+  'NA':   { device: 'switch-na',   perf: 'N',   label: 'Non-automatic switch / disconnector (standard)' },
+  'HA':   { device: 'switch-na',   perf: 'H',   label: 'Non-automatic switch / disconnector (high)' },
+  'HA10': { device: 'switch-na',   perf: 'H10', label: 'Non-automatic switch / disconnector, 1150 V' },
+  'BHA':  { device: 'switch-na',   perf: 'H',   label: 'Non-automatic switch / disconnector, 4000 A' },
+  'HF':   { device: 'switch-auto', perf: 'H',   label: 'Automatic molded-case switch (HF)' },
+  'HB':   { device: 'switch-auto', perf: 'H',   label: 'Automatic switch, high withstand, drawout (HB)' },
+  'HC':   { device: 'switch-auto', perf: 'H',   label: 'Automatic switch, high withstand, drawout (HC)' }
+};
+
+var DEVICE_LABEL = {
+  'breaker':     'Automatic circuit breaker (accepts a Micrologic trip unit)',
+  'switch-na':   'Non-automatic switch / disconnector — NO trip unit',
+  'switch-auto': 'Automatic molded-case switch — self-protected, no adjustable trip unit'
+};
+
+/* Micrologic trip unit ordering (Table 70). Protection letters:
+   L=Long-time (overload), S=Short-time (selective), I=Instantaneous, G=Ground-fault. */
+var MICROLOGIC = {
+  '2':    { platform: '2.0', feature: 'Basic',            protection: 'LS0',  std: 'IEC rated' },
+  '3':    { platform: '3.0', feature: 'Basic',            protection: 'LI',   std: 'UL Listed / ANSI Certified' },
+  '5':    { platform: '5.0', feature: 'Basic',            protection: 'LSI',  std: '' },
+  '2.0A': { platform: '2.0', feature: 'Ammeter',          protection: 'LS0',  std: 'IEC rated' },
+  '3.0A': { platform: '3.0', feature: 'Ammeter',          protection: 'LI',   std: 'UL Listed / ANSI Certified' },
+  '5.0A': { platform: '5.0', feature: 'Ammeter',          protection: 'LSI',  std: '' },
+  '6.0A': { platform: '6.0', feature: 'Ammeter',          protection: 'LSIG', std: '' },
+  '5.0P': { platform: '5.0', feature: 'Power metering',   protection: 'LSI',  std: '' },
+  '6.0P': { platform: '6.0', feature: 'Power metering',   protection: 'LSIG', std: '' },
+  '5.0H': { platform: '5.0', feature: 'Harmonic metering', protection: 'LSI', std: '' },
+  '6.0H': { platform: '6.0', feature: 'Harmonic metering', protection: 'LSIG', std: '' }
+};
+var PROTECTION_LEGEND = {
+  'L': 'Long-time (overload)',
+  'S': 'Short-time (selective short-circuit)',
+  'I': 'Instantaneous',
+  'G': 'Ground-fault',
+  '0': 'no instantaneous'
+};
+var FEATURE_LEGEND = {
+  'Basic': 'Protection only, no metering.',
+  'Ammeter': 'Adds true-RMS current (ammeter) readout.',
+  'Power metering': 'Adds voltage, power (kW/kVA/kVAR), energy and power-factor metering.',
+  'Harmonic metering': 'Adds power/energy metering plus harmonic (THD) analysis and power-quality data.'
+};
+
+/* ============================================================
+   Rating tables (from catalog Selection, Tables 71-95).
+   Each table: { std, device, ratingLabel, frameFamily, cols[voltage labels],
+                 groups:[ {a: frame amps, plugs:[sensor plugs] | null,
+                           rows:[ [model, [kA per col], extra?[[label,val]]] ] } ] }
+   null in a kA array renders as em-dash.
+   ============================================================ */
+var RATING_TABLES = [
+  /* ---- T-FRAME BREAKERS ---- */
+  { std: 'ANSI C37 / UL 1066', device: 'Circuit Breaker', ratingLabel: 'Interrupting', frameFamily: 'T',
+    cols: ['254 V', '508 V', '635 V'],
+    groups: [
+      { a: 800, plugs: [100,250,400,600,800], rows: [ ['NT08N1', [42,42,null]] ] }
+    ] },
+  { std: 'UL 489', device: 'Circuit Breaker', ratingLabel: 'Interrupting', frameFamily: 'T',
+    cols: ['240 V', '480 V', '600 V'],
+    groups: [
+      { a: 800,  plugs: [100,250,400,600,800], rows: [
+        ['NT08N',  [50,50,35]], ['NT08H',  [65,50,50]], ['NT08L1', [100,65,null]], ['NT08L', [200,100,null]], ['NT08LF', [200,100,null]] ] },
+      { a: 1200, plugs: [600,800,1000,1200], rows: [
+        ['NT12N',  [50,50,35]], ['NT12H',  [65,50,50]], ['NT12L1', [100,65,null]], ['NT12L', [200,100,null]], ['NT12LF', [200,100,null]] ] },
+      { a: 1600, plugs: [800,1000,1200,1600], rows: [
+        ['NT16N',  [50,50,35]], ['NT16H',  [65,50,50]], ['NT16L1', [100,65,null]], ['NT16L', [200,100,null]], ['NT16LF', [200,100,null]] ] }
+    ] },
+  { std: 'IEC 60947-2', device: 'Circuit Breaker', ratingLabel: 'Interrupting', frameFamily: 'T',
+    cols: ['240 V', '440 V', '690 V', '1000 V'],
+    groups: [
+      { a: 800,  plugs: [250,400,630,800],  rows: [ ['NT08H1', [42,42,42,null]], ['NT08L1', [150,130,25,null]] ] },
+      { a: 1000, plugs: [400,630,800,1000], rows: [ ['NT10H1', [42,42,42,null]], ['NT10L1', [150,130,25,null]] ] },
+      { a: 1250, plugs: [630,800,1000,1250], rows: [ ['NT12H1', [42,42,42,null]] ] },
+      { a: 1600, plugs: [800,1000,1250,1600], rows: [ ['NT16H1', [42,42,42,null]] ] }
+    ] },
+
+  /* ---- T-FRAME SWITCHES ---- */
+  { std: 'ANSI C37 / UL 1066', device: 'Non-Automatic Switch', ratingLabel: 'Interrupting', frameFamily: 'T',
+    cols: ['254 V', '508 V', '635 V'],
+    groups: [ { a: 800, plugs: null, rows: [
+      ['NT08NA', [42,42,null], [['Short-time (0.5 s) rating','42 kA']]],
+      ['NT08HA', [42,42,22],   [['Short-time (0.5 s) rating','42 kA']]] ] } ] },
+  { std: 'UL 489', device: 'Automatic Switch', ratingLabel: 'Withstand', frameFamily: 'T',
+    cols: ['240 V', '480 V', '600 V'],
+    groups: [
+      { a: 800,  plugs: null, rows: [ ['NT08HF', [65,50,50], [['Instantaneous override','40 kA']]], ['NT08HB', [200,100,null], [['Instantaneous override','10 kA']]] ] },
+      { a: 1200, plugs: null, rows: [ ['NT12HF', [65,50,50], [['Instantaneous override','40 kA']]], ['NT12HB', [200,100,null], [['Instantaneous override','10 kA']]] ] },
+      { a: 1600, plugs: null, rows: [ ['NT16HF', [65,50,50], [['Instantaneous override','40 kA']]], ['NT16HB', [200,100,null], [['Instantaneous override','10 kA']]] ] }
+    ] },
+  { std: 'IEC 60947-3', device: 'Non-Automatic Switch', ratingLabel: 'Interrupting', frameFamily: 'T',
+    cols: ['240 V', '440 V', '690 V'],
+    groups: [
+      { a: 800,  plugs: null, rows: [ ['NT08HA', [42,42,42], [['Short-time (0.5 s) rating','42 kA']]] ] },
+      { a: 1000, plugs: null, rows: [ ['NT10HA', [42,42,42], [['Short-time (0.5 s) rating','42 kA']]] ] },
+      { a: 1250, plugs: null, rows: [ ['NT12HA', [42,42,42], [['Short-time (0.5 s) rating','42 kA']]] ] },
+      { a: 1600, plugs: null, rows: [ ['NT16HA', [42,42,42], [['Short-time (0.5 s) rating','42 kA']]] ] }
+    ] },
+
+  /* ---- W-FRAME BREAKERS ---- */
+  { std: 'ANSI C37 / UL 1066', device: 'Circuit Breaker', ratingLabel: 'Interrupting', frameFamily: 'W',
+    cols: ['254 V', '508 V', '635 V'],
+    groups: [
+      { a: 800,  plugs: [100,250,400,600,800], rows: [
+        ['NW08N1',[42,42,42]], ['NW08H1',[65,65,65]], ['NW08H2',[85,85,85]], ['NW08H3',[100,100,85]], ['NW08L1',[200,200,130]], ['NW08L1F',[200,200,130]] ] },
+      { a: 1600, plugs: [800,1000,1200,1600], rows: [
+        ['NW16N1',[42,42,42]], ['NW16H1',[65,65,65]], ['NW16H2',[85,85,85]], ['NW16H3',[100,100,85]], ['NW16L1',[200,200,130]], ['NW16L1F',[200,200,130]] ] },
+      { a: 2000, plugs: [1000,1200,1600,2000], rows: [
+        ['NW20H1',[65,65,65]], ['NW20H2',[85,85,85]], ['NW20H3',[100,100,85]], ['NW20L1',[100,200,130]], ['NW20L1F',[200,200,130]] ] },
+      { a: 3200, plugs: [1600,2000,2500,3000,3200], rows: [
+        ['NW32H1',[65,65,65]], ['NW32H2',[85,85,85]], ['NW32H3',[100,100,85]] ] },
+      { a: 4000, plugs: [2000,2500,3000,3200,3600,4000], rows: [
+        ['NW40BH1',[65,65,65]], ['NW40BH2',[85,85,85]], ['NW40BH3',[100,100,85]] ] }
+    ] },
+  { std: 'UL 489', device: 'Circuit Breaker', ratingLabel: 'Interrupting', frameFamily: 'W',
+    cols: ['240 V', '480 V', '600 V'],
+    groups: [
+      { a: 800,  plugs: [100,250,400,600,800], rows: [ ['NW08N',[65,65,50]], ['NW08H',[100,100,85]], ['NW08L',[200,150,100]], ['NW08LF',[200,150,100]] ] },
+      { a: 1200, plugs: [600,800,1000,1200],   rows: [ ['NW12N',[65,65,50]], ['NW12H',[100,100,85]], ['NW12L',[200,150,100]], ['NW12LF',[200,150,100]] ] },
+      { a: 1600, plugs: [800,1000,1200,1600],  rows: [ ['NW16N',[65,65,50]], ['NW16H',[100,100,85]], ['NW16L',[200,150,100]], ['NW16LF',[200,150,100]] ] },
+      { a: 2000, plugs: [1000,1200,1600,2000], rows: [ ['NW20N',[65,65,50]], ['NW20H',[100,100,85]], ['NW20L',[200,150,100]], ['NW20LF',[200,150,100]] ] },
+      { a: 2500, plugs: [1200,1600,2000,2500], rows: [ ['NW25H',[100,100,85]], ['NW25L',[200,150,100]] ] },
+      { a: 3000, plugs: [1600,2000,2500,3000], rows: [ ['NW30H',[100,100,85]], ['NW30L',[200,150,100]] ] }
+    ] },
+  { std: 'IEC 60947-2', device: 'Circuit Breaker', ratingLabel: 'Interrupting', frameFamily: 'W',
+    cols: ['240 V', '440 V', '690 V', '1150 V'],
+    groups: [
+      { a: 800,  plugs: [400,630,800],       rows: [ ['NW08N1',[42,42,42,null]], ['NW08H1',[65,65,65,null]], ['NW08H2',[100,100,85,null]], ['NW08L1',[150,150,100,null]], ['NW08H10',[null,null,null,50]] ] },
+      { a: 1000, plugs: [400,630,800,1000],  rows: [ ['NW10N1',[42,42,42,null]], ['NW10H1',[65,65,65,null]], ['NW10H2',[100,100,85,null]], ['NW10L1',[150,150,100,null]], ['NW10H10',[null,null,null,50]] ] },
+      { a: 1250, plugs: [630,800,1000,1250], rows: [ ['NW12N1',[42,42,42,null]], ['NW12H1',[65,65,65,null]], ['NW12H2',[100,100,85,null]], ['NW12L1',[150,150,100,null]], ['NW12H10',[null,null,null,50]] ] },
+      { a: 1600, plugs: [800,1000,1250,1600], rows: [ ['NW16N1',[42,42,42,null]], ['NW16H1',[65,65,65,null]], ['NW16H2',[100,100,85,null]], ['NW16L1',[150,150,100,null]], ['NW16H10',[null,null,null,50]] ] },
+      { a: 2000, plugs: [1000,1250,1600,2000], rows: [ ['NW20H1',[65,65,65,null]], ['NW20H2',[100,100,85,null]], ['NW20H3',[150,150,100,null]], ['NW20L1',[150,150,100,null]], ['NW20H10',[null,null,null,50]] ] },
+      { a: 2500, plugs: [1250,1600,2000,2500], rows: [ ['NW25H1',[65,65,65,null]], ['NW25H2',[100,100,85,null]], ['NW25H3',[150,150,100,null]], ['NW25H10',[null,null,null,50]] ] },
+      { a: 3200, plugs: [1600,2000,2500,3200], rows: [ ['NW32H1',[65,65,65,null]], ['NW32H2',[100,100,85,null]], ['NW32H3',[150,150,100,null]], ['NW32H10',[null,null,null,50]] ] },
+      { a: 4000, plugs: [2000,2500,3200,4000], rows: [ ['NW40H1',[65,65,65,null]], ['NW40H2',[100,100,85,null]], ['NW40H3',[150,150,100,null]], ['NW40H10',[null,null,null,50]] ] }
+    ] },
+
+  /* ---- W-FRAME SWITCHES ---- */
+  { std: 'ANSI C37 / UL 1066', device: 'Non-Automatic Switch', ratingLabel: 'Interrupting', frameFamily: 'W',
+    cols: ['254 V', '508 V', '635 V'],
+    groups: [ { a: null, plugs: null, rows: [
+      ['NW08HA',[65,65,65],[['Short-time (0.5 s) rating','65 kA']]], ['NW16HA',[65,65,65],[['Short-time (0.5 s) rating','65 kA']]],
+      ['NW20HA',[65,65,65],[['Short-time (0.5 s) rating','65 kA']]], ['NW32HA',[65,65,65],[['Short-time (0.5 s) rating','65 kA']]] ] } ] },
+  { std: 'ANSI C37 / UL 1066', device: 'Drawout Automatic Switch', ratingLabel: 'Interrupting', frameFamily: 'W',
+    cols: ['254 V', '508 V', '635 V'],
+    groups: [ { a: null, plugs: null, rows: [
+      ['NW08HF',[100,100,85],[['Short-time (0.5 s) rating','85 kA']]], ['NW08HC',[200,200,130],[['Short-time (0.5 s) rating','30 kA']]],
+      ['NW16HF',[100,100,85],[['Short-time (0.5 s) rating','85 kA']]], ['NW16HC',[200,200,130],[['Short-time (0.5 s) rating','30 kA']]],
+      ['NW20HF',[100,100,85],[['Short-time (0.5 s) rating','85 kA']]], ['NW20HC',[200,200,130],[['Short-time (0.5 s) rating','30 kA']]],
+      ['NW32HF',[100,100,85],[['Short-time (0.5 s) rating','85 kA']]] ] } ] },
+  { std: 'UL 489', device: 'Drawout Automatic Switch', ratingLabel: 'Withstand', frameFamily: 'W',
+    cols: ['240 V', '480 V', '600 V'],
+    groups: [
+      { a: 800,  plugs: null, rows: [ ['NW08HF',[100,100,85],[['Instantaneous override','40 kA']]], ['NW08HB',[200,150,100],[['Instantaneous override','35 kA']]] ] },
+      { a: 1200, plugs: null, rows: [ ['NW12HF',[100,100,85],[['Instantaneous override','40 kA']]], ['NW12HB',[200,150,100],[['Instantaneous override','35 kA']]] ] },
+      { a: 1600, plugs: null, rows: [ ['NW16HF',[100,100,85],[['Instantaneous override','40 kA']]], ['NW16HB',[200,150,100],[['Instantaneous override','35 kA']]] ] },
+      { a: 2000, plugs: null, rows: [ ['NW20HF',[100,100,85],[['Instantaneous override','40 kA']]], ['NW20HB',[200,150,100],[['Instantaneous override','35 kA']]] ] },
+      { a: 2500, plugs: null, rows: [ ['NW25HF',[100,100,85],[['Instantaneous override','65 kA']]], ['NW25HB',[200,150,100],[['Instantaneous override','65 kA']]] ] },
+      { a: 3000, plugs: null, rows: [ ['NW30HF',[100,100,85],[['Instantaneous override','65 kA']]], ['NW30HB',[200,150,100],[['Instantaneous override','65 kA']]] ] }
+    ] },
+  { std: 'IEC 60947-3', device: 'Automatic Switch', ratingLabel: 'Withstand', frameFamily: 'W',
+    cols: ['240 V', '440 V', '690 V'],
+    groups: [ { a: null, plugs: null, rows: [
+      ['NW08HF',[85,85,85],[['Instantaneous override','85 kA']]], ['NW10HF',[85,85,85],[['Instantaneous override','85 kA']]],
+      ['NW12HF',[85,85,85],[['Instantaneous override','85 kA']]], ['NW16HF',[85,85,85],[['Instantaneous override','85 kA']]],
+      ['NW20HF',[85,85,85],[['Instantaneous override','85 kA']]], ['NW25HF',[85,85,85],[['Instantaneous override','85 kA']]],
+      ['NW32HF',[85,85,85],[['Instantaneous override','85 kA']]], ['NW40HF',[85,85,85],[['Instantaneous override','85 kA']]] ] } ] },
+  { std: 'IEC 60947-3', device: 'Non-Automatic Switch', ratingLabel: 'Interrupting', frameFamily: 'W',
+    cols: ['240 V', '440 V', '690 V', '1150 V'],
+    groups: [
+      { a: 800,  plugs: null, rows: [ ['NW08NA',[42,42,42,null],[['Short-time (0.5 s) rating','42 kA']]], ['NW08HA',[50,50,50,null],[['Short-time (0.5 s) rating','50 kA']]], ['NW08HA10',[null,null,null,50],[['Short-time (0.5 s) rating','50 kA']]] ] },
+      { a: 1000, plugs: null, rows: [ ['NW10NA',[42,42,42,null],[['Short-time (0.5 s) rating','42 kA']]], ['NW10HA',[50,50,50,null],[['Short-time (0.5 s) rating','50 kA']]], ['NW10HA10',[null,null,null,50],[['Short-time (0.5 s) rating','50 kA']]] ] },
+      { a: 1250, plugs: null, rows: [ ['NW12NA',[42,42,42,null],[['Short-time (0.5 s) rating','42 kA']]], ['NW12HA',[50,50,50,null],[['Short-time (0.5 s) rating','50 kA']]], ['NW12HA10',[null,null,null,50],[['Short-time (0.5 s) rating','50 kA']]] ] },
+      { a: 1600, plugs: null, rows: [ ['NW16NA',[42,42,42,null],[['Short-time (0.5 s) rating','42 kA']]], ['NW16HA',[50,50,50,null],[['Short-time (0.5 s) rating','50 kA']]], ['NW16HA10',[null,null,null,50],[['Short-time (0.5 s) rating','50 kA']]] ] },
+      { a: 2000, plugs: null, rows: [ ['NW20HA',[50,50,50,null],[['Short-time (0.5 s) rating','50 kA']]], ['NW20HA10',[null,null,null,50],[['Short-time (0.5 s) rating','50 kA']]] ] },
+      { a: 2500, plugs: null, rows: [ ['NW25HA',[50,50,50,null],[['Short-time (0.5 s) rating','50 kA']]], ['NW25HA10',[null,null,null,50],[['Short-time (0.5 s) rating','50 kA']]] ] },
+      { a: 3200, plugs: null, rows: [ ['NW32HA',[50,50,50,null],[['Short-time (0.5 s) rating','50 kA']]], ['NW32HA10',[null,null,null,50],[['Short-time (0.5 s) rating','50 kA']]] ] },
+      { a: 4000, plugs: null, rows: [ ['NW40HA',[50,50,50,null],[['Short-time (0.5 s) rating','50 kA']]], ['NW40HA10',[null,null,null,50],[['Short-time (0.5 s) rating','50 kA']]] ] }
+    ] },
+
+  /* ---- Y-FRAME BREAKERS ---- */
+  { std: 'ANSI C37 / UL 1066', device: 'Circuit Breaker', ratingLabel: 'Interrupting', frameFamily: 'Y',
+    cols: ['254 V', '508 V', '635 V'],
+    groups: [
+      { a: 4000, plugs: [2000,2500,3000,3200,4000], rows: [
+        ['NW32L1',[200,200,130]], ['NW40H2',[85,85,85]], ['NW40H3',[100,100,85]], ['NW40L1',[200,200,130]] ] },
+      { a: 5000, plugs: [2500,3000,3200,4000,5000], rows: [
+        ['NW50H2',[85,85,85]], ['NW50H3',[100,100,85]], ['NW50L1',[200,200,130]] ] }
+    ] },
+  { std: 'UL 489', device: 'Circuit Breaker', ratingLabel: 'Interrupting', frameFamily: 'Y',
+    cols: ['240 V', '480 V', '600 V'],
+    groups: [
+      { a: 4000, plugs: [2000,2500,3000,4000], rows: [ ['NW40H',[100,100,85]], ['NW40L',[200,150,100]] ] },
+      { a: 5000, plugs: [2500,3000,4000,5000], rows: [ ['NW50H',[100,100,85]], ['NW50L',[200,150,100]] ] },
+      { a: 6000, plugs: [3000,4000,5000,6000], rows: [ ['NW60H',[100,100,85]], ['NW60L',[200,150,100]] ] }
+    ] },
+  { std: 'IEC 60947-2', device: 'Circuit Breaker', ratingLabel: 'Interrupting', frameFamily: 'Y',
+    cols: ['240 V', '440 V', '690 V'],
+    groups: [
+      { a: 4000, plugs: [2000,2500,3200,4000], rows: [ ['NW40BH1',[100,100,100]], ['NW40BH2',[150,150,100]] ] },
+      { a: 5000, plugs: [2500,3200,4000,5000], rows: [ ['NW50H1',[100,100,100]], ['NW50H2',[150,150,100]] ] },
+      { a: 6300, plugs: [3200,4000,5000,6300], rows: [ ['NW63H1',[100,100,100]], ['NW63H2',[150,150,100]] ] }
+    ] },
+
+  /* ---- Y-FRAME SWITCHES ---- */
+  { std: 'ANSI C37 / UL 1066', device: 'Non-Automatic Switch', ratingLabel: 'Interrupting', frameFamily: 'Y',
+    cols: ['254 V', '508 V', '635 V'],
+    groups: [ { a: null, plugs: null, rows: [
+      ['NW40HA',[85,85,85],[['Short-time (0.5 s) rating','85 kA']]], ['NW50HA',[85,85,85],[['Short-time (0.5 s) rating','85 kA']]] ] } ] },
+  { std: 'ANSI C37 / UL 1066', device: 'Drawout Automatic Switch', ratingLabel: 'Interrupting', frameFamily: 'Y',
+    cols: ['254 V', '508 V', '635 V'],
+    groups: [ { a: null, plugs: null, rows: [
+      ['NW32HC',[200,200,130],[['Short-time (0.5 s) rating','100 kA']]],
+      ['NW40HF',[100,100,85],[['Short-time (0.5 s) rating','85 kA']]], ['NW40HC',[200,200,130],[['Short-time (0.5 s) rating','100 kA']]],
+      ['NW50HF',[100,100,85],[['Short-time (0.5 s) rating','85 kA']]], ['NW50HC',[200,200,130],[['Short-time (0.5 s) rating','100 kA']]] ] } ] },
+  { std: 'UL 489', device: 'Fixed Automatic Switch', ratingLabel: 'Withstand', frameFamily: 'Y',
+    cols: ['240 V', '480 V', '600 V'],
+    groups: [ { a: null, plugs: null, rows: [
+      ['NW40HF',[100,100,85],[['Instantaneous override','75 kA']]], ['NW50HF',[100,100,85],[['Instantaneous override','75 kA']]], ['NW60HF',[100,100,85],[['Instantaneous override','75 kA']]] ] } ] },
+  { std: 'IEC 60947-3', device: 'Non-Automatic Switch', ratingLabel: 'Interrupting', frameFamily: 'Y',
+    cols: ['240 V', '440 V', '690 V'],
+    groups: [ { a: null, plugs: null, rows: [
+      ['NW40BHA',[85,85,85],[['Short-time (0.5 s) rating','85 kA']]], ['NW50HA',[85,85,85],[['Short-time (0.5 s) rating','85 kA']]], ['NW63HA',[85,85,85],[['Short-time (0.5 s) rating','85 kA']]] ] } ] }
+];
+
+/* Build a model -> [listings] index at load. Same model can appear under
+   multiple standards (e.g. NW08H1 under ANSI and IEC). */
+var MODEL_INDEX = {};
+(function buildIndex() {
+  for (var t = 0; t < RATING_TABLES.length; t++) {
+    var tbl = RATING_TABLES[t];
+    for (var g = 0; g < tbl.groups.length; g++) {
+      var grp = tbl.groups[g];
+      for (var r = 0; r < grp.rows.length; r++) {
+        var row = grp.rows[r];
+        var model = row[0];
+        if (!MODEL_INDEX[model]) MODEL_INDEX[model] = [];
+        MODEL_INDEX[model].push({
+          std: tbl.std, device: tbl.device, ratingLabel: tbl.ratingLabel,
+          frameFamily: tbl.frameFamily, cols: tbl.cols,
+          kA: row[1], extra: row[2] || null, frameA: grp.a, plugs: grp.plugs
+        });
+      }
+    }
+  }
+})();
+
+/* ============================================================
+   Parsers
+   ============================================================ */
+function parseBreaker(raw) {
+  var s = String(raw || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+  if (!s) return { valid: false, error: 'Enter a breaker frame / catalog number (e.g. NW20H1).' };
+
+  var family = s.substring(0, 2);
+  if (family !== 'NT' && family !== 'NW') {
+    return { valid: false, error: 'MasterPact frames start with NT or NW. Got "' + s + '".' };
+  }
+  var rest = s.substring(2);
+  var fm = rest.match(/^(\d{2})/);
+  if (!fm) {
+    return { valid: false, error: 'Expected a 2-digit frame code after ' + family + ' (08, 10, 12, 16, 20, 25, 30, 32, 40, 50, 60, 63).' };
+  }
+  var frameCode = fm[1];
+  var classToken = rest.substring(2);
+
+  var d = {
+    valid: true, raw: s, family: family, frameCode: frameCode,
+    classToken: classToken, frameAmps: FRAME_AMPS[frameCode] || null,
+    frameDisplay: FRAME_DISPLAY[frameCode] || (FRAME_AMPS[frameCode] ? FRAME_AMPS[frameCode] + ' A' : 'Unknown'),
+    classInfo: classToken ? (CLASS_MAP[classToken] || null) : null,
+    listings: MODEL_INDEX[s] || []
+  };
+  d.device = d.classInfo ? d.classInfo.device : (d.listings[0] ? deviceFromListing(d.listings[0]) : 'breaker');
+  return d;
+}
+
+function deviceFromListing(l) {
+  if (/Non-Automatic/i.test(l.device)) return 'switch-na';
+  if (/Switch/i.test(l.device)) return 'switch-auto';
+  return 'breaker';
+}
+
+function construction(family, frameCode, listings) {
+  if (family === 'NT') return 'T-frame';
+  if (listings && listings.length) {
+    var fams = [];
+    for (var i = 0; i < listings.length; i++) if (fams.indexOf(listings[i].frameFamily) < 0) fams.push(listings[i].frameFamily);
+    return fams.map(function (f) { return f + '-frame'; }).join(' / ');
+  }
+  if (['50','60','63'].indexOf(frameCode) >= 0) return 'Y-frame';
+  if (frameCode === '40') return 'W-frame or Y-frame';
+  return 'W-frame';
+}
+
+function parseTrip(raw) {
+  var s = String(raw || '').toUpperCase().replace(/\s/g, '');
+  if (!s) return null;
+  var m = s.match(/^(\d)(?:\.0)?([APH])?$/);
+  if (!m) return { valid: false, raw: s };
+  var digit = m[1], suffix = m[2] || '';
+  var key = suffix ? (digit + '.0' + suffix) : digit;
+  var info = MICROLOGIC[key];
+  if (!info) return { valid: false, raw: s, digit: digit, suffix: suffix };
+  return { valid: true, raw: s, key: key, info: info };
+}
+
+/* ============================================================
+   Decode orchestration + render
+   ============================================================ */
+function decode() {
+  hideError();
+  var b = parseBreaker(document.getElementById('catInput').value);
+  if (!b.valid) { showError('Invalid Breaker Frame', b.error); document.getElementById('results').classList.remove('visible'); return; }
+  var t = parseTrip(document.getElementById('tripInput').value);
+  renderResults(b, t);
+}
+
+function renderResults(b, t) {
+  var el = document.getElementById('results');
+  renderCharMap(b);
+
+  var constr = construction(b.family, b.frameCode, b.listings);
+  var series = 'MasterPact ' + b.family;
+  var deviceKind = b.device;
+  var frameLabel = b.frameDisplay;
+
+  var html = '';
+
+  /* Summary banner */
+  var specBits = [];
+  if (b.frameAmps) specBits.push(b.frameAmps + ' A frame');
+  specBits.push(constr);
+  if (b.classInfo) specBits.push(b.classInfo.perf + ' class');
+  var bannerCat = b.raw + (t && t.valid ? '  +  Micrologic ' + t.info.platform + (t.info.feature !== 'Basic' ? ' ' + t.key.replace(/^\d\.0/, '') : '') : '');
+
+  html += '<div class="summary-banner">';
+  html += '<div class="headline">Square D / Schneider ' + series + ' ' + esc(b.raw) + '</div>';
+  html += '<div class="catalog-fmt">' + esc(bannerCat) + '</div>';
+  html += '<button class="btn-copy" id="btnCopyCat" onclick="copyCatalog()">Copy Catalog Number</button>';
+  html += ' <button class="btn-pdf" onclick="downloadDecoderPDF()">Download PDF</button>';
+  html += ' <button class="btn-quote" onclick="openDecoderQuote()">Get a Quote for This Breaker</button>';
+  html += '</div>';
+
+  /* 1. Identification */
+  var idFields = [
+    field('Series', 'Square D / Schneider MasterPact ' + b.family),
+    field('Construction', constr),
+    field('Frame rating', frameLabel)
+  ];
+  if (b.classInfo) {
+    idFields.push(field('Interrupting class', b.classInfo.label));
+    if (b.classInfo.std) idFields.push(field('Standard', b.classInfo.std));
+    if (b.classInfo.arc) idFields.push(field('Arc-flash', 'Tested for arc-flash hazard category (NFPA 70E)'));
+  } else if (b.classToken) {
+    idFields.push(field('Interrupting class', 'Unrecognized code "' + esc(b.classToken) + '" — verify against nameplate'));
+  }
+  idFields.push(field('Device type', DEVICE_LABEL[deviceKind] || deviceKind));
+  html += card('Breaker Identification', 'valid', idFields);
+
+  /* 2. Interrupting / withstand ratings — one card per standard listing */
+  if (b.listings.length) {
+    for (var i = 0; i < b.listings.length; i++) {
+      var l = b.listings[i];
+      var rFields = [];
+      for (var c = 0; c < l.cols.length; c++) {
+        rFields.push(field(l.cols[c], l.kA[c] == null ? '—' : l.kA[c] + ' kA'));
+      }
+      if (l.extra) for (var e = 0; e < l.extra.length; e++) rFields.push(field(l.extra[e][0], l.extra[e][1]));
+      html += card(l.ratingLabel + ' Rating — ' + l.std + ' (' + l.device + ')', 'info', rFields);
+    }
+  } else if (b.classInfo) {
+    html += card('Rating', 'info', [ field('Note', 'Grammar decoded, but this exact model is not in the rating tables. Verify kA against the nameplate or contact Voyten.') ]);
+  }
+
+  /* 3. Sensor plugs (breakers only) */
+  if (deviceKind === 'breaker') {
+    var plugSet = [];
+    for (var p = 0; p < b.listings.length; p++) {
+      if (b.listings[p].plugs) for (var q = 0; q < b.listings[p].plugs.length; q++) {
+        if (plugSet.indexOf(b.listings[p].plugs[q]) < 0) plugSet.push(b.listings[p].plugs[q]);
+      }
+    }
+    if (plugSet.length) {
+      plugSet.sort(function (x, y) { return x - y; });
+      html += card('Sensor Plug Ratings', 'valid', [
+        field('Available (In)', plugSet.map(function (x) { return x + ' A'; }).join(', ')),
+        field('Note', 'Breaker is ordered by SENSOR plug rating, not trip amps. Sensor + rating plug are field-replaceable.')
+      ]);
+    }
+  }
+
+  /* 4. Micrologic trip unit (if provided) */
+  if (t) {
+    if (deviceKind !== 'breaker') {
+      html += card('Micrologic Trip Unit', 'trip', [
+        field('Not applicable', 'This device is a ' + (deviceKind === 'switch-na' ? 'non-automatic switch (disconnector)' : 'molded-case switch') + ' — it does not take a Micrologic trip unit.')
+      ]);
+    } else if (t.valid) {
+      var pr = t.info.protection;
+      var prExpanded = expandProtection(pr);
+      var tFields = [
+        field('Trip unit', 'Micrologic ' + t.key),
+        field('Platform', t.info.platform),
+        field('Feature type', t.info.feature),
+        field('Protection', pr + ' — ' + prExpanded)
+      ];
+      if (t.info.std) tFields.push(field('Standard', t.info.std));
+      tFields.push(field('Metering', FEATURE_LEGEND[t.info.feature] || ''));
+      html += card('Micrologic Trip Unit', 'trip', tFields);
+    } else {
+      html += card('Micrologic Trip Unit', 'trip', [
+        field('Unrecognized', '"' + esc(t.raw) + '" — expected base 2/3/5/6 with optional A, P, or H (e.g. 5.0P).')
+      ]);
+    }
+  }
+
+  /* 5. Modular ordering note */
+  html += card('How This Breaker Is Ordered (Modular)', 'info', [
+    field('1 · Breaker frame', b.raw + (b.classInfo ? '' : '')),
+    field('2 · Micrologic trip unit', t && t.valid ? 'Micrologic ' + t.key : 'ordered separately'),
+    field('3 · Rating plug', 'sets long-time pickup (Ir) — ordered separately'),
+    field('4 · Sensor plug', 'sets max trip range (In) — ordered separately'),
+    field('5 · Cradle & accessories', 'drawout cradle, aux, shunt, UVR, motor operator — separately')
+  ]);
+
+  /* 6. Brand cross-reference */
+  html += card('Brand Cross-Reference', 'valid', [
+    field('Square D (North America)', b.raw),
+    field('Schneider Electric (global)', 'MasterPact ' + b.family + ' ' + b.raw.substring(2)),
+    field('Relationship', 'Identical device — dual-branded (Square D = Schneider MasterPact)')
+  ]);
+
+  el.innerHTML = html;
+  el.classList.add('visible');
+}
+
+function expandProtection(pr) {
+  var parts = [];
+  for (var i = 0; i < pr.length; i++) {
+    var ch = pr[i];
+    if (PROTECTION_LEGEND[ch]) parts.push(PROTECTION_LEGEND[ch]);
+  }
+  return parts.join(' + ');
+}
+
+/* ============================================================
+   Char map
+   ============================================================ */
+function renderCharMap(b) {
+  var raw = b.raw;
+  var chars = raw.split('');
+  var boxes = document.getElementById('charBoxes');
+  var labels = document.getElementById('groupLabels');
+  var posLbls = document.getElementById('posLabels');
+  boxes.innerHTML = ''; labels.innerHTML = ''; posLbls.innerHTML = '';
+
+  var groups = [
+    { label: 'FAMILY', start: 0, len: 2 },
+    { label: 'FRAME', start: 2, len: 2 },
+    { label: 'CLASS', start: 4, len: Math.max(raw.length - 4, 0) }
+  ];
+  var badClass = (b.classToken && !b.classInfo);
+
+  for (var g = 0; g < groups.length; g++) {
+    var seg = groups[g];
+    if (seg.len <= 0) continue;
+
+    var gl = document.createElement('div');
+    gl.className = 'group-label';
+    gl.style.width = (seg.len * 34 - 2) + 'px';
+    gl.textContent = seg.label;
+    labels.appendChild(gl);
+
+    for (var i = 0; i < seg.len; i++) {
+      var ch = chars[seg.start + i] || '';
+      var box = document.createElement('div');
+      box.className = 'char-box';
+      if (ch) box.classList.add('entered');
+      if (seg.label === 'CLASS' && badClass) box.classList.add('error');
+      box.textContent = ch;
+      boxes.appendChild(box);
+
+      var pl = document.createElement('div');
+      pl.className = 'pos-label';
+      pl.textContent = (seg.start + i + 1);
+      posLbls.appendChild(pl);
+    }
+
+    if (g < groups.length - 1 && groups[g + 1].len > 0) {
+      var sep = document.createElement('div'); sep.className = 'char-box separator'; boxes.appendChild(sep);
+      var sepL = document.createElement('div'); sepL.className = 'pos-label sep'; posLbls.appendChild(sepL);
+      var gs = document.createElement('div'); gs.className = 'group-label'; gs.style.width = '8px'; gs.style.borderBottom = 'none'; labels.appendChild(gs);
+    }
+  }
+}
+
+function clearCharMap() {
+  document.getElementById('charBoxes').innerHTML = '';
+  document.getElementById('groupLabels').innerHTML = '';
+  document.getElementById('posLabels').innerHTML = '';
+}
+
+/* ============================================================
+   UI helpers
+   ============================================================ */
+function card(title, cls, fields) {
+  return '<div class="card ' + cls + '"><h3>' + title + '</h3>' + fields.join('') + '</div>';
+}
+function field(label, value) {
+  return '<div class="field"><span class="field-label">' + label + '</span><span class="field-value">' + value + '</span></div>';
+}
+function showError(title, text) {
+  var el = document.getElementById('errorBox');
+  document.getElementById('errorTitle').textContent = title;
+  document.getElementById('errorText').textContent = text;
+  el.classList.add('visible');
+  clearCharMap();
+}
+function hideError() { document.getElementById('errorBox').classList.remove('visible'); }
+
+function clearAll() {
+  document.getElementById('catInput').value = '';
+  document.getElementById('tripInput').value = '';
+  document.getElementById('results').innerHTML = '';
+  document.getElementById('results').classList.remove('visible');
+  hideError(); clearCharMap();
+  document.getElementById('catInput').focus();
+}
+function loadExample(btn) { document.getElementById('catInput').value = btn.textContent; decode(); }
+function loadTrip(btn) { document.getElementById('tripInput').value = btn.textContent; if (document.getElementById('catInput').value.trim()) decode(); }
+
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]; }); }
+
+function copyCatalog() {
+  var val = document.getElementById('catInput').value.trim().toUpperCase();
+  if (!val) return;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(val).then(showCopied);
+  } else {
+    var ta = document.createElement('textarea'); ta.value = val; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); showCopied();
+  }
+}
+function showCopied() {
+  var btn = document.getElementById('btnCopyCat'); if (!btn) return;
+  btn.textContent = 'Copied!'; btn.classList.add('copied');
+  setTimeout(function () { btn.textContent = 'Copy Catalog Number'; btn.classList.remove('copied'); }, 2000);
+}
+
+document.getElementById('catInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') decode(); });
+document.getElementById('tripInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') decode(); });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="/tools/decoder-pdf.js"></script>
+<script src="/tools/decoder-quote.js"></script>
+</body>
+</html>

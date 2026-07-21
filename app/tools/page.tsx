@@ -4,7 +4,7 @@ import { Cpu, ArrowRight } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Breaker Decoder Tools',
-  description: 'Free circuit breaker catalog number decoders. Decode Eaton, Siemens, and GE model numbers for Siemens RL, GE WavePro, Eaton RD (R-Frame), Magnum DS (MDS) / SBS, Magnum MW (IEC), and Magnum PXR / Power Defense SB breakers instantly.',
+  description: 'Free circuit breaker catalog number decoders. Decode Eaton, Siemens, GE, and Square D / Schneider model numbers for Siemens RL, GE WavePro, Eaton RD (R-Frame), Magnum DS (MDS) / SBS, Magnum MW (IEC), Magnum PXR / Power Defense SB, and Square D MasterPact NT / NW breakers instantly.',
   robots: { index: true, follow: true },
   alternates: {
     canonical: 'https://www.voytenmanuals.com/tools',
@@ -69,6 +69,14 @@ const tools = [
     description: 'Decode 25-character Magnum PXR and 15-character Power Defense SB catalog numbers. Identifies frame size, ampere rating, trip unit, and accessories.',
     frames: 'Magnum DS (PXR) · Power Defense SB',
     ratings: '800A – 6,000A',
+  },
+  {
+    slug: 'sqd-ntnw',
+    name: 'MasterPact NT / NW',
+    manufacturer: 'Square D',
+    description: 'Decode Square D / Schneider MasterPact NT and NW catalog numbers. Identifies frame construction (T/W/Y), ampere rating, interrupting class, device type, sensor plugs, and Micrologic trip unit.',
+    frames: 'NT (T-frame) · NW (W / Y-frame)',
+    ratings: '800A – 6,300A',
   },
 ];
 
