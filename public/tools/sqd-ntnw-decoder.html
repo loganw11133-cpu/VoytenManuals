@@ -66,6 +66,10 @@ body {
 .input-section label .opt { font-weight: 400; font-size: 0.78rem; color: var(--gray-400); text-transform: none; letter-spacing: 0; }
 .field-block { margin-bottom: 14px; }
 .field-block:last-of-type { margin-bottom: 0; }
+.or-divider { display: flex; align-items: center; text-align: center; margin: 18px 0 12px; }
+.or-divider::before, .or-divider::after { content: ""; flex: 1; height: 1px; background: var(--gray-200); }
+.or-divider span { padding: 0 12px; font-size: 0.72rem; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; }
+.or-divider strong { color: var(--gray-600); }
 .input-row { display: flex; gap: 8px; margin-bottom: 6px; }
 .input-row input {
   flex: 1; padding: 12px 14px; font-size: 16px; font-family: 'IBM Plex Mono', 'Consolas', 'Monaco', monospace;
@@ -276,6 +280,25 @@ body {
             <button class="ex-btn" onclick="loadTrip(this)">5.0A</button>
             <button class="ex-btn" onclick="loadTrip(this)">6.0P</button>
             <button class="ex-btn" onclick="loadTrip(this)">6.0H</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="or-divider"><span>— or decode the full nameplate <strong>catalog number</strong> —</span></div>
+
+    <div class="field-block">
+      <label>Configured Catalog Number <span class="opt">(the "Cat." digest on the nameplate, e.g. WA…)</span></label>
+      <div class="input-row">
+        <input type="text" id="waInput" placeholder="e.g. WA4ECR43A9SXXXWXJA" maxlength="25" autocomplete="off" autocorrect="off" spellcheck="false">
+      </div>
+      <div class="hint">Decodes all 25 PLS007 positions — construction, standard, interrupting, frame, sensor, mounting, trip unit &amp; accessories. Overrides fields 1–2 when filled.</div>
+      <div class="ex-hover" tabindex="0" role="button" aria-label="Show example catalog numbers">
+        <span class="ex-hover__trigger">Catalog examples</span>
+        <div class="ex-hover__panel">
+          <div class="examples">
+            <button class="ex-btn" onclick="loadWa(this)">WA4ECR43A9SXXXWXJA</button>
+            <button class="ex-btn" onclick="loadWa(this)">WA4FMR63A3F9C4CX4M1C</button>
           </div>
         </div>
       </div>
@@ -670,47 +693,180 @@ function parseTrip(raw) {
 }
 
 /* ============================================================
+   Configured Catalog Number ("Cat." digest, e.g. WA4ECR43…)
+   Per Square D PLS007 Rev 25 — position-by-position nomenclature.
+   Positions 1-9 are the electrical core (validated vs real breakers);
+   10-25 are factory accessories.
+   ============================================================ */
+var WA_P1 = { /* platform / pole spacing / construction */
+  'T': { family: 'NT', spacing: '70 mm',  poles: '3-pole' },
+  'A': { family: 'NT', spacing: '70 mm',  poles: '4-pole' },
+  'W': { family: 'NW', spacing: '115 mm', poles: '3-pole' },
+  'G': { family: 'NW', spacing: '115 mm', poles: '3-pole', arc: true },
+  'B': { family: 'NW', spacing: '115 mm', poles: '4-pole' },
+  'Y': { family: 'NW', spacing: '230 mm', poles: '3-pole' },
+  'H': { family: 'NW', spacing: '230 mm', poles: '3-pole', arc: true },
+  'C': { family: 'NW', spacing: '230 mm', poles: '4-pole' },
+  'E': { family: 'NW', spacing: '115 mm', poles: 'DC', dc: true }
+};
+var WA_P2 = { /* brand + standard */
+  'L': { brand: 'Square D', std: 'UL' },   'A': { brand: 'Square D', std: 'ANSI' },   'C': { brand: 'Square D', std: 'IEC' },
+  'G': { brand: 'Schneider Electric', std: 'UL' }, 'N': { brand: 'Schneider Electric', std: 'ANSI' }, 'M': { brand: 'Schneider Electric', std: 'IEC' }
+};
+/* pos3 interrupting-rating char → class letter, keyed by standard (PLS007 AC table) */
+var WA_P3 = {
+  'UL':   { '1': 'N',  '3': 'H',  '7': 'L',  '8': 'L1',  '9': 'LF',  'A': 'HXT' },
+  'ANSI': { '2': 'N1', '4': 'H1', '5': 'H2', '6': 'H3',  '8': 'L1',  '9': 'L1F' },
+  'IEC':  { '1': 'N1', '2': 'HA', '3': 'HF', '4': 'H1',  '5': 'H2',  '6': 'H3', '7': 'L1', '8': 'H10', '9': 'HA10', 'A': 'H1T' }
+};
+var WA_P4 = { 'A':800,'P':800,'B':1000,'C':1200,'D':1250,'R':1400,'E':1600,'F':2000,'G':2500,'H':3000,'J':3200,'K':4000,'L':5000,'M':6000,'N':6300 };
+var AMP2CODE = { 800:'08',1000:'10',1200:'12',1250:'12',1400:'14',1600:'16',2000:'20',2500:'25',3000:'30',3200:'32',4000:'40',5000:'50',6000:'60',6300:'63' };
+var WA_P5 = { 'W':100,'P':250,'S':400,'T':600,'U':630,'A':800,'B':1000,'C':1200,'D':1250,'E':1600,'F':2000,'G':2500,'H':3000,'J':3200,'K':4000,'L':5000,'M':6000,'N':6300,'R':3600 };
+var WA_P6 = { /* fixed vs drawout + connection */
+  'R': 'Drawout breaker', 'X': 'None',
+  'V': 'Fixed — rear-connected T, vertical (RCTV)', 'H': 'Fixed — rear-connected T, horizontal (RCTH)',
+  'F': 'Fixed — front-connected flat (FCF)', 'D': 'Fixed — front-connected flat (FCF)',
+  'K': 'Fixed — FCF / RCTV', 'L': 'Fixed — RCTV / FCF', 'N': 'Fixed — 4-hole RCTH / RCTV',
+  'P': 'Fixed — 4-hole RCTH, 6-pole', 'Q': 'Fixed — 4-hole RCTV / RCTH', 'S': 'Fixed — 4-hole RCTV, 6-pole',
+  'W': 'Fixed — RCTH / RCTV', 'Y': 'Fixed — RCTV / RCTH', 'Z': 'Fixed — RCOV 4000 A ANSI 3P',
+  'T': 'Fixed — 11.75 in FCT', 'G': 'Fixed — Orion 9.7 in FCT', 'U': 'Fixed — RCOV 3200 A',
+  'B': 'Fixed — 4-hole RCTV', 'J': 'Fixed — 4-hole RCTH', 'M': 'Fixed — 4-hole RCTV, 6-pole',
+  'A': 'Fixed — 4-hole RCTH, 6-pole', 'E': 'Fixed — 4-hole RCT w/ heat sink, 6-pole 5000 A',
+  'C': 'Fixed — 4-hole RCTV w/ heat sinks, 6P 6000 A / 6300 RCTV'
+};
+/* pos7+pos8 (combined) → trip unit designation + protection + hardware family */
+var WA_TRIP = {
+  '31': { d: '3.0',  p: 'LI',   hw: 'ELS (130)' }, '32': { d: '2.0',  p: 'LS0',  hw: 'ELS (130)' }, '33': { d: '5.0',  p: 'LSI',  hw: 'ELS (130)' },
+  '41': { d: '3.0A', p: 'LI',   hw: 'ELA (140)' }, '42': { d: '2.0A', p: 'LS0',  hw: 'ELA (140)' }, '43': { d: '5.0A', p: 'LSI',  hw: 'ELA (140)' },
+  '44': { d: '6.0A', p: 'LSIG', hw: 'ELA (140)' }, '45': { d: '7.0A', p: 'LSIV', hw: 'ELA (140)' },
+  '63': { d: '5.0P', p: 'LSI',  hw: 'ELU (160)' }, '64': { d: '6.0P', p: 'LSIG', hw: 'ELU (160)' }, '65': { d: '7.0P', p: 'LSIV', hw: 'ELU (160)' },
+  '73': { d: '5.0H', p: 'LSI',  hw: 'ELH (170)' }, '74': { d: '6.0H', p: 'LSIG', hw: 'ELH (170)' }, '75': { d: '7.0H', p: 'LSIV', hw: 'ELH (170)' },
+  'NN': { d: '—',    p: 'Non-automatic switch (no trip unit)', hw: '—', dev: 'switch-na' },
+  'SS': { d: '—',    p: 'Automatic switch (instantaneous override only)', hw: '—', dev: 'switch-auto' },
+  'XX': { d: '—',    p: 'Supplied without trip unit', hw: '—', dev: 'breaker' },
+  '10': { d: 'DC 1.0', p: 'Instantaneous only (DC, variable offer)', hw: 'DC' },
+  '11': { d: 'DC 1.0', p: 'Instantaneous only (DC, fixed offer)', hw: 'DC' },
+  'HH': { d: 'Hitachi', p: 'Hitachi trip unit', hw: '—' }
+};
+var WA_P9 = { 'A':'UL rating plug "A"','B':'UL rating plug "B"','C':'UL rating plug "C"','D':'UL rating plug "D"','E':'UL rating plug "E"','F':'UL rating plug "F"','G':'UL rating plug "G"','H':'UL rating plug "H"','X':'No rating plug required','P':'"OFF" plug (IEC only)','R':'IEC "Standard" plug','S':'IEC "Lower range" plug','T':'IEC "Upper range" plug' };
+var WA_P10 = { '2':'For future use','3':'Modbus','4':'DeviceNet','5':'CAN','6':'Profibus DP','7':'Batibus','8':'For future use','9':'None' };
+var WA_P11 = { 'S':'No PCM — 4 Form C (NT/NW)','C':'No PCM — 8 Form C (NW)','D':'No PCM — 12 Form C (NW)','A':'No PCM — 4 Form C NT low-level','F':'2 PCM — 4 Form C','G':'2 PCM — 8 Form C','H':'2 PCM — 12 Form C','B':'2 PCM — 4 Form C low-level','K':'6 PCM — 4 Form C','L':'6 PCM — 8 Form C','M':'6 PCM — 12 Form C','E':'6 PCM — 4 Form C low-level' };
+var WA_P12 = { 'C':'Spring-charging motor (MCH), 24–30 Vac/dc','D':'MCH, 48–60 Vac/dc','F':'MCH, 100–130 Vac/dc','G':'MCH, 100–130 Vac/dc','H':'MCH, 200–240 Vac/dc','J':'MCH, 200–240 Vac/dc','K':'MCH, 277 Vac','L':'MCH, 380–415 Vac','P':'MCH, 440–480 Vac','X':'No spring-charging motor' };
+var WA_P13 = { 'A':'Shunt trip (MX), 12 Vdc','V':'Shunt trip (MX)-Com, 12 Vdc','B':'Shunt trip (MX), 24–30 Vac/dc','C':'Shunt trip (MX)-Com, 24–30 Vac/dc','D':'Shunt trip (MX), 48–60 Vac/dc','E':'Shunt trip (MX)-Com, 48–60 Vac/dc','F':'Shunt trip (MX), 100–130 Vac/dc','G':'Shunt trip (MX)-Com, 100–130 Vac/dc','H':'Shunt trip (MX), 200–240 Vac/dc','J':'Shunt trip (MX)-Com, 200–240 Vac/dc','K':'Shunt trip (MX), 277 Vac','R':'Shunt trip (MX)-Com, 277 Vac','M':'Shunt trip (MX), 380–480 Vac','S':'Shunt trip (MX)-Com, 380–480 Vac','X':'No shunt trip' };
+var WA_P14 = { 'A':'Closing coil (XF), 12 Vdc','V':'Closing coil (XF)-Com, 12 Vdc','B':'Closing coil (XF), 24–30 Vac/dc','C':'Closing coil (XF)-Com, 24–30 Vac/dc','D':'Closing coil (XF), 48–60 Vac/dc','E':'Closing coil (XF)-Com, 48–60 Vac/dc','F':'Closing coil (XF), 100–130 Vac/dc','G':'Closing coil (XF)-Com, 100–130 Vac/dc','H':'Closing coil (XF), 200–240 Vac/dc','J':'Closing coil (XF)-Com, 200–240 Vac/dc','K':'Closing coil (XF), 277 Vac','R':'Closing coil (XF)-Com, 277 Vac','M':'Closing coil (XF), 380–480 Vac','S':'Closing coil (XF)-Com, 380–480 Vac','X':'No closing coil' };
+var WA_P15 = { 'F':'Electric reset, 100–130 Vac/dc','H':'Electric reset, 200–240 Vac/dc','W':'2nd overcurrent trip switch (SDE)','Y':'2nd overcurrent trip switch (SDE), low-level','X':'None (one SDE contact standard)' };
+var WA_P16 = { 'A':'Instantaneous UVR, 48–60 Vac/dc','B':'Instantaneous UVR, 100–130 Vac/dc','C':'Instantaneous UVR, 200–240 Vac/dc','D':'Instantaneous UVR, 277 Vac','E':'Instantaneous UVR, 380–480 Vac','G':'Adjustable time-delay UVR, 100–130 Vac/dc','H':'Adjustable time-delay UVR, 200–240 Vac/dc','J':'Adjustable time-delay UVR, 277 Vac','K':'Adjustable time-delay UVR, 380–480 Vac','L':'Fixed time-delay UVR, 200–240 Vac/dc','M':'Fixed time-delay UVR, 277 Vac','N':'2nd shunt trip, 12 Vdc','P':'2nd shunt trip, 24–30 Vac/dc','R':'2nd shunt trip, 48–60 Vac/dc','S':'2nd shunt trip, 100–130 Vac/dc','T':'2nd shunt trip, 200–240 Vac/dc','U':'2nd shunt trip, 277 Vac','W':'2nd shunt trip, 380–480 Vac','X':'None' };
+var WA_P17 = { 'A':'Ready-to-Close switch','B':'Low-level Ready-to-Close switch','C':'Padlockable push-button cover','D':'Mechanical operation counter','E':'Ready-to-Close switch + padlockable cover','F':'Ready-to-Close switch + mech. counter','G':'Low-level RTC + padlockable cover','H':'Low-level RTC + mech. counter','J':'Padlockable cover + mech. counter','K':'RTC + cover + counter','L':'Low-level RTC + cover + counter','X':'None' };
+var WA_P19 = { 'A':'ABS-NVR rated','B':'4-pole with right-hand-side neutral','C':'CT characterization','D':'Dual-rated (Aggreko)','E':'Push-button electrical close','F':'2 keylocks keyed different','G':'OFF push-button — crank interlock','H':'Automatic spring-discharge interlock','K':'2 keylocks keyed alike','N':'Additional 12 auxiliary switches','R':'Automatic reset','T':'Test report','V':'External voltage-sensing wiring','Y':'Customer special','Z':'No instruction manual' };
+
+/* Accessory positions decoded in order after the pos7/8 trip unit. */
+var WA_ACCESSORY_POSITIONS = [
+  { n: 9,  label: 'Rating plug',                map: WA_P9 },
+  { n: 10, label: 'Communications',             map: WA_P10 },
+  { n: 11, label: 'Aux contacts (PCM)',         map: WA_P11 },
+  { n: 12, label: 'Spring-charging motor',      map: WA_P12 },
+  { n: 13, label: 'Shunt trip',                 map: WA_P13 },
+  { n: 14, label: 'Closing coil',               map: WA_P14 },
+  { n: 15, label: 'Reset / SDE',                map: WA_P15 },
+  { n: 16, label: 'Undervoltage / 2nd shunt',   map: WA_P16 },
+  { n: 17, label: 'RTC / cover / counter',      map: WA_P17 }
+];
+
+function parseWA(raw) {
+  var s = String(raw || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+  if (!s) return null;
+  if (s.substring(0, 2) !== 'WA' && !(WA_P1[s[0]] && WA_P2[s[1]])) {
+    return { valid: false, raw: s, error: 'Configured catalog numbers start with the platform + standard chars (e.g. WA…). Got "' + s + '".' };
+  }
+  var ch = s.split('');
+  var p1 = WA_P1[ch[0]], p2 = WA_P2[ch[1]];
+  if (!p1 || !p2) return { valid: false, raw: s, error: 'Unrecognized platform/standard in "' + s.substring(0, 2) + '".' };
+
+  var std = p2.std;
+  var classLetter = (WA_P3[std] || {})[ch[2]] || null;
+  var frameAmps = WA_P4[ch[3]] || null;
+  var frameCode = frameAmps ? AMP2CODE[frameAmps] : null;
+  var sensor = WA_P5[ch[4]] || null;
+  var mount = WA_P6[ch[5]] || null;
+  var tripKey = (ch[6] || '') + (ch[7] || '');
+  var trip = WA_TRIP[tripKey] || null;
+
+  /* device kind from the trip-unit positions */
+  var deviceKind = trip && trip.dev ? trip.dev : 'breaker';
+  /* derived model number (reuse the frame rating tables) */
+  var derivedModel = (p1.family && frameCode && classLetter) ? (p1.family + frameCode + classLetter) : null;
+
+  /* position-by-position breakdown */
+  var positions = [
+    { n: 1, char: ch[0], label: 'Platform / poles', value: 'MasterPact ' + p1.family + ', ' + p1.spacing + ' pole spacing, ' + p1.poles + (p1.arc ? ', ArcBlok' : '') + (p1.dc ? ' (DC)' : '') },
+    { n: 2, char: ch[1], label: 'Brand / standard', value: p2.brand + ' — ' + std },
+    { n: 3, char: ch[2], label: 'Interrupting class', value: classLetter ? classLetter + ' (per ' + std + ')' : 'code "' + (ch[2] || '') + '" — verify' },
+    { n: 4, char: ch[3], label: 'Frame rating', value: frameAmps ? frameAmps + ' A' : 'code "' + (ch[3] || '') + '" — verify' },
+    { n: 5, char: ch[4], label: 'Sensor plug (In)', value: sensor ? sensor + ' A' : 'code "' + (ch[4] || '') + '" — verify' },
+    { n: 6, char: ch[5], label: 'Mounting / connection', value: mount || 'code "' + (ch[5] || '') + '" — verify' },
+    { n: '7-8', char: tripKey, label: 'Trip unit', value: trip ? (trip.d === '—' ? trip.p : 'Micrologic ' + trip.d + ' (' + trip.p + ', ' + trip.hw + ')') : 'code "' + tripKey + '" — verify' }
+  ];
+
+  /* accessory positions 9..17 (present when characters exist) */
+  var accessories = [];
+  for (var i = 0; i < WA_ACCESSORY_POSITIONS.length; i++) {
+    var ap = WA_ACCESSORY_POSITIONS[i];
+    var idx = ap.n - 1; /* char index (pos9 = index 8) */
+    if (idx >= ch.length) break;
+    var c = ch[idx];
+    var meaning = ap.map[c] || ('code "' + c + '" — verify per PLS007');
+    positions.push({ n: ap.n, char: c, label: ap.label, value: meaning });
+    /* accessories list = genuinely-installed options only (skip "none"/standard) */
+    if (c !== 'X' && ap.map[c] && !/^(No |None)/.test(meaning)) accessories.push({ label: ap.label, value: meaning });
+  }
+  /* trailing additional-feature positions 18+ (variable) */
+  for (var j = 17; j < ch.length; j++) {
+    var cc = ch[j];
+    if (cc === 'X') continue;
+    var m19 = WA_P19[cc];
+    if (m19) { accessories.push({ label: 'Feature (pos ' + (j + 1) + ')', value: m19 }); positions.push({ n: j + 1, char: cc, label: 'Additional feature', value: m19 }); }
+    else positions.push({ n: j + 1, char: cc, label: 'Additional feature', value: 'code "' + cc + '" — verify per PLS007' });
+  }
+
+  return {
+    valid: true, raw: s, positions: positions, accessories: accessories,
+    family: p1.family, std: std, brand: p2.brand, classLetter: classLetter,
+    frameAmps: frameAmps, frameCode: frameCode, sensor: sensor, mount: mount,
+    trip: trip, tripKey: tripKey, deviceKind: deviceKind, derivedModel: derivedModel,
+    ratingPlug: WA_P9[ch[8]] || null, arc: p1.arc, poles: p1.poles
+  };
+}
+
+/* ============================================================
    Decode orchestration + render
    ============================================================ */
 function decode() {
   hideError();
+  /* Configured catalog number (WA…) takes priority when present. */
+  var waRaw = document.getElementById('waInput').value;
+  if (waRaw && waRaw.trim()) {
+    var wa = parseWA(waRaw);
+    if (wa && !wa.valid) { showError('Invalid Catalog Number', wa.error); document.getElementById('results').classList.remove('visible'); return; }
+    if (wa) { renderWA(wa); return; }
+  }
   var b = parseBreaker(document.getElementById('catInput').value);
   if (!b.valid) { showError('Invalid Breaker Frame', b.error); document.getElementById('results').classList.remove('visible'); return; }
   var t = parseTrip(document.getElementById('tripInput').value);
   renderResults(b, t);
 }
 
-function renderResults(b, t) {
-  var el = document.getElementById('results');
-  renderCharMap(b);
+/* ---- Reusable card builders (shared by the frame path and the WA path) ---- */
 
+function buildBreakerCards(b) {
   var constr = construction(b.family, b.frameCode, b.listings);
-  var series = 'MasterPact ' + b.family;
   var deviceKind = b.device;
-  var frameLabel = b.frameDisplay;
-
   var html = '';
 
-  /* Summary banner */
-  var specBits = [];
-  if (b.frameAmps) specBits.push(b.frameAmps + ' A frame');
-  specBits.push(constr);
-  if (b.classInfo) specBits.push(b.classInfo.perf + ' class');
-  var bannerCat = b.raw + (t && t.valid ? '  +  Micrologic ' + t.info.platform + (t.info.feature !== 'Basic' ? ' ' + t.key.replace(/^\d\.0/, '') : '') : '');
-
-  html += '<div class="summary-banner">';
-  html += '<div class="headline">Square D / Schneider ' + series + ' ' + esc(b.raw) + '</div>';
-  html += '<div class="catalog-fmt">' + esc(bannerCat) + '</div>';
-  html += '<button class="btn-copy" id="btnCopyCat" onclick="copyCatalog()">Copy Catalog Number</button>';
-  html += ' <button class="btn-pdf" onclick="downloadDecoderPDF()">Download PDF</button>';
-  html += ' <button class="btn-quote" onclick="openDecoderQuote()">Get a Quote for This Breaker</button>';
-  html += '</div>';
-
-  /* 1. Identification */
+  /* Identification */
   var idFields = [
     field('Series', 'Square D / Schneider MasterPact ' + b.family),
     field('Construction', constr),
-    field('Frame rating', frameLabel)
+    field('Frame rating', b.frameDisplay)
   ];
   if (b.classInfo) {
     idFields.push(field('Interrupting class', b.classInfo.label));
@@ -722,14 +878,12 @@ function renderResults(b, t) {
   idFields.push(field('Device type', DEVICE_LABEL[deviceKind] || deviceKind));
   html += card('Breaker Identification', 'valid', idFields);
 
-  /* 2. Interrupting / withstand ratings — one card per standard listing */
+  /* Interrupting / withstand ratings — one card per standard listing */
   if (b.listings.length) {
     for (var i = 0; i < b.listings.length; i++) {
       var l = b.listings[i];
       var rFields = [];
-      for (var c = 0; c < l.cols.length; c++) {
-        rFields.push(field(l.cols[c], l.kA[c] == null ? '—' : l.kA[c] + ' kA'));
-      }
+      for (var c = 0; c < l.cols.length; c++) rFields.push(field(l.cols[c], l.kA[c] == null ? '—' : l.kA[c] + ' kA'));
       if (l.extra) for (var e = 0; e < l.extra.length; e++) rFields.push(field(l.extra[e][0], l.extra[e][1]));
       html += card(l.ratingLabel + ' Rating — ' + l.std + ' (' + l.device + ')', 'info', rFields);
     }
@@ -737,7 +891,7 @@ function renderResults(b, t) {
     html += card('Rating', 'info', [ field('Note', 'Grammar decoded, but this exact model is not in the rating tables. Verify kA against the nameplate or contact Voyten.') ]);
   }
 
-  /* 3. Sensor plugs + rating plug (breakers only) */
+  /* Sensor plugs + rating plug (breakers only) */
   if (deviceKind === 'breaker') {
     var plugSet = [];
     for (var p = 0; p < b.listings.length; p++) {
@@ -751,11 +905,9 @@ function renderResults(b, t) {
         field('Available (In)', plugSet.map(function (x) { return x + ' A'; }).join(', ')),
         field('Note', 'Breaker is ordered by SENSOR plug rating, not trip amps. Sensor + rating plug are field-replaceable.')
       ]);
-
-      /* Rating plug — long-time pickup Ir = In × plug setting. Compute Ir envelope. */
       var minIn = plugSet[0], maxIn = plugSet[plugSet.length - 1];
-      var std = RATING_PLUGS.plugs[0];
-      var irLo = Math.round(std.lo * minIn), irHi = Math.round(std.hi * maxIn);
+      var sp = RATING_PLUGS.plugs[0];
+      var irLo = Math.round(sp.lo * minIn), irHi = Math.round(sp.hi * maxIn);
       html += card('Long-Time Rating Plug (Ir)', 'valid', [
         field('Ir (long-time pickup)', 'Ir = In (sensor) × rating-plug setting'),
         field(RATING_PLUGS.plugs[0].name, RATING_PLUGS.plugs[0].range + '  (' + RATING_PLUGS.plugs[0].steps + ')'),
@@ -767,49 +919,124 @@ function renderResults(b, t) {
       ]);
     }
   }
+  return html;
+}
 
-  /* 4. Micrologic trip unit (if provided) */
-  if (t) {
-    if (deviceKind !== 'breaker') {
-      html += card('Micrologic Trip Unit', 'trip', [
-        field('Not applicable', 'This device is a ' + (deviceKind === 'switch-na' ? 'non-automatic switch (disconnector)' : 'molded-case switch') + ' — it does not take a Micrologic trip unit.')
-      ]);
-    } else if (t.valid) {
-      var pr = t.info.protection;
-      var prExpanded = expandProtection(pr);
-      var tFields = [
-        field('Trip unit', 'Micrologic ' + t.key),
-        field('Order as', 'Micrologic ' + t.key + ' — field-interchangeable control unit'),
-        field('Platform', t.info.platform),
-        field('Feature type', t.info.feature),
-        field('Protection', pr + ' — ' + prExpanded)
-      ];
-      if (t.info.std) tFields.push(field('Standard', t.info.std));
-      tFields.push(field('Metering', FEATURE_LEGEND[t.info.feature] || ''));
-      if (MICROLOGIC_CAPS[t.info.feature]) tFields.push(field('Key features', MICROLOGIC_CAPS[t.info.feature]));
-      html += card('Micrologic Trip Unit', 'trip', tFields);
-    } else {
-      html += card('Micrologic Trip Unit', 'trip', [
-        field('Unrecognized', '"' + esc(t.raw) + '" — expected base 2/3/5/6 with optional A, P, or H (e.g. 5.0P).')
-      ]);
-    }
+function buildMicrologicCard(t, deviceKind) {
+  if (!t) return '';
+  if (deviceKind !== 'breaker') {
+    return card('Micrologic Trip Unit', 'trip', [
+      field('Not applicable', 'This device is a ' + (deviceKind === 'switch-na' ? 'non-automatic switch (disconnector)' : 'molded-case switch') + ' — it does not take a Micrologic trip unit.')
+    ]);
   }
+  if (t.valid) {
+    var pr = t.info.protection;
+    var tFields = [
+      field('Trip unit', 'Micrologic ' + t.key),
+      field('Order as', 'Micrologic ' + t.key + ' — field-interchangeable control unit'),
+      field('Platform', t.info.platform),
+      field('Feature type', t.info.feature),
+      field('Protection', pr + ' — ' + expandProtection(pr))
+    ];
+    if (t.info.std) tFields.push(field('Standard', t.info.std));
+    tFields.push(field('Metering', FEATURE_LEGEND[t.info.feature] || ''));
+    if (MICROLOGIC_CAPS[t.info.feature]) tFields.push(field('Key features', MICROLOGIC_CAPS[t.info.feature]));
+    return card('Micrologic Trip Unit', 'trip', tFields);
+  }
+  return card('Micrologic Trip Unit', 'trip', [
+    field('Unrecognized', '"' + esc(t.raw) + '" — expected base 2/3/5/6 with optional A, P, or H (e.g. 5.0P).')
+  ]);
+}
 
-  /* 5. Modular ordering note */
+function summaryBanner(headline, catLine) {
+  return '<div class="summary-banner">' +
+    '<div class="headline">' + esc(headline) + '</div>' +
+    '<div class="catalog-fmt">' + esc(catLine) + '</div>' +
+    '<button class="btn-copy" id="btnCopyCat" onclick="copyCatalog()">Copy Catalog Number</button>' +
+    ' <button class="btn-pdf" onclick="downloadDecoderPDF()">Download PDF</button>' +
+    ' <button class="btn-quote" onclick="openDecoderQuote()">Get a Quote for This Breaker</button>' +
+    '</div>';
+}
+
+function crossRefCard(b) {
+  return card('Brand Cross-Reference', 'valid', [
+    field('Square D (North America)', b.raw),
+    field('Schneider Electric (global)', 'MasterPact ' + b.family + ' ' + b.raw.substring(2)),
+    field('Relationship', 'Identical device — dual-branded (Square D = Schneider MasterPact)')
+  ]);
+}
+
+function renderResults(b, t) {
+  var el = document.getElementById('results');
+  renderCharMap(b);
+
+  var bannerCat = b.raw + (t && t.valid ? '  +  Micrologic ' + t.info.platform + (t.info.feature !== 'Basic' ? ' ' + t.key.replace(/^\d\.0/, '') : '') : '');
+  var html = summaryBanner('Square D / Schneider MasterPact ' + b.family + ' ' + b.raw, bannerCat);
+
+  html += buildBreakerCards(b);
+  html += buildMicrologicCard(t, b.device);
+
   html += card('How This Breaker Is Ordered (Modular)', 'info', [
-    field('1 · Breaker frame', b.raw + (b.classInfo ? '' : '')),
+    field('1 · Breaker frame', b.raw),
     field('2 · Micrologic trip unit', t && t.valid ? 'Micrologic ' + t.key : 'ordered separately'),
     field('3 · Rating plug', 'sets long-time pickup (Ir) — ordered separately'),
     field('4 · Sensor plug', 'sets max trip range (In) — ordered separately'),
     field('5 · Cradle & accessories', 'drawout cradle, aux, shunt, UVR, motor operator — separately')
   ]);
+  html += crossRefCard(b);
 
-  /* 6. Brand cross-reference */
-  html += card('Brand Cross-Reference', 'valid', [
-    field('Square D (North America)', b.raw),
-    field('Schneider Electric (global)', 'MasterPact ' + b.family + ' ' + b.raw.substring(2)),
-    field('Relationship', 'Identical device — dual-branded (Square D = Schneider MasterPact)')
-  ]);
+  el.innerHTML = html;
+  el.classList.add('visible');
+}
+
+/* ---- Full configured-catalog-number (WA…) render ---- */
+function renderWA(wa) {
+  var el = document.getElementById('results');
+  renderCharMapWA(wa);
+
+  var modelStr = wa.derivedModel || (wa.family + (wa.frameCode || '??') + (wa.classLetter || ''));
+  var html = summaryBanner('Square D / Schneider MasterPact ' + modelStr, wa.raw);
+
+  /* Position-by-position breakdown — the headline card */
+  var posFields = wa.positions.map(function (p) {
+    return field('Pos ' + p.n + '  ·  ' + esc(String(p.char)) + '  ·  ' + p.label, p.value);
+  });
+  html += card('Configured Catalog Number — Position Breakdown', 'valid', posFields);
+
+  /* Derived model electrical detail (reuse the frame path) */
+  if (wa.derivedModel) {
+    var b = parseBreaker(wa.derivedModel);
+    if (b.valid) {
+      b.device = wa.deviceKind || b.device;
+      html += buildBreakerCards(b);
+      /* trip unit from the digest */
+      if (wa.trip && wa.trip.d && wa.trip.d !== '—') {
+        var t = parseTrip(wa.trip.d);
+        html += buildMicrologicCard(t, b.device);
+      }
+    }
+  }
+
+  /* As-configured (installed) card — the actual build, not just what's available */
+  var asBuilt = [ field('Derived model', modelStr) ];
+  if (wa.sensor) asBuilt.push(field('Installed sensor plug (In)', wa.sensor + ' A'));
+  if (wa.sensor) {
+    var sp0 = RATING_PLUGS.plugs[0];
+    asBuilt.push(field('Ir range (installed sensor, std plug)', Math.round(sp0.lo * wa.sensor) + ' A – ' + wa.sensor + ' A'));
+  }
+  if (wa.ratingPlug) asBuilt.push(field('Rating plug', wa.ratingPlug));
+  if (wa.mount) asBuilt.push(field('Mounting / connection', wa.mount));
+  if (wa.trip) asBuilt.push(field('Trip unit', wa.trip.d === '—' ? wa.trip.p : 'Micrologic ' + wa.trip.d + ' — ' + wa.trip.hw));
+  html += card('As-Configured (This Exact Build)', 'trip', asBuilt);
+
+  /* Accessories */
+  if (wa.accessories.length) {
+    html += card('Factory-Installed Accessories', 'info', wa.accessories.map(function (a) { return field(a.label, a.value); }));
+  } else {
+    html += card('Factory-Installed Accessories', 'info', [ field('None decoded', 'No optional accessories encoded (positions after the trip unit are “none”).') ]);
+  }
+
+  html += crossRefCard({ raw: modelStr, family: wa.family });
 
   el.innerHTML = html;
   el.classList.add('visible');
@@ -875,6 +1102,33 @@ function renderCharMap(b) {
   }
 }
 
+/* Char map for the full WA… catalog string: each char is its own position box. */
+function renderCharMapWA(wa) {
+  var chars = wa.raw.split('');
+  var boxes = document.getElementById('charBoxes');
+  var labels = document.getElementById('groupLabels');
+  var posLbls = document.getElementById('posLabels');
+  boxes.innerHTML = ''; labels.innerHTML = ''; posLbls.innerHTML = '';
+
+  /* one label band spanning all chars */
+  var gl = document.createElement('div');
+  gl.className = 'group-label';
+  gl.style.width = (chars.length * 34 - 2) + 'px';
+  gl.textContent = 'CONFIGURED CATALOG NUMBER (PLS007)';
+  labels.appendChild(gl);
+
+  for (var i = 0; i < chars.length; i++) {
+    var box = document.createElement('div');
+    box.className = 'char-box entered';
+    box.textContent = chars[i];
+    boxes.appendChild(box);
+    var pl = document.createElement('div');
+    pl.className = 'pos-label';
+    pl.textContent = (i + 1);
+    posLbls.appendChild(pl);
+  }
+}
+
 function clearCharMap() {
   document.getElementById('charBoxes').innerHTML = '';
   document.getElementById('groupLabels').innerHTML = '';
@@ -902,18 +1156,21 @@ function hideError() { document.getElementById('errorBox').classList.remove('vis
 function clearAll() {
   document.getElementById('catInput').value = '';
   document.getElementById('tripInput').value = '';
+  document.getElementById('waInput').value = '';
   document.getElementById('results').innerHTML = '';
   document.getElementById('results').classList.remove('visible');
   hideError(); clearCharMap();
   document.getElementById('catInput').focus();
 }
-function loadExample(btn) { document.getElementById('catInput').value = btn.textContent; decode(); }
-function loadTrip(btn) { document.getElementById('tripInput').value = btn.textContent; if (document.getElementById('catInput').value.trim()) decode(); }
+function loadExample(btn) { document.getElementById('waInput').value = ''; document.getElementById('catInput').value = btn.textContent; decode(); }
+function loadTrip(btn) { document.getElementById('waInput').value = ''; document.getElementById('tripInput').value = btn.textContent; if (document.getElementById('catInput').value.trim()) decode(); }
+function loadWa(btn) { document.getElementById('waInput').value = btn.textContent; decode(); }
 
 function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]; }); }
 
 function copyCatalog() {
-  var val = document.getElementById('catInput').value.trim().toUpperCase();
+  var wa = document.getElementById('waInput').value.trim().toUpperCase();
+  var val = wa || document.getElementById('catInput').value.trim().toUpperCase();
   if (!val) return;
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(val).then(showCopied);
@@ -930,6 +1187,11 @@ function showCopied() {
 
 document.getElementById('catInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') decode(); });
 document.getElementById('tripInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') decode(); });
+document.getElementById('waInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') decode(); });
+/* Typing in the WA field clears the frame/trip fields to avoid ambiguity. */
+document.getElementById('waInput').addEventListener('input', function () {
+  if (this.value.trim()) { document.getElementById('catInput').value = ''; document.getElementById('tripInput').value = ''; }
+});
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="/tools/decoder-pdf.js"></script>
