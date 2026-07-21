@@ -382,6 +382,30 @@ var FEATURE_LEGEND = {
   'Harmonic metering': 'Adds power/energy metering plus harmonic (THD) analysis and power-quality data.'
 };
 
+/* Feature capabilities by trip-unit type (catalog Table 5 — Micrologic Trip Unit Features).
+   All units include: true-RMS sensing, thermal imaging, long-time-pickup LED, UL listing,
+   and a field-interchangeable adjustable rating plug. */
+var MICROLOGIC_CAPS = {
+  'Basic': 'True-RMS sensing · thermal imaging · long-time-pickup LED · field-interchangeable rating plug',
+  'Ammeter': 'Digital ammeter + phase-loading bar graph · trip-indication LED · zone-selective interlocking (ZSI, on LSI units) · optional Modbus/ULP comms',
+  'Power metering': 'LCD dot-matrix display + advanced UI · V/kW/kVA/kVAR/kWh + power-factor metering · protective relay functions · neutral protection · contact-wear indication · ZSI · standard comms · selectable long-time delay bands',
+  'Harmonic metering': 'All Power-metering features PLUS harmonic (THD) analysis · power-quality measurement · waveform capture'
+};
+
+/* Long-time (LT) rating plug — sets Ir (long-time pickup) = In (sensor plug) × plug setting.
+   Four field-interchangeable plugs (catalog 0613CT, Schneider LT rating plug ref PB100773-32);
+   control units ship with the Standard (0.4–1.0) plug. Ir is field-adjustable, not part of the
+   ordered catalog string. Rating plugs must be removed before dielectric/insulation testing. */
+var RATING_PLUGS = {
+  ref: 'PB100773-32',
+  plugs: [
+    { name: 'Standard (default)',  range: '0.4 – 1.0 × In', steps: '0.4 · 0.5 · 0.6 · 0.7 · 0.8 · 0.9 · 0.95 · 0.98 · 1.0', lo: 0.4, hi: 1.0 },
+    { name: 'Low-setting option',  range: '0.4 – 0.8 × In', steps: '0.4 · 0.45 · 0.50 · 0.55 · 0.60 · 0.65 · 0.70 · 0.75 · 0.8', lo: 0.4, hi: 0.8 },
+    { name: 'High-setting option', range: '0.8 – 1.0 × In', steps: '0.80 · 0.82 · 0.85 · 0.88 · 0.90 · 0.92 · 0.95 · 0.98 · 1.0', lo: 0.8, hi: 1.0 },
+    { name: 'Off plug',            range: 'No long-time protection (Ir = In)', steps: '—', lo: null, hi: null }
+  ]
+};
+
 /* ============================================================
    Rating tables (from catalog Selection, Tables 71-95).
    Each table: { std, device, ratingLabel, frameFamily, cols[voltage labels],
@@ -713,7 +737,7 @@ function renderResults(b, t) {
     html += card('Rating', 'info', [ field('Note', 'Grammar decoded, but this exact model is not in the rating tables. Verify kA against the nameplate or contact Voyten.') ]);
   }
 
-  /* 3. Sensor plugs (breakers only) */
+  /* 3. Sensor plugs + rating plug (breakers only) */
   if (deviceKind === 'breaker') {
     var plugSet = [];
     for (var p = 0; p < b.listings.length; p++) {
@@ -723,9 +747,23 @@ function renderResults(b, t) {
     }
     if (plugSet.length) {
       plugSet.sort(function (x, y) { return x - y; });
-      html += card('Sensor Plug Ratings', 'valid', [
+      html += card('Sensor Plug Ratings (In)', 'valid', [
         field('Available (In)', plugSet.map(function (x) { return x + ' A'; }).join(', ')),
         field('Note', 'Breaker is ordered by SENSOR plug rating, not trip amps. Sensor + rating plug are field-replaceable.')
+      ]);
+
+      /* Rating plug — long-time pickup Ir = In × plug setting. Compute Ir envelope. */
+      var minIn = plugSet[0], maxIn = plugSet[plugSet.length - 1];
+      var std = RATING_PLUGS.plugs[0];
+      var irLo = Math.round(std.lo * minIn), irHi = Math.round(std.hi * maxIn);
+      html += card('Long-Time Rating Plug (Ir)', 'valid', [
+        field('Ir (long-time pickup)', 'Ir = In (sensor) × rating-plug setting'),
+        field(RATING_PLUGS.plugs[0].name, RATING_PLUGS.plugs[0].range + '  (' + RATING_PLUGS.plugs[0].steps + ')'),
+        field(RATING_PLUGS.plugs[1].name, RATING_PLUGS.plugs[1].range),
+        field(RATING_PLUGS.plugs[2].name, RATING_PLUGS.plugs[2].range),
+        field(RATING_PLUGS.plugs[3].name, RATING_PLUGS.plugs[3].range),
+        field('Ir envelope (this frame)', irLo + ' A – ' + irHi + ' A  (across ' + minIn + '–' + maxIn + ' A sensors, standard plug)'),
+        field('Rating plug ref', 'Schneider LT rating plug ' + RATING_PLUGS.ref + ' — field-replaceable; remove before dielectric tests')
       ]);
     }
   }
@@ -741,12 +779,14 @@ function renderResults(b, t) {
       var prExpanded = expandProtection(pr);
       var tFields = [
         field('Trip unit', 'Micrologic ' + t.key),
+        field('Order as', 'Micrologic ' + t.key + ' — field-interchangeable control unit'),
         field('Platform', t.info.platform),
         field('Feature type', t.info.feature),
         field('Protection', pr + ' — ' + prExpanded)
       ];
       if (t.info.std) tFields.push(field('Standard', t.info.std));
       tFields.push(field('Metering', FEATURE_LEGEND[t.info.feature] || ''));
+      if (MICROLOGIC_CAPS[t.info.feature]) tFields.push(field('Key features', MICROLOGIC_CAPS[t.info.feature]));
       html += card('Micrologic Trip Unit', 'trip', tFields);
     } else {
       html += card('Micrologic Trip Unit', 'trip', [
