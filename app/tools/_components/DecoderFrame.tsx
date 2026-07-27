@@ -75,7 +75,7 @@ export default function DecoderFrame({ src, title }: { src: string; title: strin
           display: 'block',
         }}
         title={title}
-        sandbox="allow-scripts allow-same-origin allow-downloads"
+        sandbox="allow-scripts allow-same-origin allow-downloads allow-popups allow-popups-to-escape-sandbox"
       />
     </div>
   );
