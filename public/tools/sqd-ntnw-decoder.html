@@ -757,6 +757,17 @@ var WA_P14 = { 'A':'Closing coil (XF), 12 Vdc','V':'Closing coil (XF)-Com, 12 Vd
 var WA_P15 = { 'F':'Electric reset, 100–130 Vac/dc','H':'Electric reset, 200–240 Vac/dc','W':'2nd overcurrent trip switch (SDE)','Y':'2nd overcurrent trip switch (SDE), low-level','X':'None (one SDE contact standard)' };
 var WA_P16 = { 'A':'Instantaneous UVR, 48–60 Vac/dc','B':'Instantaneous UVR, 100–130 Vac/dc','C':'Instantaneous UVR, 200–240 Vac/dc','D':'Instantaneous UVR, 277 Vac','E':'Instantaneous UVR, 380–480 Vac','G':'Adjustable time-delay UVR, 100–130 Vac/dc','H':'Adjustable time-delay UVR, 200–240 Vac/dc','J':'Adjustable time-delay UVR, 277 Vac','K':'Adjustable time-delay UVR, 380–480 Vac','L':'Fixed time-delay UVR, 200–240 Vac/dc','M':'Fixed time-delay UVR, 277 Vac','N':'2nd shunt trip, 12 Vdc','P':'2nd shunt trip, 24–30 Vac/dc','R':'2nd shunt trip, 48–60 Vac/dc','S':'2nd shunt trip, 100–130 Vac/dc','T':'2nd shunt trip, 200–240 Vac/dc','U':'2nd shunt trip, 277 Vac','W':'2nd shunt trip, 380–480 Vac','X':'None' };
 var WA_P17 = { 'A':'Ready-to-Close switch','B':'Low-level Ready-to-Close switch','C':'Padlockable push-button cover','D':'Mechanical operation counter','E':'Ready-to-Close switch + padlockable cover','F':'Ready-to-Close switch + mech. counter','G':'Low-level RTC + padlockable cover','H':'Low-level RTC + mech. counter','J':'Padlockable cover + mech. counter','K':'RTC + cover + counter','L':'Low-level RTC + cover + counter','X':'None' };
+/* Position 18 — padlocks & keylock interlocks (PLS007 padlock matrix). */
+var WA_P18 = {
+  'A':'Padlock',
+  'B':'1 Kirk lock', 'C':'1 Ronis lock', 'D':'1 Fed. Pioneer lock', 'E':'1 Profalux lock', 'F':'1 Castell lock',
+  'M':'Padlock + 1 Kirk lock', 'P':'Padlock + 2 Kirk locks',
+  'Q':'Padlock + 1 Ronis lock', 'R':'Padlock + 2 Ronis locks',
+  'S':'Padlock + 1 Fed. Pioneer lock', 'T':'Padlock + 2 Fed. Pioneer locks',
+  'U':'Padlock + 1 Profalux lock', 'V':'Padlock + 2 Profalux locks',
+  'W':'Padlock + 1 Castell lock', 'Y':'Padlock + 2 Castell locks',
+  'X':'None'
+};
 var WA_P19 = { 'A':'ABS-NVR rated','B':'4-pole with right-hand-side neutral','C':'CT characterization','D':'Dual-rated (Aggreko)','E':'Push-button electrical close','F':'2 keylocks keyed different','G':'OFF push-button — crank interlock','H':'Automatic spring-discharge interlock','K':'2 keylocks keyed alike','N':'Additional 12 auxiliary switches','R':'Automatic reset','T':'Test report','V':'External voltage-sensing wiring','Y':'Customer special','Z':'No instruction manual' };
 
 /* Accessory positions decoded in order after the pos7/8 trip unit. */
@@ -769,7 +780,8 @@ var WA_ACCESSORY_POSITIONS = [
   { n: 14, label: 'Closing coil',               map: WA_P14 },
   { n: 15, label: 'Reset / SDE',                map: WA_P15 },
   { n: 16, label: 'Undervoltage / 2nd shunt',   map: WA_P16 },
-  { n: 17, label: 'RTC / cover / counter',      map: WA_P17 }
+  { n: 17, label: 'RTC / cover / counter',      map: WA_P17 },
+  { n: 18, label: 'Padlock / keylock interlock', map: WA_P18 }
 ];
 
 function parseWA(raw) {
@@ -819,8 +831,8 @@ function parseWA(raw) {
     /* accessories list = genuinely-installed options only (skip "none"/standard) */
     if (c !== 'X' && ap.map[c] && !/^(No |None)/.test(meaning)) accessories.push({ label: ap.label, value: meaning });
   }
-  /* trailing additional-feature positions 18+ (variable) */
-  for (var j = 17; j < ch.length; j++) {
+  /* trailing additional-feature positions 19-25 (variable, WA_P19) */
+  for (var j = 18; j < ch.length; j++) {
     var cc = ch[j];
     if (cc === 'X') continue;
     var m19 = WA_P19[cc];
@@ -878,10 +890,12 @@ function buildBreakerCards(b) {
   idFields.push(field('Device type', DEVICE_LABEL[deviceKind] || deviceKind));
   html += card('Breaker Identification', 'valid', idFields);
 
-  /* Interrupting / withstand ratings — one card per standard listing */
-  if (b.listings.length) {
-    for (var i = 0; i < b.listings.length; i++) {
-      var l = b.listings[i];
+  /* Interrupting / withstand ratings — one card per standard listing (IEC omitted;
+     this is a North-American Square D tool, so ANSI/UL ratings only). */
+  var ratingListings = b.listings.filter(function (l) { return !/IEC/.test(l.std); });
+  if (ratingListings.length) {
+    for (var i = 0; i < ratingListings.length; i++) {
+      var l = ratingListings[i];
       var rFields = [];
       for (var c = 0; c < l.cols.length; c++) rFields.push(field(l.cols[c], l.kA[c] == null ? '—' : l.kA[c] + ' kA'));
       if (l.extra) for (var e = 0; e < l.extra.length; e++) rFields.push(field(l.extra[e][0], l.extra[e][1]));
@@ -904,18 +918,6 @@ function buildBreakerCards(b) {
       html += card('Sensor Plug Ratings (In)', 'valid', [
         field('Available (In)', plugSet.map(function (x) { return x + ' A'; }).join(', ')),
         field('Note', 'Breaker is ordered by SENSOR plug rating, not trip amps. Sensor + rating plug are field-replaceable.')
-      ]);
-      var minIn = plugSet[0], maxIn = plugSet[plugSet.length - 1];
-      var sp = RATING_PLUGS.plugs[0];
-      var irLo = Math.round(sp.lo * minIn), irHi = Math.round(sp.hi * maxIn);
-      html += card('Long-Time Rating Plug (Ir)', 'valid', [
-        field('Ir (long-time pickup)', 'Ir = In (sensor) × rating-plug setting'),
-        field(RATING_PLUGS.plugs[0].name, RATING_PLUGS.plugs[0].range + '  (' + RATING_PLUGS.plugs[0].steps + ')'),
-        field(RATING_PLUGS.plugs[1].name, RATING_PLUGS.plugs[1].range),
-        field(RATING_PLUGS.plugs[2].name, RATING_PLUGS.plugs[2].range),
-        field(RATING_PLUGS.plugs[3].name, RATING_PLUGS.plugs[3].range),
-        field('Ir envelope (this frame)', irLo + ' A – ' + irHi + ' A  (across ' + minIn + '–' + maxIn + ' A sensors, standard plug)'),
-        field('Rating plug ref', 'Schneider LT rating plug ' + RATING_PLUGS.ref + ' — field-replaceable; remove before dielectric tests')
       ]);
     }
   }
