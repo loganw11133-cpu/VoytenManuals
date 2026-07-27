@@ -214,6 +214,19 @@ noscript .ns-msg {
   max-width: 480px; margin: 60px auto; padding: 24px; background: var(--white);
   border-radius: 12px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
+
+/* Company link buttons (Google Business · LinkedIn · eBay) */
+.social { display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; margin: 26px auto 24px; padding: 0 12px; }
+.social a {
+  display: inline-flex; align-items: center; gap: 8px; padding: 7px 15px;
+  border-radius: 999px; border: 1px solid var(--gray-200); background: var(--white);
+  text-decoration: none; color: var(--gray-700); font-size: 0.8rem; font-weight: 600;
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+}
+.social a:hover { border-color: var(--gray-300); box-shadow: 0 2px 8px rgba(0,0,0,0.1); transform: translateY(-1px); }
+.social a:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
+.social a svg { height: 18px; width: auto; display: block; }
+
 </style>
   <style>
   /* Compact hover-reveal examples — condensed, professional UI */
@@ -326,6 +339,34 @@ noscript .ns-msg {
   <div id="results" class="results" role="region" aria-live="polite" aria-label="Decode results"></div>
 
 </div>
+
+<nav class="social" aria-label="Connect with Voyten Electric">
+  <a href="https://share.google/8zeiyPVd68OB1smJW" target="_blank" rel="noopener noreferrer" title="Voyten Electric on Google Business Profile">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <rect x="4" y="11" width="16" height="9" rx="1" fill="#4989F5"/>
+      <path d="M3 11 L4.5 5 H19.5 L21 11 Z" fill="#3367D6"/>
+      <path d="M8 5 L7.2 11 H10 L10.3 5 Z" fill="#5B9BFF"/>
+      <path d="M14 5 L14 11 H16.8 L16 5 Z" fill="#5B9BFF"/>
+      <rect x="10" y="14" width="4" height="6" rx="0.5" fill="#ffffff"/>
+    </svg>
+    Google Business
+  </a>
+  <a href="https://www.linkedin.com/in/voyten-electric-sales-team/" target="_blank" rel="noopener noreferrer" title="Voyten Electric on LinkedIn">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <rect width="24" height="24" rx="4" fill="#0A66C2"/>
+      <path fill="#ffffff" d="M8.34 18.34H5.67V9.75h2.67v8.59zM7 8.58a1.55 1.55 0 1 1 0-3.1 1.55 1.55 0 0 1 0 3.1zM18.34 18.34h-2.67v-4.18c0-1-.02-2.28-1.39-2.28-1.39 0-1.6 1.09-1.6 2.21v4.25h-2.67V9.75h2.56v1.17h.04c.36-.68 1.23-1.39 2.53-1.39 2.7 0 3.2 1.78 3.2 4.09v4.72z"/>
+    </svg>
+    LinkedIn
+  </a>
+  <a href="https://www.ebay.com/str/voytenelectric" target="_blank" rel="noopener noreferrer" title="Voyten Electric eBay Store">
+    <svg viewBox="0 0 84 34" aria-hidden="true" focusable="false">
+      <text x="0" y="27" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" letter-spacing="-1.5">
+        <tspan fill="#E53238">e</tspan><tspan fill="#0064D2">b</tspan><tspan fill="#F5AF02">a</tspan><tspan fill="#86B817">y</tspan>
+      </text>
+    </svg>
+    Store
+  </a>
+</nav>
 
 <div class="footer">
   Eaton RD (R-Frame) Decoder &mdash; Voyten Electric &amp; Electronics, Inc.<br>

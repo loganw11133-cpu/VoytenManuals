@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Phone, BookOpen, Shield, Users, Zap, ArrowRight, MapPin, Factory, Award, Globe } from 'lucide-react';
 import type { Metadata } from 'next';
+import SocialLinks from '@/components/SocialLinks';
 
 export const metadata: Metadata = {
   title: 'About Voyten Electric — Family Owned Since 1953',
@@ -344,6 +345,7 @@ export default function AboutPage() {
           <p className="text-slate-500 text-xs mt-2">
             CAGE: 0GEF5 &nbsp;|&nbsp; DUNS: 070449368
           </p>
+          <SocialLinks className="mt-6 justify-center" />
         </div>
       </section>
     </div>

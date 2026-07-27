@@ -1,7 +1,8 @@
 import Link from 'next/link';
-import { Phone, BookOpen, ArrowRight, Clock, Truck, Download } from 'lucide-react';
+import { Phone, BookOpen, ArrowRight, Clock, Truck, Cpu } from 'lucide-react';
 import Image from 'next/image';
 import ManualSearchBar from '@/components/ManualSearchBar';
+import SocialLinks from '@/components/SocialLinks';
 import { getTotalManualCount, getCategories, getManufacturers, toSlug } from '@/lib/manuals-db';
 import YouTubeEmbed from '@/components/YouTubeEmbed';
 
@@ -97,15 +98,30 @@ export default async function Home() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
             {[
               { icon: BookOpen, text: `${totalCount.toLocaleString()} Manuals` },
-              { icon: Download, text: 'Free PDF Downloads' },
+              { icon: Cpu, text: 'Free Decoder Tools', href: '/tools' },
               { icon: Clock, text: 'Serving Since 1953' },
               { icon: Truck, text: 'Parts Available' },
-            ].map(item => (
-              <div key={item.text} className="flex items-center justify-center gap-2 text-sm text-slate-600">
-                <item.icon size={16} className="text-[#dc2626] flex-shrink-0" />
-                <span className="font-medium">{item.text}</span>
-              </div>
-            ))}
+            ].map(item => {
+              const inner = (
+                <>
+                  <item.icon size={16} className="text-[#dc2626] flex-shrink-0" />
+                  <span className="font-medium">{item.text}</span>
+                </>
+              );
+              return 'href' in item && item.href ? (
+                <Link
+                  key={item.text}
+                  href={item.href}
+                  className="flex items-center justify-center gap-2 text-sm text-slate-600 hover:text-[#dc2626] transition-colors"
+                >
+                  {inner}
+                </Link>
+              ) : (
+                <div key={item.text} className="flex items-center justify-center gap-2 text-sm text-slate-600">
+                  {inner}
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -241,6 +257,7 @@ export default async function Home() {
               <p className="text-slate-500 text-sm mt-6">
                 Voyten Electric & Electronics, Inc. — Family Owned Since 1953 — Polk, PA
               </p>
+              <SocialLinks className="mt-5 justify-center lg:justify-start" />
             </div>
           </div>
         </div>
