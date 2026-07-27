@@ -166,8 +166,10 @@ body {
 .card.info { border-left-color: var(--blue); }
 .card.trip { border-left-color: var(--green); }
 
-/* Side-by-side result grid (mirrors the PXR / PD-SB decoder layout) */
-.result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+/* Side-by-side result grid (mirrors the PXR / PD-SB decoder layout).
+   align-items:start keeps each card at its natural height so a short card
+   (e.g. Interrupting Rating) doesn't stretch and leave blank space. */
+.result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: start; }
 @media (max-width: 640px) { .result-grid { grid-template-columns: 1fr; } }
 .result-card {
   background: var(--white); border-radius: 10px; padding: 16px;
@@ -216,6 +218,10 @@ body {
   cursor: pointer; transition: all 0.2s; margin-left: 8px;
 }
 .btn-quote:hover { background: #b91c1c; border-color: #b91c1c; }
+
+.footer {
+  text-align: center; padding: 20px; font-size: 0.7rem; color: var(--gray-400); margin-top: 20px;
+}
 
 /* Error */
 .error {
@@ -307,6 +313,11 @@ body {
 
   <!-- Results -->
   <div class="results" id="results"></div>
+</div>
+
+<div class="footer">
+  Square D / Schneider MasterPact NT / NW Decoder &mdash; Voyten Electric &amp; Electronics, Inc.<br>
+  Data sourced from Square D catalog 0613CT0001 (Rev 06/20) &amp; PLS007 Rev 25.
 </div>
 
 <script>
@@ -949,19 +960,6 @@ function renderWA(wa) {
   html += '</div>';
 
   html += '</div>'; // end result-grid
-
-  /* Position Breakdown (wide, two-column) */
-  html += '<div class="result-card wide config" style="margin-top:12px;">';
-  html += '<div class="card-title">Configured Catalog Number — Position Breakdown</div>';
-  html += '<div class="result-grid" style="margin:0;">';
-  html += '<div style="font-size:0.85rem;">';
-  var half = Math.ceil(wa.positions.length / 2);
-  for (var pi = 0; pi < wa.positions.length; pi++) {
-    if (pi === half) html += '</div><div style="font-size:0.85rem;">';
-    var p = wa.positions[pi];
-    html += row('Pos ' + p.n + ' · ' + esc(String(p.char)) + ' · ' + p.label, p.value);
-  }
-  html += '</div></div></div>';
 
   /* General Specifications (wide, two-column) */
   html += '<div class="result-card wide info" style="margin-top:12px;">';
