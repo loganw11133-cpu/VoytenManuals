@@ -29,6 +29,8 @@
   --green-light: #dcfce7;
   --blue: #2563eb;
   --blue-light: #dbeafe;
+  --purple: #7c3aed;
+  --yellow: #ca8a04;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -164,9 +166,32 @@ body {
 .card.info { border-left-color: var(--blue); }
 .card.trip { border-left-color: var(--green); }
 
+/* Side-by-side result grid (mirrors the PXR / PD-SB decoder layout) */
+.result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 640px) { .result-grid { grid-template-columns: 1fr; } }
+.result-card {
+  background: var(--white); border-radius: 10px; padding: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-left: 4px solid var(--gray-300);
+}
+.result-card.wide { grid-column: 1 / -1; }
+.result-card.config { border-left-color: var(--red); }
+.result-card.trip { border-left-color: var(--green); }
+.result-card.access { border-left-color: var(--purple); }
+.result-card.options { border-left-color: var(--yellow); }
+.result-card.info { border-left-color: var(--blue); }
+.card-title {
+  font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--gray-500); margin-bottom: 8px;
+}
+.card-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 0.85rem; border-bottom: 1px solid var(--gray-100); gap: 12px; }
+.card-row:last-child { border-bottom: none; }
+.card-label { color: var(--gray-500); font-weight: 500; }
+.card-value { font-weight: 600; color: var(--gray-800); text-align: right; max-width: 62%; }
+
 /* Summary banner */
 .summary-banner {
-  background: var(--black); color: var(--white); border-radius: 12px;
+  background: linear-gradient(135deg, var(--deep-black), var(--black));
+  color: var(--white); border-radius: 12px;
   padding: 20px; margin-bottom: 16px; border-left: 5px solid var(--red);
 }
 .summary-banner .headline { font-size: 1.15rem; font-weight: 700; margin-bottom: 6px; }
@@ -238,67 +263,23 @@ body {
 
 <div class="header">
   <h1>Square D <span class="accent">MasterPact NT / NW</span> Decoder</h1>
-  <div class="subtitle">Universal Power Circuit Breaker — Frame &amp; Micrologic Trip Unit Decoder</div>
+  <div class="subtitle">Universal Power Circuit Breaker — Configured Catalog Number Decoder</div>
 </div>
 
 <div class="container">
   <!-- Input -->
   <div class="input-section">
     <div class="field-block">
-      <label>1 &mdash; Breaker Frame / Catalog Number</label>
-      <div class="input-row">
-        <input type="text" id="catInput" placeholder="e.g. NW20H1" maxlength="14" autocomplete="off" autocorrect="off" spellcheck="false">
-      </div>
-      <div class="hint" id="formatHint">Format: [NT | NW] + frame code (08&ndash;63) + interrupting class (N/H/L &plusmn; 1/2/3/F/10) + optional switch suffix (A/F/B/C)</div>
-      <div class="ex-hover" tabindex="0" role="button" aria-label="Show example frame numbers">
-        <span class="ex-hover__trigger">Frame examples</span>
-        <div class="ex-hover__panel">
-          <div class="examples">
-            <button class="ex-btn" onclick="loadExample(this)">NT08N1</button>
-            <button class="ex-btn" onclick="loadExample(this)">NW20H1</button>
-            <button class="ex-btn" onclick="loadExample(this)">NW08L1F</button>
-            <button class="ex-btn" onclick="loadExample(this)">NW40BH3</button>
-            <button class="ex-btn" onclick="loadExample(this)">NW63H2</button>
-            <button class="ex-btn" onclick="loadExample(this)">NW08HA</button>
-            <button class="ex-btn" onclick="loadExample(this)">NT16LF</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="field-block">
-      <label>2 &mdash; Micrologic Trip Unit <span class="opt">(optional &mdash; ordered separately)</span></label>
-      <div class="input-row">
-        <input type="text" id="tripInput" placeholder="e.g. 5.0P" maxlength="6" autocomplete="off" autocorrect="off" spellcheck="false">
-      </div>
-      <div class="hint">Base 2 / 3 / 5 / 6 + optional feature suffix A (ammeter) &middot; P (power) &middot; H (harmonic)</div>
-      <div class="ex-hover" tabindex="0" role="button" aria-label="Show example trip units">
-        <span class="ex-hover__trigger">Trip examples</span>
-        <div class="ex-hover__panel">
-          <div class="examples">
-            <button class="ex-btn" onclick="loadTrip(this)">3.0</button>
-            <button class="ex-btn" onclick="loadTrip(this)">5.0A</button>
-            <button class="ex-btn" onclick="loadTrip(this)">6.0P</button>
-            <button class="ex-btn" onclick="loadTrip(this)">6.0H</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="or-divider"><span>— or decode the full nameplate <strong>catalog number</strong> —</span></div>
-
-    <div class="field-block">
       <label>Configured Catalog Number <span class="opt">(the "Cat." digest on the nameplate, e.g. WA…)</span></label>
       <div class="input-row">
-        <input type="text" id="waInput" placeholder="e.g. WA4ECR43A9SXXXWXJA" maxlength="25" autocomplete="off" autocorrect="off" spellcheck="false">
+        <input type="text" id="catInput" placeholder="e.g. WA4ECR43A9SXXXWXJA" maxlength="25" autocomplete="off" autocorrect="off" spellcheck="false">
       </div>
-      <div class="hint">Decodes all 25 PLS007 positions — construction, standard, interrupting, frame, sensor, mounting, trip unit &amp; accessories. Overrides fields 1–2 when filled.</div>
+      <div class="hint">Decodes all 25 PLS007 positions — construction, standard, interrupting, frame, sensor plug, mounting, Micrologic trip unit &amp; factory accessories.</div>
       <div class="ex-hover" tabindex="0" role="button" aria-label="Show example catalog numbers">
         <span class="ex-hover__trigger">Catalog examples</span>
         <div class="ex-hover__panel">
           <div class="examples">
             <button class="ex-btn" onclick="loadWa(this)">WA4ECR43A9SXXXWXJA</button>
-            <button class="ex-btn" onclick="loadWa(this)">WA4FMR63A3F9C4CX4M1C</button>
           </div>
         </div>
       </div>
@@ -321,7 +302,7 @@ body {
   <div class="error" id="errorBox">
     <div class="error-title" id="errorTitle">Invalid Input</div>
     <div class="error-text" id="errorText"></div>
-    <div class="error-hint">Format: [NT | NW] + 2-digit frame code + interrupting class. Example: NW20H1</div>
+    <div class="error-hint">Enter the configured "Cat." number from the nameplate. Example: WA4ECR43A9SXXXWXJA</div>
   </div>
 
   <!-- Results -->
@@ -854,17 +835,13 @@ function parseWA(raw) {
    ============================================================ */
 function decode() {
   hideError();
-  /* Configured catalog number (WA…) takes priority when present. */
-  var waRaw = document.getElementById('waInput').value;
-  if (waRaw && waRaw.trim()) {
-    var wa = parseWA(waRaw);
-    if (wa && !wa.valid) { showError('Invalid Catalog Number', wa.error); document.getElementById('results').classList.remove('visible'); return; }
-    if (wa) { renderWA(wa); return; }
-  }
-  var b = parseBreaker(document.getElementById('catInput').value);
-  if (!b.valid) { showError('Invalid Breaker Frame', b.error); document.getElementById('results').classList.remove('visible'); return; }
-  var t = parseTrip(document.getElementById('tripInput').value);
-  renderResults(b, t);
+  var raw = document.getElementById('catInput').value;
+  var msg = 'Enter the configured "Cat." number from the nameplate (e.g. WA4ECR43A9SXXXWXJA).';
+  if (!raw || !raw.trim()) { showError('Enter a Catalog Number', msg); document.getElementById('results').classList.remove('visible'); return; }
+  var wa = parseWA(raw);
+  if (!wa) { showError('Enter a Catalog Number', msg); document.getElementById('results').classList.remove('visible'); return; }
+  if (!wa.valid) { showError('Invalid Catalog Number', wa.error); document.getElementById('results').classList.remove('visible'); return; }
+  renderWA(wa);
 }
 
 /* ---- Reusable card builders (shared by the frame path and the WA path) ---- */
@@ -968,81 +945,158 @@ function crossRefCard(b) {
   ]);
 }
 
-function renderResults(b, t) {
-  var el = document.getElementById('results');
-  renderCharMap(b);
-
-  var bannerCat = b.raw + (t && t.valid ? '  +  Micrologic ' + t.info.platform + (t.info.feature !== 'Basic' ? ' ' + t.key.replace(/^\d\.0/, '') : '') : '');
-  var html = summaryBanner('Square D / Schneider MasterPact ' + b.family + ' ' + b.raw, bannerCat);
-
-  html += buildBreakerCards(b);
-  html += buildMicrologicCard(t, b.device);
-
-  html += card('How This Breaker Is Ordered (Modular)', 'info', [
-    field('1 · Breaker frame', b.raw),
-    field('2 · Micrologic trip unit', t && t.valid ? 'Micrologic ' + t.key : 'ordered separately'),
-    field('3 · Rating plug', 'sets long-time pickup (Ir) — ordered separately'),
-    field('4 · Sensor plug', 'sets max trip range (In) — ordered separately'),
-    field('5 · Cradle & accessories', 'drawout cradle, aux, shunt, UVR, motor operator — separately')
-  ]);
-  html += crossRefCard(b);
-
-  el.innerHTML = html;
-  el.classList.add('visible');
-}
-
-/* ---- Full configured-catalog-number (WA…) render ---- */
+/* ---- Full configured-catalog-number (WA…) render — side-by-side card
+   layout mirroring the PXR / Power Defense SB decoder. ---- */
 function renderWA(wa) {
   var el = document.getElementById('results');
   renderCharMapWA(wa);
 
   var modelStr = wa.derivedModel || (wa.family + (wa.frameCode || '??') + (wa.classLetter || ''));
-  var html = summaryBanner('Square D / Schneider MasterPact ' + modelStr, wa.raw);
+  var b = wa.derivedModel ? parseBreaker(wa.derivedModel) : null;
+  if (b && b.valid) b.device = wa.deviceKind || b.device;
 
-  /* Position-by-position breakdown — the headline card */
-  var posFields = wa.positions.map(function (p) {
-    return field('Pos ' + p.n + '  ·  ' + esc(String(p.char)) + '  ·  ' + p.label, p.value);
-  });
-  html += card('Configured Catalog Number — Position Breakdown', 'valid', posFields);
+  var constr = (b && b.valid) ? construction(b.family, b.frameCode, b.listings)
+    : (wa.family === 'NT' ? 'T-frame' : 'W / Y-frame');
 
-  /* Derived model electrical detail (reuse the frame path) */
-  if (wa.derivedModel) {
-    var b = parseBreaker(wa.derivedModel);
-    if (b.valid) {
-      b.device = wa.deviceKind || b.device;
-      html += buildBreakerCards(b);
-      /* trip unit from the digest */
-      if (wa.trip && wa.trip.d && wa.trip.d !== '—') {
-        var t = parseTrip(wa.trip.d);
-        html += buildMicrologicCard(t, b.device);
+  /* non-IEC interrupting listing (ANSI/UL) + max kA */
+  var ratingListing = null, maxKA = null;
+  if (b && b.valid) {
+    var nonIec = b.listings.filter(function (l) { return !/IEC/.test(l.std); });
+    if (nonIec.length) {
+      ratingListing = nonIec[0];
+      for (var ri = 0; ri < nonIec.length; ri++) for (var rk = 0; rk < nonIec[ri].kA.length; rk++) {
+        var v = nonIec[ri].kA[rk];
+        if (v != null && (maxKA == null || v > maxKA)) maxKA = v;
       }
     }
   }
 
-  /* As-configured (installed) card — the actual build, not just what's available */
-  var asBuilt = [ field('Derived model', modelStr) ];
-  if (wa.sensor) asBuilt.push(field('Installed sensor plug (In)', wa.sensor + ' A'));
-  if (wa.sensor) {
-    var sp0 = RATING_PLUGS.plugs[0];
-    asBuilt.push(field('Ir range (installed sensor, std plug)', Math.round(sp0.lo * wa.sensor) + ' A – ' + wa.sensor + ' A'));
+  var mountShort = wa.mount ? (/Drawout/.test(wa.mount) ? 'Drawout' : 'Fixed') : '';
+  var isBreaker = wa.deviceKind === 'breaker';
+  var tp = (isBreaker && wa.trip && wa.trip.d && wa.trip.d !== '—') ? parseTrip(wa.trip.d) : null;
+  var tInfo = tp && tp.valid ? tp.info : null;
+
+  /* Summary banner */
+  var bits = ['MasterPact ' + modelStr];
+  if (wa.frameAmps) bits.push(fmtA(wa.frameAmps));
+  if (maxKA != null) bits.push(maxKA + ' kA');
+  if (wa.poles) bits.push(capPoles(wa.poles));
+  if (mountShort) bits.push(mountShort);
+
+  var html = '';
+  html += '<div class="summary-banner">';
+  html += '<div class="headline">' + esc(bits.join(' — ')) + '</div>';
+  html += '<div class="catalog-fmt">' + esc(wa.raw) + '</div>';
+  html += '<button class="btn-copy" id="btnCopyCat" onclick="copyCatalog()">Copy Full Catalog Number</button>';
+  html += ' <button class="btn-pdf" onclick="downloadDecoderPDF()">Download PDF</button>';
+  html += ' <button class="btn-quote" onclick="openDecoderQuote()">Get a Quote for This Breaker</button>';
+  html += '</div>';
+
+  html += '<div class="result-grid">';
+
+  /* Breaker Configuration */
+  html += '<div class="result-card config">';
+  html += '<div class="card-title">Breaker Configuration</div>';
+  html += row('Product Family', 'Square D / Schneider MasterPact ' + wa.family);
+  html += row('Application', 'Universal Power Circuit Breaker');
+  html += row('Standard', wa.std || 'N/A');
+  html += row('Brand', wa.brand || 'N/A');
+  html += row('Construction', constr);
+  html += row('Frame Size', wa.frameAmps ? fmtA(wa.frameAmps) : 'N/A');
+  html += row('Interrupting Class', wa.classLetter || 'N/A');
+  if (maxKA != null) html += row('Interrupt Rating', maxKA + ' kA (max)');
+  html += row('Poles', capPoles(wa.poles));
+  html += row('Mounting', wa.mount || 'N/A');
+  html += '</div>';
+
+  /* Sensor & Trip Unit */
+  html += '<div class="result-card trip">';
+  html += '<div class="card-title">Sensor &amp; Trip Unit</div>';
+  html += row('In Rating (Sensor)', wa.sensor ? fmtA(wa.sensor) : 'N/A');
+  if (isBreaker && wa.trip && wa.trip.d !== '—') {
+    html += row('Trip Unit', 'Micrologic ' + wa.trip.d);
+    if (tInfo) { html += row('Platform', tInfo.platform); html += row('Feature Type', tInfo.feature); }
+    html += row('Protection', wa.trip.p + (expandProtection(wa.trip.p) ? ' — ' + expandProtection(wa.trip.p) : ''));
+    if (wa.trip.hw && wa.trip.hw !== '—') html += row('Trip Hardware', wa.trip.hw);
+  } else {
+    html += row('Trip Unit', wa.trip ? wa.trip.p : 'N/A');
   }
-  if (wa.ratingPlug) asBuilt.push(field('Rating plug', wa.ratingPlug));
-  if (wa.mount) asBuilt.push(field('Mounting / connection', wa.mount));
-  if (wa.trip) asBuilt.push(field('Trip unit', wa.trip.d === '—' ? wa.trip.p : 'Micrologic ' + wa.trip.d + ' — ' + wa.trip.hw));
-  html += card('As-Configured (This Exact Build)', 'trip', asBuilt);
+  if (wa.ratingPlug) html += row('Rating Plug', wa.ratingPlug);
+  html += '</div>';
+
+  /* Interrupting Rating (ANSI/UL only) */
+  if (ratingListing) {
+    html += '<div class="result-card info">';
+    html += '<div class="card-title">Interrupting Rating — ' + esc(ratingListing.std) + '</div>';
+    for (var c = 0; c < ratingListing.cols.length; c++) {
+      html += row(ratingListing.cols[c], ratingListing.kA[c] == null ? '—' : ratingListing.kA[c] + ' kA');
+    }
+    if (ratingListing.extra) for (var e = 0; e < ratingListing.extra.length; e++) html += row(ratingListing.extra[e][0], ratingListing.extra[e][1]);
+    html += '</div>';
+  }
 
   /* Accessories */
-  if (wa.accessories.length) {
-    html += card('Factory-Installed Accessories', 'info', wa.accessories.map(function (a) { return field(a.label, a.value); }));
-  } else {
-    html += card('Factory-Installed Accessories', 'info', [ field('None decoded', 'No optional accessories encoded (positions after the trip unit are “none”).') ]);
-  }
+  html += '<div class="result-card access">';
+  html += '<div class="card-title">Accessories</div>';
+  html += row('Communications (Pos 10)', waPos(wa, 10));
+  html += row('Aux Contacts / PCM (Pos 11)', waPos(wa, 11));
+  html += row('Spring-Charging Motor (Pos 12)', waPos(wa, 12));
+  html += row('Shunt Trip (Pos 13)', waPos(wa, 13));
+  html += row('Closing Coil (Pos 14)', waPos(wa, 14));
+  html += row('Reset / SDE (Pos 15)', waPos(wa, 15));
+  html += row('UVR / 2nd Shunt (Pos 16)', waPos(wa, 16));
+  html += row('RTC / Cover / Counter (Pos 17)', waPos(wa, 17));
+  html += row('Padlock / Keylock (Pos 18)', waPos(wa, 18));
+  html += '</div>';
 
-  html += crossRefCard({ raw: modelStr, family: wa.family });
+  html += '</div>'; // end result-grid
+
+  /* Position Breakdown (wide, two-column) */
+  html += '<div class="result-card wide config" style="margin-top:12px;">';
+  html += '<div class="card-title">Configured Catalog Number — Position Breakdown</div>';
+  html += '<div class="result-grid" style="margin:0;">';
+  html += '<div style="font-size:0.85rem;">';
+  var half = Math.ceil(wa.positions.length / 2);
+  for (var pi = 0; pi < wa.positions.length; pi++) {
+    if (pi === half) html += '</div><div style="font-size:0.85rem;">';
+    var p = wa.positions[pi];
+    html += row('Pos ' + p.n + ' · ' + esc(String(p.char)) + ' · ' + p.label, p.value);
+  }
+  html += '</div></div></div>';
+
+  /* General Specifications (wide, two-column) */
+  html += '<div class="result-card wide info" style="margin-top:12px;">';
+  html += '<div class="card-title">General Specifications</div>';
+  html += '<div class="result-grid" style="margin:0;">';
+  html += '<div style="font-size:0.85rem;">';
+  html += row('Manufacturer', 'Schneider Electric / Square D');
+  html += row('Product Line', 'MasterPact ' + wa.family);
+  html += row('Description', 'Universal Power Circuit Breaker');
+  html += row('Standard', wa.std || 'N/A');
+  html += row('Application', 'Switchgear / distribution');
+  html += row('Frequency', '50/60 Hz');
+  html += '</div><div style="font-size:0.85rem;">';
+  html += row('Max Operating Voltage', '635 Vac (ANSI) / 600 Vac (UL)');
+  html += row('100% Rated', 'Yes');
+  html += row('ANSI Standards', 'C37.13, C37.16, C37.17, C37.50');
+  html += row('Configuration', mountShort || 'N/A');
+  html += row('Field-Interchangeable Trip Unit', isBreaker ? 'Yes (Micrologic)' : 'N/A');
+  html += '</div></div></div>';
 
   el.innerHTML = html;
   el.classList.add('visible');
 }
+
+/* PXR-style row + small formatters */
+function row(label, value) {
+  return '<div class="card-row"><span class="card-label">' + label + '</span><span class="card-value">' + value + '</span></div>';
+}
+function waPos(wa, n) {
+  for (var i = 0; i < wa.positions.length; i++) if (wa.positions[i].n === n) return wa.positions[i].value;
+  return '—';
+}
+function fmtA(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' A'; }
+function capPoles(p) { return p ? p.replace('-pole', '-Pole') : 'N/A'; }
 
 function expandProtection(pr) {
   var parts = [];
@@ -1157,22 +1211,17 @@ function hideError() { document.getElementById('errorBox').classList.remove('vis
 
 function clearAll() {
   document.getElementById('catInput').value = '';
-  document.getElementById('tripInput').value = '';
-  document.getElementById('waInput').value = '';
   document.getElementById('results').innerHTML = '';
   document.getElementById('results').classList.remove('visible');
   hideError(); clearCharMap();
   document.getElementById('catInput').focus();
 }
-function loadExample(btn) { document.getElementById('waInput').value = ''; document.getElementById('catInput').value = btn.textContent; decode(); }
-function loadTrip(btn) { document.getElementById('waInput').value = ''; document.getElementById('tripInput').value = btn.textContent; if (document.getElementById('catInput').value.trim()) decode(); }
-function loadWa(btn) { document.getElementById('waInput').value = btn.textContent; decode(); }
+function loadWa(btn) { document.getElementById('catInput').value = btn.textContent; decode(); }
 
 function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]; }); }
 
 function copyCatalog() {
-  var wa = document.getElementById('waInput').value.trim().toUpperCase();
-  var val = wa || document.getElementById('catInput').value.trim().toUpperCase();
+  var val = document.getElementById('catInput').value.trim().toUpperCase();
   if (!val) return;
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(val).then(showCopied);
@@ -1184,16 +1233,10 @@ function copyCatalog() {
 function showCopied() {
   var btn = document.getElementById('btnCopyCat'); if (!btn) return;
   btn.textContent = 'Copied!'; btn.classList.add('copied');
-  setTimeout(function () { btn.textContent = 'Copy Catalog Number'; btn.classList.remove('copied'); }, 2000);
+  setTimeout(function () { btn.textContent = 'Copy Full Catalog Number'; btn.classList.remove('copied'); }, 2000);
 }
 
 document.getElementById('catInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') decode(); });
-document.getElementById('tripInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') decode(); });
-document.getElementById('waInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') decode(); });
-/* Typing in the WA field clears the frame/trip fields to avoid ambiguity. */
-document.getElementById('waInput').addEventListener('input', function () {
-  if (this.value.trim()) { document.getElementById('catInput').value = ''; document.getElementById('tripInput').value = ''; }
-});
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="/tools/decoder-pdf.js"></script>
