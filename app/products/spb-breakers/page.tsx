@@ -3,7 +3,7 @@ import Image from 'next/image';
 import type { Metadata } from 'next';
 import { Phone, ArrowRight, ChevronRight, Wrench, Shield, ExternalLink, BookOpen, Zap } from 'lucide-react';
 import ManualCard from '@/components/ManualCard';
-import { getSPBProductLine } from '@/lib/manuals-db';
+import { getSPBProductLine, type Manual } from '@/lib/manuals-db';
 
 export const revalidate = 3600;
 
@@ -77,7 +77,15 @@ const ACCESSORY_GRID = [
 // ── Page ──
 
 export default async function SPBBreakersPage() {
-  const { breakers, docs } = await getSPBProductLine();
+  // DB-driven with a static fallback: a Turso outage degrades to the static
+  // page shell (schema, copy, CTAs) instead of hard-failing. Mirrors rl-breakers.
+  let breakers: Manual[] = [];
+  let docs: Manual[] = [];
+  try {
+    ({ breakers, docs } = await getSPBProductLine());
+  } catch (err) {
+    console.error('[spb-breakers] getSPBProductLine failed; rendering static fallback:', err);
+  }
   const allDocs = [...breakers, ...docs];
   const totalCount = allDocs.length;
 
