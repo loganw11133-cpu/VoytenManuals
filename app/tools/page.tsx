@@ -78,6 +78,15 @@ const tools = [
     frames: 'NT (T-frame) · NW (W / Y-frame)',
     ratings: '800A – 6,300A',
   },
+  {
+    slug: 'wl',
+    name: 'WL',
+    manufacturer: 'Siemens',
+    comingSoon: true,
+    description: 'Decode Siemens WL (Sentron WL) low-voltage power circuit breaker catalog numbers — frame size, ampere rating, interrupting class, ETU trip unit, mounting, and accessories.',
+    frames: 'WL Frame I / II / III',
+    ratings: '800A – 5,000A',
+  },
 ];
 
 export default function ToolsPage() {
@@ -100,20 +109,17 @@ export default function ToolsPage() {
         <div className="grid gap-5">
           {[...tools].sort((a, b) => a.name.localeCompare(b.name)).map((tool) => {
             const isLanding = 'landing' in tool && tool.landing;
+            const isComingSoon = 'comingSoon' in tool && tool.comingSoon;
             const href = 'href' in tool && tool.href ? tool.href : `/tools/${tool.slug}`;
-            return (
-            <Link
-              key={tool.slug}
-              href={href}
-              className="group bg-white border border-slate-200 rounded-xl p-6 hover:border-[#1a1a1a]/30 hover:shadow-lg transition-all"
-            >
+
+            const body = (
               <div className="flex items-start gap-5">
-                <div className="w-12 h-12 bg-[#1a1a1a]/5 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-[#1a1a1a] transition-colors">
-                  <Cpu className="w-6 h-6 text-[#1a1a1a] group-hover:text-white transition-colors" />
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors ${isComingSoon ? 'bg-slate-100' : 'bg-[#1a1a1a]/5 group-hover:bg-[#1a1a1a]'}`}>
+                  <Cpu className={`w-6 h-6 transition-colors ${isComingSoon ? 'text-slate-400' : 'text-[#1a1a1a] group-hover:text-white'}`} />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3 mb-1">
-                    <h2 className="text-lg font-bold text-slate-900 group-hover:text-[#dc2626] transition-colors">
+                    <h2 className={`text-lg font-bold transition-colors ${isComingSoon ? 'text-slate-500' : 'text-slate-900 group-hover:text-[#dc2626]'}`}>
                       {isLanding ? tool.name : `${tool.name} Decoder`}
                     </h2>
                     {'manufacturer' in tool && (
@@ -126,15 +132,43 @@ export default function ToolsPage() {
                         Availability &amp; Quote
                       </span>
                     )}
-                    <ArrowRight size={16} className="text-slate-400 group-hover:text-[#dc2626] group-hover:translate-x-1 transition-all flex-shrink-0" />
+                    {isComingSoon && (
+                      <span className="text-[0.65rem] font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-700 uppercase tracking-wide">
+                        Coming Soon
+                      </span>
+                    )}
+                    {!isComingSoon && (
+                      <ArrowRight size={16} className="text-slate-400 group-hover:text-[#dc2626] group-hover:translate-x-1 transition-all flex-shrink-0" />
+                    )}
                   </div>
-                  <p className="text-sm text-slate-600 mb-3">{tool.description}</p>
+                  <p className={`text-sm mb-3 ${isComingSoon ? 'text-slate-500' : 'text-slate-600'}`}>{tool.description}</p>
                   <div className="flex flex-wrap gap-x-6 gap-y-1 text-xs text-slate-500">
                     <span><span className="font-semibold text-slate-700">Frames:</span> {tool.frames}</span>
                     <span><span className="font-semibold text-slate-700">Ratings:</span> {tool.ratings}</span>
                   </div>
                 </div>
               </div>
+            );
+
+            // Not yet built — render as a static placeholder so it doesn't 404.
+            if (isComingSoon) {
+              return (
+                <div
+                  key={tool.slug}
+                  className="bg-slate-50 border border-dashed border-slate-300 rounded-xl p-6"
+                >
+                  {body}
+                </div>
+              );
+            }
+
+            return (
+            <Link
+              key={tool.slug}
+              href={href}
+              className="group bg-white border border-slate-200 rounded-xl p-6 hover:border-[#1a1a1a]/30 hover:shadow-lg transition-all"
+            >
+              {body}
             </Link>
             );
           })}
