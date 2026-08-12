@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="description" content="Siemens WL (Sentron WL) low-voltage circuit breaker catalog number decoder. Decodes all 15 digits under both UL 489 (insulated case) and UL 1066 / ANSI C37 (power circuit breaker) — interrupting class, frame size, mounting, poles, ampere rating, rating plug, ETU trip unit and factory accessories.">
+<title>Siemens WL (Sentron WL) Decoder — Voyten Electric</title>
+<link rel="stylesheet" href="/tools/decoder-fonts.css">
+<style>
+:root {
+  --red: #dc2626;
+  --dark-red: #b91c1c;
+  --deep-red: #991b1b;
+  --black: #1a1a1a;
+  --deep-black: #111111;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --white: #ffffff;
+  --green: #16a34a;
+  --green-light: #dcfce7;
+  --blue: #2563eb;
+  --blue-light: #dbeafe;
+  --purple: #7c3aed;
+  --yellow: #ca8a04;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--gray-100);
+  color: var(--gray-800);
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+
+.header {
+  background: linear-gradient(135deg, var(--deep-black), var(--black));
+  color: var(--white);
+  padding: 24px 20px 20px;
+  text-align: center;
+  border-bottom: 4px solid var(--red);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+.header h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: 0.5px; }
+.header h1 .accent { color: var(--red); }
+.header .subtitle { font-size: 0.85rem; color: var(--gray-300); margin-top: 4px; }
+.container { max-width: 960px; margin: 0 auto; padding: 16px; }
+
+/* Input Section */
+.input-section {
+  background: var(--white); border-radius: 12px; padding: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 16px;
+  border: 2px solid var(--red);
+}
+.input-section label {
+  display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 6px; color: var(--gray-700);
+}
+.input-section label .opt { font-weight: 400; font-size: 0.78rem; color: var(--gray-400); text-transform: none; letter-spacing: 0; }
+.field-block { margin-bottom: 14px; }
+.field-block:last-of-type { margin-bottom: 0; }
+.input-row { display: flex; gap: 8px; margin-bottom: 6px; }
+.input-row input {
+  flex: 1; padding: 12px 14px; font-size: 16px; font-family: 'IBM Plex Mono', 'Consolas', 'Monaco', monospace;
+  border: 2px solid var(--gray-200); border-radius: 8px; text-transform: uppercase;
+  letter-spacing: 1.5px; -webkit-appearance: none; transition: border-color 0.2s;
+}
+.input-row input:focus { outline: none; border-color: var(--red); }
+.hint { font-size: 0.75rem; color: var(--gray-500); margin-bottom: 2px; }
+
+/* Listing-standard pill selector (UL 489 vs UL 1066).
+   WL uses ONE 15-digit position map but two different code sets, so the
+   standard must be known before digits 1, 2, 3, 5-6 and 7 can be read. */
+.std-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+.std-pill {
+  flex: 1 1 200px; text-align: left; cursor: pointer; touch-action: manipulation;
+  padding: 10px 14px; border-radius: 10px; background: var(--gray-50);
+  border: 2px solid var(--gray-200); transition: all 0.15s; font-family: inherit;
+}
+.std-pill:hover { border-color: var(--gray-300); background: var(--white); }
+.std-pill:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
+.std-pill.active { background: var(--black); border-color: var(--black); }
+.std-pill__name { display: block; font-weight: 700; font-size: 0.9rem; color: var(--gray-800); }
+.std-pill__desc { display: block; font-size: 0.72rem; color: var(--gray-500); margin-top: 1px; }
+.std-pill.active .std-pill__name { color: var(--white); }
+.std-pill.active .std-pill__desc { color: var(--gray-300); }
+
+.btn-row { display: flex; gap: 8px; margin: 14px 0 12px; }
+.btn {
+  padding: 10px 20px; border: none; border-radius: 8px; font-weight: 700;
+  font-size: 0.9rem; cursor: pointer; transition: background 0.2s; touch-action: manipulation;
+}
+.btn-decode { background: var(--red); color: var(--white); flex: 1; }
+.btn-decode:hover { background: var(--dark-red); }
+.btn-clear { background: var(--gray-200); color: var(--gray-700); }
+.btn-clear:hover { background: var(--gray-300); }
+
+.examples-label { font-size: 0.75rem; font-weight: 600; color: var(--gray-500); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+.examples { display: flex; flex-wrap: wrap; gap: 6px; }
+.ex-btn {
+  padding: 4px 10px; font-size: 0.72rem; font-family: 'IBM Plex Mono', 'Consolas', monospace;
+  background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 6px;
+  cursor: pointer; transition: all 0.15s; color: var(--gray-700); touch-action: manipulation;
+}
+.ex-btn:hover { background: var(--red); color: var(--white); border-color: var(--red); }
+.ex-group { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gray-400); margin: 8px 0 4px; }
+.ex-group:first-child { margin-top: 0; }
+
+/* Compact hover-reveal examples */
+.ex-hover { position: relative; display: inline-block; margin-top: 4px; }
+.ex-hover__trigger {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.4px; text-transform: uppercase;
+  color: var(--gray-500); cursor: pointer; user-select: none;
+  background: var(--gray-100);
+  border: 1px solid var(--gray-300); border-radius: 6px; padding: 4px 10px;
+  transition: color .15s, border-color .15s;
+}
+.ex-hover__trigger::after { content: "\25BE"; font-size: 0.6rem; opacity: .7; }
+.ex-hover:hover .ex-hover__trigger,
+.ex-hover:focus-within .ex-hover__trigger { color: var(--red); border-color: var(--red); }
+.ex-hover__panel {
+  position: absolute; z-index: 50; top: calc(100% + 6px); left: 0;
+  display: none; min-width: 240px; max-width: min(94vw, 560px);
+  padding: 12px 14px 10px;
+  background: #fff; border: 1px solid var(--gray-200); border-radius: 10px;
+  box-shadow: 0 12px 34px rgba(0,0,0,.14);
+}
+.ex-hover:hover .ex-hover__panel,
+.ex-hover:focus-within .ex-hover__panel { display: block; }
+
+/* Char Map */
+.charmap-wrap { margin: 16px 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.charmap-inner { min-width: 300px; }
+.group-labels { display: flex; gap: 2px; margin-bottom: 2px; }
+.group-label {
+  font-size: 0.55rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0;
+  color: var(--gray-500); text-align: center; padding: 2px 0;
+  border-bottom: 2px solid var(--gray-300);
+  overflow: hidden; white-space: nowrap;
+}
+.char-boxes { display: flex; gap: 2px; }
+.char-box {
+  width: 32px; height: 38px; display: flex; align-items: center; justify-content: center;
+  font-family: 'IBM Plex Mono', 'Consolas', monospace; font-size: 0.85rem; font-weight: 700;
+  background: var(--gray-100); border: 2px solid var(--gray-200); border-radius: 6px;
+  transition: all 0.2s;
+}
+.char-box.entered { background: var(--black); color: var(--white); border-color: var(--black); }
+.char-box.error { background: #fecaca; color: #dc2626; border-color: #f87171; }
+.char-box.separator { width: 8px; border: none; background: transparent; }
+.pos-labels { display: flex; gap: 2px; margin-top: 1px; }
+.pos-label { width: 32px; text-align: center; font-size: 0.55rem; color: var(--gray-400); }
+.pos-label.sep { width: 8px; }
+
+/* Result Cards */
+.results { display: none; }
+.results.visible { display: block; }
+.card {
+  background: var(--white); border-radius: 12px; padding: 16px;
+  margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  border-left: 4px solid var(--gray-200);
+}
+.card h3 {
+  font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--gray-500); margin-bottom: 8px;
+}
+.field { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--gray-100); gap: 12px; }
+.field:last-child { border-bottom: none; }
+.field-label { font-size: 0.8rem; color: var(--gray-500); }
+.field-value { font-size: 0.8rem; font-weight: 600; color: var(--gray-800); text-align: right; max-width: 62%; }
+.card.valid { border-left-color: var(--red); }
+.card.info { border-left-color: var(--blue); }
+.card.trip { border-left-color: var(--green); }
+
+/* Side-by-side result grid (mirrors the PXR / PD-SB + NT/NW decoder layout).
+   align-items:start keeps each card at its natural height so a short card
+   doesn't stretch and leave blank space. */
+.result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: start; }
+@media (max-width: 640px) { .result-grid { grid-template-columns: 1fr; } }
+.result-card {
+  background: var(--white); border-radius: 10px; padding: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-left: 4px solid var(--gray-300);
+}
+.result-card.wide { grid-column: 1 / -1; }
+.result-card.config { border-left-color: var(--red); }
+.result-card.trip { border-left-color: var(--green); }
+.result-card.access { border-left-color: var(--purple); }
+.result-card.options { border-left-color: var(--yellow); }
+.result-card.info { border-left-color: var(--blue); }
+.card-title {
+  font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--gray-500); margin-bottom: 8px;
+}
+.card-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 0.85rem; border-bottom: 1px solid var(--gray-100); gap: 12px; }
+.card-row:last-child { border-bottom: none; }
+.card-label { color: var(--gray-500); font-weight: 500; }
+.card-value { font-weight: 600; color: var(--gray-800); text-align: right; max-width: 62%; }
+.card-note { font-size: 0.72rem; color: var(--gray-500); margin-top: 8px; line-height: 1.45; }
+
+/* Summary banner */
+.summary-banner {
+  background: linear-gradient(135deg, var(--deep-black), var(--black));
+  color: var(--white); border-radius: 12px;
+  padding: 20px; margin-bottom: 16px; border-left: 5px solid var(--red);
+}
+.summary-banner .headline { font-size: 1.15rem; font-weight: 700; margin-bottom: 6px; }
+.summary-banner .catalog-fmt { font-family: 'IBM Plex Mono', 'Consolas', monospace; font-size: 0.85rem; color: var(--gray-300); letter-spacing: 2px; margin-bottom: 12px; }
+
+.btn-copy {
+  padding: 8px 20px; border: 2px solid var(--gray-200); border-radius: 8px;
+  background: var(--white); color: var(--gray-700); font-weight: 600; font-size: 0.8rem;
+  cursor: pointer; transition: all 0.2s;
+}
+.btn-copy:hover { background: var(--gray-200); }
+.btn-copy.copied { background: var(--green-light); border-color: var(--green); color: var(--green); }
+.btn-pdf {
+  padding: 8px 20px; border: 2px solid var(--red); border-radius: 8px;
+  background: var(--white); color: var(--red); font-weight: 600; font-size: 0.8rem;
+  cursor: pointer; transition: all 0.2s; margin-left: 8px;
+}
+.btn-pdf:hover { background: var(--red); color: var(--white); }
+.btn-quote {
+  padding: 8px 20px; border: 2px solid var(--red); border-radius: 8px;
+  background: var(--red); color: var(--white); font-weight: 700; font-size: 0.8rem;
+  cursor: pointer; transition: all 0.2s; margin-left: 8px;
+}
+.btn-quote:hover { background: #b91c1c; border-color: #b91c1c; }
+
+/* Company link buttons (Google Business · LinkedIn · eBay) */
+.social { display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; margin: 26px auto 24px; padding: 0 12px; }
+.social a {
+  display: inline-flex; align-items: center; gap: 8px; padding: 7px 15px;
+  border-radius: 999px; border: 1px solid var(--gray-200); background: var(--white);
+  text-decoration: none; color: var(--gray-700); font-size: 0.8rem; font-weight: 600;
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+}
+.social a:hover { border-color: var(--gray-300); box-shadow: 0 2px 8px rgba(0,0,0,0.1); transform: translateY(-1px); }
+.social a:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
+.social a svg { height: 18px; width: auto; display: block; }
+
+.footer {
+  text-align: center; padding: 16px 20px 24px; font-size: 0.7rem; color: var(--gray-400); margin-top: 8px;
+}
+
+/* Error */
+.error {
+  background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px;
+  padding: 12px 16px; margin-bottom: 12px; display: none;
+}
+.error.visible { display: block; }
+.error-title { font-weight: 700; color: #991b1b; font-size: 0.85rem; margin-bottom: 2px; }
+.error-text { font-size: 0.8rem; color: #b91c1c; }
+.error-hint { font-size: 0.75rem; color: var(--gray-500); margin-top: 6px; }
+
+.note-box { font-size: 0.75rem; color: var(--gray-500); margin-top: 8px; line-height: 1.5; }
+
+/* Noscript */
+.ios-notice {
+  max-width: 600px; margin: 40px auto; background: #fffbeb; border: 2px solid #f59e0b;
+  border-radius: 12px; padding: 24px; color: #92400e; font-size: 0.95rem; line-height: 1.6;
+}
+.ios-notice strong { color: #78350f; }
+.ios-notice .steps { margin: 12px 0; padding-left: 20px; }
+.ios-notice .steps li { margin-bottom: 6px; }
+
+@media (max-width: 600px) {
+  .header h1 { font-size: 1.25rem; }
+  .container { padding: 10px; }
+  .field-value { max-width: 58%; }
+}
+</style>
+</head>
+<body>
+
+<noscript>
+<div class="ios-notice">
+  <strong>Interactive Mode Required</strong><br><br>
+  This decoder requires JavaScript to run. If you are viewing this on an iPhone or iPad, the Files app preview does not support interactive content.
+  <ol class="steps">
+    <li>Tap the <strong>Share</strong> button (box with arrow)</li>
+    <li>Select <strong>"Open in Safari"</strong></li>
+    <li>The decoder will be fully interactive in Safari</li>
+  </ol>
+  On Mac: Right-click the file &rarr; Open With &rarr; Safari.<br>
+  On Android: Open with Chrome or any browser.
+</div>
+</noscript>
+
+<div class="header">
+  <h1>Siemens <span class="accent">WL / Sentron WL</span> Decoder</h1>
+  <div class="subtitle">Low Voltage Circuit Breaker &mdash; 15-Digit Catalog Number Decoder</div>
+</div>
+
+<div class="container">
+  <!-- Input -->
+  <div class="input-section">
+    <div class="field-block">
+      <label>Listing Standard <span class="opt">(printed on the breaker nameplate &mdash; pick one before decoding)</span></label>
+      <div class="std-pills" id="stdPills" role="radiogroup" aria-label="Listing standard">
+        <button type="button" class="std-pill active" id="pillUL489" role="radio" aria-checked="true">
+          <span class="std-pill__name">UL 489</span>
+          <span class="std-pill__desc">Insulated Case &middot; Frame Size 1&ndash;3 &middot; 800&ndash;5000 A</span>
+        </button>
+        <button type="button" class="std-pill" id="pillUL1066" role="radio" aria-checked="false">
+          <span class="std-pill__name">UL 1066 / ANSI C37</span>
+          <span class="std-pill__desc">Power Circuit Breaker &middot; Frame Size 2&ndash;3 &middot; 800&ndash;6000 A</span>
+        </button>
+      </div>
+      <div class="hint" style="margin-top:6px;">Both listings share the same 15 digit positions but use <strong>different code sets</strong> for the class, frame, mounting and ampere digits. If you pick the wrong one, the decoder will tell you which to switch to.</div>
+    </div>
+
+    <div class="field-block">
+      <label>Catalog Number <span class="opt">(the "WL&hellip;" number on the nameplate &mdash; the WL prefix is optional)</span></label>
+      <div class="input-row">
+        <input type="text" id="catInput" placeholder="e.g. WLL2D320UDEGCGWAC" maxlength="20" autocomplete="off" autocorrect="off" spellcheck="false">
+      </div>
+      <div class="hint">Decodes all 15 positions &mdash; interrupting class, frame size, mounting, poles, frame ampere rating, rating plug, ETU trip unit and every factory accessory digit. Non-automatic switches are recognised automatically. The short 6-character stem that dealers list breakers under (e.g. <strong>WLL3F340</strong>) also decodes, as far as it goes.</div>
+      <div class="ex-hover" tabindex="0" role="button" aria-label="Show example catalog numbers">
+        <span class="ex-hover__trigger">Catalog examples</span>
+        <div class="ex-hover__panel">
+          <div class="ex-group">UL 489 &mdash; Insulated Case</div>
+          <div class="examples">
+            <button class="ex-btn" onclick="loadEx(this,'UL489')">WLS1F308NCXXXXXXN</button>
+            <button class="ex-btn" onclick="loadEx(this,'UL489')">L2D320UDEGCGWAC</button>
+            <button class="ex-btn" onclick="loadEx(this,'UL489')">C3D350ZHJGCGZWC</button>
+            <button class="ex-btn" onclick="loadEx(this,'UL489')">L1Y308SSXXXXXXN</button>
+            <button class="ex-btn" onclick="loadEx(this,'UL489')">S1F316TCDXCXXXN</button>
+            <button class="ex-btn" onclick="loadEx(this,'UL489')">WLL3F340</button>
+          </div>
+          <div class="ex-group">UL 1066 / ANSI C37 &mdash; Power Circuit Breaker</div>
+          <div class="examples">
+            <button class="ex-btn" onclick="loadEx(this,'UL1066')">WLH3A440ZWJGCGZAC</button>
+            <button class="ex-btn" onclick="loadEx(this,'UL1066')">L2A332YVXXXXXXN</button>
+            <button class="ex-btn" onclick="loadEx(this,'UL1066')">F2A30CNCXXXXXXN</button>
+            <button class="ex-btn" onclick="loadEx(this,'UL1066')">L2S308SSXXXXXXN</button>
+            <button class="ex-btn" onclick="loadEx(this,'UL1066')">H2A332YEGAXCWCN</button>
+            <button class="ex-btn" onclick="loadEx(this,'UL1066')">WLM3A340</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-decode" onclick="decode()">DECODE</button>
+      <button class="btn btn-clear" onclick="clearAll()">CLEAR</button>
+    </div>
+  </div>
+
+  <!-- Char Map -->
+  <div class="charmap-wrap"><div class="charmap-inner">
+    <div class="group-labels" id="groupLabels"></div>
+    <div class="char-boxes" id="charBoxes"></div>
+    <div class="pos-labels" id="posLabels"></div>
+  </div></div>
+
+  <!-- Error -->
+  <div class="error" id="errorBox">
+    <div class="error-title" id="errorTitle">Invalid Input</div>
+    <div class="error-text" id="errorText"></div>
+    <div class="error-hint">Enter the 15-digit catalog number from the nameplate (the leading "WL" is optional). Example: WLL2D320UDEGCGWAC</div>
+  </div>
+
+  <!-- Results -->
+  <div class="results" id="results"></div>
+</div>
+
+<nav class="social" aria-label="Connect with Voyten Electric">
+  <a href="https://share.google/8zeiyPVd68OB1smJW" target="_blank" rel="noopener noreferrer" title="Voyten Electric on Google Business Profile">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <rect x="4" y="11" width="16" height="9" rx="1" fill="#4989F5"/>
+      <path d="M3 11 L4.5 5 H19.5 L21 11 Z" fill="#3367D6"/>
+      <path d="M8 5 L7.2 11 H10 L10.3 5 Z" fill="#5B9BFF"/>
+      <path d="M14 5 L14 11 H16.8 L16 5 Z" fill="#5B9BFF"/>
+      <rect x="10" y="14" width="4" height="6" rx="0.5" fill="#ffffff"/>
+    </svg>
+    Google Business
+  </a>
+  <a href="https://www.linkedin.com/in/voyten-electric-sales-team/" target="_blank" rel="noopener noreferrer" title="Voyten Electric on LinkedIn">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <rect width="24" height="24" rx="4" fill="#0A66C2"/>
+      <path fill="#ffffff" d="M8.34 18.34H5.67V9.75h2.67v8.59zM7 8.58a1.55 1.55 0 1 1 0-3.1 1.55 1.55 0 0 1 0 3.1zM18.34 18.34h-2.67v-4.18c0-1-.02-2.28-1.39-2.28-1.39 0-1.6 1.09-1.6 2.21v4.25h-2.67V9.75h2.56v1.17h.04c.36-.68 1.23-1.39 2.53-1.39 2.7 0 3.2 1.78 3.2 4.09v4.72z"/>
+    </svg>
+    LinkedIn
+  </a>
+  <a href="https://www.ebay.com/str/voytenelectric" target="_blank" rel="noopener noreferrer" title="Voyten Electric eBay Store">
+    <svg viewBox="0 0 84 34" aria-hidden="true" focusable="false">
+      <text x="0" y="27" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" letter-spacing="-1.5">
+        <tspan fill="#E53238">e</tspan><tspan fill="#0064D2">b</tspan><tspan fill="#F5AF02">a</tspan><tspan fill="#86B817">y</tspan>
+      </text>
+    </svg>
+    Store
+  </a>
+</nav>
+
+<div class="footer">
+  Siemens WL / Sentron WL Decoder &mdash; Voyten Electric &amp; Electronics, Inc.<br>
+  Data sourced from Siemens "Low Voltage WL Circuit Breakers &mdash; Selection and Application Guide" (EP 1710, Oct 2017), pp. 26&ndash;52,<br>
+  cross-checked against the Siemens US guide CBSA-00001-0318 / -0913 and the Siemens Canada Power Product Catalogue Section 6 (2025).
+</div>
+
+<script>
+/* ============================================================
+   Siemens WL / Sentron WL — Nomenclature Data
+   Source: Siemens "Low Voltage WL Circuit Breakers — Selection
+   and Application Guide", document EP 1710 (October 2017).
+     · p.26      — 15-digit catalog numbering overview
+     · pp.27-28  — UL 489 ratings (breakers + non-automatic switches)
+     · pp.29-33  — UL 489 assembled breaker catalog number
+     · pp.34-37  — UL 489 non-automatic switch catalog number
+     · pp.42-43  — UL 1066 ratings (breakers + non-automatic switches)
+     · pp.44-49  — UL 1066 assembled breaker catalog number
+     · pp.50-52  — UL 1066 non-automatic switch catalog number
+
+   ARCHITECTURE NOTE: WL is NOT a single flat substring map like the
+   Magnum DS / MW / PXR / WavePro decoders. The 15 positions are fixed,
+   but digits 1, 2, 3, 5-6 and 7 carry DIFFERENT code sets depending on
+   the listing standard (UL 489 vs UL 1066) and on whether the device is
+   a breaker or a non-automatic switch. Digit 3 alone is disjoint across
+   all four product classes, so it is used to detect a standard mismatch
+   and tell the user which pill to pick. Cradles are ordered separately
+   and are deliberately out of scope for this tool.
+   ============================================================ */
+
+/* ── Digit 3: mounting / device type. The four code sets are disjoint,
+      which is what makes standard mis-selection detectable. ── */
+var TYPE_MAP = {
+  /* UL 489 breakers */
+  'F': { std: 'UL489',  device: 'breaker', mount: 'Fixed mount',  short: 'Fixed' },
+  'D': { std: 'UL489',  device: 'breaker', mount: 'Draw-out',     short: 'Draw-out' },
+  /* UL 489 non-automatic switches */
+  'Y': { std: 'UL489',  device: 'switch',  mount: 'Fixed mount',  short: 'Fixed' },
+  'Z': { std: 'UL489',  device: 'switch',  mount: 'Draw-out',     short: 'Draw-out' },
+  /* UL 1066 breakers — A/G draw-out, H/K fixed. Confirmed by the p.45
+     footnote "FS2 3200A, FS3 4000A/5000A FIXED MOUNT breakers have
+     vertical rear connectors included as standard", which is keyed to
+     the H and K rows only. */
+  'A': { std: 'UL1066', device: 'breaker', mount: 'Draw-out',     short: 'Draw-out', neutralCT: true },
+  'G': { std: 'UL1066', device: 'breaker', mount: 'Draw-out',     short: 'Draw-out', neutralCT: false },
+  'H': { std: 'UL1066', device: 'breaker', mount: 'Fixed mount',  short: 'Fixed',    neutralCT: false },
+  'K': { std: 'UL1066', device: 'breaker', mount: 'Fixed mount',  short: 'Fixed',    neutralCT: true },
+  /* UL 1066 non-automatic switches */
+  'S': { std: 'UL1066', device: 'switch',  mount: 'Draw-out',     short: 'Draw-out' },
+  'J': { std: 'UL1066', device: 'switch',  mount: 'Fixed mount',  short: 'Fixed' }
+};
+
+/* ── Digit 1: interrupting class, per standard.
+      kA values are taken from the catalog-number pages (p.29 for UL 489,
+      pp.44-45 for UL 1066) where each class letter is printed alongside
+      its own interrupting rating — these are the authoritative,
+      class-tied figures. `icw` = short-time withstand from pp.27-28 /
+      pp.42-43. `null` means the source prints a dash for that class. ── */
+var CLASS_MAP = {
+  'UL489': {
+    'S': { label: 'Standard interrupting (S)',        byFrame: {
+             '1': { lowV: 65,  highV: 65,  icw: 65 },
+             '2': { lowV: 65,  highV: 65,  icw: 65 } } },
+    'L': { label: 'High interrupting (L)',            byFrame: {
+             '1': { lowV: 100, highV: 65,  icw: 65 },
+             '2': { lowV: 100, highV: 85,  icw: 85 },
+             '3': { lowV: 100, highV: 85,  icw: 85 } } },
+    'C': { label: 'Current-limiting / extra-high (C)', byFrame: {
+             '2': { lowV: 150, highV: 100, icw: 100 },
+             '3': { lowV: 150, highV: 100, icw: 100 } } }
+  },
+  'UL1066': {
+    'N': { label: 'Standard interrupting (N)',        byFrame: {
+             '2': { lowV: 50,  highV: 50,  icw: 50 } } },
+    'S': { label: 'Standard interrupting (S)',        byFrame: {
+             '2': { lowV: 65,  highV: 65,  icw: 65 } } },
+    'H': { label: 'High interrupting (H)',            byFrame: {
+             '2': { lowV: 85,  highV: 65,  icw: 65 },
+             '3': { lowV: 85,  highV: 85,  icw: 85 } } },
+    'L': { label: 'Extra-high interrupting (L)',      byFrame: {
+             '2': { lowV: 100, highV: 85,  icw: 85 },
+             '3': { lowV: 100, highV: 85,  icw: 100 } } },
+    'M': { label: 'Maximum interrupting (M)',         byFrame: {
+             '3': { lowV: 150, highV: 85,  icw: 100 } } },
+    'F': { label: 'Fused (F)',                        fused: true, byFrame: {
+             '2': { lowV: 200, highV: 200, icw: null },
+             '3': { lowV: 200, highV: 200, icw: null } } }
+  }
+};
+
+/* Voltage column headings differ between the two listings. */
+var VOLTAGE_COLS = {
+  'UL489':  { low: '240 / 480 VAC', high: '600 VAC',   icwTime: '0.4 sec.' },
+  'UL1066': { low: '254 / 508 VAC', high: '635 VAC',   icwTime: '1 sec.' }
+};
+
+/* ── Digits 5-6: frame ampere rating. Per standard, per frame size,
+      per device — the guide tabulates different amp sets for each. ── */
+var AMP_CODES = { '08': 800, '12': 1200, '16': 1600, '20': 2000, '25': 2500,
+                  '30': 3000, '32': 3200, '40': 4000, '50': 5000, '60': 6000 };
+
+/* Frame-size → amp codes actually tabulated in the guide. Used for an
+   advisory note, never to reject an otherwise well-formed number. */
+var FRAME_AMPS_TABULATED = {
+  'UL489':  { breaker: { '1': ['08','12','16','20'],
+                         '2': ['08','12','16','20','25','30'],
+                         '3': ['40','50'] },
+              switch:  { '1': ['08','12','16','20'],
+                         '2': ['08','16','20','25','30'],
+                         '3': ['40','50'] } },
+  'UL1066': { breaker: { '2': ['08','16','20','32'],
+                         '3': ['32','40','50','60'] },
+              switch:  { '2': ['08','16','20','32'],
+                         '3': ['32','40','50','60'] } }
+};
+
+/* ── UL 1066 F-class (fused) only: digit 6 becomes a fuse-rating letter
+      and digit 5 carries the frame indicator. Frame Size 3 fused devices
+      are offered with a 6000 A fuse only, so they keep the normal
+      two-character amp code. (p.44 breakers, p.50 switches) ── */
+var FUSED_FRAME_BY_D5 = { '0': 800, '1': 1600, '2': 2000 };
+var FUSE_LETTERS = { 'A': 400, 'B': 600, 'C': 800, 'D': 900, 'E': 1000,
+                     'F': 1200, 'G': 1600, 'H': 2000, 'J': 2500, 'K': 3000 };
+
+/* ── Digit 7: rating plug (maximum continuous current rating, In).
+      Availability differs by standard + frame size. ── */
+var RATING_PLUGS = {
+  'A': 200,  'B': 225,  'C': 250,  'D': 300,  'E': 315,  'F': 350,
+  'G': 400,  'H': 450,  'J': 500,  'K': 600,  'L': 630,  'M': 700,
+  'N': 800,  'P': 1000, 'Q': 1200, 'R': 1250, 'T': 1600, 'U': 2000,
+  'V': 2500, 'W': 3000, 'Y': 3200, 'Z': 4000, '1': 5000, '2': 6000
+};
+var PLUG_FRAMES = {
+  'UL489': {
+    'A': ['1','2'], 'B': ['1','2'], 'C': ['1','2'], 'D': ['1','2'], 'E': ['1','2'],
+    'F': ['1','2'], 'G': ['1','2'], 'H': ['1','2'], 'J': ['1','2'], 'K': ['1','2'],
+    'L': ['1','2'], 'M': ['1','2'], 'N': ['1','2','3'], 'P': ['1','2','3'],
+    'Q': ['1','2','3'], 'R': ['1','2','3'], 'T': ['1','2','3'], 'U': ['1','2','3'],
+    'V': ['2','3'], 'W': ['2','3'], 'Y': ['3'], 'Z': ['3'], '1': ['3']
+  },
+  'UL1066': {
+    'A': ['2'], 'B': ['2'], 'C': ['2'], 'D': ['2'], 'E': ['2'], 'F': ['2'],
+    'G': ['2'], 'H': ['2'], 'J': ['2'], 'K': ['2'], 'L': ['2'], 'M': ['2'],
+    'N': ['2','3'], 'P': ['2','3'], 'Q': ['2','3'], 'R': ['2','3'],
+    'T': ['2','3'], 'U': ['2','3'], 'V': ['2','3'], 'W': ['2','3'],
+    'Y': ['2','3'], 'Z': ['3'], '1': ['3'], '2': ['3']
+  }
+};
+
+/* ── Digit 8: electronic trip unit (ETU). Identical table under both
+      listings (p.30 = p.46). Both ETU745 and ETU776 provide long-time (L)
+      plus user-disableable short-time (S) and instantaneous (I); neutral
+      protection (N) is standard. Both support Extended Instantaneous
+      Protection (EIP), Dynamic Arc-Flash Sentry (DAS) and selectable
+      I⁴t overload characteristic (p.8). ── */
+var ETU_CODES = {
+  /* ETU748 (LS only — no instantaneous; its short-time is non-defeatable).
+     Documented in the US Selection & Application Guides CBSA-00001-0913 /
+     -0318 and the 2018 Siemens Canada catalogue. The US and Canadian
+     document lineages diverge here: the US guides carry ETU748 and no EMC
+     codes, EP 1710 and the 2025 CA catalogue carry the EMC codes and no
+     ETU748. The letters do not collide, so both sets are supported. */
+  'J': { model: 'ETU748', lcd: false, gfAlarm: false, gfTrip: false, emc: false },
+  'K': { model: 'ETU748', lcd: true,  gfAlarm: false, gfTrip: false, emc: false },
+  'L': { model: 'ETU748', lcd: false, gfAlarm: true,  gfTrip: false, emc: false },
+  'N': { model: 'ETU748', lcd: true,  gfAlarm: true,  gfTrip: false, emc: false },
+  'P': { model: 'ETU748', lcd: false, gfAlarm: true,  gfTrip: true,  emc: false },
+  'Q': { model: 'ETU748', lcd: true,  gfAlarm: true,  gfTrip: true,  emc: false },
+
+  'C': { model: 'ETU745', lcd: false, gfAlarm: false, gfTrip: false, emc: false },
+  'D': { model: 'ETU745', lcd: true,  gfAlarm: false, gfTrip: false, emc: false },
+  'E': { model: 'ETU745', lcd: false, gfAlarm: true,  gfTrip: false, emc: false },
+  'F': { model: 'ETU745', lcd: true,  gfAlarm: true,  gfTrip: false, emc: false },
+  'G': { model: 'ETU745', lcd: false, gfAlarm: true,  gfTrip: true,  emc: false },
+  'H': { model: 'ETU745', lcd: true,  gfAlarm: true,  gfTrip: true,  emc: false },
+  '3': { model: 'ETU745', lcd: false, gfAlarm: false, gfTrip: false, emc: true  },
+  '4': { model: 'ETU745', lcd: true,  gfAlarm: false, gfTrip: false, emc: true  },
+  '5': { model: 'ETU745', lcd: false, gfAlarm: true,  gfTrip: false, emc: true  },
+  '6': { model: 'ETU745', lcd: true,  gfAlarm: true,  gfTrip: false, emc: true  },
+  '7': { model: 'ETU745', lcd: false, gfAlarm: true,  gfTrip: true,  emc: true  },
+  '8': { model: 'ETU745', lcd: true,  gfAlarm: true,  gfTrip: true,  emc: true  },
+  'V': { model: 'ETU776', lcd: false, gfAlarm: false, gfTrip: false, emc: false },
+  'W': { model: 'ETU776', lcd: false, gfAlarm: true,  gfTrip: false, emc: false },
+  'Y': { model: 'ETU776', lcd: false, gfAlarm: true,  gfTrip: true,  emc: false },
+  'M': { model: 'ETU776', lcd: false, gfAlarm: false, gfTrip: false, emc: true  },
+  'Z': { model: 'ETU776', lcd: false, gfAlarm: true,  gfTrip: false, emc: true  },
+  '1': { model: 'ETU776', lcd: true,  gfAlarm: true,  gfTrip: true,  emc: true  }
+};
+var ETU_MODEL_NOTES = {
+  'ETU745': 'Full-function LSI trip unit with rotary/keypad settings; ground fault, alphanumeric LCD and EMC filter are ordering options.',
+  'ETU776': 'Top-tier trip unit — LSI protection plus on-board power metering and CubicleBUS communications.'
+};
+
+/* ── Voltage sets reused across the accessory digits ── */
+var V24 = '24 VDC', V48 = '48 VDC', V120 = '120 VAC / 125 VDC', V240 = '240 VAC / 250 VDC';
+
+/* ── Digit 9 — bell alarm, breaker ready-to-close, auxiliary contacts.
+      BREAKERS (p.31 = p.47). ── */
+var D9_BREAKER = {
+  'X': 'None',
+  'A': 'Bell alarm, Form C contacts',
+  'B': 'Breaker ready-to-close, 1b contact',
+  'C': 'Auxiliary switches, 2a + 2b',
+  'D': 'Auxiliary switches, 4a + 4b',
+  'E': 'Bell alarm (Form C) + ready-to-close',
+  'F': 'Bell alarm (Form C) + aux 2a + 2b',
+  'G': 'Bell alarm (Form C) + aux 4a + 4b',
+  'H': 'Ready-to-close + aux 2a + 2b',
+  'I': 'Ready-to-close + aux 4a + 4b',
+  'J': 'Bell alarm (Form C) + ready-to-close + aux 2a + 2b',
+  'K': 'Bell alarm (Form C) + ready-to-close + aux 4a + 4b',
+  'L': 'Bell alarm, ' + V24 + ' remote reset coil',
+  'M': 'Bell alarm, ' + V48 + ' remote reset coil',
+  'N': 'Bell alarm, ' + V120 + ' remote reset coil',
+  'O': 'Bell alarm, ' + V240 + ' remote reset coil',
+  'P': 'Bell alarm ' + V24 + ' remote reset + ready-to-close',
+  'Q': 'Bell alarm ' + V48 + ' remote reset + ready-to-close',
+  'R': 'Bell alarm ' + V120 + ' remote reset + ready-to-close',
+  'S': 'Bell alarm ' + V240 + ' remote reset + ready-to-close',
+  'T': 'Bell alarm ' + V24 + ' remote reset + aux 2a + 2b',
+  'U': 'Bell alarm ' + V48 + ' remote reset + aux 2a + 2b',
+  'V': 'Bell alarm ' + V120 + ' remote reset + aux 2a + 2b',
+  'W': 'Bell alarm ' + V240 + ' remote reset + aux 2a + 2b',
+  'Y': 'Bell alarm ' + V24 + ' remote reset + aux 4a + 4b',
+  'Z': 'Bell alarm ' + V48 + ' remote reset + aux 4a + 4b',
+  '1': 'Bell alarm ' + V120 + ' remote reset + aux 4a + 4b',
+  '2': 'Bell alarm ' + V240 + ' remote reset + aux 4a + 4b',
+  '3': 'Bell alarm ' + V24 + ' remote reset + ready-to-close + aux 2a + 2b',
+  '4': 'Bell alarm ' + V48 + ' remote reset + ready-to-close + aux 2a + 2b',
+  '5': 'Bell alarm ' + V120 + ' remote reset + ready-to-close + aux 2a + 2b',
+  '6': 'Bell alarm ' + V240 + ' remote reset + ready-to-close + aux 2a + 2b',
+  '7': 'Bell alarm ' + V24 + ' remote reset + ready-to-close + aux 4a + 4b',
+  '8': 'Bell alarm ' + V48 + ' remote reset + ready-to-close + aux 4a + 4b',
+  '9': 'Bell alarm ' + V120 + ' remote reset + ready-to-close + aux 4a + 4b',
+  '0': 'Bell alarm ' + V240 + ' remote reset + ready-to-close + aux 4a + 4b'
+};
+
+/* Digit 9 — SWITCHES (p.34 = p.51). Switches have no bell alarm. */
+var D9_SWITCH = {
+  'X': 'None',
+  'B': 'Ready-to-close, 1b contact',
+  'C': 'Auxiliary switches, 2a + 2b',
+  'D': 'Auxiliary switches, 4a + 4b',
+  'H': 'Ready-to-close + aux 2a + 2b',
+  'I': 'Ready-to-close + aux 4a + 4b'
+};
+
+/* ── Digit 10 — shunt trip. Breakers (p.31 = p.47) and UL 489 switches
+      (p.35) share this table. ── */
+var D10_FULL = {
+  'X': 'None',
+  'A': 'Shunt trip, ' + V24,
+  'B': 'Shunt trip, ' + V48,
+  'C': 'Shunt trip, ' + V120,
+  'D': 'Shunt trip, ' + V240,
+  'E': 'Shunt trip ' + V24 + ' + status contact',
+  'F': 'Shunt trip ' + V48 + ' + status contact',
+  'G': 'Shunt trip ' + V120 + ' + status contact',
+  'H': 'Shunt trip ' + V240 + ' + status contact',
+  'J': 'Shunt trip ' + V24 + ', continuous-duty coil (electrical interlock)',
+  'K': 'Shunt trip ' + V48 + ', continuous-duty coil (electrical interlock)',
+  'L': 'Shunt trip ' + V120 + ', continuous-duty coil (electrical interlock)',
+  'M': 'Shunt trip ' + V240 + ', continuous-duty coil (electrical interlock)',
+  'N': 'Shunt trip ' + V24 + ' + status contact + continuous-duty coil',
+  'P': 'Shunt trip ' + V48 + ' + status contact + continuous-duty coil',
+  'R': 'Shunt trip ' + V120 + ' + status contact + continuous-duty coil',
+  'S': 'Shunt trip ' + V240 + ' + status contact + continuous-duty coil'
+};
+
+/* Digit 10 — UL 1066 switches only (p.51): no continuous-duty option. */
+var D10_SWITCH_1066 = {
+  'X': 'None',
+  'A': 'Shunt trip, ' + V24,
+  'B': 'Shunt trip, ' + V48,
+  'C': 'Shunt trip, ' + V120,
+  'D': 'Shunt trip, ' + V240,
+  'E': 'Shunt trip ' + V24 + ' + status contact',
+  'F': 'Shunt trip ' + V48 + ' + status contact',
+  'G': 'Shunt trip ' + V120 + ' + status contact',
+  'H': 'Shunt trip ' + V240 + ' + status contact'
+};
+
+/* ── Digit 11 — undervoltage release (with or without time delay) or
+      2nd shunt trip. Identical for breakers and switches, both
+      listings (p.32 = p.35 = p.48 = p.51). ── */
+var D11 = {
+  'X': 'None',
+  'A': 'UVR without time delay, ' + V24,
+  'B': 'UVR without time delay, ' + V48,
+  'C': 'UVR without time delay, ' + V120,
+  'D': 'UVR without time delay, ' + V240,
+  'E': 'UVR with time delay, ' + V48,
+  'F': 'UVR with time delay, ' + V120,
+  'G': 'UVR with time delay, ' + V240,
+  'H': '2nd shunt trip, ' + V24,
+  'J': '2nd shunt trip, ' + V48,
+  'K': '2nd shunt trip, ' + V120,
+  'L': '2nd shunt trip, ' + V240,
+  'M': 'UVR without delay ' + V24 + ' + UVR status contact (1NO)',
+  'N': 'UVR without delay ' + V48 + ' + UVR status contact (1NO)',
+  'P': 'UVR without delay ' + V120 + ' + UVR status contact (1NO)',
+  'Q': 'UVR without delay ' + V240 + ' + UVR status contact (1NO)',
+  'R': 'UVR with delay ' + V48 + ' + UVR status contact (1NO)',
+  'S': 'UVR with delay ' + V120 + ' + UVR status contact (1NO)',
+  'T': 'UVR with delay ' + V240 + ' + UVR status contact (1NO)'
+};
+
+/* ── Digit 12 — charging motor, motor cut-off switch, operations counter.
+      Identical for breakers and switches, both listings
+      (p.32 = p.36 = p.48 = p.52). ── */
+var D12 = {
+  'X': 'None',
+  'A': 'Charging motor, ' + V24,
+  'B': 'Charging motor, ' + V48,
+  'C': 'Charging motor, ' + V120,
+  'D': 'Charging motor, ' + V240,
+  'E': 'Charging motor ' + V24 + ' + motor cut-off switch',
+  'F': 'Charging motor ' + V48 + ' + motor cut-off switch',
+  'G': 'Charging motor ' + V120 + ' + motor cut-off switch',
+  'H': 'Charging motor ' + V240 + ' + motor cut-off switch',
+  'J': 'Charging motor ' + V24 + ' + operations counter',
+  'K': 'Charging motor ' + V48 + ' + operations counter',
+  'L': 'Charging motor ' + V120 + ' + operations counter',
+  'M': 'Charging motor ' + V240 + ' + operations counter',
+  'N': 'Charging motor ' + V24 + ' + cut-off switch + operations counter',
+  'P': 'Charging motor ' + V48 + ' + cut-off switch + operations counter',
+  'Q': 'Charging motor ' + V120 + ' + cut-off switch + operations counter',
+  'R': 'Charging motor ' + V240 + ' + cut-off switch + operations counter'
+};
+
+/* ── Digit 13 — close coil, power metering and communications.
+      BREAKERS (p.33 = p.49). ── */
+var D13_BREAKER = {
+  'X': 'None',
+  'A': 'Close coil, ' + V24,
+  'B': 'Close coil, ' + V48,
+  'C': 'Close coil, ' + V120,
+  'D': 'Close coil, ' + V240,
+  'G': 'Modbus communications',
+  'H': 'PROFIBUS communications',
+  'E': 'Modbus TCP / PROFINET communications',
+  'N': 'Close coil ' + V24 + ' + Modbus',
+  'P': 'Close coil ' + V24 + ' + PROFIBUS',
+  'S': 'Close coil ' + V48 + ' + Modbus',
+  'T': 'Close coil ' + V48 + ' + PROFIBUS',
+  'W': 'Close coil ' + V120 + ' + Modbus',
+  'Y': 'Close coil ' + V120 + ' + PROFIBUS',
+  'J': 'Close coil ' + V120 + ' + Modbus TCP / PROFINET',
+  '2': 'Close coil ' + V240 + ' + Modbus',
+  '3': 'Close coil ' + V240 + ' + PROFIBUS',
+  'Q': 'Close coil ' + V24 + ' + power metering + Modbus',
+  'U': 'Close coil ' + V48 + ' + power metering + Modbus',
+  'Z': 'Close coil ' + V120 + ' + power metering + Modbus',
+  '4': 'Close coil ' + V240 + ' + power metering + Modbus',
+  'R': 'Close coil ' + V24 + ' + power metering + PROFIBUS',
+  '6': 'Close coil ' + V24 + ' + power metering + Modbus TCP / PROFINET',
+  'V': 'Close coil ' + V48 + ' + power metering + PROFIBUS',
+  '7': 'Close coil ' + V48 + ' + power metering + Modbus TCP / PROFINET',
+  '1': 'Close coil ' + V120 + ' + power metering + PROFIBUS',
+  '9': 'Close coil ' + V120 + ' + power metering + Modbus TCP / PROFINET',
+  '5': 'Close coil ' + V240 + ' + power metering + PROFIBUS',
+  'O': 'Close coil ' + V240 + ' + power metering + Modbus TCP / PROFINET',
+  'L': 'Power metering + Modbus',
+  'M': 'Power metering + PROFIBUS',
+  'F': 'Power metering capable',
+  'K': 'Power metering + Modbus TCP / PROFINET',
+  '8': 'Close coil ' + V120 + ' + power metering'
+};
+
+/* Digit 13 — SWITCHES. Power metering is not available on non-automatic
+   switches, so the metering combinations are absent from the switch
+   tables (p.36 UL 489, p.52 UL 1066). UL 489 switches additionally
+   offer code 8; UL 1066 switches do not. */
+var D13_SWITCH_489 = {
+  'X': 'None',
+  'A': 'Close coil, ' + V24,
+  'B': 'Close coil, ' + V48,
+  'C': 'Close coil, ' + V120,
+  'D': 'Close coil, ' + V240,
+  'G': 'Modbus communications',
+  'H': 'PROFIBUS communications',
+  'E': 'Modbus TCP / PROFINET communications',
+  'N': 'Close coil ' + V24 + ' + Modbus',
+  'P': 'Close coil ' + V24 + ' + PROFIBUS',
+  'S': 'Close coil ' + V48 + ' + Modbus',
+  'T': 'Close coil ' + V48 + ' + PROFIBUS',
+  'W': 'Close coil ' + V120 + ' + Modbus',
+  'Y': 'Close coil ' + V120 + ' + PROFIBUS',
+  'J': 'Close coil ' + V120 + ' + Modbus TCP / PROFINET',
+  '2': 'Close coil ' + V240 + ' + Modbus',
+  '3': 'Close coil ' + V240 + ' + PROFIBUS',
+  '8': 'Close coil ' + V120 + ' + power-metering-capable module'
+};
+var D13_SWITCH_1066 = {
+  'X': 'None',
+  'A': 'Close coil, ' + V24,
+  'B': 'Close coil, ' + V48,
+  'C': 'Close coil, ' + V120,
+  'D': 'Close coil, ' + V240,
+  'G': 'Modbus communications',
+  'H': 'PROFIBUS communications',
+  'E': 'Modbus TCP / PROFINET communications',
+  'N': 'Close coil ' + V24 + ' + Modbus',
+  'P': 'Close coil ' + V24 + ' + PROFIBUS',
+  'S': 'Close coil ' + V48 + ' + Modbus',
+  'T': 'Close coil ' + V48 + ' + PROFIBUS',
+  'W': 'Close coil ' + V120 + ' + Modbus',
+  'Y': 'Close coil ' + V120 + ' + PROFIBUS',
+  'J': 'Close coil ' + V120 + ' + Modbus TCP / PROFINET',
+  '2': 'Close coil ' + V240 + ' + Modbus',
+  '3': 'Close coil ' + V240 + ' + PROFIBUS'
+};
+
+/* ── Digit 14 — breaker / switch locks. Identical across all four
+      product classes (p.33 = p.37 = p.49). ── */
+var D14 = {
+  'X': 'None',
+  'A': 'Key lock, OPEN position (KIRK)',
+  'C': 'Padlock provisions for OPEN and CLOSE push buttons',
+  'E': 'Padlock provisions for charging handle',
+  'F': 'Key lock, OPEN position (SUPERIOR)',
+  'G': 'Key lock (KIRK) + padlock provisions for push buttons',
+  'J': 'Key lock (SUPERIOR) + padlock provisions for push buttons',
+  'S': 'Key lock (KIRK) + padlock provisions for charging handle',
+  'U': 'Key lock (SUPERIOR) + padlock provisions for charging handle',
+  'V': 'Padlock provisions for push buttons + charging handle',
+  'W': 'Key lock (KIRK) + padlock provisions for push buttons + charging handle',
+  'Z': 'Key lock (SUPERIOR) + padlock provisions for push buttons + charging handle'
+};
+
+/* ── Digit 15 — miscellaneous options. Switches have no ETU, so the
+      manual-trip-reset options are breaker-only (p.33 = p.49 vs p.37). ── */
+var D15_BREAKER = {
+  'N': 'None',
+  'B': 'Key lock, OPEN position (provision only)',
+  'C': 'Manual trip reset ETU (automatic trip reset is standard)',
+  'D': 'Key lock provision + manual trip reset ETU'
+};
+var D15_SWITCH = {
+  'N': 'None',
+  'B': 'Key lock, OPEN position (provision only)'
+};
+
+/* ── Position map used by the char map and the "Position Breakdown" ── */
+var POSITIONS = [
+  { n: 1,  short: 'CLS',  label: 'Interrupting Class' },
+  { n: 2,  short: 'FRM',  label: 'Frame Size' },
+  { n: 3,  short: 'TYP',  label: 'Breaker / Switch Type' },
+  { n: 4,  short: 'POL',  label: 'Number of Poles' },
+  { n: 5,  short: 'AMPS', label: 'Frame Ampere Rating', span: 2 },
+  { n: 7,  short: 'PLG',  label: 'Rating Plug' },
+  { n: 8,  short: 'ETU',  label: 'Electronic Trip Unit' },
+  { n: 9,  short: 'ALM',  label: 'Bell Alarm / Ready-to-Close / Aux' },
+  { n: 10, short: 'SHT',  label: 'Shunt Trip' },
+  { n: 11, short: 'UVR',  label: 'Undervoltage Release / 2nd Shunt Trip' },
+  { n: 12, short: 'MTR',  label: 'Charging Motor / Cut-off / Counter' },
+  { n: 13, short: 'CCM',  label: 'Close Coil / Metering / Communications' },
+  { n: 14, short: 'LCK',  label: 'Breaker Locks' },
+  { n: 15, short: 'MSC',  label: 'Miscellaneous Options' }
+];
+
+/* ============================================================
+   State
+   ============================================================ */
+var STANDARD = 'UL489';
+
+function setStandard(std, skipDecode) {
+  STANDARD = std;
+  var on489 = (std === 'UL489');
+  var p489 = document.getElementById('pillUL489');
+  var p1066 = document.getElementById('pillUL1066');
+  p489.classList.toggle('active', on489);
+  p1066.classList.toggle('active', !on489);
+  p489.setAttribute('aria-checked', on489 ? 'true' : 'false');
+  p1066.setAttribute('aria-checked', on489 ? 'false' : 'true');
+  if (!skipDecode && document.getElementById('catInput').value.trim()) decode();
+}
+
+/* ============================================================
+   Parser
+   ============================================================ */
+
+/* Normalise: drop the optional WL prefix plus any spacing/punctuation
+   a nameplate or listing might carry. */
+function normalise(raw) {
+  var s = String(raw || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+  if (s.indexOf('WL') === 0) s = s.substring(2);
+  return s;
+}
+
+function parse(rawInput, std) {
+  var s = normalise(rawInput);
+  var out = { input: String(rawInput || '').trim().toUpperCase(), digits: s, std: std, notes: [] };
+
+  if (!s) return { error: { title: 'No Catalog Number', text: 'Enter the catalog number from the breaker nameplate.' } };
+
+  /* Two forms occur in the field:
+       · the full 15-digit configured number (nameplate / order record), and
+       · the 6-character "stem" (digits 1-6) that surplus dealers and eBay
+         listings title breakers with — e.g. WLL3F340, WLS2A316, WLH2K416.
+     Both are accepted; the stem decodes what it actually carries and says
+     so rather than guessing at the accessory digits. Anything else fails
+     loudly, because a 14-character string (which distributors do publish)
+     would silently shift every position after the missing character. */
+  if (s.length !== 15 && s.length !== 6) {
+    return { error: { title: 'Wrong Length',
+      text: 'WL catalog numbers are 15 characters, or 6 for the short "WL…" stem that dealers list ' +
+            '(e.g. WLL3F340). You entered ' + s.length + '. Check for a missing or extra character — ' +
+            'a 14-character string shifts every position after the gap.' } };
+  }
+  var shortForm = (s.length === 6);
+  out.shortForm = shortForm;
+
+  var d = s.split('');
+  var d1 = d[0], d2 = d[1], d3 = d[2], d4 = d[3], d56 = d[4] + d[5], d7 = d[6], d8 = d[7];
+
+  /* Digit 3 identifies the standard AND the device outright — use it to
+     catch a mis-set pill before anything else can mis-decode. */
+  var type = TYPE_MAP[d3];
+  if (!type) {
+    return { error: { title: 'Unrecognised Type Digit',
+      text: 'Digit 3 is "' + d3 + '", which is not a WL mounting code. Expected F or D (UL 489 breaker), ' +
+            'Y or Z (UL 489 switch), A/G/H/K (UL 1066 breaker) or S/J (UL 1066 switch).' } };
+  }
+  if (type.std !== std) {
+    var other = type.std === 'UL489' ? 'UL 489' : 'UL 1066 / ANSI C37';
+    return { error: { title: 'Wrong Listing Standard Selected',
+      text: 'Digit 3 is "' + d3 + '", which is a ' + other + ' code. Select ' + other + ' above and decode again.' } };
+  }
+  out.device = type.device;
+  out.mount = type.mount;
+  out.mountShort = type.short;
+  out.neutralCT = type.neutralCT;
+
+  /* Digit 1 — interrupting class */
+  var classes = CLASS_MAP[std];
+  var cls = classes[d1];
+  if (!cls) {
+    return { error: { title: 'Unrecognised Interrupting Class',
+      text: 'Digit 1 is "' + d1 + '". Valid ' + (std === 'UL489' ? 'UL 489' : 'UL 1066') +
+            ' classes are ' + Object.keys(classes).join(', ') + '.' } };
+  }
+  out.classLetter = d1;
+  out.classLabel = cls.label;
+  out.fused = !!cls.fused;
+
+  /* Digit 2 — frame size */
+  if (!/[123]/.test(d2)) {
+    return { error: { title: 'Unrecognised Frame Size',
+      text: 'Digit 2 is "' + d2 + '". WL frame sizes are 1, 2 or 3.' } };
+  }
+  /* Frame Size 1 is not in the current UL 1066 catalogue, but real
+     Frame-Size-1 UL 1066 stems do circulate on the surplus market
+     (e.g. WLH1A308). Warn rather than reject — an older-vintage or
+     mis-keyed number is still worth decoding as far as it goes. */
+  if (std === 'UL1066' && d2 === '1') {
+    out.notes.push('Frame Size 1 is not listed for UL 1066 / ANSI C37 in the current catalogue ' +
+                   '(UL 1066 is Frame Size 2 and 3). This may be an older-vintage number or a listing error — verify against the nameplate.');
+  }
+  out.frameSize = d2;
+  var rating = cls.byFrame[d2];
+  if (!rating) {
+    out.notes.push('Class ' + d1 + ' is not tabulated in Frame Size ' + d2 +
+                   ' in the source guide — the interrupting rating below could not be resolved.');
+  }
+  out.rating = rating || null;
+
+  /* Digit 4 — poles */
+  if (d4 !== '3' && d4 !== '4') {
+    return { error: { title: 'Unrecognised Pole Count',
+      text: 'Digit 4 is "' + d4 + '". WL catalog numbers use 3 or 4 poles.' } };
+  }
+  out.poles = d4 + '-Pole';
+
+  /* Digits 5-6 — frame ampere rating. UL 1066 F-class (fused) devices in
+     Frame Size 2 repurpose digit 6 as the fuse-rating letter. */
+  if (out.fused && d2 === '2' && FUSED_FRAME_BY_D5[d[4]] && FUSE_LETTERS[d[5]]) {
+    out.frameAmps = FUSED_FRAME_BY_D5[d[4]];
+    out.fuseAmps = FUSE_LETTERS[d[5]];
+  } else if (out.fused && !AMP_CODES[d56]) {
+    return { error: { title: 'Unrecognised Fused Frame / Fuse Code',
+      text: 'For F-class (fused) Frame Size 2 devices, digit 5 is the frame indicator (0 = 800 A, 1 = 1600 A, ' +
+            '2 = 2000 A) and digit 6 is the fuse letter (A-K). You entered "' + d56 + '".' } };
+  } else {
+    var amps = AMP_CODES[d56];
+    if (!amps) {
+      return { error: { title: 'Unrecognised Frame Ampere Code',
+        text: 'Digits 5-6 are "' + d56 + '". Valid WL frame codes are ' + Object.keys(AMP_CODES).join(', ') + '.' } };
+    }
+    out.frameAmps = amps;
+    if (out.fused) {
+      if (d2 === '3') {
+        out.fuseAmps = 6000; /* Frame Size 3 fused devices are offered with a 6000 A fuse only */
+      } else {
+        /* Digits 5-6 read as a plain frame code on an F-class device. Siemens'
+           US and Canadian document lineages disagree on whether the fuse letter
+           sits at digit 6 or digit 7, and dealer stems such as WLF2S312 carry no
+           fuse letter at all — so report the frame and say the fuse is unresolved
+           rather than mis-scale it against the rating-plug table. */
+        out.notes.push('This is an F-class (fused) device, but digits 5-6 read as a plain frame code, ' +
+                       'so the integral fuse rating could not be resolved from the catalog number. ' +
+                       'Confirm the fuse rating from the breaker or fuse-carriage label.');
+      }
+    }
+    var tabulated = FRAME_AMPS_TABULATED[std][out.device][d2];
+    if (tabulated && tabulated.indexOf(d56) === -1) {
+      out.notes.push(fmtA(amps) + ' is not tabulated for Frame Size ' + d2 +
+                     ' in the source guide — verify the frame against the nameplate.');
+    }
+  }
+
+  /* The guide tabulates UL 489 WL as 3-pole only. */
+  if (std === 'UL489' && d4 === '4') {
+    out.notes.push('The source guide tabulates UL 489 WL devices as 3-pole only — a 4-pole UL 489 number is not in the catalogue. Verify against the nameplate.');
+  }
+
+  /* A short stem carries digits 1-6 and nothing else — stop cleanly here
+     rather than reading undefined positions. */
+  if (shortForm) {
+    out.acc = [];
+    out.badDigits = [];
+    return out;
+  }
+
+  /* Digits 7-8 — rating plug + ETU, or "SS" on a non-automatic switch */
+  if (out.device === 'switch') {
+    if (d7 !== 'S' || d8 !== 'S') {
+      out.notes.push('Digit 3 indicates a non-automatic switch, but digits 7-8 are "' + d7 + d8 +
+                     '" rather than the expected "SS" (switches carry no rating plug or trip unit).');
+    }
+    out.ratingPlug = null;
+    out.etu = null;
+  } else {
+    var plug = RATING_PLUGS[d7];
+    if (!plug) {
+      return { error: { title: 'Unrecognised Rating Plug',
+        text: 'Digit 7 is "' + d7 + '", which is not a WL rating-plug code.' } };
+    }
+    out.ratingPlug = plug;
+    var plugFrames = PLUG_FRAMES[std][d7];
+    if (plugFrames && plugFrames.indexOf(d2) === -1) {
+      out.notes.push('The ' + fmtA(plug) + ' rating plug (code ' + d7 + ') is listed for Frame Size ' +
+                     plugFrames.join(' / ') + ', not Frame Size ' + d2 + '.');
+    }
+    if (plug > out.frameAmps) {
+      out.notes.push('The rating plug (' + fmtA(plug) + ') exceeds the frame ampere rating (' +
+                     fmtA(out.frameAmps) + ') — re-check digits 5-7 against the nameplate.');
+    }
+    /* The single most common misread on resale listings: the advertised
+       ampacity is the rating plug, while the catalog number encodes the
+       frame. Surface it explicitly instead of leaving the buyer to spot it. */
+    out.plugBelowFrame = (plug < out.frameAmps);
+
+    var etu = ETU_CODES[d8];
+    if (!etu) {
+      return { error: { title: 'Unrecognised Trip Unit',
+        text: 'Digit 8 is "' + d8 + '", which is not a WL ETU code.' } };
+    }
+    out.etu = etu;
+    out.etuCode = d8;
+  }
+
+  /* Digits 9-15 — accessories. Table selection depends on device + standard. */
+  var t9  = out.device === 'switch' ? D9_SWITCH : D9_BREAKER;
+  var t10 = (out.device === 'switch' && std === 'UL1066') ? D10_SWITCH_1066 : D10_FULL;
+  var t13 = out.device === 'breaker' ? D13_BREAKER
+          : (std === 'UL489' ? D13_SWITCH_489 : D13_SWITCH_1066);
+  var t15 = out.device === 'switch' ? D15_SWITCH : D15_BREAKER;
+
+  out.acc = [
+    lookup(9,  d[8],  t9,  'Bell Alarm / RTC / Aux'),
+    lookup(10, d[9],  t10, 'Shunt Trip'),
+    lookup(11, d[10], D11, 'UVR / 2nd Shunt Trip'),
+    lookup(12, d[11], D12, 'Charging Motor'),
+    lookup(13, d[12], t13, 'Close Coil / Metering / Comms'),
+    lookup(14, d[13], D14, 'Locks'),
+    lookup(15, d[14], t15, 'Miscellaneous')
+  ];
+
+  for (var i = 0; i < out.acc.length; i++) {
+    if (!out.acc[i].known) {
+      out.notes.push('Digit ' + out.acc[i].n + ' code "' + out.acc[i].code +
+                     '" is not in the ' + (out.device === 'switch' ? 'switch' : 'breaker') +
+                     ' table for this listing.');
+    }
+  }
+  out.badDigits = out.acc.filter(function (a) { return !a.known; }).map(function (a) { return a.n; });
+
+  return out;
+}
+
+function lookup(n, code, table, label) {
+  var hit = table[code];
+  return { n: n, code: code, label: label, value: hit || 'Unrecognised code "' + code + '"', known: !!hit };
+}
+
+/* ============================================================
+   Decode entry point
+   ============================================================ */
+function decode() {
+  var raw = document.getElementById('catInput').value;
+  var res = document.getElementById('results');
+
+  var b = parse(raw, STANDARD);
+  if (b.error) {
+    res.innerHTML = '';
+    res.classList.remove('visible');
+    showError(b.error.title, b.error.text);
+    return;
+  }
+  hideError();
+  renderCharMap(b);
+  renderResults(b);
+}
+
+/* ============================================================
+   Results
+   ============================================================ */
+function renderResults(b) {
+  var el = document.getElementById('results');
+  var vc = VOLTAGE_COLS[b.std];
+  var stdLabel = b.std === 'UL489' ? 'UL 489 (insulated case)' : 'UL 1066 / ANSI C37 (power circuit breaker)';
+  var deviceLabel = b.device === 'switch' ? 'Non-automatic switch' : 'Circuit breaker';
+
+  /* Summary banner */
+  var bits = ['Siemens WL'];
+  bits.push(fmtA(b.frameAmps));
+  if (b.rating) bits.push(b.rating.lowV + ' kA');
+  bits.push(b.poles);
+  bits.push(b.mountShort);
+  if (b.device === 'switch') bits.push('Switch');
+
+  var html = '';
+  html += '<div class="summary-banner">';
+  html += '<div class="headline">' + esc(bits.join(' — ')) + '</div>';
+  html += '<div class="catalog-fmt">' + esc('WL' + b.digits) + '</div>';
+  html += '<button class="btn-copy" id="btnCopyCat">Copy Full Catalog Number</button>';
+  html += ' <button class="btn-pdf" onclick="downloadDecoderPDF()">Download PDF</button>';
+  html += ' <button class="btn-quote" onclick="openDecoderQuote()">Get a Quote for This Breaker</button>';
+  html += '</div>';
+
+  html += '<div class="result-grid">';
+
+  /* Configuration */
+  html += '<div class="result-card config">';
+  html += '<div class="card-title">' + (b.device === 'switch' ? 'Switch' : 'Breaker') + ' Configuration</div>';
+  html += row('Product Family', 'Siemens WL (Sentron WL)');
+  html += row('Device Type', deviceLabel);
+  html += row('Listing Standard', stdLabel);
+  html += row('Interrupting Class', esc(b.classLabel));
+  html += row('Frame Size', 'Frame Size ' + esc(b.frameSize));
+  html += row('Frame Ampere Rating', fmtA(b.frameAmps));
+  if (b.fuseAmps) html += row('Integral Fuse Rating', fmtA(b.fuseAmps));
+  html += row('Poles', esc(b.poles));
+  html += row('Mounting', esc(b.mount));
+  if (b.neutralCT !== undefined && b.poles === '4-Pole') {
+    html += row('Neutral CT', b.neutralCT ? 'Included' : 'Not included');
+  }
+  html += '</div>';
+
+  /* Rating plug & trip unit */
+  html += '<div class="result-card trip">';
+  html += '<div class="card-title">Rating Plug &amp; Trip Unit</div>';
+  if (b.shortForm) {
+    html += row('Rating Plug (In)', 'Not encoded in the short stem');
+    html += row('Trip Unit', 'Not encoded in the short stem');
+    html += '<div class="card-note">You entered the 6-character stem (digits 1&ndash;6) that dealers list breakers under. ' +
+            'The rating plug, trip unit and all nine accessory digits live in the full 15-character number &mdash; ' +
+            'enter that to decode them.</div>';
+  } else if (b.device === 'switch') {
+    html += row('Rating Plug', 'N/A — non-automatic switch');
+    html += row('Trip Unit', 'None — switching duty only');
+    html += row('Overcurrent Protection', 'External relay required');
+  } else {
+    html += row('Rating Plug (In)', fmtA(b.ratingPlug));
+    html += row('Trip Unit', esc(b.etu.model));
+    html += row('Protection Functions', 'L, S, I (S and I user-disableable) + N standard');
+    html += row('Alphanumeric LCD', b.etu.lcd ? 'Yes' : 'No');
+    html += row('Ground Fault Alarm', b.etu.gfAlarm ? 'Yes' : 'No');
+    html += row('Ground Fault Trip', b.etu.gfTrip ? 'Yes' : 'No');
+    html += row('EMC Filter', b.etu.emc ? 'Yes' : 'No');
+    html += '<div class="card-note">' + esc(ETU_MODEL_NOTES[b.etu.model]) + '</div>';
+    if (b.plugBelowFrame) {
+      html += '<div class="card-note"><strong>Note:</strong> resale listings usually advertise the rating plug — ' +
+              'this device is a ' + fmtA(b.frameAmps) + ' <em>frame</em> set to ' + fmtA(b.ratingPlug) +
+              ' by its plug, so it may be listed as a "' + fmtA(b.ratingPlug) + '" breaker.</div>';
+    }
+  }
+  html += '</div>';
+
+  /* Interrupting rating */
+  html += '<div class="result-card info">';
+  html += '<div class="card-title">Interrupting Rating — ' + esc(b.std === 'UL489' ? 'UL 489' : 'UL 1066') + '</div>';
+  if (b.rating) {
+    html += row('Icu / Ics at ' + vc.low, b.rating.lowV + ' kA');
+    html += row('Icu / Ics at ' + vc.high, b.rating.highV + ' kA');
+    if (b.rating.icw != null) html += row('Short-time Icw (' + vc.icwTime + ')', b.rating.icw + ' kA');
+    else html += row('Short-time Icw', 'Not rated — fused device');
+  } else {
+    html += row('Rating', 'Not tabulated for this class / frame combination');
+  }
+  if (b.fused) html += '<div class="card-note">Fused (F-class) devices achieve their 200 kA rating through the integral current-limiting fuse.</div>';
+  html += '</div>';
+
+  /* Accessories — digits 9-12 (absent from the short stem) */
+  if (!b.shortForm) {
+    html += '<div class="result-card access">';
+    html += '<div class="card-title">Factory Accessories</div>';
+    for (var i = 0; i < 4; i++) {
+      var a = b.acc[i];
+      html += row(a.label + ' (Digit ' + a.n + ': ' + esc(a.code) + ')', esc(a.value));
+    }
+    html += '</div>';
+  }
+
+  html += '</div>'; /* end result-grid */
+
+  /* Options — digits 13-15 (wide) */
+  if (!b.shortForm) {
+    html += '<div class="result-card wide options" style="margin-top:12px;">';
+    html += '<div class="card-title">Communications, Locks &amp; Options</div>';
+    for (var j = 4; j < b.acc.length; j++) {
+      var o = b.acc[j];
+      html += row(o.label + ' (Digit ' + o.n + ': ' + esc(o.code) + ')', esc(o.value));
+    }
+    html += '</div>';
+  }
+
+  /* General specifications */
+  html += '<div class="result-card wide info" style="margin-top:12px;">';
+  html += '<div class="card-title">General Specifications</div>';
+  html += '<div class="result-grid" style="margin:0;">';
+  html += '<div style="font-size:0.85rem;">';
+  html += row('Manufacturer', 'Siemens');
+  html += row('Product Line', 'WL / Sentron WL');
+  html += row('Description', b.std === 'UL489'
+    ? 'Low voltage insulated case circuit breaker'
+    : 'Low voltage power circuit breaker');
+  html += row('Listing', stdLabel);
+  html += row('Frequency', '50 / 60 Hz');
+  html += row('100% Rated', 'Yes — continuous operation at full frame rating');
+  html += '</div><div style="font-size:0.85rem;">';
+  html += row('Max Operating Voltage', b.std === 'UL489' ? '600 VAC' : '635 VAC');
+  html += row('Ambient Operating Temp.', '-25 to 40 °C');
+  html += row('Standards', b.std === 'UL489'
+    ? 'UL/CSA 489, UL 489 Supplement SB'
+    : 'UL 1066, ANSI/IEEE C37.13, tested to ANSI C37.50');
+  html += row('Feed Direction', 'Bi-directional — top or bottom supply');
+  html += row('Sensing', 'Rogowski coil, full-range');
+  html += '</div></div></div>';
+
+  /* Advisory notes */
+  if (b.notes.length) {
+    html += '<div class="result-card wide" style="margin-top:12px;border-left-color:var(--yellow);">';
+    html += '<div class="card-title">Check These Digits</div>';
+    for (var k = 0; k < b.notes.length; k++) {
+      html += '<div class="card-note" style="margin-top:4px;">• ' + esc(b.notes[k]) + '</div>';
+    }
+    html += '</div>';
+  }
+
+  el.innerHTML = html;
+  el.classList.add('visible');
+
+  /* Post-render listener rather than an inline onclick that interpolates
+     the catalog string into an HTML attribute (see rd-decoder.html). */
+  var copyBtn = document.getElementById('btnCopyCat');
+  if (copyBtn) copyBtn.addEventListener('click', copyCatalog);
+}
+
+function row(label, value) {
+  return '<div class="card-row"><span class="card-label">' + label + '</span><span class="card-value">' + value + '</span></div>';
+}
+function fmtA(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' A'; }
+
+/* ============================================================
+   Char map — 15 positions, one group per field
+   ============================================================ */
+function renderCharMap(b) {
+  var chars = b.digits.split('');
+  var boxes = document.getElementById('charBoxes');
+  var labels = document.getElementById('groupLabels');
+  var posLbls = document.getElementById('posLabels');
+  boxes.innerHTML = ''; labels.innerHTML = ''; posLbls.innerHTML = '';
+
+  /* The 6-character stem only carries positions 1-6. */
+  var groups = b.shortForm ? POSITIONS.filter(function (p) { return p.n <= 6; }) : POSITIONS;
+
+  for (var g = 0; g < groups.length; g++) {
+    var seg = groups[g];
+    var len = seg.span || 1;
+    var start = seg.n - 1;
+
+    var gl = document.createElement('div');
+    gl.className = 'group-label';
+    gl.style.width = (len * 34 - 2) + 'px';
+    gl.textContent = seg.short;
+    gl.title = seg.label;
+    labels.appendChild(gl);
+
+    for (var i = 0; i < len; i++) {
+      var ch = chars[start + i] || '';
+      var box = document.createElement('div');
+      box.className = 'char-box';
+      if (ch) box.classList.add('entered');
+      if (b.badDigits && b.badDigits.indexOf(seg.n + i) !== -1) box.classList.add('error');
+      box.textContent = ch;
+      boxes.appendChild(box);
+
+      var pl = document.createElement('div');
+      pl.className = 'pos-label';
+      pl.textContent = (start + i + 1);
+      posLbls.appendChild(pl);
+    }
+
+    if (g < groups.length - 1) {
+      var sep = document.createElement('div'); sep.className = 'char-box separator'; boxes.appendChild(sep);
+      var sepL = document.createElement('div'); sepL.className = 'pos-label sep'; posLbls.appendChild(sepL);
+      var gs = document.createElement('div'); gs.className = 'group-label'; gs.style.width = '8px'; gs.style.borderBottom = 'none'; labels.appendChild(gs);
+    }
+  }
+}
+
+function clearCharMap() {
+  document.getElementById('charBoxes').innerHTML = '';
+  document.getElementById('groupLabels').innerHTML = '';
+  document.getElementById('posLabels').innerHTML = '';
+}
+
+/* ============================================================
+   UI helpers
+   ============================================================ */
+function showError(title, text) {
+  var el = document.getElementById('errorBox');
+  document.getElementById('errorTitle').textContent = title;
+  document.getElementById('errorText').textContent = text;
+  el.classList.add('visible');
+  clearCharMap();
+}
+function hideError() { document.getElementById('errorBox').classList.remove('visible'); }
+
+function clearAll() {
+  document.getElementById('catInput').value = '';
+  document.getElementById('results').innerHTML = '';
+  document.getElementById('results').classList.remove('visible');
+  hideError(); clearCharMap();
+  document.getElementById('catInput').focus();
+}
+
+/* Example buttons carry their own standard so a UL 1066 sample also
+   flips the pill instead of tripping the mismatch guard. */
+function loadEx(btn, std) {
+  setStandard(std, true);
+  document.getElementById('catInput').value = btn.textContent;
+  decode();
+}
+
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]; }); }
+
+function copyCatalog() {
+  var val = document.getElementById('catInput').value.trim().toUpperCase();
+  if (!val) return;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(val).then(showCopied);
+  } else {
+    var ta = document.createElement('textarea'); ta.value = val; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); showCopied();
+  }
+}
+function showCopied() {
+  var btn = document.getElementById('btnCopyCat'); if (!btn) return;
+  btn.textContent = 'Copied!'; btn.classList.add('copied');
+  setTimeout(function () { btn.textContent = 'Copy Full Catalog Number'; btn.classList.remove('copied'); }, 2000);
+}
+
+document.getElementById('pillUL489').addEventListener('click', function () { setStandard('UL489'); });
+document.getElementById('pillUL1066').addEventListener('click', function () { setStandard('UL1066'); });
+document.getElementById('catInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') decode(); });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="/tools/decoder-pdf.js"></script>
+<script src="/tools/decoder-quote.js"></script>

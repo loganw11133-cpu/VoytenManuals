@@ -4,7 +4,7 @@ import { Cpu, ArrowRight } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Breaker Decoder Tools',
-  description: 'Free circuit breaker catalog number decoders. Decode Eaton, Siemens, GE, and Square D / Schneider model numbers for Siemens RL, GE WavePro, Eaton RD (R-Frame), Magnum DS (MDS) / SBS, Magnum MW (IEC), Magnum PXR / Power Defense SB, and Square D MasterPact NT / NW breakers instantly.',
+  description: 'Free circuit breaker catalog number decoders. Decode Eaton, Siemens, GE, and Square D / Schneider model numbers for Siemens RL, Siemens WL (Sentron WL), GE WavePro, Eaton RD (R-Frame), Magnum DS (MDS) / SBS, Magnum MW (IEC), Magnum PXR / Power Defense SB, and Square D MasterPact NT / NW breakers instantly.',
   robots: { index: true, follow: true },
   alternates: {
     canonical: 'https://www.voytenmanuals.com/tools',
@@ -80,12 +80,11 @@ const tools = [
   },
   {
     slug: 'wl',
-    name: 'WL',
+    name: 'WL (Sentron WL)',
     manufacturer: 'Siemens',
-    comingSoon: true,
-    description: 'Decode Siemens WL (Sentron WL) low-voltage power circuit breaker catalog numbers — frame size, ampere rating, interrupting class, ETU trip unit, mounting, and accessories.',
-    frames: 'WL Frame I / II / III',
-    ratings: '800A – 5,000A',
+    description: 'Decode Siemens WL (Sentron WL) catalog numbers under both UL 489 and UL 1066 / ANSI C37. Identifies interrupting class, frame size, mounting, poles, ampere rating, rating plug, ETU745 / ETU776 trip unit, and every factory accessory digit.',
+    frames: 'Frame Size 1 / 2 / 3 (UL 489 · UL 1066)',
+    ratings: '800A – 6,000A',
   },
 ];
 
@@ -109,7 +108,11 @@ export default function ToolsPage() {
         <div className="grid gap-5">
           {[...tools].sort((a, b) => a.name.localeCompare(b.name)).map((tool) => {
             const isLanding = 'landing' in tool && tool.landing;
-            const isComingSoon = 'comingSoon' in tool && tool.comingSoon;
+            // `=== true` keeps this a boolean even when no tool currently carries the
+            // flag — otherwise TS narrows `tool.comingSoon` to `unknown` and the JSX
+            // guard below fails to compile. Retained so the next unbuilt decoder can
+            // ship a placeholder card without reinstating the render branch.
+            const isComingSoon = 'comingSoon' in tool && tool.comingSoon === true;
             const href = 'href' in tool && tool.href ? tool.href : `/tools/${tool.slug}`;
 
             const body = (

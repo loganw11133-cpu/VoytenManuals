@@ -125,7 +125,7 @@ async function generateStaticAndFilterSitemap(): Promise<MetadataRoute.Sitemap> 
       priority: 0.8,
     },
     // Public breaker decoders (SPB is internal-only — intentionally excluded)
-    ...['rl', 'wavepro', 'rd', 'mds-sbs', 'mw-iec', 'pxr-pdsb', 'sqd-ntnw'].map((slug) => ({
+    ...['rl', 'wl', 'wavepro', 'rd', 'mds-sbs', 'mw-iec', 'pxr-pdsb', 'sqd-ntnw'].map((slug) => ({
       url: `${baseUrl}/tools/${slug}`,
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
