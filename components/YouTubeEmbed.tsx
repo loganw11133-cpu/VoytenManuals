@@ -7,16 +7,25 @@ import { Play } from 'lucide-react';
 interface YouTubeEmbedProps {
   videoId: string;
   title: string;
+  /** Caption shown over the thumbnail. Defaults to the homepage facility-tour wording. */
+  label?: string;
+  /** Seconds to start playback at, for videos with a slate or lead-in. */
+  start?: number;
 }
 
-export default function YouTubeEmbed({ videoId, title }: YouTubeEmbedProps) {
+export default function YouTubeEmbed({
+  videoId,
+  title,
+  label = 'Watch: Tour Our Facility',
+  start,
+}: YouTubeEmbedProps) {
   const [playing, setPlaying] = useState(false);
 
   if (playing) {
     return (
       <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl">
         <iframe
-          src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`}
+          src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0${start ? `&start=${start}` : ''}`}
           title={title}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
@@ -54,7 +63,7 @@ export default function YouTubeEmbed({ videoId, title }: YouTubeEmbedProps) {
       {/* Bottom label */}
       <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
         <p className="text-white font-semibold text-sm sm:text-base drop-shadow-lg">
-          Watch: Tour Our Facility
+          {label}
         </p>
       </div>
     </button>

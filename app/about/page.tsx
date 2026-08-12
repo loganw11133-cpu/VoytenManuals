@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { Phone, BookOpen, Shield, Users, Zap, ArrowRight, MapPin, Factory, Award, Globe } from 'lucide-react';
 import type { Metadata } from 'next';
 import SocialLinks from '@/components/SocialLinks';
+import YouTubeEmbed from '@/components/YouTubeEmbed';
 
 export const metadata: Metadata = {
   title: 'About Voyten Electric — Family Owned Since 1953',
@@ -32,9 +33,30 @@ export const metadata: Metadata = {
   ],
 };
 
+/* Mirrors the homepage facility-tour markup. Every field is taken from the
+   video's own YouTube metadata rather than estimated. */
+const videoJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'VideoObject',
+  name: 'The People of Voyten',
+  description:
+    'Meet the team at Voyten Electric & Electronics, Inc. — a third-generation family owned electrical equipment wholesaler in Polk, Pennsylvania, started by the late John Voyten in 1953.',
+  thumbnailUrl: 'https://img.youtube.com/vi/TyLrTVjjxCo/maxresdefault.jpg',
+  uploadDate: '2025-03-31',
+  duration: 'PT3M25S',
+  contentUrl: 'https://www.youtube.com/watch?v=TyLrTVjjxCo',
+  embedUrl: 'https://www.youtube.com/embed/TyLrTVjjxCo',
+  publisher: {
+    '@type': 'Organization',
+    name: 'Voyten Electric & Electronics, Inc.',
+    url: 'https://www.voytenmanuals.com',
+  },
+};
+
 export default function AboutPage() {
   return (
     <div className="bg-white">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(videoJsonLd) }} />
       {/* Hero */}
       <section className="bg-[#1a1a1a] text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-[#111111] via-[#1a1a1a] to-[#991b1b]"></div>
@@ -53,6 +75,20 @@ export default function AboutPage() {
       {/* Why We Built This */}
       <section className="py-14 lg:py-18">
         <div className="max-w-4xl mx-auto px-4">
+          {/* Facade embed — the thumbnail is a static image and the YouTube
+              iframe is only loaded once the visitor actually presses play. */}
+          <div className="mb-10 lg:mb-12">
+            <YouTubeEmbed
+              videoId="TyLrTVjjxCo"
+              title="The People of Voyten — Voyten Electric & Electronics, Polk, PA"
+              label="Watch: The People of Voyten"
+              start={2}
+            />
+            <p className="text-sm text-slate-500 mt-3 text-center">
+              Meet the people behind the library — three generations of the Voyten family in Polk, Pennsylvania.
+            </p>
+          </div>
+
           <h2 className="text-2xl font-bold text-slate-900 mb-6">Why We Built This</h2>
           <div className="space-y-4 text-slate-600 text-lg leading-relaxed">
             <p>
