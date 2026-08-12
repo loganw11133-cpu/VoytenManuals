@@ -517,6 +517,9 @@ var FRAME_AMPS_TABULATED = {
                          '3': ['32','40','50','60'] } }
 };
 
+/* Classes offered at fewer ampere ratings than their frame size allows. */
+var CLASS_AMP_LIMIT = { 'UL1066': { 'N': ['08', '16'] } };
+
 /* ── UL 1066 F-class (fused) only: digit 6 becomes a fuse-rating letter
       and digit 5 carries the frame indicator. Frame Size 3 fused devices
       are offered with a 6000 A fuse only, so they keep the normal
@@ -936,7 +939,7 @@ function detectForeignFamily(compact) {
 
 function parse(rawInput, std) {
   var s = normalise(rawInput);
-  var out = { input: String(rawInput || '').trim().toUpperCase(), digits: s, std: std, notes: [] };
+  var out = { input: String(rawInput || '').trim().toUpperCase(), digits: s, std: std, notes: [], badDigits: [] };
 
   if (!s) return { error: { title: 'No Catalog Number', text: 'Enter the catalog number from the breaker nameplate.' } };
 
@@ -1056,6 +1059,14 @@ function parse(rawInput, std) {
       out.notes.push(fmtA(amps) + ' is not tabulated for Frame Size ' + d2 +
                      ' in the source guide — verify the frame against the nameplate.');
     }
+    /* A few classes are offered at fewer ampere ratings than their frame
+       size allows — UL 1066 N-class is tabulated at 800 A and 1600 A only. */
+    var classLimit = (CLASS_AMP_LIMIT[std] || {})[d1];
+    if (classLimit && classLimit.indexOf(d56) === -1) {
+      out.notes.push('Class ' + d1 + ' is tabulated only at ' +
+                     classLimit.map(function (c) { return fmtA(AMP_CODES[c]); }).join(' and ') +
+                     ' — verify digits 1 and 5-6 against the nameplate.');
+    }
   }
 
   /* The guide tabulates UL 489 WL as 3-pole only. */
@@ -1080,20 +1091,27 @@ function parse(rawInput, std) {
     out.ratingPlug = null;
     out.etu = null;
   } else {
+    /* Digits 7-8 are reported as warnings rather than hard failures. Resale
+       listings routinely mis-transcribe a single accessory character (two
+       observed in the wild carry an unmapped digit 8 while their plug and
+       frame agree perfectly), and killing the whole decode over one bad
+       character is the wrong trade for someone identifying a used breaker. */
     var plug = RATING_PLUGS[d7];
     if (!plug) {
-      return { error: { title: 'Unrecognised Rating Plug',
-        text: 'Digit 7 is "' + d7 + '", which is not a WL rating-plug code.' } };
+      out.badDigits.push(7);
+      out.notes.push('Digit 7 is "' + d7 + '", which is not a WL rating-plug code — the rating plug could not be ' +
+                     'read. Everything else below still decoded; check that character against the nameplate.');
     }
-    out.ratingPlug = plug;
-    var plugFrames = PLUG_FRAMES[std][d7];
+    out.ratingPlug = plug || null;
+    var plugFrames = plug && PLUG_FRAMES[std][d7];
     if (plugFrames && plugFrames.indexOf(d2) === -1) {
       out.notes.push('The ' + fmtA(plug) + ' rating plug (code ' + d7 + ') is listed for Frame Size ' +
                      plugFrames.join(' / ') + ', not Frame Size ' + d2 + '.');
     }
-    if (plug > out.frameAmps) {
+    if (plug && plug > out.frameAmps) {
       out.notes.push('The rating plug (' + fmtA(plug) + ') exceeds the frame ampere rating (' +
-                     fmtA(out.frameAmps) + ') — re-check digits 5-7 against the nameplate.');
+                     fmtA(out.frameAmps) + ') — a plug cannot be larger than its frame, so digit 5, 6 or 7 is ' +
+                     'likely mis-transcribed. Verify against the nameplate.');
     }
     /* The single most common misread on resale listings: the advertised
        ampacity is the rating plug, while the catalog number encodes the
@@ -1102,10 +1120,11 @@ function parse(rawInput, std) {
 
     var etu = ETU_CODES[d8];
     if (!etu) {
-      return { error: { title: 'Unrecognised Trip Unit',
-        text: 'Digit 8 is "' + d8 + '", which is not a WL ETU code.' } };
+      out.badDigits.push(8);
+      out.notes.push('Digit 8 is "' + d8 + '", which is not a WL ETU code in any revision of the guide — the trip ' +
+                     'unit could not be read. Everything else below still decoded.');
     }
-    out.etu = etu;
+    out.etu = etu || null;
     out.etuCode = d8;
   }
 
@@ -1133,7 +1152,8 @@ function parse(rawInput, std) {
                      ' table for this listing.');
     }
   }
-  out.badDigits = out.acc.filter(function (a) { return !a.known; }).map(function (a) { return a.n; });
+  out.badDigits = out.badDigits.concat(
+    out.acc.filter(function (a) { return !a.known; }).map(function (a) { return a.n; }));
 
   return out;
 }
@@ -1221,14 +1241,23 @@ function renderResults(b) {
     html += row('Trip Unit', 'None — switching duty only');
     html += row('Overcurrent Protection', 'External relay required');
   } else {
-    html += row('Rating Plug (In)', fmtA(b.ratingPlug));
-    html += row('Trip Unit', esc(b.etu.model));
-    html += row('Protection Functions', 'L, S, I (S and I user-disableable) + N standard');
-    html += row('Alphanumeric LCD', b.etu.lcd ? 'Yes' : 'No');
-    html += row('Ground Fault Alarm', b.etu.gfAlarm ? 'Yes' : 'No');
-    html += row('Ground Fault Trip', b.etu.gfTrip ? 'Yes' : 'No');
-    html += row('EMC Filter', b.etu.emc ? 'Yes' : 'No');
-    html += '<div class="card-note">' + esc(ETU_MODEL_NOTES[b.etu.model]) + '</div>';
+    html += row('Rating Plug (In)', b.ratingPlug ? fmtA(b.ratingPlug)
+      : 'Unreadable — digit 7 is "' + esc(b.digits.charAt(6)) + '"');
+    if (b.etu) {
+      html += row('Trip Unit', esc(b.etu.model));
+      /* ETU748 is the LS-only unit — no instantaneous, and its short-time
+         is non-defeatable, so it must not claim the LSI line. */
+      html += row('Protection Functions', b.etu.model === 'ETU748'
+        ? 'L, S (short-time non-defeatable) + N standard — no instantaneous'
+        : 'L, S, I (S and I user-disableable) + N standard');
+      html += row('Alphanumeric LCD', b.etu.lcd ? 'Yes' : 'No');
+      html += row('Ground Fault Alarm', b.etu.gfAlarm ? 'Yes' : 'No');
+      html += row('Ground Fault Trip', b.etu.gfTrip ? 'Yes' : 'No');
+      html += row('EMC Filter', b.etu.emc ? 'Yes' : 'No');
+      html += '<div class="card-note">' + esc(ETU_MODEL_NOTES[b.etu.model]) + '</div>';
+    } else {
+      html += row('Trip Unit', 'Unreadable — digit 8 is "' + esc(b.digits.charAt(7)) + '"');
+    }
     if (b.plugBelowFrame) {
       html += '<div class="card-note"><strong>Note:</strong> resale listings usually advertise the rating plug — ' +
               'this device is a ' + fmtA(b.frameAmps) + ' <em>frame</em> set to ' + fmtA(b.ratingPlug) +
