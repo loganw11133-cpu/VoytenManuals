@@ -11,7 +11,21 @@ export const metadata: Metadata = {
   },
 };
 
-const tools = [
+type Tool = {
+  slug: string;
+  name: string;
+  manufacturer: string;
+  description: string;
+  frames: string;
+  ratings: string;
+  /** Card points at a product / quote page instead of a decoder route. */
+  href?: string;
+  landing?: boolean;
+  /** Decoder is spec'd but not built — renders a non-clickable placeholder so it can't 404. */
+  comingSoon?: boolean;
+};
+
+const tools: Tool[] = [
   {
     slug: 'rl',
     name: 'RL',
@@ -88,12 +102,40 @@ const tools = [
   },
 ];
 
+/* Section headings carry the legacy brand alongside the current one — the people
+   searching for these breakers are usually holding a nameplate that says
+   Cutler-Hammer or Square D, not Eaton or Schneider. */
+const MANUFACTURER_LABELS: Record<string, string> = {
+  Eaton: 'Eaton / Cutler-Hammer',
+  Siemens: 'Siemens',
+  GE: 'General Electric',
+  'Square D': 'Square D / Schneider Electric',
+};
+
+const grouped = Array.from(
+  tools.reduce((map, tool) => {
+    const list = map.get(tool.manufacturer) ?? [];
+    list.push(tool);
+    map.set(tool.manufacturer, list);
+    return map;
+  }, new Map<string, Tool[]>())
+)
+  .map(([manufacturer, items]) => ({
+    manufacturer,
+    label: MANUFACTURER_LABELS[manufacturer] ?? manufacturer,
+    id: manufacturer.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+    items: [...items].sort((a, b) => a.name.localeCompare(b.name)),
+  }))
+  // Fullest ranges first, so single-tool manufacturers don't break up the big
+  // groups. Derived from the data, so a new decoder slots in without edits here.
+  .sort((a, b) => b.items.length - a.items.length || a.manufacturer.localeCompare(b.manufacturer));
+
 export default function ToolsPage() {
   return (
     <div className="bg-slate-50 min-h-screen">
       {/* Header */}
       <div className="bg-[#1a1a1a] text-white">
-        <div className="max-w-5xl mx-auto px-4 py-12 text-center">
+        <div className="max-w-6xl mx-auto px-4 py-12 text-center">
           <h1 className="text-3xl md:text-4xl font-bold mb-3">
             Breaker Decoders
           </h1>
@@ -103,83 +145,108 @@ export default function ToolsPage() {
         </div>
       </div>
 
-      {/* Tool Cards */}
-      <div className="max-w-5xl mx-auto px-4 py-10">
-        <div className="grid gap-5">
-          {[...tools].sort((a, b) => a.name.localeCompare(b.name)).map((tool) => {
-            const isLanding = 'landing' in tool && tool.landing;
-            // `=== true` keeps this a boolean even when no tool currently carries the
-            // flag — otherwise TS narrows `tool.comingSoon` to `unknown` and the JSX
-            // guard below fails to compile. Retained so the next unbuilt decoder can
-            // ship a placeholder card without reinstating the render branch.
-            const isComingSoon = 'comingSoon' in tool && tool.comingSoon === true;
-            const href = 'href' in tool && tool.href ? tool.href : `/tools/${tool.slug}`;
-
-            const body = (
-              <div className="flex items-start gap-5">
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors ${isComingSoon ? 'bg-slate-100' : 'bg-[#1a1a1a]/5 group-hover:bg-[#1a1a1a]'}`}>
-                  <Cpu className={`w-6 h-6 transition-colors ${isComingSoon ? 'text-slate-400' : 'text-[#1a1a1a] group-hover:text-white'}`} />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-3 mb-1">
-                    <h2 className={`text-lg font-bold transition-colors ${isComingSoon ? 'text-slate-500' : 'text-slate-900 group-hover:text-[#dc2626]'}`}>
-                      {isLanding ? tool.name : `${tool.name} Decoder`}
-                    </h2>
-                    {'manufacturer' in tool && (
-                      <span className="text-[0.65rem] font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-500 uppercase tracking-wide">
-                        {tool.manufacturer}
-                      </span>
-                    )}
-                    {isLanding && (
-                      <span className="text-[0.65rem] font-bold px-2 py-0.5 rounded bg-[#dc2626]/10 text-[#dc2626] uppercase tracking-wide">
-                        Availability &amp; Quote
-                      </span>
-                    )}
-                    {isComingSoon && (
-                      <span className="text-[0.65rem] font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-700 uppercase tracking-wide">
-                        Coming Soon
-                      </span>
-                    )}
-                    {!isComingSoon && (
-                      <ArrowRight size={16} className="text-slate-400 group-hover:text-[#dc2626] group-hover:translate-x-1 transition-all flex-shrink-0" />
-                    )}
-                  </div>
-                  <p className={`text-sm mb-3 ${isComingSoon ? 'text-slate-500' : 'text-slate-600'}`}>{tool.description}</p>
-                  <div className="flex flex-wrap gap-x-6 gap-y-1 text-xs text-slate-500">
-                    <span><span className="font-semibold text-slate-700">Frames:</span> {tool.frames}</span>
-                    <span><span className="font-semibold text-slate-700">Ratings:</span> {tool.ratings}</span>
-                  </div>
-                </div>
-              </div>
-            );
-
-            // Not yet built — render as a static placeholder so it doesn't 404.
-            if (isComingSoon) {
-              return (
-                <div
-                  key={tool.slug}
-                  className="bg-slate-50 border border-dashed border-slate-300 rounded-xl p-6"
-                >
-                  {body}
-                </div>
-              );
-            }
-
-            return (
-            <Link
-              key={tool.slug}
-              href={href}
-              className="group bg-white border border-slate-200 rounded-xl p-6 hover:border-[#1a1a1a]/30 hover:shadow-lg transition-all"
+      <div className="max-w-6xl mx-auto px-4 py-10">
+        {/* Jump to a manufacturer */}
+        <nav aria-label="Jump to manufacturer" className="flex flex-wrap justify-center gap-2 mb-10">
+          {grouped.map((group) => (
+            <a
+              key={group.id}
+              href={`#${group.id}`}
+              className="inline-flex items-center gap-2 bg-white border border-slate-200 hover:border-[#1a1a1a]/40 text-slate-700 rounded-full px-4 py-1.5 text-sm font-medium transition-colors"
             >
-              {body}
-            </Link>
-            );
-          })}
-        </div>
+              {group.label}
+              <span className="text-[0.65rem] font-bold text-slate-500 bg-slate-100 rounded-full px-1.5 py-0.5">
+                {group.items.length}
+              </span>
+            </a>
+          ))}
+        </nav>
+
+        {/* Tool cards, grouped by manufacturer */}
+        {grouped.map((group) => (
+          <section key={group.id} id={group.id} className="mb-12 scroll-mt-24">
+            <div className="flex items-baseline gap-3 mb-5 pb-2 border-b border-slate-200">
+              <h2 className="text-xl font-bold text-slate-900">{group.label}</h2>
+              <span className="text-xs text-slate-500">
+                {group.items.length} {group.items.length === 1 ? 'tool' : 'tools'}
+              </span>
+            </div>
+
+            <div className="grid gap-5 md:grid-cols-2">
+              {group.items.map((tool) => {
+                const isLanding = tool.landing === true;
+                const isComingSoon = tool.comingSoon === true;
+                const href = tool.href ?? `/tools/${tool.slug}`;
+
+                const body = (
+                  <div className="flex items-start gap-4">
+                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors ${isComingSoon ? 'bg-slate-100' : 'bg-[#1a1a1a]/5 group-hover:bg-[#1a1a1a]'}`}>
+                      <Cpu className={`w-6 h-6 transition-colors ${isComingSoon ? 'text-slate-400' : 'text-[#1a1a1a] group-hover:text-white'}`} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1 flex-wrap">
+                        {/* Arrow sits inside the heading so it trails the last word
+                            instead of orphaning onto its own line when a long name
+                            wraps (e.g. "Magnum PXR / Power Defense SB Decoder"). */}
+                        <h3 className={`text-lg font-bold transition-colors ${isComingSoon ? 'text-slate-500' : 'text-slate-900 group-hover:text-[#dc2626]'}`}>
+                          {isLanding ? tool.name : `${tool.name} Decoder`}
+                          {!isComingSoon && (
+                            <ArrowRight
+                              size={16}
+                              aria-hidden="true"
+                              className="inline-block ml-1.5 -mb-0.5 text-slate-400 group-hover:text-[#dc2626] group-hover:translate-x-1 transition-all"
+                            />
+                          )}
+                        </h3>
+                        {isLanding && (
+                          <span className="text-[0.65rem] font-bold px-2 py-0.5 rounded bg-[#dc2626]/10 text-[#dc2626] uppercase tracking-wide">
+                            Availability &amp; Quote
+                          </span>
+                        )}
+                        {isComingSoon && (
+                          <span className="text-[0.65rem] font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-700 uppercase tracking-wide">
+                            Coming Soon
+                          </span>
+                        )}
+                      </div>
+                      <p className={`text-sm mb-3 ${isComingSoon ? 'text-slate-500' : 'text-slate-600'}`}>{tool.description}</p>
+                      <div className="flex flex-col gap-1 text-xs text-slate-500">
+                        <span><span className="font-semibold text-slate-700">Frames:</span> {tool.frames}</span>
+                        <span><span className="font-semibold text-slate-700">Ratings:</span> {tool.ratings}</span>
+                      </div>
+                    </div>
+                  </div>
+                );
+
+                // Not yet built — render as a static placeholder so it doesn't 404.
+                if (isComingSoon) {
+                  return (
+                    <div
+                      key={tool.slug}
+                      className="h-full bg-slate-50 border border-dashed border-slate-300 rounded-xl p-6"
+                    >
+                      {body}
+                    </div>
+                  );
+                }
+
+                return (
+                  <Link
+                    key={tool.slug}
+                    href={href}
+                    className="group h-full bg-white border border-slate-200 rounded-xl p-6 hover:border-[#1a1a1a]/30 hover:shadow-lg transition-all"
+                  >
+                    {body}
+                  </Link>
+                );
+              })}
+            </div>
+          </section>
+        ))}
 
         {/* CTA */}
         <div className="mt-10 bg-white border border-slate-200 rounded-xl p-8 text-center">
-          <h3 className="font-bold text-slate-900 text-lg mb-2">Need help identifying a breaker?</h3>
+          <h2 className="font-bold text-slate-900 text-lg mb-2">Need help identifying a breaker?</h2>
           <p className="text-slate-600 text-sm mb-4 max-w-lg mx-auto">
             If you can&#39;t decode your model number with these tools, our team can help. Send us the catalog number or nameplate photo and we&#39;ll identify it for you.
           </p>
