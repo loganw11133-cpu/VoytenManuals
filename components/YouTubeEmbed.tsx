@@ -1,8 +1,17 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { Play } from 'lucide-react';
+
+/* YouTube only generates maxresdefault.jpg when the source upload was at least
+   720p. For anything smaller that URL 404s and the poster frame renders blank —
+   which is exactly what happened to the facility tour on the homepage.
+
+   Ordered largest first. sddefault and hqdefault are 4:3 with letterbox bars,
+   but object-cover in the 16:9 frame crops those away, so they still look right. */
+const THUMB_SIZES = ['maxresdefault', 'sddefault', 'hqdefault'] as const;
+type ThumbSize = (typeof THUMB_SIZES)[number];
 
 interface YouTubeEmbedProps {
   videoId: string;
@@ -11,24 +20,41 @@ interface YouTubeEmbedProps {
   label?: string;
   /** Seconds to start playback at, for videos with a slate or lead-in. */
   start?: number;
+  /**
+   * Largest thumbnail YouTube actually holds for this video. Set it explicitly
+   * when you know maxresdefault is missing — that renders correctly on the
+   * first paint instead of relying on a failed request to trigger the fallback
+   * below, which is easy to miss around hydration.
+   */
+  thumbnailSize?: ThumbSize;
 }
-
-/* YouTube only generates maxresdefault.jpg when the source upload was at least
-   720p — for anything smaller it 404s and the poster frame renders blank. Walk
-   down to a size that exists rather than assuming the best one does. sddefault
-   and hqdefault are 4:3 with letterbox bars, but object-cover in the 16:9 frame
-   crops those away. */
-const THUMB_SIZES = ['maxresdefault', 'sddefault', 'hqdefault'] as const;
 
 export default function YouTubeEmbed({
   videoId,
   title,
   label = 'Watch: Tour Our Facility',
   start,
+  thumbnailSize = 'maxresdefault',
 }: YouTubeEmbedProps) {
   const [playing, setPlaying] = useState(false);
-  const [sizeIndex, setSizeIndex] = useState(0);
+  const [sizeIndex, setSizeIndex] = useState(() => Math.max(0, THUMB_SIZES.indexOf(thumbnailSize)));
+  const imgRef = useRef<HTMLImageElement>(null);
+
   const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/${THUMB_SIZES[sizeIndex]}.jpg`;
+  const stepDown = () => setSizeIndex((i) => (i < THUMB_SIZES.length - 1 ? i + 1 : i));
+
+  /* Safety net for any video whose thumbnailSize was not set. The browser can
+     finish (and fail) the request before React attaches the onError handler, in
+     which case the event is never delivered — so also check on mount for an
+     image that has already completed with no intrinsic width. */
+  useEffect(() => {
+    const el = imgRef.current;
+    if (!el || !el.complete || el.naturalWidth !== 0) return;
+    // Deferred rather than called inline: this is recovering from an event that
+    // already happened, not synchronising state during render.
+    const id = window.setTimeout(stepDown, 0);
+    return () => window.clearTimeout(id);
+  }, [sizeIndex]);
 
   if (playing) {
     return (
@@ -52,13 +78,14 @@ export default function YouTubeEmbed({
     >
       {/* Thumbnail */}
       <Image
+        ref={imgRef}
         key={thumbnailUrl}
         src={thumbnailUrl}
         alt={title}
         fill
         sizes="(max-width: 1024px) 100vw, 50vw"
         className="object-cover transition-transform duration-500 group-hover:scale-105"
-        onError={() => setSizeIndex((i) => (i < THUMB_SIZES.length - 1 ? i + 1 : i))}
+        onError={stepDown}
       />
 
       {/* Gradient overlay */}

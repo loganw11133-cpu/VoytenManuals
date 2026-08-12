@@ -225,6 +225,8 @@ export default async function Home() {
               <YouTubeEmbed
                 videoId="pf5XGcExiM0"
                 title="Voyten Electric & Electronics Facility Tour — Polk, PA"
+                // This video has no maxresdefault — sddefault is the largest YouTube serves for it.
+                thumbnailSize="sddefault"
               />
             </div>
 
