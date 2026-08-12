@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Cpu, ArrowRight } from 'lucide-react';
+import { Cpu, ArrowRight, WifiOff } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Breaker Decoder Tools',
@@ -244,8 +244,33 @@ export default function ToolsPage() {
           </section>
         ))}
 
+        {/* Offline kit — these tools run from a local folder with no connection,
+            which matters in a switchgear room or basement with no signal. */}
+        <div className="mt-10 bg-white border border-slate-200 rounded-xl p-6 flex flex-col sm:flex-row sm:items-center gap-5">
+          <div className="w-12 h-12 rounded-xl bg-[#1a1a1a]/5 flex items-center justify-center flex-shrink-0">
+            <WifiOff className="w-6 h-6 text-[#1a1a1a]" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <h2 className="font-bold text-slate-900 mb-1">Working somewhere without a signal?</h2>
+            <p className="text-slate-600 text-sm">
+              Every decoder above also runs offline from a local folder &mdash; decoding, the position
+              map, copy and PDF export all work with no connection.
+            </p>
+          </div>
+          {/* Plain <a>, not next/link — offline.html is a static file in public/,
+              not a route, so it needs a real navigation rather than a client-side
+              transition the router can't resolve. */}
+          <a
+            href="/tools/offline.html"
+            className="inline-flex items-center justify-center gap-2 flex-shrink-0 border-2 border-[#1a1a1a] text-[#1a1a1a] hover:bg-[#1a1a1a] hover:text-white px-5 py-2.5 rounded-lg font-medium text-sm transition-colors"
+          >
+            Open the Offline Kit
+            <ArrowRight size={16} />
+          </a>
+        </div>
+
         {/* CTA */}
-        <div className="mt-10 bg-white border border-slate-200 rounded-xl p-8 text-center">
+        <div className="mt-5 bg-white border border-slate-200 rounded-xl p-8 text-center">
           <h2 className="font-bold text-slate-900 text-lg mb-2">Need help identifying a breaker?</h2>
           <p className="text-slate-600 text-sm mb-4 max-w-lg mx-auto">
             If you can&#39;t decode your model number with these tools, our team can help. Send us the catalog number or nameplate photo and we&#39;ll identify it for you.
