@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="description" content="Siemens WL (Sentron WL) low-voltage circuit breaker catalog number decoder. Decodes all 15 digits under both UL 489 (insulated case) and UL 1066 / ANSI C37 (power circuit breaker) — interrupting class, frame size, mounting, poles, ampere rating, rating plug, ETU trip unit and factory accessories.">
 <title>Siemens WL (Sentron WL) Decoder — Voyten Electric</title>
-<link rel="stylesheet" href="/tools/decoder-fonts.css">
+<link rel="stylesheet" href="decoder-fonts.css">
 <style>
 :root {
   --red: #dc2626;
@@ -937,7 +937,7 @@ function detectForeignFamily(compact) {
             'product line with its own hyphenated ordering grammar (frame size, current code, release code, ' +
             'then an optional -Z option suffix). This decoder covers the ANSI/UL WL family (UL 489 and ' +
             'UL 1066 / ANSI C37), whose numbers carry a bare "WL" prefix.',
-      hint: 'We don’t have a 3WL decoder yet. <a href="/contact" target="_blank" rel="noopener">Send us the number</a> ' +
+      hint: 'We don’t have a 3WL decoder yet. <a href="https://www.voytenmanuals.com/contact" target="_blank" rel="noopener">Send us the number</a> ' +
             'and our team will identify it and quote a replacement.'
     };
   }
@@ -948,7 +948,7 @@ function detectForeignFamily(compact) {
             'character 1 is the pole count and frame (W = 3-pole MasterPact NW) and character 2 is the brand ' +
             'and standard (L = Square D, UL). On a genuine Siemens WL number, the character after "WL" is a ' +
             'letter — the interrupting class — never a digit.',
-      hint: 'Decode it with our <a href="/tools/sqd-ntnw" target="_blank" rel="noopener">MasterPact NT / NW decoder</a> instead.'
+      hint: 'Decode it with our <a href="https://www.voytenmanuals.com/tools/sqd-ntnw" target="_blank" rel="noopener">MasterPact NT / NW decoder</a> instead.'
     };
   }
   return null;
@@ -1479,6 +1479,6 @@ document.getElementById('pillUL489').addEventListener('click', function () { set
 document.getElementById('pillUL1066').addEventListener('click', function () { setStandard('UL1066'); });
 document.getElementById('catInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') decode(); });
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="/tools/decoder-pdf.js"></script>
-<script src="/tools/decoder-quote.js"></script>
+<script src="jspdf.umd.min.js"></script>
+<script src="decoder-pdf.js"></script>
+<script src="decoder-quote.js"></script>

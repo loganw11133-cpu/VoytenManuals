@@ -1,6 +1,6 @@
 /* decoder-fonts.css — self-hosted IBM Plex for the decoder tools (matches the main site). */
-@font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:400;font-display:swap;src:url('/tools/fonts/plex-sans-400.woff2') format('woff2');}
-@font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:600;font-display:swap;src:url('/tools/fonts/plex-sans-600.woff2') format('woff2');}
-@font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:700;font-display:swap;src:url('/tools/fonts/plex-sans-700.woff2') format('woff2');}
-@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url('/tools/fonts/plex-mono-400.woff2') format('woff2');}
-@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;src:url('/tools/fonts/plex-mono-500.woff2') format('woff2');}
+@font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/plex-sans-400.woff2') format('woff2');}
+@font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:600;font-display:swap;src:url('fonts/plex-sans-600.woff2') format('woff2');}
+@font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/plex-sans-700.woff2') format('woff2');}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/plex-mono-400.woff2') format('woff2');}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;src:url('fonts/plex-mono-500.woff2') format('woff2');}
