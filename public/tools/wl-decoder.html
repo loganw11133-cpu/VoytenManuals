@@ -367,7 +367,7 @@ body {
   <div class="error" id="errorBox">
     <div class="error-title" id="errorTitle">Invalid Input</div>
     <div class="error-text" id="errorText"></div>
-    <div class="error-hint">Enter the 15-digit catalog number from the nameplate (the leading "WL" is optional). Example: WLL2D320UDEGCGWAC</div>
+    <div class="error-hint" id="errorHint"></div>
   </div>
 
   <!-- Results -->
@@ -891,11 +891,57 @@ function normalise(raw) {
   return s;
 }
 
+/* ── Adjacent families that people land here with ──────────────────────
+   Searching "siemens WL" turns up two neighbouring product lines whose
+   numbers are NOT decodable here. Both used to fall through to a bare
+   "wrong length" error, which tells a tech nothing. Detect them first
+   and route.
+
+   The Schneider collision is real: Square D / Schneider MasterPact
+   configured numbers (scheme PLS007) can legitimately begin with the
+   letters "WL" — but there, position 1 is the pole-count/frame family
+   (W = 3-pole NW) and position 2 is the brand/standard (L = Square D UL),
+   so the "WL" is a coincidence rather than a prefix. The two schemes are
+   exact complements at character 3, which makes a single character a
+   decisive test with no ambiguous strings:
+
+     Siemens WL      : WL + letter (interrupting class) + digit (frame size)
+     Schneider PLS007:      digit (interrupting rating) + letter (frame code)
+
+   e.g. WL3FFR43A9DFFFXSJXT = Square D MasterPact NW20H, not a Siemens WL. */
+function detectForeignFamily(compact) {
+  if (/^3WL\d/.test(compact)) {
+    return {
+      title: 'That’s a Siemens IEC 3WL, Not an ANSI/UL WL',
+      text: 'Numbers beginning "3WL" are the Siemens SENTRON 3WL1 family, built to IEC 60947-2 — a different ' +
+            'product line with its own hyphenated ordering grammar (frame size, current code, release code, ' +
+            'then an optional -Z option suffix). This decoder covers the ANSI/UL WL family (UL 489 and ' +
+            'UL 1066 / ANSI C37), whose numbers carry a bare "WL" prefix.',
+      hint: 'We don’t have a 3WL decoder yet. <a href="/contact" target="_blank" rel="noopener">Send us the number</a> ' +
+            'and our team will identify it and quote a replacement.'
+    };
+  }
+  if (/^WL\d/.test(compact)) {
+    return {
+      title: 'That’s a Square D / Schneider MasterPact Number',
+      text: 'The leading "WL" here is a coincidence, not the Siemens prefix: in the Schneider PLS007 scheme ' +
+            'character 1 is the pole count and frame (W = 3-pole MasterPact NW) and character 2 is the brand ' +
+            'and standard (L = Square D, UL). On a genuine Siemens WL number, the character after "WL" is a ' +
+            'letter — the interrupting class — never a digit.',
+      hint: 'Decode it with our <a href="/tools/sqd-ntnw" target="_blank" rel="noopener">MasterPact NT / NW decoder</a> instead.'
+    };
+  }
+  return null;
+}
+
 function parse(rawInput, std) {
   var s = normalise(rawInput);
   var out = { input: String(rawInput || '').trim().toUpperCase(), digits: s, std: std, notes: [] };
 
   if (!s) return { error: { title: 'No Catalog Number', text: 'Enter the catalog number from the breaker nameplate.' } };
+
+  var foreign = detectForeignFamily(String(rawInput || '').toUpperCase().replace(/[^A-Z0-9]/g, ''));
+  if (foreign) return { error: foreign };
 
   /* Two forms occur in the field:
        · the full 15-digit configured number (nameplate / order record), and
@@ -1108,7 +1154,7 @@ function decode() {
   if (b.error) {
     res.innerHTML = '';
     res.classList.remove('visible');
-    showError(b.error.title, b.error.text);
+    showError(b.error.title, b.error.text, b.error.hint);
     return;
   }
   hideError();
@@ -1333,10 +1379,17 @@ function clearCharMap() {
 /* ============================================================
    UI helpers
    ============================================================ */
-function showError(title, text) {
+var DEFAULT_HINT = 'Enter the 15-character catalog number from the nameplate (the leading "WL" is optional), ' +
+                   'or the 6-character stem dealers list — e.g. WLL2D320UDEGCGWAC or WLL3F340.';
+
+/* `hintHtml` is only ever a fixed string from our own tables (the foreign-family
+   routing messages, which carry a link). User input is never interpolated into
+   it — the catalog number itself always goes through textContent below. */
+function showError(title, text, hintHtml) {
   var el = document.getElementById('errorBox');
   document.getElementById('errorTitle').textContent = title;
   document.getElementById('errorText').textContent = text;
+  document.getElementById('errorHint').innerHTML = hintHtml || DEFAULT_HINT;
   el.classList.add('visible');
   clearCharMap();
 }
