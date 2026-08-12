@@ -74,44 +74,50 @@ export default function AboutPage() {
 
       {/* Why We Built This */}
       <section className="py-14 lg:py-18">
-        <div className="max-w-4xl mx-auto px-4">
-          {/* Facade embed — the thumbnail is a static image and the YouTube
-              iframe is only loaded once the visitor actually presses play. */}
-          <div className="mb-10 lg:mb-12">
-            <YouTubeEmbed
-              videoId="TyLrTVjjxCo"
-              title="The People of Voyten — Voyten Electric & Electronics, Polk, PA"
-              label="Watch: The People of Voyten"
-              start={2}
-            />
-            <p className="text-sm text-slate-500 mt-3 text-center">
-              Meet the people behind the library — three generations of the Voyten family in Polk, Pennsylvania.
-            </p>
-          </div>
+        <div className="max-w-6xl mx-auto px-4">
+          {/* Video sits beside the copy on desktop. It is first in the DOM so that
+              on mobile, where the grid collapses, it still leads the section. */}
+          <div className="grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-8 lg:gap-12 items-start">
+            {/* Facade embed — the thumbnail is a static image and the YouTube
+                iframe is only loaded once the visitor actually presses play. */}
+            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4">
+              <YouTubeEmbed
+                videoId="TyLrTVjjxCo"
+                title="The People of Voyten — Voyten Electric & Electronics, Polk, PA"
+                label="Watch: The People of Voyten"
+                start={2}
+              />
+              <p className="text-sm text-slate-500 mt-3">
+                Meet the people behind the library — three generations of the Voyten family in Polk, Pennsylvania.
+              </p>
+            </div>
 
-          <h2 className="text-2xl font-bold text-slate-900 mb-6">Why We Built This</h2>
-          <div className="space-y-4 text-slate-600 text-lg leading-relaxed">
-            <p>
-              If you&#39;ve ever spent hours searching for a lost instruction manual, a renewal parts catalog,
-              or a characteristic curve sheet for a piece of electrical equipment — you know the frustration.
-            </p>
-            <p>
-              We built Voyten Manuals to solve that problem. Our team at Voyten Electric has been working
-              with electrical equipment for over 70 years. Over the decades, we&#39;ve accumulated an extensive collection
-              of technical documentation that we believe should be freely accessible to anyone who needs it.
-            </p>
-            <p>
-              This library includes instruction manuals, renewal parts catalogs, retrofit kit guides,
-              field testing procedures, and more — covering equipment from manufacturers like Westinghouse,
-              Square D, General Electric, Siemens, Cutler-Hammer, ITE, ABB, and others.
-            </p>
-            <p>
-              Our library is continually growing. If you can&#39;t find what you need,{' '}
-              <Link href="/contact?type=manual-request" className="text-[#1a1a1a] font-medium hover:underline">
-                let us know
-              </Link>{' '}
-              and we&#39;ll do our best to track it down.
-            </p>
+            <div>
+              <h2 className="text-2xl font-bold text-slate-900 mb-6">Why We Built This</h2>
+              <div className="space-y-4 text-slate-600 text-lg leading-relaxed">
+                <p>
+                  If you&#39;ve ever spent hours searching for a lost instruction manual, a renewal parts catalog,
+                  or a characteristic curve sheet for a piece of electrical equipment — you know the frustration.
+                </p>
+                <p>
+                  We built Voyten Manuals to solve that problem. Our team at Voyten Electric has been working
+                  with electrical equipment for over 70 years. Over the decades, we&#39;ve accumulated an extensive collection
+                  of technical documentation that we believe should be freely accessible to anyone who needs it.
+                </p>
+                <p>
+                  This library includes instruction manuals, renewal parts catalogs, retrofit kit guides,
+                  field testing procedures, and more — covering equipment from manufacturers like Westinghouse,
+                  Square D, General Electric, Siemens, Cutler-Hammer, ITE, ABB, and others.
+                </p>
+                <p>
+                  Our library is continually growing. If you can&#39;t find what you need,{' '}
+                  <Link href="/contact?type=manual-request" className="text-[#1a1a1a] font-medium hover:underline">
+                    let us know
+                  </Link>{' '}
+                  and we&#39;ll do our best to track it down.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
