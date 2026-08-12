@@ -112,8 +112,11 @@ body {
   cursor: pointer; transition: all 0.15s; color: var(--gray-700); touch-action: manipulation;
 }
 .ex-btn:hover { background: var(--red); color: var(--white); border-color: var(--red); }
-.ex-group { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gray-400); margin: 8px 0 4px; }
+.ex-group { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gray-400); margin: 10px 0 4px; }
 .ex-group:first-child { margin-top: 0; }
+.ex-note { font-size: 0.7rem; color: var(--gray-500); line-height: 1.45; margin: 0 0 8px; }
+.ex-note + .ex-group { margin-top: 0; }
+.examples + .ex-note { margin: 6px 0 4px; }
 
 /* Compact hover-reveal examples */
 .ex-hover { position: relative; display: inline-block; margin-top: 4px; }
@@ -130,7 +133,8 @@ body {
 .ex-hover:focus-within .ex-hover__trigger { color: var(--red); border-color: var(--red); }
 .ex-hover__panel {
   position: absolute; z-index: 50; top: calc(100% + 6px); left: 0;
-  display: none; min-width: 240px; max-width: min(94vw, 560px);
+  display: none; width: min(94vw, 540px);
+  max-height: min(70vh, 520px); overflow-y: auto;
   padding: 12px 14px 10px;
   background: #fff; border: 1px solid var(--gray-200); border-radius: 10px;
   box-shadow: 0 12px 34px rgba(0,0,0,.14);
@@ -328,24 +332,37 @@ body {
       <div class="ex-hover" tabindex="0" role="button" aria-label="Show example catalog numbers">
         <span class="ex-hover__trigger">Catalog examples</span>
         <div class="ex-hover__panel">
+          <div class="ex-note">Every breaker below is a real catalog number taken from a live
+            distributor or auction listing, and decodes to match the specs that listing states.</div>
+
           <div class="ex-group">UL 489 &mdash; Insulated Case</div>
           <div class="examples">
-            <button class="ex-btn" onclick="loadEx(this,'UL489')">WLS1F308NCXXXXXXN</button>
-            <button class="ex-btn" onclick="loadEx(this,'UL489')">L2D320UDEGCGWAC</button>
-            <button class="ex-btn" onclick="loadEx(this,'UL489')">C3D350ZHJGCGZWC</button>
-            <button class="ex-btn" onclick="loadEx(this,'UL489')">L1Y308SSXXXXXXN</button>
-            <button class="ex-btn" onclick="loadEx(this,'UL489')">S1F316TCDXCXXXN</button>
-            <button class="ex-btn" onclick="loadEx(this,'UL489')">WLL3F340</button>
+            <button class="ex-btn" onclick="loadEx(this,'UL489')" title="2000 A, 600 V, 3-pole, 65 kA @ 480 V — listed as WLS2F320">S2F320UCCXXXXXN</button>
+            <button class="ex-btn" onclick="loadEx(this,'UL489')" title="Frame Size 1 — 1600 A frame, 1600 A plug, ETU745, fixed mount">S1F316TCDXCXXXN</button>
+            <button class="ex-btn" onclick="loadEx(this,'UL489')" title="5000 A frame, 5000 A plug, ETU776, fixed — listed as WLL3F350">L3F3501YKAXARCB</button>
+            <button class="ex-btn" onclick="loadEx(this,'UL489')" title="1200 A frame set to a 1000 A plug — shows the frame-vs-plug advisory">S2F312PGXXXXXEN</button>
+            <button class="ex-btn" onclick="loadEx(this,'UL489')" title="2000 A drawout, ETU745">L2D320UGXXXXXXN</button>
+            <button class="ex-btn" onclick="loadEx(this,'UL489')" title="Short 6-character dealer stem — 4000 A, fixed">WLL3F340</button>
           </div>
+
           <div class="ex-group">UL 1066 / ANSI C37 &mdash; Power Circuit Breaker</div>
           <div class="examples">
-            <button class="ex-btn" onclick="loadEx(this,'UL1066')">WLH3A440ZWJGCGZAC</button>
-            <button class="ex-btn" onclick="loadEx(this,'UL1066')">L2A332YVXXXXXXN</button>
-            <button class="ex-btn" onclick="loadEx(this,'UL1066')">F2A30CNCXXXXXXN</button>
-            <button class="ex-btn" onclick="loadEx(this,'UL1066')">L2S308SSXXXXXXN</button>
-            <button class="ex-btn" onclick="loadEx(this,'UL1066')">H2A332YEGAXCWCN</button>
-            <button class="ex-btn" onclick="loadEx(this,'UL1066')">WLM3A340</button>
+            <button class="ex-btn" onclick="loadEx(this,'UL1066')" title="3200 A frame &amp; plug, 85 kA, ETU745, drawout — listed as WLH2A332">H2A332YEGAXCWCN</button>
+            <button class="ex-btn" onclick="loadEx(this,'UL1066')" title="4-pole, fixed mount with neutral CT — 1600 A frame, 1200 A plug">H2K416QDGCXCCXN</button>
+            <button class="ex-btn" onclick="loadEx(this,'UL1066')" title="N-class 50 kA — 800 A frame set to a 400 A plug">N2A308GFFXXXFXN</button>
+            <button class="ex-btn" onclick="loadEx(this,'UL1066')" title="F-class fused, 200 kA — 800 A frame, 700 A plug">F2A308MGDAXXXXN</button>
+            <button class="ex-btn" onclick="loadEx(this,'UL1066')" title="M-class 150 kA — 4000 A, ETU776, drawout">M3A340ZYGCFCCXC</button>
+            <button class="ex-btn" onclick="loadEx(this,'UL1066')" title="Short 6-character dealer stem — 4000 A drawout">WLM3A340</button>
           </div>
+
+          <div class="ex-group">Non-automatic switches &mdash; from the Siemens tables</div>
+          <div class="examples">
+            <button class="ex-btn" onclick="loadEx(this,'UL489')" title="UL 489 switch — Y = fixed mount, SS at digits 7-8">L1Y308SSXXXXXXN</button>
+            <button class="ex-btn" onclick="loadEx(this,'UL1066')" title="UL 1066 switch — S = drawout, SS at digits 7-8">L2S308SSXXXXXXN</button>
+          </div>
+          <div class="ex-note">Switch numbers are built from the guide&rsquo;s ordering tables &mdash;
+            we found no non-automatic WL switch offered for resale, so unlike the breakers above
+            these two are not confirmed against a field example.</div>
         </div>
       </div>
     </div>
