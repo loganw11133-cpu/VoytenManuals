@@ -13,6 +13,13 @@ interface YouTubeEmbedProps {
   start?: number;
 }
 
+/* YouTube only generates maxresdefault.jpg when the source upload was at least
+   720p — for anything smaller it 404s and the poster frame renders blank. Walk
+   down to a size that exists rather than assuming the best one does. sddefault
+   and hqdefault are 4:3 with letterbox bars, but object-cover in the 16:9 frame
+   crops those away. */
+const THUMB_SIZES = ['maxresdefault', 'sddefault', 'hqdefault'] as const;
+
 export default function YouTubeEmbed({
   videoId,
   title,
@@ -20,6 +27,8 @@ export default function YouTubeEmbed({
   start,
 }: YouTubeEmbedProps) {
   const [playing, setPlaying] = useState(false);
+  const [sizeIndex, setSizeIndex] = useState(0);
+  const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/${THUMB_SIZES[sizeIndex]}.jpg`;
 
   if (playing) {
     return (
@@ -43,11 +52,13 @@ export default function YouTubeEmbed({
     >
       {/* Thumbnail */}
       <Image
-        src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+        key={thumbnailUrl}
+        src={thumbnailUrl}
         alt={title}
         fill
         sizes="(max-width: 1024px) 100vw, 50vw"
         className="object-cover transition-transform duration-500 group-hover:scale-105"
+        onError={() => setSizeIndex((i) => (i < THUMB_SIZES.length - 1 ? i + 1 : i))}
       />
 
       {/* Gradient overlay */}

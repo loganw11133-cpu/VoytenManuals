@@ -34,7 +34,9 @@ export default async function Home() {
     "@type": "VideoObject",
     "name": "Voyten Electric Capabilities — Facility Tour",
     "description": "Tour of Voyten Electric & Electronics' 200,000 sq ft facility in Polk, PA. Specializing in new, surplus, and reconditioned electrical equipment — circuit breakers, switchgear, motor controls, and more. Family owned since 1953.",
-    "thumbnailUrl": "https://img.youtube.com/vi/pf5XGcExiM0/maxresdefault.jpg",
+    // This video has no maxresdefault (it was not uploaded at 720p or better),
+    // so that URL 404s — sddefault is the largest size YouTube actually serves for it.
+    "thumbnailUrl": "https://img.youtube.com/vi/pf5XGcExiM0/sddefault.jpg",
     "uploadDate": "2025-02-25",
     "contentUrl": "https://www.youtube.com/watch?v=pf5XGcExiM0",
     "embedUrl": "https://www.youtube.com/embed/pf5XGcExiM0",
