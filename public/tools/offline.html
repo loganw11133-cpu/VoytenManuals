@@ -34,14 +34,14 @@ a.card:hover { border-color:var(--black); box-shadow:0 2px 10px rgba(0,0,0,.08);
 a.card .name { font-weight:700; color:var(--gray-800); font-size:0.95rem; }
 a.card:hover .name { color:var(--red); }
 a.card .meta { font-size:0.75rem; color:var(--gray-500); margin-top:3px; }
-.note { font-size:0.8rem; color:var(--gray-500); line-height:1.6; background:var(--white);
-  border:1px solid var(--gray-200); border-radius:10px; padding:16px; margin-top:8px; }
-.note h3 { font-size:0.75rem; text-transform:uppercase; letter-spacing:.5px;
-  color:var(--gray-500); margin-bottom:8px; }
-.note ul { margin:0 0 10px 18px; }
-.note li { margin-bottom:4px; }
-.note code { font-family:'IBM Plex Mono','Consolas',monospace; font-size:0.75rem;
-  background:var(--gray-100); padding:1px 5px; border-radius:4px; }
+.help { background:var(--white); border:1px solid var(--gray-200); border-radius:10px;
+  padding:18px; margin-top:8px; display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+.help-text { flex:1 1 300px; font-size:0.85rem; color:var(--gray-500); line-height:1.6; }
+.help-text strong { display:block; color:var(--gray-800); font-size:0.95rem; margin-bottom:2px; }
+.help-cta { flex-shrink:0; display:inline-block; background:var(--red); color:var(--white);
+  text-decoration:none; font-weight:700; font-size:0.9rem; padding:10px 22px; border-radius:8px;
+  transition:background .15s; }
+.help-cta:hover { background:#b91c1c; }
 .footer { text-align:center; padding:20px; font-size:0.72rem; color:var(--gray-400); }
 .footer a { color:var(--gray-500); }
 </style>
@@ -56,9 +56,9 @@ a.card .meta { font-size:0.75rem; color:var(--gray-500); margin-top:3px; }
 <div class="container">
 
   <div class="banner">
-    <strong>These run with no internet connection.</strong>
-    Copy this whole <code>tools</code> folder to a laptop, USB stick or phone and open any decoder
-    directly. Decoding, the position map, Copy and Download PDF all work offline.
+    <strong>No internet connection required.</strong>
+    Keep this folder on a laptop, tablet or USB stick and open any decoder below. Decoding, the
+    character-position map, Copy Catalog Number and Download PDF all work offline.
   </div>
 
   <div class="group">
@@ -117,23 +117,13 @@ a.card .meta { font-size:0.75rem; color:var(--gray-500); margin-top:3px; }
     </div>
   </div>
 
-  <div class="note">
-    <h3>What needs a connection</h3>
-    <ul>
-      <li><strong>Get a Quote</strong> &mdash; with no page around it, this opens a pre-filled email
-        to sales@voyten.com instead of the on-site quote form. The decoded spec is written into the
-        message either way, so it still works; it just needs a mail client and a connection to send.</li>
-      <li><strong>Google Business, LinkedIn and eBay buttons</strong> at the foot of each decoder.</li>
-    </ul>
-    <h3>Keeping this copy current</h3>
-    <ul>
-      <li>The live tools at <code>voytenmanuals.com/tools</code> are the source of truth. Re-copy this
-        folder after any decoder update rather than editing files here &mdash; an edited local copy
-        will silently drift from the deployed one.</li>
-      <li>Keep the folder intact. Each decoder loads <code>decoder-fonts.css</code>,
-        <code>decoder-pdf.js</code>, <code>decoder-quote.js</code>, <code>jspdf.umd.min.js</code>
-        and the <code>fonts/</code> folder from alongside it.</li>
-    </ul>
+  <div class="help">
+    <div class="help-text">
+      <strong>Can&rsquo;t find your breaker, or the number won&rsquo;t decode?</strong>
+      Send us the catalog number or a photo of the nameplate and our team will identify it
+      and quote a replacement.
+    </div>
+    <a class="help-cta" href="tel:18004584001">1-800-458-4001</a>
   </div>
 
 </div>
