@@ -79,22 +79,14 @@ export default function ToolsPage() {
       </div>
 
       <div className="max-w-6xl mx-auto px-4 py-10">
-        {/* Indexable framing for the hub — states what the tools do, who they're
-            for, and which nameplate brands they cover, in the words engineers
-            actually search. */}
+        {/* One line naming who the tools are for. The longer framing copy was
+            removed at Logan's request — the per-decoder routes now carry the
+            indexable detail, so the hub does not need to. */}
         <div className="max-w-3xl mx-auto text-center mb-10">
-          <p className="text-slate-700 leading-relaxed">
-            A breaker catalog number encodes everything you need to source a replacement &mdash;
-            frame size, ampere rating, interrupting capacity, trip unit, mounting and every
-            factory-installed accessory. These {publicDecoders.length} free tools read that number
-            and give you the answer in seconds, with a position-by-position map showing which
-            character carried which value. No login, no cost.
-          </p>
-          <p className="text-slate-600 text-sm mt-3">
+          <p className="text-slate-600 text-sm">
             Built for engineers, plant and facility managers, electricians and field-service
             technicians identifying obsolete or end-of-life gear during an outage or a planned
-            shutdown &mdash; including nameplates still stamped Cutler-Hammer, Westinghouse,
-            Siemens-Allis or Square D.
+            shutdown.
           </p>
         </div>
 
