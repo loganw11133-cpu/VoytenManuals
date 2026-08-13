@@ -1,34 +1,25 @@
-import type { Metadata } from 'next';
 import DecoderFrame from '../_components/DecoderFrame';
+import DecoderAbout from '../_components/DecoderAbout';
+import { requireDecoder } from '@/lib/decoders';
+import { decoderMetadata, decoderJsonLd } from '@/lib/decoder-seo';
 
-const URL = 'https://www.voytenmanuals.com/tools/rl';
+// Content, metadata and structured data all come from lib/decoders.ts so the
+// eight decoder routes cannot drift apart. DecoderAbout carries the indexable
+// copy — the decoder itself is an iframe, so none of its text counts as content
+// on this page.
+const decoder = requireDecoder('rl');
 
-export const metadata: Metadata = {
-  title: 'Siemens RL Breaker Decoder | Free Catalog Number Tool',
-  description:
-    'Free Siemens RL / RLE / RLI / RLF 600V Low Voltage Power Circuit Breaker catalog number decoder. Identify connection, interrupting type, frame, sensors, system wiring, trip unit, and optional devices. 800A–5,000A.',
-  robots: { index: true, follow: true },
-  alternates: { canonical: URL },
-};
-
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'SoftwareApplication',
-  name: 'Siemens RL Catalog Number Decoder',
-  applicationCategory: 'BusinessApplication',
-  operatingSystem: 'Web',
-  url: URL,
-  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-  publisher: { '@type': 'Organization', name: 'Voyten Electric & Electronics', url: 'https://www.voyten.com' },
-  description:
-    'Decode Siemens RL 600V Low Voltage Power Circuit Breaker catalog numbers — connection, interrupting type, frame (RL/RLE/RLI/RLF), sensors, system wiring, trip unit, and optional devices.',
-};
+export const metadata = decoderMetadata(decoder);
 
 export default function RlDecoderPage() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(decoderJsonLd(decoder)) }}
+      />
       <DecoderFrame src="/tools/rl-decoder.html" title="Siemens RL Circuit Breaker Decoder" />
+      <DecoderAbout decoder={decoder} />
     </>
   );
 }

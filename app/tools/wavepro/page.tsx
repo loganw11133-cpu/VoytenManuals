@@ -1,34 +1,25 @@
-import type { Metadata } from 'next';
 import DecoderFrame from '../_components/DecoderFrame';
+import DecoderAbout from '../_components/DecoderAbout';
+import { requireDecoder } from '@/lib/decoders';
+import { decoderMetadata, decoderJsonLd } from '@/lib/decoder-seo';
 
-const URL = 'https://www.voytenmanuals.com/tools/wavepro';
+// Content, metadata and structured data all come from lib/decoders.ts so the
+// eight decoder routes cannot drift apart. DecoderAbout carries the indexable
+// copy — the decoder itself is an iframe, so none of its text counts as content
+// on this page.
+const decoder = requireDecoder('wavepro');
 
-export const metadata: Metadata = {
-  title: 'GE WavePro Breaker Decoder | Free Catalog Number Tool',
-  description:
-    'Free GE WavePro low-voltage power air circuit breaker catalog number decoder. Identify equipment usage, interrupting/fuse rating, frame & sensor, MVT / Power+ trip unit, trip function, rating plug, operation voltages, and mounted accessories. 800A–5,000A (AKD-10 / PowerBreak II).',
-  robots: { index: true, follow: true },
-  alternates: { canonical: URL },
-};
-
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'SoftwareApplication',
-  name: 'GE WavePro Catalog Number Decoder',
-  applicationCategory: 'BusinessApplication',
-  operatingSystem: 'Web',
-  url: URL,
-  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-  publisher: { '@type': 'Organization', name: 'Voyten Electric & Electronics', url: 'https://www.voyten.com' },
-  description:
-    'Decode GE WavePro low-voltage power air circuit breaker catalog numbers — equipment usage, interrupting/fuse rating, frame & sensor, MVT / Power+ trip unit, trip function, rating plug, operation voltages, and mounted accessories. 800A–5,000A.',
-};
+export const metadata = decoderMetadata(decoder);
 
 export default function WaveProDecoderPage() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(decoderJsonLd(decoder)) }}
+      />
       <DecoderFrame src="/tools/wavepro-decoder.html" title="GE WavePro Circuit Breaker Decoder" />
+      <DecoderAbout decoder={decoder} />
     </>
   );
 }

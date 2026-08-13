@@ -1,138 +1,71 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Cpu, ArrowRight, WifiOff } from 'lucide-react';
+import { decoders, groupedDecoders as grouped, publicDecoders } from '@/lib/decoders';
+
+const SITE = 'https://www.voytenmanuals.com';
 
 export const metadata: Metadata = {
   title: 'Breaker Decoder Tools',
   description: 'Free circuit breaker catalog number decoders. Decode Eaton, Siemens, GE, and Square D / Schneider model numbers for Siemens RL, Siemens WL (Sentron WL), GE WavePro, Eaton RD (R-Frame), Magnum DS (MDS) / SBS, Magnum MW (IEC), Magnum PXR / Power Defense SB, and Square D MasterPact NT / NW breakers instantly.',
+  keywords: [
+    'circuit breaker catalog number decoder',
+    'breaker nameplate decoder',
+    'decode breaker model number',
+    'obsolete circuit breaker identification',
+    ...decoders.map((d) => `${d.fullName} decoder`),
+  ],
   robots: { index: true, follow: true },
   alternates: {
-    canonical: 'https://www.voytenmanuals.com/tools',
+    canonical: `${SITE}/tools`,
+  },
+  openGraph: {
+    type: 'website',
+    url: `${SITE}/tools`,
+    siteName: 'Voyten Manuals',
+    title: 'Free Breaker Catalog Number Decoders',
+    description: 'Identify a Siemens, Eaton / Cutler-Hammer, GE or Square D circuit breaker from its catalog number — frame, ampere rating, trip unit, mounting and factory accessories. Free, no login.',
   },
 };
 
-type Tool = {
-  slug: string;
-  name: string;
-  manufacturer: string;
-  description: string;
-  frames: string;
-  ratings: string;
-  /** Card points at a product / quote page instead of a decoder route. */
-  href?: string;
-  landing?: boolean;
-  /** Decoder is spec'd but not built — renders a non-clickable placeholder so it can't 404. */
-  comingSoon?: boolean;
+// ItemList lets search and AI systems enumerate the tool set from one fetch;
+// BreadcrumbList gives the hub its place in the site hierarchy.
+const hubJsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'ItemList',
+      '@id': `${SITE}/tools#tools`,
+      name: 'Free Breaker Catalog-Number Decoders',
+      description:
+        'Free web tools that decode circuit breaker catalog and edge-stamped numbers into frame size, ampere rating, interrupting capacity, trip unit, mounting and factory accessories.',
+      numberOfItems: publicDecoders.length,
+      itemListElement: publicDecoders.map((d, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: `${d.fullName} Catalog Number Decoder`,
+        url: `${SITE}/tools/${d.slug}`,
+      })),
+    },
+    {
+      '@type': 'BreadcrumbList',
+      '@id': `${SITE}/tools#breadcrumbs`,
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: SITE },
+        { '@type': 'ListItem', position: 2, name: 'Breaker Decoders', item: `${SITE}/tools` },
+      ],
+    },
+  ],
 };
-
-const tools: Tool[] = [
-  {
-    slug: 'rl',
-    name: 'RL',
-    manufacturer: 'Siemens',
-    description: 'Decode Siemens RL 600V Low Voltage Power Circuit Breaker catalog numbers. Identifies connection, interrupting type, frame, sensors, system wiring, trip unit, and optional devices.',
-    frames: 'RL / RLE / RLI / RLF',
-    ratings: '800A – 5,000A',
-  },
-  {
-    slug: 'wavepro',
-    name: 'WavePro',
-    manufacturer: 'GE',
-    description: 'Decode GE WavePro low-voltage power air circuit breaker catalog numbers. Identifies equipment usage, interrupting/fuse rating, frame & sensor, MVT / Power+ trip unit, trip function, rating plug, operation voltages, and mounted accessories.',
-    frames: 'WavePro (AKD-10 / PowerBreak II)',
-    ratings: '800A – 5,000A',
-  },
-  {
-    slug: 'spb',
-    name: 'SPB',
-    manufacturer: 'Eaton',
-    href: '/products/spb-breakers',
-    landing: true,
-    description: 'Looking for an Eaton SPB (Systems Pow-R)? Get SPB availability and a quote — our team identifies your SPB-50 / 65 / 100 and sources the new-surplus or reconditioned replacement.',
-    frames: 'SPB 50 / SPB 65 / SPB 100',
-    ratings: '800A – 4,000A',
-  },
-  {
-    slug: 'mds-sbs',
-    name: 'Magnum DS (MDS) / SBS',
-    manufacturer: 'Eaton',
-    description: 'Decode Magnum DS (MDS) and SBS-series catalog numbers. Identifies frame, rating, interrupting capacity, trip unit type, and mounting.',
-    frames: 'Magnum DS (MDS) · SBS',
-    ratings: '800A – 6,000A',
-  },
-  {
-    slug: 'rd',
-    name: 'RD (R-Frame)',
-    manufacturer: 'Eaton',
-    description: 'Decode RD-series R-Frame catalog numbers including factory-installed accessories. Parses post-W accessory groups (S/U/T/A/B/Q/N).',
-    frames: 'RD / R-Frame',
-    ratings: '400A – 2,000A',
-  },
-  {
-    slug: 'mw-iec',
-    name: 'Magnum MW (IEC)',
-    manufacturer: 'Eaton',
-    description: 'Decode IEC 60947-2 Magnum MW catalog numbers. Supports 49 ampere ratings with fixed/draw-out mounting and motorized/manual operation.',
-    frames: 'Magnum MW (IEC)',
-    ratings: '800A – 6,300A',
-  },
-  {
-    slug: 'pxr-pdsb',
-    name: 'Magnum PXR / Power Defense SB',
-    manufacturer: 'Eaton',
-    description: 'Decode 25-character Magnum PXR and 15-character Power Defense SB catalog numbers. Identifies frame size, ampere rating, trip unit, and accessories.',
-    frames: 'Magnum DS (PXR) · Power Defense SB',
-    ratings: '800A – 6,000A',
-  },
-  {
-    slug: 'sqd-ntnw',
-    name: 'MasterPact NT / NW',
-    manufacturer: 'Square D',
-    description: 'Decode Square D / Schneider MasterPact NT and NW catalog numbers. Identifies frame construction (T/W/Y), ampere rating, interrupting class, device type, sensor plugs, and Micrologic trip unit.',
-    frames: 'NT (T-frame) · NW (W / Y-frame)',
-    ratings: '800A – 6,300A',
-  },
-  {
-    slug: 'wl',
-    name: 'WL (Sentron WL)',
-    manufacturer: 'Siemens',
-    description: 'Decode Siemens WL (Sentron WL) catalog numbers under both UL 489 and UL 1066 / ANSI C37. Identifies interrupting class, frame size, mounting, poles, ampere rating, rating plug, ETU745 / ETU776 trip unit, and every factory accessory digit.',
-    frames: 'Frame Size 1 / 2 / 3 (UL 489 · UL 1066)',
-    ratings: '800A – 6,000A',
-  },
-];
-
-/* Section headings carry the legacy brand alongside the current one — the people
-   searching for these breakers are usually holding a nameplate that says
-   Cutler-Hammer or Square D, not Eaton or Schneider. */
-const MANUFACTURER_LABELS: Record<string, string> = {
-  Eaton: 'Eaton / Cutler-Hammer',
-  Siemens: 'Siemens',
-  GE: 'General Electric',
-  'Square D': 'Square D / Schneider Electric',
-};
-
-const grouped = Array.from(
-  tools.reduce((map, tool) => {
-    const list = map.get(tool.manufacturer) ?? [];
-    list.push(tool);
-    map.set(tool.manufacturer, list);
-    return map;
-  }, new Map<string, Tool[]>())
-)
-  .map(([manufacturer, items]) => ({
-    manufacturer,
-    label: MANUFACTURER_LABELS[manufacturer] ?? manufacturer,
-    id: manufacturer.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-    items: [...items].sort((a, b) => a.name.localeCompare(b.name)),
-  }))
-  // Fullest ranges first, so single-tool manufacturers don't break up the big
-  // groups. Derived from the data, so a new decoder slots in without edits here.
-  .sort((a, b) => b.items.length - a.items.length || a.manufacturer.localeCompare(b.manufacturer));
 
 export default function ToolsPage() {
   return (
     <div className="bg-slate-50 min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(hubJsonLd) }}
+      />
+
       {/* Header */}
       <div className="bg-[#1a1a1a] text-white">
         <div className="max-w-6xl mx-auto px-4 py-12 text-center">
@@ -146,6 +79,25 @@ export default function ToolsPage() {
       </div>
 
       <div className="max-w-6xl mx-auto px-4 py-10">
+        {/* Indexable framing for the hub — states what the tools do, who they're
+            for, and which nameplate brands they cover, in the words engineers
+            actually search. */}
+        <div className="max-w-3xl mx-auto text-center mb-10">
+          <p className="text-slate-700 leading-relaxed">
+            A breaker catalog number encodes everything you need to source a replacement &mdash;
+            frame size, ampere rating, interrupting capacity, trip unit, mounting and every
+            factory-installed accessory. These {publicDecoders.length} free tools read that number
+            and give you the answer in seconds, with a position-by-position map showing which
+            character carried which value. No login, no cost.
+          </p>
+          <p className="text-slate-600 text-sm mt-3">
+            Built for engineers, plant and facility managers, electricians and field-service
+            technicians identifying obsolete or end-of-life gear during an outage or a planned
+            shutdown &mdash; including nameplates still stamped Cutler-Hammer, Westinghouse,
+            Siemens-Allis or Square D.
+          </p>
+        </div>
+
         {/* Jump to a manufacturer */}
         <nav aria-label="Jump to manufacturer" className="flex flex-wrap justify-center gap-2 mb-10">
           {grouped.map((group) => (

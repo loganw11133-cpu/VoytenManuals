@@ -28,6 +28,24 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async headers() {
+    return [
+      {
+        // The raw decoder HTML files are the iframe payload for /tools/<slug>.
+        // Left indexable they compete with their own route for the same catalog
+        // -number queries and split the ranking signal, so mark them noindex
+        // while keeping them crawlable — a robots.txt disallow would stop
+        // crawlers from ever seeing this header.
+        source: '/tools/:file(.*-decoder\\.html)',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, follow' }],
+      },
+      {
+        // Offline kit index — a customer hand-off page, not a search result.
+        source: '/tools/offline.html',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, follow' }],
+      },
+    ];
+  },
   async redirects() {
     return [
       // Legacy electricalpartmanuals.com routes

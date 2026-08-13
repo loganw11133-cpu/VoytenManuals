@@ -1,7 +1,8 @@
 import { notFound, permanentRedirect } from 'next/navigation';
 import Link from 'next/link';
-import { FileText, ChevronRight, Phone, Building2, Tag, BookOpen, ArrowLeft, Layers, Download, Shield, Wrench, ArrowRight, ExternalLink } from 'lucide-react';
+import { FileText, ChevronRight, Phone, Building2, Tag, BookOpen, ArrowLeft, Layers, Download, Shield, Wrench, ArrowRight, ExternalLink, Cpu } from 'lucide-react';
 import { getManualBySlug, getManualWithRelated, formatFileSize, toSlug } from '@/lib/manuals-db';
+import { matchDecoderForManual } from '@/lib/decoders';
 import { MANUAL_REDIRECTS } from '@/lib/manual-redirects';
 import ManualCard from '@/components/ManualCard';
 import LeadCaptureForm from '@/components/LeadCaptureForm';
@@ -100,6 +101,11 @@ export default async function ManualPage({ params }: ManualPageProps) {
       store: 'https://spbbreakers.com',
       storeLabel: 'SPBBreakers.com',
     } : null;
+  // If this manual's breaker family has a catalog-number decoder, offer it —
+  // the visitor is holding the unit and usually needs to identify it before the
+  // manual is any use.
+  const decoder = matchDecoderForManual(manual.manufacturer, mTitle);
+
   const productModel = mTitle.replace(/\s*Manual$/i, '');
   const productOfferJsonLd = productLine ? {
     "@context": "https://schema.org",
@@ -314,6 +320,30 @@ export default async function ManualPage({ params }: ManualPageProps) {
                 </div>
               )}
             </div>
+
+            {decoder && (
+              <Link
+                href={`/tools/${decoder.slug}`}
+                className="group mt-6 bg-white rounded-xl border border-slate-200 hover:border-[#1a1a1a]/40 hover:shadow-md transition-all p-6 flex flex-col sm:flex-row sm:items-center gap-4"
+              >
+                <div className="w-11 h-11 rounded-xl bg-[#1a1a1a]/5 group-hover:bg-[#1a1a1a] flex items-center justify-center flex-shrink-0 transition-colors">
+                  <Cpu className="w-5 h-5 text-[#1a1a1a] group-hover:text-white transition-colors" aria-hidden="true" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-bold text-slate-900 group-hover:text-[#dc2626] transition-colors">
+                    Decode your {decoder.fullName} catalog number
+                  </h3>
+                  <p className="text-slate-600 text-sm">
+                    Free tool &mdash; enter the number from the nameplate to get frame size, ampere
+                    rating, trip unit, mounting and factory accessories.
+                  </p>
+                </div>
+                <span className="inline-flex items-center gap-2 text-sm font-medium text-[#1a1a1a] flex-shrink-0">
+                  Open the decoder
+                  <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+                </span>
+              </Link>
+            )}
 
             {productLine && (
               <div className="mt-6 bg-white rounded-xl border border-[#dc2626]/30 p-6">

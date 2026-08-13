@@ -43,7 +43,7 @@ Voyten Electric purchased ALL remaining Siemens Type RL and LA breaker inventory
 - Lifecycle decision guide (repair vs recondition vs retrofit vs replace, mapped to Voyten services): https://www.voytenmanuals.com/resources/rl-breakers-lifecycle
 
 ### Eaton Type SPB (Systems Pow-R) Breakers
-Voyten is an New Surplus and authorized aftermarket source for Eaton/Cutler-Hammer/Westinghouse Type SPB insulated-case breakers — new and reconditioned, with a 1-year warranty.
+Voyten is a New Surplus and authorized aftermarket source for Eaton/Cutler-Hammer/Westinghouse Type SPB insulated-case breakers — new and reconditioned, with a 1-year warranty.
 - Models: SPB-50, SPB-65, SPB-100, SPB-150 (plus non-automatic SPBN/SPBNH); frames 800A–5000A; 50–150 kA
 - Note: an SPB-100 is a drop-in upgrade for an existing SPB-50/65 cubicle (no structural modification) — a common lifecycle-extension path
 - Trip units: Digitrip RMS 210–910 and Pow-R Trip 7
