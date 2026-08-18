@@ -1,10 +1,52 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import type { Metadata } from 'next';
-import { Phone, ChevronRight, BookOpen, Zap, Shield, ArrowRight, Info, Hash, Tag, Wrench, AlertTriangle } from 'lucide-react';
+import { Phone, ChevronRight, BookOpen, Zap, Shield, ArrowRight, Info, Hash, Tag, Wrench, AlertTriangle, Download, Check } from 'lucide-react';
 import ObfuscatedEmail from '@/components/ObfuscatedEmail';
 import Toc from '../_components/Toc';
 
 export const revalidate = 3600;
+
+// ── RL/LA offering, mirrored from the printed RL marketing flyer ──
+// Photos are cropped from that flyer, so its resolution is their ceiling. All
+// four are pre-normalised to one 640x360 canvas so the cards align under the
+// `w-full h-auto` image convention used across the RL pages.
+
+const RL_OFFERINGS = [
+  {
+    title: 'RL Breaker',
+    img: '/images/rl-offer-breaker.jpg',
+    alt: 'Siemens Type RL low voltage power circuit breaker',
+    copy: 'Low voltage power circuit breakers, 800A to 5000A.',
+  },
+  {
+    title: 'E/O Parts',
+    img: '/images/rl-offer-eo-parts.jpg',
+    alt: 'Siemens RL motor operator, undervoltage release, and shunt trip assemblies',
+    copy: 'Motor operators, UVR, shunt trips, contacts, and parts.',
+  },
+  {
+    title: 'Non-Electric Parts',
+    img: '/images/rl-offer-non-electric.jpg',
+    alt: 'Siemens RL operator mechanisms and arc chute barriers',
+    copy: 'Operator mechanisms, arc chute barriers, and parts.',
+  },
+  {
+    title: 'Static Trip',
+    img: '/images/rl-offer-static-trip.jpg',
+    alt: 'Siemens Static Trip III trip unit with current sensors',
+    copy: 'Static Trip III with adjustable LSIG. Fully tested in shop.',
+  },
+];
+
+const RL_SERVICES = [
+  'Apparatus life extension services',
+  'Upgrades and retrofit',
+  'Custom rebuilds',
+  'Swap-out programs',
+  'Rental services',
+  'Full specialty builds and equipment fabrication',
+];
 
 // ── SEO Metadata ──
 
@@ -568,6 +610,78 @@ export default function RLBreakersGuide() {
               View all Siemens RL manuals &rarr;
             </Link>
           </p>
+            </div>
+          </div>
+        </section>
+
+        {/* ── What We Offer (mirrors the printed RL marketing flyer) ── */}
+        <section className="even:bg-slate-100 py-10 lg:py-14">
+          <div className="mx-auto max-w-7xl px-4">
+            <div className="lg:pl-[228px]">
+          <h2 className="text-2xl font-bold text-slate-900 mb-4">What We Offer for RL &amp; LA</h2>
+          <div className="text-slate-700 leading-relaxed mb-6">
+            <p>
+              Voyten Electric stocks new Siemens RL and LA breakers, renewal parts, and accessories,
+              and supports the full apparatus lifecycle &mdash; retrofit, replacement, rebuild, and
+              rental. Family owned since 1953, with 70+ years of switchgear experience providing the
+              right, timely solutions for your electrical lifecycle needs.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {RL_OFFERINGS.map(item => (
+              <div
+                key={item.title}
+                className="bg-slate-50 rounded-xl border border-slate-200 overflow-hidden"
+              >
+                <Image
+                  src={item.img}
+                  alt={item.alt}
+                  width={640}
+                  height={360}
+                  sizes="(min-width: 640px) 50vw, 100vw"
+                  className="w-full h-auto bg-white"
+                />
+                <div className="p-4">
+                  <p className="font-bold text-slate-900 mb-1">{item.title}</p>
+                  <p className="text-sm text-slate-600">{item.copy}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-6 bg-slate-50 rounded-xl border border-slate-200 p-5">
+            <p className="font-bold text-slate-900 mb-3">Services</p>
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2">
+              {RL_SERVICES.map(s => (
+                <li key={s} className="flex items-start gap-2 text-sm text-slate-700">
+                  <Check size={16} className="text-[#dc2626] shrink-0 mt-0.5" />
+                  {s}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="mt-6 flex flex-col sm:flex-row gap-3">
+            <a
+              href="/rl-breaker-flyer.pdf"
+              target="_blank"
+              rel="noopener"
+              className="flex items-center justify-center gap-2 bg-[#1a1a1a] text-white px-6 py-3 rounded-lg font-bold hover:bg-slate-800 transition-colors"
+            >
+              <Download size={18} />
+              Download the RL flyer (PDF)
+            </a>
+            <a
+              href="https://www.rlbreakers.com"
+              target="_blank"
+              rel="noopener"
+              className="flex items-center justify-center gap-2 bg-white text-slate-900 px-6 py-3 rounded-lg font-medium border border-slate-300 hover:bg-slate-50 transition-colors"
+            >
+              Visit RLBreakers.com
+              <ArrowRight size={16} />
+            </a>
+          </div>
             </div>
           </div>
         </section>
