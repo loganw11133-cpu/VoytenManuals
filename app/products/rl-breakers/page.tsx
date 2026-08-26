@@ -25,6 +25,8 @@ export const metadata: Metadata = {
     'RLI integrally fused', 'RLF fully rated', 'Static Trip III', 'RL accessories', 'RL parts',
     'Type LA breaker', 'LVPCB', 'low voltage power circuit breaker',
     'Voyten Electric', 'RLBreakers.com', 'Wendell NC breakers', 'SG-3068', 'SGIM-3068D',
+    // Legacy nameplate wording — non-rendered, for query resolution only.
+    'Siemens RL breaker', 'Siemens Type RL', 'Siemens LA breaker', 'Siemens Wendell',
     'anti-pump relay', 'shunt trip', 'auxiliary switch', 'motor operator',
     'tapped sensor', 'undervoltage trip', 'close solenoid', 'RL renewal parts',
   ],

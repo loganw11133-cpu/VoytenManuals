@@ -25,6 +25,8 @@ export const metadata: Metadata = {
     'recondition vs replace circuit breaker', 'aging switchgear options', 'obsolete breaker decision',
     'RL breaker emergency replacement', 'EOL switchgear lifecycle', 'breaker retrofill', 'RL switchgear upgrade',
     'Voyten Electric', 'PEARL recyclers league',
+    // Legacy nameplate wording — non-rendered, for query resolution only.
+    'Siemens RL breaker replacement', 'Siemens Type RL switchgear',
   ],
   openGraph: {
     title: 'Voyten Type RL/VRL Breaker — Repair, Recondition, Retrofit, or Replace?',

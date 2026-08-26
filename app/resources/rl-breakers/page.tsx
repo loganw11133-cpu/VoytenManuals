@@ -63,6 +63,8 @@ export const metadata: Metadata = {
     'Type LA breaker', 'RL renewal parts guide',
     'SGIM-3068', 'SG-3068', 'SG-3118', 'SG-3169',
     'Voyten Electric', 'RLBreakers.com',
+    // Legacy nameplate wording — non-rendered, for query resolution only.
+    'Siemens RL breaker guide', 'Siemens Type RL', 'Siemens Wendell NC', 'Siemens LA breaker',
   ],
   openGraph: {
     title: 'Voyten Type RL/VRL Breaker — Complete Technical Reference',
