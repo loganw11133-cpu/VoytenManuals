@@ -7,7 +7,7 @@ const SITE = 'https://www.voytenmanuals.com';
 
 export const metadata: Metadata = {
   title: 'Breaker Decoder Tools',
-  description: 'Free circuit breaker catalog number decoders. Decode Eaton, Siemens, GE, and Square D / Schneider model numbers for Siemens RL, Siemens WL (Sentron WL), GE WavePro, Eaton RD (R-Frame), Magnum DS (MDS) / SBS, Magnum MW (IEC), Magnum PXR / Power Defense SB, and Square D MasterPact NT / NW breakers instantly.',
+  description: 'Free circuit breaker catalog number decoders. Decode Voyten, Eaton, Siemens, GE, and Square D / Schneider model numbers for Voyten Type RL/VRL, Siemens WL (Sentron WL), GE WavePro, Eaton RD (R-Frame), Magnum DS (MDS) / SBS, Magnum MW (IEC), Magnum PXR / Power Defense SB, and Square D MasterPact NT / NW breakers instantly.',
   keywords: [
     'circuit breaker catalog number decoder',
     'breaker nameplate decoder',
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     url: `${SITE}/tools`,
     siteName: 'Voyten Manuals',
     title: 'Free Breaker Catalog Number Decoders',
-    description: 'Identify a Siemens, Eaton / Cutler-Hammer, GE or Square D circuit breaker from its catalog number — frame, ampere rating, trip unit, mounting and factory accessories. Free, no login.',
+    description: 'Identify a Voyten, Siemens, Eaton / Cutler-Hammer, GE or Square D circuit breaker from its catalog number — frame, ampere rating, trip unit, mounting and factory accessories. Free, no login.',
   },
 };
 

@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="description" content="Siemens RL 600V LVPCB circuit breaker catalog number decoder. Identify connection, interrupting type, frame size, operation, sensors, control voltage, system wiring, trip unit, and optional devices.">
-<title>Siemens RL LVPCB Decoder — Voyten Electric</title>
+<meta name="description" content="Voyten Type RL/VRL 600V LVPCB circuit breaker catalog number decoder. Identify connection, interrupting type, frame size, operation, sensors, control voltage, system wiring, trip unit, and optional devices.">
+<title>Voyten Type RL/VRL LVPCB Decoder — Voyten Electric</title>
 <link rel="stylesheet" href="decoder-fonts.css">
 <style>
 :root {
@@ -242,8 +242,8 @@ body {
 </noscript>
 
 <div class="header">
-  <h1>Siemens <span class="accent">RL LVPCB</span> Decoder</h1>
-  <div class="subtitle">RL 600V Low Voltage Power Circuit Breaker — Catalog Number Decoder</div>
+  <h1>Voyten Type <span class="accent">RL/VRL LVPCB</span> Decoder</h1>
+  <div class="subtitle">RL/VRL 600V Low Voltage Power Circuit Breaker — Catalog Number Decoder</div>
 </div>
 
 <div class="container">
@@ -679,7 +679,7 @@ function decode() {
   document.getElementById('results').innerHTML = '';
   document.getElementById('results').classList.remove('visible');
 
-  if (!rawInput) { showError('Empty Input', 'Please enter a Siemens RL catalog number.'); return; }
+  if (!rawInput) { showError('Empty Input', 'Please enter a Type RL/VRL catalog number.'); return; }
 
   /* Split off dash-suffix if present (e.g. -K, -G, -A1HB2) */
   let raw = rawInput;
@@ -931,7 +931,7 @@ function renderResults(raw, d) {
   if (d.connection) bannerSpecs.push(d.connection.value);
   if (d.operation) bannerSpecs.push(d.operation.value);
   html += '<div class="summary-banner">';
-  html += '<div class="headline">Siemens ' + designation + (bannerSpecs.length ? ' — ' + bannerSpecs.join(' — ') : '') + '</div>';
+  html += '<div class="headline">Voyten Type ' + designation + (bannerSpecs.length ? ' — ' + bannerSpecs.join(' — ') : '') + '</div>';
   html += '<div class="catalog-fmt">' + esc(raw) + '</div>';
   html += '<button class="btn-copy" id="btnCopyCat" onclick="copyCatalog()">Copy Catalog Number</button>';
   html += ' <button class="btn-pdf" onclick="downloadDecoderPDF()">Download PDF</button>';

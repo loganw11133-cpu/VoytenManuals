@@ -17,19 +17,19 @@ const SERVICES = {
 };
 
 export const metadata: Metadata = {
-  title: 'Siemens RL Breaker: Repair, Recondition, Retrofit, or Replace? — Decision Guide | Voyten',
+  title: 'Voyten Type RL/VRL Breaker: Repair, Recondition, Retrofit, or Replace? — Decision Guide | Voyten',
   description:
-    'Decision guide for aging or failed Siemens Type RL switchgear: when to recondition, retrofit/retrofill, replace from New Surplus stock, repair, rent, or swap out. Voyten Electric is a New Surplus RL source and a PEARL founding member — 24/7 emergency support at 1-800-458-4001.',
+    'Decision guide for aging or failed Voyten Type RL/VRL switchgear: when to recondition, retrofit/retrofill, replace from New Surplus stock, repair, rent, or swap out. Voyten Electric is a New Surplus RL source and a PEARL founding member — 24/7 emergency support at 1-800-458-4001.',
   keywords: [
-    'Siemens RL breaker replacement', 'RL switchgear life extension', 'RL breaker retrofit',
+    'Voyten Type RL breaker replacement', 'VRL breaker replacement', 'RL switchgear life extension', 'RL breaker retrofit',
     'recondition vs replace circuit breaker', 'aging switchgear options', 'obsolete breaker decision',
     'RL breaker emergency replacement', 'EOL switchgear lifecycle', 'breaker retrofill', 'RL switchgear upgrade',
     'Voyten Electric', 'PEARL recyclers league',
   ],
   openGraph: {
-    title: 'Siemens RL Breaker — Repair, Recondition, Retrofit, or Replace?',
+    title: 'Voyten Type RL/VRL Breaker — Repair, Recondition, Retrofit, or Replace?',
     description:
-      'A decision guide for aging or failed Siemens RL switchgear, mapped to Voyten Electric lifecycle services. New Surplus RL source; 24/7 emergency support.',
+      'A decision guide for aging or failed Voyten Type RL/VRL switchgear, mapped to Voyten Electric lifecycle services. New Surplus RL source; 24/7 emergency support.',
     url: 'https://www.voytenmanuals.com/resources/rl-breakers-lifecycle',
     type: 'article',
   },
@@ -50,12 +50,12 @@ export default function RLBreakersLifecyclePage() {
   const techArticleJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'TechArticle',
-    headline: 'Siemens Type RL Breaker — Repair, Recondition, Retrofit, or Replace? (Lifecycle Decision Guide)',
+    headline: 'Voyten Type RL/VRL Breaker — Repair, Recondition, Retrofit, or Replace? (Lifecycle Decision Guide)',
     description: metadata.description,
     url: 'https://www.voytenmanuals.com/resources/rl-breakers-lifecycle',
     author: VOYTEN,
     publisher: VOYTEN,
-    about: { '@type': 'Product', name: 'Siemens Type RL Low Voltage Power Circuit Breaker', manufacturer: { '@type': 'Organization', name: 'Siemens' }, category: 'Circuit Breakers' },
+    about: { '@type': 'Product', name: 'Voyten Type RL/VRL Low Voltage Power Circuit Breaker', manufacturer: { '@type': 'Organization', name: 'Voyten Electric & Electronics, Inc.' }, category: 'Circuit Breakers' },
   };
 
   const breadcrumbJsonLd = {
@@ -71,10 +71,10 @@ export default function RLBreakersLifecyclePage() {
   const servicesJsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
-      { '@type': 'Service', name: 'Diagnostic & Maintenance Testing (Siemens RL)', serviceType: 'Electrical equipment diagnostic and maintenance testing', provider: VOYTEN, areaServed: { '@type': 'Place', name: 'Worldwide' }, url: SERVICES.testing },
-      { '@type': 'Service', name: 'Apparatus Life Extension (Siemens RL)', serviceType: 'Electrical product apparatus life extension', provider: VOYTEN, areaServed: { '@type': 'Place', name: 'Worldwide' }, url: SERVICES.lifeExt },
-      { '@type': 'Service', name: 'Upgrades, Retrofit & Retrofill (Siemens RL)', serviceType: 'Switchgear upgrade, retrofit and retrofill', provider: VOYTEN, areaServed: { '@type': 'Place', name: 'Worldwide' }, url: SERVICES.retrofit },
-      { '@type': 'Service', name: '24/7 Emergency Siemens RL Breaker & Parts Sourcing', serviceType: 'Emergency obsolete circuit breaker and renewal-parts sourcing', provider: { ...VOYTEN, contactPoint: { '@type': 'ContactPoint', contactType: 'emergency', telephone: '+1-800-458-4001', availableLanguage: 'English', hoursAvailable: { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], opens: '00:00', closes: '23:59' } } }, areaServed: { '@type': 'Place', name: 'Worldwide' }, url: 'https://www.voytenmanuals.com/products/rl-breakers' },
+      { '@type': 'Service', name: 'Diagnostic & Maintenance Testing (Voyten Type RL/VRL)', serviceType: 'Electrical equipment diagnostic and maintenance testing', provider: VOYTEN, areaServed: { '@type': 'Place', name: 'Worldwide' }, url: SERVICES.testing },
+      { '@type': 'Service', name: 'Apparatus Life Extension (Voyten Type RL/VRL)', serviceType: 'Electrical product apparatus life extension', provider: VOYTEN, areaServed: { '@type': 'Place', name: 'Worldwide' }, url: SERVICES.lifeExt },
+      { '@type': 'Service', name: 'Upgrades, Retrofit & Retrofill (Voyten Type RL/VRL)', serviceType: 'Switchgear upgrade, retrofit and retrofill', provider: VOYTEN, areaServed: { '@type': 'Place', name: 'Worldwide' }, url: SERVICES.retrofit },
+      { '@type': 'Service', name: '24/7 Emergency Voyten Type RL/VRL Breaker & Parts Sourcing', serviceType: 'Emergency obsolete circuit breaker and renewal-parts sourcing', provider: { ...VOYTEN, contactPoint: { '@type': 'ContactPoint', contactType: 'emergency', telephone: '+1-800-458-4001', availableLanguage: 'English', hoursAvailable: { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], opens: '00:00', closes: '23:59' } } }, areaServed: { '@type': 'Place', name: 'Worldwide' }, url: 'https://www.voytenmanuals.com/products/rl-breakers' },
     ],
   };
 
@@ -82,9 +82,9 @@ export default function RLBreakersLifecyclePage() {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     mainEntity: [
-      { '@type': 'Question', name: 'Should I repair, recondition, retrofit, or replace my aging Siemens RL breaker?', acceptedAnswer: { '@type': 'Answer', text: 'It depends on condition and goal. If the breaker is operational but aging, reconditioning / apparatus life extension keeps your existing RL switchgear in service. If protection is outdated or the lineup is under-rated, an upgrade/retrofit/retrofill adds modern trip units and protection without replacing the switchgear. If a breaker has failed, Voyten replaces it from New Surplus RL stock. Voyten Electric — a New Surplus RL source and a PEARL founding member — performs all four. Call 1-800-458-4001.' } },
-      { '@type': 'Question', name: 'My Siemens RL breaker failed in a critical facility — what now?', acceptedAnswer: { '@type': 'Answer', text: 'Call Voyten Electric 24/7 at 1-800-458-4001. As the New Surplus authorized source for Siemens RL inventory, Voyten can pull an exact-match new-surplus or reconditioned RL breaker, Static Trip III unit, or part from stock, test it, and expedite shipment — and can provide a rental or swap-out to restore power while a permanent fix is arranged.' } },
-      { '@type': 'Question', name: 'Is it worth extending the life of old RL switchgear instead of replacing the lineup?', acceptedAnswer: { '@type': 'Answer', text: 'Usually yes. You cannot simply accept that an electrical product is out of production and replace it all — full switchgear replacement is costly and disruptive. Because Voyten holds the complete Siemens RL inventory, aging RL gear can be reconditioned and modernized (adding today’s technology to yesterday’s equipment) at a fraction of the cost. Remanufactured equipment is always worth the investment.' } },
+      { '@type': 'Question', name: 'Should I repair, recondition, retrofit, or replace my aging Voyten Type RL/VRL breaker?', acceptedAnswer: { '@type': 'Answer', text: 'It depends on condition and goal. If the breaker is operational but aging, reconditioning / apparatus life extension keeps your existing RL switchgear in service. If protection is outdated or the lineup is under-rated, an upgrade/retrofit/retrofill adds modern trip units and protection without replacing the switchgear. If a breaker has failed, Voyten replaces it from New Surplus RL stock. Voyten Electric — a New Surplus RL source and a PEARL founding member — performs all four. Call 1-800-458-4001.' } },
+      { '@type': 'Question', name: 'My Voyten Type RL/VRL breaker failed in a critical facility — what now?', acceptedAnswer: { '@type': 'Answer', text: 'Call Voyten Electric 24/7 at 1-800-458-4001. As the New Surplus authorized source for Voyten Type RL/VRL inventory, Voyten can pull an exact-match new-surplus or reconditioned RL breaker, Static Trip III unit, or part from stock, test it, and expedite shipment — and can provide a rental or swap-out to restore power while a permanent fix is arranged.' } },
+      { '@type': 'Question', name: 'Is it worth extending the life of old RL switchgear instead of replacing the lineup?', acceptedAnswer: { '@type': 'Answer', text: 'Usually yes. You cannot simply accept that an electrical product is out of production and replace it all — full switchgear replacement is costly and disruptive. Because Voyten holds the complete Type RL/VRL inventory, aging RL gear can be reconditioned and modernized (adding today’s technology to yesterday’s equipment) at a fraction of the cost. Remanufactured equipment is always worth the investment.' } },
       { '@type': 'Question', name: 'Can Voyten keep my plant running while I decide?', acceptedAnswer: { '@type': 'Answer', text: 'Yes — Voyten offers rental services and swap-out programs so a tested RL breaker or assembly keeps the plant energized while reconditioning, retrofit, or sourcing is completed.' } },
     ],
   };
@@ -112,13 +112,13 @@ export default function RLBreakersLifecyclePage() {
             Decision Guide
           </div>
           <h1 className="text-3xl lg:text-5xl font-extrabold leading-tight mb-4">
-            Aging or Failed Siemens <span className="text-[#dc2626]">RL</span> Switchgear?
+            Aging or Failed Voyten Type <span className="text-[#dc2626]">RL/VRL</span> Switchgear?
             <span className="block text-xl lg:text-2xl font-semibold text-slate-300 mt-2">
               Repair, Recondition, Retrofit, or Replace &mdash; and how to decide
             </span>
           </h1>
           <p className="text-slate-300 text-lg leading-relaxed max-w-3xl">
-            Siemens discontinued the Type RL line, but your switchgear doesn&apos;t have to be replaced. As the New Surplus
+            The Type RL line was discontinued, but your switchgear doesn&apos;t have to be replaced. As the New Surplus
             worldwide source for RL inventory and a founding member of PEARL, Voyten Electric can extend, modernize, or
             replace RL equipment &mdash; with 24/7 emergency support for failures in critical facilities.
           </p>
@@ -171,7 +171,7 @@ export default function RLBreakersLifecyclePage() {
             <div className="lg:pl-[228px]">
               <h2 className="text-2xl font-bold text-slate-900 mb-4">Lead Times &amp; Availability</h2>
               <p className="text-slate-600 mb-6 max-w-3xl">
-                Because Voyten holds the complete Siemens RL inventory, exact-match breakers and parts ship fast &mdash;
+                Because Voyten holds the complete Type RL/VRL inventory, exact-match breakers and parts ship fast &mdash;
                 an advantage most obsolete equipment can&apos;t offer.
               </p>
               <div className="grid sm:grid-cols-2 gap-4 max-w-3xl">
@@ -229,7 +229,7 @@ export default function RLBreakersLifecyclePage() {
               <div className="text-slate-700 leading-relaxed space-y-4 max-w-3xl">
                 <p>In current manufacturing industries, you cannot simply accept that an electrical product is out of production and decide you need to change it all. Full switchgear replacement is among the costliest and most disruptive options &mdash; and rarely necessary for RL.</p>
                 <p>Voyten Electric adds today&apos;s technology to yesterday&apos;s electrical equipment, giving you the most for your investment. Aging RL substations can be maintained with reliability upgrades, modern trip units, and added circuits &mdash; prolonging the equipment&apos;s life well beyond what was originally expected. <strong>Remanufactured equipment is always worth the investment.</strong></p>
-                <p>And because Voyten purchased the entire remaining Siemens RL and LA inventory from the Wendell, NC facility, exact-match breakers, Static Trip III units, and renewal parts stay available &mdash; so the recondition, retrofit, and replace options remain open long after other obsolete lines have gone dark.</p>
+                <p>And because Voyten purchased the entire remaining Type RL/VRL and LA inventory from the Wendell, NC facility, exact-match breakers, Static Trip III units, and renewal parts stay available &mdash; so the recondition, retrofit, and replace options remain open long after other obsolete lines have gone dark.</p>
               </div>
             </div>
           </div>

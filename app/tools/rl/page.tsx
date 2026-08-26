@@ -18,7 +18,7 @@ export default function RlDecoderPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(decoderJsonLd(decoder)) }}
       />
-      <DecoderFrame src="/tools/rl-decoder.html" title="Siemens RL Circuit Breaker Decoder" />
+      <DecoderFrame src="/tools/rl-decoder.html" title="Voyten Type RL/VRL Circuit Breaker Decoder" />
       <DecoderAbout decoder={decoder} />
     </>
   );

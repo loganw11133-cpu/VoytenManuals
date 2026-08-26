@@ -17,19 +17,19 @@ const IMG_PARTS = `${CDN}/assets/images/white%20background%20parts.png`;
 // ── SEO Metadata ──
 
 export const metadata: Metadata = {
-  title: 'Siemens RL Breakers & Accessories — New Surplus Inventory | Voyten Manuals',
+  title: 'Voyten Type RL/VRL Breakers & Accessories — New Surplus Inventory | Voyten Manuals',
   description:
-    'Voyten Electric acquired all remaining Siemens Type RL & LA breaker inventory from Siemens Wendell, NC. Browse manuals, parts catalogs, and technical documentation for RL, RLE, RLI, RLF breakers (800–5000A), Static Trip III units, and 23 accessory categories. Your New Surplus authorized source for  RL parts.',
+    'Voyten Electric acquired all remaining Type RL & LA breaker inventory directly from the Wendell, NC manufacturing facility. Browse manuals, parts catalogs, and technical documentation for Voyten Type RL/VRL, RLE, RLI, and RLF breakers (800–5000A), Static Trip III units, and 23 accessory categories. Your New Surplus authorized source for RL/VRL parts.',
   keywords: [
-    'Siemens RL breaker', 'RL circuit breaker', 'RLE breaker', 'RLI integrally fused',
-    'RLF fully rated', 'Static Trip III', 'RL accessories', 'RL parts',
-    'Siemens LA breaker', 'LVPCB', 'low voltage power circuit breaker',
-    'Voyten Electric', 'RLBreakers.com', 'Siemens Wendell', 'SG-3068', 'SGIM-3068D',
+    'Voyten Type RL breaker', 'VRL breaker', 'RL circuit breaker', 'RLE breaker',
+    'RLI integrally fused', 'RLF fully rated', 'Static Trip III', 'RL accessories', 'RL parts',
+    'Type LA breaker', 'LVPCB', 'low voltage power circuit breaker',
+    'Voyten Electric', 'RLBreakers.com', 'Wendell NC breakers', 'SG-3068', 'SGIM-3068D',
     'anti-pump relay', 'shunt trip', 'auxiliary switch', 'motor operator',
     'tapped sensor', 'undervoltage trip', 'close solenoid', 'RL renewal parts',
   ],
   openGraph: {
-    title: 'Siemens RL Breakers — New Surplus Inventory from Voyten Electric',
+    title: 'Voyten Type RL/VRL Breakers — New Surplus Inventory from Voyten Electric',
     description:
       'Complete RL product line: breakers 800–5000A, Static Trip III, 23 accessory categories, and LA breakers. Free manuals + parts available.',
     url: 'https://www.voytenmanuals.com/products/rl-breakers',
@@ -37,8 +37,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Siemens RL Breakers — Voyten New Surplus',
-    description: 'Your New Surplus authorized source for Siemens RL & LA breaker inventory, manuals, and parts.',
+    title: 'Voyten Type RL/VRL Breakers — New Surplus',
+    description: 'Your New Surplus authorized source for Voyten Type RL/VRL & LA breaker inventory, manuals, and parts.',
   },
   alternates: {
     canonical: 'https://www.voytenmanuals.com/products/rl-breakers',
@@ -98,7 +98,7 @@ export default async function RLBreakersPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: 'Siemens RL & LA Low Voltage Power Circuit Breakers',
+    name: 'Voyten Type RL/VRL & LA Low Voltage Power Circuit Breakers',
     description: metadata.description,
     url: 'https://www.voytenmanuals.com/products/rl-breakers',
     numberOfItems: totalCount,
@@ -110,8 +110,8 @@ export default async function RLBreakersPage() {
     },
     about: {
       '@type': 'Product',
-      name: 'Siemens Type RL Low Voltage Power Circuit Breaker',
-      manufacturer: { '@type': 'Organization', name: 'Siemens' },
+      name: 'Voyten Type RL/VRL Low Voltage Power Circuit Breaker',
+      manufacturer: { '@type': 'Organization', name: 'Voyten Electric & Electronics, Inc.' },
       category: 'Circuit Breakers',
     },
   };
@@ -121,9 +121,7 @@ export default async function RLBreakersPage() {
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.voytenmanuals.com' },
-      { '@type': 'ListItem', position: 2, name: 'Manufacturers', item: 'https://www.voytenmanuals.com/manufacturers' },
-      { '@type': 'ListItem', position: 3, name: 'Siemens', item: 'https://www.voytenmanuals.com/manufacturers/siemens' },
-      { '@type': 'ListItem', position: 4, name: 'RL Breakers' },
+      { '@type': 'ListItem', position: 2, name: 'Voyten Type RL/VRL Breakers', item: 'https://www.voytenmanuals.com/products/rl-breakers' },
     ],
   };
 
@@ -133,18 +131,18 @@ export default async function RLBreakersPage() {
     mainEntity: [
       {
         '@type': 'Question',
-        name: 'Where can I buy Siemens RL breaker parts?',
+        name: 'Where can I buy Voyten Type RL/VRL breaker parts?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Voyten Electric & Electronics, Inc. is the New Surplus authorized source for Siemens Type RL breaker inventory worldwide. Voyten purchased all remaining RL and LA breaker inventory directly from the Siemens Wendell, NC manufacturing facility. New-surplus breakers, Static Trip III units, and every renewal part are tested, in stock, and ready to ship. Call 1-800-458-4001 or request a quote at voytenmanuals.com/contact.',
+          text: 'Voyten Electric & Electronics, Inc. is the New Surplus authorized source for Voyten Type RL/VRL breaker inventory worldwide. Voyten purchased all remaining RL and LA breaker inventory directly from the Wendell, NC manufacturing facility. New-surplus breakers, Static Trip III units, and every renewal part are tested, in stock, and ready to ship. Call 1-800-458-4001 or request a quote at voytenmanuals.com/contact.',
         },
       },
       {
         '@type': 'Question',
-        name: 'What is a Siemens Type RL breaker?',
+        name: 'What is a Voyten Type RL/VRL breaker?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'The Siemens Type RL is a low voltage power circuit breaker (LVPCB) in drawout construction, rated from 800A to 5000A. It uses the Static Trip III electronic trip unit for LSIG (Long-time, Short-time, Instantaneous, Ground fault) overcurrent protection. Variants include the RL (standard), RLE (economical — 800/2000/4000A frames), RLI (integrally fused — 800A), and RLF (fully rated). The RL product line also includes the companion Type LA air circuit breaker.',
+          text: 'The Voyten Type RL/VRL is a low voltage power circuit breaker (LVPCB) in drawout construction, rated from 800A to 5000A. It uses the Static Trip III electronic trip unit for LSIG (Long-time, Short-time, Instantaneous, Ground fault) overcurrent protection. Variants include the RL (standard), RLE (economical — 800/2000/4000A frames), RLI (integrally fused — 800A), and RLF (fully rated). The RL product line also includes the companion Type LA air circuit breaker.',
         },
       },
       {
@@ -152,31 +150,31 @@ export default async function RLBreakersPage() {
         name: 'What is the Static Trip III trip unit?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'The Siemens Static Trip III is an electronic trip unit providing adjustable LSIG overcurrent protection for all RL series breakers. L = Long-time delay (adjustable pickup and time band), S = Short-time delay (I²t or flat response), I = Instantaneous (fixed or adjustable pickup), G = Ground fault (adjustable pickup and delay). Voyten stocks new-surplus and reconditioned Static Trip III units with full testing and calibration.',
+          text: 'The Static Trip III is an electronic trip unit providing adjustable LSIG overcurrent protection for all RL series breakers. L = Long-time delay (adjustable pickup and time band), S = Short-time delay (I²t or flat response), I = Instantaneous (fixed or adjustable pickup), G = Ground fault (adjustable pickup and delay). Voyten stocks new-surplus and reconditioned Static Trip III units with full testing and calibration.',
         },
       },
       {
         '@type': 'Question',
-        name: 'What RL breaker frame sizes does Voyten stock?',
+        name: 'What RL/VRL breaker frame sizes does Voyten stock?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Voyten stocks RL breakers and parts for all frame sizes: 800A, 1200A, 1600A, 2000A, 2500A, 3000A, 3200A, 4000A, and 5000A. The inventory includes 23 accessory categories covering every component from anti-pump relays and arc chutes to motor operators and undervoltage trip devices.',
+          text: 'Voyten stocks Type RL/VRL breakers and parts for all frame sizes: 800A, 1200A, 1600A, 2000A, 2500A, 3000A, 3200A, 4000A, and 5000A. The inventory includes 23 accessory categories covering every component from anti-pump relays and arc chutes to motor operators and undervoltage trip devices.',
         },
       },
       {
         '@type': 'Question',
-        name: 'Are Siemens RL breakers still manufactured?',
+        name: 'Are Type RL/VRL breakers still manufactured?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'No. Siemens discontinued the RL product line and closed the Wendell, NC facility. Voyten Electric purchased all remaining inventory, making them the New Surplus authorized source for  RL breakers, LA breakers, Static Trip III units, and all renewal parts. Free technical documentation including instruction manuals (SGIM-3068), renewal parts catalogs (SG-3068), and wiring diagrams (SGIM-3068D) is available at voytenmanuals.com/products/rl-breakers.',
+          text: 'No. The RL product line was discontinued and the Wendell, NC facility closed. Voyten Electric purchased all remaining inventory, making them the New Surplus authorized source for Voyten Type RL/VRL breakers, LA breakers, Static Trip III units, and all renewal parts. Free technical documentation including instruction manuals (SGIM-3068), renewal parts catalogs (SG-3068), and wiring diagrams (SGIM-3068D) is available at voytenmanuals.com/products/rl-breakers.',
         },
       },
       {
         '@type': 'Question',
-        name: 'My Siemens RL breaker failed — who do I call for an emergency replacement?',
+        name: 'My Type RL/VRL breaker failed — who do I call for an emergency replacement?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Call Voyten Electric at 1-800-458-4001 for 24/7 emergency support. As the New Surplus authorized source for Siemens Type RL inventory, Voyten identifies your breaker from its catalog or edge number, pulls an exact-match new-surplus or reconditioned RL/RLE/RLI/RLF breaker, Static Trip III unit, or renewal part from stock, tests it, and expedites shipment to minimize downtime in plants and critical facilities.',
+          text: 'Call Voyten Electric at 1-800-458-4001 for 24/7 emergency support. As the New Surplus authorized source for Voyten Type RL/VRL inventory, Voyten identifies your breaker from its catalog or edge number, pulls an exact-match new-surplus or reconditioned RL/RLE/RLI/RLF breaker, Static Trip III unit, or renewal part from stock, tests it, and expedites shipment to minimize downtime in plants and critical facilities.',
         },
       },
       {
@@ -184,12 +182,12 @@ export default async function RLBreakersPage() {
         name: 'How do I extend the life of aging RL switchgear instead of replacing it?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Because Voyten holds the complete Siemens RL inventory, aging RL switchgear can stay in service with genuine new-surplus and reconditioned RL breakers, Static Trip III trip units, and renewal parts — no need to replace the switchgear lineup. Voyten supplies exact-match components across all frames (800–5000A) so existing cells, bus, and wiring stay intact. Call 1-800-458-4001.',
+          text: 'Because Voyten holds the complete Type RL/VRL inventory, aging RL switchgear can stay in service with genuine new-surplus and reconditioned RL breakers, Static Trip III trip units, and renewal parts — no need to replace the switchgear lineup. Voyten supplies exact-match components across all frames (800–5000A) so existing cells, bus, and wiring stay intact. Call 1-800-458-4001.',
         },
       },
       {
         '@type': 'Question',
-        name: 'How do I identify my Siemens RL breaker to order a replacement?',
+        name: 'How do I identify my Type RL/VRL breaker to order a replacement?',
         acceptedAnswer: {
           '@type': 'Answer',
           text: 'Provide the catalog number or the edge number stamped on the breaker frame, plus the frame size (800–5000A) and trip-unit model. Voyten cross-references these to the exact replacement breaker and parts. Call 1-800-458-4001 or request a quote at voytenmanuals.com/contact.',
@@ -201,11 +199,11 @@ export default async function RLBreakersPage() {
   const offerJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Product',
-    name: 'Siemens Type RL Low Voltage Power Circuit Breaker',
+    name: 'Voyten Type RL/VRL Low Voltage Power Circuit Breaker',
     category: 'Low Voltage Power Circuit Breakers',
-    description: 'New-surplus and reconditioned Siemens Type RL/RLE/RLI/RLF power circuit breakers (800–5000A), Static Trip III trip units, and renewal parts — from Voyten Electric, the New Surplus authorized source for the discontinued Siemens RL line.',
-    brand: { '@type': 'Brand', name: 'Siemens' },
-    manufacturer: { '@type': 'Organization', name: 'Siemens' },
+    description: 'New-surplus and reconditioned Voyten Type RL/VRL/RLE/RLI/RLF power circuit breakers (800–5000A), Static Trip III trip units, and renewal parts — from Voyten Electric, the New Surplus authorized source for the discontinued RL line.',
+    brand: { '@type': 'Brand', name: 'Voyten Electric' },
+    manufacturer: { '@type': 'Organization', name: 'Voyten Electric & Electronics, Inc.' },
     url: 'https://www.voytenmanuals.com/products/rl-breakers',
     offers: {
       '@type': 'Offer',
@@ -225,9 +223,9 @@ export default async function RLBreakersPage() {
   const serviceJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    name: '24/7 Emergency Siemens RL Breaker & Parts Sourcing',
+    name: '24/7 Emergency Voyten Type RL/VRL Breaker & Parts Sourcing',
     serviceType: 'Emergency obsolete circuit breaker and renewal-parts sourcing',
-    description: 'Emergency sourcing, testing, and expedited shipment of exact-match Siemens Type RL breakers, Static Trip III trip units, and renewal parts for failed or aging RL switchgear. Voyten holds New Surplus RL inventory acquired from the Siemens Wendell, NC facility.',
+    description: 'Emergency sourcing, testing, and expedited shipment of exact-match Voyten Type RL/VRL breakers, Static Trip III trip units, and renewal parts for failed or aging RL switchgear. Voyten holds New Surplus RL inventory acquired from the Wendell, NC facility.',
     areaServed: { '@type': 'Place', name: 'Worldwide' },
     provider: {
       '@type': 'Organization',
@@ -267,9 +265,7 @@ export default async function RLBreakersPage() {
               <nav className="flex items-center gap-2 text-sm text-slate-400 mb-6">
                 <Link href="/" className="hover:text-white transition-colors">Home</Link>
                 <ChevronRight size={14} />
-                <Link href="/manufacturers/siemens" className="hover:text-white transition-colors">Siemens</Link>
-                <ChevronRight size={14} />
-                <span className="text-white">RL Breakers</span>
+                <span className="text-white">Voyten Type RL/VRL Breakers</span>
               </nav>
 
               <div className="inline-flex items-center gap-2 bg-[#dc2626] text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-4">
@@ -278,7 +274,7 @@ export default async function RLBreakersPage() {
               </div>
 
               <h1 className="text-3xl lg:text-5xl font-extrabold leading-tight mb-4">
-                Siemens Type <span className="text-[#dc2626]">RL</span> Breakers
+                Voyten Type <span className="text-[#dc2626]">RL/VRL</span> Breakers
                 <span className="block text-xl lg:text-2xl font-semibold text-slate-300 mt-2">
                   Low Voltage Power Circuit Breakers — 800A to 5000A
                 </span>
@@ -286,9 +282,9 @@ export default async function RLBreakersPage() {
 
               <p className="text-slate-300 text-lg leading-relaxed mb-6 max-w-xl">
                 Voyten Electric is your <strong className="text-white">New Surplus authorized source</strong> for
-                Siemens Type RL &amp; LA breakers, acquired directly from the Siemens Wendell, NC facility. Complete
+                Voyten Type RL/VRL &amp; LA breakers, acquired directly from the Wendell, NC manufacturing facility. Complete
                 breakers — new and reconditioned — plus Static Trip III units, rating plugs, and every renewal part
-                in the RL product line, stocked for immediate shipment.
+                in the RL/VRL product line, stocked for immediate shipment.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3">
@@ -315,14 +311,14 @@ export default async function RLBreakersPage() {
                 <div className="bg-white/5 rounded-2xl p-6 backdrop-blur-sm border border-white/10">
                   <Image
                     src={IMG_BREAKER_HERO}
-                    alt="Siemens Type RL Low Voltage Power Circuit Breaker — drawout insulated case breaker with Static Trip III electronic trip unit"
+                    alt="Voyten Type RL/VRL Low Voltage Power Circuit Breaker — drawout insulated case breaker with Static Trip III electronic trip unit"
                     width={480}
                     height={360}
                     className="w-full h-auto rounded-lg"
                     priority
                   />
                   <p className="text-center text-sm text-slate-400 mt-3">
-                    Siemens Type RL LVPCB with Static Trip III
+                    Voyten Type RL/VRL LVPCB with Static Trip III
                   </p>
                 </div>
               </div>
@@ -361,7 +357,7 @@ export default async function RLBreakersPage() {
           <div className="mb-6">
             <h2 className="text-2xl font-bold text-slate-900">RL Accessories &amp; Renewal Parts</h2>
             <p className="text-slate-500 mt-1">
-              23 accessory categories — every component for the RL product line, from anti-pump relays to undervoltage trip devices.
+              23 accessory categories — every component for the RL/VRL product line, from anti-pump relays to undervoltage trip devices.
             </p>
           </div>
 
@@ -371,7 +367,7 @@ export default async function RLBreakersPage() {
               <div className="lg:col-span-1 flex justify-center">
                 <Image
                   src={IMG_PARTS}
-                  alt="Siemens RL breaker accessories and renewal parts — technical drawing showing component assemblies"
+                  alt="Voyten Type RL/VRL breaker accessories and renewal parts — technical drawing showing component assemblies"
                   width={400}
                   height={300}
                   className="w-full max-w-sm h-auto rounded-lg"
@@ -380,7 +376,7 @@ export default async function RLBreakersPage() {
               <div className="lg:col-span-2">
                 <h3 className="text-lg font-bold text-slate-900 mb-2">Complete Parts Availability</h3>
                 <p className="text-slate-600 leading-relaxed mb-4">
-                  Voyten maintains the largest available inventory of Siemens RL renewal parts. From contact finger kits and
+                  Voyten maintains the largest available inventory of Type RL/VRL renewal parts. From contact finger kits and
                   arc chutes to complete breaker assemblies, every component is tested and ready to ship. Our inventory
                   includes parts for all frame sizes from 800A through 5000A.
                 </p>
@@ -530,7 +526,7 @@ export default async function RLBreakersPage() {
               <div className="lg:col-span-2 bg-slate-50 flex items-center justify-center p-8">
                 <Image
                   src="/images/static-trip-iii-diagram.png"
-                  alt="Siemens Static Trip III power flow diagram — TSIG/CP unit with forward and reverse kW/kVAR metering"
+                  alt="Static Trip III power flow diagram — TSIG/CP unit with forward and reverse kW/kVAR metering"
                   width={400}
                   height={260}
                   className="w-full max-w-[360px] h-auto rounded-lg"
@@ -545,7 +541,7 @@ export default async function RLBreakersPage() {
           <div className="bg-[#dc2626] rounded-2xl p-8 lg:p-10 text-center text-white">
             <h2 className="text-2xl lg:text-3xl font-bold mb-3">Need an RL Part?</h2>
             <p className="text-white/90 mb-6 max-w-2xl mx-auto">
-              Voyten Electric is your New Surplus authorized source for Siemens RL &amp; LA breaker inventory. New-surplus breakers, Static Trip III
+              Voyten Electric is your New Surplus authorized source for Voyten Type RL/VRL &amp; LA breaker inventory. New-surplus breakers, Static Trip III
               units, contact kits, and every renewal part — tested, in stock, and ready to ship.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">

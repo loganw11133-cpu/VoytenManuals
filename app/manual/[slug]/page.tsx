@@ -88,9 +88,9 @@ export default async function ManualPage({ params }: ManualPageProps) {
   const mTitle = manual.title || '';
   const productLine =
     (manual.manufacturer === 'Siemens' && /\bRL[EIF]?\b/.test(mTitle)) ? {
-      brand: 'Siemens',
-      label: 'Siemens RL breaker',
-      blurb: 'New Surplus and reconditioned RL breakers, Static Trip III units, and renewal parts',
+      brand: 'Voyten Electric',
+      label: 'Voyten Type RL/VRL breaker',
+      blurb: 'New Surplus and reconditioned Type RL/VRL breakers, Static Trip III units, and renewal parts',
       store: 'https://rlbreakers.com',
       storeLabel: 'RLBreakers.com',
     } :

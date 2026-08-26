@@ -21,7 +21,7 @@ export type Decoder = {
   name: string;
   /** Full product name used in headings, titles and schema. */
   fullName: string;
-  manufacturer: 'Siemens' | 'Eaton' | 'GE' | 'Square D';
+  manufacturer: 'Voyten Electric' | 'Siemens' | 'Eaton' | 'GE' | 'Square D';
   /** Card/summary description — also the meta description base. */
   description: string;
   frames: string;
@@ -51,6 +51,7 @@ export type Decoder = {
 export const MANUFACTURER_LABELS: Record<string, string> = {
   Eaton: 'Eaton / Cutler-Hammer',
   Siemens: 'Siemens',
+  'Voyten Electric': 'Voyten Electric',
   GE: 'General Electric',
   'Square D': 'Square D / Schneider Electric',
 };
@@ -61,14 +62,14 @@ export const decoders: Decoder[] = [
   {
     slug: 'rl',
     name: 'RL',
-    fullName: 'Siemens RL (RLE / RLI / RLF)',
-    manufacturer: 'Siemens',
+    fullName: 'Voyten Type RL/VRL (RLE / RLI / RLF)',
+    manufacturer: 'Voyten Electric',
     description:
-      'Decode Siemens RL 600V Low Voltage Power Circuit Breaker catalog numbers. Identifies connection, interrupting type, frame, sensors, system wiring, trip unit, and optional devices.',
+      'Decode Voyten Type RL/VRL 600V Low Voltage Power Circuit Breaker catalog numbers. Identifies connection, interrupting type, frame, sensors, system wiring, trip unit, and optional devices.',
     frames: 'RL / RLE / RLI / RLF',
     ratings: '800A – 5,000A',
     example: 'RLAS2EAJXCA05X-IJW3D8',
-    alsoKnownAs: ['Siemens Type RL', 'Siemens-Allis RL', 'RLE', 'RLI', 'RLF', 'Type LA (companion air breaker)'],
+    alsoKnownAs: ['Voyten Type RL', 'VRL', 'RLE', 'RLI', 'RLF', 'Type LA (companion air breaker)'],
     identifies: [
       'Connection type and mounting (drawout or fixed)',
       'Interrupting type and frame class — RL, RLE, RLI, RLF',
@@ -80,15 +81,15 @@ export const decoders: Decoder[] = [
     ],
     manualSearch: '/search?q=RL&manufacturer=Siemens',
     manualSearchLabel: 'Siemens RL manuals and renewal-parts catalogs',
-    productPage: { href: '/products/rl-breakers', label: 'Siemens RL breakers, Static Trip III units and renewal parts' },
+    productPage: { href: '/products/rl-breakers', label: 'Voyten Type RL/VRL breakers, Static Trip III units and renewal parts' },
     faq: [
       {
-        q: 'Where is the catalog number on a Siemens RL breaker?',
+        q: 'Where is the catalog number on a Voyten Type RL/VRL breaker?',
         a: 'On the breaker nameplate, on the front escutcheon of the drawout element. On a typical RL the catalog number runs together with a suffix after a hyphen, as in RLAS2EAJXCA05X-IJW3D8. If the plate is painted over or illegible, ' + CALL,
       },
       {
-        q: 'Is the Siemens Type RL still in production?',
-        a: 'No. Siemens discontinued the Type RL line and there is no current-production drop-in equivalent, so existing RL switchgear is supported through the aftermarket rather than replaced. Voyten Electric purchased the complete remaining RL and Type LA inventory directly from the Siemens Wendell, North Carolina facility and holds it as New Surplus.',
+        q: 'Is the Voyten Type RL/VRL still in production?',
+        a: 'No. The Type RL line was discontinued and there is no current-production drop-in equivalent, so existing RL switchgear is supported through the aftermarket rather than replaced. Voyten Electric purchased the complete remaining RL and Type LA inventory directly from the Wendell, North Carolina facility and holds it as New Surplus.',
       },
       {
         q: 'What trip unit does an RL breaker use?',
@@ -128,8 +129,8 @@ export const decoders: Decoder[] = [
         a: 'They are closely related but not interchangeable catalog systems. The ANSI/UL WL and the IEC 3WL use different numbering, so a 3WL number entered into the WL decoder is routed rather than force-decoded.',
       },
       {
-        q: 'What replaced the Siemens RL?',
-        a: 'The WL / Sentron WL family succeeded the RL in Siemens low-voltage switchgear. They are not drop-in replacements for one another — an RL cubicle needs an RL breaker or a documented retrofit.',
+        q: 'What replaced the Type RL/VRL?',
+        a: 'The WL / Sentron WL family succeeded the RL in that manufacturer\'s low-voltage switchgear. They are not drop-in replacements for one another — an RL cubicle needs a Type RL/VRL breaker or a documented retrofit.',
       },
     ],
   },

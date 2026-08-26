@@ -152,7 +152,7 @@ export default function Header() {
                     className="block px-4 py-3 hover:bg-slate-50"
                   >
                     <p className="font-semibold text-slate-900 text-sm">RL Breakers</p>
-                    <p className="text-xs text-slate-500 mt-0.5">Siemens RL New Surplus</p>
+                    <p className="text-xs text-slate-500 mt-0.5">Voyten Type RL/VRL New Surplus</p>
                   </Link>
                 </div>
               </div>
