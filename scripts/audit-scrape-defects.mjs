@@ -1,119 +1,155 @@
-// READ-ONLY scan for the two scrape-era defects found on the S&C SM-20 record.
-// Writes nothing. Run: node scripts/audit-scrape-defects.mjs
+// READ-ONLY scan for scrape-era data defects. Writes nothing.
+// Run: node scripts/audit-scrape-defects.mjs [--visible]
+//   --visible  restrict to customer-facing fields (title/description/keywords),
+//              skipping slugs, which must not change or live URLs break.
 //
-//   A. "&amp;" flattened into the word "AMP"  (e.g. "S AMP C")
-//   B. Decimal point dropped from a voltage   (e.g. "138 KV" for 13.8 kV)
+//   A. HTML entities decoded into words: "&amp;" -> "AMP"/"Sampc",
+//      '"' -> "quot", '·' -> "acircmiddot", 'Â' -> "acirc", etc.
+//   B. Decimal point dropped from a voltage: "138 KV" for 13.8 kV,
+//      "825" for 8.25, "725" for 72.5, "72" for 7.2.
+//   C. Delimiters lost between mashed numbers: "47682515KV" = 4.76/8.25/15 kV.
 //
-// B needs care: plenty of voltages legitimately have no decimal (600V, 480V,
-// 15 kV, 38 kV, 345 kV on real transmission gear). So we only flag values that
-// are implausible for their unit, and we report the evidence rather than a
-// verdict -- every hit still needs a human or a PDF check.
+// B is decided by ANSI/IEEE voltage classes: a bare integer before kV that is
+// NOT a real class, but which BECOMES one when a decimal is reinserted, is a
+// defect. Values that are real classes either way are reported as ambiguous.
 import { createClient } from '@libsql/client';
 import * as dotenv from 'dotenv';
 
 dotenv.config({ path: 'C:/Users/rodol/Desktop/DesktopBackup/Folders/Voyten-ICCB/Projects/Web-Tech Dev/EPM & VManuals/Project/Structural/VoytenManuals/.env.local' });
 
+const VISIBLE_ONLY = process.argv.includes('--visible');
 const db = createClient({ url: process.env.TURSO_DATABASE_URL, authToken: process.env.TURSO_AUTH_TOKEN });
 
 const rows = (await db.execute(
   'SELECT id, slug, title, description, keywords, manufacturer FROM manuals'
 )).rows;
-console.log('scanned ' + rows.length + ' rows\n');
 
-const FIELDS = ['title', 'description', 'keywords', 'slug'];
+const FIELDS = VISIBLE_ONLY ? ['title', 'description', 'keywords'] : ['title', 'description', 'keywords', 'slug'];
+console.log('scanned ' + rows.length + ' rows across [' + FIELDS.join(', ') + ']\n');
 
-/* ─────────── Defect A: &amp; → AMP ─────────── */
-// "AMP"/"amp" as a standalone token. Excludes legitimate uses: Ampere(s),
-// amperage, "amp" as a rating word ("800 amp"), AMP/Tyco the connector brand,
-// clamp/ramp/lamp (guarded by the word boundary anyway).
-const ampHits = [];
+/* ── ANSI/IEEE voltage classes actually manufactured (kV) ── */
+const REAL = new Set([
+  // LV
+  0.24, 0.48, 0.6, 0.635,
+  // MV nominal
+  2.4, 4.16, 4.8, 6.9, 7.2, 8.32, 11.5, 12, 12.47, 13.2, 13.8, 14.4,
+  23, 24.94, 25, 26.4, 27.6, 34.5, 46, 69,
+  // max-design ratings
+  4.76, 5, 8.25, 15, 15.5, 25.8, 27, 38, 48.3, 72.5,
+  // transmission
+  115, 121, 138, 145, 161, 169, 230, 242, 287, 345, 362, 500, 550, 765, 800,
+]);
+const isReal = n => REAL.has(n);
+
+// Insert a decimal at each interior position; return real-class candidates.
+function decimalCandidates(digits) {
+  const out = [];
+  for (let i = 1; i < digits.length; i++) {
+    const cand = parseFloat(digits.slice(0, i) + '.' + digits.slice(i));
+    if (isReal(cand)) out.push(cand);
+  }
+  return out;
+}
+
+/* ── Defect A: entity fossils ── */
+const ENTITY = [
+  { name: '&amp; -> AMP',   re: /\b([A-Za-z]{1,4})\s+AMP\s+([A-Za-z]{1,4})\b/,  note: 'ampersand between two codes' },
+  { name: '&amp; -> Sampc', re: /\bSampc\b/i,                                    note: 'S&C collapsed' },
+  { name: '&amp; token',    re: /(^|,\s*)amp(\s*,|$)/i,                          note: 'stray keyword' },
+  { name: '&quot;',         re: /quot[a-z]?quot|&?\bquot\b/i,                    note: 'double-quote fossil' },
+  { name: 'mojibake Â·',    re: /acircmiddot|acirc|Atilde|Acirc|â€/i,            note: 'UTF-8 read as latin-1' },
+  { name: '&nbsp; / dashes',re: /\bnbsp\b|\bndash\b|\bmdash\b|\bhellip\b/i,      note: 'entity word' },
+  { name: 'quotes/symbols', re: /\brsquo\b|\blsquo\b|\bldquo\b|\brdquo\b|\bdeg\b|\btrade\b(?!\s?mark)/i, note: 'entity word' },
+];
+const aHits = [];
 for (const r of rows) {
   for (const f of FIELDS) {
     const v = r[f]; if (!v) continue;
     const s = String(v);
-    // sandwiched between single letters/words the way "S AMP C" is, or a bare
-    // "amp" keyword token, or the slug form "-amp-"
-    const pats = [
-      /\b([A-Za-z]{1,3})\s+AMP\s+([A-Za-z]{1,3})\b/,      // S AMP C
-      /(^|,\s*)amp(\s*,|$)/i,                              // bare keyword token
-      /(^|-)amp(-|$)/,                                     // slug: s-amp-c
-    ];
-    // not a hit if preceded by a number ("800 amp") -- that's a real rating
-    if (/\d\s*amp/i.test(s) && !/\b[A-Za-z]{1,3}\s+AMP\s+[A-Za-z]{1,3}\b/.test(s)) continue;
-    for (const p of pats) {
-      if (p.test(s)) { ampHits.push({ id: r.id, field: f, mfr: r.manufacturer, value: s.slice(0, 150) }); break; }
+    for (const e of ENTITY) {
+      // "800 amp" is a real rating, not an entity fossil
+      if (e.name === '&amp; token' && /\d\s*amp/i.test(s)) continue;
+      if (e.re.test(s)) {
+        aHits.push({ id: r.id, field: f, mfr: r.manufacturer, kind: e.name, value: s.slice(0, 130) });
+        break;
+      }
     }
   }
 }
 
-/* ─────────── Defect B: dropped decimal in a voltage ─────────── */
-// Standard distribution/transmission kV classes that DO exist without a
-// decimal -- these are never flagged.
-const REAL_KV = new Set([1,2,3,5,6,7,8,10,11,12,13,15,17,20,23,25,26,27,33,34,35,36,38,44,46,48,50,55,63,66,69,72,88,100,110,115,120,132,138,145,150,161,169,220,230,242,245,275,287,300,330,345,362,380,400,420,500,525,550,735,765,800]);
-// The decimal-dropped forms we actually expect from real nameplate voltages.
-const SUSPECT = new Map([
-  ['138', '13.8'], ['345', '34.5'], ['416', '4.16'], ['248', '24.8'],
-  ['278', '27.8'], ['138', '13.8'], ['721', '7.2'],  ['144', '14.4'],
-  ['481', '4.8'],  ['242', '2.4'],  ['690', '6.9'],  ['1197', '11.97'],
-]);
-
-const kvHits = [];
+/* ── Defect B: dropped decimal before kV ── */
+const bDefect = [], bAmbiguous = [];
 for (const r of rows) {
   for (const f of ['title', 'description']) {
     const v = r[f]; if (!v) continue;
     const s = String(v);
-    const re = /\b(\d{3,4})\s*k\s*v\b/gi;
+    // digits immediately before kV/KV/kv, NOT kVA
+    const re = /\b(\d{2,5})\s*k\.?\s*v\b(?!a)/gi;
     let m;
     while ((m = re.exec(s))) {
-      const n = m[1];
-      if (!SUSPECT.has(n)) continue;
-      // A genuine transmission doc can legitimately say 138 kV or 345 kV.
-      // The tell is context: distribution / indoor / low-voltage gear.
-      const ctx = s.toLowerCase();
-      const lowVoltCtx = /indoor|distribution|fuse|starter|motor control|switchgear|load ?break|cutout|recloser|padmount|pad-mount|network/.test(ctx);
-      kvHits.push({
-        id: r.id, field: f, mfr: r.manufacturer,
-        found: n + ' kV', likely: SUSPECT.get(n),
-        distributionContext: lowVoltCtx,
-        value: s.slice(0, 150),
-      });
+      const digits = m[1];
+      const asInt = parseInt(digits, 10);
+      const cands = decimalCandidates(digits);
+      if (isReal(asInt)) {
+        // real either way -> only note it if a decimal reading also works
+        if (cands.length) {
+          bAmbiguous.push({ id: r.id, field: f, mfr: r.manufacturer, found: digits, alt: cands.join(' / '), value: s.slice(0, 130) });
+        }
+      } else if (cands.length) {
+        bDefect.push({ id: r.id, field: f, mfr: r.manufacturer, found: digits, fix: cands.join(' / '), value: s.slice(0, 130) });
+      }
     }
   }
 }
 
-/* ─────────── Report ─────────── */
-function group(hits) {
-  const byId = new Map();
-  for (const h of hits) {
-    if (!byId.has(h.id)) byId.set(h.id, []);
-    byId.get(h.id).push(h);
+/* ── Defect C: mashed numeric runs before kV ── */
+const cHits = [];
+for (const r of rows) {
+  for (const f of ['title', 'description']) {
+    const v = r[f]; if (!v) continue;
+    const s = String(v);
+    const re = /\b(\d{6,})\s*k\.?\s*v\b(?!a)/gi;
+    let m;
+    while ((m = re.exec(s))) {
+      cHits.push({ id: r.id, field: f, mfr: r.manufacturer, run: m[1], value: s.slice(0, 130) });
+    }
   }
-  return byId;
 }
 
-console.log('════════ DEFECT A: "&amp;" flattened to "AMP" ════════');
-const aById = group(ampHits);
-console.log('rows affected: ' + aById.size + '  (field hits: ' + ampHits.length + ')\n');
-for (const [id, hs] of aById) {
-  console.log('  id ' + id + '  [' + hs[0].mfr + ']');
-  for (const h of hs) console.log('      ' + h.field.padEnd(12) + ' ' + h.value);
+/* ── Report ── */
+const uniq = hits => new Set(hits.map(h => h.id)).size;
+
+console.log('════ DEFECT A: HTML entity fossils ════');
+console.log('rows: ' + uniq(aHits) + '   hits: ' + aHits.length);
+const byKind = {};
+for (const h of aHits) (byKind[h.kind] ||= []).push(h);
+for (const [k, hs] of Object.entries(byKind)) {
+  console.log('\n  ' + k + '  -- ' + uniq(hs) + ' rows');
+  const vis = hs.filter(h => h.field !== 'slug');
+  for (const h of vis.slice(0, 25)) console.log('    id ' + String(h.id).padEnd(6) + h.field.padEnd(12) + h.value);
+  if (vis.length > 25) console.log('    ... +' + (vis.length - 25) + ' more visible');
+  const slugOnly = uniq(hs) - uniq(vis);
+  if (slugOnly > 0) console.log('    (' + slugOnly + ' further rows slug-only)');
 }
 
-console.log('\n════════ DEFECT B: dropped decimal in kV ════════');
-const bById = group(kvHits);
-console.log('rows affected: ' + bById.size + '  (field hits: ' + kvHits.length + ')');
-console.log('NOTE: 138/345 kV are real transmission classes. "distributionContext=true"');
-console.log('      means the surrounding words say distribution-class gear, so the');
-console.log('      value is almost certainly a dropped decimal. false = verify the PDF.\n');
-const likely = [...bById].filter(([, hs]) => hs.some(h => h.distributionContext));
-const unsure = [...bById].filter(([, hs]) => !hs.some(h => h.distributionContext));
-console.log('  -- LIKELY DEFECTS (distribution context): ' + likely.length + ' rows');
-for (const [id, hs] of likely) {
-  console.log('  id ' + id + '  [' + hs[0].mfr + ']  ' + hs[0].found + ' -> likely ' + hs[0].likely);
-  console.log('      ' + hs[0].value);
+console.log('\n\n════ DEFECT B: dropped decimal before kV ════');
+console.log('CONFIRMED (value is not a real class; decimal reading is): ' + uniq(bDefect) + ' rows, ' + bDefect.length + ' hits');
+const seenB = new Set();
+for (const h of bDefect) {
+  const key = h.id + h.found;
+  if (seenB.has(key)) continue; seenB.add(key);
+  console.log('  id ' + String(h.id).padEnd(6) + '[' + h.mfr + ']  ' + h.found + ' kV -> ' + h.fix);
+  console.log('      ' + h.value);
 }
-console.log('\n  -- NEEDS VERIFICATION (could be genuine transmission gear): ' + unsure.length + ' rows');
-for (const [id, hs] of unsure) {
-  console.log('  id ' + id + '  [' + hs[0].mfr + ']  ' + hs[0].found + ' -> maybe ' + hs[0].likely);
-  console.log('      ' + hs[0].value);
+console.log('\nAMBIGUOUS (real class either way -- needs the PDF): ' + uniq(bAmbiguous) + ' rows');
+const seenA2 = new Set();
+for (const h of bAmbiguous) {
+  const key = h.id + h.found;
+  if (seenA2.has(key)) continue; seenA2.add(key);
+  console.log('  id ' + String(h.id).padEnd(6) + '[' + h.mfr + ']  ' + h.found + ' kV  (or ' + h.alt + ')');
+  console.log('      ' + h.value);
 }
+
+console.log('\n\n════ DEFECT C: mashed numeric runs before kV ════');
+console.log('rows: ' + uniq(cHits));
+for (const h of cHits) console.log('  id ' + String(h.id).padEnd(6) + h.run + ' -> ' + h.value);
