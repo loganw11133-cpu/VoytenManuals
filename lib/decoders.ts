@@ -439,6 +439,24 @@ export function matchDecoderForManual(manufacturer: string, title: string): Deco
   return null;
 }
 
+/**
+ * Neutral cross-section pointers, keyed by the manufacturer whose section shows them.
+ *
+ * Someone hunting a Type RL/VRL is usually reading a nameplate from the Wendell
+ * facility and will look under Siemens first, but the RL is grouped under Voyten
+ * Electric. This names the destination by its legal product name only — it does
+ * NOT put a Siemens heading over an RL product card, which commit 411786d
+ * deliberately removed. Keep it that way: the text here must never brand the RL
+ * as Siemens. See the RL de-tag constraint before editing.
+ */
+export const SECTION_CROSS_REFS: Record<string, { question: string; href: string; linkLabel: string }> = {
+  Siemens: {
+    question: 'Looking for a Type RL/VRL?',
+    href: '#voyten-electric',
+    linkLabel: 'It’s listed under Voyten Electric',
+  },
+};
+
 /** Grouped by manufacturer, fullest ranges first, derived from the data. */
 export const groupedDecoders = Array.from(
   decoders.reduce((map, tool) => {

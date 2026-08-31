@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Cpu, ArrowRight, WifiOff } from 'lucide-react';
-import { decoders, groupedDecoders as grouped, publicDecoders } from '@/lib/decoders';
+import { decoders, groupedDecoders as grouped, publicDecoders, SECTION_CROSS_REFS } from '@/lib/decoders';
 
 const SITE = 'https://www.voytenmanuals.com';
 
@@ -185,6 +185,24 @@ export default function ToolsPage() {
                 );
               })}
             </div>
+
+            {/* Neutral pointer to a decoder grouped under a different manufacturer.
+                Names the RL by its legal product name only — never brands it Siemens
+                (see SECTION_CROSS_REFS and commit 411786d). */}
+            {SECTION_CROSS_REFS[group.manufacturer] && (
+              <p className="mt-5 text-sm text-slate-600">
+                <span className="font-semibold text-slate-700">
+                  {SECTION_CROSS_REFS[group.manufacturer].question}
+                </span>{' '}
+                <a
+                  href={SECTION_CROSS_REFS[group.manufacturer].href}
+                  className="inline-flex items-center gap-1 text-[#dc2626] hover:underline font-medium"
+                >
+                  {SECTION_CROSS_REFS[group.manufacturer].linkLabel}
+                  <ArrowRight size={14} aria-hidden="true" />
+                </a>
+              </p>
+            )}
           </section>
         ))}
 
