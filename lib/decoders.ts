@@ -329,6 +329,38 @@ export const decoders: Decoder[] = [
     ],
   },
   {
+    slug: 'vcp-w',
+    name: 'VCP-W',
+    fullName: 'Eaton VCP-W (Cutler-Hammer VCP-W)',
+    manufacturer: 'Eaton',
+    comingSoon: true,
+    description:
+      'In development — a decoder for Eaton / Cutler-Hammer VCP-W medium-voltage vacuum circuit breakers. Reads the type designation (voltage class, rating basis, and the ND / C / XC / G / SE variants) and the 10-digit style number, and returns the full ANSI rated-values set.',
+    frames: 'VCP-W · WND · WC / WXC · WG · WSE (ANSI + IEC)',
+    ratings: '4.76 kV – 27 kV · 1200A – 3000A',
+    /* Nothing parses yet, so the fields that feed a live route stay empty —
+       `publicDecoders` filters comingSoon out, so no /tools/vcp-w route,
+       sitemap entry, llms.txt line or ItemList item is emitted for it. Same
+       staging the WL card used before its decoder shipped (04ca580). */
+    example: '',
+    alsoKnownAs: [
+      'Cutler-Hammer VCP-W',
+      'Westinghouse VCP-W',
+      'VCPW',
+      'VCP-WND (narrow design)',
+      'VCP-WC / VCP-WXC (extra capability)',
+      'VCP-WG (generator)',
+      'VCP-WSE (special environment)',
+    ],
+    identifies: [],
+    // Unfiltered on purpose: VCP-W instruction books are filed under
+    // Westinghouse, Cutler-Hammer and Eaton, so a manufacturer facet would
+    // hide most of the family.
+    manualSearch: '/search?q=VCP-W',
+    manualSearchLabel: 'VCP-W instruction books and renewal-parts catalogs',
+    faq: [],
+  },
+  {
     slug: 'spb',
     name: 'SPB',
     fullName: 'Eaton SPB (Systems Pow-R)',
