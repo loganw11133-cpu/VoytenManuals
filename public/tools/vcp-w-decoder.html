@@ -184,6 +184,26 @@ body {
 .card-label { color: var(--gray-500); font-weight: 500; }
 .card-value { font-weight: 600; color: var(--gray-800); text-align: right; max-width: 62%; }
 .card-value.mono { font-family: 'IBM Plex Mono', 'Consolas', monospace; letter-spacing: 0.5px; }
+/* Collapsible card. Used for the interrupter tables, which can run to a dozen
+   rows and otherwise bury the ratings under a wall of part numbers. Built on
+   <details> so it needs no JS and stays keyboard accessible. The rows remain in
+   the DOM while collapsed, so the PDF export and the quote payload still read
+   them — collapsing is presentation only. */
+.collapse summary {
+  list-style: none; cursor: pointer; display: flex; align-items: baseline;
+  gap: 8px; flex-wrap: wrap;
+}
+.collapse summary::-webkit-details-marker { display: none; }
+.collapse summary::after {
+  content: "▸"; margin-left: auto; color: var(--gray-400);
+  font-size: 0.85rem; transition: transform .15s;
+}
+.collapse[open] summary::after { transform: rotate(90deg); }
+.collapse summary:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; border-radius: 4px; }
+.collapse summary .card-title { margin-bottom: 0; }
+.collapse__hint { font-size: 0.7rem; color: var(--gray-500); font-weight: 500; }
+.collapse[open] .collapse__hint { color: var(--gray-400); }
+.collapse__body { margin-top: 10px; }
 .card-note { font-size: 0.72rem; color: var(--gray-500); margin-top: 8px; line-height: 1.45; }
 
 /* Corrected-source notice. Used wherever the tool prints a value that differs
@@ -698,7 +718,16 @@ function interruptersFor(p, typeKey) {
 function partsCard(p, typeKey) {
   var hits = interruptersFor(p, typeKey);
   if (!hits.length) return '';
-  var h = '<div class="result-card parts wide"><div class="card-title">Interrupter assemblies</div>';
+  /* Collapsed by default: this can run to a dozen rows and would otherwise push
+     the ratings off the screen. The summary still names the count and the
+     three-per-breaker rule, so the ordering hook survives the collapse. */
+  var n = 0;
+  hits.forEach(function (x) { n += x.it.parts.length; });
+  var h = '<div class="result-card parts wide"><details class="collapse">' +
+    '<summary><span class="card-title">Interrupter assemblies</span>' +
+    '<span class="collapse__hint">' + n + ' published part ' + (n === 1 ? 'number' : 'numbers') +
+    ' &middot; 3 required per breaker</span></summary><div class="collapse__body">';
+
   hits.forEach(function (x) {
     x.it.parts.forEach(function (pt) {
       h += row(esc(x.it.desc) + (x.high ? ' <em>(high close &amp; latch option)</em>' : '') +
@@ -707,7 +736,8 @@ function partsCard(p, typeKey) {
   });
   h += '<div class="card-note"><strong>Three interrupter assemblies are required per breaker</strong> &mdash; ' +
        'the style shown is the quantity-one part number. Source: IB131006EN Tables 29&ndash;30. ' +
-       'Voyten stocks and supplies VCP-W renewal parts; call ' + TEL + ' with the style number and the breaker serial.</div></div>';
+       'Voyten stocks and supplies VCP-W renewal parts; call ' + TEL + ' with the style number and the breaker serial.</div>' +
+       '</div></details></div>';
   return h;
 }
 

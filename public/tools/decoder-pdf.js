@@ -109,11 +109,69 @@ function downloadDecoderPDF() {
   var COL_GAP = 16;
   var colW = (CW - COL_GAP) / 2;
   var ROW_H = 13;
+  var LINE_H = 9;
+  var MIN_LABEL_W = 72;   // below this a row stacks instead of colliding      // spacing between wrapped lines inside one row
   var SECTION_GAP = 10;
   var TITLE_H = 16;
   var footerTop = H - 50;
 
-  function cardHeight(c) { return TITLE_H + c.rows.length * ROW_H + SECTION_GAP; }
+  /* Lay each row out ONCE and reuse it for both the height calculation and the
+     draw, so the two can never disagree.
+
+     The label used to be drawn unmeasured while only the value was truncated, so
+     a long label ran underneath the right-aligned value and the two overlapped.
+     Worst on the medium-voltage parts tables, whose labels carry a rating, a
+     current and a column name. Now the value is measured first, the label gets
+     whatever width is left, and it wraps instead of colliding. */
+  function layoutRow(row) {
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(8);
+    // Value keeps the width it always had, so nothing that used to render in
+    // full is newly truncated in the eight other decoders.
+    var val = String(row.value == null ? '' : row.value);
+    while (doc.getTextWidth(val) > colW - 8 && val.length > 4) {
+      val = val.substring(0, val.length - 2) + '\u2026';
+    }
+    var valW = doc.getTextWidth(val);
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(8);
+    var avail = colW - valW - 12;
+
+    // When label and value cannot share a line without colliding, stack them:
+    // label wrapped across the full column, value right-aligned beneath. Better
+    // than truncating either, since both carry ordering information.
+    if (avail < MIN_LABEL_W) {
+      var wrapped = doc.splitTextToSize(String(row.label == null ? '' : row.label), colW - 4);
+      if (wrapped.length > 3) wrapped = wrapped.slice(0, 3).concat('\u2026');
+      return { lines: wrapped, val: val, stacked: true };
+    }
+    var lines = doc.splitTextToSize(String(row.label == null ? '' : row.label), avail);
+    if (lines.length > 3) lines = lines.slice(0, 3).concat('\u2026');
+    return { lines: lines, val: val, stacked: false };
+  }
+
+  cards.forEach(function (card) { card.laid = card.rows.map(layoutRow); });
+
+  function rowHeight(l) {
+    return ROW_H + (l.lines.length - 1) * LINE_H + (l.stacked ? LINE_H : 0);
+  }
+  function cardHeight(c) {
+    var h = TITLE_H + SECTION_GAP;
+    c.laid.forEach(function (l) { h += rowHeight(l); });
+    return h;
+  }
+
+  function drawFooter() {
+    doc.setDrawColor(LGRY[0], LGRY[1], LGRY[2]);
+    doc.setLineWidth(0.5);
+    doc.line(M, H - 46, W - M, H - 46);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(6.5);
+    doc.setTextColor(GRY[0], GRY[1], GRY[2]);
+    doc.text('Voyten Electric & Electronics, Inc.  \u00B7  voytenmanuals.com  \u00B7  1-800-458-4001', M, H - 32);
+    doc.text('Generated from catalog number data. Verify against the physical breaker nameplate.', M, H - 22);
+  }
 
   var leftY = y, rightY = y;
 
@@ -129,48 +187,37 @@ function downloadDecoderPDF() {
     doc.line(cx, cy + 2, cx + tw, cy + 2);
     cy += TITLE_H;
 
-    card.rows.forEach(function (row) {
+    card.laid.forEach(function (l) {
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(8);
       doc.setTextColor(GRY[0], GRY[1], GRY[2]);
-      doc.text(row.label, cx + 2, cy);
-
+      for (var i = 0; i < l.lines.length; i++) {
+        doc.text(l.lines[i], cx + 2, cy + i * LINE_H);
+      }
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(8);
       doc.setTextColor(BLK[0], BLK[1], BLK[2]);
-      var val = row.value;
-      var maxValW = colW - 8;
-      while (doc.getTextWidth(val) > maxValW && val.length > 4) {
-        val = val.substring(0, val.length - 2) + '\u2026';
-      }
-      doc.text(val, cx + colW - 2, cy, { align: 'right' });
-      cy += ROW_H;
+      var vy = l.stacked ? cy + l.lines.length * LINE_H : cy;
+      doc.text(l.val, cx + colW - 2, vy, { align: 'right' });
+      cy += rowHeight(l);
     });
   }
 
+  /* A card that fitted in neither column used to be drawn anyway, straight over
+     the footer. Start a new page instead. */
   cards.forEach(function (card) {
     var h = cardHeight(card);
-    if (leftY <= rightY) {
-      if (leftY + h < footerTop) { drawCard(card, M, leftY); leftY += h; }
-      else if (rightY + h < footerTop) { drawCard(card, M + colW + COL_GAP, rightY); rightY += h; }
-      else { drawCard(card, M, leftY); leftY += h; }
-    } else {
-      if (rightY + h < footerTop) { drawCard(card, M + colW + COL_GAP, rightY); rightY += h; }
-      else if (leftY + h < footerTop) { drawCard(card, M, leftY); leftY += h; }
-      else { drawCard(card, M + colW + COL_GAP, rightY); rightY += h; }
+    if (leftY + h >= footerTop && rightY + h >= footerTop) {
+      drawFooter();
+      doc.addPage();
+      leftY = rightY = M + 20;
     }
+    var useLeft = (leftY <= rightY) ? (leftY + h < footerTop) : !(rightY + h < footerTop);
+    if (useLeft) { drawCard(card, M, leftY); leftY += h; }
+    else { drawCard(card, M + colW + COL_GAP, rightY); rightY += h; }
   });
 
-  /* ── Footer ── */
-  doc.setDrawColor(LGRY[0], LGRY[1], LGRY[2]);
-  doc.setLineWidth(0.5);
-  doc.line(M, H - 46, W - M, H - 46);
-
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(6.5);
-  doc.setTextColor(GRY[0], GRY[1], GRY[2]);
-  doc.text('Voyten Electric & Electronics, Inc.  \u00B7  voytenmanuals.com  \u00B7  1-800-458-4001', M, H - 32);
-  doc.text('Generated from catalog number data. Verify against the physical breaker nameplate.', M, H - 22);
+  drawFooter();
 
   var fn = cat ? 'decode-' + cat.replace(/[^A-Z0-9-]/gi, '') + '.pdf' : 'decode-report.pdf';
   doc.save(fn);
