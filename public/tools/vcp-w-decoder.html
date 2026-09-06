@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="description" content="Eaton / Cutler-Hammer VCP-W medium-voltage vacuum circuit breaker decoder. Identify a type designation or a 10-digit style number and get the full ANSI or IEC rated-values set, breaker weight, control voltage and the interrupter assembly part number. Covers VCP-W, VCPW-ND, VCP-WC, VCP-WXC and VCPW-SE, 4.76 kV to 27 kV.">
+<title>Eaton VCP-W Vacuum Circuit Breaker Decoder &mdash; Voyten Electric</title>
+<link rel="stylesheet" href="decoder-fonts.css">
+<style>
+:root {
+  --red: #dc2626;
+  --dark-red: #b91c1c;
+  --deep-red: #991b1b;
+  --black: #1a1a1a;
+  --deep-black: #111111;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --white: #ffffff;
+  --green: #16a34a;
+  --green-light: #dcfce7;
+  --blue: #2563eb;
+  --blue-light: #dbeafe;
+  --purple: #7c3aed;
+  --yellow: #ca8a04;
+  --amber-bg: #fffbeb;
+  --amber-border: #f59e0b;
+  --amber-text: #92400e;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--gray-100);
+  color: var(--gray-800);
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+
+.header {
+  background: linear-gradient(135deg, var(--deep-black), var(--black));
+  color: var(--white);
+  padding: 24px 20px 20px;
+  text-align: center;
+  border-bottom: 4px solid var(--red);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+.header h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: 0.5px; }
+.header h1 .accent { color: var(--red); }
+.header .subtitle { font-size: 0.85rem; color: var(--gray-300); margin-top: 4px; }
+.container { max-width: 960px; margin: 0 auto; padding: 16px; }
+
+/* Input Section */
+.input-section {
+  background: var(--white); border-radius: 12px; padding: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 16px;
+  border: 2px solid var(--red);
+}
+.input-section label {
+  display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 6px; color: var(--gray-700);
+}
+.input-section label .opt { font-weight: 400; font-size: 0.78rem; color: var(--gray-400); text-transform: none; letter-spacing: 0; }
+.field-block { margin-bottom: 14px; }
+.field-block:last-of-type { margin-bottom: 0; }
+.input-row { display: flex; gap: 8px; margin-bottom: 6px; }
+.input-row input {
+  flex: 1; padding: 12px 14px; font-size: 16px; font-family: 'IBM Plex Mono', 'Consolas', 'Monaco', monospace;
+  border: 2px solid var(--gray-200); border-radius: 8px; text-transform: uppercase;
+  letter-spacing: 1.5px; -webkit-appearance: none; transition: border-color 0.2s;
+}
+.input-row input:focus { outline: none; border-color: var(--red); }
+.hint { font-size: 0.75rem; color: var(--gray-500); margin-bottom: 2px; }
+
+.btn-row { display: flex; gap: 8px; margin: 14px 0 12px; }
+.btn {
+  padding: 10px 20px; border: none; border-radius: 8px; font-weight: 700;
+  font-size: 0.9rem; cursor: pointer; transition: background 0.2s; touch-action: manipulation;
+}
+.btn-decode { background: var(--red); color: var(--white); flex: 1; }
+.btn-decode:hover { background: var(--dark-red); }
+.btn-clear { background: var(--gray-200); color: var(--gray-700); }
+.btn-clear:hover { background: var(--gray-300); }
+
+.examples { display: flex; flex-wrap: wrap; gap: 6px; }
+.ex-btn {
+  padding: 4px 10px; font-size: 0.72rem; font-family: 'IBM Plex Mono', 'Consolas', monospace;
+  background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 6px;
+  cursor: pointer; transition: all 0.15s; color: var(--gray-700); touch-action: manipulation;
+}
+.ex-btn:hover { background: var(--red); color: var(--white); border-color: var(--red); }
+.ex-group { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gray-400); margin: 10px 0 4px; }
+.ex-group:first-child { margin-top: 0; }
+.ex-note { font-size: 0.7rem; color: var(--gray-500); line-height: 1.45; margin: 0 0 8px; }
+.ex-note + .ex-group { margin-top: 0; }
+.examples + .ex-note { margin: 6px 0 4px; }
+
+/* Compact hover-reveal examples */
+.ex-hover { position: relative; display: inline-block; margin-top: 4px; }
+.ex-hover__trigger {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.4px; text-transform: uppercase;
+  color: var(--gray-500); cursor: pointer; user-select: none;
+  background: var(--gray-100);
+  border: 1px solid var(--gray-300); border-radius: 6px; padding: 4px 10px;
+  transition: color .15s, border-color .15s;
+}
+.ex-hover__trigger::after { content: "\25BE"; font-size: 0.6rem; opacity: .7; }
+.ex-hover:hover .ex-hover__trigger,
+.ex-hover:focus-within .ex-hover__trigger { color: var(--red); border-color: var(--red); }
+.ex-hover__panel {
+  position: absolute; z-index: 50; top: calc(100% + 6px); left: 0;
+  display: none; width: min(94vw, 540px);
+  max-height: min(70vh, 520px); overflow-y: auto;
+  padding: 12px 14px 10px;
+  background: #fff; border: 1px solid var(--gray-200); border-radius: 10px;
+  box-shadow: 0 12px 34px rgba(0,0,0,.14);
+}
+.ex-hover:hover .ex-hover__panel,
+.ex-hover:focus-within .ex-hover__panel { display: block; }
+
+/* Style-number breakdown. VCP-W has no per-character grammar, so this is a
+   two-segment split (7-digit base + 3-character control-voltage suffix)
+   rather than the position map the low-voltage decoders draw. */
+.stylemap { display: flex; gap: 10px; flex-wrap: wrap; margin: 16px 0; }
+.seg {
+  flex: 1 1 200px; background: var(--white); border: 2px solid var(--gray-200);
+  border-radius: 10px; padding: 10px 14px;
+}
+.seg.known { border-color: var(--black); }
+.seg.unknown { border-color: var(--amber-border); background: var(--amber-bg); }
+.seg__chars {
+  font-family: 'IBM Plex Mono', 'Consolas', monospace; font-size: 1.15rem;
+  font-weight: 700; letter-spacing: 3px; color: var(--gray-800);
+}
+.seg__label { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--gray-400); margin-bottom: 3px; }
+.seg__val { font-size: 0.78rem; color: var(--gray-600); margin-top: 4px; }
+
+/* Result Cards */
+.results { display: none; }
+.results.visible { display: block; }
+.card {
+  background: var(--white); border-radius: 12px; padding: 16px;
+  margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  border-left: 4px solid var(--gray-200);
+}
+.card h3 {
+  font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--gray-500); margin-bottom: 8px;
+}
+.field { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--gray-100); gap: 12px; }
+.field:last-child { border-bottom: none; }
+.field-label { font-size: 0.8rem; color: var(--gray-500); }
+.field-value { font-size: 0.8rem; font-weight: 600; color: var(--gray-800); text-align: right; max-width: 62%; }
+.card.valid { border-left-color: var(--red); }
+.card.info { border-left-color: var(--blue); }
+
+.result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: start; }
+@media (max-width: 640px) { .result-grid { grid-template-columns: 1fr; } }
+.result-card {
+  background: var(--white); border-radius: 10px; padding: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-left: 4px solid var(--gray-300);
+}
+.result-card.wide { grid-column: 1 / -1; }
+.result-card.config { border-left-color: var(--red); }
+.result-card.ratings { border-left-color: var(--green); }
+.result-card.parts { border-left-color: var(--purple); }
+.result-card.style { border-left-color: var(--yellow); }
+.result-card.info { border-left-color: var(--blue); }
+.card-title {
+  font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--gray-500); margin-bottom: 8px;
+}
+.card-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 0.85rem; border-bottom: 1px solid var(--gray-100); gap: 12px; }
+.card-row:last-child { border-bottom: none; }
+.card-label { color: var(--gray-500); font-weight: 500; }
+.card-value { font-weight: 600; color: var(--gray-800); text-align: right; max-width: 62%; }
+.card-value.mono { font-family: 'IBM Plex Mono', 'Consolas', monospace; letter-spacing: 0.5px; }
+.card-note { font-size: 0.72rem; color: var(--gray-500); margin-top: 8px; line-height: 1.45; }
+
+/* Corrected-source notice. Used wherever the tool prints a value that differs
+   from what the instruction book prints, so the difference is never silent. */
+.correction {
+  margin-top: 10px; padding: 10px 12px; border-radius: 8px;
+  background: var(--amber-bg); border: 1px solid var(--amber-border);
+  font-size: 0.74rem; line-height: 1.5; color: var(--amber-text);
+}
+.correction strong { color: #78350f; }
+.correction .printed {
+  font-family: 'IBM Plex Mono', 'Consolas', monospace;
+  text-decoration: line-through; opacity: 0.75;
+}
+
+/* Routing card - a recognised type we deliberately do not rate. */
+.route {
+  background: var(--white); border-radius: 12px; padding: 18px;
+  margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  border-left: 4px solid var(--blue);
+}
+.route h3 { font-size: 0.95rem; color: var(--gray-800); margin-bottom: 6px; }
+.route p { font-size: 0.82rem; color: var(--gray-600); line-height: 1.55; margin-bottom: 8px; }
+.route a { color: var(--red); font-weight: 600; text-decoration: none; }
+.route a:hover { text-decoration: underline; }
+.route .tel { font-weight: 700; }
+
+/* Summary banner */
+.summary-banner {
+  background: linear-gradient(135deg, var(--deep-black), var(--black));
+  color: var(--white); border-radius: 12px;
+  padding: 20px; margin-bottom: 16px; border-left: 5px solid var(--red);
+}
+.summary-banner .headline { font-size: 1.15rem; font-weight: 700; margin-bottom: 6px; }
+.summary-banner .catalog-fmt { font-family: 'IBM Plex Mono', 'Consolas', monospace; font-size: 0.85rem; color: var(--gray-300); letter-spacing: 2px; margin-bottom: 12px; }
+.summary-banner .basis {
+  display: inline-block; font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.6px; padding: 3px 9px; border-radius: 999px;
+  background: rgba(255,255,255,0.14); color: var(--white); margin-right: 6px;
+}
+
+.btn-copy {
+  padding: 8px 20px; border: 2px solid var(--gray-200); border-radius: 8px;
+  background: var(--white); color: var(--gray-700); font-weight: 600; font-size: 0.8rem;
+  cursor: pointer; transition: all 0.2s;
+}
+.btn-copy:hover { background: var(--gray-200); }
+.btn-copy.copied { background: var(--green-light); border-color: var(--green); color: var(--green); }
+.btn-pdf {
+  padding: 8px 20px; border: 2px solid var(--red); border-radius: 8px;
+  background: var(--white); color: var(--red); font-weight: 600; font-size: 0.8rem;
+  cursor: pointer; transition: all 0.2s;
+}
+.btn-pdf:hover { background: var(--red); color: var(--white); }
+.btn-quote {
+  padding: 8px 20px; border: 2px solid var(--red); border-radius: 8px;
+  background: var(--red); color: var(--white); font-weight: 700; font-size: 0.8rem;
+  cursor: pointer; transition: all 0.2s;
+}
+.btn-quote:hover { background: #b91c1c; border-color: #b91c1c; }
+
+.error {
+  background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px;
+  padding: 12px 16px; margin-bottom: 12px; display: none;
+}
+.error.visible { display: block; }
+.error-title { font-weight: 700; color: #991b1b; font-size: 0.85rem; margin-bottom: 2px; }
+.error-text { font-size: 0.8rem; color: #b91c1c; }
+.error-hint { font-size: 0.75rem; color: var(--gray-500); margin-top: 6px; }
+
+.note-box { font-size: 0.75rem; color: var(--gray-500); margin-top: 8px; line-height: 1.5; }
+
+.social { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; padding: 18px 16px 0; }
+.social a {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 7px 14px; border-radius: 999px;
+  background: var(--white); border: 1px solid var(--gray-200);
+  font-size: 0.78rem; font-weight: 600; color: var(--gray-700);
+  text-decoration: none; transition: all 0.15s;
+}
+.social a:hover { border-color: var(--gray-400); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.social svg { width: 18px; height: 18px; display: block; }
+
+.footer {
+  text-align: center; padding: 22px 16px 30px; font-size: 0.72rem;
+  color: var(--gray-500); line-height: 1.6;
+}
+
+/* Noscript */
+.ios-notice {
+  max-width: 600px; margin: 40px auto; background: #fffbeb; border: 2px solid #f59e0b;
+  border-radius: 12px; padding: 24px; color: #92400e; font-size: 0.95rem; line-height: 1.6;
+}
+.ios-notice strong { color: #78350f; }
+.ios-notice .steps { margin: 12px 0; padding-left: 20px; }
+.ios-notice .steps li { margin-bottom: 6px; }
+
+@media (max-width: 600px) {
+  .header h1 { font-size: 1.25rem; }
+  .container { padding: 10px; }
+  .field-value { max-width: 58%; }
+}
+</style>
+</head>
+<body>
+
+<noscript>
+<div class="ios-notice">
+  <strong>Interactive Mode Required</strong><br><br>
+  This decoder requires JavaScript to run. If you are viewing this on an iPhone or iPad, the Files app preview does not support interactive content.
+  <ol class="steps">
+    <li>Tap the <strong>Share</strong> button (box with arrow)</li>
+    <li>Select <strong>"Open in Safari"</strong></li>
+    <li>The decoder will be fully interactive in Safari</li>
+  </ol>
+  On Mac: Right-click the file &rarr; Open With &rarr; Safari.<br>
+  On Android: Open with Chrome or any browser.
+</div>
+</noscript>
+
+<div class="header">
+  <h1>Eaton <span class="accent">VCP-W</span> Decoder</h1>
+  <div class="subtitle">Medium Voltage Vacuum Circuit Breaker &mdash; Type &amp; Style Number Identification</div>
+</div>
+
+<div class="container">
+  <!-- Input -->
+  <div class="input-section">
+    <div class="field-block">
+      <label>Type designation or style number <span class="opt">(both are printed on the breaker nameplate)</span></label>
+      <div class="input-row">
+        <input type="text" id="catInput" placeholder="e.g. 150VCP-W750  or  3776A24G62" maxlength="40" autocomplete="off" autocorrect="off" spellcheck="false">
+      </div>
+      <div class="hint">
+        Unlike a low-voltage catalog number, a VCP-W type is not decoded character by character &mdash; the
+        type space is a closed set, so this looks it up and returns the published rated values. Enter the
+        <strong>type</strong> (callout A on the nameplate) for ratings and weights, or the
+        <strong>10-digit style number</strong> (callout D) to work back to the type, continuous current and
+        control voltage. Spacing and hyphen position do not matter.
+      </div>
+      <div class="ex-hover" tabindex="0" role="button" aria-label="Show example type designations and style numbers">
+        <span class="ex-hover__trigger">Examples</span>
+        <div class="ex-hover__panel">
+          <div class="ex-note">Every string below is taken from the Eaton / Cutler-Hammer documents this tool
+            is built on &mdash; instruction book IB131006EN (Oct 2025) and price lists PL01301006E (May 2004)
+            and PL01301011E (Dec 2016). None are invented.</div>
+
+          <div class="ex-group">ANSI &mdash; MVA class (Table 1 and Table 2)</div>
+          <div class="examples">
+            <button class="ex-btn" onclick="loadEx(this)" title="15 kV, 750 MVA — the type on the specimen nameplate">150VCP-W750</button>
+            <button class="ex-btn" onclick="loadEx(this)" title="4.76 kV, 250 MVA, K = 1.24">50VCP-W250</button>
+            <button class="ex-btn" onclick="loadEx(this)" title="15 kV, 1000 MVA">150VCP-W1000</button>
+            <button class="ex-btn" onclick="loadEx(this)" title="27 kV, 1000 MVA / 22 kA — printed with spaces in the book">270 VCP-W1000(22)</button>
+            <button class="ex-btn" onclick="loadEx(this)" title="Narrow design, 1200 A only — hyphen after the W in the 2025 book">50VCPW-ND250</button>
+          </div>
+
+          <div class="ex-group">ANSI &mdash; K = 1, kA basis (Table 5)</div>
+          <div class="examples">
+            <button class="ex-btn" onclick="loadEx(this)" title="Resolves in TWO tables with different close-and-latch — both are shown">150VCP-W63</button>
+            <button class="ex-btn" onclick="loadEx(this)" title="8.25 kV, 50 kA — the row IB131006EN prints incorrectly at 15 kV / 60 kV BIL">75VCP-W50</button>
+            <button class="ex-btn" onclick="loadEx(this)" title="4.76 kV, 25 kA — one character from 50VCP-W250, a different breaker">50VCP-W25</button>
+          </div>
+
+          <div class="ex-group">Extra capability &mdash; VCP-WC and VCP-WXC</div>
+          <div class="examples">
+            <button class="ex-btn" onclick="loadEx(this)" title="17.5 kV, 63 kA, 3-cycle — C comes AFTER the number">150VCP-W63C</button>
+            <button class="ex-btn" onclick="loadEx(this)" title="17.5 kV, 63 kA, 5-cycle — XC comes BEFORE the number">150VCP-WXC63</button>
+            <button class="ex-btn" onclick="loadEx(this)" title="2004 price list only — max voltage is disputed between two pages">50VCP-W63C</button>
+          </div>
+
+          <div class="ex-group">IEC 60056 (Table 4)</div>
+          <div class="examples">
+            <button class="ex-btn" onclick="loadEx(this)" title="3.6 kV narrow design, 25 kA">36VCPW-ND25</button>
+            <button class="ex-btn" onclick="loadEx(this)" title="12 kV, 25 kA — note this designation also names an outdoor breaker">120VCP-W25</button>
+            <button class="ex-btn" onclick="loadEx(this)" title="17.5 kV, 40 kA">175VCP-W40</button>
+            <button class="ex-btn" onclick="loadEx(this)" title="24 kV — parts are published, ratings are not">240VCP-W25</button>
+          </div>
+
+          <div class="ex-group">Style numbers</div>
+          <div class="examples">
+            <button class="ex-btn" onclick="loadEx(this)" title="The worked example printed in PL01301006E p15 — 15 kV, 500 MVA, 1200 A, 125 Vdc">3A73950G02</button>
+            <button class="ex-btn" onclick="loadEx(this)" title="From the specimen nameplate — a G-code outside the published range">3776A24G62</button>
+            <button class="ex-btn" onclick="loadEx(this)" title="Eaton's own sample nameplate, a 3-cycle build">4A05425G44</button>
+            <button class="ex-btn" onclick="loadEx(this)" title="7-digit base with no control-voltage suffix">8075A31</button>
+            <button class="ex-btn" onclick="loadEx(this)" title="IEC base — the 8075A run splits IEC from ANSI">8075A02</button>
+          </div>
+
+          <div class="ex-group">Not this breaker &mdash; these route out</div>
+          <div class="examples">
+            <button class="ex-btn" onclick="loadEx(this)" title="Separate family and separate instruction book">VCP-TR</button>
+            <button class="ex-btn" onclick="loadEx(this)" title="A wiring diagram number, not a breaker style">691C386H44</button>
+            <button class="ex-btn" onclick="loadEx(this)" title="A power module — the Gnn is a structural config, not a control voltage">3A38303G01</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-decode" onclick="decode()">IDENTIFY</button>
+      <button class="btn btn-clear" onclick="clearAll()">CLEAR</button>
+    </div>
+  </div>
+
+  <!-- Style-number breakdown (style input only) -->
+  <div id="styleMap"></div>
+
+  <!-- Error -->
+  <div class="error" id="errorBox">
+    <div class="error-title" id="errorTitle">Not recognised</div>
+    <div class="error-text" id="errorText"></div>
+    <div class="error-hint" id="errorHint"></div>
+  </div>
+
+  <!-- Results -->
+  <div class="results" id="results"></div>
+</div>
+
+<nav class="social" aria-label="Connect with Voyten Electric">
+  <a href="https://share.google/8zeiyPVd68OB1smJW" target="_blank" rel="noopener noreferrer" title="Voyten Electric on Google Business Profile">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <rect x="4" y="11" width="16" height="9" rx="1" fill="#4989F5"/>
+      <path d="M3 11 L4.5 5 H19.5 L21 11 Z" fill="#3367D6"/>
+      <path d="M8 5 L7.2 11 H10 L10.3 5 Z" fill="#5B9BFF"/>
+      <path d="M14 5 L14 11 H16.8 L16 5 Z" fill="#5B9BFF"/>
+      <rect x="10" y="14" width="4" height="6" rx="0.5" fill="#ffffff"/>
+    </svg>
+    Google Business
+  </a>
+  <a href="https://www.linkedin.com/in/voyten-electric-sales-team/" target="_blank" rel="noopener noreferrer" title="Voyten Electric on LinkedIn">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <rect width="24" height="24" rx="4" fill="#0A66C2"/>
+      <path fill="#ffffff" d="M8.34 18.34H5.67V9.75h2.67v8.59zM7 8.58a1.55 1.55 0 1 1 0-3.1 1.55 1.55 0 0 1 0 3.1zM18.34 18.34h-2.67v-4.18c0-1-.02-2.28-1.39-2.28-1.39 0-1.6 1.09-1.6 2.21v4.25h-2.67V9.75h2.56v1.17h.04c.36-.68 1.23-1.39 2.53-1.39 2.7 0 3.2 1.78 3.2 4.09v4.72z"/>
+    </svg>
+    LinkedIn
+  </a>
+  <a href="https://www.ebay.com/str/voytenelectric" target="_blank" rel="noopener noreferrer" title="Voyten Electric eBay Store">
+    <svg viewBox="0 0 84 34" aria-hidden="true" focusable="false">
+      <text x="0" y="27" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" letter-spacing="-1.5">
+        <tspan fill="#E53238">e</tspan><tspan fill="#0064D2">b</tspan><tspan fill="#F5AF02">a</tspan><tspan fill="#86B817">y</tspan>
+      </text>
+    </svg>
+    Store
+  </a>
+</nav>
+
+<div class="footer">
+  Eaton VCP-W Decoder &mdash; Voyten Electric &amp; Electronics, Inc.<br>
+  Rated values from Eaton instruction book <strong>IB131006EN</strong> (Effective October 2025), Tables 1&ndash;6 and 19&ndash;22.<br>
+  Style numbers, control-voltage codes and 2004 list prices from Cutler-Hammer price list <strong>PL01301006E</strong> (May 2004);<br>
+  renewal parts from <strong>IB131006EN</strong> Tables 29&ndash;30 and price list <strong>PL01301011E</strong> (Dec 2016).<br>
+  Where this tool prints a value that differs from the book, the difference is shown and explained on the result.
+</div>
+<script>
+var VCP = {"_built":"2026-09-06","types":[{"keys":["50VCPWND250"],"display":"50VCPW-ND250","table":"T1","std":"ANSI","basis":"MVA","clRule":"2.7 x K x rated short circuit","type":"50VCPW-ND250","nomKv":4.16,"mva":250,"eMaxKv":4.76,"k":1.24,"pfWithstandKvRms":19,"impulseKvPeak":60,"amps":[1200],"iscKaRms":29,"interruptingCycles":5,"ySeconds":2,"eOverK":3.85,"maxSymInterruptingKaRms":36,"clKaPeak":97,"clMomentaryKaRms":58},{"keys":["50VCPW250"],"display":"50VCP-W250","table":"T1","std":"ANSI","basis":"MVA","clRule":"2.7 x K x rated short circuit","type":"50VCP-W250","nomKv":4.16,"mva":250,"eMaxKv":4.76,"k":1.24,"pfWithstandKvRms":19,"impulseKvPeak":60,"amps":[1200,2000,3000],"iscKaRms":29,"interruptingCycles":5,"ySeconds":2,"eOverK":3.85,"maxSymInterruptingKaRms":36,"clKaPeak":97,"clMomentaryKaRms":58,"highCLoptionKaPeak":132,"highCLoptionMomentaryKaRms":78,"highCLnote":"footnote 2 - non-standard high close and latch, special applications"},{"keys":["50VCPW350"],"display":"50VCP-W350","table":"T1","std":"ANSI","basis":"MVA","clRule":"2.7 x K x rated short circuit","type":"50VCP-W350","nomKv":4.16,"mva":350,"eMaxKv":4.76,"k":1.19,"pfWithstandKvRms":19,"impulseKvPeak":60,"amps":[1200,2000,3000],"iscKaRms":41,"interruptingCycles":5,"ySeconds":2,"eOverK":4,"maxSymInterruptingKaRms":49,"clKaPeak":132,"clMomentaryKaRms":78},{"keys":["50VCPW63","50VCPW500"],"display":"50VCP-W63 (500)","table":"T1","std":"ANSI","basis":"MVA","clRule":"2.7 x K x rated short circuit","type":"50VCP-W63 (500)","nomKv":4.16,"mva":500,"eMaxKv":4.76,"k":1,"pfWithstandKvRms":19,"impulseKvPeak":60,"amps":[1200,2000,3000],"iscKaRms":63,"interruptingCycles":5,"ySeconds":2,"eOverK":4.76,"maxSymInterruptingKaRms":63,"clKaPeak":173,"clMomentaryKaRms":101,"clFlag":"Printed as 173 kA peak in IB131006EN Table 1. The table header states 2.7 x K x rated short circuit, which gives 170.1. Reported as printed - this may be a tested value rather than a derived one, so it is never recomputed."},{"keys":["75VCPW500"],"display":"75VCP-W500","table":"T1","std":"ANSI","basis":"MVA","clRule":"2.7 x K x rated short circuit","type":"75VCP-W500","nomKv":7.2,"mva":500,"eMaxKv":8.25,"k":1.25,"pfWithstandKvRms":36,"impulseKvPeak":95,"amps":[1200,2000,3000],"iscKaRms":33,"interruptingCycles":5,"ySeconds":2,"eOverK":6.6,"maxSymInterruptingKaRms":41,"clKaPeak":111,"clMomentaryKaRms":66},{"keys":["150VCPW500"],"display":"150VCP-W500","table":"T1","std":"ANSI","basis":"MVA","clRule":"2.7 x K x rated short circuit","type":"150VCP-W500","nomKv":13.8,"mva":500,"eMaxKv":15,"k":1.3,"pfWithstandKvRms":36,"impulseKvPeak":95,"amps":[1200,2000,3000],"iscKaRms":18,"interruptingCycles":5,"ySeconds":2,"eOverK":11.5,"maxSymInterruptingKaRms":23,"clKaPeak":62,"clMomentaryKaRms":37,"highCLoptionKaPeak":97,"highCLoptionMomentaryKaRms":58,"highCLnote":"footnote 2"},{"keys":["150VCPW750"],"display":"150VCP-W750","table":"T1","std":"ANSI","basis":"MVA","clRule":"2.7 x K x rated short circuit","type":"150VCP-W750","nomKv":13.8,"mva":750,"eMaxKv":15,"k":1.3,"pfWithstandKvRms":36,"impulseKvPeak":95,"amps":[1200,2000,3000],"iscKaRms":28,"interruptingCycles":5,"ySeconds":2,"eOverK":11.5,"maxSymInterruptingKaRms":36,"clKaPeak":97,"clMomentaryKaRms":58,"highCLoptionKaPeak":130,"highCLoptionMomentaryKaRms":77,"highCLnote":"footnote 2"},{"keys":["150VCPW1000"],"display":"150VCP-W1000","table":"T1","std":"ANSI","basis":"MVA","clRule":"2.7 x K x rated short circuit","type":"150VCP-W1000","nomKv":13.8,"mva":1000,"eMaxKv":15,"k":1.3,"pfWithstandKvRms":36,"impulseKvPeak":95,"amps":[1200,2000,3000],"iscKaRms":37,"interruptingCycles":5,"ySeconds":2,"eOverK":11.5,"maxSymInterruptingKaRms":48,"clKaPeak":130,"clMomentaryKaRms":77},{"keys":["150VCPW63","150VCPW1500"],"display":"150VCP-W63(1500)","table":"T1","std":"ANSI","basis":"MVA","clRule":"2.7 x K x rated short circuit","type":"150VCP-W63(1500)","nomKv":13.8,"mva":1500,"eMaxKv":15,"k":1,"pfWithstandKvRms":36,"impulseKvPeak":95,"amps":[1200,2000,3000],"iscKaRms":63,"interruptingCycles":5,"ySeconds":2,"eOverK":15,"maxSymInterruptingKaRms":63,"clKaPeak":173,"clMomentaryKaRms":101,"clFlag":"Printed as 173 kA peak in IB131006EN Table 1. The table header states 2.7 x K x rated short circuit, which gives 170.1. Reported as printed - this may be a tested value rather than a derived one, so it is never recomputed."},{"keys":["270VCPW750","270VCPW16"],"display":"270VCP-W750(16)","table":"T2","std":"ANSI","basis":"MVA","type":"270VCP-W750(16)","notes":[5],"nomKv":27,"mva":750,"eMaxKv":27,"k":1,"pfWithstandKvRms":60,"impulseKvPeak":125,"amps":[600,1200,2000],"iscKaRms":16,"cycles":5,"ySeconds":2,"trvE2KvRms":51,"trvT2":105,"clKaPeak":43,"capSwitchCableChargingKaRms":31.5},{"keys":["270VCPW1000","270VCPW22"],"display":"270VCP-W1000(22)","table":"T2","std":"ANSI","basis":"MVA","type":"270VCP-W1000(22)","notes":[5],"nomKv":27,"mva":1000,"eMaxKv":27,"k":1,"pfWithstandKvRms":60,"impulseKvPeak":125,"amps":[600,1200,2000],"iscKaRms":22,"cycles":5,"ySeconds":2,"trvE2KvRms":51,"trvT2":105,"clKaPeak":60,"capSwitchCableChargingKaRms":31.5},{"keys":["270VCPW1250","270VCPW25"],"display":"270VCP-W1250(25)","table":"T2","std":"ANSI","basis":"MVA","type":"270VCP-W1250(25)","notes":[5],"nomKv":27,"mva":1250,"eMaxKv":27,"k":1,"pfWithstandKvRms":60,"impulseKvPeak":125,"amps":[600,1200,2000],"iscKaRms":25,"cycles":5,"ySeconds":2,"trvE2KvRms":51,"trvT2":105,"clKaPeak":68,"capSwitchCableChargingKaRms":31.5},{"keys":["270VCPW1600","270VCPW32"],"display":"270VCP-W1600(32)","table":"T2","std":"ANSI","basis":"MVA","type":"270VCP-W1600(32)","notes":[6],"nomKv":27,"mva":1600,"eMaxKv":27,"k":1,"pfWithstandKvRms":60,"impulseKvPeak":125,"amps":[1200,2000],"iscKaRms":31.5,"cycles":5,"ySeconds":2,"trvE2KvRms":51,"trvT2":105,"clKaPeak":85,"capSwitchCableChargingKaRms":31.5},{"keys":["270VCPW2000","270VCPW40"],"display":"270VCP-W2000(40)","table":"T2","std":"ANSI","basis":"MVA","type":"270VCP-W2000(40)","notes":[6],"nomKv":27,"mva":2000,"eMaxKv":27,"k":1,"pfWithstandKvRms":60,"impulseKvPeak":125,"amps":[1200,2000],"iscKaRms":40,"cycles":5,"ySeconds":2,"trvE2KvRms":51,"trvT2":105,"clKaPeak":106,"capSwitchCableChargingKaRms":31.5},{"keys":["50VCPW40C"],"display":"50VCP-W40C","table":"T3","std":"ANSI","basis":"kA","xc":"WC","type":"50VCP-W40C","eMaxKv":5.95,"k":1,"pfWithstandKvRms":24,"impulseKvPeak":75,"amps":[1200,2000,3000],"symIscKaRms":40,"dcComponentPct":75,"asymKaRms":58,"clKaPeak":139,"shortTime3sKaRms":40,"cycles":3,"ySeconds":2,"rrrvKvPerUs":[0.9,0.9,0.8],"backToBackCapBankARms":["630(5)","1000(5)","-"],"inrushKaPeak":[15,18,null],"inrushKhz":[3.5,2.7,null],"noLoadOperations":[10000,10000,5000]},{"keys":["50VCPW50C"],"display":"50VCP-W50C","table":"T3","std":"ANSI","basis":"kA","xc":"WC","type":"50VCP-W50C","eMaxKv":5.95,"k":1,"pfWithstandKvRms":24,"impulseKvPeak":75,"amps":[1200,2000,3000],"symIscKaRms":50,"dcComponentPct":[57,57,52],"asymKaRms":[64,64,62],"clKaPeak":139,"shortTime3sKaRms":50,"cycles":3,"ySeconds":2,"rrrvKvPerUs":[0.9,0.9,0.8],"backToBackCapBankARms":["630(5)","1000(5)","-"],"inrushKaPeak":[15,18,null],"inrushKhz":[3.5,2.7,null],"noLoadOperations":[10000,10000,5000]},{"keys":["75VCPW50C"],"display":"75VCP-W50C","table":"T3","std":"ANSI","basis":"kA","xc":"WC","type":"75VCP-W50C","eMaxKv":10.3,"k":1,"pfWithstandKvRms":42,"impulseKvPeak":95,"amps":[1200,2000,3000],"symIscKaRms":50,"dcComponentPct":[57,57,52],"asymKaRms":[64,64,62],"clKaPeak":139,"shortTime3sKaRms":50,"cycles":3,"ySeconds":2,"rrrvKvPerUs":[0.9,0.9,0.8],"backToBackCapBankARms":["630(5)","1000(5)","-"],"inrushKaPeak":[15,18,null],"inrushKhz":[3.5,2.7,null],"noLoadOperations":[10000,10000,5000]},{"keys":["150VCPW25C"],"display":"150VCP-W25C","table":"T3","std":"ANSI","basis":"kA","xc":"WC","type":"150VCP-W25C","eMaxKv":17.5,"k":1,"pfWithstandKvRms":42,"impulseKvPeak":95,"amps":[1200,2000,3000],"symIscKaRms":25,"dcComponentPct":[50,75,75],"asymKaRms":[31,36,36],"clKaPeak":97,"clNotes":[2],"shortTime3sKaRms":25,"cycles":3,"ySeconds":2,"rrrvKvPerUs":[0.95,0.9,0.8],"backToBackCapBankARms":["600(6)","1000(5)(6)","-"],"inrushKaPeak":[20,18,null],"inrushKhz":[3.5,2.7,null],"noLoadOperations":[10000,10000,5000]},{"keys":["150VCPW40C"],"display":"150VCP-W40C","table":"T3","std":"ANSI","basis":"kA","xc":"WC","type":"150VCP-W40C","eMaxKv":17.5,"k":1,"pfWithstandKvRms":42,"impulseKvPeak":95,"amps":[1200,2000,3000],"symIscKaRms":40,"dcComponentPct":75,"asymKaRms":58,"clKaPeak":139,"shortTime3sKaRms":40,"cycles":3,"ySeconds":2,"rrrvKvPerUs":[0.9,0.9,0.8],"isolatedShuntCapBankARms":["630(4)","630(4)","250(4)"],"backToBackCapBankARms":["630(5)(6)","1000(5)(6)","-"],"inrushKaPeak":[15,18,null],"inrushKhz":[3.5,2.7,null],"noLoadOperations":[10000,10000,5000]},{"keys":["150VCPW50C"],"display":"150VCP-W50C","table":"T3","std":"ANSI","basis":"kA","xc":"WC","type":"150VCP-W50C","eMaxKv":17.5,"k":1,"pfWithstandKvRms":42,"impulseKvPeak":95,"amps":[1200,2000,3000],"symIscKaRms":50,"dcComponentPct":[57,57,52],"asymKaRms":[64,64,62],"clKaPeak":139,"shortTime3sKaRms":50,"cycles":3,"ySeconds":2,"rrrvKvPerUs":[0.9,0.9,0.8],"isolatedShuntCapBankARms":["630(4)","630(4)","250(4)"],"backToBackCapBankARms":["630(5)(6)","1000(5)(6)","-"],"inrushKaPeak":[15,18,null],"inrushKhz":[3.5,2.7,null],"noLoadOperations":[10000,10000,5000]},{"keys":["150VCPW63C"],"display":"150VCP-W63C","table":"T3","std":"ANSI","basis":"kA","xc":"WC","type":"150VCP-W63C","eMaxKv":17.5,"k":1,"pfWithstandKvRms":42,"impulseKvPeak":95,"amps":[1200,2000,3000],"symIscKaRms":63,"dcComponentPct":[61,61,61],"asymKaRms":83,"clKaPeak":175,"shortTime3sKaRms":63,"cycles":3,"ySeconds":2,"rrrvKvPerUs":[1.07,1.07,1.07],"backToBackCapBankARms":["200,1600(9)","200,1600(9)","200,1600(9)"],"inrushKaPeak":[7.7,7.7,7.7],"inrushKhz":[465,465,465],"noLoadOperations":[10000,10000,10000]},{"keys":["270VCPW25C"],"display":"270VCP-W25C","table":"T3","std":"ANSI","basis":"kA","xc":"WC","type":"270VCP-W25C","eMaxKv":27,"k":1,"pfWithstandKvRms":60,"impulseKvPeak":125,"amps":[1200,1600],"symIscKaRms":25,"dcComponentPct":75,"asymKaRms":36,"clKaPeak":85,"shortTime3sKaRms":25,"shortTimeNotes":[8],"cycles":3,"ySeconds":2,"rrrvKvPerUs":1.1,"backToBackCapBankARms":"400","inrushKaPeak":20,"inrushKhz":4.2,"noLoadOperations":2500},{"keys":["270VCPW32C"],"display":"270VCP-W32C","table":"T3","std":"ANSI","basis":"kA","xc":"WC","type":"270VCP-W32C","eMaxKv":27,"k":1,"pfWithstandKvRms":60,"impulseKvPeak":125,"amps":[1200,1600],"symIscKaRms":31.5,"dcComponentPct":57,"asymKaRms":40,"clKaPeak":97,"shortTime3sKaRms":32,"shortTimeNotes":[7],"cycles":3,"ySeconds":1,"rrrvKvPerUs":1.1,"backToBackCapBankARms":"400","inrushKaPeak":20,"inrushKhz":4.2,"noLoadOperations":2500},{"keys":["270VCPW40C"],"display":"270VCP-W40C","table":"T3","std":"ANSI","basis":"kA","xc":"WC","type":"270VCP-W40C","eMaxKv":27,"k":1,"pfWithstandKvRms":60,"impulseKvPeak":125,"amps":[1200,1600],"symIscKaRms":40,"dcComponentPct":50,"asymKaRms":49,"clKaPeak":104,"shortTime3sKaRms":40,"shortTimeNotes":[7],"cycles":3,"ySeconds":1,"rrrvKvPerUs":1.1,"backToBackCapBankARms":"400","inrushKaPeak":20,"inrushKhz":4.2,"noLoadOperations":2500},{"keys":["36VCPWND25"],"display":"36VCPW-ND25","table":"T4","std":"IEC","basis":"kA","type":"36VCPW-ND25","kvRms":3.6,"pfKvRms":10,"impulseKvPeak":40,"amps":[630,1250],"breakingKaRms":25,"shortTime3sKaRms":25,"makingKaPeak":63,"cableChargingA":25},{"keys":["36VCPWND32"],"display":"36VCPW-ND32","table":"T4","std":"IEC","basis":"kA","type":"36VCPW-ND32","kvRms":3.6,"pfKvRms":10,"impulseKvPeak":40,"amps":[630,1250],"breakingKaRms":31.5,"shortTime3sKaRms":31.5,"makingKaPeak":79,"cableChargingA":25},{"keys":["72VCPWND25"],"display":"72VCPW-ND25","table":"T4","std":"IEC","basis":"kA","type":"72VCPW-ND25","kvRms":7.2,"pfKvRms":20,"impulseKvPeak":60,"amps":[630,1250],"breakingKaRms":25,"shortTime3sKaRms":25,"makingKaPeak":63,"cableChargingA":25},{"keys":["72VCPWND32"],"display":"72VCPW-ND32","table":"T4","std":"IEC","basis":"kA","type":"72VCPW-ND32","kvRms":7.2,"pfKvRms":20,"impulseKvPeak":60,"amps":[630,1250],"breakingKaRms":31.5,"shortTime3sKaRms":31.5,"makingKaPeak":79,"cableChargingA":25},{"keys":["36VCPW25"],"display":"36VCP-W25","table":"T4","std":"IEC","basis":"kA","type":"36VCP-W25","kvRms":3.6,"pfKvRms":10,"impulseKvPeak":40,"amps":[630,1250,2000],"breakingKaRms":25,"shortTime3sKaRms":25,"makingKaPeak":63,"cableChargingA":25},{"keys":["36VCPW32"],"display":"36VCP-W32","table":"T4","std":"IEC","basis":"kA","type":"36VCP-W32","kvRms":3.6,"pfKvRms":10,"impulseKvPeak":40,"amps":[1250,2000],"breakingKaRms":31.5,"shortTime3sKaRms":31.5,"makingKaPeak":79,"cableChargingA":25},{"keys":["36VCPW40"],"display":"36VCP-W40","table":"T4","std":"IEC","basis":"kA","type":"36VCP-W40","kvRms":3.6,"pfKvRms":10,"impulseKvPeak":40,"amps":[1250,2000],"breakingKaRms":40,"shortTime3sKaRms":40,"makingKaPeak":100,"cableChargingA":25},{"keys":["72VCPW25"],"display":"72VCP-W25","table":"T4","std":"IEC","basis":"kA","type":"72VCP-W25","kvRms":7.2,"pfKvRms":20,"impulseKvPeak":60,"amps":[630,1250,2000],"breakingKaRms":25,"shortTime3sKaRms":25,"makingKaPeak":63,"cableChargingA":25},{"keys":["72VCPW32"],"display":"72VCP-W32","table":"T4","std":"IEC","basis":"kA","type":"72VCP-W32","kvRms":7.2,"pfKvRms":20,"impulseKvPeak":60,"amps":[1250,2000],"breakingKaRms":31.5,"shortTime3sKaRms":31.5,"makingKaPeak":79,"cableChargingA":25},{"keys":["72VCPW40"],"display":"72VCP-W40","table":"T4","std":"IEC","basis":"kA","type":"72VCP-W40","kvRms":7.2,"pfKvRms":20,"impulseKvPeak":60,"amps":[1250,2000],"breakingKaRms":40,"shortTime3sKaRms":40,"makingKaPeak":100,"cableChargingA":25},{"keys":["120VCPW25"],"display":"120VCP-W25","table":"T4","std":"IEC","basis":"kA","type":"120VCP-W25","kvRms":12,"pfKvRms":28,"impulseKvPeak":75,"amps":[630,1250,2000],"breakingKaRms":25,"shortTime3sKaRms":25,"makingKaPeak":63,"cableChargingA":25},{"keys":["120VCPW32"],"display":"120VCP-W32","table":"T4","std":"IEC","basis":"kA","type":"120VCP-W32","kvRms":12,"pfKvRms":28,"impulseKvPeak":75,"amps":[1250,2000],"breakingKaRms":31.5,"shortTime3sKaRms":31.5,"makingKaPeak":79,"cableChargingA":25},{"keys":["120VCPW40"],"display":"120VCP-W40","table":"T4","std":"IEC","basis":"kA","type":"120VCP-W40","kvRms":12,"pfKvRms":28,"impulseKvPeak":75,"amps":[1250,2000],"breakingKaRms":40,"shortTime3sKaRms":40,"makingKaPeak":100,"cableChargingA":25},{"keys":["175VCPW25"],"display":"175VCP-W25","table":"T4","std":"IEC","basis":"kA","type":"175VCP-W25","kvRms":17.5,"pfKvRms":38,"impulseKvPeak":95,"amps":[1250,2000],"breakingKaRms":25,"shortTime3sKaRms":25,"makingKaPeak":63,"cableChargingA":31.5},{"keys":["175VCPW32"],"display":"175VCP-W32","table":"T4","std":"IEC","basis":"kA","type":"175VCP-W32","kvRms":17.5,"pfKvRms":38,"impulseKvPeak":95,"amps":[1250,2000],"breakingKaRms":31.5,"shortTime3sKaRms":31.5,"makingKaPeak":79,"cableChargingA":31.5},{"keys":["175VCPW40"],"display":"175VCP-W40","table":"T4","std":"IEC","basis":"kA","type":"175VCP-W40","kvRms":17.5,"pfKvRms":38,"impulseKvPeak":95,"amps":[1250,2000],"breakingKaRms":40,"shortTime3sKaRms":40,"makingKaPeak":100,"cableChargingA":31.5},{"keys":["50VCPW25"],"display":"50VCP-W25","table":"T5","std":"ANSI","basis":"kA","clRule":"2.6 x K x rated short circuit","type":"50VCP-W25","nomKv":4.16,"eMaxKv":4.76,"k":1,"pfWithstandKvRms":19,"impulseKvPeak":60,"amps":[1200,2000,3000],"iscKaRms":25,"interruptingCycles":"3 or 5","ySeconds":2,"eOverK":4.76,"clKaPeak":65,"clMomentaryKaRms":39},{"keys":["50VCPW40"],"display":"50VCP-W40","table":"T5","std":"ANSI","basis":"kA","clRule":"2.6 x K x rated short circuit","type":"50VCP-W40","nomKv":4.16,"eMaxKv":4.76,"k":1,"pfWithstandKvRms":19,"impulseKvPeak":60,"amps":[1200,2000,3000],"iscKaRms":40,"interruptingCycles":"3 or 5","ySeconds":2,"eOverK":4.76,"clKaPeak":104,"clMomentaryKaRms":62},{"keys":["50VCPW50"],"display":"50VCP-W50","table":"T5","std":"ANSI","basis":"kA","clRule":"2.6 x K x rated short circuit","type":"50VCP-W50","nomKv":4.16,"eMaxKv":4.76,"k":1,"pfWithstandKvRms":19,"impulseKvPeak":60,"amps":[1200,2000,3000],"iscKaRms":50,"interruptingCycles":"3 or 5","ySeconds":2,"eOverK":4.76,"clKaPeak":130,"clMomentaryKaRms":78},{"keys":["50VCPW63"],"display":"50VCP-W63","table":"T5","std":"ANSI","basis":"kA","clRule":"2.6 x K x rated short circuit","type":"50VCP-W63","nomKv":4.16,"eMaxKv":4.76,"k":1,"pfWithstandKvRms":19,"impulseKvPeak":60,"amps":[1200,2000,3000],"iscKaRms":63,"interruptingCycles":"3 or 5","ySeconds":2,"eOverK":4.76,"clKaPeak":164,"clMomentaryKaRms":98},{"keys":["75VCPW40"],"display":"75VCP-W40","table":"T5","std":"ANSI","basis":"kA","clRule":"2.6 x K x rated short circuit","type":"75VCP-W40","nomKv":7.2,"eMaxKv":8.25,"k":1,"pfWithstandKvRms":36,"impulseKvPeak":95,"amps":[1200,2000,3000],"iscKaRms":40,"interruptingCycles":"3 or 5","ySeconds":2,"eOverK":8.25,"eOverKDefect":"Printed 11.5. With K=1.0, E/K must equal E = 8.25. Corrected value 8.25.","clKaPeak":104,"clMomentaryKaRms":62,"printed":{"eOverK":11.5},"correction":"IB131006EN (Oct 2025) Table 5 prints E/K as 11.5. With K = 1.0, E/K must equal E. Corrected to 8.25."},{"keys":["75VCPW50"],"display":"75VCP-W50","table":"T5","std":"ANSI","basis":"kA","clRule":"2.6 x K x rated short circuit","type":"75VCP-W50","nomKv":7.2,"eMaxKv":8.25,"k":1,"pfWithstandKvRms":36,"impulseKvPeak":95,"amps":[1200,2000,3000],"iscKaRms":50,"interruptingCycles":"3 or 5","ySeconds":2,"eOverK":8.25,"printDefect":"This row is defective as printed in IB131006EN (Oct 2025). A 7.2 kV nominal-class breaker cannot have 15 kV max voltage, and a 60 kV BIL does not go with 15 kV. Every other 8.25 kV row in every table reads 8.25 kV max / 36 kV power-frequency / 95 kV BIL. Corrected: eMaxKv 8.25, impulseKvPeak 95, eOverK 8.25.","clKaPeak":130,"clMomentaryKaRms":78,"printed":{"eMaxKv":15,"impulseKvPeak":60,"eOverK":11.5},"correction":"IB131006EN (Oct 2025) Table 5 prints this row at 15 kV max with a 60 kV BIL and E/K 11.5. A 7.2 kV nominal class cannot be 15 kV, and 60 kV BIL is the 4.76 kV class - echoing it understates the insulation level of an 8.25 kV breaker. Corrected to 8.25 kV / 95 kV BIL / E/K 8.25."},{"keys":["150VCPW25"],"display":"150VCP-W25","table":"T5","std":"ANSI","basis":"kA","clRule":"2.6 x K x rated short circuit","type":"150VCP-W25","nomKv":13.8,"eMaxKv":15,"k":1,"pfWithstandKvRms":36,"impulseKvPeak":95,"amps":[1200,2000,3000],"iscKaRms":25,"interruptingCycles":"3 or 5","ySeconds":2,"eOverK":15,"clKaPeak":65,"clMomentaryKaRms":39},{"keys":["150VCPW40"],"display":"150VCP-W40","table":"T5","std":"ANSI","basis":"kA","clRule":"2.6 x K x rated short circuit","type":"150VCP-W40","nomKv":13.8,"eMaxKv":15,"k":1,"pfWithstandKvRms":36,"impulseKvPeak":95,"amps":[1200,2000,3000],"iscKaRms":40,"interruptingCycles":"3 or 5","ySeconds":2,"eOverK":15,"clKaPeak":104,"clMomentaryKaRms":62},{"keys":["150VCPW50"],"display":"150VCP-W50","table":"T5","std":"ANSI","basis":"kA","clRule":"2.6 x K x rated short circuit","type":"150VCP-W50","nomKv":13.8,"eMaxKv":15,"k":1,"pfWithstandKvRms":36,"impulseKvPeak":95,"amps":[1200,2000,3000],"iscKaRms":50,"interruptingCycles":"3 or 5","ySeconds":2,"eOverK":15,"clKaPeak":130,"clMomentaryKaRms":78},{"keys":["150VCPW63"],"display":"150VCP-W63","table":"T5","std":"ANSI","basis":"kA","clRule":"2.6 x K x rated short circuit","type":"150VCP-W63","nomKv":13.8,"eMaxKv":15,"k":1,"pfWithstandKvRms":36,"impulseKvPeak":95,"amps":[1200,2000,3000],"iscKaRms":63,"interruptingCycles":"3 or 5","ySeconds":2,"eOverK":15,"printDefect":"The Max voltage cell is BLANK in IB131006EN (Oct 2025). E/K reads 15.0 and K = 1.0, so E = 15 kV. Corrected: eMaxKv 15.","clKaPeak":164,"clMomentaryKaRms":98,"printed":{"eMaxKv":null},"correction":"IB131006EN (Oct 2025) Table 5 leaves the max-voltage cell blank. E/K reads 15.0 at K = 1.0, so E = 15 kV."},{"keys":["150VCPWXC63"],"display":"150VCP-WXC63","table":"T6","std":"ANSI","basis":"kA","xc":"XC","type":"150VCP-WXC63","eMaxKv":17.5,"k":1,"pfWithstandKvRms":42,"impulseKvPeak":95,"amps":[1200,2000,3000],"symIscKaRms":63,"dcComponentPct":[61,61,61],"asymKaRms":83,"clKaPeak":175,"shortTime3sKaRms":63,"cycles":5,"ySeconds":2,"rrrvKvPerUs":[1.07,1.07,1.07],"backToBackCapBankARms":["200,1600(9)","200,1600(9)","200,1600(9)"],"inrushKaPeak":7.7,"inrushKhz":465,"noLoadOperations":[10000,10000,5000]},{"display":"50VCP-W63C","keys":["50VCPW63C"],"std":"ANSI","basis":"kA","xc":"WC","table":"PL006","eMaxKv":5.95,"pfWithstandKvRms":24,"impulseKvPeak":75,"k":1,"symIscKaRms":63,"amps":[1200,2000,3000],"only2004":true,"disputed":"PL01301006E p6 prints 10.3 kV; p16 prints 5.95 kV. The type was dropped from the Oct 2025 instruction book, so there is no current tiebreaker. 5.95 kV is carried here because p16 is internally coherent - its 24 kV rms / 75 kV BIL insulation set IS the 5.95 kV extra-capability class, confirmed independently by the ratings audit. Treat as provisional and confirm with Voyten before ordering."},{"display":"50VCP-W25C","keys":["50VCPW25C"],"std":"ANSI","basis":"kA","xc":"WC","table":"PL006","eMaxKv":5.95,"pfWithstandKvRms":24,"impulseKvPeak":75,"k":1,"symIscKaRms":25,"amps":[1200,2000,3000],"only2004":true}],"unrated":[{"display":"240VCP-W16","keys":["240VCPW16"]},{"display":"240VCP-W20","keys":["240VCPW20"]},{"display":"240VCP-W25","keys":["240VCPW25"],"note":"IB131006EN Table 30 publishes a full 24 kV renewal-parts column for this type - interrupters at 650 A / 1250 A / 2000 A, primary disconnects, phase barrier, push rod, tie bar and front panel. So it is a real, supported, parts-listed product. What is missing is the ratings table."}],"weights":[{"k":["50VCPWND250"],"amps":[1200],"lbs":[345],"kg":[157],"se":null},{"k":["50VCPW250"],"amps":[1200,2000,3000],"lbs":[350,410,525],"kg":[159,186,238],"se":"50VCPW-SE250"},{"k":["50VCPW350"],"amps":[1200,2000,3000],"lbs":[460,490,525],"kg":[209,222,238],"se":"50VCPW-SE350"},{"k":["75VCPW500"],"amps":[1200,2000,3000],"lbs":[375,410,525],"kg":[170,186,238],"se":"75VCPW-SE500"},{"k":["150VCPW500"],"amps":[1200,2000,3000],"lbs":[350,410,525],"kg":[159,186,238],"se":"150VCPW-SE500"},{"k":["150VCPW750"],"amps":[1200,2000,3000],"lbs":[350,410,525],"kg":[159,186,238],"se":"150VCPW-SE750"},{"k":["150VCPW1000"],"amps":[1200,2000,3000],"lbs":[460,490,525],"kg":[209,222,238],"se":"150VCPW-SE1000"},{"k":["150VCPW1500","150VCPW63"],"amps":[1200,2000,3000],"lbs":[525,530,550],"kg":[238,241,250],"se":"150VCPW-SE1500(63)"},{"k":["270VCPW750","270VCPW16"],"amps":[600,1200,2000],"lbs":[460,480,500],"kg":[209,218,227],"se":null},{"k":["270VCPW1000","270VCPW22"],"amps":[600,1200,2000],"lbs":[460,480,500],"kg":[209,218,227],"se":null},{"k":["270VCPW1250","270VCPW25"],"amps":[600,1200,2000],"lbs":[460,480,500],"kg":[209,218,227],"se":null},{"k":["270VCPW1600","270VCPW32"],"amps":[1200,2000],"lbs":[545,560],"kg":[245,252],"se":null},{"k":["270VCPW2000","270VCPW40"],"amps":[1200,2000],"lbs":[545,560],"kg":[245,252],"se":null},{"k":["36VCPWND25"],"amps":[630,1250],"lbs":[350,350],"kg":[159,159]},{"k":["36VCPWND32"],"amps":[630,1250],"lbs":[350,350],"kg":[159,159]},{"k":["72VCPWND25"],"amps":[630,1250],"lbs":[350,350],"kg":[159,159]},{"k":["72VCPWND32"],"amps":[630,1250],"lbs":[350,350],"kg":[159,159]},{"k":["36VCPW25"],"amps":[630,1250,2000],"lbs":[350,350,410],"kg":[159,159,186]},{"k":["36VCPW32"],"amps":[1250,2000],"lbs":[350,410],"kg":[159,186]},{"k":["36VCPW40"],"amps":[1250,2000],"lbs":[375,410],"kg":[170,186]},{"k":["72VCPW25"],"amps":[630,1250,2000],"lbs":[350,350,410],"kg":[159,159,186]},{"k":["72VCPW32"],"amps":[1250,2000],"lbs":[350,410],"kg":[159,186]},{"k":["72VCPW40"],"amps":[1250,2000],"lbs":[375,410],"kg":[170,186]},{"k":["120VCPW25"],"amps":[630,1250,2000],"lbs":[350,350,410],"kg":[159,159,186]},{"k":["120VCPW32"],"amps":[1250,2000],"lbs":[350,410],"kg":[159,186]},{"k":["120VCPW40"],"amps":[1250,2000],"lbs":[375,410],"kg":[170,186]},{"k":["175VCPW25"],"amps":[630,1250,2000],"lbs":[350,350,410],"kg":[159,159,186]},{"k":["175VCPW32"],"amps":[1250,2000],"lbs":[375,410],"kg":[170,186]},{"k":["175VCPW40"],"amps":[1250,2000],"lbs":[375,410],"kg":[170,186]},{"k":["240VCPW16"],"amps":[630,1250,2000],"lbs":[462,484,506],"kg":[210,220,230]},{"k":["240VCPW20"],"amps":[630,1250,2000],"lbs":[462,484,506],"kg":[210,220,230]},{"k":["240VCPW25"],"amps":[630,1250,2000],"lbs":[462,484,506],"kg":[210,220,230]},{"k":["150VCPW25"],"amps":[1200,2000,3000],"lbs":[350,375,500],"kg":[159,170,227]},{"k":["150VCPW40"],"amps":[1200,2000,3000],"lbs":[375,375,500],"kg":[170,170,227]},{"k":["150VCPW50"],"amps":[1200,2000,3000],"lbs":[480,490,500],"kg":[218,222,227]},{"k":["150VCPW63"],"amps":[1200,2000,3000],"lbs":[460,490,525],"kg":[209,222,238]},{"k":["75VCPW40"],"amps":[1200,2000,3000],"lbs":[375,375,500],"kg":[170,170,227]},{"k":["75VCPW50"],"amps":[1200,2000,3000],"lbs":[480,490,525],"kg":[218,222,227],"flag":"The 3000 A cell reads 525 (227). 525 lb is 238 kg and 500 lb is 227 kg, so one of the two figures is wrong. Every other 63 kA-class 3000 A row reads 525 (238). Show both and flag."},{"k":["50VCPW25"],"amps":[1200,2000,3000],"lbs":[350,375,500],"kg":[159,170,227]},{"k":["50VCPW40"],"amps":[1200,2000,3000],"lbs":[375,375,500],"kg":[170,170,227]},{"k":["50VCPW50"],"amps":[1200,2000,3000],"lbs":[480,490,500],"kg":[218,222,227]},{"k":["50VCPW63"],"amps":[1200,2000,3000],"lbs":[460,490,525],"kg":[209,222,238]}],"styles":[{"base":"3A75630","type":"50VCP-WND250","alt":null,"amps":1200,"kv":4.76,"k":1.24,"std":"ANSI","usd":11100,"byDesc":null},{"base":"8075A31","type":"50VCP-W250","alt":null,"amps":1200,"kv":4.76,"k":1.24,"std":"ANSI","usd":11100,"byDesc":null},{"base":"8075A32","type":"50VCP-W250","alt":null,"amps":2000,"kv":4.76,"k":1.24,"std":"ANSI","usd":15100,"byDesc":null},{"base":"3776A13","type":"50VCP-W250","alt":null,"amps":3000,"kv":4.76,"k":1.24,"std":"ANSI","usd":23300,"byDesc":null},{"base":"8075A34","type":"50VCP-W350","alt":null,"amps":1200,"kv":4.76,"k":1.19,"std":"ANSI","usd":14800,"byDesc":null},{"base":"8075A35","type":"50VCP-W350","alt":null,"amps":2000,"kv":4.76,"k":1.19,"std":"ANSI","usd":18000,"byDesc":null},{"base":"3776A16","type":"50VCP-W350","alt":null,"amps":3000,"kv":4.76,"k":1.19,"std":"ANSI","usd":26800,"byDesc":null},{"base":null,"type":"50VCP-W500","alt":"50VCP-W500 (63kA)","amps":1200,"kv":4.76,"k":1,"std":"ANSI","usd":48200,"byDesc":"Order by description"},{"base":null,"type":"50VCP-W500","alt":"50VCP-W500 (63kA)","amps":2000,"kv":4.76,"k":1,"std":"ANSI","usd":55500,"byDesc":"Order by description"},{"base":null,"type":"50VCP-W500","alt":"50VCP-W500 (63kA)","amps":3000,"kv":4.76,"k":1,"std":"ANSI","usd":65800,"byDesc":"Order by description"},{"base":"8349A38","type":"75VCP-W500","alt":null,"amps":1200,"kv":8.25,"k":1.25,"std":"ANSI","usd":15500,"byDesc":null},{"base":"3776A18","type":"75VCP-W500","alt":null,"amps":2000,"kv":8.25,"k":1.25,"std":"ANSI","usd":18500,"byDesc":null},{"base":"3776A19","type":"75VCP-W500","alt":null,"amps":3000,"kv":8.25,"k":1.25,"std":"ANSI","usd":28100,"byDesc":null},{"base":"3A73950","type":"150VCP-W500","alt":null,"amps":1200,"kv":15,"k":1.3,"std":"ANSI","usd":13600,"byDesc":null},{"base":"3776A21","type":"150VCP-W500","alt":null,"amps":2000,"kv":15,"k":1.3,"std":"ANSI","usd":16300,"byDesc":null},{"base":"3776A22","type":"150VCP-W500","alt":null,"amps":3000,"kv":15,"k":1.3,"std":"ANSI","usd":25300,"byDesc":null},{"base":"3776A23","type":"150VCP-W750","alt":null,"amps":1200,"kv":15,"k":1.3,"std":"ANSI","usd":15100,"byDesc":null},{"base":"3776A24","type":"150VCP-W750","alt":null,"amps":2000,"kv":15,"k":1.3,"std":"ANSI","usd":18700,"byDesc":null},{"base":"3776A25","type":"150VCP-W750","alt":null,"amps":3000,"kv":15,"k":1.3,"std":"ANSI","usd":27400,"byDesc":null},{"base":"8075A37","type":"150VCP-W1000","alt":null,"amps":1200,"kv":15,"k":1.3,"std":"ANSI","usd":23600,"byDesc":null},{"base":"8075A38","type":"150VCP-W1000","alt":null,"amps":2000,"kv":15,"k":1.3,"std":"ANSI","usd":28600,"byDesc":null},{"base":"3776A28","type":"150VCP-W1000","alt":null,"amps":3000,"kv":15,"k":1.3,"std":"ANSI","usd":35800,"byDesc":null},{"base":"4A35390","type":"150VCP-W1500","alt":"150VCP-W1500 (63kA)","amps":1200,"kv":15,"k":1,"std":"ANSI","usd":56800,"byDesc":null},{"base":"4A35391","type":"150VCP-W1500","alt":"150VCP-W1500 (63kA)","amps":2000,"kv":15,"k":1,"std":"ANSI","usd":65300,"byDesc":null},{"base":"4A35392","type":"150VCP-W1500","alt":"150VCP-W1500 (63kA)","amps":3000,"kv":15,"k":1,"std":"ANSI","usd":77500,"byDesc":null},{"base":"1A33580","type":"36VCP-WND25","amps":630,"kv":3.6,"ka":25,"std":"IEC","usd":14000},{"base":"1A33581","type":"36VCP-WND25","amps":1250,"kv":3.6,"ka":25,"std":"IEC","usd":15500},{"base":"8075A02","type":"36VCP-W25","amps":630,"kv":3.6,"ka":25,"std":"IEC","usd":14000},{"base":"8075A03","type":"36VCP-W25","amps":1250,"kv":3.6,"ka":25,"std":"IEC","usd":15500},{"base":"8075A04","type":"36VCP-W25","amps":2000,"kv":3.6,"ka":25,"std":"IEC","usd":19500},{"base":"1A33582","type":"36VCP-WND32","amps":630,"kv":3.6,"ka":31.5,"std":"IEC","usd":16700},{"base":"1A33583","type":"36VCP-WND32","amps":1250,"kv":3.6,"ka":31.5,"std":"IEC","usd":17400},{"base":"8075A05","type":"36VCP-W32","amps":1250,"kv":3.6,"ka":31.5,"std":"IEC","usd":17400},{"base":"8075A06","type":"36VCP-W32","amps":2000,"kv":3.6,"ka":31.5,"std":"IEC","usd":20800},{"base":"8075A07","type":"36VCP-W40","amps":1250,"kv":3.6,"ka":40,"std":"IEC","usd":25900},{"base":"8075A08","type":"36VCP-W40","amps":2000,"kv":3.6,"ka":40,"std":"IEC","usd":28500},{"base":"1A33584","type":"72VCP-WND25","amps":630,"kv":7.2,"ka":25,"std":"IEC","usd":14900},{"base":"1A33585","type":"72VCP-WND25","amps":1250,"kv":7.2,"ka":25,"std":"IEC","usd":16300},{"base":"8075A09","type":"72VCP-W25","amps":630,"kv":7.2,"ka":25,"std":"IEC","usd":14900},{"base":"8075A10","type":"72VCP-W25","amps":1250,"kv":7.2,"ka":25,"std":"IEC","usd":16300},{"base":"8075A11","type":"72VCP-W25","amps":2000,"kv":7.2,"ka":25,"std":"IEC","usd":20300},{"base":"1A33586","type":"72VCP-WND32","amps":630,"kv":7.2,"ka":31.5,"std":"IEC","usd":18800},{"base":"1A33587","type":"72VCP-WND32","amps":1250,"kv":7.2,"ka":31.5,"std":"IEC","usd":21000},{"base":"8075A12","type":"72VCP-W32","amps":1250,"kv":7.2,"ka":31.5,"std":"IEC","usd":21000},{"base":"8075A13","type":"72VCP-W32","amps":2000,"kv":7.2,"ka":31.5,"std":"IEC","usd":23100},{"base":"8075A14","type":"72VCP-W40","amps":1250,"kv":7.2,"ka":40,"std":"IEC","usd":27100},{"base":"8075A15","type":"72VCP-W40","amps":2000,"kv":7.2,"ka":40,"std":"IEC","usd":33300},{"base":"8075A16","type":"120VCP-W25","amps":630,"kv":12,"ka":25,"std":"IEC","usd":17400},{"base":"8075A17","type":"120VCP-W25","amps":1250,"kv":12,"ka":25,"std":"IEC","usd":19500},{"base":"8075A18","type":"120VCP-W25","amps":2000,"kv":12,"ka":25,"std":"IEC","usd":24600},{"base":"8075A19","type":"120VCP-W32","amps":1250,"kv":12,"ka":31.5,"std":"IEC","usd":22300},{"base":"8075A20","type":"120VCP-W32","amps":2000,"kv":12,"ka":31.5,"std":"IEC","usd":29200},{"base":"8075A21","type":"120VCP-W40","amps":1250,"kv":12,"ka":40,"std":"IEC","usd":32000},{"base":"8075A22","type":"120VCP-W40","amps":2000,"kv":12,"ka":40,"std":"IEC","usd":38800},{"base":"8075A24","type":"175VCP-W25","amps":1250,"kv":17.5,"ka":25,"std":"IEC","usd":22400},{"base":"8075A25","type":"175VCP-W25","amps":2000,"kv":17.5,"ka":25,"std":"IEC","usd":27300},{"base":"8075A26","type":"175VCP-W32","amps":1250,"kv":17.5,"ka":31.5,"std":"IEC","usd":28200},{"base":"8075A27","type":"175VCP-W32","amps":2000,"kv":17.5,"ka":31.5,"std":"IEC","usd":30800},{"base":"8075A28","type":"175VCP-W40","amps":1250,"kv":17.5,"ka":40,"std":"IEC","usd":35600},{"base":"8075A29","type":"175VCP-W40","amps":2000,"kv":17.5,"ka":40,"std":"IEC","usd":45400},{"base":null,"type":"175VCP-W50","amps":3150,"kv":17.5,"ka":50,"std":"IEC","usd":50000}],"interrupters":[{"desc":"50/250, 1200 A-58 kA","qty":3,"parts":[{"col":"VCP-W","style":"8297A02H01"},{"col":"VCPW-SE / 27 kV","style":"8297A02H02"},{"col":"VCPW-ND","style":"8297A02H03"}]},{"desc":"50/250, 1200 A-58 kA (4\" SC)","qty":3,"parts":[{"col":"VCP-W","style":"8297A02H21"},{"col":"VCPW-SE / 27 kV","style":"8297A02H22"}]},{"desc":"50/250H, 1200 A-78 kA","qty":3,"parts":[{"col":"VCP-W","style":"8297A05H01"},{"col":"VCPW-SE / 27 kV","style":"8297A05H02"}]},{"desc":"50/250, 2000 A-58 kA","qty":3,"parts":[{"col":"VCP-W","style":"8297A03H01"},{"col":"VCPW-SE / 27 kV","style":"8297A03H02"}]},{"desc":"50/250, 2000 A-58 kA (5\" SC)","qty":3,"parts":[{"col":"VCP-W","style":"8297A03H21"},{"col":"VCPW-SE / 27 kV","style":"8297A03H22"}]},{"desc":"50/250H, 2000 A-78 kA","qty":3,"parts":[{"col":"VCP-W","style":"8297A06H01"},{"col":"VCPW-SE / 27 kV","style":"8297A06H02"}]},{"desc":"50/250, 3000 A-58 kA","qty":3,"parts":[{"col":"VCP-W","style":"8297A04H01"},{"col":"VCPW-SE / 27 kV","style":"8297A04H02"}]},{"desc":"50/250H, 3000 A-78 kA","qty":3,"parts":[{"col":"VCP-W","style":"8297A07H01"},{"col":"VCPW-SE / 27 kV","style":"8297A07H02"}]},{"desc":"50/350, 1200 A-78 kA","qty":3,"parts":[{"col":"VCP-W","style":"8297A08H01"},{"col":"VCPW-SE / 27 kV","style":"8297A08H02"}]},{"desc":"50/350, 1200 A-78 kA (5\" SC)","qty":3,"parts":[{"col":"VCP-W","style":"8297A08H21"},{"col":"VCPW-SE / 27 kV","style":"8297A08H22"}]},{"desc":"50/350C, 1200 A-78 kA","qty":3,"parts":[{"col":"VCP-W","style":"8297A08H23"},{"col":"VCPW-SE / 27 kV","style":"8297A08H24"}]},{"desc":"50/350, 2000 A-78 kA","qty":3,"parts":[{"col":"VCP-W","style":"8297A09H01"},{"col":"VCPW-SE / 27 kV","style":"8297A09H02"}]},{"desc":"50/350, 2000 A-78 kA (5\" SC)","qty":3,"parts":[{"col":"VCP-W","style":"8297A09H21"},{"col":"VCPW-SE / 27 kV","style":"8297A09H22"}]},{"desc":"50/350C, 2000 A-78 kA","qty":3,"parts":[{"col":"VCP-W","style":"8297A09H23"},{"col":"VCPW-SE / 27 kV","style":"8297A09H24"}]},{"desc":"50/350, 3000 A-78 kA","qty":3,"parts":[{"col":"VCP-W","style":"8297A10H01"},{"col":"VCPW-SE / 27 kV","style":"8297A10H02"}]},{"desc":"50/63, 1200 A","qty":3,"parts":[{"col":"VCP-W","style":"8297A29H05"}]},{"desc":"50/63, 2000 A","qty":3,"parts":[{"col":"VCP-W","style":"8297A30H05"}]},{"desc":"50/63, 3000 A","qty":3,"parts":[{"col":"VCP-W","style":"8297A31H03"}]},{"desc":"50VCP-W40C, 3000 A","qty":3,"parts":[{"col":"VCPW-SE / 27 kV","style":"8297A10H23"}]},{"desc":"50VCP-W50C, 3000 A","qty":3,"parts":[{"col":"VCPW-SE / 27 kV","style":"8297A10H23"}]},{"desc":"75/500, 1200 A-66 kA (5\")","qty":3,"parts":[{"col":"VCP-W","style":"8297A11H01"},{"col":"VCPW-SE / 27 kV","style":"8297A11H02"}]},{"desc":"75/500, 1200 A-66 kA (4\")","qty":3,"parts":[{"col":"VCP-W","style":"8297A11H03"},{"col":"VCPW-SE / 27 kV","style":"8297A11H04"}]},{"desc":"75/500, 2000 A-66 kA","qty":3,"parts":[{"col":"VCP-W","style":"8297A12H01"},{"col":"VCPW-SE / 27 kV","style":"8297A12H02"}]},{"desc":"50VCP-WC, 1200 A","qty":3,"parts":[{"col":"VCPW-SE / 27 kV","style":"8297A11H23"}]},{"desc":"50VCP-WC, 2000 A","qty":3,"parts":[{"col":"VCPW-SE / 27 kV","style":"8297A12H23"}]},{"desc":"75/500, 3000 A-66 kA","qty":3,"parts":[{"col":"VCP-W","style":"8297A13H01"},{"col":"VCPW-SE / 27 kV","style":"8297A13H02"}]},{"desc":"75VCP-W50C, 3000 A","qty":3,"parts":[{"col":"VCPW-SE / 27 kV","style":"8297A13H23"}]},{"desc":"150/500, 1200 A-37 kA (4\")","qty":3,"parts":[{"col":"VCP-W","style":"8297A17H01"},{"col":"VCPW-SE / 27 kV","style":"8297A17H02"}]},{"desc":"150/500, 1200 A-37 kA (3\" SC)","qty":3,"parts":[{"col":"VCP-W","style":"8297A17H21"},{"col":"VCPW-SE / 27 kV","style":"8297A17H22"}]},{"desc":"150/500H, 1200 A-58 kA","qty":3,"parts":[{"col":"VCP-W","style":"8297A20H01"},{"col":"VCPW-SE / 27 kV","style":"8297A20H02"}]},{"desc":"150/500, 2000 A-37 kA","qty":3,"parts":[{"col":"VCP-W","style":"8297A18H01"},{"col":"VCPW-SE / 27 kV","style":"8297A18H02"}]},{"desc":"150/500H, 2000 A-58 kA","qty":3,"parts":[{"col":"VCP-W","style":"8297A21H01"},{"col":"VCPW-SE / 27 kV","style":"8297A21H02"}]},{"desc":"150VCP-W25C, 1200 A","qty":3,"parts":[{"col":"VCPW-SE / 27 kV","style":"8297A20H23"}]},{"desc":"150/500, 3000 A-37 kA","qty":3,"parts":[{"col":"VCP-W","style":"8297A19H01"},{"col":"VCPW-SE / 27 kV","style":"8297A19H02"}]},{"desc":"150/500, 3000 A-58 kA","qty":3,"parts":[{"col":"VCP-W","style":"8297A22H01"},{"col":"VCPW-SE / 27 kV","style":"8297A22H02"}]},{"desc":"150/750, 1200 A-58 kA","qty":3,"parts":[{"col":"VCP-W","style":"8297A23H01"},{"col":"VCPW-SE / 27 kV","style":"8297A23H02"}]},{"desc":"150/750H, 1200 A-77 kA","qty":3,"parts":[{"col":"VCP-W","style":"8297A26H01"},{"col":"VCPW-SE / 27 kV","style":"8297A26H02"}]},{"desc":"150/750, 2000 A-58 kA","qty":3,"parts":[{"col":"VCP-W","style":"8297A24H01"},{"col":"VCPW-SE / 27 kV","style":"8297A24H02"}]},{"desc":"150/750H, 2000 A-77 kA","qty":3,"parts":[{"col":"VCP-W","style":"8297A27H01"},{"col":"VCPW-SE / 27 kV","style":"8297A27H02"}]},{"desc":"150/750, 3000 A-58 kA","qty":3,"parts":[{"col":"VCP-W","style":"8297A25H01"},{"col":"VCPW-SE / 27 kV","style":"8297A25H02"}]},{"desc":"150/750H, 3000 A-77 kA","qty":3,"parts":[{"col":"VCP-W","style":"8297A28H01"},{"col":"VCPW-SE / 27 kV","style":"8297A28H02"}]},{"desc":"150/1000, 1200 A-77 kA (7\")","qty":3,"parts":[{"col":"VCP-W","style":"8297A29H01"},{"col":"VCPW-SE / 27 kV","style":"8297A29H02"}]},{"desc":"150/1000, 1200 A-77 kA (5\")","qty":3,"parts":[{"col":"VCP-W","style":"8297A29H03"},{"col":"VCPW-SE / 27 kV","style":"8297A29H04"}]},{"desc":"150/1000, 1200 A-77 kA (5\") LT","qty":3,"parts":[{"col":"VCP-W","style":"8297A29H21"},{"col":"VCPW-SE / 27 kV","style":"8297A29H22"}]},{"desc":"150/1000C, 1200 A-77 kA (5\") LT","qty":3,"parts":[{"col":"VCP-W","style":"8297A29H23"},{"col":"VCPW-SE / 27 kV","style":"8297A29H24"}]},{"desc":"150/1000, 2000 A-77 kA (7\")","qty":3,"parts":[{"col":"VCP-W","style":"8297A30H01"},{"col":"VCPW-SE / 27 kV","style":"8297A30H02"}]},{"desc":"150/1000, 2000 A-77 kA (5\")","qty":3,"parts":[{"col":"VCP-W","style":"8297A30H03"},{"col":"VCPW-SE / 27 kV","style":"8297A30H04"}]},{"desc":"150/1000, 2000 A-77 kA (5\") LT","qty":3,"parts":[{"col":"VCP-W","style":"8297A30H21"},{"col":"VCPW-SE / 27 kV","style":"8297A30H22"}]},{"desc":"150/1000C, 2000 A-77 kA (5\") LT","qty":3,"parts":[{"col":"VCP-W","style":"8297A30H23"},{"col":"VCPW-SE / 27 kV","style":"8297A30H24"}]},{"desc":"150VCP-W40C, 1200 A","qty":3,"parts":[{"col":"VCPW-SE / 27 kV","style":"8297A29H36"}]},{"desc":"150VCP-W40C, 2000 A","qty":3,"parts":[{"col":"VCPW-SE / 27 kV","style":"8297A30H36"}]},{"desc":"150VCP-W50C, 1200 A","qty":3,"parts":[{"col":"VCPW-SE / 27 kV","style":"8297A29H37"}]},{"desc":"150VCP-W50C, 2000 A","qty":3,"parts":[{"col":"VCPW-SE / 27 kV","style":"8297A30H37"}]},{"desc":"150/1000, 3000 A-77 kA","qty":3,"parts":[{"col":"VCP-W","style":"8297A31H01"},{"col":"VCPW-SE / 27 kV","style":"8297A31H02"}]},{"desc":"150/63, 1200 A","qty":3,"parts":[{"col":"VCP-W","style":"8297A29H31"}]},{"desc":"150/63, 2000 A","qty":3,"parts":[{"col":"VCP-W","style":"8297A30H31"}]},{"desc":"150/63, 3000 A","qty":3,"parts":[{"col":"VCP-W","style":"8297A31H31"}]},{"desc":"270/16/22/25-630 A-37 kA","qty":3,"parts":[{"col":"VCPW-SE / 27 kV","style":"8299A04H01"}]},{"desc":"270/16/22/25-1200 A-37 kA","qty":3,"parts":[{"col":"VCPW-SE / 27 kV","style":"8299A05H01"}]},{"desc":"270/16/22/25-2000 A-37 kA","qty":3,"parts":[{"col":"VCPW-SE / 27 kV","style":"8299A02H01"}]},{"desc":"270/32, 1200 A-50 kA","qty":3,"parts":[{"col":"VCPW-SE / 27 kV","style":"8299A05H21"}]},{"desc":"270/32, 2000 A-50 kA","qty":3,"parts":[{"col":"VCPW-SE / 27 kV","style":"8299A02H21"}]},{"desc":"270/40, 1200 A-64 kA","qty":3,"parts":[{"col":"VCPW-SE / 27 kV","style":"8299A05H31"}]},{"desc":"270/40, 2000 A-64 kA","qty":3,"parts":[{"col":"VCPW-SE / 27 kV","style":"8299A02H31"}]},{"desc":"50/25C, 1200 A","qty":3,"parts":[{"col":"VCP-WC","style":"8297A33H01"}]},{"desc":"50/25C, 2000 A","qty":3,"parts":[{"col":"VCP-WC","style":"8297A33H02"}]},{"desc":"50/25C, 3000 A","qty":3,"parts":[{"col":"VCP-WC","style":"8297A33H03"}]},{"desc":"50/40C, 1200 A","qty":3,"parts":[{"col":"VCP-WC","style":"8297A34H01"}]},{"desc":"50/40C, 2000 A","qty":3,"parts":[{"col":"VCP-WC","style":"8297A34H02"}]},{"desc":"50/40C, 3000 A","qty":3,"parts":[{"col":"VCP-WC","style":"8297A34H03"}]},{"desc":"50/50C, 1200 A","qty":3,"parts":[{"col":"VCP-WC","style":"8297A34H04"}]},{"desc":"50/50C, 2000 A","qty":3,"parts":[{"col":"VCP-WC","style":"8297A34H05"}]},{"desc":"50/50C, 3000 A","qty":3,"parts":[{"col":"VCP-WC","style":"8297A34H06"}]},{"desc":"50/63C, 1200 A","qty":3,"parts":[{"col":"VCP-WC","style":"8297A35H01"}]},{"desc":"50/63C, 2000 A","qty":3,"parts":[{"col":"VCP-WC","style":"8297A35H02"}]},{"desc":"50/63C, 3000 A","qty":3,"parts":[{"col":"VCP-WC","style":"8297A35H03"}]},{"desc":"75/50C, 1200 A","qty":3,"parts":[{"col":"VCP-WC","style":"8297A34H07"}]},{"desc":"75/50C, 2000 A","qty":3,"parts":[{"col":"VCP-WC","style":"8297A34H08"}]},{"desc":"75/50C, 3000 A","qty":3,"parts":[{"col":"VCP-WC","style":"8297A34H09"}]},{"desc":"150/25C, 1200 A","qty":3,"parts":[{"col":"VCP-WC","style":"8297A33H11"}]},{"desc":"150/25C, 2000 A","qty":3,"parts":[{"col":"VCP-WC","style":"8297A33H12"}]},{"desc":"150/25C, 3000 A","qty":3,"parts":[{"col":"VCP-WC","style":"8297A33H13"}]},{"desc":"150/40C, 1200 A","qty":3,"parts":[{"col":"VCP-WC","style":"8297A34H11"}]},{"desc":"150/40C, 2000 A","qty":3,"parts":[{"col":"VCP-WC","style":"8297A34H12"}]},{"desc":"150/40C, 3000 A","qty":3,"parts":[{"col":"VCP-WC","style":"8297A34H13"}]},{"desc":"150/50C, 1200 A","qty":3,"parts":[{"col":"VCP-WC","style":"8297A34H14"}]},{"desc":"150/50C, 2000 A","qty":3,"parts":[{"col":"VCP-WC","style":"8297A34H15"}]},{"desc":"150/50C, 3000 A","qty":3,"parts":[{"col":"VCP-WC","style":"8297A34H16"}]},{"desc":"150/63C, 1200 A","qty":3,"parts":[{"col":"VCP-WC","style":"8297A35H11"}]},{"desc":"150/63C, 2000 A","qty":3,"parts":[{"col":"VCP-WC","style":"8297A35H12"}]},{"desc":"150/63C, 3000 A","qty":3,"parts":[{"col":"VCP-WC","style":"8297A35H13"}]},{"desc":"270/25C, 1200 A","qty":3,"parts":[{"col":"VCP-WC","style":"8297A36H01"}]},{"desc":"270/25C, 1600 A","qty":3,"parts":[{"col":"VCP-WC","style":"8297A36H02"}]},{"desc":"270/32C, 1200 A","qty":3,"parts":[{"col":"VCP-WC","style":"8297A36H03"}]},{"desc":"270/32C, 1600 A","qty":3,"parts":[{"col":"VCP-WC","style":"8297A36H04"}]},{"desc":"270/40C, 1200 A","qty":3,"parts":[{"col":"VCP-WC","style":"8297A36H05"}]},{"desc":"270/40C, 1600 A","qty":3,"parts":[{"col":"VCP-WC","style":"8297A36H06"}]},{"desc":"36/25-630 A","qty":3,"parts":[{"col":"up to 17.5 kV","style":"8299A01H01"}]},{"desc":"36/25-1250 A","qty":3,"parts":[{"col":"up to 17.5 kV","style":"8299A01H02"}]},{"desc":"36/25-2000 A","qty":3,"parts":[{"col":"up to 17.5 kV","style":"8299A01H03"}]},{"desc":"36/32-1250 A","qty":3,"parts":[{"col":"up to 17.5 kV","style":"8299A01H04"}]},{"desc":"36/32-2000 A","qty":3,"parts":[{"col":"up to 17.5 kV","style":"8299A01H05"}]},{"desc":"36/40-1250 A","qty":3,"parts":[{"col":"up to 17.5 kV","style":"8299A01H06"}]},{"desc":"36/40-2000 A","qty":3,"parts":[{"col":"up to 17.5 kV","style":"8299A01H07"}]},{"desc":"72/25-630 A","qty":3,"parts":[{"col":"up to 17.5 kV","style":"8299A01H08"}]},{"desc":"72/25-1250 A","qty":3,"parts":[{"col":"up to 17.5 kV","style":"8299A01H09"}]},{"desc":"72/25-2000 A","qty":3,"parts":[{"col":"up to 17.5 kV","style":"8299A01H10"}]},{"desc":"72/32-1250 A","qty":3,"parts":[{"col":"up to 17.5 kV","style":"8299A01H11"}]},{"desc":"72/32-2000 A","qty":3,"parts":[{"col":"up to 17.5 kV","style":"8299A01H12"}]},{"desc":"72/40-1250 A","qty":3,"parts":[{"col":"up to 17.5 kV","style":"8299A01H13"}]},{"desc":"72/40-2000 A","qty":3,"parts":[{"col":"up to 17.5 kV","style":"8299A01H14"}]},{"desc":"120/25-630 A","qty":3,"parts":[{"col":"up to 17.5 kV","style":"8299A01H15"}]},{"desc":"120/25-1250 A","qty":3,"parts":[{"col":"up to 17.5 kV","style":"8299A01H16"}]},{"desc":"120/25-2000 A","qty":3,"parts":[{"col":"up to 17.5 kV","style":"8299A01H17"}]},{"desc":"120/32-1250 A","qty":3,"parts":[{"col":"up to 17.5 kV","style":"8299A01H18"}]},{"desc":"120/32-2000 A","qty":3,"parts":[{"col":"up to 17.5 kV","style":"8299A01H19"}]},{"desc":"120/40-1250 A","qty":3,"parts":[{"col":"up to 17.5 kV","style":"8299A01H20"}]},{"desc":"120/40-2000 A","qty":3,"parts":[{"col":"up to 17.5 kV","style":"8299A01H21"}]},{"desc":"175/25-1250 A","qty":3,"parts":[{"col":"up to 17.5 kV","style":"8299A01H22"}]},{"desc":"175/25-2000 A","qty":3,"parts":[{"col":"up to 17.5 kV","style":"8299A01H23"}]},{"desc":"175/32-1250 A","qty":3,"parts":[{"col":"up to 17.5 kV","style":"8299A01H24"}]},{"desc":"175/32-2000 A","qty":3,"parts":[{"col":"up to 17.5 kV","style":"8299A01H25"}]},{"desc":"175/40-1250 A","qty":3,"parts":[{"col":"up to 17.5 kV","style":"8299A01H26"}]},{"desc":"175/40-1250 A [printed; almost certainly 2000 A - see documentDefects]","qty":3,"parts":[{"col":"up to 17.5 kV","style":"8299A01H27"}]},{"desc":"240/25-650 A","qty":3,"parts":[{"col":"24 kV","style":"8299A01H28"}]},{"desc":"240/25-1250 A","qty":3,"parts":[{"col":"24 kV","style":"8299A01H29"}]},{"desc":"240/25-2000 A","qty":3,"parts":[{"col":"24 kV","style":"8299A01H30"}]}],"controlVoltage":{"source":"PL01301006E p7, Table 3","scopeHeader":"80 ms Interrupting Time (5-Cycle) / VCP-W & VCP-WND / Last 3 Digits of Style Number","scopeWarning":"These seven codes are published ONLY for VCP-W and VCP-WND breakers with 5-cycle (80 ms) interrupting time, appended to a Table 1 or Table 2 base. They are not a universal G-code table.","codes":[{"code":"G01","closeAndMotor":"48 Vdc","trip":"48 Vdc"},{"code":"G02","closeAndMotor":"125 Vdc","trip":"125 Vdc"},{"code":"G03","closeAndMotor":"250 Vdc","trip":"250 Vdc"},{"code":"G04","closeAndMotor":"120 Vac","trip":"48 Vdc"},{"code":"G05","closeAndMotor":"240 Vac","trip":"48 Vdc"},{"code":"G06","closeAndMotor":"120 Vac","trip":"Cap Trip (120 Vac)","footnote":3},{"code":"G07","closeAndMotor":"240 Vac","trip":"Cap Trip (240 Vac)","footnote":3}],"footnotes":{"3":"Provisions for capacitor trip only. If a capacitor trip device is required, select the capacitor trip device on page 11."}},"nameplate":{"A":"Breaker type","B":"Breaker frame size in amperes","C":"Serial number (first four digits are YYMM)","D":"Style number","E":"Feature option code (used to identify factory-installed accessories)","F":"Motor control voltage","G":"Close (spring release) control voltage","H":"Open (shunt trip #1) control voltage","I":"Open (shunt trip #2) control voltage","J":"Undervoltage trip control voltage"},"grammar":{"rule":"PL01301006E p15, verbatim: 'To select the correct style number for a VCP-W breaker, the following information must be known: Voltage rating, short circuit current rating (ANSI or IEC), and continuous current rating. After this information has been determined select the first 7 digits of the circuit breaker style number from Table 1 or Table 2. The last 3 digits of a VCP-W circuit breaker style number can be determined from the circuit breaker control voltage(s) and interrupting (breaking) time, from Table 3.'","workedExample":{"spec":"ANSI 15 kV, 500 MVA, 1200 A, 125 Vdc control, standard 5-cycle interrupting time","style":"3A73950G02","source":"PL01301006E p15"},"shape":"10 digits total = 7-digit base (type + continuous current) + 3-character control-voltage suffix (Gnn)","byDescriptionEscapeHatch":{"quote":"Breakers which require a control voltage not available in Table 3 or breakers which require an undervoltage release or second shunt trip, 3 cycle rating and/or UL label should be entered on Vista order entry suffix Y3 by description.","source":"PL01301006E p15","consequence":"A 3-cycle breaker, a UV-release breaker, a second-shunt-trip breaker or a UL-labelled breaker was NOT ordered by a published style code. Any Gnn outside G01-G07 on such a unit is a factory-assigned build code with no published decode."}}};
+/* ============================================================================
+   Eaton VCP-W decoder.
+
+   This tool does NOT parse a catalog string character by character the way the
+   low-voltage decoders do. VCP-W has no per-character grammar: the type space
+   is a closed set of about 66 designations, so identification is a lookup and
+   everything adjacent is routed rather than force-decoded. A wrong decode on an
+   obsolete medium-voltage breaker means a wrong emergency part, so anything not
+   published in the held documents is named and routed, never interpolated.
+   ============================================================================ */
+
+var TEL = '1-800-458-4001';
+var SITE = 'https://www.voytenmanuals.com';
+
+function esc(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+  });
+}
+
+/* Normalised key. Dropping every non-alphanumeric collapses all four notation
+   variants on record at once: the hyphen that migrates around the W
+   (50VCP-WND250 / 50VCPW-ND250), the stray spaces the 2025 book prints
+   (50 VCP-W 40C), and the SE placement (150VCPW-SE750). The book also has the
+   defect running the other way ("AChigh", a MISSING space), which is why
+   matching is done on a stripped key rather than by repairing spacing. */
+function K(s) { return String(s || '').toUpperCase().replace(/[^A-Z0-9]/g, ''); }
+
+/* A type printed with a parenthetical carries two designations for the same
+   breaker, and the book writes them in both orders: Table 1 prints
+   150VCP-W63(1500) (kA primary) where Table 20 eleven pages later prints
+   150VCP-W1500(63) (MVA primary). Both keys resolve to the same rows. */
+function inputKeys(raw) {
+  var s = String(raw || '').toUpperCase();
+  var out = [K(s)];
+  var m = s.match(/^([^(]+)\(([^)]+)\)\s*$/);
+  if (m) {
+    var stem = m[1].trim(), inner = m[2].replace(/[^0-9.]/g, '');
+    out.push(K(stem));
+    var head = stem.match(/^(.*?)(\d+)\s*$/);
+    if (head && inner) out.push(K(head[1] + inner));
+  }
+  return out.filter(function (v, i, a) { return v && a.indexOf(v) === i; });
+}
+
+/* prefix / variant / trailing number / trailing C, from a normalised key. */
+function parseType(key) {
+  var m = key.match(/^(\d+)VCPW(ND|SE|XC|G)?(\d+)(C)?$/);
+  if (!m) return null;
+  return { prefix: m[1], variant: m[2] || null, num: m[3], c: !!m[4] };
+}
+
+/* ---------------------------------------------------------------- routing */
+/* Everything here is recognised by name and deliberately not rated. A
+   recognised-but-unrated answer is a lead; calling it "invalid" loses one. */
+var ROUTES = [
+  { test: /^VCP-?T(R|L|RL)?$/, title: 'That is a VCP-T, not a VCP-W',
+    body: 'The VCP-T / TR / TL / TRL are a separate Eaton family documented in their own instruction books (IB131016EN and IB131017EN). This tool covers the VCP-W book only. Voyten stocks and services both.' },
+  { test: /^155VCPW/, title: 'That is an outdoor VCP-W',
+    body: 'The 155 VCP-W is a fixed-type outdoor element from the Westinghouse-era instruction book I.B. 6468C69H03, which is not one of the documents behind this tool. Its ratings are not published here.' },
+  { test: /^(VCPWHD|380VCPW|350VCPW)/, title: 'That is the VCPW-HD / 38 kV line',
+    body: 'The 38 kV class was segmented off to the VCPW-HD line and is not in the VCP-W instruction book. Note also that 350VCP-W does not exist &mdash; the 38 kV prefix is 380, since the prefix is the maximum kV times ten.' },
+  { test: /^(VCPWR|VRSERIES)/, title: 'VCP-WR &mdash; unresolved in Eaton’s own documentation',
+    body: 'Eaton titles IB131010EN "Fixed vacuum circuit breakers, VCP-WR" while the same booklet’s body describes a drawout value-added element, and every dealer sells it as a retrofit. That contradiction is inside Eaton’s document, not in your number, so this tool records it rather than resolving it. Elsewhere Eaton lists VCP-WR as a line distinct from VCP-W.' },
+  { test: /^(DHPVR|WVACR|WVAC)$/, title: 'Related mechanism family, different breaker',
+    body: 'DHP-VR, W-VACR and W-VAC share the VCP-W mechanism family and are named alongside it in IB131006EN section 6.9.1, but they are different breakers with their own ratings. Voyten handles all of them.' },
+];
+
+/* Style bases that are NOT breaker elements. The suffix letter identifies
+   nothing on its own -- H appears on hundreds of orderable physical parts
+   (every interrupter assembly, lifters, bushings, insulators, aux switches) as
+   well as on documents. Product class is established by looking the BASE up. */
+var NONBREAKER = {
+  '3A38303': { what: 'power module', body: 'This is a power module &mdash; the structure the breaker rolls into, not the breaker itself. The Gnn on a module is a structural configuration code, not a control voltage.' },
+  '6510C91': { what: 'mini module', body: 'This is a mini module, not a breaker element. The Gnn is a structural configuration code.' },
+  '2197A01': { what: 'vacuum contactor', body: 'This is a vacuum contactor, not a circuit breaker.' },
+  '691C386': { what: 'wiring diagram', body: 'This is a wiring diagram number, not a breaker style. On the nameplate it sits in its own field, below the parts-list (style) number.' },
+  '3759A72': { what: 'nameplate drawing', body: 'This is a nameplate drawing number, not a breaker style.' },
+  '691C605': { what: 'dummy element', body: 'This is a dummy element &mdash; a non-current-carrying blank used to fill a cubicle.' },
+};
+
+/* ------------------------------------------------------------ field specs */
+var F = {
+  T1: [['Nominal voltage class', 'nomKv', ' kV'], ['MVA class', 'mva', ' MVA'],
+       ['Maximum voltage (E)', 'eMaxKv', ' kV'], ['Voltage range factor (K)', 'k', ''],
+       ['Power-frequency withstand', 'pfWithstandKvRms', ' kV rms'], ['Lightning impulse (BIL)', 'impulseKvPeak', ' kV peak'],
+       ['Continuous current', 'amps', ' A'], ['Rated short-circuit current (I)', 'iscKaRms', ' kA rms'],
+       ['E / K', 'eOverK', ' kV'], ['Max symmetrical interrupting (K x I)', 'maxSymInterruptingKaRms', ' kA rms'],
+       ['Closing &amp; latching', 'clKaPeak', ' kA peak'], ['Momentary', 'clMomentaryKaRms', ' kA rms'],
+       ['Interrupting time', 'interruptingCycles', ' cycles'], ['Permissible tripping delay (Y)', 'ySeconds', ' s']],
+  T2: [['Nominal voltage class', 'nomKv', ' kV'], ['MVA class', 'mva', ' MVA'],
+       ['Maximum voltage (E)', 'eMaxKv', ' kV'], ['Voltage range factor (K)', 'k', ''],
+       ['Power-frequency withstand', 'pfWithstandKvRms', ' kV rms'], ['Lightning impulse (BIL)', 'impulseKvPeak', ' kV peak'],
+       ['Continuous current', 'amps', ' A'], ['Rated short-circuit current', 'iscKaRms', ' kA rms'],
+       ['Closing &amp; latching', 'clKaPeak', ' kA peak'], ['TRV &mdash; E2', 'trvE2KvRms', ' kV rms'], ['TRV &mdash; T2', 'trvT2', ''],
+       ['Cable-charging switching', 'capSwitchCableChargingKaRms', ' A rms'],
+       ['Interrupting time', 'cycles', ' cycles'], ['Permissible tripping delay (Y)', 'ySeconds', ' s']],
+  T3: [['Maximum voltage (E)', 'eMaxKv', ' kV'], ['Voltage range factor (K)', 'k', ''],
+       ['Power-frequency withstand', 'pfWithstandKvRms', ' kV rms'], ['Lightning impulse (BIL)', 'impulseKvPeak', ' kV peak'],
+       ['Continuous current', 'amps', ' A'], ['Rated symmetrical short circuit', 'symIscKaRms', ' kA rms'],
+       ['dc component', 'dcComponentPct', ' %'], ['Asymmetrical', 'asymKaRms', ' kA rms'],
+       ['Closing &amp; latching', 'clKaPeak', ' kA peak'], ['Short time (3 s)', 'shortTime3sKaRms', ' kA rms'],
+       ['Interrupting time', 'cycles', ' cycles'], ['Permissible tripping delay (Y)', 'ySeconds', ' s'],
+       ['RRRV', 'rrrvKvPerUs', ' kV/&micro;s'], ['Back-to-back cap bank', 'backToBackCapBankARms', ' A rms'],
+       ['Inrush (peak)', 'inrushKaPeak', ' kA'], ['Inrush (frequency)', 'inrushKhz', ' kHz'],
+       ['No-load mechanical operations', 'noLoadOperations', '']],
+  T4: [['Rated voltage', 'kvRms', ' kV rms'], ['Power-frequency withstand', 'pfKvRms', ' kV rms'],
+       ['Lightning impulse (BIL)', 'impulseKvPeak', ' kV peak'], ['Continuous current', 'amps', ' A'],
+       ['Rated breaking current', 'breakingKaRms', ' kA rms'], ['Short time (3 s)', 'shortTime3sKaRms', ' kA rms'],
+       ['Rated making current', 'makingKaPeak', ' kA peak'], ['Cable-charging breaking', 'cableChargingA', ' A']],
+  T5: [['Nominal voltage class', 'nomKv', ' kV'], ['Maximum voltage (E)', 'eMaxKv', ' kV'],
+       ['Voltage range factor (K)', 'k', ''], ['Power-frequency withstand', 'pfWithstandKvRms', ' kV rms'],
+       ['Lightning impulse (BIL)', 'impulseKvPeak', ' kV peak'], ['Continuous current', 'amps', ' A'],
+       ['Rated short-circuit current (I)', 'iscKaRms', ' kA rms'], ['E / K', 'eOverK', ' kV'],
+       ['Closing &amp; latching', 'clKaPeak', ' kA peak'], ['Momentary', 'clMomentaryKaRms', ' kA rms'],
+       ['Interrupting time', 'interruptingCycles', ' cycles'], ['Permissible tripping delay (Y)', 'ySeconds', ' s']],
+  PL006: [['Maximum voltage (E)', 'eMaxKv', ' kV'], ['Voltage range factor (K)', 'k', ''],
+       ['Power-frequency withstand', 'pfWithstandKvRms', ' kV rms'], ['Lightning impulse (BIL)', 'impulseKvPeak', ' kV peak'],
+       ['Continuous current', 'amps', ' A'], ['Rated symmetrical short circuit', 'symIscKaRms', ' kA rms']],
+};
+F.T6 = F.T3;
+
+var TABLE_SRC = {
+  T1: 'IB131006EN (Oct 2025) Table 1 &mdash; ANSI, through 15 kV, MVA basis',
+  T2: 'IB131006EN (Oct 2025) Table 2 &mdash; ANSI, 27 kV',
+  T3: 'IB131006EN (Oct 2025) Table 3 &mdash; ANSI, VCP-WC extra capability',
+  T4: 'IB131006EN (Oct 2025) Table 4 &mdash; IEC 60056, through 17.5 kV',
+  T5: 'IB131006EN (Oct 2025) Table 5 &mdash; ANSI, K = 1, kA basis',
+  T6: 'IB131006EN (Oct 2025) Table 6 &mdash; ANSI, VCP-WXC',
+  PL006: 'PL01301006E (May 2004) &mdash; not carried forward into the 2025 book',
+};
+
+function fmt(v, unit) {
+  if (v == null) return null;
+  if (Array.isArray(v)) {
+    var parts = v.map(function (x) { return x == null ? '&mdash;' : x; });
+    return parts.join(' / ') + unit;
+  }
+  return v + unit;
+}
+
+/* ------------------------------------------------------------- rendering */
+function row(label, value, mono) {
+  if (value == null || value === '') return '';
+  return '<div class="card-row"><span class="card-label">' + label + '</span>' +
+         '<span class="card-value' + (mono ? ' mono' : '') + '">' + value + '</span></div>';
+}
+
+function ratingsCard(t) {
+  var spec = F[t.table] || F.T5;
+  var h = '<div class="result-card ratings wide"><div class="card-title">Rated values &mdash; ' + esc(t.display) + '</div>';
+  for (var i = 0; i < spec.length; i++) {
+    var v = fmt(t[spec[i][1]], spec[i][2]);
+    if (v != null) h += row(spec[i][0], v);
+  }
+  h += '<div class="card-note">Source: ' + TABLE_SRC[t.table] + '.' +
+       (t.clRule ? ' Closing and latching on this table is ' + t.clRule + '.' : '') + '</div>';
+
+  if (t.correction) {
+    h += '<div class="correction"><strong>Corrected against the source.</strong> ' + esc(t.correction) + '</div>';
+  }
+  if (t.clFlag) {
+    h += '<div class="correction"><strong>Printed value kept.</strong> ' + esc(t.clFlag) + '</div>';
+  }
+  if (t.disputed) {
+    h += '<div class="correction"><strong>Disputed in the source.</strong> ' + esc(t.disputed) + '</div>';
+  }
+  if (t.only2004) {
+    h += '<div class="correction"><strong>2004 data.</strong> This type is published in the May 2004 price list ' +
+         'and was not carried into the October 2025 instruction book. It is shown here because breakers of that ' +
+         'vintage are still in service, but confirm against the unit before ordering.</div>';
+  }
+  if (t.xc) {
+    h += '<div class="card-note"><strong>Extra capability.</strong> VCP-' + t.xc + ' types are deliberately ' +
+         'uprated and carry their own insulation set (5.95 kV &rarr; 24 / 75, 10.3 kV &rarr; 42 / 95, ' +
+         '17.5 kV &rarr; 42 / 95), so they will not match a standard ANSI C37.06 class table.</div>';
+  }
+  h += '</div>';
+  return h;
+}
+
+function weightsFor(keys) {
+  var out = [];
+  for (var i = 0; i < VCP.weights.length; i++) {
+    var w = VCP.weights[i];
+    for (var j = 0; j < keys.length; j++) if (w.k.indexOf(keys[j]) > -1) { out.push(w); break; }
+  }
+  return out;
+}
+
+function weightsCard(keys) {
+  var ws = weightsFor(keys);
+  if (!ws.length) return '';
+  var h = '<div class="result-card wide"><div class="card-title">Breaker weight</div>';
+  ws.forEach(function (w) {
+    var amps = Array.isArray(w.amps) ? w.amps : [w.amps];
+    var lbs = Array.isArray(w.lbs) ? w.lbs : [w.lbs];
+    var kg = Array.isArray(w.kg) ? w.kg : [w.kg];
+    for (var i = 0; i < amps.length; i++) {
+      h += row(amps[i] + ' A', lbs[i] + ' lb (' + kg[i] + ' kg)');
+    }
+    if (w.se) h += row('SE twin', esc(w.se));
+    if (w.flag) h += '<div class="correction"><strong>Inconsistent in the source.</strong> ' + esc(w.flag) + '</div>';
+  });
+  h += '<div class="card-note">Source: IB131006EN Tables 20&ndash;22. Does not include shipping carton.</div></div>';
+  return h;
+}
+
+/* Interrupter assemblies are keyed by the same kV/MVA shorthand as the type
+   designation, so once a type is identified its interrupter can be named.
+   This is the most-requested part on an obsolete medium-voltage breaker. */
+function interruptersFor(p, typeKey) {
+  if (!p) return [];
+  var want = p.prefix + '/' + p.num + (p.c ? 'C' : '');
+  var out = [];
+  for (var i = 0; i < VCP.interrupters.length; i++) {
+    var it = VCP.interrupters[i];
+    var head = String(it.desc).split(/[,\-]/)[0].trim();
+    var hit = false, high = false;
+    if (head === want) hit = true;
+    else if (head === want + 'H') { hit = true; high = true; }
+    else if (K(head) === typeKey) hit = true;
+    else {
+      var parts = head.split('/');
+      if (parts[0] === p.prefix && parts.slice(1).indexOf(p.num + (p.c ? 'C' : '')) > -1) hit = true;
+    }
+    if (hit) out.push({ it: it, high: high });
+  }
+  return out;
+}
+
+function partsCard(p, typeKey) {
+  var hits = interruptersFor(p, typeKey);
+  if (!hits.length) return '';
+  var h = '<div class="result-card parts wide"><div class="card-title">Interrupter assemblies</div>';
+  hits.forEach(function (x) {
+    x.it.parts.forEach(function (pt) {
+      h += row(esc(x.it.desc) + (x.high ? ' <em>(high close &amp; latch option)</em>' : '') +
+               ' &mdash; ' + esc(pt.col), esc(pt.style), true);
+    });
+  });
+  h += '<div class="card-note"><strong>Three interrupter assemblies are required per breaker</strong> &mdash; ' +
+       'the style shown is the quantity-one part number. Source: IB131006EN Tables 29&ndash;30. ' +
+       'Voyten stocks and supplies VCP-W renewal parts; call ' + TEL + ' with the style number and the breaker serial.</div></div>';
+  return h;
+}
+
+function styleCard(p, typeKey) {
+  var rows = VCP.styles.filter(function (s) {
+    var k = inputKeys(s.type).concat(s.alt ? inputKeys(s.alt) : []);
+    return k.indexOf(typeKey) > -1;
+  });
+  if (!rows.length) return '';
+  var h = '<div class="result-card style wide"><div class="card-title">Published style numbers (first 7 digits)</div>';
+  rows.forEach(function (s) {
+    var v = s.base ? esc(s.base) : '<em>' + esc(s.byDesc || 'Order by description') + '</em>';
+    h += row(s.amps + ' A' + (s.std === 'IEC' ? ' &middot; IEC' : ''), v, !!s.base);
+  });
+  h += '<div class="card-note">From PL01301006E (May 2004) Tables 1 and 2. The full style number is these ' +
+       '7 digits plus a 3-character control-voltage suffix from Table 3. <strong>Never compute a base from a ' +
+       'neighbouring one</strong> &mdash; the 8075A run splits IEC (A02&ndash;A29) from ANSI (A31&ndash;A38) and ' +
+       'skips A23 entirely, and 3776A spans five different type families.</div></div>';
+  return h;
+}
+
+function nearMissCard(p) {
+  if (!p) return '';
+  /* 50VCP-W25 (25 kA, Table 5) and 50VCP-W250 (250 MVA, Table 1) are different
+     breakers one character apart. Same for 75VCP-W50/500 and 150VCP-W50/500. */
+  var alt = null;
+  if (/^(25|40|50|63)$/.test(p.num) && !p.c) alt = p.prefix + 'VCP-W' + p.num + '0';
+  else if (/^(250|500|630)$/.test(p.num)) alt = p.prefix + 'VCP-W' + p.num.slice(0, -1);
+  if (!alt) return '';
+  var altKey = K(alt);
+  var exists = VCP.types.some(function (t) { return t.keys.indexOf(altKey) > -1; });
+  if (!exists) return '';
+  return '<div class="result-card info wide"><div class="card-title">Check the nameplate again</div>' +
+    '<div class="card-note"><strong>' + esc(alt) + '</strong> is also a real type, and it is a different ' +
+    'breaker &mdash; one character apart, a different rating basis and different rated values. ' +
+    'The trailing number on this one was read as <strong>' + (p.num.length > 2 ? 'an MVA class' : 'a kA rating') +
+    '</strong>. If that is not what the nameplate says, decode the other string.</div></div>';
+}
+
+function outdoorNote(p) {
+  if (!p || p.prefix !== '120') return '';
+  return '<div class="result-card info wide"><div class="card-title">This designation names two different breakers</div>' +
+    '<div class="card-note">The values above are the <strong>IEC 12 kV, 3-pole, drawout</strong> reading from ' +
+    'IB131006EN Table 4. <strong>120VCP-W</strong> also names a <strong>1- or 2-pole fixed outdoor</strong> element ' +
+    'in the Westinghouse-era book I.B. 6468C69H03, which is not one of the sources behind this tool. If your unit ' +
+    'is outdoor or single-pole, these ratings are not yours &mdash; call ' + TEL + '.</div></div>';
+}
+
+function routeCard(title, body, extra) {
+  return '<div class="route"><h3>' + title + '</h3><p>' + body + '</p>' +
+    (extra || '') +
+    '<p>Voyten Electric stocks, remanufactures and supplies parts for obsolete medium-voltage switchgear. ' +
+    'Call <a class="tel" href="tel:' + TEL + '">' + TEL + '</a> or ' +
+    '<a href="' + SITE + '/contact" target="_blank" rel="noopener">request a quote</a>. ' +
+    'You can also <a href="' + SITE + '/search?q=VCP-W" target="_blank" rel="noopener">search the manual library</a>.</p></div>';
+}
+
+/* ------------------------------------------------------------------ main */
+function showError(title, text, hint) {
+  var box = document.getElementById('errorBox');
+  document.getElementById('errorTitle').innerHTML = title;
+  document.getElementById('errorText').innerHTML = text;
+  document.getElementById('errorHint').innerHTML = hint || '';
+  box.classList.add('visible');
+}
+
+function decode() {
+  var raw = document.getElementById('catInput').value.trim();
+  var res = document.getElementById('results');
+  var box = document.getElementById('errorBox');
+  var smap = document.getElementById('styleMap');
+  box.classList.remove('visible');
+  res.classList.remove('visible');
+  res.innerHTML = '';
+  smap.innerHTML = '';
+  if (!raw) return;
+
+  var keys = inputKeys(raw);
+  var key = keys[0];
+  var html = '';
+
+  /* 1. Routing table first -- these must never fall through to a lookup. */
+  for (var i = 0; i < ROUTES.length; i++) {
+    if (ROUTES[i].test.test(key)) {
+      res.innerHTML = routeCard(ROUTES[i].title, ROUTES[i].body);
+      res.classList.add('visible');
+      return;
+    }
+  }
+
+  /* 2. Style number or part number: 7-digit base, optionally + Gnn / Hnn. */
+  var sm = key.match(/^([0-9][A-Z0-9]{6})([GH][0-9]{2})?$/);
+  if (sm) { renderStyle(sm[1], sm[2] || null, raw); return; }
+
+  /* 3. Type designation. */
+  var matches = [];
+  VCP.types.forEach(function (t) {
+    for (var j = 0; j < keys.length; j++) if (t.keys.indexOf(keys[j]) > -1) { matches.push(t); return; }
+  });
+
+  if (matches.length) {
+    var p = parseType(matches[0].keys[0]) || parseType(key);
+    var t0 = matches[0];
+    html += '<div class="summary-banner">' +
+      '<div class="headline">' + esc(t0.display) + '</div>' +
+      '<div class="catalog-fmt">' + esc(String(raw).toUpperCase()) + '</div>' +
+      '<div><span class="basis">' + (t0.std || 'ANSI') + '</span>' +
+      '<span class="basis">' + (t0.basis === 'MVA' ? 'MVA class basis' : 'kA basis') + '</span>' +
+      (t0.xc ? '<span class="basis">Extra capability</span>' : '') +
+      (matches.length > 1 ? '<span class="basis">' + matches.length + ' tables</span>' : '') +
+      '</div></div>';
+
+    if (matches.length > 1) {
+      html += '<div class="result-card info wide"><div class="card-title">This designation is published in more than one table</div>' +
+        '<div class="card-note">A K = 1 type that also carries an MVA class appears in both the MVA-basis table and ' +
+        'the K = 1 table, and the two use <strong>different close-and-latch multipliers</strong> &mdash; 2.7 K in the ' +
+        'MVA tables, 2.6 K in the K = 1 tables. Both readings are shown below. Neither is wrong; use the one that ' +
+        'matches the basis printed on your nameplate.</div></div>';
+    }
+
+    html += '<div class="result-grid">';
+    matches.forEach(function (t) { html += ratingsCard(t); });
+    html += weightsCard(keys);
+    html += styleCard(p, key);
+    html += partsCard(p, key);
+    html += outdoorNote(p);
+    html += nearMissCard(p);
+    html += '</div>';
+
+    html += actionRow();
+    res.innerHTML = html;
+    res.classList.add('visible');
+    return;
+  }
+
+  /* 4. Recognised but deliberately unrated (IEC 24 kV). */
+  var un = null;
+  VCP.unrated.forEach(function (u) { for (var j = 0; j < keys.length; j++) if (u.keys.indexOf(keys[j]) > -1) un = u; });
+  if (un) {
+    var p2 = parseType(K(un.display));
+    var extra = partsCard(p2, K(un.display));
+    res.innerHTML = routeCard(
+      esc(un.display) + ' &mdash; recognised, but its ratings are not published here',
+      'This is a real IEC 24 kV VCP-W and it is in the instruction book’s weight table, but ' +
+      '<strong>no ratings table for the 24 kV class exists in the held sources</strong> &mdash; no maximum voltage, ' +
+      'BIL, breaking current, making current or interrupting time. Those numbers are deliberately not estimated here. ' +
+      (un.note ? esc(un.note) : ''),
+      extra) + actionRow();
+    document.getElementById('results').classList.add('visible');
+    return;
+  }
+
+  /* 5. Not recognised. */
+  showError('Not recognised',
+    'That is not a VCP-W type designation or a 7- or 10-digit style number in the documents behind this tool.',
+    'A VCP-W type looks like <strong>150VCP-W750</strong> (prefix = maximum kV &times; 10) and a style number like ' +
+    '<strong>3776A24G62</strong>. If the number came off a nameplate and it is not decoding, call ' + TEL + ' with ' +
+    'the style, the serial and the G.O. number from the white label on the right-hand side of the breaker.');
+}
+
+function renderStyle(base, suffix, raw) {
+  var res = document.getElementById('results');
+  var smap = document.getElementById('styleMap');
+
+  /* Non-breaker product classes are established by looking the BASE up. The
+     suffix letter identifies nothing -- H is all over orderable physical parts
+     as well as documents, so a shape test would misroute a real customer. */
+  var nb = NONBREAKER[base];
+  if (nb) {
+    res.innerHTML = routeCard('That is a ' + nb.what + ', not a breaker element', nb.body) + actionRow();
+    res.classList.add('visible');
+    return;
+  }
+
+  /* Interrupter assemblies and other renewal parts. */
+  var part = null;
+  VCP.interrupters.forEach(function (it) {
+    it.parts.forEach(function (pt) { if (pt.style && K(pt.style).indexOf(base) === 0) part = { it: it, pt: pt }; });
+  });
+  if (part) {
+    res.innerHTML = routeCard('That is an interrupter assembly',
+      'Style <strong>' + esc(part.pt.style) + '</strong> is the interrupter assembly for <strong>' +
+      esc(part.it.desc) + '</strong> (' + esc(part.pt.col) + '). <strong>Three are required per breaker</strong> ' +
+      'and the style shown is the quantity-one part number. Source: IB131006EN Tables 29&ndash;30.') + actionRow();
+    res.classList.add('visible');
+    return;
+  }
+
+  var hits = VCP.styles.filter(function (s) { return s.base === base; });
+  var cv = suffix && suffix.charAt(0) === 'G'
+    ? VCP.controlVoltage.codes.filter(function (c) { return c.code === suffix; })[0] : null;
+
+  /* Style-number segment map. */
+  smap.innerHTML = '<div class="stylemap">' +
+    '<div class="seg ' + (hits.length ? 'known' : 'unknown') + '">' +
+      '<div class="seg__label">First 7 digits &mdash; type &amp; continuous current</div>' +
+      '<div class="seg__chars">' + esc(base) + '</div>' +
+      '<div class="seg__val">' + (hits.length ? esc(hits[0].type) + ' &middot; ' + hits[0].amps + ' A' : 'not in the published tables') + '</div>' +
+    '</div>' +
+    (suffix ?
+    '<div class="seg ' + (cv ? 'known' : 'unknown') + '">' +
+      '<div class="seg__label">Last 3 &mdash; control voltage</div>' +
+      '<div class="seg__chars">' + esc(suffix) + '</div>' +
+      '<div class="seg__val">' + (cv ? esc(cv.closeAndMotor) + ' close/motor &middot; ' + esc(cv.trip) + ' trip'
+        : 'no published decode') + '</div>' +
+    '</div>' : '') +
+  '</div>';
+
+  var html = '';
+  if (hits.length) {
+    var s = hits[0];
+    html += '<div class="summary-banner">' +
+      '<div class="headline">' + esc(s.type) + (s.alt ? ' <span style="opacity:.7;font-weight:400">(' + esc(s.alt) + ')</span>' : '') + '</div>' +
+      '<div class="catalog-fmt">' + esc(String(raw).toUpperCase()) + '</div>' +
+      '<div><span class="basis">' + s.std + '</span><span class="basis">' + s.amps + ' A</span>' +
+      '<span class="basis">' + s.kv + ' kV</span></div></div>';
+
+    html += '<div class="result-grid"><div class="result-card config wide">' +
+      '<div class="card-title">Style number</div>' +
+      row('Type', esc(s.type)) + row('Continuous current', s.amps + ' A') +
+      row('Maximum voltage', s.kv + ' kV') + row('Voltage range factor (K)', s.k) +
+      row('Short circuit', s.ka ? s.ka + ' kA rms' : null) +
+      row('Standard', s.std) +
+      row('2004 list price', s.usd ? '$' + s.usd.toLocaleString() + ' (May 2004)' : null) +
+      '<div class="card-note">First 7 digits from PL01301006E ' + (s.std === 'IEC' ? 'Table 2' : 'Table 1') + '.</div></div>';
+
+    if (cv) {
+      html += '<div class="result-card"><div class="card-title">Control voltage &mdash; ' + esc(cv.code) + '</div>' +
+        row('Close &amp; motor', esc(cv.closeAndMotor)) + row('Trip', esc(cv.trip)) +
+        '<div class="card-note">' + esc(VCP.controlVoltage.scopeWarning) + '</div></div>';
+    } else if (suffix) {
+      html += byDescriptionCard(suffix);
+    }
+
+    var pt = parseType(K(s.type));
+    html += weightsCard(inputKeys(s.type));
+    html += partsCard(pt, K(s.type));
+    html += '</div>';
+    html += actionRow();
+  } else {
+    html += byDescriptionCard(suffix, base);
+    html += actionRow();
+  }
+  res.innerHTML = html;
+  res.classList.add('visible');
+}
+
+/* The one real misinformation hazard in this build, closed deliberately.
+   PL01301006E Table 3 publishes G01-G07 only, scoped by its own header to
+   5-cycle VCP-W / VCP-WND. Page 15 then says outright that a breaker needing a
+   different control voltage, an undervoltage release, a second shunt trip, a
+   3-cycle rating or a UL label is entered BY DESCRIPTION on Vista suffix Y3 --
+   so it never got a published style code. Two independent 3-cycle nameplates
+   carry two different non-published codes, which is why there is no "G6x
+   series" to infer. */
+function byDescriptionCard(suffix, base) {
+  return '<div class="result-card info wide"><div class="card-title">' +
+    (base ? 'Not in the published tables' : 'Control voltage code ' + esc(suffix) + ' has no published decode') +
+    '</div>' +
+    (base ? '<div class="card-note">Base <strong>' + esc(base) + '</strong> is not in PL01301006E Table 1 or Table 2. ' +
+      'That does not make it invalid &mdash; style bases drifted between eras, so a breaker built before or after ' +
+      'the May 2004 list can legitimately carry a base that list never printed.</div>' : '') +
+    '<div class="card-note"><strong>Eaton publishes G01&ndash;G07 only</strong>, and only for VCP-W and VCP-WND ' +
+    'breakers with 5-cycle (80 ms) interrupting time. PL01301006E page 15 states that a breaker needing a control ' +
+    'voltage outside that table, an undervoltage release, a second shunt trip, a 3-cycle rating or a UL label was ' +
+    'ordered <strong>by description</strong> &mdash; so it never received a published style code. A suffix outside ' +
+    'G01&ndash;G07 is a factory-assigned build code with no published decode, and it cannot be inferred from a ' +
+    'neighbouring one. Read the control voltages off the nameplate fields instead (callouts F, G, H, I and J), or ' +
+    'call ' + TEL + ' with the style number, the serial and the G.O. number.</div></div>';
+}
+
+function actionRow() {
+  return '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;">' +
+    '<button class="btn-copy" id="btnCopyCat" onclick="copyCatalog()">Copy</button>' +
+    '<button class="btn-pdf" onclick="downloadDecoderPDF()">Download PDF</button>' +
+    '<button class="btn-quote" onclick="openDecoderQuote()">Get a Quote for This Breaker</button>' +
+    '</div>';
+}
+
+function clearAll() {
+  document.getElementById('catInput').value = '';
+  document.getElementById('results').classList.remove('visible');
+  document.getElementById('results').innerHTML = '';
+  document.getElementById('errorBox').classList.remove('visible');
+  document.getElementById('styleMap').innerHTML = '';
+  document.getElementById('catInput').focus();
+}
+
+function loadEx(btn) {
+  document.getElementById('catInput').value = btn.textContent;
+  decode();
+}
+
+function copyCatalog() {
+  var val = document.getElementById('catInput').value.trim().toUpperCase();
+  if (!val) return;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(val).then(showCopied);
+  } else {
+    var ta = document.createElement('textarea'); ta.value = val; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); showCopied();
+  }
+}
+function showCopied() {
+  var btn = document.getElementById('btnCopyCat'); if (!btn) return;
+  btn.textContent = 'Copied!'; btn.classList.add('copied');
+  setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+}
+
+document.getElementById('catInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') decode(); });
+</script>
+<script src="jspdf.umd.min.js"></script>
+<script src="decoder-pdf.js"></script>
+<script src="decoder-quote.js"></script>
+</body>
+</html>

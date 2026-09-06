@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next';
 import { searchManuals, getCategories, getManufacturers, toSlug } from '@/lib/manuals-db';
+import { publicDecoders } from '@/lib/decoders';
 
 const baseUrl = 'https://www.voytenmanuals.com';
 const MANUALS_PER_SITEMAP = 1000;
@@ -124,9 +125,13 @@ async function generateStaticAndFilterSitemap(): Promise<MetadataRoute.Sitemap> 
       changeFrequency: 'monthly',
       priority: 0.8,
     },
-    // Public breaker decoders (SPB is internal-only — intentionally excluded)
-    ...['rl', 'wl', 'wavepro', 'rd', 'mds-sbs', 'mw-iec', 'pxr-pdsb', 'sqd-ntnw'].map((slug) => ({
-      url: `${baseUrl}/tools/${slug}`,
+    // Public breaker decoders, derived from the registry rather than listed
+    // here — `publicDecoders` already excludes the internal-only SPB card
+    // (landing) and any card still staged as comingSoon. This used to be a
+    // hardcoded slug array that needed a manual edit on the day a decoder
+    // shipped, which is easy to forget.
+    ...publicDecoders.map((d) => ({
+      url: `${baseUrl}/tools/${d.slug}`,
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.75,

@@ -70,6 +70,7 @@ For engineers, plant/facility managers, electricians, field-service techs, and m
 - Eaton Magnum MW (IEC 60947-2) — fixed/draw-out, 800A–6300A: https://www.voytenmanuals.com/tools/mw-iec
 - Eaton Magnum PXR / Power Defense SB — 800A–6000A: https://www.voytenmanuals.com/tools/pxr-pdsb
 - Square D / Schneider MasterPact NT / NW — universal power circuit breaker (T/W/Y-frame) + Micrologic trip unit, 800A–6300A: https://www.voytenmanuals.com/tools/sqd-ntnw
+- Eaton / Cutler-Hammer VCP-W — MEDIUM-VOLTAGE vacuum circuit breaker, 4.76kV–27kV, 630A–3000A. Identifies the type designation (incl. VCPW-ND narrow design, VCP-WC / VCP-WXC extra capability, VCPW-SE) and the 10-digit style number, and returns the full ANSI or IEC 60056 rated-values set, breaker weight, control voltage and the interrupter assembly part number: https://www.voytenmanuals.com/tools/vcp-w
 - Decoder hub: https://www.voytenmanuals.com/tools
 - Eaton Type SPB (Systems Pow-R): SPB identification is handled directly by Voyten's team — request availability and a quote at https://www.voytenmanuals.com/products/spb-breakers or call 1-800-458-4001.
 

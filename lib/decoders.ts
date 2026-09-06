@@ -333,16 +333,11 @@ export const decoders: Decoder[] = [
     name: 'VCP-W',
     fullName: 'Eaton VCP-W (Cutler-Hammer VCP-W)',
     manufacturer: 'Eaton',
-    comingSoon: true,
     description:
-      'In development — a decoder for Eaton / Cutler-Hammer VCP-W medium-voltage vacuum circuit breakers. Reads the type designation (voltage class, rating basis, and the ND / C / XC / G / SE variants) and the 10-digit style number, and returns the full ANSI rated-values set.',
-    frames: 'VCP-W · WND · WC / WXC · WG · WSE (ANSI + IEC)',
-    ratings: '4.76 kV – 27 kV · 1200A – 3000A',
-    /* Nothing parses yet, so the fields that feed a live route stay empty —
-       `publicDecoders` filters comingSoon out, so no /tools/vcp-w route,
-       sitemap entry, llms.txt line or ItemList item is emitted for it. Same
-       staging the WL card used before its decoder shipped (04ca580). */
-    example: '',
+      'Identify an Eaton / Cutler-Hammer VCP-W medium-voltage vacuum circuit breaker from its type designation or its 10-digit style number. Returns the full ANSI or IEC rated-values set, breaker weight, published control voltage and the interrupter assembly part number.',
+    frames: 'VCP-W · WND · WC / WXC · WSE (ANSI + IEC)',
+    ratings: '4.76 kV – 27 kV · 630A – 3000A',
+    example: '150VCP-W750',
     alsoKnownAs: [
       'Cutler-Hammer VCP-W',
       'Westinghouse VCP-W',
@@ -352,13 +347,42 @@ export const decoders: Decoder[] = [
       'VCP-WG (generator)',
       'VCP-WSE (special environment)',
     ],
-    identifies: [],
+    identifies: [
+      'Type designation — voltage class, rating basis and the ND / C / XC / SE variants',
+      'Full ANSI rated values — max voltage, K factor, BIL, short circuit, closing and latching, momentary',
+      'Full IEC 60056 rated values — breaking, making and short-time current',
+      'The 10-digit style number, back to type and continuous current',
+      'Published control-voltage codes G01–G07',
+      'Breaker weight by continuous current',
+      'The interrupter assembly part number for the identified breaker',
+    ],
     // Unfiltered on purpose: VCP-W instruction books are filed under
     // Westinghouse, Cutler-Hammer and Eaton, so a manufacturer facet would
     // hide most of the family.
     manualSearch: '/search?q=VCP-W',
     manualSearchLabel: 'VCP-W instruction books and renewal-parts catalogs',
-    faq: [],
+    faq: [
+      {
+        q: 'Why does the VCP-W tool look up a type instead of decoding it character by character?',
+        a: 'Because there is nothing to decode character by character. The eight low-voltage decoders read a catalog string position by position, but a VCP-W type designation is one of a closed set of roughly 66 published strings — identification is a table lookup, not a grammar. The prefix is the maximum voltage times ten (150 = 15 kV, 270 = 27 kV), and the trailing number is either an MVA class or a kA rating depending on the table, which the tool detects and states.',
+      },
+      {
+        q: 'What is the difference between 50VCP-W25 and 50VCP-W250?',
+        a: 'They are different breakers one character apart. 50VCP-W25 is a K = 1 breaker rated 25 kA; 50VCP-W250 is a K = 1.24 breaker rated 250 MVA. The same trap exists for 75VCP-W50 against 75VCP-W500 and 150VCP-W50 against 150VCP-W500. The decoder names the rating basis it detected and shows the near-miss so the nameplate can be checked.',
+      },
+      {
+        q: 'My style number ends in something other than G01–G07. What does it mean?',
+        a: 'Eaton published control-voltage codes G01 through G07 only, and only for VCP-W and VCP-WND breakers with 5-cycle interrupting time. A breaker needing a different control voltage, an undervoltage release, a second shunt trip, a 3-cycle rating or a UL label was ordered by description, so it never received a published style code. A suffix outside that range is a factory-assigned build code with no published decode, and it cannot be inferred from a neighbouring one. Read the control voltages off the nameplate fields, or call with the style, serial and G.O. number.',
+      },
+      {
+        q: 'Can I work out a style number from a similar one?',
+        a: 'No. Style bases must be looked up, never computed. The 8075A run splits IEC types (A02–A29) from ANSI types (A31–A38) and skips A23 entirely, and the 3776A base spans five different type families. Bases also drift between eras — the same type and current can carry one base on 2004 gear and another on later gear.',
+      },
+      {
+        q: 'Which interrupter assembly does my VCP-W take?',
+        a: 'The renewal-parts tables are keyed by the same voltage and rating shorthand as the type designation, so once the type is identified the decoder names its interrupter assembly directly. Three assemblies are required per breaker and the published style is the quantity-one part number. It is the most-requested part on an obsolete medium-voltage breaker; Voyten stocks and supplies them.',
+      },
+    ],
   },
   {
     slug: 'spb',
