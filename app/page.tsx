@@ -61,9 +61,14 @@ export default async function Home() {
         <div className="absolute inset-0 bg-gradient-to-b from-[#111111]/70 via-[#1a1a1a]/55 to-[#1a1a1a]/80"></div>
         <div className="relative max-w-7xl mx-auto px-4 py-16 lg:py-24">
           <div className="max-w-3xl mx-auto text-center">
+            {/* The red phrase is held together as one unbreakable unit from sm up.
+                Without it, mid-range widths are wide enough to pull "Equipment"
+                onto the first line and orphan "Manuals" alone on the second.
+                Left to wrap naturally below sm, where the phrase on its own line
+                would be close to the viewport width. */}
             <h1 className="text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-4">
-              Your Source for Electrical
-              <span className="text-[#dc2626]"> Equipment Manuals</span>
+              Your Source for Electrical{' '}
+              <span className="text-[#dc2626] sm:whitespace-nowrap">Equipment Manuals</span>
             </h1>
             <p className="text-lg lg:text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
               Instruction manuals, renewal parts catalogs, wiring diagrams,
