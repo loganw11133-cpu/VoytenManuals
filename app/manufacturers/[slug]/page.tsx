@@ -7,8 +7,6 @@ import {
   getManufacturerBySlug,
   getManufacturerCategories,
   getManufacturerManuals,
-  getManufacturers,
-  toSlug,
 } from '@/lib/manuals-db';
 
 export const revalidate = 3600;

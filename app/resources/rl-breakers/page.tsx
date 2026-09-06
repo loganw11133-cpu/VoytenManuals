@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Metadata } from 'next';
-import { Phone, ChevronRight, BookOpen, Zap, Shield, ArrowRight, Info, Hash, Tag, Wrench, AlertTriangle, Download, Check } from 'lucide-react';
+import { Phone, ChevronRight, BookOpen, Shield, ArrowRight, Info, Hash, Tag, Wrench, AlertTriangle, Download, Check } from 'lucide-react';
 import ObfuscatedEmail from '@/components/ObfuscatedEmail';
 import Toc from '../_components/Toc';
 
