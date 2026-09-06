@@ -164,14 +164,14 @@ export default function Footer() {
       {/* Bottom */}
       <div className="border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4 py-4 space-y-2">
-          <p className="text-xs text-slate-500 text-center">
-            All trademarks, brand names, and product names are the property of their respective owners. Voyten Manuals is an independent resource and is not affiliated with or endorsed by any manufacturer listed.
-          </p>
           <p className="text-sm text-slate-500 text-center">
             &copy; {new Date().getFullYear()} Voyten Electric & Electronics, Inc. All rights reserved.
           </p>
           <p className="text-xs text-slate-600 text-center">
             CAGE: 0GEF5 &nbsp;|&nbsp; DUNS: 070449368
+          </p>
+          <p className="text-xs text-slate-500 text-center">
+            All trademarks, brand names, and product names are the property of their respective owners. Voyten Manuals is an independent resource and is not affiliated with or endorsed by any manufacturer listed.
           </p>
         </div>
       </div>
