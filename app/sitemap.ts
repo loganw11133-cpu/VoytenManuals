@@ -29,14 +29,23 @@ export async function generateSitemaps() {
   return sitemaps;
 }
 
-export default async function sitemap({ id }: { id: number }): Promise<MetadataRoute.Sitemap> {
+export default async function sitemap({ id }: { id: number | string }): Promise<MetadataRoute.Sitemap> {
+  // Next passes the sitemap id through the URL segment, so it arrives as a
+  // STRING even though generateSitemaps above returns numbers. The previous
+  // strict `id === 0` therefore never matched: chunk 0 fell through and served
+  // the same manual batch as chunk 1, and the static/filter sitemap — the
+  // homepage, /search, /categories, /manufacturers, the product and resource
+  // pages, every decoder route, and all the category/manufacturer filter
+  // combinations — was never published at all. Coerce before comparing.
+  const n = Number(id);
+
   // Sitemap 0: static pages + category/manufacturer/combo filter pages
-  if (id === 0) {
+  if (n === 0) {
     return generateStaticAndFilterSitemap();
   }
 
   // Sitemaps 1+: batches of individual manual pages
-  return generateManualBatchSitemap(id);
+  return generateManualBatchSitemap(n);
 }
 
 async function generateStaticAndFilterSitemap(): Promise<MetadataRoute.Sitemap> {
