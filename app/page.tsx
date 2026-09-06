@@ -1,9 +1,9 @@
 import Link from 'next/link';
-import { Phone, BookOpen, ArrowRight, Clock, Truck, Cpu } from 'lucide-react';
+import { Phone, BookOpen, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import ManualSearchBar from '@/components/ManualSearchBar';
 import SocialLinks from '@/components/SocialLinks';
-import { getTotalManualCount, getCategories, getManufacturers, toSlug } from '@/lib/manuals-db';
+import { getCategories, getManufacturers, toSlug } from '@/lib/manuals-db';
 import YouTubeEmbed from '@/components/YouTubeEmbed';
 
 const CATEGORIES = [
@@ -20,8 +20,7 @@ const CATEGORIES = [
 export const revalidate = 3600;
 
 export default async function Home() {
-  const [totalCount, categories, manufacturers] = await Promise.all([
-    getTotalManualCount(),
+  const [categories, manufacturers] = await Promise.all([
     getCategories(),
     getManufacturers(),
   ]);
@@ -68,10 +67,6 @@ export default async function Home() {
         <div className="absolute inset-0 bg-gradient-to-b from-[#111111]/70 via-[#1a1a1a]/55 to-[#1a1a1a]/80"></div>
         <div className="relative max-w-7xl mx-auto px-4 py-16 lg:py-24">
           <div className="max-w-3xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 bg-white/10 px-4 py-1.5 rounded-full text-sm text-white/80 mb-6">
-              <BookOpen size={16} />
-              {totalCount.toLocaleString()} Free Electrical Equipment Manuals
-            </div>
             <h1 className="text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-4">
               Your Source for Electrical
               <span className="text-[#dc2626]"> Equipment Manuals</span>
@@ -82,48 +77,7 @@ export default async function Home() {
             </p>
 
             {/* Search Bar - Primary CTA */}
-            <ManualSearchBar size="large" className="max-w-2xl mx-auto mb-4" />
-
-            <p className="text-slate-400 text-sm">
-              Search by title, part number, manufacturer, or keyword — {totalCount.toLocaleString()} manuals available
-            </p>
-            <p className="text-slate-500 text-xs mt-3 tracking-wide">
-              173 Voyten Blvd. &nbsp;&bull;&nbsp; Polk, PA 16342
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Trust Bar */}
-      <section className="bg-white border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 py-5">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-            {[
-              { icon: BookOpen, text: `${totalCount.toLocaleString()} Manuals` },
-              { icon: Cpu, text: 'Free Decoder Tools', href: '/tools' },
-              { icon: Clock, text: 'Serving Since 1953' },
-              { icon: Truck, text: 'Parts Available' },
-            ].map(item => {
-              const inner = (
-                <>
-                  <item.icon size={16} className="text-[#dc2626] flex-shrink-0" />
-                  <span className="font-medium">{item.text}</span>
-                </>
-              );
-              return 'href' in item && item.href ? (
-                <Link
-                  key={item.text}
-                  href={item.href}
-                  className="flex items-center justify-center gap-2 text-sm text-slate-600 hover:text-[#dc2626] transition-colors"
-                >
-                  {inner}
-                </Link>
-              ) : (
-                <div key={item.text} className="flex items-center justify-center gap-2 text-sm text-slate-600">
-                  {inner}
-                </div>
-              );
-            })}
+            <ManualSearchBar size="large" className="max-w-2xl mx-auto" />
           </div>
         </div>
       </section>

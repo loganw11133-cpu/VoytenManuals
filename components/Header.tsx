@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Phone, Mail, Menu, X, Search, ChevronDown, Zap } from 'lucide-react';
+import { Phone, Mail, Menu, X, Search, ChevronDown } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import ObfuscatedEmail from './ObfuscatedEmail';
 
@@ -26,16 +26,6 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 bg-white shadow-sm">
-      {/* Emergency services banner */}
-      <div className="bg-[#dc2626] text-white">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center justify-center gap-2 h-8 text-xs sm:text-sm font-semibold tracking-wide">
-            <Zap size={13} className="flex-shrink-0" />
-            <span>24/7 Emergency Services</span>
-          </div>
-        </div>
-      </div>
-
       {/* Top utility bar */}
       <div className="bg-[#1a1a1a] text-white">
         <div className="max-w-7xl mx-auto px-4">
@@ -53,6 +43,10 @@ export default function Header() {
               />
             </div>
             <div className="flex items-center gap-3">
+              <span className="hidden md:inline text-white/80 text-xs font-medium tracking-wide">
+                Family Owned Since 1953
+              </span>
+              <span className="hidden md:block w-px h-3.5 bg-white/30"></span>
               <span className="text-white/60 text-xs hidden sm:inline">Powered by</span>
               <a
                 href="https://voytenelectric.com"
