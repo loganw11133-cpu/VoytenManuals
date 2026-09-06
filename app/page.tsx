@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Phone, BookOpen, ArrowRight } from 'lucide-react';
+import { Phone, BookOpen, ArrowRight, Cpu } from 'lucide-react';
 import Image from 'next/image';
 import ManualSearchBar from '@/components/ManualSearchBar';
 import SocialLinks from '@/components/SocialLinks';
@@ -76,50 +76,28 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Product Lines — promoted from a thin utility strip to a full band so the
-          two highest-value links carry weight. Card sub-lines mirror the header
-          nav copy verbatim. Note the RL card names the line "Voyten Type RL/VRL"
-          and must never carry Siemens branding — see the RL de-tag constraint. */}
-      <section className="py-12 lg:py-14 bg-slate-50 border-y border-slate-200">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-8">
-            <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 mb-2">
-              Your <span className="text-[#dc2626]">only</span> source for new RL &amp; SPB products
-            </h2>
-            <p className="text-slate-500 text-sm max-w-xl mx-auto">
-              New surplus inventory — in stock and ready to ship.
-            </p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
-            <Link
-              href="/products/rl-breakers"
-              className="group flex items-center justify-between gap-4 bg-white border border-slate-200 rounded-xl px-6 py-5 hover:border-[#dc2626] hover:shadow-lg transition-all"
-            >
-              <span className="min-w-0">
-                <span className="block font-bold text-slate-900 group-hover:text-[#dc2626] transition-colors">
-                  RL Breakers
-                </span>
-                <span className="block text-sm text-slate-500 mt-0.5">
-                  Voyten Type RL/VRL — New Surplus
-                </span>
-              </span>
-              <ArrowRight size={18} className="flex-shrink-0 text-slate-400 group-hover:text-[#dc2626] transition-colors" />
+      {/* Product Lines — a thin utility strip, kept on slate-50 so the homepage
+          still alternates dark / slate-50 / white / dark now that the
+          manufacturer chip band is gone. */}
+      <section className="bg-slate-50 border-y border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 py-5">
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-1 text-sm">
+            <span className="text-slate-400 font-medium">Your <strong className="text-slate-600">ONLY</strong> Source for New RL &amp; SPB Products:</span>
+            <Link href="/products/rl-breakers" className="text-[#dc2626] hover:text-[#b91c1c] font-medium transition-colors">
+              RL Breakers — New Surplus
             </Link>
-
+            <span className="text-slate-300 hidden sm:inline">|</span>
+            <Link href="/products/spb-breakers" className="text-[#dc2626] hover:text-[#b91c1c] font-medium transition-colors">
+              SPB Breakers — New Surplus
+            </Link>
+          </div>
+          <div className="mt-2 text-center">
             <Link
-              href="/products/spb-breakers"
-              className="group flex items-center justify-between gap-4 bg-white border border-slate-200 rounded-xl px-6 py-5 hover:border-[#dc2626] hover:shadow-lg transition-all"
+              href="/tools"
+              className="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-[#dc2626] transition-colors"
             >
-              <span className="min-w-0">
-                <span className="block font-bold text-slate-900 group-hover:text-[#dc2626] transition-colors">
-                  SPB Breakers
-                </span>
-                <span className="block text-sm text-slate-500 mt-0.5">
-                  Eaton / Cutler-Hammer Systems Pow-R — New Surplus
-                </span>
-              </span>
-              <ArrowRight size={18} className="flex-shrink-0 text-slate-400 group-hover:text-[#dc2626] transition-colors" />
+              <Cpu size={13} className="flex-shrink-0" />
+              Free Breaker Decoder Tools
             </Link>
           </div>
         </div>

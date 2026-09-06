@@ -133,8 +133,8 @@ export default function Footer() {
               </li>
               <li>
                 <a href="tel:814-432-5893" className="text-slate-400 hover:text-white flex items-center gap-2 text-xs">
-                  <Phone size={12} />
-                  Local: (814) 432-5893
+                  <Phone size={12} className="flex-shrink-0" />
+                  <span className="whitespace-nowrap">(814) 432-5893</span>
                 </a>
               </li>
               <li>
