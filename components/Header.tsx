@@ -32,8 +32,8 @@ export default function Header() {
           <div className="flex justify-between items-center h-9 text-xs sm:text-sm">
             <div className="flex items-center gap-3 sm:gap-5">
               <a href="tel:1-800-458-4001" className="flex items-center gap-1.5 text-white/90 hover:text-white transition-colors">
-                <Phone size={12} />
-                <span className="font-medium">1-800-458-4001</span>
+                <Phone size={12} className="flex-shrink-0" />
+                <span className="font-medium whitespace-nowrap">1-800-458-4001</span>
               </a>
               <span className="hidden sm:block w-px h-3.5 bg-white/30"></span>
               <ObfuscatedEmail

@@ -17,9 +17,9 @@ export default function Footer() {
             <div className="flex gap-3">
               <a
                 href="tel:1-800-458-4001"
-                className="flex items-center gap-2 bg-white text-[#1a1a1a] px-6 py-2.5 rounded-lg font-bold hover:bg-slate-100 transition-colors"
+                className="flex items-center gap-2 bg-white text-[#1a1a1a] px-6 py-2.5 rounded-lg font-bold hover:bg-slate-100 transition-colors whitespace-nowrap"
               >
-                <Phone size={18} />
+                <Phone size={18} className="flex-shrink-0" />
                 1-800-458-4001
               </a>
               <Link
@@ -44,9 +44,6 @@ export default function Footer() {
               </div>
               <span className="text-lg font-bold">Voyten<span className="text-[#dc2626]">Manuals</span></span>
             </div>
-            <p className="text-slate-400 text-sm mb-4">
-              A free resource by Voyten Electric. Searchable library of electrical equipment manuals, instruction guides, and technical documentation.
-            </p>
             <p className="text-slate-300 text-sm font-semibold mb-2">Our Family of Sites</p>
             <ul className="space-y-1 text-sm">
               <li>

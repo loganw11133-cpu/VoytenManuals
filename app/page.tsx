@@ -3,7 +3,7 @@ import { Phone, BookOpen, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import ManualSearchBar from '@/components/ManualSearchBar';
 import SocialLinks from '@/components/SocialLinks';
-import { getCategories, getManufacturers, toSlug } from '@/lib/manuals-db';
+import { getCategories } from '@/lib/manuals-db';
 import YouTubeEmbed from '@/components/YouTubeEmbed';
 
 const CATEGORIES = [
@@ -20,13 +20,7 @@ const CATEGORIES = [
 export const revalidate = 3600;
 
 export default async function Home() {
-  const [categories, manufacturers] = await Promise.all([
-    getCategories(),
-    getManufacturers(),
-  ]);
-
-  // Top manufacturers by manual count
-  const topManufacturers = manufacturers.slice(0, 10);
+  const categories = await getCategories();
 
   const videoJsonLd = {
     "@context": "https://schema.org",
@@ -82,17 +76,50 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Product Line Links */}
-      <section className="bg-white border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 py-3">
-          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-1 text-sm">
-            <span className="text-slate-400 font-medium">Your <strong className="text-slate-600">ONLY</strong> Source for New RL &amp; SPB Products:</span>
-            <Link href="/products/rl-breakers" className="text-[#dc2626] hover:text-[#b91c1c] font-medium transition-colors">
-              RL Breakers — New Surplus
+      {/* Product Lines — promoted from a thin utility strip to a full band so the
+          two highest-value links carry weight. Card sub-lines mirror the header
+          nav copy verbatim. Note the RL card names the line "Voyten Type RL/VRL"
+          and must never carry Siemens branding — see the RL de-tag constraint. */}
+      <section className="py-12 lg:py-14 bg-slate-50 border-y border-slate-200">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 mb-2">
+              Your <span className="text-[#dc2626]">only</span> source for new RL &amp; SPB products
+            </h2>
+            <p className="text-slate-500 text-sm max-w-xl mx-auto">
+              New surplus inventory — in stock and ready to ship.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
+            <Link
+              href="/products/rl-breakers"
+              className="group flex items-center justify-between gap-4 bg-white border border-slate-200 rounded-xl px-6 py-5 hover:border-[#dc2626] hover:shadow-lg transition-all"
+            >
+              <span className="min-w-0">
+                <span className="block font-bold text-slate-900 group-hover:text-[#dc2626] transition-colors">
+                  RL Breakers
+                </span>
+                <span className="block text-sm text-slate-500 mt-0.5">
+                  Voyten Type RL/VRL — New Surplus
+                </span>
+              </span>
+              <ArrowRight size={18} className="flex-shrink-0 text-slate-400 group-hover:text-[#dc2626] transition-colors" />
             </Link>
-            <span className="text-slate-300 hidden sm:inline">|</span>
-            <Link href="/products/spb-breakers" className="text-[#dc2626] hover:text-[#b91c1c] font-medium transition-colors">
-              SPB Breakers — New Surplus
+
+            <Link
+              href="/products/spb-breakers"
+              className="group flex items-center justify-between gap-4 bg-white border border-slate-200 rounded-xl px-6 py-5 hover:border-[#dc2626] hover:shadow-lg transition-all"
+            >
+              <span className="min-w-0">
+                <span className="block font-bold text-slate-900 group-hover:text-[#dc2626] transition-colors">
+                  SPB Breakers
+                </span>
+                <span className="block text-sm text-slate-500 mt-0.5">
+                  Eaton / Cutler-Hammer Systems Pow-R — New Surplus
+                </span>
+              </span>
+              <ArrowRight size={18} className="flex-shrink-0 text-slate-400 group-hover:text-[#dc2626] transition-colors" />
             </Link>
           </div>
         </div>
@@ -141,35 +168,6 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Manufacturer Links */}
-      <section className="py-12 bg-slate-50 border-y border-slate-200">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold text-slate-900 mb-2">Manufacturers We Cover</h2>
-            <p className="text-slate-500 text-sm">Documentation from the industry&#39;s leading electrical equipment manufacturers</p>
-          </div>
-          <div className="flex flex-wrap justify-center gap-3">
-            {topManufacturers.map((mfr) => (
-              <Link
-                key={mfr.name}
-                href={`/manufacturers/${toSlug(mfr.name)}`}
-                className="px-5 py-2.5 bg-white border border-slate-200 rounded-lg text-slate-700 font-medium text-sm hover:border-[#1a1a1a] hover:text-[#1a1a1a] hover:shadow-sm transition-all"
-              >
-                {mfr.name}
-                <span className="text-slate-400 ml-1.5 text-xs">({mfr.count})</span>
-              </Link>
-            ))}
-            <Link
-              href="/manufacturers"
-              className="px-5 py-2.5 border border-dashed border-slate-300 rounded-lg text-slate-500 text-sm hover:border-[#1a1a1a] hover:text-[#1a1a1a] transition-all flex items-center gap-1"
-            >
-              View all
-              <ArrowRight size={14} />
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* Facility Video + CTA */}
       <section className="py-14 lg:py-20 bg-[#1a1a1a]">
         <div className="max-w-6xl mx-auto px-4">
@@ -187,7 +185,7 @@ export default async function Home() {
             {/* CTA Content */}
             <div className="text-center lg:text-left">
               <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
-                Found the Manual? Need the Part?
+                We stock the part, not just the manual.
               </h2>
               <p className="text-lg text-slate-300 mb-4">
                 Voyten Electric stocks thousands of electrical parts across 200,000 sq. ft. of warehouse space —
@@ -199,9 +197,9 @@ export default async function Home() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <a
                   href="tel:1-800-458-4001"
-                  className="flex items-center justify-center gap-3 bg-[#dc2626] hover:bg-[#b91c1c] text-white px-8 py-4 rounded-xl font-bold text-lg transition-colors"
+                  className="flex items-center justify-center gap-3 bg-[#dc2626] hover:bg-[#b91c1c] text-white px-6 lg:px-8 py-4 rounded-xl font-bold text-lg transition-colors whitespace-nowrap"
                 >
-                  <Phone size={22} />
+                  <Phone size={22} className="flex-shrink-0" />
                   Call: 1-800-458-4001
                 </a>
                 <Link
