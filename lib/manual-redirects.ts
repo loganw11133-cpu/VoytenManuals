@@ -151,6 +151,7 @@ export const MANUAL_REDIRECTS: Record<string, string> = {
   "square-d-masterpact-nw63-6300a-micrologic-5-0": "square-d-masterpact-nw63-6300a-air-circuit-breaker",
   "square-d-masterpact-nw63-6300a-micrologic-6-0": "square-d-masterpact-nw63-6300a-air-circuit-breaker",
   "square-d-masterpact-nw63-6300a-micrologic-7-0": "square-d-masterpact-nw63-6300a-air-circuit-breaker",
+  "square-d-micrologic-7-0-trip-unit": "square-d-micrologic-6-0-trip-unit",
   "standard-outside-finish-for-inerteen-transformer-tanks": "instructions-for-standard-outside-finish-inerteen-transformer-tanks",
   "station-arrester-type-cpl-controlled-protective-level": "station-arrester-cpl-controlled-protective-level",
   "sudden-pressure-relay": "instructions-for-sudden-pressure-relay",

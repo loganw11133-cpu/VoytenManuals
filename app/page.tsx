@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Phone, BookOpen, ArrowRight, Cpu } from 'lucide-react';
+import { Phone, ArrowRight, Cpu } from 'lucide-react';
 import Image from 'next/image';
 import ManualSearchBar from '@/components/ManualSearchBar';
 import SocialLinks from '@/components/SocialLinks';
@@ -14,7 +14,7 @@ const CATEGORIES = [
   { name: 'Fuses', iconSrc: '/icons/fuses.png', description: 'Fuse links, fuse holders, fuse catalogs' },
   { name: 'Transformers', iconSrc: '/icons/transformers.png', description: 'Dry-type, oil-filled, pad-mounted, instrument transformers' },
   { name: 'Bus Products', iconSrc: '/icons/bus-products.png', description: 'Bus duct, busway, bus plugs, insulators' },
-  { name: 'Miscellaneous', fallbackIcon: BookOpen, description: 'Communications, accessories, field testing, and more' },
+  { name: 'Miscellaneous', iconSrc: '/icons/miscellaneous.png', description: 'Communications, accessories, field testing, and more' },
 ] as const;
 
 export const revalidate = 3600;
@@ -121,7 +121,6 @@ export default async function Home() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {CATEGORIES.map((cat) => {
               const dbCat = categories.find(c => c.name === cat.name);
-              const FallbackIcon = 'fallbackIcon' in cat ? cat.fallbackIcon : null;
               return (
                 <Link
                   key={cat.name}
@@ -129,12 +128,8 @@ export default async function Home() {
                   className="group bg-slate-50 hover:bg-[#1a1a1a] rounded-xl p-5 transition-all hover:shadow-lg"
                 >
                   <div className="flex items-center justify-between mb-3">
-                    <div className={`rounded-lg flex items-center justify-center overflow-hidden transition-colors ${'iconSrc' in cat ? 'w-[72px] h-[72px] bg-[#1a1a1a]/5 group-hover:bg-white/20' : 'w-10 h-10 bg-[#1a1a1a]/10 group-hover:bg-white/20'}`}>
-                      {'iconSrc' in cat ? (
-                        <Image src={cat.iconSrc} alt={cat.name} width={72} height={72} className="w-full h-full object-contain" />
-                      ) : FallbackIcon ? (
-                        <FallbackIcon className="w-5 h-5 text-[#1a1a1a] group-hover:text-white transition-colors" />
-                      ) : null}
+                    <div className="w-20 h-20 rounded-lg flex items-center justify-center overflow-hidden bg-[#1a1a1a]/5 group-hover:bg-white/20 transition-colors">
+                      <Image src={cat.iconSrc} alt={cat.name} width={80} height={80} className="w-full h-full object-contain" />
                     </div>
                     {dbCat && (
                       <span className="text-xs font-medium text-slate-400 group-hover:text-white/50 bg-slate-100 group-hover:bg-white/10 px-2 py-0.5 rounded-full transition-colors">
