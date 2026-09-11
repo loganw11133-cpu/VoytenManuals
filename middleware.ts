@@ -4,14 +4,36 @@ import { NextRequest, NextResponse } from 'next/server';
  * Edge middleware — runs BEFORE serverless functions.
  * Rate limits aggressive bot traffic to protect /manual/[slug] routes.
  * Runs at Vercel's edge (~0ms overhead for normal users).
+ *
+ * The limiter used to allow 30 requests per 10s and then blackhole the IP with
+ * a 429 for a full minute. That fires at three requests per second, which sits
+ * inside normal Googlebot behaviour for a library this size (8,300+ manual
+ * pages), so the crawlers robots.txt explicitly invites were being throttled on
+ * the routes that matter. A Semrush audit on 10 Sep 2026 reported 147 "broken
+ * link" errors across 100 crawled pages; every one of them was this middleware
+ * answering 429, not a broken link. Two changes fix that without giving up the
+ * abuse protection:
+ *
+ *   1. Search and AI crawlers get their own, much larger budget. They are still
+ *      counted — a user agent is trivially spoofed, so an impostor stays capped
+ *      — but the ceiling is far above any real crawl rate.
+ *   2. Exceeding the budget now costs you the rest of the current window with a
+ *      Retry-After, instead of a sticky 60-second block. A crawler that briefly
+ *      bursts slows down; it no longer loses the next minute of URLs.
  */
 
 // In-memory sliding window rate limiter (per edge region)
 const hits = new Map<string, { count: number; windowStart: number }>();
 const WINDOW_MS = 10_000; // 10 second window
-const MAX_HITS = 30;      // 30 requests per 10s per IP (normal users do 1-3)
-const BLOCK_DURATION = 60_000; // Block for 60s after exceeding
-const blocked = new Map<string, number>();
+const MAX_HITS = 90;      // 90 requests per 10s per IP (normal users do 1-3)
+const MAX_HITS_CRAWLER = 300; // verified-crawler budget — ~30 req/s, far above real crawl rates
+
+/**
+ * Search and AI crawlers. Kept in step with the agents named in app/robots.ts,
+ * plus the classic search bots that robots.txt covers under `User-Agent: *`.
+ */
+const CRAWLER_UA =
+  /(googlebot|google-inspectiontool|storebot-google|google-extended|googleother|bingbot|bingpreview|slurp|duckduckbot|baiduspider|yandex(bot)?|applebot|gptbot|chatgpt-user|oai-searchbot|claudebot|anthropic-ai|perplexitybot|xai-grok|facebookbot|meta-externalagent|cohere-ai|amazonbot|bytespider)/i;
 
 // Clean up periodically to prevent memory growth
 let lastCleanup = Date.now();
@@ -19,12 +41,16 @@ function cleanup() {
   const now = Date.now();
   if (now - lastCleanup < 30_000) return;
   lastCleanup = now;
-  for (const [key, time] of blocked) {
-    if (now > time) blocked.delete(key);
-  }
   for (const [key, entry] of hits) {
     if (now - entry.windowStart > WINDOW_MS * 2) hits.delete(key);
   }
+}
+
+function tooMany(retryAfterMs: number) {
+  return new NextResponse('Too Many Requests', {
+    status: 429,
+    headers: { 'Retry-After': String(Math.max(1, Math.ceil(retryAfterMs / 1000))) },
+  });
 }
 
 export function middleware(request: NextRequest) {
@@ -33,14 +59,9 @@ export function middleware(request: NextRequest) {
 
   cleanup();
 
-  // Check if currently blocked
-  const blockedUntil = blocked.get(ip);
-  if (blockedUntil && now < blockedUntil) {
-    return new NextResponse('Too Many Requests', {
-      status: 429,
-      headers: { 'Retry-After': '60' },
-    });
-  }
+  const limit = CRAWLER_UA.test(request.headers.get('user-agent') ?? '')
+    ? MAX_HITS_CRAWLER
+    : MAX_HITS;
 
   // Sliding window counter
   const entry = hits.get(ip);
@@ -48,13 +69,10 @@ export function middleware(request: NextRequest) {
     hits.set(ip, { count: 1, windowStart: now });
   } else {
     entry.count++;
-    if (entry.count > MAX_HITS) {
-      blocked.set(ip, now + BLOCK_DURATION);
-      hits.delete(ip);
-      return new NextResponse('Too Many Requests', {
-        status: 429,
-        headers: { 'Retry-After': '60' },
-      });
+    if (entry.count > limit) {
+      // Throttle for the remainder of this window only — the next window opens
+      // normally, so a burst costs a pause rather than a minute of lost URLs.
+      return tooMany(entry.windowStart + WINDOW_MS - now);
     }
   }
 

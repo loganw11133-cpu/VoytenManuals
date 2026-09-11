@@ -1,0 +1,948 @@
+{
+  "generated": "2026-09-11",
+  "source": "live <h1> (manual.title) for every slug carrying an HTML-entity remnant",
+  "note": "Slugs are renamed to toSlug(title); every old slug gets a 301 via lib/manual-redirects.ts.",
+  "skipped": [
+    {
+      "slug": "application-of-molded-case-circuit-breakers-in-series-with-amp-trap-current-limiters",
+      "title": "Application of Molded Case Circuit Breakers in Series with AMP Trap Current Limiters",
+      "reason": "false-positive-not-corrupt"
+    },
+    {
+      "slug": "multi-amp-protective-relay-test-sets",
+      "title": "Multi AMP Protective Relay Test Sets",
+      "reason": "false-positive-not-corrupt"
+    },
+    {
+      "slug": "sfc151d-a-sfc153d-a-static-timeatildeiumliquestfrac12atildeacircmiddotovercurrent-relay",
+      "title": "SFC151D a SFC153D a Static Timeiumliquestfrac12-overcurrent Relay",
+      "reason": "title-still-corrupt"
+    },
+    {
+      "slug": "siprotec-7sj602-v35x-annunciations-to-the-serial-system-interface-according-to-iec-60-associated-manual-c53000atildecentiumliquestfrac12iumliquestfrac12g1176atildecentiumliquestfrac12iumliquestfrac12c125",
+      "title": "Siprotec 7SJ602 V35X Annunciations to the Serial System Interface According to IEC 60 Associated Manual C53000centiumliquestfrac12iumliquestfrac12g1176centiumliquestfrac12iumliquestfrac12c125",
+      "reason": "title-still-corrupt"
+    }
+  ],
+  "batches": {
+    "1": [
+      {
+        "from": "1acircmiddot10-horsepower-1000-150020003000-type-pt-controllers",
+        "to": "1-10-horsepower-1000-150020003000-type-pt-controllers",
+        "title": "1-10 Horsepower 1000 150020003000 Type PT Controllers"
+      },
+      {
+        "from": "a-1000-mva-138-kv-magnetic-quotde-ionquot-air-circuit-breaker",
+        "to": "a-1000-mva-13-8-kv-magnetic-de-ion-air-circuit-breaker",
+        "title": "A 1000 MVA 13.8 KV Magnetic De-Ion Air Circuit Breaker"
+      },
+      {
+        "from": "a-c-or-d-c-limit-switch-types-ndh-amp-ndhe",
+        "to": "a-c-or-d-c-limit-switch-types-ndh-ndhe",
+        "title": "A C or D C Limit Switch Types Ndh & Ndhe"
+      },
+      {
+        "from": "ab-1-nofuze-quotde-ionquot-circuit-breakers-dimension-sheet-index",
+        "to": "ab-1-nofuze-de-ion-circuit-breakers-dimension-sheet-index",
+        "title": "AB 1 Nofuze De-Ion Circuit Breakers Dimension Sheet Index"
+      },
+      {
+        "from": "ab-de-ionacircreg-circuit-breakers-for-naval-shipboard-use",
+        "to": "ab-de-ion-circuit-breakers-for-naval-shipboard-use",
+        "title": "Ab De-Ion® Circuit Breakers for Naval Shipboard Use"
+      },
+      {
+        "from": "air-cooled-induction-voltage-regulators-type-quotsaquot",
+        "to": "air-cooled-induction-voltage-regulators-type-sa",
+        "title": "Air Cooled Induction Voltage Regulators Type SA"
+      },
+      {
+        "from": "altistartacircreg-48-enclosed-soft-start-controllers-1-600-hp-600-v-1-500-hp-480-v-1-250-hp-240-v-or-1-200-hp-208-v-class-8638-and-8639",
+        "to": "altistart-48-enclosed-soft-start-controllers-1-600-hp-600-v-1-500-hp-480-v-1-250-hp-240-v-or-1-200-hp-208-v-class-8638-and-8639",
+        "title": "Altistart® 48 Enclosed Soft Start Controllers 1 600 HP 600 V 1 500 HP 480 V 1 250 HP 240 V or 1 200 HP 208 V Class 8638 and 8639"
+      },
+      {
+        "from": "amp-trap-e-rated-medium-voltage-fuses-55-kv-and-155-kv",
+        "to": "amp-trap-e-rated-medium-voltage-fuses-55-kv-and-15-5-kv",
+        "title": "AMP Trap E Rated Medium Voltage Fuses 55 KV and 15.5 KV"
+      },
+      {
+        "from": "asa-standard-outdoor-condenser-bushings-type-quotsquot",
+        "to": "asa-standard-outdoor-condenser-bushings-type-s",
+        "title": "ASA Standard Outdoor Condenser Bushings Type S"
+      },
+      {
+        "from": "asa-standard-outdoor-condenser-bushings-types-quotsquot-and-quotosquot",
+        "to": "asa-standard-outdoor-condenser-bushings-types-type-s-and-type-os",
+        "title": "ASA Standard Outdoor Condenser Bushings Types Type S and Type OS"
+      },
+      {
+        "from": "avibv-lineatildeacircreg-switchboards",
+        "to": "i-line-switchboards",
+        "title": "I-Line® Switchboards"
+      },
+      {
+        "from": "b-amp-b-rs-232485-converter-connection-to-abb-protective-relays-an-75a-00",
+        "to": "b-b-rs-232485-converter-connection-to-abb-protective-relays-an-75a-00",
+        "title": "B&B RS 232485 Converter Connection to ABB Protective Relays an 75A 00"
+      },
+      {
+        "from": "bristols-series-quot500quot-voltmeter",
+        "to": "bristol-s-series-500-voltmeter",
+        "title": "Bristol's Series \"500\" Voltmeter"
+      },
+      {
+        "from": "burdens-amp-current-transformer-requirements-of-micom-relays",
+        "to": "burdens-current-transformer-requirements-of-micom-relays",
+        "title": "Burdens & Current Transformer Requirements of Micom Relays"
+      },
+      {
+        "from": "class-200-equipment-quotessquot-excitation-support-system-for-shunt-static-exciterregulators",
+        "to": "class-200-equipment-type-ess-excitation-support-system-for-shunt-static-exciterregulators",
+        "title": "Class 200 Equipment Type ESS Excitation Support System for Shunt Static Exciterregulators"
+      },
+      {
+        "from": "class-5840-reactivaracirccent-medium-voltage-power-factor-capacitors-fixed-fused-and-unfused",
+        "to": "class-5840-reactivar-medium-voltage-power-factor-capacitors-fixed-fused-and-unfused",
+        "title": "Class 5840 Reactivar Medium Voltage Power Factor Capacitors Fixed Fused and Unfused"
+      },
+      {
+        "from": "concentric-lead-bushing-for-type-quotursquot-step-regulator",
+        "to": "concentric-lead-bushing-for-type-urs-step-regulator",
+        "title": "Concentric Lead Bushing for Type URS Step Regulator"
+      },
+      {
+        "from": "control-circuits-for-quotcspquot-power-transformer-circuits-with-network-relaying",
+        "to": "control-circuits-for-type-csp-power-transformer-circuits-with-network-relaying",
+        "title": "Control Circuits for Type CSP Power Transformer Circuits with Network Relaying"
+      },
+      {
+        "from": "cork-neoprene-gaskets-pds-no-7249-9-for-quotursquot-tap-changers-an-quotursquot-regulators",
+        "to": "cork-neoprene-gaskets-pds-no-7249-9-for-type-urs-tap-changers-an-type-urs-regulators",
+        "title": "Cork Neoprene Gaskets Pds No 7249 9 for Type URS Tap Changers an Type URS Regulators"
+      },
+      {
+        "from": "db-de-ionacircreg-circuit-breakers-15-4000-amperes-a-c-or-d-c",
+        "to": "db-de-ion-circuit-breakers-15-4000-amperes-a-c-or-d-c",
+        "title": "DB De-Ion® Circuit Breakers 15 4000 Amperes a C or D C"
+      },
+      {
+        "from": "de-ion-air-circuit-breakers-db-15-db-25-db-f-amp-dbl-25-600-volts-ac-250-volts-dc",
+        "to": "de-ion-air-circuit-breakers-db-15-db-25-db-f-dbl-25-600-volts-ac-250-volts-dc",
+        "title": "De-Ion Air Circuit Breakers DB 15 DB 25 DB F & DBL 25 600 Volts AC 250 Volts DC"
+      },
+      {
+        "from": "de-ionacircreg-air-circuit-breaker-type-50-dh-75",
+        "to": "de-ion-air-circuit-breaker-type-50-dh-75",
+        "title": "De-Ion® Air Circuit Breaker Type 50 DH 75"
+      },
+      {
+        "from": "digitrip-520-520m-520-520mi---long-delay-amp-short-delay-curves",
+        "to": "digitrip-520-520m-520-520mi-long-delay-short-delay-curves",
+        "title": "Digitrip 520 520M 520 520MI Long Delay & Short Delay Curves"
+      },
+      {
+        "from": "digitrip-retrofit-system-for-siemens-allis-laf-1600-b-amp-c-fused-breakers",
+        "to": "digitrip-retrofit-system-for-siemens-allis-laf-1600-b-c-fused-breakers",
+        "title": "Digitrip Retrofit System for Siemens Allis LAF 1600 B & C Fused Breakers"
+      },
+      {
+        "from": "fluarcacircreg-type-fg2-sf6-circuit-breakers",
+        "to": "fluarc-type-fg2-sf6-circuit-breakers",
+        "title": "Fluarc® Type FG2 SF6 Circuit Breakers"
+      },
+      {
+        "from": "ft-flexitest-switches-type-ft-1-ft-1f-ft-1x-amp-ft14",
+        "to": "ft-flexitest-switches-type-ft-1-ft-1f-ft-1x-ft14",
+        "title": "Ft Flexitest Switches Type FT 1 FT 1F FT 1X & FT14"
+      },
+      {
+        "from": "generic-guide-for-selecting-quotstart-upquot-and-quotrunningquot-spare-parts-for-ampgard-motor-starters",
+        "to": "generic-guide-for-selecting-start-up-and-type-running-spare-parts-for-ampgard-motor-starters",
+        "title": "Generic Guide for Selecting \"Start Up\" and Type Running Spare Parts for Ampgard Motor Starters"
+      },
+      {
+        "from": "ger-amp-geh-medium-voltage-replacement-circuit-breakers-ansi-47682515kv-at-250acirc1000-mva-1200-3000-amperes",
+        "to": "ger-geh-medium-voltage-replacement-circuit-breakers-ansi-47682515kv-at-2501000-mva-1200-3000-amperes",
+        "title": "Ger & Geh Medium Voltage Replacement Circuit Breakers ANSI 47682515KV at 2501000 MVA 1200 3000 Amperes"
+      },
+      {
+        "from": "grid-type-resistors-5quot-8quot-14quot-and-l-grids-3-point",
+        "to": "grid-type-resistors-5-8-14-and-l-grids-3-point",
+        "title": "Grid Type Resistors 5\" 8\" 14\" and L Grids 3 Point"
+      },
+      {
+        "from": "high-pressure-nonacircmiddotcondensing-turbine-with-feed-heating-turbine",
+        "to": "high-pressure-non-condensing-turbine-with-feed-heating-turbine",
+        "title": "High Pressure Non-condensing Turbine with Feed Heating Turbine"
+      },
+      {
+        "from": "high-voltage-magnetic-air-power-circuit-breaker-type-dst-5kv-amp-15-kv",
+        "to": "high-voltage-magnetic-air-power-circuit-breaker-type-dst-5kv-15-kv",
+        "title": "High Voltage Magnetic Air Power Circuit Breaker Type DST 5KV & 15 KV"
+      },
+      {
+        "from": "i-t-e-low-voltage-power-circuit-breakers-type-k-225-thru-2000-and-k-600s-thru-2000s-type-k-donacircreg-600-thru-1600-and-k-don-600s-thru-1600s-type-kspacirccent-1200-thru-2000-power-service-protectors",
+        "to": "i-t-e-low-voltage-power-circuit-breakers-type-k-225-thru-2000-and-k-600s-thru-2000s-type-k-don-600-thru-1600-and-k-don-600s-thru-1600s-type-ksp-1200-thru-2000-power-service-protectors",
+        "title": "I T E Low Voltage Power Circuit Breakers Type K 225 Thru 2000 and K 600S Thru 2000S Type K Don® 600 Thru 1600 and K Don 600S Thru 1600S Type KSP 1200 Thru 2000 Power Service Protectors"
+      },
+      {
+        "from": "inerteenacircreg-insulating-fluid-pds-54201-ka",
+        "to": "inerteen-insulating-fluid-pds-54201-ka",
+        "title": "Inerteen® Insulating Fluid PDS 54201 Ka"
+      },
+      {
+        "from": "insert-arc-welded-bushing-type-quotrfwquot",
+        "to": "insert-arc-welded-bushing-type-rfw",
+        "title": "Insert Arc Welded Bushing Type RFW"
+      },
+      {
+        "from": "installation-and-maintenance-instructions-type-305-b-quotatcotrolquot-timers",
+        "to": "installation-and-maintenance-instructions-type-305-b-type-atcotrol-timers",
+        "title": "Installation and Maintenance Instructions Type 305 B Type Atcotrol Timers"
+      },
+      {
+        "from": "installation-maintenance-instructions-and-renewal-parts-kirkacircreg-key-interlocks",
+        "to": "installation-maintenance-instructions-and-renewal-parts-kirk-key-interlocks",
+        "title": "Installation Maintenance Instructions and Renewal Parts Kirk® Key Interlocks"
+      },
+      {
+        "from": "installation-operation-and-maintenance-of-electrical-control-equipment-for-100hp-av-drive-for-farell-birmingham-consolidated-machine-tool-co-50quot-sellers-wheel-lathe",
+        "to": "installation-operation-and-maintenance-of-electrical-control-equipment-for-100hp-av-drive-for-farell-birmingham-consolidated-machine-tool-co-50-sellers-wheel-lathe",
+        "title": "Installation Operation and Maintenance of Electrical Control Equipment for 100HP Av Drive for Farell Birmingham Consolidated Machine Tool CO 50\" Sellers Wheel Lathe"
+      },
+      {
+        "from": "instructions-for-de-ionacircreg-air-circuit-breakers-types-dm-dm2f-dmd",
+        "to": "instructions-for-de-ion-air-circuit-breakers-types-dm-dm2f-dmd",
+        "title": "Instructions for De-Ion® Air Circuit Breakers Types DM DM2F DMD"
+      },
+      {
+        "from": "instructions-for-motor-operator-for-use-with-types-la-and-hla-ab-de-ionatildeacircreg-circuit-breakers",
+        "to": "instructions-for-motor-operator-for-use-with-types-la-and-hla-ab-de-ion-circuit-breakers",
+        "title": "Instructions for Motor Operator for Use with Types LA and HLA Ab De-Ion® Circuit Breakers"
+      },
+      {
+        "from": "instructions-for-rectangular-core-and-coil-assembly-type-quot-sl-quot-transformers",
+        "to": "instructions-for-rectangular-core-and-coil-assembly-type-sl-transformers",
+        "title": "Instructions for Rectangular Core and Coil Assembly Type \"SL\" Transformers"
+      },
+      {
+        "from": "instructions-for-the-care-amp-maintenance-of-type-is-air-interrupter-switches",
+        "to": "instructions-for-the-care-maintenance-of-type-is-air-interrupter-switches",
+        "title": "Instructions for the Care & Maintenance of Type IS Air Interrupter Switches"
+      },
+      {
+        "from": "instructions-for-the-installation-and-operation-of-allis-chalmers-type-quotlaquot-low-voltage-air-circuit-breakers-and-auxiliary-equipment",
+        "to": "instructions-for-the-installation-and-operation-of-allis-chalmers-type-la-low-voltage-air-circuit-breakers-and-auxiliary-equipment",
+        "title": "Instructions for the Installation and Operation of Allis Chalmers Type LA Low Voltage Air Circuit Breakers and Auxiliary Equipment"
+      },
+      {
+        "from": "instructions-for-type-ba-amp-cle-fuses",
+        "to": "instructions-for-type-ba-cle-fuses",
+        "title": "Instructions for Type BA & Cle Fuses"
+      },
+      {
+        "from": "insulating-paper-aging-comparison-envirotempacircreg-fr3acirccent-fluid-vs-mineral-oil",
+        "to": "insulating-paper-aging-comparison-envirotemp-fr3-fluid-vs-mineral-oil",
+        "title": "Insulating Paper Aging Comparison Envirotemp® FR3 Fluid vs Mineral OIL"
+      },
+      {
+        "from": "internal-operating-mechanism-for-types-quotrsquot-and-quotwsbquot-tap-changers",
+        "to": "internal-operating-mechanism-for-types-type-rs-and-type-wsb-tap-changers",
+        "title": "Internal Operating Mechanism for Types Type RS and Type WSB Tap Changers"
+      },
+      {
+        "from": "international-power-machinesacircreg-balancedpower-ii-model-bpii-20-model-bpii-25-model-bpii-30-uninterruptible-power-system",
+        "to": "international-power-machines-balancedpower-ii-model-bpii-20-model-bpii-25-model-bpii-30-uninterruptible-power-system",
+        "title": "International Power Machines® Balancedpower II Model BPII 20 Model BPII 25 Model BPII 30 Uninterruptible Power System"
+      },
+      {
+        "from": "la-600b-la-800a-amp-la-1600b-low-voltage-circuit-breakers-sg-11045",
+        "to": "la-600b-la-800a-la-1600b-low-voltage-circuit-breakers-sg-11045",
+        "title": "LA 600B LA 800A & LA 1600B Low Voltage Circuit Breakers SG 11045"
+      },
+      {
+        "from": "liquid-immersed-secondary-unit-substations-power-centers-type-rsl-rectangular-coil-core-form-wemco-quotcquot-oil-standardized-500-2500-kva-three-phase-60-hertz",
+        "to": "liquid-immersed-secondary-unit-substations-power-centers-type-rsl-rectangular-coil-core-form-wemco-type-c-oil-standardized-500-2500-kva-three-phase-60-hertz",
+        "title": "Liquid Immersed Secondary Unit Substations Power Centers Type RSL Rectangular Coil Core Form Wemco Type C OIL Standardized 500 2500 KVA Three Phase 60 Hertz"
+      },
+      {
+        "from": "low-voltage-metal-enclosed-switchgear-type-quotrquot-indoor-and-quotsrquot-outdoor-600-volt",
+        "to": "low-voltage-metal-enclosed-switchgear-type-r-indoor-and-type-sr-outdoor-600-volt",
+        "title": "Low Voltage Metal Enclosed Switchgear Type R Indoor and Type SR Outdoor 600 Volt"
+      },
+      {
+        "from": "masterpactacirccent-mp-circuit-breaker-introduction-advantages",
+        "to": "masterpact-mp-circuit-breaker-introduction-advantages",
+        "title": "Masterpact Mp Circuit Breaker Introduction Advantages"
+      },
+      {
+        "from": "mcr-amp-mbr-medium-voltage-replacement-circuit-breakers",
+        "to": "mcr-mbr-medium-voltage-replacement-circuit-breakers",
+        "title": "Mcr & Mbr Medium Voltage Replacement Circuit Breakers"
+      },
+      {
+        "from": "mechanical-interlock-assembly-for-1-12quot-and-2quot-ips-operation-pipe",
+        "to": "mechanical-interlock-assembly-for-1-1-2-and-2-ips-operation-pipe",
+        "title": "Mechanical Interlock Assembly for 1-1/2\" and 2\" Ips Operation Pipe"
+      },
+      {
+        "from": "metal-clad-switchgear-with-type-ampquotdhampquot-air-circuit-breakers",
+        "to": "metal-clad-switchgear-with-type-dh-air-circuit-breakers",
+        "title": "Metal Clad Switchgear with Type DH Air Circuit Breakers"
+      },
+      {
+        "from": "micartaacircreg-copper-clad-materials",
+        "to": "micarta-copper-clad-materials",
+        "title": "Micarta® Copper Clad Materials"
+      },
+      {
+        "from": "microversatrip-plus-and-microversatrip-pm-trip-units-for-type-akr-low--voltage-power-circuit-breakers-power-breakacircreg-insulated-case-circuit-breakers-power-breakacircreg-ii-insulated-case-circuit-breakers-r-frame-molded-case-circuit-break",
+        "to": "microversatrip-plus-and-microversatrip-pm-trip-units-for-type-akr-low-voltage-power-circuit-breakers-power-break-insulated-case-circuit-breakers-power-break-ii-insulated-case-circuit-breakers-r-frame-molded-case-circuit-break",
+        "title": "MicroVersaTrip Plus and MicroVersaTrip Pm Trip Units for Type AKR Low Voltage Power Circuit Breakers Power Break® Insulated Case Circuit Breakers Power Break® II Insulated Case Circuit Breakers R Frame Molded Case Circuit Break"
+      },
+      {
+        "from": "microversatripacircreg-test-set-type-tvts1",
+        "to": "microversatrip-test-set-type-tvts1",
+        "title": "MicroVersaTrip® Test Set Type TVTS1"
+      },
+      {
+        "from": "minimum-amp-rated-breaking-current-peak-overvoltage-amp-power-dissipation-for-square-de-rated-din",
+        "to": "minimum-rated-breaking-current-peak-overvoltage-power-dissipation-for-square-de-rated-din",
+        "title": "Minimum & Rated Breaking Current Peak Overvoltage & Power Dissipation for Square De Rated Din"
+      },
+      {
+        "from": "model-390-2-volt-amp-wattmeter",
+        "to": "model-390-2-volt-wattmeter",
+        "title": "Model 390 2 Volt & Wattmeter"
+      },
+      {
+        "from": "motor-operated-mechanism-for-ab-de-ionatildeacircreg-circuit-breaker-type-kl-2-and-3-pole-400-frame-size",
+        "to": "motor-operated-mechanism-for-ab-de-ion-circuit-breaker-type-kl-2-and-3-pole-400-frame-size",
+        "title": "Motor Operated Mechanism for Ab De-Ion® Circuit Breaker Type KL 2 and 3 Pole 400 Frame Size"
+      },
+      {
+        "from": "msv-amp-fsv-medium-voltage-replacement-circuit-breakers-ansi-47682515kv-at-250-1000-mva-1200-3000-amperes",
+        "to": "msv-fsv-medium-voltage-replacement-circuit-breakers-ansi-47682515kv-at-250-1000-mva-1200-3000-amperes",
+        "title": "Msv & Fsv Medium Voltage Replacement Circuit Breakers ANSI 47682515KV at 250 1000 MVA 1200 3000 Amperes"
+      },
+      {
+        "from": "nehb-panelboards-main-lugs-amp-main-breaker",
+        "to": "nehb-panelboards-main-lugs-main-breaker",
+        "title": "Nehb Panelboards Main Lugs & Main Breaker"
+      },
+      {
+        "from": "oil-circuit-breaker-types-dz-60b-amp-100b",
+        "to": "oil-circuit-breaker-types-dz-60b-100b",
+        "title": "OIL Circuit Breaker Types Dz 60B & 100B"
+      },
+      {
+        "from": "outdoor-condenser-bushings-type-quot0quot",
+        "to": "outdoor-condenser-bushings-type-o",
+        "title": "Outdoor Condenser Bushings Type \"O\""
+      },
+      {
+        "from": "outdoor-condenser-bushings-type-quotoquot-oil-impregnated-for-oil-circuit-breakers-and-transformers",
+        "to": "outdoor-condenser-bushings-type-o-oil-impregnated-for-oil-circuit-breakers-and-transformers",
+        "title": "Outdoor Condenser Bushings Type O OIL Impregnated for OIL Circuit Breakers and Transformers"
+      },
+      {
+        "from": "outdoor-condenser-bushings-types-quotsquot-and-quotosquot",
+        "to": "outdoor-condenser-bushings-types-type-s-and-type-os",
+        "title": "Outdoor Condenser Bushings Types Type S and Type OS"
+      },
+      {
+        "from": "outdoor-oil-breakers-type-gw-watch-case-230-kv-to-345-kv-1200-to-1600-amperes-3-cycle-interrupting-de-ionacircreg-grid",
+        "to": "outdoor-oil-breakers-type-gw-watch-case-230-kv-to-345-kv-1200-to-1600-amperes-3-cycle-interrupting-de-ion-grid",
+        "title": "Outdoor OIL Breakers Type GW Watch Case 230 KV to 345 KV 1200 to 1600 Amperes 3 Cycle Interrupting De-Ion® Grid"
+      },
+      {
+        "from": "parallel-operation-of-tcul-transformers-in-double-ended-unit-substations-using-quotsuquot-relay-and-line-drop-compensator",
+        "to": "parallel-operation-of-tcul-transformers-in-double-ended-unit-substations-using-type-su-relay-and-line-drop-compensator",
+        "title": "Parallel Operation of Tcul Transformers in Double Ended Unit Substations Using Type SU Relay and Line Drop Compensator"
+      },
+      {
+        "from": "poke-thru-service-fittings-one-two-or-three-service-devices-and-abandoning-outlet-assemblies-for-2quot-or-3quot-core-drilled-holes",
+        "to": "poke-thru-service-fittings-one-two-or-three-service-devices-and-abandoning-outlet-assemblies-for-2-or-3-core-drilled-holes",
+        "title": "Poke Thru Service Fittings One Two or Three Service Devices and Abandoning Outlet Assemblies for 2\" or 3\" Core Drilled Holes"
+      },
+      {
+        "from": "porcelain-bushings-type-quotrjquot",
+        "to": "porcelain-bushings-type-rj",
+        "title": "Porcelain Bushings Type RJ"
+      },
+      {
+        "from": "power-logicacircreg-interactive-graphics-interface-for-system-manageracirccent-and-system-manager-plusacirccent-software",
+        "to": "power-logic-interactive-graphics-interface-for-system-manager-and-system-manager-plus-software",
+        "title": "Power Logic® Interactive Graphics Interface for System Manager and System Manager Plus Software"
+      },
+      {
+        "from": "powerlogic-ion8600-metering-amp-control-device-installation-guide",
+        "to": "powerlogic-ion8600-metering-control-device-installation-guide",
+        "title": "Powerlogic ION8600 Metering & Control Device Installation Guide"
+      },
+      {
+        "from": "powerlogicacircreg-system-display",
+        "to": "powerlogic-system-display",
+        "title": "Powerlogic® System Display"
+      },
+      {
+        "from": "protective-links-used-on-quotcspquot-power-transformers",
+        "to": "protective-links-used-on-type-csp-power-transformers",
+        "title": "Protective Links Used on Type CSP Power Transformers"
+      },
+      {
+        "from": "quot22-1000-30-regenerative-drive-c600mquot",
+        "to": "22-1000-30-regenerative-drive-c600m",
+        "title": "22-1000-30 Regenerative Drive C600M"
+      },
+      {
+        "from": "quotaslquot-distribution-and-power-transformers-air-cooled",
+        "to": "type-asl-distribution-and-power-transformers-air-cooled",
+        "title": "Type ASL Distribution and Power Transformers Air Cooled"
+      },
+      {
+        "from": "quotavrquot-distribution-transformers-dry-type",
+        "to": "type-avr-distribution-transformers-dry-type",
+        "title": "Type AVR Distribution Transformers Dry Type"
+      },
+      {
+        "from": "quotde-ionquot-air-circuit-breakers-types-db-15-and-db-25",
+        "to": "de-ion-air-circuit-breakers-types-db-15-and-db-25",
+        "title": "De-Ion Air Circuit Breakers Types DB 15 and DB 25"
+      },
+      {
+        "from": "quotde-ionquot-air-circuit-breakers-types-db-75-and-db-100",
+        "to": "de-ion-air-circuit-breakers-types-db-75-and-db-100",
+        "title": "De-Ion Air Circuit Breakers Types DB 75 and DB 100"
+      },
+      {
+        "from": "quotde-ionquot-arresters",
+        "to": "de-ion-arresters",
+        "title": "De-Ion Arresters"
+      },
+      {
+        "from": "quotde-ionquot-gap-arresters",
+        "to": "de-ion-gap-arresters",
+        "title": "De-Ion Gap Arresters"
+      },
+      {
+        "from": "quotde-ionquot-grid-oil-circuit-breaker-outdoor-type-g",
+        "to": "de-ion-grid-oil-circuit-breaker-outdoor-type-g",
+        "title": "De-Ion Grid OIL Circuit Breaker Outdoor Type G"
+      },
+      {
+        "from": "quotde-ionquot-grid-oil-circuit-breaker-outdoor-type-gc",
+        "to": "de-ion-grid-oil-circuit-breaker-outdoor-type-gc",
+        "title": "De-Ion Grid OIL Circuit Breaker Outdoor Type GC"
+      },
+      {
+        "from": "quotde-ionquot-grid-outdoor-oil-circuit-breakers-type-go-1a-345kv-600-amp-type-go-1a-46kv-600-amp",
+        "to": "de-ion-grid-outdoor-oil-circuit-breakers-type-go-1a-34-5kv-600-amp-type-go-1a-46kv-600-amp",
+        "title": "De-Ion Grid Outdoor OIL Circuit Breakers Type GO 1A 34.5KV 600 AMP Type GO 1A 46KV 600 AMP"
+      },
+      {
+        "from": "quotde-ionquot-grind-oil-circuit-breaker-outdoor-type-g",
+        "to": "de-ion-grind-oil-circuit-breaker-outdoor-type-g",
+        "title": "De-Ion Grind OIL Circuit Breaker Outdoor Type G"
+      },
+      {
+        "from": "quotdquot-line-watthour-meter-calibration-information",
+        "to": "type-d-line-watthour-meter-calibration-information",
+        "title": "Type D Line Watthour Meter Calibration Information"
+      },
+      {
+        "from": "quotgetting-down-to-earthquot-a-manual-on-earth-resistance-testing-for-the-practical-man-electronic-grounding-systems-earth-resistivity",
+        "to": "getting-down-to-earth-a-manual-on-earth-resistance-testing-for-the-practical-man-electronic-grounding-systems-earth-resistivity",
+        "title": "\"Getting Down to Earth\" — A Manual on Earth Resistance Testing for the Practical Man, Electronic Grounding Systems, Earth Resistivity"
+      },
+      {
+        "from": "quotradial-clearancequot-labyrinth-seal",
+        "to": "radial-clearance-labyrinth-seal",
+        "title": "\"Radial Clearance\" Labyrinth Seal"
+      },
+      {
+        "from": "quotsealedairequot-transformers",
+        "to": "type-sealedaire-transformers",
+        "title": "Type Sealedaire Transformers"
+      },
+      {
+        "from": "quotssequot-shuntstatic-exciterregulators",
+        "to": "type-sse-shuntstatic-exciterregulators",
+        "title": "Type SSE Shuntstatic Exciterregulators"
+      },
+      {
+        "from": "quotstandardquot-oil-to-water-thermosiphon-heat-exchanger",
+        "to": "type-standard-oil-to-water-thermosiphon-heat-exchanger",
+        "title": "Type Standard OIL to Water Thermosiphon Heat Exchanger"
+      },
+      {
+        "from": "quotstart-stopquot-and-quot3-positionquot-push-button-class-15-016-moulded-type",
+        "to": "start-stop-and-3-position-push-button-class-15-016-moulded-type",
+        "title": "\"Start Stop\" and \"3 Position\" Push Button Class 15-016 Moulded Type"
+      },
+      {
+        "from": "ref-550-distribution-feeder-amp-subtransmission-line",
+        "to": "ref-550-distribution-feeder-subtransmission-line",
+        "title": "REF 550 Distribution Feeder & Subtransmission Line"
+      }
+    ],
+    "2": [
+      {
+        "from": "renewal-parts-pub-for-nema-size-8-non-reversing-amp-reversing-contactors-and-starters",
+        "to": "renewal-parts-pub-for-nema-size-8-non-reversing-reversing-contactors-and-starters",
+        "title": "Renewal Parts Pub for NEMA Size 8 Non Reversing & Reversing Contactors and Starters"
+      },
+      {
+        "from": "replacing-damaged-porcelains-on-types-quotsquot-and-quotosquot-condensor-brushings",
+        "to": "replacing-damaged-porcelains-on-types-type-s-and-type-os-condensor-brushings",
+        "title": "Replacing Damaged Porcelains on Types Type S and Type OS Condensor Brushings"
+      },
+      {
+        "from": "replacing-damaged-weather-casing-on-types-quotsquot-and-quotosquot-condenser-bushings",
+        "to": "replacing-damaged-weather-casing-on-types-type-s-and-type-os-condenser-bushings",
+        "title": "Replacing Damaged Weather Casing on Types Type S and Type OS Condenser Bushings"
+      },
+      {
+        "from": "revamping-westinghouse-outdoor-oil-circuit-breakers-with-quotde-ion-gridquot-contacts",
+        "to": "revamping-westinghouse-outdoor-oil-circuit-breakers-with-de-ion-grid-contacts",
+        "title": "Revamping Westinghouse Outdoor OIL Circuit Breakers with De-Ion Grid Contacts"
+      },
+      {
+        "from": "s-amp-c-power-fuses---type-sm",
+        "to": "s-c-power-fuses-type-sm",
+        "title": "S&C Power Fuses Type SM"
+      },
+      {
+        "from": "s-amp-c-power-fuses---type-smacircmiddot20-indoor-distribution-138-kv-through-345-kv",
+        "to": "s-c-power-fuses-type-sm-20-indoor-distribution-13-8-kv-through-34-5-kv",
+        "title": "S&C Power Fuses Type SM-20 Indoor Distribution 13.8 KV Through 34.5 KV"
+      },
+      {
+        "from": "s-amp-c-power-fuses-types-sm-4-and-sm-5",
+        "to": "s-c-power-fuses-types-sm-4-and-sm-5",
+        "title": "S&C Power Fuses Types SM 4 and SM 5"
+      },
+      {
+        "from": "s-amp-c-power-fuses-types-sm-4-sm-5-smd-20-and-smd-40",
+        "to": "s-c-power-fuses-types-sm-4-sm-5-smd-20-and-smd-40",
+        "title": "S&C Power Fuses Types SM 4 SM 5 SMD 20 and SMD 40"
+      },
+      {
+        "from": "samms-mvacirccent-siemens-advanced-motor-master-system-for-medium-voltage-motors",
+        "to": "samms-mv-siemens-advanced-motor-master-system-for-medium-voltage-motors",
+        "title": "Samms Mv Siemens Advanced Motor Master System for Medium Voltage Motors"
+      },
+      {
+        "from": "saturable-core-reactorsntype-scrnsingle-phase-60-hertzn500-0-volts-and-belown150ampacircampdegc-rise-system",
+        "to": "saturable-core-reactorsntype-scrnsingle-phase-60-hertzn500-0-volts-and-belown150ampampdegc-rise-system",
+        "title": "Saturable Core Reactorsntype Scrnsingle Phase 60 Hertzn500 0 Volts and Belown150ampampdegc Rise System"
+      },
+      {
+        "from": "sel-121-f-sel-121-f-1-sel-121f-8-phase-and-ground-distance-relay-groundacircmiddot-directional-overcurrent-relay-synchronism-checking-relay-reclosing-relay-fault-locator",
+        "to": "sel-121-f-sel-121-f-1-sel-121f-8-phase-and-ground-distance-relay-ground-directional-overcurrent-relay-synchronism-checking-relay-reclosing-relay-fault-locator",
+        "title": "SEL 121 F SEL 121 F 1 SEL 121F 8 Phase and Ground Distance Relay Ground- Directional Overcurrent Relay Synchronism Checking Relay Reclosing Relay Fault Locator"
+      },
+      {
+        "from": "series-81000acirccent-720-ampere-vacuum-controller-type-96h6-distribution-voltage-2400-4800-vac-utilization-voltage-2300-4600-vac",
+        "to": "series-81000-720-ampere-vacuum-controller-type-96h6-distribution-voltage-2400-4800-vac-utilization-voltage-2300-4600-vac",
+        "title": "Series 81000 720 Ampere Vacuum Controller Type 96H6 Distribution Voltage 2400 4800 Vac Utilization Voltage 2300 4600 Vac"
+      },
+      {
+        "from": "series-81000acirccent-controller-with-drawout-vacuum-contactors",
+        "to": "series-81000-controller-with-drawout-vacuum-contactors",
+        "title": "Series 81000 Controller with Drawout Vacuum Contactors"
+      },
+      {
+        "from": "series-quot500quot-metameter-transmitter",
+        "to": "series-500-metameter-transmitter",
+        "title": "Series \"500\" Metameter Transmitter"
+      },
+      {
+        "from": "siemens-type-hvr-amp-hkr-medium-voltage-vacuum-circuit-breakers",
+        "to": "siemens-type-hvr-hkr-medium-voltage-vacuum-circuit-breakers",
+        "title": "Siemens Type HVR & Hkr Medium Voltage Vacuum Circuit Breakers"
+      },
+      {
+        "from": "simpson-260-series-9s-amp-9sp-volt-ohm-milliammeter",
+        "to": "simpson-260-series-9s-9sp-volt-ohm-milliammeter",
+        "title": "Simpson 260 Series 9S & 9SP Volt Ohm Milliammeter"
+      },
+      {
+        "from": "static-trip-ii-amp-limitrip-overcurrent-trip-devices-used-with-type-la-power-circuit-breakers",
+        "to": "static-trip-ii-limitrip-overcurrent-trip-devices-used-with-type-la-power-circuit-breakers",
+        "title": "Static Trip II & Limitrip Overcurrent Trip Devices Used with Type LA Power Circuit Breakers"
+      },
+      {
+        "from": "supplementary-instructions-for-type-db-air-circuit-breakers-amptectoracircreg-solid-state-trip-system",
+        "to": "supplementary-instructions-for-type-db-air-circuit-breakers-amptector-solid-state-trip-system",
+        "title": "Supplementary Instructions for Type DB Air Circuit Breakers Amptector® Solid State Trip System"
+      },
+      {
+        "from": "suspension-insulators-4-38quot-to-7-12quot-diameter",
+        "to": "suspension-insulators-4-3-8-to-7-1-2-diameter",
+        "title": "Suspension Insulators 4-3/8\" to 7-1/2\" Diameter"
+      },
+      {
+        "from": "switchgear-acirc-low-voltage",
+        "to": "switchgear-low-voltage",
+        "title": "Switchgear Low Voltage"
+      },
+      {
+        "from": "tandem-compound-condensing-turbine-type-quotatquot",
+        "to": "tandem-compound-condensing-turbine-type-at",
+        "title": "Tandem Compound Condensing Turbine Type at"
+      },
+      {
+        "from": "the-rc-quotdynac-brakequot",
+        "to": "the-rc-dynac-brake",
+        "title": "The RC \"Dynac Brake\""
+      },
+      {
+        "from": "type-50-dh-150-quotde-ionquot-air-circuit-breaker-breaker-unit-600-ampere-5000-volt-3-pole",
+        "to": "type-50-dh-150-de-ion-air-circuit-breaker-breaker-unit-600-ampere-5000-volt-3-pole",
+        "title": "Type 50 DH 150 De-Ion Air Circuit Breaker Breaker Unit 600 Ampere 5000 Volt 3 Pole"
+      },
+      {
+        "from": "type-amacircmiddot138-150--250--500-magne-blast-air-circuit-breakers",
+        "to": "type-am-138-150-250-500-magne-blast-air-circuit-breakers",
+        "title": "Type AM-138 150 250 500 Magne-Blast Air Circuit Breakers"
+      },
+      {
+        "from": "type-ampquotfampquot-ground-and-test-device-used-with-15-kv-metal-clad-switchgear",
+        "to": "type-f-ground-and-test-device-used-with-15-kv-metal-clad-switchgear-18x4473",
+        "title": "Type F Ground and Test Device Used with 15 KV Metal Clad Switchgear"
+      },
+      {
+        "from": "type-asl-core-form-gas-insulated-power-center-transformer-class-aa-1500-kva-13-200-6---480-6-volts-three-phase-60-cycles-120acircdeg-c-rise",
+        "to": "type-asl-core-form-gas-insulated-power-center-transformer-class-aa-1500-kva-13-200-6-480-6-volts-three-phase-60-cycles-120deg-c-rise",
+        "title": "Type ASL Core Form Gas Insulated Power Center Transformer Class AA 1500 KVA 13 200 6 480 6 Volts Three Phase 60 Cycles 120DEG C Rise"
+      },
+      {
+        "from": "type-db-75-quotde-ionquot-air-circuit-breaker-3000-ampere-frame-size-600-volts-a-c-250-volts-d-c-interrupting-rating-75000-amperes---600-volts-a-c-100000-amperes---250-volts-a-c",
+        "to": "type-db-75-de-ion-air-circuit-breaker-3000-ampere-frame-size-600-volts-a-c-250-volts-d-c-interrupting-rating-75000-amperes-600-volts-a-c-100000-amperes-250-volts-a-c",
+        "title": "Type DB 75 De-Ion Air Circuit Breaker 3000 Ampere Frame Size 600 Volts a C 250 Volts D C Interrupting Rating 75000 Amperes 600 Volts a C 100000 Amperes 250 Volts a C"
+      },
+      {
+        "from": "type-dbu-fuses-fast-quotkquot-rated-fuse-units",
+        "to": "type-dbu-fuses-fast-type-k-rated-fuse-units",
+        "title": "Type DBU Fuses Fast Type K Rated Fuse Units"
+      },
+      {
+        "from": "type-dbu-fuses-fast-quotkquot-related-fuse-units",
+        "to": "type-dbu-fuses-fast-type-k-related-fuse-units",
+        "title": "Type DBU Fuses Fast Type K Related Fuse Units"
+      },
+      {
+        "from": "type-dbu-fuses-fastquotkquot-rated-fuse-units",
+        "to": "type-dbu-fuses-fasttype-k-rated-fuse-units",
+        "title": "Type DBU Fuses FastType K Rated Fuse Units"
+      },
+      {
+        "from": "type-dbu-fuses-slow-quotequot-rated-fuse-units",
+        "to": "type-dbu-fuses-slow-type-e-rated-fuse-units",
+        "title": "Type DBU Fuses Slow Type E Rated Fuse Units"
+      },
+      {
+        "from": "type-dst-2-5kv-amp-15kv-magnetic-air-circuit-breaker",
+        "to": "type-dst-2-5kv-15kv-magnetic-air-circuit-breaker",
+        "title": "Type DST 2 5KV & 15KV Magnetic Air Circuit Breaker"
+      },
+      {
+        "from": "type-f-movable-portion-fb-sooaacircmiddotfcacircmiddot750a-ruptair-magnetic-power-circuit-breaker-and-auxiliary-equipment-stored-energy-operator",
+        "to": "type-f-movable-portion-fb-soo-fc-750a-ruptair-magnetic-power-circuit-breaker-and-auxiliary-equipment-stored-energy-operator",
+        "title": "Type F Movable Portion FB SOO/FC-750a Ruptair Magnetic Power Circuit Breaker and Auxiliary Equipment Stored Energy Operator"
+      },
+      {
+        "from": "type-hk-ii-ansi-rated-vacuum-amp-sf6-gas-medium-voltage-metal-clad-switchgear",
+        "to": "type-hk-ii-ansi-rated-vacuum-sf6-gas-medium-voltage-metal-clad-switchgear",
+        "title": "Type HK II ANSI Rated Vacuum & SF6 Gas Medium Voltage Metal Clad Switchgear"
+      },
+      {
+        "from": "type-la-75a-amp-la-100a-circuit-breaker",
+        "to": "type-la-75a-la-100a-circuit-breaker",
+        "title": "Type LA 75A & LA 100A Circuit Breaker"
+      },
+      {
+        "from": "type-ph-20-c2-quotpneu-draulicquot-operator",
+        "to": "type-ph-20-c2-pneu-draulic-operator",
+        "title": "Type PH 20 C2 Pneu-Draulic Operator"
+      },
+      {
+        "from": "type-quotaquot-explosion-proof-squirrel-cage-life-line-motors",
+        "to": "type-a-explosion-proof-squirrel-cage-life-line-motors",
+        "title": "Type a Explosion Proof Squirrel Cage Life-Line Motors"
+      },
+      {
+        "from": "type-quotaquot-explosion-proof-squirrel-cage-life-line-motors-frames-364-u-and-larger-model-nos-ending-in-ep",
+        "to": "type-a-explosion-proof-squirrel-cage-life-line-motors-frames-364-u-and-larger-model-nos-ending-in-ep",
+        "title": "Type a Explosion Proof Squirrel Cage Life-Line Motors Frames 364 U and Larger Model Nos Ending in Ep"
+      },
+      {
+        "from": "type-quotdhquot-quotde-ionquot-air-circuit-breakers",
+        "to": "type-dh-de-ion-air-circuit-breakers",
+        "title": "Type DH De-Ion Air Circuit Breakers"
+      },
+      {
+        "from": "type-quotdquot-416-kv-1200-amp-air-magnetic-circuit-breaker",
+        "to": "type-d-4-16-kv-1200-amp-air-magnetic-circuit-breaker",
+        "title": "Type D 4.16 KV 1200 AMP Air Magnetic Circuit Breaker"
+      },
+      {
+        "from": "type-quotdquot-ground-and-test-device-special-for-consolidated-edison-comany",
+        "to": "type-d-ground-and-test-device-special-for-consolidated-edison-comany",
+        "title": "Type D Ground and Test Device Special for Consolidated Edison Comany"
+      },
+      {
+        "from": "type-quotdquot-ground-and-test-device-used-with-5-kv-metal-clad-switchgear",
+        "to": "type-d-ground-and-test-device-used-with-5-kv-metal-clad-switchgear",
+        "title": "Type D Ground and Test Device Used with 5 KV Metal Clad Switchgear"
+      },
+      {
+        "from": "type-quotdquot-movable-portion-ma-350b-1200-amp-ruptair-magnetic-power-circuit-breaker-and-auxiliary-equipment",
+        "to": "type-d-movable-portion-ma-350b-1200-amp-ruptair-magnetic-power-circuit-breaker-and-auxiliary-equipment",
+        "title": "Type D Movable Portion MA 350B 1200 AMP Ruptair Magnetic Power Circuit Breaker and Auxiliary Equipment"
+      },
+      {
+        "from": "type-quotdquot-movable-portion-ma-75150250b-ruptair-magnetic-power-circuit-breaker-and-auxiliary-equipment-stored-energy-operator",
+        "to": "type-d-movable-portion-ma-75150250b-ruptair-magnetic-power-circuit-breaker-and-auxiliary-equipment-stored-energy-operator",
+        "title": "Type D Movable Portion MA 75150250B Ruptair Magnetic Power Circuit Breaker and Auxiliary Equipment Stored Energy Operator"
+      },
+      {
+        "from": "type-quotdquot-movable-portion-ma-75150b-ruptair-magnetic-power-circuit-breakers-and-auxiliary-equipment",
+        "to": "type-d-movable-portion-ma-75150b-ruptair-magnetic-power-circuit-breakers-and-auxiliary-equipment",
+        "title": "Type D Movable Portion MA 75150B Ruptair Magnetic Power Circuit Breakers and Auxiliary Equipment"
+      },
+      {
+        "from": "type-quotdquot-movable-portion-ma-75a-1150a-1250a-1-magnetic-power-circuit-breaker-and-auxiliary-equipment",
+        "to": "type-d-movable-portion-ma-75a-1150a-1250a-1-magnetic-power-circuit-breaker-and-auxiliary-equipment",
+        "title": "Type D Movable Portion MA 75A 1150A 1250A 1 Magnetic Power Circuit Breaker and Auxiliary Equipment"
+      },
+      {
+        "from": "type-quotdquot-rack-in-mechanism",
+        "to": "type-d-rack-in-mechanism",
+        "title": "Type D Rack in Mechanism"
+      },
+      {
+        "from": "type-quotfquot-ground-and-test-device-used-with-15-kv-metal-clad-switchgear",
+        "to": "type-f-ground-and-test-device-used-with-15-kv-metal-clad-switchgear-bwx6738",
+        "title": "Type F Ground and Test Device Used with 15 KV Metal Clad Switchgear"
+      },
+      {
+        "from": "type-quotfquot-movable-portion-bf-250a-ruptair-magnetic-power-circuit-breaker-and-auxiliary-equipment-solenoid-operator",
+        "to": "type-f-movable-portion-bf-250a-ruptair-magnetic-power-circuit-breaker-and-auxiliary-equipment-solenoid-operator",
+        "title": "Type F Movable Portion BF 250A Ruptair Magnetic Power Circuit Breaker and Auxiliary Equipment Solenoid Operator"
+      },
+      {
+        "from": "type-quotfquot-movable-portion-fb-250-ruptair-magnetic-power-circuit-breaker-and-auxiliary-equipment-stored-energy-operator",
+        "to": "type-f-movable-portion-fb-250-ruptair-magnetic-power-circuit-breaker-and-auxiliary-equipment-stored-energy-operator",
+        "title": "Type F Movable Portion FB 250 Ruptair Magnetic Power Circuit Breaker and Auxiliary Equipment Stored Energy Operator"
+      },
+      {
+        "from": "type-quotfquot-movable-portion-fb-500-ruptair-magnetic-power-circuit-breaker-and-auxiliary-equipment-solenoid-operator-book-bwx-6639",
+        "to": "type-f-movable-portion-fb-500-ruptair-magnetic-power-circuit-breaker-and-auxiliary-equipment-solenoid-operator-book-bwx-6639",
+        "title": "Type F Movable Portion FB 500 Ruptair Magnetic Power Circuit Breaker and Auxiliary Equipment Solenoid Operator Book BWX 6639"
+      },
+      {
+        "from": "type-quotfquot-movable-portion-fb-500a-fc-750a-ruptair-mangetic-power-circuit-breaker-and-auxiliary-equipment-solenoid-operator",
+        "to": "type-f-movable-portion-fb-500a-fc-750a-ruptair-mangetic-power-circuit-breaker-and-auxiliary-equipment-solenoid-operator",
+        "title": "Type F Movable Portion FB 500A FC 750A Ruptair Mangetic Power Circuit Breaker and Auxiliary Equipment Solenoid Operator"
+      },
+      {
+        "from": "type-quotfquot-movable-portion-fc-1000a-ruptair-magnetic-power-circuit-breaker-and-auxiliary-equipment-solenoid-operator",
+        "to": "type-f-movable-portion-fc-1000a-ruptair-magnetic-power-circuit-breaker-and-auxiliary-equipment-solenoid-operator",
+        "title": "Type F Movable Portion FC 1000A Ruptair Magnetic Power Circuit Breaker and Auxiliary Equipment Solenoid Operator"
+      },
+      {
+        "from": "type-quotfquot-movable-portion-fc-1000a-ruptair-magnetic-power-circuit-breaker-and-auxiliary-equipment-stored-energy-operator",
+        "to": "type-f-movable-portion-fc-1000a-ruptair-magnetic-power-circuit-breaker-and-auxiliary-equipment-stored-energy-operator",
+        "title": "Type F Movable Portion FC 1000A Ruptair Magnetic Power Circuit Breaker and Auxiliary Equipment Stored Energy Operator"
+      },
+      {
+        "from": "type-quotfquot-movable-portion-fc150a250a500a-ruptair-magnetic-power-circuit-breaker-and-auxiliary-equipment-stored-energy-operator",
+        "to": "type-f-movable-portion-fc150a250a500a-ruptair-magnetic-power-circuit-breaker-and-auxiliary-equipment-stored-energy-operator",
+        "title": "Type F Movable Portion FC150A250A500A Ruptair Magnetic Power Circuit Breaker and Auxiliary Equipment Stored Energy Operator"
+      },
+      {
+        "from": "type-quotfquot-movable-portion-fcacircmiddot150a250a500a-ruptair-magnetic-power-circuit-breaker-and-auxiliary-equipment-solenoid-operator",
+        "to": "type-f-movable-portion-fc-150a250a500a-ruptair-magnetic-power-circuit-breaker-and-auxiliary-equipment-solenoid-operator",
+        "title": "Type F Movable Portion Fc-150a250a500a Ruptair Magnetic Power Circuit Breaker and Auxiliary Equipment Solenoid Operator"
+      },
+      {
+        "from": "type-quotfquot-movable-portion-fr-500a-fc750a-ruptair-magnetic-power-circuit-breaker-and-auxiliary-equipment-stored-energy-operator",
+        "to": "type-f-movable-portion-fr-500a-fc750a-ruptair-magnetic-power-circuit-breaker-and-auxiliary-equipment-stored-energy-operator",
+        "title": "Type F Movable Portion FR 500A FC750A Ruptair Magnetic Power Circuit Breaker and Auxiliary Equipment Stored Energy Operator"
+      },
+      {
+        "from": "type-quotfquot-movable-portion-mc-750100-ruptair-magnetic-power-circuit-breaker-and-auxiliary-equipment",
+        "to": "type-f-movable-portion-mc-750100-ruptair-magnetic-power-circuit-breaker-and-auxiliary-equipment",
+        "title": "Type F Movable Portion MC 750100 Ruptair Magnetic Power Circuit Breaker and Auxiliary Equipment"
+      },
+      {
+        "from": "type-quotfquot-movable-portion-mc-750a1000a-ruptair-magnetic-power-circuit-breaker-and-auxiliary-equipment",
+        "to": "type-f-movable-portion-mc-750a1000a-ruptair-magnetic-power-circuit-breaker-and-auxiliary-equipment",
+        "title": "Type F Movable Portion MC 750A1000A Ruptair Magnetic Power Circuit Breaker and Auxiliary Equipment"
+      },
+      {
+        "from": "type-quotfquot-moveable-portion-fb-500---fc-750-ruptair-magnetic-power-circuit-breaker-and-auxiliary-equipment-stored-energy-operator",
+        "to": "type-f-moveable-portion-fb-500-fc-750-ruptair-magnetic-power-circuit-breaker-and-auxiliary-equipment-stored-energy-operator",
+        "title": "Type F Moveable Portion FB 500 FC 750 Ruptair Magnetic Power Circuit Breaker and Auxiliary Equipment Stored Energy Operator"
+      },
+      {
+        "from": "type-quothaquot-position-indicator-lamp-type",
+        "to": "type-ha-position-indicator-lamp-type",
+        "title": "Type HA Position Indicator Lamp Type"
+      },
+      {
+        "from": "type-quothdquot-movable-portions-consisting-of-type-am-50c-ruptair-magnetic-verti-lift-breakers-and-auxiliary-equipment",
+        "to": "type-hd-movable-portions-consisting-of-type-am-50c-ruptair-magnetic-verti-lift-breakers-and-auxiliary-equipment",
+        "title": "Type HD Movable Portions Consisting of Type AM 50C Ruptair Magnetic Verti Lift Breakers and Auxiliary Equipment"
+      },
+      {
+        "from": "type-quotlaquot-low-voltage-air-circuit-breakers",
+        "to": "type-la-low-voltage-air-circuit-breakers",
+        "title": "Type LA Low Voltage Air Circuit Breakers"
+      },
+      {
+        "from": "type-quotlrquot-automatic-feeder-voltage-booster-regulator",
+        "to": "type-lr-automatic-feeder-voltage-booster-regulator",
+        "title": "Type LR Automatic Feeder Voltage Booster Regulator"
+      },
+      {
+        "from": "type-quotsgquot-secondary-relay-for-step-voltage-regulators-double-throw-four-pole-mechanically-interlocked-style-no-1059227",
+        "to": "type-sg-secondary-relay-for-step-voltage-regulators-double-throw-four-pole-mechanically-interlocked-style-no-1059227",
+        "title": "Type SG Secondary Relay for Step Voltage Regulators Double Throw Four Pole Mechanically Interlocked Style No 1059227"
+      },
+      {
+        "from": "type-quotsquot-outdoor-condenser-bushing-for-transformers",
+        "to": "type-s-outdoor-condenser-bushing-for-transformers",
+        "title": "Type S Outdoor Condenser Bushing for Transformers"
+      },
+      {
+        "from": "type-quotstaquot-synchronous-motor-field-application-unit",
+        "to": "type-sta-synchronous-motor-field-application-unit",
+        "title": "Type STA Synchronous Motor Field Application Unit"
+      },
+      {
+        "from": "type-quottfquot-no-load-tap-changer",
+        "to": "type-tf-no-load-tap-changer",
+        "title": "Type TF No Load Tap Changer"
+      },
+      {
+        "from": "type-quottjquot-movable-portion-type-mc-150-ruptair-magnetic-power-circuit-breaker-and-auxiliary-equipment",
+        "to": "type-tj-movable-portion-type-mc-150-ruptair-magnetic-power-circuit-breaker-and-auxiliary-equipment",
+        "title": "Type TJ Movable Portion Type MC 150 Ruptair Magnetic Power Circuit Breaker and Auxiliary Equipment"
+      },
+      {
+        "from": "type-quottmquot-movable-portion-type-mb-250-ruptair-magnetic-power-circuit-breaker-and-auxiliary-equipment",
+        "to": "type-tm-movable-portion-type-mb-250-ruptair-magnetic-power-circuit-breaker-and-auxiliary-equipment",
+        "title": "Type TM Movable Portion Type MB 250 Ruptair Magnetic Power Circuit Breaker and Auxiliary Equipment"
+      },
+      {
+        "from": "type-quottmquot-movable-portion-type-mc-250-ruptair-magnetic-power-circuit-breaker-and-auxillary-equipment",
+        "to": "type-tm-movable-portion-type-mc-250-ruptair-magnetic-power-circuit-breaker-and-auxillary-equipment",
+        "title": "Type TM Movable Portion Type MC 250 Ruptair Magnetic Power Circuit Breaker and Auxillary Equipment"
+      },
+      {
+        "from": "type-quottoquot-movable-portion-type-mc-500-ruptair-magnetic-power-circuit-breaker-and-auxiliary-equipment",
+        "to": "type-to-movable-portion-type-mc-500-ruptair-magnetic-power-circuit-breaker-and-auxiliary-equipment",
+        "title": "Type to Movable Portion Type MC 500 Ruptair Magnetic Power Circuit Breaker and Auxiliary Equipment"
+      },
+      {
+        "from": "type-quottrcquot-thermal-relay",
+        "to": "type-trc-thermal-relay",
+        "title": "Type TRC Thermal Relay"
+      },
+      {
+        "from": "type-quotuquot-quotde-ionquot-air-circuit-breaker",
+        "to": "type-u-de-ion-air-circuit-breaker",
+        "title": "Type U De-Ion Air Circuit Breaker"
+      },
+      {
+        "from": "type-u-quotde-ionquot-air-circuit-breaker-600-to-2000-amperes-2500-and-5000-volts-60-cycles-types-25-u-20-25-u-25-50-u-12-50-u-20",
+        "to": "type-u-de-ion-air-circuit-breaker-600-to-2000-amperes-2500-and-5000-volts-60-cycles-types-25-u-20-25-u-25-50-u-12-50-u-20",
+        "title": "Type U De-Ion Air Circuit Breaker 600 to 2000 Amperes 2500 and 5000 Volts 60 Cycles Types 25 U 20 25 U 25 50 U 12 50 U 20"
+      },
+      {
+        "from": "type-u-quotde-ionquot-air-circuit-breakers-600-to-2000-amperes-2500-to-15000-volts-60-cycles",
+        "to": "type-u-de-ion-air-circuit-breakers-600-to-2000-amperes-2500-to-15000-volts-60-cycles",
+        "title": "Type U De-Ion Air Circuit Breakers 600 to 2000 Amperes 2500 to 15000 Volts 60 Cycles"
+      },
+      {
+        "from": "type-u-quotde-ionquot-air-circuit-breakers-60012002000-amperes-15000-volts-60-cycles-3-pole-floor-mounted-with-4quot-saf-solenoid-mechanism-types-150-u-12-and-150-u-22",
+        "to": "type-u-de-ion-air-circuit-breakers-60012002000-amperes-15000-volts-60-cycles-3-pole-floor-mounted-with-4-saf-solenoid-mechanism-types-150-u-12-and-150-u-22",
+        "title": "Type U De-Ion Air Circuit Breakers 60012002000 Amperes 15000 Volts 60 Cycles 3 Pole Floor Mounted with 4\" Saf Solenoid Mechanism Types 150 U 12 and 150 U 22"
+      },
+      {
+        "from": "typequotfquot-ground-andacircmiddottest-device-used-with-15-kvacircmiddotmetal-clad-switchgear-with-515-2t-se-operator",
+        "to": "typetype-f-ground-and-test-device-used-with-15-kv-metal-clad-switchgear-with-515-2t-se-operator",
+        "title": "TypeType F Ground And-test Device Used with 15 Kv-metal Clad Switchgear with 515 2T Se Operator"
+      },
+      {
+        "from": "types-quotgpquot-and-quotgpdquot-size-6-a-c-contactors-2-3-pole-front-or-rear-connected",
+        "to": "types-type-gp-and-type-gpd-size-6-a-c-contactors-2-3-pole-front-or-rear-connected",
+        "title": "Types Type GP and Type GPD Size 6 a C Contactors 2 3 Pole Front or Rear Connected"
+      },
+      {
+        "from": "types-quotsquot-and-quotosquot-condenser-bushings-with-power-factor-testing-terminal",
+        "to": "types-type-s-and-type-os-condenser-bushings-with-power-factor-testing-terminal",
+        "title": "Types Type S and Type OS Condenser Bushings with Power Factor Testing Terminal"
+      },
+      {
+        "from": "types-ttt-and-tts-air-switches-5quot-bolt-circle-69h-kv-and-above",
+        "to": "types-ttt-and-tts-air-switches-5-bolt-circle-69h-kv-and-above",
+        "title": "Types Ttt and Tts Air Switches 5\" Bolt Circle 69H KV and Above"
+      },
+      {
+        "from": "ul-listed-indoor-outdoor-quotgreen-linequot-3-phase-mini-power-center",
+        "to": "ul-listed-indoor-outdoor-green-line-3-phase-mini-power-center",
+        "title": "UL Listed Indoor Outdoor \"Green Line\" 3 Phase Mini Power Center"
+      },
+      {
+        "from": "umqsacirccopy-utilities-management-operating-system",
+        "to": "umqscopy-utilities-management-operating-system",
+        "title": "Umqscopy Utilities Management Operating System"
+      },
+      {
+        "from": "vacpacacircreg-vacuum-switchgear",
+        "to": "vacpac-vacuum-switchgear",
+        "title": "Vacpac® Vacuum Switchgear"
+      },
+      {
+        "from": "voltage-amp-frequency-relay-three-phase-m-0296",
+        "to": "voltage-frequency-relay-three-phase-m-0296",
+        "title": "Voltage & Frequency Relay Three Phase M 0296"
+      },
+      {
+        "from": "westinghouse-description-operation-maintence-instructions-quotowquot-transformer-cooling-equipment",
+        "to": "westinghouse-description-operation-maintence-instructions-type-ow-transformer-cooling-equipment",
+        "title": "Westinghouse Description Operation Maintence Instructions Type OW Transformer Cooling Equipment"
+      },
+      {
+        "from": "westinghouse-type-quotdquot-gear-unit",
+        "to": "westinghouse-type-d-gear-unit",
+        "title": "Westinghouse Type D Gear Unit"
+      },
+      {
+        "from": "westinghouse-type-quotpcaquot-capacitor-potential-device",
+        "to": "westinghouse-type-pca-capacitor-potential-device",
+        "title": "Westinghouse Type PCA Capacitor Potential Device"
+      },
+      {
+        "from": "westinghouse-type-quotrlquot-switches-75-through-69-kv-600-and-1200-amperes",
+        "to": "westinghouse-type-rl-switches-7-5-through-69-kv-600-and-1200-amperes",
+        "title": "Westinghouse Type RL Switches 7.5 Through 69 KV 600 and 1200 Amperes"
+      },
+      {
+        "from": "westinghouse-type-quotvquot-switches-75-through-69-kv---600-and-1200-amperes-standard-duty-3quot-bolt-circle-insulators",
+        "to": "westinghouse-type-v-switches-7-5-through-69-kv-600-and-1200-amperes-standard-duty-3-bolt-circle-insulators",
+        "title": "Westinghouse Type V Switches 7.5 Through 69 KV 600 and 1200 Amperes Standard Duty 3\" Bolt Circle Insulators"
+      },
+      {
+        "from": "westinghouse-types-hkbtcu---skbtcu-amp-skbu-relays",
+        "to": "westinghouse-types-hkbtcu-skbtcu-skbu-relays",
+        "title": "Westinghouse Types Hkbtcu Skbtcu & Skbu Relays"
+      }
+    ]
+  }
+}
