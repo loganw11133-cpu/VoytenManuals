@@ -1,26 +1,16 @@
 {
   "generated": "2026-09-11",
   "source": "live <h1> (manual.title) for every slug carrying an HTML-entity remnant",
-  "note": "Slugs are renamed to toSlug(title); every old slug gets a 301 via lib/manual-redirects.ts.",
+  "note": "Batch 1 applied 2026-09-11. Batch 2 regenerated from the DB: the authoritative test is toSlug(title) !== slug, which supersedes the original token heuristic and picks up 16 ampersands it had wrongly excluded.",
   "skipped": [
     {
-      "slug": "application-of-molded-case-circuit-breakers-in-series-with-amp-trap-current-limiters",
-      "title": "Application of Molded Case Circuit Breakers in Series with AMP Trap Current Limiters",
-      "reason": "false-positive-not-corrupt"
-    },
-    {
-      "slug": "multi-amp-protective-relay-test-sets",
-      "title": "Multi AMP Protective Relay Test Sets",
-      "reason": "false-positive-not-corrupt"
+      "slug": "siprotec-7sj602-v35x-annunciations-to-the-serial-system-interface-according-to-iec-60-associated-manual-c53000atildecentiumliquestfrac12iumliquestfrac12g1176atildecentiumliquestfrac12iumliquestfrac12c125",
+      "title": "Siprotec 7SJ602 V35X Annunciations to the Serial System Interface According to IEC 60 Associated Manual C53000centiumliquestfrac12iumliquestfrac12g1176centiumliquestfrac12iumliquestfrac12c125",
+      "reason": "title-still-corrupt"
     },
     {
       "slug": "sfc151d-a-sfc153d-a-static-timeatildeiumliquestfrac12atildeacircmiddotovercurrent-relay",
       "title": "SFC151D a SFC153D a Static Timeiumliquestfrac12-overcurrent Relay",
-      "reason": "title-still-corrupt"
-    },
-    {
-      "slug": "siprotec-7sj602-v35x-annunciations-to-the-serial-system-interface-according-to-iec-60-associated-manual-c53000atildecentiumliquestfrac12iumliquestfrac12g1176atildecentiumliquestfrac12iumliquestfrac12c125",
-      "title": "Siprotec 7SJ602 V35X Annunciations to the Serial System Interface According to IEC 60 Associated Manual C53000centiumliquestfrac12iumliquestfrac12g1176centiumliquestfrac12iumliquestfrac12c125",
       "reason": "title-still-corrupt"
     }
   ],
@@ -489,6 +479,66 @@
     ],
     "2": [
       {
+        "from": "100-ampere-et-eh-frame-circuit-breakers-2-amp-3-pole-15-100-amperes",
+        "to": "100-ampere-et-eh-frame-circuit-breakers-2-3-pole-15-100-amperes",
+        "title": "100 Ampere ET EH Frame Circuit Breakers 2 & 3 Pole 15 100 Amperes"
+      },
+      {
+        "from": "75-amp-15-kv-power-circuit-breakers-type-75hk250-and-500-15hk150250500-and-750",
+        "to": "75-15-kv-power-circuit-breakers-type-75hk250-and-500-15hk150250500-and-750",
+        "title": "75 & 15 KV Power Circuit Breakers Type 75HK250 and 500 15HK150250500 and 750"
+      },
+      {
+        "from": "800-ampere-et-km-frame-circuit-breakers-2-amp-3-pole-250-800-amperes",
+        "to": "800-ampere-et-km-frame-circuit-breakers-2-3-pole-250-800-amperes",
+        "title": "800 Ampere ET KM Frame Circuit Breakers 2 & 3 Pole 250 800 Amperes"
+      },
+      {
+        "from": "abb-auxiliary-signalling-and-tripping-relays-rxma1-rxma-2-rxms-1-rxsf-1-rxme-1-rxme-18-rxmh-2-amp-rxmt-1",
+        "to": "abb-auxiliary-signalling-and-tripping-relays-rxma1-rxma-2-rxms-1-rxsf-1-rxme-1-rxme-18-rxmh-2-rxmt-1",
+        "title": "ABB Auxiliary Signalling and Tripping Relays RXMA1 RXMA 2 RXMS 1 RXSF 1 RXME 1 RXME 18 RXMH 2 & RXMT 1"
+      },
+      {
+        "from": "digitrip-retrofit-system-for-federal-pioneer-25-h-2-amp-h-l-and-5065-h-2-amp-h-l-breakers",
+        "to": "digitrip-retrofit-system-for-federal-pioneer-25-h-2-h-l-and-5065-h-2-h-l-breakers",
+        "title": "Digitrip Retrofit System for Federal Pioneer 25 H 2 & H L and 5065 H 2 & H L Breakers"
+      },
+      {
+        "from": "digitrip-retrofit-system-for-general-electric-ak-22a-15-ak-22a-25-aku-22a-25-ak-33a-25-amp-aku-33a-25-and-higher-ak-25-series-breakers",
+        "to": "digitrip-retrofit-system-for-general-electric-ak-22a-15-ak-22a-25-aku-22a-25-ak-33a-25-aku-33a-25-and-higher-ak-25-series-breakers",
+        "title": "Digitrip Retrofit System for General Electric AK 22A 15 AK 22A 25 AKU 22A 25 AK 33A 25 & AKU 33A 25 and Higher AK 25 Series Breakers"
+      },
+      {
+        "from": "digitrip-rms-510-610-810-amp-910-retrofit-kits-on-power-circuit-breakers",
+        "to": "digitrip-rms-510-610-810-910-retrofit-kits-on-power-circuit-breakers",
+        "title": "Digitrip RMS 510 610 810 & 910 Retrofit Kits on Power Circuit Breakers"
+      },
+      {
+        "from": "directional-ground-distance-relay-type-gcxg51a11-amp-up",
+        "to": "directional-ground-distance-relay-type-gcxg51a11-up",
+        "title": "Directional Ground Distance Relay Type GCXG51A11 & Up"
+      },
+      {
+        "from": "electronic-manual-voltage-control-modules-mvc-112-amp-mvc-236",
+        "to": "electronic-manual-voltage-control-modules-mvc-112-mvc-236",
+        "title": "Electronic Manual Voltage Control Modules MVC 112 & MVC 236"
+      },
+      {
+        "from": "instructions-type-fc-1000b-15-kv-1200---2000---3000-amp-air-magnetic-circuit-breaker-with-stored-energy-operator-type-515-3",
+        "to": "instructions-type-fc-1000b-15-kv-1200-2000-3000-amp-air-magnetic-circuit-breaker-with-stored-energy-operator-type-515-3",
+        "title": "Instructions Type FC 1000B 15 KV 1200 2000 3000 AMP Air Magnetic Circuit Breaker with Stored Energy Operator Type 515 3"
+      },
+      {
+        "from": "instructons-for-the-application-of-digitrip-rms-500600700-amp-800-retrofit-kits-on-power-circuit-breakers",
+        "to": "instructons-for-the-application-of-digitrip-rms-500600700-800-retrofit-kits-on-power-circuit-breakers",
+        "title": "Instructons for the Application of Digitrip RMS 500600700 & 800 Retrofit Kits on Power Circuit Breakers"
+      },
+      {
+        "from": "microversatrip-programmer-for-circuit-breakers-150-4000-amperes-240-480-amp-600v-ac",
+        "to": "microversatrip-programmer-for-circuit-breakers-150-4000-amperes-240-480-600v-ac",
+        "title": "MicroVersaTrip Programmer for Circuit Breakers 150 4000 Amperes 240 480 & 600V AC"
+      },
+      {
         "from": "renewal-parts-pub-for-nema-size-8-non-reversing-amp-reversing-contactors-and-starters",
         "to": "renewal-parts-pub-for-nema-size-8-non-reversing-reversing-contactors-and-starters",
         "title": "Renewal Parts Pub for NEMA Size 8 Non Reversing & Reversing Contactors and Starters"
@@ -584,6 +634,11 @@
         "title": "Suspension Insulators 4-3/8\" to 7-1/2\" Diameter"
       },
       {
+        "from": "switchboard-watthour-meters-510c-----series-in-ft-21-ft-31-ft-32-amp-ft-42-flexitest-cases-types-cb-f-cb-2f-cb-3f-cb-7f-cb-8f-cb-32f-cb-38f",
+        "to": "switchboard-watthour-meters-510c-series-in-ft-21-ft-31-ft-32-ft-42-flexitest-cases-types-cb-f-cb-2f-cb-3f-cb-7f-cb-8f-cb-32f-cb-38f",
+        "title": "Switchboard Watthour Meters 510C Series in FT 21 FT 31 FT 32 & FT 42 Flexitest Cases Types CB F CB 2F CB 3F CB 7F CB 8F CB 32F CB 38F"
+      },
+      {
         "from": "switchgear-acirc-low-voltage",
         "to": "switchgear-low-voltage",
         "title": "Switchgear Low Voltage"
@@ -647,6 +702,11 @@
         "from": "type-dst-2-5kv-amp-15kv-magnetic-air-circuit-breaker",
         "to": "type-dst-2-5kv-15kv-magnetic-air-circuit-breaker",
         "title": "Type DST 2 5KV & 15KV Magnetic Air Circuit Breaker"
+      },
+      {
+        "from": "type-et-5-amp-et-6-indicating-lamp-for-panel-mounting",
+        "to": "type-et-5-et-6-indicating-lamp-for-panel-mounting",
+        "title": "Type ET 5 & ET 6 Indicating Lamp for Panel Mounting"
       },
       {
         "from": "type-f-movable-portion-fb-sooaacircmiddotfcacircmiddot750a-ruptair-magnetic-power-circuit-breaker-and-auxiliary-equipment-stored-energy-operator",
@@ -859,6 +919,11 @@
         "title": "Type U De-Ion Air Circuit Breaker"
       },
       {
+        "from": "type-sdv-2-power-circuit-breaker-15-25-amp-38-kv",
+        "to": "type-sdv-2-power-circuit-breaker-15-25-38-kv",
+        "title": "Type SDV 2 Power Circuit Breaker 15 25 & 38 KV"
+      },
+      {
         "from": "type-u-quotde-ionquot-air-circuit-breaker-600-to-2000-amperes-2500-and-5000-volts-60-cycles-types-25-u-20-25-u-25-50-u-12-50-u-20",
         "to": "type-u-de-ion-air-circuit-breaker-600-to-2000-amperes-2500-and-5000-volts-60-cycles-types-25-u-20-25-u-25-50-u-12-50-u-20",
         "title": "Type U De-Ion Air Circuit Breaker 600 to 2000 Amperes 2500 and 5000 Volts 60 Cycles Types 25 U 20 25 U 25 50 U 12 50 U 20"
@@ -877,6 +942,11 @@
         "from": "typequotfquot-ground-andacircmiddottest-device-used-with-15-kvacircmiddotmetal-clad-switchgear-with-515-2t-se-operator",
         "to": "typetype-f-ground-and-test-device-used-with-15-kv-metal-clad-switchgear-with-515-2t-se-operator",
         "title": "TypeType F Ground And-test Device Used with 15 Kv-metal Clad Switchgear with 515 2T Se Operator"
+      },
+      {
+        "from": "types-clf-3000-amp-clf-4000-low-voltage-ac-fuse-draw-outs-used-with-types-laf-3000a-amp-laf-4000a-low-voltage-ac-power-circuit-breakers",
+        "to": "types-clf-3000-clf-4000-low-voltage-ac-fuse-draw-outs-used-with-types-laf-3000a-laf-4000a-low-voltage-ac-power-circuit-breakers",
+        "title": "Types CLF 3000 & CLF 4000 Low Voltage AC Fuse Draw Outs Used with Types LAF 3000A & LAF 4000A Low Voltage AC Power Circuit Breakers"
       },
       {
         "from": "types-quotgpquot-and-quotgpdquot-size-6-a-c-contactors-2-3-pole-front-or-rear-connected",
