@@ -492,7 +492,10 @@ var ROUTES = [
     body: 'The 38 kV class was segmented off to the VCPW-HD line and is not in the VCP-W instruction book. Note also that 350VCP-W does not exist &mdash; the 38 kV prefix is 380, since the prefix is the maximum kV times ten.' },
   { test: /^(VCPWR|VRSERIES)/, title: 'VCP-WR &mdash; unresolved in Eaton’s own documentation',
     body: 'Eaton titles IB131010EN "Fixed vacuum circuit breakers, VCP-WR" while the same booklet’s body describes a drawout value-added element, and every dealer sells it as a retrofit. That contradiction is inside Eaton’s document, not in your number, so this tool records it rather than resolving it. Elsewhere Eaton lists VCP-WR as a line distinct from VCP-W.' },
-  { test: /^(DHPVR|WVACR|WVAC)$/, title: 'Related mechanism family, different breaker',
+  /* Nameplates carry the voltage prefix and the rating suffix the same way a
+     VCP-W does ("50DHP-VR250"), so match the family inside that shape rather
+     than on its own — anchoring both ends dropped every real number. */
+  { test: /^\d*(DHPVR|WVACR|WVAC)\d*$/, title: 'Related mechanism family, different breaker',
     body: 'DHP-VR, W-VACR and W-VAC share the VCP-W mechanism family and are named alongside it in IB131006EN section 6.9.1, but they are different breakers with their own ratings. Voyten handles all of them.' },
 ];
 

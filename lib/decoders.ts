@@ -445,6 +445,13 @@ const MANUAL_MATCHERS: { slug: string; manufacturers: RegExp; title: RegExp }[] 
   // Deliberately NOT a bare "Type RD" — that also matches the Westinghouse Type
   // RD Line Drop Compensator, which is not a breaker.
   { slug: 'rd', manufacturers: /^(Eaton|Cutler-Hammer|Westinghouse)$/i, title: /\bRDC?[\s-]?frame\b|\bR[\s-]frame\b|\bRD\s*\/\s*RDC\b/i },
+  // The W is load-bearing, and there is deliberately no leading \b: library
+  // titles glue the voltage prefix to the type ("150VCP-W500", "50VCPW-ND250"),
+  // so a word boundary before VCP would miss the whole nameplate-shaped set.
+  // Requiring the W also keeps out the two families this tool does not read —
+  // bare "Type VCP" (the earlier Westinghouse line) and "VacClad-W" / "Type VCP
+  // Medium Voltage Metal Clad Switchgear" (the switchgear, not the element).
+  { slug: 'vcp-w', manufacturers: /^(Eaton|Cutler-Hammer|Westinghouse)$/i, title: /VCP[\s-]?W/i },
   // Bare "MasterPact" is not enough: MasterPact MP and MasterPact MTZ are
   // different generations with different catalog grammar, and this decoder would
   // mis-parse both. Require an explicit NT/NW.
