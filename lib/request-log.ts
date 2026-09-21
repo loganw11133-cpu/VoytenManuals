@@ -15,22 +15,36 @@
  * How it stays cheap: hits accumulate in memory and flush as one batched upsert
  * per interval, not one write per request. The flush is handed to waitUntil, so
  * it resolves after the response has already gone out and never adds latency.
- * Edge instances are short-lived, so a partial final bucket can be lost on
- * instance recycle — this measures the SHAPE of traffic, and should not be
- * quoted as an exact request count.
+ * The interval is short and the first request on a fresh instance flushes at
+ * once, because edge instances are recycled constantly and anything still in
+ * memory when one dies is simply lost. Under load that costs nothing — requests
+ * arrive faster than the interval, so the buffer coalesces and one batch covers
+ * many hits. It is quiet traffic that needs the eager flush.
+ *
+ * Because of that recycling, a partial final bucket can still be lost. This
+ * measures the SHAPE of traffic and should not be quoted as an exact count.
  *
  * Nothing here may ever break a page. Every entry point swallows its own
  * errors; a logging failure must cost a data point, never a response.
  */
 import { createClient } from '@libsql/client/web';
 
-const FLUSH_MS = 60_000;   // flush at most once a minute per edge instance
-const FLUSH_KEYS = 250;    // ...or sooner if the buffer gets wide
+const FLUSH_MS = 5_000;    // at most one flush per 5s per edge instance
+const FLUSH_KEYS = 100;    // ...or sooner if the buffer gets wide
 const MAX_KEYS = 2_000;    // hard ceiling; stop accumulating rather than grow forever
 
 /** key = day|hour|country|ua_class|path_class */
 const buffer = new Map<string, number>();
-let lastFlush = Date.now();
+/**
+ * Deliberately 0, not Date.now(). Edge instances are created and recycled
+ * constantly, and on a quiet site one may serve only a handful of requests
+ * before it goes away. Starting the clock at "now" would give every new
+ * instance a grace period it usually does not outlive, and its counts would
+ * die with it — the log would read empty while traffic was arriving. Starting
+ * at 0 makes the first request on a fresh instance flush immediately, which
+ * bounds the loss to at most one interval of a LIVE instance.
+ */
+let lastFlush = 0;
 let flushing = false;
 
 let client: ReturnType<typeof createClient> | null = null;
