@@ -664,15 +664,19 @@ export default function RLBreakersGuide() {
             </ul>
           </div>
 
+          {/* The line card is a NEW file rather than an overwrite of
+              /rl-breaker-flyer.pdf: Vercel caches static assets by URL, so
+              swapping one in place can keep serving the old bytes for hours.
+              The superseded flyer stays in public/, unlinked. */}
           <div className="mt-6 flex flex-col sm:flex-row gap-3">
             <a
-              href="/rl-breaker-flyer.pdf"
+              href="/voyten-rl-linecard.pdf"
               target="_blank"
               rel="noopener"
               className="flex items-center justify-center gap-2 bg-[#1a1a1a] text-white px-6 py-3 rounded-lg font-bold hover:bg-slate-800 transition-colors"
             >
               <Download size={18} />
-              Download the RL flyer (PDF)
+              Download the RL line card (PDF)
             </a>
             <a
               href="https://www.rlbreakers.com"
