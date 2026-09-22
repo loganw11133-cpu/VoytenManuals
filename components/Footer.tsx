@@ -118,6 +118,7 @@ export default function Footer() {
               <li><Link href="/faq" className="text-slate-400 hover:text-white">FAQ</Link></li>
               <li><Link href="/products/rl-breakers" className="text-slate-400 hover:text-white">RL Breakers &amp; Parts</Link></li>
               <li><Link href="/contact" className="text-slate-400 hover:text-white">Contact / Request a Part</Link></li>
+              <li><Link href="/terms" className="text-slate-400 hover:text-white">Terms of Use</Link></li>
             </ul>
           </div>
 

@@ -1219,6 +1219,30 @@ document.getElementById('catInput').addEventListener('keydown', function(e) {
   </a>
 </nav>
 
+<style>
+.vmnote-use{max-width:960px;margin:8px auto 28px;padding:0 20px;box-sizing:border-box}
+.vmnote-use .vmnote-box{border:1px solid #e5e7eb;background:#f9fafb;border-radius:12px;padding:16px 18px}
+.vmnote-use h2{margin:0 0 6px;font-size:0.8rem;font-weight:700;color:#374151;letter-spacing:0.01em}
+.vmnote-use p{margin:0 0 8px;font-size:0.72rem;line-height:1.6;color:#4b5563}
+.vmnote-use p:last-child{margin-bottom:0}
+@media print{.vmnote-use{page-break-inside:avoid}}
+</style>
+<div class="vmnote-use">
+  <div class="vmnote-box">
+    <h2>About these results</h2>
+    <p>This decoder reads published manufacturer catalog-number conventions and returns the most
+    likely configuration. It is an identification aid, not a specification: numbers get reused and
+    revised, nameplates get mis-stamped, and some factory-fitted options never appear in a type
+    designation at all. Confirm any result against the breaker&rsquo;s own nameplate and the
+    manufacturer&rsquo;s documentation before ordering a part, fitting a replacement, or relying on
+    a rating.</p>
+    <p>Power circuit breakers are hazardous equipment. Installation, testing and maintenance are
+    work for qualified personnel following NFPA 70E and the equipment manufacturer&rsquo;s
+    instructions. This tool is provided as is, without warranty of any kind, and Voyten Electric
+    &amp; Electronics, Inc. accepts no liability for loss, damage or injury arising from reliance on
+    decoded output.</p>
+  </div>
+</div>
 <script src="jspdf.umd.min.js"></script>
 <script src="decoder-pdf.js"></script>
 <script src="decoder-quote.js"></script>

@@ -129,6 +129,12 @@ async function generateStaticAndFilterSitemap(): Promise<MetadataRoute.Sitemap> 
       priority: 0.7,
     },
     {
+      url: `${baseUrl}/terms`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.3,
+    },
+    {
       url: `${baseUrl}/tools`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
