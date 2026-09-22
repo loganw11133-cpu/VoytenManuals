@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Cpu, ArrowRight, WifiOff } from 'lucide-react';
+import { Cpu, ArrowRight, WifiOff, AlertTriangle } from 'lucide-react';
 import { decoders, groupedDecoders as grouped, publicDecoders, SECTION_CROSS_REFS } from '@/lib/decoders';
 
 const SITE = 'https://www.voytenmanuals.com';
@@ -229,6 +229,42 @@ export default function ToolsPage() {
             Open the Offline Kit
             <ArrowRight size={16} />
           </a>
+        </div>
+
+        {/* Use notice. Deliberately set as fine print, not as a warning banner:
+            a red alert box on every visit trains people to skip it, and the
+            operative sentence here is "check it against the nameplate", not
+            "danger". It sits under the offline card rather than inside it so it
+            reads as covering all the decoders, not just the offline copies.
+            NOTE: the offline kit ships these tools as standalone files, so an
+            offline user never loads this page — the same notice belongs in the
+            decoder HTML itself. Not done here. */}
+        <div className="mt-5 bg-slate-50 border border-slate-200 rounded-xl p-5 sm:p-6">
+          <div className="flex gap-3">
+            <AlertTriangle
+              size={18}
+              className="text-slate-500 flex-shrink-0 mt-0.5"
+              aria-hidden="true"
+            />
+            <div className="text-xs leading-relaxed text-slate-600 space-y-2">
+              <p className="font-semibold text-slate-700 text-sm">About these results</p>
+              <p>
+                The decoders read published manufacturer catalog-number conventions and return the
+                most likely configuration. They are an identification aid, not a specification:
+                numbers get reused and revised, nameplates get mis-stamped, and some factory-fitted
+                options never appear in a type designation at all. Confirm any result against the
+                breaker&#39;s own nameplate and the manufacturer&#39;s documentation before ordering a
+                part, fitting a replacement, or relying on a rating.
+              </p>
+              <p>
+                Power circuit breakers are hazardous equipment. Installation, testing and maintenance
+                are work for qualified personnel following NFPA 70E and the equipment
+                manufacturer&#39;s instructions. These tools are provided as is, without warranty of
+                any kind, and Voyten Electric &amp; Electronics, Inc. accepts no liability for loss,
+                damage or injury arising from reliance on decoded output.
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* CTA */}
