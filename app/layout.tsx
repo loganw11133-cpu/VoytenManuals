@@ -248,12 +248,15 @@ export default function RootLayout({
         <meta name="theme-color" content="#dc2626" />
         <meta name="geo.region" content="US-PA" />
         <meta name="geo.placename" content="Polk, Pennsylvania" />
-        <Script
+        {/* Plain <script>, not next/script: <Script> only injects after hydration, so the
+            org/website JSON-LD never reached the served HTML and crawlers that do not run JS
+            (GPTBot, ClaudeBot, PerplexityBot) saw none of it. GA below stays on <Script>. */}
+        <script
           id="json-ld-org"
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <Script
+        <script
           id="json-ld-website"
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }}
