@@ -11,7 +11,8 @@ export const revalidate = 3600;
 
 const CDN = 'https://cdn4.volusion.store/jhkcv-upqrn/v/vspfiles';
 const IMG_BREAKER_HERO = `${CDN}/assets/images/breaker%20white.png`;
-const IMG_PARTS = `${CDN}/assets/images/white%20background%20parts.png`;
+// Parts overview: an upscale of the original accessories photo, served from public/images.
+const IMG_PARTS = '/images/rl-accessories-parts-2026-09.jpg';
 
 
 // ── SEO Metadata ──
@@ -369,9 +370,9 @@ export default async function RLBreakersPage() {
               <div className="lg:col-span-1 flex justify-center">
                 <Image
                   src={IMG_PARTS}
-                  alt="Voyten Type RL/VRL breaker accessories and renewal parts — technical drawing showing component assemblies"
+                  alt="Voyten Type RL/VRL breaker accessories and renewal parts — trip devices, current sensors, arc chute barriers and control components"
                   width={400}
-                  height={300}
+                  height={223}
                   className="w-full max-w-sm h-auto rounded-lg"
                 />
               </div>
