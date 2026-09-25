@@ -329,6 +329,35 @@ export const decoders: Decoder[] = [
     ],
   },
   {
+    slug: 'sqd-vr',
+    name: 'Type VR',
+    fullName: 'Square D Type VR (Masterclad)',
+    manufacturer: 'Square D',
+    comingSoon: true,
+    description:
+      'In development — a decoder for Square D Type VR medium-voltage vacuum circuit breakers, the drawout breaker in Masterclad metal-clad switchgear. Reads the nameplate catalog number (V5D…) or the VR rating number and returns the full ANSI rated-values set, with close and trip control voltages.',
+    frames: 'Type VR · VAD-3 · Class 6055 Masterclad',
+    ratings: '4.76 kV – 27 kV · 1200A – 4000A',
+    /* Built and routed (/tools/sqd-vr), but not announced. comingSoon keeps
+       sqd-vr out of publicDecoders — no sitemap entry, llms.txt line,
+       ItemList item or manual-page link — and makes the route noindex
+       (lib/decoder-seo.ts). The card stays a placeholder until launch. */
+    example: 'V5DC133YS00',
+    alsoKnownAs: ['Schneider Type VR', 'Square D VR', 'Masterclad VR', 'Class 6055', 'VAD-5', 'VAD-3 (predecessor)'],
+    identifies: [
+      'Nameplate catalog number (V5D…) — rating, continuous current, close and trip control voltages',
+      'VR rating number (VR-05025-12) — voltage class, MVA class, continuous current',
+      'Full ANSI rated values from the 1994 Masterclad catalog, with the later K = 1 rating where it differs',
+      '63 kA, 4000 A and 27 kV ratings from the later Square D data bulletins',
+      'VAD-3 / VacArc predecessor numbers (V3D…, VAD-3-…)',
+    ],
+    // "Type VR" with the Square D facet: unfaceted, the Type VRT-3
+    // disconnect switch outranks the breaker.
+    manualSearch: '/search?q=Type%20VR&manufacturer=Square%20D',
+    manualSearchLabel: 'Square D Type VR instruction bulletins and Masterclad catalogs',
+    faq: [],
+  },
+  {
     slug: 'vcp-w',
     name: 'VCP-W',
     fullName: 'Eaton VCP-W (Cutler-Hammer VCP-W)',

@@ -26,7 +26,9 @@ export function decoderMetadata(d: Decoder): Metadata {
       'obsolete circuit breaker identification',
       'legacy breaker catalog number',
     ],
-    robots: { index: true, follow: true },
+    // A route can exist while its hub card is still "Coming Soon" (built,
+    // not yet announced). Keep it out of the index until the card goes live.
+    robots: d.comingSoon ? { index: false, follow: true } : { index: true, follow: true },
     alternates: { canonical: url },
     openGraph: {
       type: 'website',

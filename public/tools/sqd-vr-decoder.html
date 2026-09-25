@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="description" content="Square D / Schneider Type VR medium-voltage vacuum circuit breaker decoder. Decode a Masterclad VR nameplate catalog number (V5D...) or a VR rating number (VR-05025-12) and get the full ANSI rated-values set from the 1994 Masterclad catalog, with later K = 1 production ratings where they differ.">
+<title>Square D Type VR Vacuum Circuit Breaker Decoder &mdash; Voyten Electric</title>
+<link rel="stylesheet" href="decoder-fonts.css">
+<style>
+:root {
+  --red: #dc2626;
+  --dark-red: #b91c1c;
+  --deep-red: #991b1b;
+  --black: #1a1a1a;
+  --deep-black: #111111;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --white: #ffffff;
+  --green: #16a34a;
+  --green-light: #dcfce7;
+  --blue: #2563eb;
+  --blue-light: #dbeafe;
+  --purple: #7c3aed;
+  --yellow: #ca8a04;
+  --amber-bg: #fffbeb;
+  --amber-border: #f59e0b;
+  --amber-text: #92400e;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--gray-100);
+  color: var(--gray-800);
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+
+.header {
+  background: linear-gradient(135deg, var(--deep-black), var(--black));
+  color: var(--white);
+  padding: 24px 20px 20px;
+  text-align: center;
+  border-bottom: 4px solid var(--red);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+.header h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: 0.5px; }
+.header h1 .accent { color: var(--red); }
+.header .subtitle { font-size: 0.85rem; color: var(--gray-300); margin-top: 4px; }
+.container { max-width: 960px; margin: 0 auto; padding: 16px; }
+
+/* Input Section */
+.input-section {
+  background: var(--white); border-radius: 12px; padding: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 16px;
+  border: 2px solid var(--red);
+}
+.input-section label {
+  display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 6px; color: var(--gray-700);
+}
+.input-section label .opt { font-weight: 400; font-size: 0.78rem; color: var(--gray-400); text-transform: none; letter-spacing: 0; }
+.field-block { margin-bottom: 14px; }
+.field-block:last-of-type { margin-bottom: 0; }
+.input-row { display: flex; gap: 8px; margin-bottom: 6px; }
+.input-row input {
+  flex: 1; padding: 12px 14px; font-size: 16px; font-family: 'IBM Plex Mono', 'Consolas', 'Monaco', monospace;
+  border: 2px solid var(--gray-200); border-radius: 8px; text-transform: uppercase;
+  letter-spacing: 1.5px; -webkit-appearance: none; transition: border-color 0.2s;
+}
+.input-row input:focus { outline: none; border-color: var(--red); }
+.hint { font-size: 0.75rem; color: var(--gray-500); margin-bottom: 2px; }
+
+.btn-row { display: flex; gap: 8px; margin: 14px 0 12px; }
+.btn {
+  padding: 10px 20px; border: none; border-radius: 8px; font-weight: 700;
+  font-size: 0.9rem; cursor: pointer; transition: background 0.2s; touch-action: manipulation;
+}
+.btn-decode { background: var(--red); color: var(--white); flex: 1; }
+.btn-decode:hover { background: var(--dark-red); }
+.btn-clear { background: var(--gray-200); color: var(--gray-700); }
+.btn-clear:hover { background: var(--gray-300); }
+
+.examples { display: flex; flex-wrap: wrap; gap: 6px; }
+.ex-btn {
+  padding: 4px 10px; font-size: 0.72rem; font-family: 'IBM Plex Mono', 'Consolas', monospace;
+  background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 6px;
+  cursor: pointer; transition: all 0.15s; color: var(--gray-700); touch-action: manipulation;
+}
+.ex-btn:hover { background: var(--red); color: var(--white); border-color: var(--red); }
+.ex-group { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gray-400); margin: 10px 0 4px; }
+.ex-group:first-child { margin-top: 0; }
+.ex-note { font-size: 0.7rem; color: var(--gray-500); line-height: 1.45; margin: 0 0 8px; }
+.ex-note + .ex-group { margin-top: 0; }
+.examples + .ex-note { margin: 6px 0 4px; }
+
+/* Compact hover-reveal examples */
+.ex-hover { position: relative; display: inline-block; margin-top: 4px; }
+.ex-hover__trigger {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.4px; text-transform: uppercase;
+  color: var(--gray-500); cursor: pointer; user-select: none;
+  background: var(--gray-100);
+  border: 1px solid var(--gray-300); border-radius: 6px; padding: 4px 10px;
+  transition: color .15s, border-color .15s;
+}
+.ex-hover__trigger::after { content: "\25BE"; font-size: 0.6rem; opacity: .7; }
+.ex-hover:hover .ex-hover__trigger,
+.ex-hover:focus-within .ex-hover__trigger { color: var(--red); border-color: var(--red); }
+.ex-hover__panel {
+  position: absolute; z-index: 50; top: calc(100% + 6px); left: 0;
+  display: none; width: min(94vw, 540px);
+  max-height: min(70vh, 520px); overflow-y: auto;
+  padding: 12px 14px 10px;
+  background: #fff; border: 1px solid var(--gray-200); border-radius: 10px;
+  box-shadow: 0 12px 34px rgba(0,0,0,.14);
+}
+.ex-hover:hover .ex-hover__panel,
+.ex-hover:focus-within .ex-hover__panel { display: block; }
+
+/* Style-number breakdown. VCP-W has no per-character grammar, so this is a
+   two-segment split (7-digit base + 3-character control-voltage suffix)
+   rather than the position map the low-voltage decoders draw. */
+.stylemap { display: flex; gap: 10px; flex-wrap: wrap; margin: 16px 0; }
+.seg {
+  flex: 1 1 200px; background: var(--white); border: 2px solid var(--gray-200);
+  border-radius: 10px; padding: 10px 14px;
+}
+.seg.known { border-color: var(--black); }
+.seg.unknown { border-color: var(--amber-border); background: var(--amber-bg); }
+.seg__chars {
+  font-family: 'IBM Plex Mono', 'Consolas', monospace; font-size: 1.15rem;
+  font-weight: 700; letter-spacing: 3px; color: var(--gray-800);
+}
+.seg__label { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--gray-400); margin-bottom: 3px; }
+.seg__val { font-size: 0.78rem; color: var(--gray-600); margin-top: 4px; }
+
+/* Result Cards */
+.results { display: none; }
+.results.visible { display: block; }
+.card {
+  background: var(--white); border-radius: 12px; padding: 16px;
+  margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  border-left: 4px solid var(--gray-200);
+}
+.card h3 {
+  font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--gray-500); margin-bottom: 8px;
+}
+.field { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--gray-100); gap: 12px; }
+.field:last-child { border-bottom: none; }
+.field-label { font-size: 0.8rem; color: var(--gray-500); }
+.field-value { font-size: 0.8rem; font-weight: 600; color: var(--gray-800); text-align: right; max-width: 62%; }
+.card.valid { border-left-color: var(--red); }
+.card.info { border-left-color: var(--blue); }
+
+.result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: start; }
+@media (max-width: 640px) { .result-grid { grid-template-columns: 1fr; } }
+.result-card {
+  background: var(--white); border-radius: 10px; padding: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-left: 4px solid var(--gray-300);
+}
+.result-card.wide { grid-column: 1 / -1; }
+.result-card.config { border-left-color: var(--red); }
+.result-card.ratings { border-left-color: var(--green); }
+.result-card.parts { border-left-color: var(--purple); }
+.result-card.style { border-left-color: var(--yellow); }
+.result-card.info { border-left-color: var(--blue); }
+.card-title {
+  font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--gray-500); margin-bottom: 8px;
+}
+.card-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 0.85rem; border-bottom: 1px solid var(--gray-100); gap: 12px; }
+.card-row:last-child { border-bottom: none; }
+.card-label { color: var(--gray-500); font-weight: 500; }
+.card-value { font-weight: 600; color: var(--gray-800); text-align: right; max-width: 62%; }
+.card-value.mono { font-family: 'IBM Plex Mono', 'Consolas', monospace; letter-spacing: 0.5px; }
+/* Collapsible card. Used for the interrupter tables, which can run to a dozen
+   rows and otherwise bury the ratings under a wall of part numbers. Built on
+   <details> so it needs no JS and stays keyboard accessible. The rows remain in
+   the DOM while collapsed, so the PDF export and the quote payload still read
+   them — collapsing is presentation only. */
+.collapse summary {
+  list-style: none; cursor: pointer; display: flex; align-items: baseline;
+  gap: 8px; flex-wrap: wrap;
+}
+.collapse summary::-webkit-details-marker { display: none; }
+.collapse summary::after {
+  content: "▸"; margin-left: auto; color: var(--gray-400);
+  font-size: 0.85rem; transition: transform .15s;
+}
+.collapse[open] summary::after { transform: rotate(90deg); }
+.collapse summary:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; border-radius: 4px; }
+.collapse summary .card-title { margin-bottom: 0; }
+.collapse__hint { font-size: 0.7rem; color: var(--gray-500); font-weight: 500; }
+.collapse[open] .collapse__hint { color: var(--gray-400); }
+.collapse__body { margin-top: 10px; }
+.card-note { font-size: 0.72rem; color: var(--gray-500); margin-top: 8px; line-height: 1.45; }
+
+/* Corrected-source notice. Used wherever the tool prints a value that differs
+   from what the instruction book prints, so the difference is never silent. */
+.correction {
+  margin-top: 10px; padding: 10px 12px; border-radius: 8px;
+  background: var(--amber-bg); border: 1px solid var(--amber-border);
+  font-size: 0.74rem; line-height: 1.5; color: var(--amber-text);
+}
+.correction strong { color: #78350f; }
+.correction .printed {
+  font-family: 'IBM Plex Mono', 'Consolas', monospace;
+  text-decoration: line-through; opacity: 0.75;
+}
+
+/* Routing card - a recognised type we deliberately do not rate. */
+.route {
+  background: var(--white); border-radius: 12px; padding: 18px;
+  margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  border-left: 4px solid var(--blue);
+}
+.route h3 { font-size: 0.95rem; color: var(--gray-800); margin-bottom: 6px; }
+.route p { font-size: 0.82rem; color: var(--gray-600); line-height: 1.55; margin-bottom: 8px; }
+.route a { color: var(--red); font-weight: 600; text-decoration: none; }
+.route a:hover { text-decoration: underline; }
+.route .tel { font-weight: 700; }
+
+/* Summary banner */
+.summary-banner {
+  background: linear-gradient(135deg, var(--deep-black), var(--black));
+  color: var(--white); border-radius: 12px;
+  padding: 20px; margin-bottom: 16px; border-left: 5px solid var(--red);
+}
+.summary-banner .headline { font-size: 1.15rem; font-weight: 700; margin-bottom: 6px; }
+.summary-banner .catalog-fmt { font-family: 'IBM Plex Mono', 'Consolas', monospace; font-size: 0.85rem; color: var(--gray-300); letter-spacing: 2px; margin-bottom: 12px; }
+.summary-banner .basis {
+  display: inline-block; font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.6px; padding: 3px 9px; border-radius: 999px;
+  background: rgba(255,255,255,0.14); color: var(--white); margin-right: 6px;
+}
+
+.btn-copy {
+  padding: 8px 20px; border: 2px solid var(--gray-200); border-radius: 8px;
+  background: var(--white); color: var(--gray-700); font-weight: 600; font-size: 0.8rem;
+  cursor: pointer; transition: all 0.2s;
+}
+.btn-copy:hover { background: var(--gray-200); }
+.btn-copy.copied { background: var(--green-light); border-color: var(--green); color: var(--green); }
+.btn-pdf {
+  padding: 8px 20px; border: 2px solid var(--red); border-radius: 8px;
+  background: var(--white); color: var(--red); font-weight: 600; font-size: 0.8rem;
+  cursor: pointer; transition: all 0.2s;
+}
+.btn-pdf:hover { background: var(--red); color: var(--white); }
+.btn-quote {
+  padding: 8px 20px; border: 2px solid var(--red); border-radius: 8px;
+  background: var(--red); color: var(--white); font-weight: 700; font-size: 0.8rem;
+  cursor: pointer; transition: all 0.2s;
+}
+.btn-quote:hover { background: #b91c1c; border-color: #b91c1c; }
+
+.error {
+  background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px;
+  padding: 12px 16px; margin-bottom: 12px; display: none;
+}
+.error.visible { display: block; }
+.error-title { font-weight: 700; color: #991b1b; font-size: 0.85rem; margin-bottom: 2px; }
+.error-text { font-size: 0.8rem; color: #b91c1c; }
+.error-hint { font-size: 0.75rem; color: var(--gray-500); margin-top: 6px; }
+
+.note-box { font-size: 0.75rem; color: var(--gray-500); margin-top: 8px; line-height: 1.5; }
+
+.social { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; padding: 18px 16px 0; }
+.social a {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 7px 14px; border-radius: 999px;
+  background: var(--white); border: 1px solid var(--gray-200);
+  font-size: 0.78rem; font-weight: 600; color: var(--gray-700);
+  text-decoration: none; transition: all 0.15s;
+}
+.social a:hover { border-color: var(--gray-400); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.social svg { width: 18px; height: 18px; display: block; }
+
+.footer {
+  text-align: center; padding: 22px 16px 30px; font-size: 0.72rem;
+  color: var(--gray-500); line-height: 1.6;
+}
+
+/* Noscript */
+.ios-notice {
+  max-width: 600px; margin: 40px auto; background: #fffbeb; border: 2px solid #f59e0b;
+  border-radius: 12px; padding: 24px; color: #92400e; font-size: 0.95rem; line-height: 1.6;
+}
+.ios-notice strong { color: #78350f; }
+.ios-notice .steps { margin: 12px 0; padding-left: 20px; }
+.ios-notice .steps li { margin-bottom: 6px; }
+
+@media (max-width: 600px) {
+  .header h1 { font-size: 1.25rem; }
+  .container { padding: 10px; }
+  .field-value { max-width: 58%; }
+}
+</style>
+</head>
+<body>
+
+<noscript>
+<div class="ios-notice">
+  <strong>Interactive Mode Required</strong><br><br>
+  This decoder requires JavaScript to run. If you are viewing this on an iPhone or iPad, the Files app preview does not support interactive content.
+  <ol class="steps">
+    <li>Tap the <strong>Share</strong> button (box with arrow)</li>
+    <li>Select <strong>"Open in Safari"</strong></li>
+    <li>The decoder will be fully interactive in Safari</li>
+  </ol>
+  On Mac: Right-click the file &rarr; Open With &rarr; Safari.<br>
+  On Android: Open with Chrome or any browser.
+</div>
+</noscript>
+
+<div class="header">
+  <h1>Square D <span class="accent">Type VR</span> Decoder</h1>
+  <div class="subtitle">Masterclad Medium Voltage Vacuum Circuit Breaker &mdash; Catalog Number Identification</div>
+</div>
+
+<div class="container">
+  <!-- Input -->
+  <div class="input-section">
+    <div class="field-block">
+      <label>Catalog number <span class="opt">(the &ldquo;CATALOG NO.&rdquo; line on the breaker nameplate)</span></label>
+      <div class="input-row">
+        <input type="text" id="catInput" placeholder="e.g. V5DC133YS00  or  VR-05025-12" maxlength="40" autocomplete="off" autocorrect="off" spellcheck="false">
+      </div>
+      <div class="hint">Enter the nameplate number (V5D&hellip;) or a VR rating number (VR-05025-12) &mdash; spacing and hyphens do not matter.</div>
+      <div class="ex-hover" tabindex="0" role="button" aria-label="Show example catalog numbers">
+        <span class="ex-hover__trigger">Examples</span>
+        <div class="ex-hover__panel">
+          <div class="ex-note">Every nameplate number below was read off a photographed Type VR or VAD-3 nameplate; rating
+            numbers are taken from the Square D documents this tool is built on. None are invented.</div>
+
+          <div class="ex-group">Nameplate catalog numbers (V5D&hellip;)</div>
+          <div class="examples">
+            <button class="ex-btn" onclick="loadEx(this)" title="4.76 kV, 63 kA, 1200 A — nameplate dated 2/26">V5DC133YS00</button>
+            <button class="ex-btn" onclick="loadEx(this)" title="15 kV, 63 kA, 1200 A — nameplate dated 7/14">V5DD133Y000</button>
+            <button class="ex-btn" onclick="loadEx(this)" title="4.76 kV, 250 MVA, 29 kA at K = 1.24 — nameplate dated 9/04">V5D3133YD00</button>
+            <button class="ex-btn" onclick="loadEx(this)" title="15 kV, 750 MVA at K = 1.00 — a 1994 rating number, re-rated; nameplate dated 1/13">V5D7133N000</button>
+            <button class="ex-btn" onclick="loadEx(this)" title="120 Vac close, 250 Vdc trip — nameplate dated 11/15">V5D3154Y000</button>
+            <button class="ex-btn" onclick="loadEx(this)" title="27 kV class — plate reads 29 kV; nameplate dated 5/00">V5D1133YZ00</button>
+          </div>
+
+          <div class="ex-group">VR rating numbers &mdash; 1994 Masterclad catalog</div>
+          <div class="examples">
+            <button class="ex-btn" onclick="loadEx(this)" title="The example in the 1994 Breaker Identification diagram">VR-05025-12</button>
+            <button class="ex-btn" onclick="loadEx(this)" title="15 kV, 500 MVA, K = 1.30">VR-15050-12</button>
+            <button class="ex-btn" onclick="loadEx(this)" title="8.25 kV, 500 MVA — printed twice in the 2022 bulletin with different ratings">VR-08050-20</button>
+          </div>
+
+          <div class="ex-group">Later production &amp; predecessor</div>
+          <div class="examples">
+            <button class="ex-btn" onclick="loadEx(this)" title="27 kV — the middle field is kA, not MVA">VR-27040-12</button>
+            <button class="ex-btn" onclick="loadEx(this)" title="4000 A — published in one table only">VR-15150-40</button>
+            <button class="ex-btn" onclick="loadEx(this)" title="VAD-3, the breaker VR replaced">VAD-3-15050-12</button>
+            <button class="ex-btn" onclick="loadEx(this)" title="VAD-3 / VacArc nameplate number, 240 Vac close — dated 2/93">V3D31A63Y000</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-decode" onclick="decode()">DECODE</button>
+      <button class="btn btn-clear" onclick="clearAll()">CLEAR</button>
+    </div>
+  </div>
+
+  <!-- Catalog-number breakdown -->
+  <div id="styleMap"></div>
+
+  <!-- Error -->
+  <div class="error" id="errorBox">
+    <div class="error-title" id="errorTitle">Not recognised</div>
+    <div class="error-text" id="errorText"></div>
+    <div class="error-hint" id="errorHint"></div>
+  </div>
+
+  <!-- Results -->
+  <div class="results" id="results"></div>
+</div>
+
+<nav class="social" aria-label="Connect with Voyten Electric">
+  <a href="https://share.google/8zeiyPVd68OB1smJW" target="_blank" rel="noopener noreferrer" title="Voyten Electric on Google Business Profile">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <rect x="4" y="11" width="16" height="9" rx="1" fill="#4989F5"/>
+      <path d="M3 11 L4.5 5 H19.5 L21 11 Z" fill="#3367D6"/>
+      <path d="M8 5 L7.2 11 H10 L10.3 5 Z" fill="#5B9BFF"/>
+      <path d="M14 5 L14 11 H16.8 L16 5 Z" fill="#5B9BFF"/>
+      <rect x="10" y="14" width="4" height="6" rx="0.5" fill="#ffffff"/>
+    </svg>
+    Google Business
+  </a>
+  <a href="https://www.linkedin.com/in/voyten-electric-sales-team/" target="_blank" rel="noopener noreferrer" title="Voyten Electric on LinkedIn">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <rect width="24" height="24" rx="4" fill="#0A66C2"/>
+      <path fill="#ffffff" d="M8.34 18.34H5.67V9.75h2.67v8.59zM7 8.58a1.55 1.55 0 1 1 0-3.1 1.55 1.55 0 0 1 0 3.1zM18.34 18.34h-2.67v-4.18c0-1-.02-2.28-1.39-2.28-1.39 0-1.6 1.09-1.6 2.21v4.25h-2.67V9.75h2.56v1.17h.04c.36-.68 1.23-1.39 2.53-1.39 2.7 0 3.2 1.78 3.2 4.09v4.72z"/>
+    </svg>
+    LinkedIn
+  </a>
+  <a href="https://www.ebay.com/str/voytenelectric" target="_blank" rel="noopener noreferrer" title="Voyten Electric eBay Store">
+    <svg viewBox="0 0 84 34" aria-hidden="true" focusable="false">
+      <text x="0" y="27" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" letter-spacing="-1.5">
+        <tspan fill="#E53238">e</tspan><tspan fill="#0064D2">b</tspan><tspan fill="#F5AF02">a</tspan><tspan fill="#86B817">y</tspan>
+      </text>
+    </svg>
+    Store
+  </a>
+</nav>
+
+<div class="footer">
+  Square D Type VR Decoder &mdash; Voyten Electric &amp; Electronics, Inc.<br>
+  Primary ratings from the Square D Masterclad brochure <strong>6055BR9402</strong> (1994), Circuit Breaker Ratings Data Chart.<br>
+  Later K = 1 ratings from data bulletins <strong>6055DB1401</strong> (06/2022) and <strong>6055DB1402</strong> (R03/26); VAD-3 from Engineering Standard <strong>E-52100</strong>.<br>
+  The V5D nameplate-number decode is inferred from Square D test-certificate codes and real nameplates &mdash; Square D did not publish it.<br>
+  All trademarks, brand names, and product names are the property of their respective owners. Not affiliated with or endorsed by any manufacturer listed.
+</div>
+<script>
+var VR = {"_built":"2026-09-25","types":[{"key":"VR0502512","cat":"VR-05025-12","era":"1994","src":"BR9402","mva":250,"nomKv":4.16,"maxKv":4.76,"k":1.24,"minKv":3.85,"amps":1200,"pfKv":19,"bil":60,"iMaxKa":29,"iNomKa":33.2,"iMinKa":36,"asym":1.2,"stKa":36,"stS":3,"clKaRms":58,"clKaCrestFn5":97,"cycles":3,"tba":false},{"key":"VR0502520","cat":"VR-05025-20","era":"1994","src":"BR9402","mva":250,"nomKv":4.16,"maxKv":4.76,"k":1.24,"minKv":3.85,"amps":2000,"pfKv":19,"bil":60,"iMaxKa":29,"iNomKa":33.2,"iMinKa":36,"asym":1.2,"stKa":36,"stS":3,"clKaRms":58,"clKaCrestFn5":97,"cycles":3,"tba":false},{"key":"VR0502530","cat":"VR-05025-30","era":"1994","src":"BR9402","mva":250,"nomKv":4.16,"maxKv":4.76,"k":1.24,"minKv":3.85,"amps":3000,"pfKv":19,"bil":60,"iMaxKa":29,"iNomKa":33.2,"iMinKa":36,"asym":1.2,"stKa":36,"stS":3,"clKaRms":58,"clKaCrestFn5":97,"cycles":3,"tba":true},{"key":"VR0503512","cat":"VR-05035-12","era":"1994","src":"BR9402","mva":350,"nomKv":4.16,"maxKv":4.76,"k":1.19,"minKv":4,"amps":1200,"pfKv":19,"bil":60,"iMaxKa":41,"iNomKa":46.9,"iMinKa":49,"asym":1.2,"stKa":49,"stS":3,"clKaRms":78,"clKaCrestFn5":132,"cycles":3,"tba":false},{"key":"VR0503520","cat":"VR-05035-20","era":"1994","src":"BR9402","mva":350,"nomKv":4.16,"maxKv":4.76,"k":1.19,"minKv":4,"amps":2000,"pfKv":19,"bil":60,"iMaxKa":41,"iNomKa":46.9,"iMinKa":49,"asym":1.2,"stKa":49,"stS":3,"clKaRms":78,"clKaCrestFn5":132,"cycles":3,"tba":false},{"key":"VR0503530","cat":"VR-05035-30","era":"1994","src":"BR9402","mva":350,"nomKv":4.16,"maxKv":4.76,"k":1.19,"minKv":4,"amps":3000,"pfKv":19,"bil":60,"iMaxKa":41,"iNomKa":46.9,"iMinKa":49,"asym":1.2,"stKa":49,"stS":3,"clKaRms":78,"clKaCrestFn5":132,"cycles":3,"tba":true},{"key":"VR0805012","cat":"VR-08050-12","era":"1994","src":"BR9402","mva":500,"nomKv":7.2,"maxKv":8.25,"k":1.25,"minKv":6.6,"amps":1200,"pfKv":36,"bil":95,"iMaxKa":33,"iNomKa":37.8,"iMinKa":41,"asym":1.2,"stKa":41,"stS":3,"clKaRms":66,"clKaCrestFn5":111,"cycles":3,"tba":false},{"key":"VR0805020","cat":"VR-08050-20","era":"1994","src":"BR9402","mva":500,"nomKv":7.2,"maxKv":8.25,"k":1.25,"minKv":6.6,"amps":2000,"pfKv":36,"bil":95,"iMaxKa":33,"iNomKa":37.8,"iMinKa":41,"asym":1.2,"stKa":41,"stS":3,"clKaRms":66,"clKaCrestFn5":111,"cycles":3,"tba":false},{"key":"VR0805030","cat":"VR-08050-30","era":"1994","src":"BR9402","mva":500,"nomKv":7.2,"maxKv":8.25,"k":1.25,"minKv":6.6,"amps":3000,"pfKv":36,"bil":95,"iMaxKa":33,"iNomKa":37.8,"iMinKa":41,"asym":1.2,"stKa":41,"stS":3,"clKaRms":66,"clKaCrestFn5":111,"cycles":3,"tba":true},{"key":"VR1505012","cat":"VR-15050-12","era":"1994","src":"BR9402","mva":500,"nomKv":13.8,"maxKv":15,"k":1.3,"minKv":11.5,"amps":1200,"pfKv":36,"bil":95,"iMaxKa":18,"iNomKa":19.5,"iMinKa":23,"asym":1.2,"stKa":23,"stS":3,"clKaRms":37,"clKaCrestFn5":63,"cycles":3,"tba":false},{"key":"VR1505020","cat":"VR-15050-20","era":"1994","src":"BR9402","mva":500,"nomKv":13.8,"maxKv":15,"k":1.3,"minKv":11.5,"amps":2000,"pfKv":36,"bil":95,"iMaxKa":18,"iNomKa":19.5,"iMinKa":23,"asym":1.2,"stKa":23,"stS":3,"clKaRms":37,"clKaCrestFn5":63,"cycles":3,"tba":false},{"key":"VR1505030","cat":"VR-15050-30","era":"1994","src":"BR9402","mva":500,"nomKv":13.8,"maxKv":15,"k":1.3,"minKv":11.5,"amps":3000,"pfKv":36,"bil":95,"iMaxKa":18,"iNomKa":19.5,"iMinKa":23,"asym":1.2,"stKa":23,"stS":3,"clKaRms":37,"clKaCrestFn5":63,"cycles":3,"tba":true},{"key":"VR1507512","cat":"VR-15075-12","era":"1994","src":"BR9402","mva":750,"nomKv":13.8,"maxKv":15,"k":1.3,"minKv":11.5,"amps":1200,"pfKv":36,"bil":95,"iMaxKa":28,"iNomKa":30.4,"iMinKa":36,"asym":1.2,"stKa":36,"stS":3,"clKaRms":58,"clKaCrestFn5":98,"cycles":3,"tba":false},{"key":"VR1507520","cat":"VR-15075-20","era":"1994","src":"BR9402","mva":750,"nomKv":13.8,"maxKv":15,"k":1.3,"minKv":11.5,"amps":2000,"pfKv":36,"bil":95,"iMaxKa":28,"iNomKa":30.4,"iMinKa":36,"asym":1.2,"stKa":36,"stS":3,"clKaRms":58,"clKaCrestFn5":98,"cycles":3,"tba":false},{"key":"VR1507530","cat":"VR-15075-30","era":"1994","src":"BR9402","mva":750,"nomKv":13.8,"maxKv":15,"k":1.3,"minKv":11.5,"amps":3000,"pfKv":36,"bil":95,"iMaxKa":28,"iNomKa":30.4,"iMinKa":36,"asym":1.2,"stKa":36,"stS":3,"clKaRms":58,"clKaCrestFn5":98,"cycles":3,"tba":true},{"key":"VR1510012","cat":"VR-15100-12","era":"1994","src":"BR9402","mva":1000,"nomKv":13.8,"maxKv":15,"k":1.3,"minKv":11.5,"amps":1200,"pfKv":36,"bil":95,"iMaxKa":37,"iNomKa":40.2,"iMinKa":48,"asym":1.2,"stKa":48,"stS":3,"clKaRms":77,"clKaCrestFn5":130,"cycles":3,"tba":false},{"key":"VR1510020","cat":"VR-15100-20","era":"1994","src":"BR9402","mva":1000,"nomKv":13.8,"maxKv":15,"k":1.3,"minKv":11.5,"amps":2000,"pfKv":36,"bil":95,"iMaxKa":37,"iNomKa":40.2,"iMinKa":48,"asym":1.2,"stKa":48,"stS":3,"clKaRms":77,"clKaCrestFn5":130,"cycles":3,"tba":false},{"key":"VR1510030","cat":"VR-15100-30","era":"1994","src":"BR9402","mva":1000,"nomKv":13.8,"maxKv":15,"k":1.3,"minKv":11.5,"amps":3000,"pfKv":36,"bil":95,"iMaxKa":37,"iNomKa":40.2,"iMinKa":48,"asym":1.2,"stKa":48,"stS":3,"clKaRms":77,"clKaCrestFn5":130,"cycles":3,"tba":true},{"key":"VR0502512","cat":"VR-05025-12","era":"modern","src":"DB1401","mva":250,"nomKv":null,"maxKv":4.76,"k":1,"amps":1200,"pfKv":19,"bil":60,"iMaxKa":40,"clKaPeak":104,"stKa":40,"stS":2,"cycles":3,"mechOps":10000,"row":0},{"key":"VR0502520","cat":"VR-05025-20","era":"modern","src":"DB1401","mva":250,"nomKv":null,"maxKv":4.76,"k":1,"amps":2000,"pfKv":19,"bil":60,"iMaxKa":40,"clKaPeak":104,"stKa":40,"stS":2,"cycles":3,"mechOps":10000,"row":1},{"key":"VR0502530","cat":"VR-05025-30","era":"modern","src":"DB1401","mva":250,"nomKv":null,"maxKv":4.76,"k":1,"amps":3000,"pfKv":19,"bil":60,"iMaxKa":40,"clKaPeak":104,"stKa":40,"stS":2,"cycles":3,"mechOps":5000,"row":2},{"key":"VR0503512","cat":"VR-05035-12","era":"modern","src":"DB1401","mva":350,"nomKv":null,"maxKv":4.76,"k":1,"amps":1200,"pfKv":19,"bil":60,"iMaxKa":50,"clKaPeak":130,"stKa":50,"stS":2,"cycles":3,"mechOps":5000,"row":3},{"key":"VR0503520","cat":"VR-05035-20","era":"modern","src":"DB1401","mva":350,"nomKv":null,"maxKv":4.76,"k":1,"amps":2000,"pfKv":19,"bil":60,"iMaxKa":50,"clKaPeak":130,"stKa":50,"stS":2,"cycles":3,"mechOps":5000,"row":4},{"key":"VR0503530","cat":"VR-05035-30","era":"modern","src":"DB1401","mva":350,"nomKv":null,"maxKv":4.76,"k":1,"amps":3000,"pfKv":19,"bil":60,"iMaxKa":50,"clKaPeak":130,"stKa":50,"stS":2,"cycles":3,"mechOps":5000,"row":5},{"key":"VR0503540","cat":"VR-05035-40","era":"modern","src":"DB1401","mva":350,"nomKv":null,"maxKv":4.76,"k":1,"amps":4000,"pfKv":19,"bil":60,"iMaxKa":50,"clKaPeak":130,"stKa":50,"stS":2,"cycles":3,"mechOps":5000,"row":6,"fan":"4000 A circuit breakers may only be used in Schneider Electric 4000 A Masterclad sections with powered fan cooling systems."},{"key":"VR0505012","cat":"VR-05050-12","era":"modern","src":"DB1401","mva":500,"nomKv":null,"maxKv":4.76,"k":1,"amps":1200,"pfKv":19,"bil":60,"iMaxKa":63,"clKaPeak":164,"stKa":63,"stS":2,"cycles":3,"mechOps":2000,"row":7},{"key":"VR0505020","cat":"VR-05050-20","era":"modern","src":"DB1401","mva":500,"nomKv":null,"maxKv":4.76,"k":1,"amps":2000,"pfKv":19,"bil":60,"iMaxKa":63,"clKaPeak":164,"stKa":63,"stS":2,"cycles":3,"mechOps":2000,"row":8},{"key":"VR0505030","cat":"VR-05050-30","era":"modern","src":"DB1401","mva":500,"nomKv":null,"maxKv":4.76,"k":1,"amps":3000,"pfKv":19,"bil":60,"iMaxKa":63,"clKaPeak":164,"stKa":63,"stS":2,"cycles":3,"mechOps":2000,"row":9},{"key":"VR0505040","cat":"VR-05050-40","era":"modern","src":"DB1401","mva":500,"nomKv":null,"maxKv":4.76,"k":1,"amps":4000,"pfKv":19,"bil":60,"iMaxKa":63,"clKaPeak":164,"stKa":63,"stS":2,"cycles":3,"mechOps":2000,"row":10,"fan":"4000 A circuit breakers may only be used in Schneider Electric 4000 A Masterclad sections with powered fan cooling systems."},{"key":"VR0805012","cat":"VR-08050-12","era":"modern","src":"DB1401","mva":500,"nomKv":null,"maxKv":8.25,"k":1,"amps":1200,"pfKv":36,"bil":60,"iMaxKa":40,"clKaPeak":104,"stKa":40,"stS":2,"cycles":3,"mechOps":10000,"row":11,"d1":true,"d2":true},{"key":"VR0805020","cat":"VR-08050-20","era":"modern","src":"DB1401","mva":500,"nomKv":null,"maxKv":8.25,"k":1,"amps":2000,"pfKv":36,"bil":95,"iMaxKa":40,"clKaPeak":104,"stKa":40,"stS":2,"cycles":3,"mechOps":10000,"row":12,"d1":true},{"key":"VR0805030","cat":"VR-08050-30","era":"modern","src":"DB1401","mva":500,"nomKv":null,"maxKv":8.25,"k":1,"amps":3000,"pfKv":36,"bil":95,"iMaxKa":40,"clKaPeak":104,"stKa":40,"stS":2,"cycles":3,"mechOps":5000,"row":13,"d1":true},{"key":"VR0805012","cat":"VR-08050-12","era":"modern","src":"DB1401","mva":500,"nomKv":null,"maxKv":8.25,"k":1,"amps":1200,"pfKv":36,"bil":95,"iMaxKa":50,"clKaPeak":130,"stKa":50,"stS":2,"cycles":3,"mechOps":5000,"row":14,"d1":true},{"key":"VR0805020","cat":"VR-08050-20","era":"modern","src":"DB1401","mva":500,"nomKv":null,"maxKv":8.25,"k":1,"amps":2000,"pfKv":36,"bil":95,"iMaxKa":50,"clKaPeak":130,"stKa":50,"stS":2,"cycles":3,"mechOps":5000,"row":15,"d1":true},{"key":"VR0805030","cat":"VR-08050-30","era":"modern","src":"DB1401","mva":500,"nomKv":null,"maxKv":8.25,"k":1,"amps":3000,"pfKv":36,"bil":95,"iMaxKa":50,"clKaPeak":130,"stKa":50,"stS":2,"cycles":3,"mechOps":5000,"row":16,"d1":true},{"key":"VR0805040","cat":"VR-08050-40","era":"modern","src":"DB1401","mva":500,"nomKv":null,"maxKv":8.25,"k":1,"amps":4000,"pfKv":36,"bil":95,"iMaxKa":50,"clKaPeak":130,"stKa":50,"stS":2,"cycles":3,"mechOps":5000,"row":17,"fan":"4000 A circuit breakers may only be used in Schneider Electric 4000 A Masterclad sections with powered fan cooling systems."},{"key":"VR1505012","cat":"VR-15050-12","era":"modern","src":"DB1401","mva":500,"nomKv":null,"maxKv":15,"k":1,"amps":1200,"pfKv":36,"bil":95,"iMaxKa":25,"clKaPeak":65,"stKa":25,"stS":2,"cycles":3,"mechOps":10000,"row":18},{"key":"VR1505020","cat":"VR-15050-20","era":"modern","src":"DB1401","mva":500,"nomKv":null,"maxKv":15,"k":1,"amps":2000,"pfKv":36,"bil":95,"iMaxKa":25,"clKaPeak":65,"stKa":25,"stS":2,"cycles":3,"mechOps":10000,"row":19},{"key":"VR1505030","cat":"VR-15050-30","era":"modern","src":"DB1401","mva":500,"nomKv":null,"maxKv":15,"k":1,"amps":3000,"pfKv":36,"bil":95,"iMaxKa":25,"clKaPeak":65,"stKa":25,"stS":2,"cycles":3,"mechOps":5000,"row":20},{"key":"VR1507512","cat":"VR-15075-12","era":"modern","src":"DB1401","mva":750,"nomKv":null,"maxKv":15,"k":1,"amps":1200,"pfKv":36,"bil":95,"iMaxKa":40,"clKaPeak":104,"stKa":40,"stS":2,"cycles":3,"mechOps":10000,"row":21},{"key":"VR1507520","cat":"VR-15075-20","era":"modern","src":"DB1401","mva":750,"nomKv":null,"maxKv":15,"k":1,"amps":2000,"pfKv":36,"bil":95,"iMaxKa":40,"clKaPeak":104,"stKa":40,"stS":2,"cycles":3,"mechOps":10000,"row":22},{"key":"VR1507530","cat":"VR-15075-30","era":"modern","src":"DB1401","mva":750,"nomKv":null,"maxKv":15,"k":1,"amps":3000,"pfKv":36,"bil":95,"iMaxKa":40,"clKaPeak":104,"stKa":40,"stS":2,"cycles":3,"mechOps":5000,"row":23},{"key":"VR1510012","cat":"VR-15100-12","era":"modern","src":"DB1401","mva":1000,"nomKv":null,"maxKv":15,"k":1,"amps":1200,"pfKv":36,"bil":95,"iMaxKa":50,"clKaPeak":130,"stKa":50,"stS":2,"cycles":3,"mechOps":5000,"row":24},{"key":"VR1510020","cat":"VR-15100-20","era":"modern","src":"DB1401","mva":1000,"nomKv":null,"maxKv":15,"k":1,"amps":2000,"pfKv":36,"bil":95,"iMaxKa":50,"clKaPeak":130,"stKa":50,"stS":2,"cycles":3,"mechOps":5000,"row":25},{"key":"VR1510030","cat":"VR-15100-30","era":"modern","src":"DB1401","mva":1000,"nomKv":null,"maxKv":15,"k":1,"amps":3000,"pfKv":36,"bil":95,"iMaxKa":50,"clKaPeak":130,"stKa":50,"stS":2,"cycles":3,"mechOps":5000,"row":26},{"key":"VR1515012","cat":"VR-15150-12","era":"modern","src":"DB1401","mva":1500,"nomKv":null,"maxKv":15,"k":1,"amps":1200,"pfKv":36,"bil":95,"iMaxKa":63,"clKaPeak":164,"stKa":63,"stS":2,"cycles":3,"mechOps":2000,"row":27},{"key":"VR1515020","cat":"VR-15150-20","era":"modern","src":"DB1401","mva":1500,"nomKv":null,"maxKv":15,"k":1,"amps":2000,"pfKv":36,"bil":95,"iMaxKa":63,"clKaPeak":164,"stKa":63,"stS":2,"cycles":3,"mechOps":2000,"row":28},{"key":"VR1515030","cat":"VR-15150-30","era":"modern","src":"DB1401","mva":1500,"nomKv":null,"maxKv":15,"k":1,"amps":3000,"pfKv":36,"bil":95,"iMaxKa":63,"clKaPeak":164,"stKa":63,"stS":2,"cycles":3,"mechOps":2000,"row":29},{"key":"VR2701612","cat":"VR-27016-12","era":"modern","src":"DB1402","mva":750,"maxKv":27,"k":1,"amps":1200,"pfKv":60,"bil":125,"iMaxKa":16,"clKaPeak":43,"stKa":16,"stS":2,"cycles":3,"mechOps":2500,"lbs":625,"kv27":true},{"key":"VR2701620","cat":"VR-27016-20","era":"modern","src":"DB1402","mva":750,"maxKv":27,"k":1,"amps":2000,"pfKv":60,"bil":125,"iMaxKa":16,"clKaPeak":43,"stKa":16,"stS":2,"cycles":3,"mechOps":2500,"lbs":650,"kv27":true},{"key":"VR2702512","cat":"VR-27025-12","era":"modern","src":"DB1402","mva":1250,"maxKv":27,"k":1,"amps":1200,"pfKv":60,"bil":125,"iMaxKa":25,"clKaPeak":68,"stKa":25,"stS":2,"cycles":3,"mechOps":2500,"lbs":625,"kv27":true},{"key":"VR2702520","cat":"VR-27025-20","era":"modern","src":"DB1402","mva":1250,"maxKv":27,"k":1,"amps":2000,"pfKv":60,"bil":125,"iMaxKa":25,"clKaPeak":68,"stKa":25,"stS":2,"cycles":3,"mechOps":2500,"lbs":650,"kv27":true},{"key":"VR2704012","cat":"VR-27040-12","era":"modern","src":"DB1402","mva":2000,"maxKv":27,"k":1,"amps":1200,"pfKv":60,"bil":125,"iMaxKa":40,"clKaPeak":108,"stKa":40,"stS":2,"cycles":3,"mechOps":2500,"lbs":625,"kv27":true},{"key":"VR2704020","cat":"VR-27040-20","era":"modern","src":"DB1402","mva":2000,"maxKv":27,"k":1,"amps":2000,"pfKv":60,"bil":125,"iMaxKa":40,"clKaPeak":108,"stKa":40,"stS":2,"cycles":3,"mechOps":2500,"lbs":650,"kv27":true}],"partial":[{"key":"VR1515040","cat":"VR-15150-40","amps":4000,"iMaxKa":63,"capA":660}],"capBy":{"VR0502512":{"capA":null,"cert":"TV5D32"},"VR0502520":{"capA":null,"cert":"TV5D32"},"VR0502530":{"capA":null,"cert":"TV5D33"},"VR0503512":{"capA":1260,"cert":"TV5D42"},"VR0503520":{"capA":1260,"cert":"TV5D42"},"VR0503530":{"capA":null,"cert":"TV5D43"},"VR0505012":{"capA":660,"cert":"TV5DC2"},"VR0505020":{"capA":660,"cert":"TV5DC2"},"VR0505030":{"capA":660,"cert":"TV5DC3"},"VR0505040":{"capA":660,"cert":"TV5DC4"},"VR1505012":{"capA":660,"cert":"TV5D61"},"VR1505020":{"capA":null,"cert":"TV5D62"},"VR1505030":{"capA":null,"cert":"TV5D63"},"VR1507512":{"capA":null,"cert":"TV5D72"},"VR1507520":{"capA":null,"cert":"TV5D72"},"VR1507530":{"capA":null,"cert":"TV5D73"},"VR1510012":{"capA":1260,"cert":"TV5D82"},"VR1510020":{"capA":1260,"cert":"TV5D82"},"VR1510030":{"capA":null,"cert":"TV5D83"},"VR1515012":{"capA":660,"cert":"TV5DD2"},"VR1515020":{"capA":660,"cert":"TV5DD2"},"VR1515030":{"capA":660,"cert":"TV5DD3"},"VR1515040":{"capA":660,"cert":"TV5DD4"},"VR2701612":{"capA":"620/630","cert":"TV5D92"},"VR2701620":{"capA":"620/630","cert":"TV5D92"},"VR2702512":{"capA":"620/630","cert":"TV5D12"},"VR2702520":{"capA":"620/630","cert":"TV5D12"},"VR2704012":{"capA":"620/630","cert":"TV5D22"},"VR2704020":{"capA":"620/630","cert":"TV5D22"}},"vad3":[{"key":"VAD30502512","cat":"VAD-3-05025-12","internal":"V3D31","maxKv":4.76,"k":1.24,"amps":1200,"iMaxKa":29,"minKv":3.85,"iMinKa":36,"clKaCrest":97,"mva":250},{"key":"VAD30502520","cat":"VAD-3-05025-20","internal":"V3D32","maxKv":4.76,"k":1.24,"amps":2000,"iMaxKa":29,"minKv":3.85,"iMinKa":36,"clKaCrest":97,"mva":250},{"key":"VAD30503512","cat":"VAD-3-05035-12","internal":null,"maxKv":4.76,"k":1.19,"amps":1200,"iMaxKa":41,"minKv":3.85,"iMinKa":49,"clKaCrest":132,"mva":350},{"key":"VAD30503520","cat":"VAD-3-05035-20","internal":null,"maxKv":4.76,"k":1.19,"amps":2000,"iMaxKa":41,"minKv":3.85,"iMinKa":49,"clKaCrest":132,"mva":350},{"key":"VAD30805012","cat":"VAD-3-08050-12","internal":"V3D51","maxKv":8.25,"k":1.25,"amps":1200,"iMaxKa":33,"minKv":6.6,"iMinKa":41,"clKaCrest":111,"mva":500},{"key":"VAD30805020","cat":"VAD-3-08050-20","internal":"V3D52","maxKv":8.25,"k":1.25,"amps":2000,"iMaxKa":33,"minKv":5.5,"iMinKa":41,"clKaCrest":111,"mva":500},{"key":"VAD31505012","cat":"VAD-3-15050-12","internal":"V3D61","maxKv":15,"k":1.3,"amps":1200,"iMaxKa":18,"minKv":11.5,"iMinKa":23,"clKaCrest":62,"mva":500},{"key":"VAD31505020","cat":"VAD-3-15050-20","internal":"V3D62","maxKv":15,"k":1.3,"amps":2000,"iMaxKa":18,"minKv":11.5,"iMinKa":23,"clKaCrest":62,"mva":500},{"key":"VAD31507512","cat":"VAD-3-15075-12","internal":"V3D71","maxKv":15,"k":1.3,"amps":1200,"iMaxKa":28,"minKv":11.5,"iMinKa":36,"clKaCrest":97,"mva":750},{"key":"VAD31507520","cat":"VAD-3-15075-20","internal":"V3D72","maxKv":15,"k":1.3,"amps":2000,"iMaxKa":28,"minKv":11.5,"iMinKa":36,"clKaCrest":97,"mva":750},{"key":"VAD31510012","cat":"VAD-3-15100-12","internal":null,"maxKv":15,"k":1.3,"amps":1200,"iMaxKa":37,"minKv":11.5,"iMinKa":48,"clKaCrest":130,"mva":1000},{"key":"VAD31510020","cat":"VAD-3-15100-20","internal":null,"maxKv":15,"k":1.3,"amps":2000,"iMaxKa":37,"minKv":11.5,"iMinKa":48,"clKaCrest":130,"mva":1000}],"v5d":{"_status":"INFERRED, NOT PUBLISHED - but now checked against 17 real nameplates (15 V5D, 2 V3D) with zero contradictions, 2026-09-25. Evidence per code below; FIELD-EVIDENCE.md holds the table.","_prefix":"V5D = Type VR (VAD-5), as V3D = VAD-3.","rating_code":{"1":"VR-27025","2":"VR-27040","3":"VR-05025","4":"VR-05035","5":"VR-08050","6":"VR-15050","7":"VR-15075","8":"VR-15100","9":"VR-27016","C":"VR-05050","D":"VR-15150","B":"VR-15050"},"rating_code_evidence":{"1":"cert TV5D12 (6055DB1402 p8) + one nameplate (mfd 5/00, 25 kA) - that plate reads 29 kV max / BIL 125 where the bulletin says 27 kV","2":"cert TV5D22 (6055DB1402 p8) only - no nameplate or listing seen","3":"cert TV5D3x + nameplates 1999-2015 (29 kA at K 1.24 through 2004; 40 kA at K 1.00 from 2010)","4":"cert TV5D4x + nameplate 2007 (41 kA, K 1.19)","5":"NO certificate, nameplate or listing - VAD-3 sequence analogy only (V3D5x = 08050)","6":"cert TV5D6x + nameplate 2007 (18 kA, K 1.30)","7":"cert TV5D7x + nameplates 2000 (28 kA, K 1.30) and 2013 (40 kA, K 1.00)","8":"cert TV5D8x + dealer listings (15 kV / 1000 MVA) - no nameplate seen","9":"cert TV5D92 (6055DB1402 p8) only - no nameplate or listing seen","B":"ONE nameplate (mfd 4/13: 15 kV, 500 MVA, 25 kA, K 1.00) - not in any certificate table","C":"cert TV5DCx + Voyten nameplate (mfd 2/26)","D":"cert TV5DDx + nameplate (mfd 7/14)"},"amps_code":{"1":1200,"2":2000,"3":3000,"4":4000},"amps_code_evidence":"1 = 1200 (many plates), 2 = 2000 (3 plates), 3 = 3000 (1 plate); 4 inferred from the TV5Dx4 certificates only","layout":"V5D | rating | amps | close V | trip V | options (Y/N + 0/J/D/Z/X + optional trailing A - undecoded)","later_only":["1","2","9","B","C","D"],"control_voltage":{"_note":"6th and 7th characters share ONE code table (close/charge, then trip). Read from nameplates; no contradictions across 17 plates. 24 Vdc is a published option but its code was never observed.","codes":{"2":{"v":"48 Vdc","close":"38-56 Vdc","trip":"28-56 Vdc","ev":"1 nameplate each position"},"3":{"v":"125 Vdc","close":"100-140 Vdc","trip":"70-140 Vdc","ev":"9 close / 14 trip nameplates"},"4":{"v":"250 Vdc","trip":"140-280 Vdc","ev":"1 trip nameplate; close position from a dealer SKU template only"},"5":{"v":"120 Vac","close":"104-127 Vac","trip":"104-127 Vac","ev":"3 close / 1 trip nameplates"},"6":{"v":"240 Vac","close":"208-254 Vac","ev":"1 VAD-3 close nameplate; no trip-position evidence"}},"weak":{"close":["4","6"],"trip":["6"]}}},"v3d":{"_layout":"V3D | rating | amps | A or - | close V | trip V | options - same values as V5D (nameplates V3D31A63Y000, V3D61A33N000, V3D72-33Y000)","rating_code":{"3":"05025","4":"05035","5":"08050","6":"15050","7":"15075","8":"15100"},"rating_code_evidence":{"3":"E-52100 xref + nameplate","4":"V5D pattern only","5":"E-52100 xref","6":"E-52100 xref + nameplate","7":"E-52100 xref + nameplate","8":"V5D pattern + dealer listing V3D81A33Y000 (15 kV / 1000 MVA)"}},"w94":{"1200":360,"2000":410,"3000":480,"_source":"6055BR9402 PDF p12 (printed p.11), 'Weights' under 36in sections. NOTE: 2014 and 2026 VR nameplates read 800 lb for a 1200 A breaker."}};
+
+/* ============================================================================
+   Square D Type VR decoder.
+
+   Two numbers identify a Type VR, and a real nameplate carries only one of them:
+     - the VR RATING NUMBER (VR-05025-12 = voltage class / MVA class / amps),
+       published in the 1994 Masterclad brochure's Breaker Identification
+       diagram and in every later data bulletin, but NOT stamped on the plate;
+     - the NAMEPLATE CATALOG NUMBER (V5DC133YS00), which is what the
+       "CATALOG NO." field actually shows. Square D never published its
+       grammar. The decode below is inferred from the test-certificate codes in
+       6055DB1401 and the VAD-3 cross-reference in E-52100, and was checked
+       against real nameplates and listings. Each position says how sure it is.
+
+   RATINGS: the 1994 chart is primary (Voyten's decision, 2026-09-25). The
+   same rating number was later re-rated to K = 1 with different values; that
+   later rating is shown collapsed beside the 1994 one, and it is used on its
+   own only where the 1994 chart has no row (63 kA, 4000 A, 27 kV). The K factor
+   on the nameplate says which one a given breaker carries.
+   ============================================================================ */
+
+var TEL = '1-800-458-4001';
+var SITE = 'https://www.voytenmanuals.com';
+var LIB = {
+  ib31: SITE + '/manual/type-vr-vacuum-circuit-breaker-476kv-825kv-and-15kv-1200-and-2000-a-class-6055',
+  ib33: SITE + '/manual/square-d-type-vr-vacuum-circuit-breaker-instruction-bulletin-6055-33',
+  br94: SITE + '/manual/masterclad-medium-voltage-metal-clad-switchgear-with-type-vr-vacuum-circuit-breakers',
+  db1401: SITE + '/manual/square-d-type-vr-medium-voltage-vacuum-circuit-breaker-data-bulletin-5-15kv',
+  db1402: SITE + '/manual/square-d-type-vr-27kv-medium-voltage-vacuum-circuit-breakers-data-bulletin',
+  vad3: SITE + '/manual/technical-data---vacuum-circuit-breaker-vad-3',
+  vad2: SITE + '/search?q=VAD-2&manufacturer=Square%20D',
+  search: SITE + '/search?q=Type%20VR&manufacturer=Square%20D'
+};
+
+function esc(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+  });
+}
+/* Normalised key. 6055DB1402 prints the same 27 kV number both hyphenated and
+   not in one document (VR-27016-12 / VR-2701612), so matching is always done
+   on a stripped key. */
+function K(s) { return String(s || '').toUpperCase().replace(/[^A-Z0-9]/g, ''); }
+
+/* Voltage class and the middle field. THE CENTRAL VR TRAP: on 05/08/15 the
+   middle field is the MVA class / 10; on 27 it is the short-circuit kA. */
+var VCLASS = { '05': 4.76, '08': 8.25, '15': 15, '27': 27 };
+
+/* Control-voltage digits (6th = closing / spring-charge, 7th = trip). Never
+   published by Square D. Both positions share ONE code table, read off 17 real
+   nameplates with no contradiction. A code seen only in the other position is
+   still decoded from the shared table, but says so; an unseen code is shown as
+   unknown rather than guessed. */
+var CV = VR.v5d.control_voltage;
+function cvText(code, pos) {
+  var c = CV.codes[code];
+  if (!c) return null;
+  var weak = CV.weak[pos].indexOf(code) > -1;
+  return c.v + (c[pos] ? ' (plate reads ' + c[pos] + ')' : '') +
+    (weak ? ' &mdash; from the shared code table; not yet seen on a nameplate in this position' : '');
+}
+
+/* ---------------------------------------------------------------- routing */
+var ROUTES = [
+  { test: /^VRT/, title: 'Type VRT is a disconnect switch, not a VR breaker',
+    body: 'Square D Type VRT-3 is an outdoor disconnecting switch. It shares the letters but not the product: it has no vacuum interrupter and no VR rating.' },
+  { test: /^VAD2/, title: 'VAD-2 &mdash; the Series 2 predecessor',
+    body: 'VAD-2 is the earlier Square D vacuum breaker used in Series 2 metal-clad switchgear. Its ratings are not in the documents behind this tool, so they are not estimated here. The <a href="' + LIB.vad2 + '" target="_blank" rel="noopener">VAD-2 manuals are in the library</a>.' },
+  { test: /^(VRSERIES|VCPWR|\d*DHPVR|\d*AMVR|\d*SODHVR|DST2VR)/, title: 'That is an Eaton VR-Series, not a Square D Type VR',
+    body: 'Eaton / Cutler-Hammer VR-Series are vacuum <em>replacement</em> elements that retrofit older air breakers (GE AM, Westinghouse DH, Federal Pacific DST-2, Eaton DHP). The name is shared; the breaker is unrelated to the Square D Type VR. Eaton VCP-W elements decode in our <a href="' + SITE + '/tools/vcp-w" target="_blank" rel="noopener">VCP-W decoder</a>.' },
+  { test: /^(FVR|POWERSUB)/, title: 'Powersub FVR &mdash; a different Square D breaker',
+    body: 'The Powersub FVR is Square D&rsquo;s outdoor substation vacuum breaker (bulletin 6065-10), not the Masterclad Type VR. Its ratings are not decoded here.' },
+  { test: /^FVB/, title: 'VacArc FVB &mdash; a different Square D breaker',
+    body: 'The VacArc FVB / FVBA is a separate Square D vacuum breaker line and is not decoded here.' }
+];
+
+/* ------------------------------------------------------------- rendering */
+function row(label, value, mono) {
+  if (value == null || value === '') return '';
+  return '<div class="card-row"><span class="card-label">' + label + '</span>' +
+         '<span class="card-value' + (mono ? ' mono' : '') + '">' + value + '</span></div>';
+}
+function kv(v) { return v == null ? null : v + ' kV'; }
+function ka(v, q) { return v == null ? null : v + ' kA ' + q; }
+
+function findTypes(key, era) {
+  return VR.types.filter(function (t) { return t.key === key && (!era || t.era === era); });
+}
+
+/* The 1994 chart, as printed. C&L is the momentary rms figure (1.6K); the
+   2.7K crest figure is only given by footnote formula, and is labelled so. */
+function card94(t) {
+  var h = '<div class="result-card ratings wide"><div class="card-title">Rated values &mdash; ' + esc(t.cat) + ' &middot; 1994 catalog</div>';
+  h += row('Nominal three-phase MVA', t.mva + ' MVA');
+  h += row('Nominal voltage', kv(t.nomKv));
+  h += row('Rated maximum voltage', kv(t.maxKv));
+  h += row('Voltage range factor (K)', t.k.toFixed(2));
+  h += row('Rated minimum voltage (max / K)', kv(t.minKv));
+  h += row('Continuous current', t.amps + ' A');
+  h += row('Low-frequency withstand', t.pfKv + ' kV rms');
+  h += row('Impulse withstand (BIL)', t.bil + ' kV crest');
+  h += row('Rated short-circuit current (at max kV)', ka(t.iMaxKa, 'rms sym'));
+  h += row('Interrupting current at nominal kV', ka(t.iNomKa, 'rms sym'));
+  h += row('Max symmetrical interrupting (K &times; I, at min kV)', ka(t.iMinKa, 'rms sym'));
+  h += row('Asymmetrical rating factor', t.asym);
+  h += row('Short-time rating (3 s)', ka(t.stKa, 'rms'));
+  h += row('Closing &amp; latching (momentary, rms)', ka(t.clKaRms, 'rms'));
+  h += row('Closing &amp; latching (crest, by footnote 5)', ka(t.clKaCrestFn5, 'crest'));
+  h += row('Interrupting time', t.cycles + ' cycles');
+  h += '<div class="card-note"><strong>Matching this to your nameplate.</strong> The 1994 chart prints closing &amp; latching as a ' +
+    '<strong>momentary rms</strong> figure (1.6 K &times; I = ' + t.clKaRms + ' kA). Its footnote 5 adds a <strong>crest</strong> figure ' +
+    '(2.7 K &times; I), which the chart does not print per row &mdash; the ' + t.clKaCrestFn5 + ' kA crest above is computed from that ' +
+    'footnote. A plate or document quoting &ldquo;kA crest&rdquo; or &ldquo;peak&rdquo; is the crest figure; an unqualified figure is rms.</div>';
+  if (t.tba) {
+    h += '<div class="correction"><strong>&ldquo;Availability to be announced.&rdquo;</strong> The 1994 chart stars every 3000 A row this ' +
+      'way &mdash; the rating was published before the breaker was offered. 3000 A units built later carry the later (K = 1) rating shown below.</div>';
+  }
+  h += '<div class="card-note">Source: Square D Masterclad brochure 6055BR9402 (1994), Circuit Breaker Ratings Data Chart, printed page 12. ' +
+    'Values are as printed; every row was checked against the chart&rsquo;s own footnote formulas.</div></div>';
+  return h;
+}
+
+/* Later production (6055DB1401 06/2022, 6055DB1402 R03/26). K = 1 throughout;
+   C&L printed as kA PEAK (2.6K on 5-15 kV, 2.7K on 27 kV). */
+function cardModern(t, title) {
+  var h = '';
+  h += row('MVA class (reference only)', t.mva + ' MVA');
+  h += row('Rated maximum voltage', kv(t.maxKv));
+  h += row('Voltage range factor (K)', Number(t.k).toFixed(2));
+  h += row('Continuous current', t.amps + ' A');
+  h += row('Power-frequency withstand', t.pfKv + ' kV rms');
+  h += row('Impulse withstand (BIL)', t.bil + ' kV peak');
+  h += row('Rated short-circuit current', ka(t.iMaxKa, 'rms sym'));
+  h += row('Closing &amp; latching (peak)', ka(t.clKaPeak, 'peak'));
+  h += row('Short-time rating (' + t.stS + ' s)', ka(t.stKa, 'rms'));
+  h += row('Interrupting time', t.cycles + ' cycles');
+  h += row('Mechanical endurance', t.mechOps ? t.mechOps.toLocaleString() + ' no-load operations' : null);
+  var cap = VR.capBy[t.key];
+  if (cap) {
+    h += row('Capacitor switching (C1)', cap.capA ? cap.capA + ' A' : 'not rated for capacitor switching');
+    h += row('Test certificate', esc(cap.cert), true);
+  }
+  if (t.lbs) h += row('Breaker weight', t.lbs + ' lb');
+  if (t.d2) {
+    h += '<div class="correction"><strong>Printed value kept.</strong> 6055DB1401 prints the impulse withstand on this row as ' +
+      '<strong>60 kV</strong>, where every other 8.25 kV row reads 95 kV and the 8.25 kV ANSI class is 95 kV BIL. Shown as printed; ' +
+      'the nameplate governs.</div>';
+  }
+  if (t.fan) h += '<div class="correction"><strong>4000 A.</strong> ' + esc(t.fan) + '</div>';
+  h += '<div class="card-note">Source: ' + (t.src === 'DB1402'
+      ? 'Square D data bulletin 6055DB1402 (R03/26), 27 kV ratings. Closing &amp; latching on this table is 2.7 &times; I peak.'
+      : 'Square D data bulletin 6055DB1401 (06/2022), 5&ndash;15 kV ratings. The bulletin marks the MVA column &ldquo;for reference only&rdquo;; the controlling rating is kA.') +
+    '</div>';
+  return '<div class="result-card ratings wide"><div class="card-title">' + title + '</div>' + h + '</div>';
+}
+
+function laterCard(list, has94) {
+  if (!list.length) return '';
+  var dup = list.length > 1;
+  var inner = '';
+  list.forEach(function (t, i) {
+    inner += cardModern(t, (dup ? 'Printed row ' + (i + 1) + ' of ' + list.length + ' &mdash; ' : '') + esc(t.cat) + ' &middot; ' + t.iMaxKa + ' kA, K = 1');
+  });
+  var d1 = dup ? '<div class="correction"><strong>The catalog number alone does not resolve this rating.</strong> 6055DB1401 prints ' +
+    '<strong>' + esc(list[0].cat) + '</strong> twice, once at ' + list[0].iMaxKa + ' kA and once at ' + list[1].iMaxKa + ' kA. ' +
+    'Both are shown; neither is picked. Read the short-circuit current off the nameplate.</div>' : '';
+  if (!has94) return d1 + inner;
+  return '<div class="result-card info wide"><details class="collapse"><summary><span class="card-title">Later production &mdash; re-rated to K = 1</span>' +
+    '<span class="collapse__hint">' + (dup ? list.length + ' printed ratings' : list[0].iMaxKa + ' kA') + ' &middot; nameplate K = 1.00</span></summary>' +
+    '<div class="collapse__body"><div class="card-note">Square D later re-rated this same rating number to <strong>K = 1</strong> with a higher ' +
+    'short-circuit current. The number did not change, so it cannot tell the two apart &mdash; <strong>the nameplate&rsquo;s ' +
+    '&ldquo;VOLTAGE RANGE FACTOR K&rdquo; line does</strong>. K above 1 (1.19&ndash;1.30): the 1994 values above apply. K = 1.00: these do. ' +
+    'Do not go by the build date: real nameplates show K &gt; 1 breakers still being built in 2007, and K = 1 breakers of the same number from 2010.</div>' +
+    d1 + inner + '</div></details></div>';
+}
+
+function weightCard(t) {
+  if (!t || t.kv27) return '';
+  var w = VR.w94[String(t.amps)];
+  if (!w) return '';
+  return '<div class="result-card wide"><div class="card-title">Breaker weight</div>' +
+    row(t.amps + ' A &mdash; 1994 brochure', w + ' lb') +
+    '<div class="correction"><strong>Check before shipping.</strong> The 1994 brochure lists ' + w + ' lb, but Type VR nameplates ' +
+    'dated 2014 and 2026 read <strong>800 lb</strong> for a 1200 A breaker. The brochure figure is shown as printed; weigh or read the plate ' +
+    'before arranging freight.</div></div>';
+}
+
+function docsCard(era, kv27) {
+  var h = '<div class="result-card wide"><div class="card-title">Documents in the library</div>';
+  if (era === '1994') {
+    h += row('Instruction bulletin (1995)', '<a href="' + LIB.ib31 + '" target="_blank" rel="noopener">6055-31</a>');
+    h += row('Ratings chart (1994)', '<a href="' + LIB.br94 + '" target="_blank" rel="noopener">6055BR9402</a>');
+  }
+  h += row('Instruction bulletin (2012)', '<a href="' + LIB.ib33 + '" target="_blank" rel="noopener">6055-33</a>');
+  h += row(kv27 ? 'Data bulletin, 27 kV' : 'Data bulletin, 5&ndash;15 kV',
+    '<a href="' + (kv27 ? LIB.db1402 : LIB.db1401) + '" target="_blank" rel="noopener">' + (kv27 ? '6055DB1402' : '6055DB1401') + '</a>');
+  if (era === '1994') {
+    h += '<div class="card-note">6055-31 is stamped <strong>PRELIMINARY</strong> on every page (October 1995) and was never superseded in the ' +
+      'library&rsquo;s holdings. Later nameplates cite 6055-33.</div>';
+  }
+  return h + '</div>';
+}
+
+function segMap(segs) {
+  var h = '<div class="stylemap">';
+  segs.forEach(function (s) {
+    h += '<div class="seg ' + (s.ok ? 'known' : 'unknown') + '"><div class="seg__label">' + s.label + '</div>' +
+      '<div class="seg__chars">' + esc(s.chars) + '</div><div class="seg__val">' + s.val + '</div></div>';
+  });
+  return h + '</div>';
+}
+
+function routeCard(title, body, extra) {
+  return '<div class="route"><h3>' + title + '</h3><p>' + body + '</p>' + (extra || '') +
+    '<p>Voyten Electric stocks, remanufactures and supplies parts for obsolete medium-voltage switchgear. ' +
+    'Call <a class="tel" href="tel:' + TEL + '">' + TEL + '</a> or ' +
+    '<a href="' + SITE + '/contact" target="_blank" rel="noopener">request a quote</a>. ' +
+    'You can also <a href="' + LIB.search + '" target="_blank" rel="noopener">search the Type VR manuals</a>.</p></div>';
+}
+
+/* Render everything for one VR rating number. `ctx` carries the V5D decode
+   when the input was a nameplate number. Returns false if nothing is known. */
+function renderRating(key, raw, ctx, laterOnly) {
+  var t94 = findTypes(key, '1994');
+  /* Rating codes that only exist in later production (B, C, D, 1, 2, 9) must
+     never be shown the 1994 values, even where the same rating number had a
+     1994 row - VR-15050 did, but a code-B plate carries the K = 1 rating. */
+  var skipped94 = laterOnly && t94.length > 0;
+  if (laterOnly) t94 = [];
+  var tm = findTypes(key, 'modern');
+  var part = VR.partial.filter(function (p) { return p.key === key; })[0];
+  if (!t94.length && !tm.length && !part) return false;
+
+  var any = t94[0] || tm[0] || part;
+  var kv27 = !!(tm[0] && tm[0].kv27);
+  var html = '<div class="summary-banner"><div class="headline">Square D Type VR &middot; ' + esc(any.cat) + '</div>' +
+    '<div class="catalog-fmt">' + esc(String(raw).toUpperCase()) + '</div><div>' +
+    (t94.length ? '<span class="basis">1994 catalog</span><span class="basis">K = ' + t94[0].k.toFixed(2) + '</span><span class="basis">' + t94[0].mva + ' MVA</span>'
+      : '<span class="basis">Later production</span><span class="basis">K = 1</span>') +
+    '<span class="basis">' + any.amps + ' A</span></div></div>';
+
+  html += '<div class="result-grid">';
+  if (ctx) html += ctx;
+  if (t94.length) {
+    html += card94(t94[0]);
+    html += laterCard(tm, true);
+  } else if (tm.length) {
+    html += '<div class="result-card info wide"><div class="card-title">' + (skipped94 ? 'Later-production code' : 'Not in the 1994 catalog') +
+      '</div><div class="card-note">' +
+      (skipped94 ? 'This nameplate code was only used after ' + esc(any.cat) + ' was re-rated, so the 1994 values for that rating number do not apply. '
+      : kv27 ? 'The 27 kV Type VR was introduced after the 1994 chart. '
+            : 'The 1994 chart has no ' + (any.amps === 4000 ? '4000 A' : any.iMaxKa + ' kA') + ' Type VR. ') +
+      'These are the later-production ratings, all at <strong>K = 1</strong>.' +
+      (kv27 ? ' <strong>On 27 kV the middle field of the rating number is the short-circuit current in kA</strong> (' + esc(any.cat) +
+        ' = ' + any.iMaxKa + ' kA), not the MVA class it is on 4.76&ndash;15 kV.' : '') + '</div></div>';
+    html += laterCard(tm, false);
+  } else {
+    html += '<div class="result-card ratings wide"><div class="card-title">' + esc(part.cat) + ' &mdash; partly published</div>' +
+      row('Continuous current', part.amps + ' A') + row('Rated short-circuit current', ka(part.iMaxKa, 'rms sym')) +
+      row('Capacitor switching (C1)', part.capA ? part.capA + ' A' : null) +
+      '<div class="correction"><strong>No full ratings row.</strong> 6055DB1401 lists ' + esc(part.cat) + ' in its capacitor-switching table ' +
+      '(page 5) but not in its ratings chart (page 3), which ends this class at 3000 A. The values above are the ones that are published; ' +
+      'the rest are deliberately not estimated. Call ' + TEL + ' to confirm this breaker.</div></div>';
+  }
+  html += weightCard(t94[0] || tm[0]);
+  html += docsCard(t94.length ? '1994' : 'modern', kv27);
+  html += '</div>' + actionRow();
+  return html;
+}
+
+/* VR rating-number breakdown. */
+function vrSegs(v, r, a) {
+  var cls = VCLASS[v];
+  var mid = v === '27' ? (+r) + ' kA short-circuit current' : (+r * 10) + ' MVA class';
+  return segMap([
+    { label: 'Type', chars: 'VR', val: 'Square D Type VR', ok: true },
+    { label: 'Voltage class', chars: v, val: cls ? cls + ' kV maximum' : 'not a published class', ok: !!cls },
+    { label: v === '27' ? 'Short circuit (27 kV)' : 'MVA class', chars: r, val: mid, ok: true },
+    { label: 'Continuous current', chars: a, val: (+a * 100) + ' A', ok: /^(12|20|30|40)$/.test(a) }
+  ]);
+}
+
+function v5dSegs(p, mapped) {
+  var ev = VR.v5d.rating_code_evidence[p.rc];
+  var cc = cvText(p.cc, 'close'), tc = cvText(p.tc, 'trip');
+  return segMap([
+    { label: 'Prefix', chars: 'V5D', val: 'Type VR (VAD-5 family)', ok: true },
+    { label: 'Rating', chars: p.rc, val: mapped ? esc(mapped) : 'not identified', ok: !!mapped && p.rc !== '5' && p.rc !== 'B' },
+    { label: 'Continuous current', chars: p.ac, val: VR.v5d.amps_code[p.ac] ? VR.v5d.amps_code[p.ac] + ' A' : 'not identified', ok: !!VR.v5d.amps_code[p.ac] },
+    { label: 'Closing / charging', chars: p.cc || '-', val: cc ? cc : 'not identified', ok: !!cc },
+    { label: 'Trip', chars: p.tc || '-', val: tc ? tc : 'not identified', ok: !!tc },
+    { label: 'Options', chars: p.sfx || '-', val: 'factory options &mdash; no published decode', ok: false }
+  ]);
+}
+
+/* The nameplate number is inferred, not published - say so, per position. */
+function v5dNote(p, mapped) {
+  var rcNote = VR.v5d.rating_code_evidence[p.rc];
+  return '<div class="result-card config wide"><div class="card-title">Nameplate catalog number &mdash; ' + esc(p.raw) + '</div>' +
+    row('Rating number', mapped ? esc(mapped) : 'not identified', true) +
+    row('Continuous current', VR.v5d.amps_code[p.ac] ? VR.v5d.amps_code[p.ac] + ' A' : null) +
+    row('Closing / spring-charge voltage', cvText(p.cc, 'close') || (p.cc ? 'code ' + esc(p.cc) + ' &mdash; not identified' : null)) +
+    row('Trip voltage', cvText(p.tc, 'trip') || (p.tc ? 'code ' + esc(p.tc) + ' &mdash; not identified' : null)) +
+    (p.misS ? '<div class="correction"><strong>Read as V5D.</strong> The number was entered as <strong>VSD</strong>; no Square D breaker number starts VSD, and a stamped 5 is easily read as an S. Decoded as V5D.</div>' : '') +
+    '<div class="card-note"><strong>How this was decoded.</strong> Square D did not publish the meaning of its V5D nameplate numbers. ' +
+    'The rating and current positions are read from the test-certificate codes in data bulletin 6055DB1401 (e.g. VR-05050-12 &rarr; TV5D<strong>C</strong>2) ' +
+    'and the VAD-3 cross-reference in Square D standard E-52100, and were checked against 17 real nameplates without a contradiction. ' +
+    'Evidence for rating code <strong>' + esc(p.rc) + '</strong>: ' + esc(rcNote || 'none') + '. ' +
+    'Control-voltage codes were read off the same nameplates. Always confirm against the plate&rsquo;s own ' +
+    'CONTINUOUS CURRENT, SHORT CIRCUIT CURRENT and coil-voltage lines.</div>' +
+    (p.rc === '5' ? '<div class="correction"><strong>Weakest decode on this tool.</strong> Rating code 5 &rarr; 8.25 kV is inferred only from ' +
+      'the VAD-3 numbering sequence; no certificate, nameplate or listing confirms it. Check the plate&rsquo;s RATED MAXIMUM VOLTAGE before relying on it.</div>' : '') +
+    (p.rc === 'B' ? '<div class="correction"><strong>Seen once.</strong> Rating code B has been read on a single nameplate (April 2013: 15 kV, ' +
+      '500 MVA, 25 kA, K = 1.00) and is in no Square D certificate table, which files VR-15050 under code 6. It is decoded as the later K = 1 ' +
+      'VR-15050 rating that plate carried; confirm against your plate.</div>' : '') +
+    (p.rc === '1' ? '<div class="correction"><strong>Plate and bulletin differ.</strong> A Type VR carrying rating code 1 (made May 2000, 25 kA) ' +
+      'reads <strong>29 kV</strong> rated maximum and 125 kV BIL on its nameplate; data bulletin 6055DB1402 rates VR-27025 at <strong>27 kV</strong>. ' +
+      'Both are shown as found. The nameplate governs.</div>' : '') +
+    '</div>';
+}
+
+/* VAD-3 (E-52100). Same positional grammar; internal V3D numbers are looked up,
+   never computed - four marketing numbers have no internal number at all. */
+function renderVad3(v, raw, p) {
+  var html = '<div class="summary-banner"><div class="headline">Square D VAD-3 &middot; ' + esc(v.cat) + '</div>' +
+    '<div class="catalog-fmt">' + esc(String(raw).toUpperCase()) + '</div><div><span class="basis">Predecessor to Type VR</span>' +
+    '<span class="basis">K = ' + v.k.toFixed(2) + '</span><span class="basis">' + v.amps + ' A</span></div></div><div class="result-grid">' +
+    '<div class="result-card ratings wide"><div class="card-title">Rated values &mdash; ' + esc(v.cat) + '</div>' +
+    row('Internal catalog number', v.internal ? esc(v.internal) : 'none published', !!v.internal) +
+    (p ? row('Closing / spring-charge voltage', cvText(p.cc, 'close') || (p.cc ? 'code ' + esc(p.cc) + ' &mdash; not identified' : null)) +
+         row('Trip voltage', cvText(p.tc, 'trip') || (p.tc ? 'code ' + esc(p.tc) + ' &mdash; not identified' : null)) : '') +
+    row('MVA class (reference)', v.mva + ' MVA') + row('Rated maximum voltage', kv(v.maxKv)) +
+    row('Voltage range factor (K)', v.k.toFixed(2)) + row('Rated minimum voltage', kv(v.minKv)) +
+    row('Continuous current', v.amps + ' A') + row('Rated short-circuit current', ka(v.iMaxKa, 'rms sym')) +
+    row('Max symmetrical interrupting', ka(v.iMinKa, 'rms sym')) + row('Closing &amp; latching', ka(v.clKaCrest, 'crest')) +
+    row('Interrupting time', '3 cycles') +
+    '<div class="card-note">Source: Square D Engineering Standard E-52100 Rev. D, &ldquo;Technical Data, VAD-3&rdquo;. Closing &amp; latching there is ' +
+    '2.7 &times; rated short-circuit current, kA crest. VAD-3 ratings are identical to the 1994 Type VR ratings of the same number. ' +
+    'VAD-3 breakers are also nameplated &ldquo;VacArc&rdquo;.' +
+    (p ? ' The V3D nameplate number uses the same rating, current and control-voltage codes as the Type VR V5D number.' : '') + '</div>' +
+    '<div class="correction"><strong>Hand-corrected source.</strong> The control-voltage page of E-52100 carries hand-written strike-through ' +
+    'corrections on its 250 Vdc rows. Control voltages are therefore not reproduced here; read them off the nameplate.</div></div>' +
+    '<div class="result-card wide"><div class="card-title">Documents in the library</div>' +
+    row('Technical data', '<a href="' + LIB.vad3 + '" target="_blank" rel="noopener">E-52100</a>') + '</div>' +
+    '</div>' + actionRow();
+  return html;
+}
+
+/* ------------------------------------------------------------------ main */
+function showError(title, text, hint) {
+  document.getElementById('errorTitle').innerHTML = title;
+  document.getElementById('errorText').innerHTML = text;
+  document.getElementById('errorHint').innerHTML = hint || '';
+  document.getElementById('errorBox').classList.add('visible');
+}
+function show(html) {
+  var res = document.getElementById('results');
+  res.innerHTML = html;
+  res.classList.add('visible');
+}
+
+function decode() {
+  var raw = document.getElementById('catInput').value.trim();
+  var res = document.getElementById('results');
+  var smap = document.getElementById('styleMap');
+  document.getElementById('errorBox').classList.remove('visible');
+  res.classList.remove('visible');
+  res.innerHTML = '';
+  smap.innerHTML = '';
+  if (!raw) return;
+
+  var key = K(raw);
+  /* "Type VR" / "VAD-5" prefixes are the same breaker. */
+  key = key.replace(/^TYPEVR/, 'VR').replace(/^VAD5/, 'VR').replace(/^SQUARED/, '');
+
+  for (var i = 0; i < ROUTES.length; i++) {
+    if (ROUTES[i].test.test(key)) { show(routeCard(ROUTES[i].title, ROUTES[i].body)); return; }
+  }
+
+  /* 1. VR rating number: VR + 2 + 3 + 2 digits. */
+  var m = key.match(/^VR(\d{2})(\d{3})(\d{2})$/);
+  if (m) {
+    smap.innerHTML = vrSegs(m[1], m[2], m[3]);
+    var h = renderRating(key, raw, null);
+    if (h) { show(h); return; }
+    show(routeCard('VR-' + m[1] + m[2] + '-' + m[3] + ' is not a published Type VR rating',
+      'The number reads as a valid shape, but no Square D document behind this tool lists that combination of voltage class, ' +
+      (m[1] === '27' ? 'short-circuit current' : 'MVA class') + ' and continuous current. It may be misread from the plate &mdash; check the ' +
+      'CATALOG NO. line, which on a real breaker starts V5D, not VR.'));
+    return;
+  }
+
+  /* 2. Nameplate catalog number: V5D + rating + amps + close + trip + options.
+     A 5 misread as S is common enough to appear in a real dealer listing
+     ("VSD3155Y500"), so VSD is accepted and the correction is stated. */
+  var misS = /^VSD[0-9A-Z]/.test(key);
+  if (misS) key = 'V5D' + key.slice(3);
+  var n = key.match(/^V5D([0-9A-Z])([0-9])?([0-9])?([0-9])?([A-Z0-9]*)$/);
+  if (n) {
+    var p = { misS: misS, raw: String(raw).toUpperCase(), rc: n[1], ac: n[2] || '', cc: n[3] || '', tc: n[4] || '', sfx: n[5] || '' };
+    var stem = VR.v5d.rating_code[p.rc];
+    var amps = VR.v5d.amps_code[p.ac];
+    var mapped = stem && amps ? stem + '-' + String(amps / 100) : null;
+    smap.innerHTML = v5dSegs(p, mapped);
+    if (!stem) {
+      show(routeCard('Rating code ' + esc(p.rc) + ' is not identified',
+        'This is a Type VR nameplate number (V5D), but its rating position (&ldquo;' + esc(p.rc) + '&rdquo;) does not match any code confirmed ' +
+        'against a Square D document and a real breaker. Read the RATED MAXIMUM VOLTAGE, SHORT CIRCUIT CURRENT and CONTINUOUS CURRENT lines ' +
+        'off the nameplate, or call with the catalog and serial numbers.'));
+      return;
+    }
+    if (!amps) {
+      show(v5dNote(p, null) + routeCard('Continuous-current code not identified',
+        'The rating position reads <strong>' + esc(stem) + '</strong>, but the current position (&ldquo;' + esc(p.ac || 'missing') + '&rdquo;) is not ' +
+        'a code seen on a real breaker. Read CONTINUOUS CURRENT off the nameplate.'));
+      return;
+    }
+    var h2 = renderRating(K(mapped), raw, v5dNote(p, mapped), VR.v5d.later_only.indexOf(p.rc) > -1);
+    if (h2) { show(h2); return; }
+    show(v5dNote(p, mapped) + routeCard(esc(mapped) + ' is not a published Type VR rating',
+      'The nameplate number decodes to a combination no Square D document behind this tool lists. Check the plate, or call with the catalog and serial numbers.'));
+    return;
+  }
+
+  /* 3. VAD-3 predecessor, marketing or internal number. */
+  var v3 = key.match(/^VAD3(\d{2})(\d{3})(\d{2})$/);
+  /* VAD-3 nameplate number: V3D + rating + amps + (A or -) + close + trip +
+     options - the V5D layout with a separator. The hyphen is already gone from
+     the key, so only the A needs allowing for. */
+  var v3i = key.match(/^V3D(\d)(\d)A?(\d)?(\d)?([A-Z0-9]*)$/);
+  var vad = null, v3p = null;
+  if (v3) vad = VR.vad3.filter(function (x) { return x.key === key; })[0];
+  if (v3i) {
+    v3p = { rc: v3i[1], ac: v3i[2], cc: v3i[3] || '', tc: v3i[4] || '' };
+    var st3 = VR.v3d.rating_code[v3p.rc];
+    var am3 = VR.v5d.amps_code[v3p.ac];
+    if (st3 && am3) vad = VR.vad3.filter(function (x) { return x.key === 'VAD3' + st3 + String(am3 / 100); })[0];
+  }
+  if (vad) { show(renderVad3(vad, raw, v3p)); return; }
+  if (v3 || v3i) {
+    show(routeCard('VAD-3 number not in the published table',
+      'Square D Engineering Standard E-52100 lists twelve VAD-3 ratings, and four of them have no internal V3D number at all. ' +
+      'This one is not among the published entries, so it is not estimated. Read the ratings off the nameplate or call.'));
+    return;
+  }
+
+  showError('Not recognised',
+    'That is not a Type VR nameplate number (V5D&hellip;) or VR rating number (VR-05025-12) in the documents behind this tool.',
+    'On the breaker, the <strong>CATALOG NO.</strong> line reads like <strong>V5DC133YS00</strong>. If the number came off a nameplate and it is not ' +
+    'decoding, call ' + TEL + ' with the catalog number, the serial number and the factory order number.');
+}
+
+function actionRow() {
+  return '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;">' +
+    '<button class="btn-copy" id="btnCopyCat" onclick="copyCatalog()">Copy</button>' +
+    '<button class="btn-pdf" onclick="downloadDecoderPDF()">Download PDF</button>' +
+    '<button class="btn-quote" onclick="openDecoderQuote()">Get a Quote for This Breaker</button>' +
+    '</div>';
+}
+
+function clearAll() {
+  document.getElementById('catInput').value = '';
+  document.getElementById('results').classList.remove('visible');
+  document.getElementById('results').innerHTML = '';
+  document.getElementById('errorBox').classList.remove('visible');
+  document.getElementById('styleMap').innerHTML = '';
+  document.getElementById('catInput').focus();
+}
+function loadEx(btn) { document.getElementById('catInput').value = btn.textContent; decode(); }
+function copyCatalog() {
+  var val = document.getElementById('catInput').value.trim().toUpperCase();
+  if (!val) return;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(val).then(showCopied);
+  } else {
+    var ta = document.createElement('textarea'); ta.value = val; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); showCopied();
+  }
+}
+function showCopied() {
+  var btn = document.getElementById('btnCopyCat'); if (!btn) return;
+  btn.textContent = 'Copied!'; btn.classList.add('copied');
+  setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+}
+document.getElementById('catInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') decode(); });
+</script>
+<style>
+.vmnote-use{max-width:960px;margin:8px auto 28px;padding:0 20px;box-sizing:border-box}
+.vmnote-use .vmnote-box{border:1px solid #e5e7eb;background:#f9fafb;border-radius:12px;padding:16px 18px}
+.vmnote-use h2{margin:0 0 6px;font-size:0.8rem;font-weight:700;color:#374151;letter-spacing:0.01em}
+.vmnote-use p{margin:0 0 8px;font-size:0.72rem;line-height:1.6;color:#4b5563}
+.vmnote-use p:last-child{margin-bottom:0}
+@media print{.vmnote-use{page-break-inside:avoid}}
+</style>
+<div class="vmnote-use">
+  <div class="vmnote-box">
+    <h2>About these results</h2>
+    <p>This decoder reads published manufacturer catalog-number conventions and returns the most
+    likely configuration. It is an identification aid, not a specification: numbers get reused and
+    revised, nameplates get mis-stamped, and some factory-fitted options never appear in a type
+    designation at all. Confirm any result against the breaker&rsquo;s own nameplate and the
+    manufacturer&rsquo;s documentation before ordering a part, fitting a replacement, or relying on
+    a rating.</p>
+    <p>Power circuit breakers are hazardous equipment. Installation, testing and maintenance are
+    work for qualified personnel following NFPA 70E and the equipment manufacturer&rsquo;s
+    instructions. This tool is provided as is, without warranty of any kind, and Voyten Electric
+    &amp; Electronics, Inc. accepts no liability for loss, damage or injury arising from reliance on
+    decoded output.</p>
+  </div>
+</div>
+<script src="jspdf.umd.min.js"></script>
+<script src="decoder-pdf.js"></script>
+<script src="decoder-quote.js"></script>
+</body>
+</html>
