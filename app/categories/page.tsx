@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { BookOpen, Phone, ArrowRight } from 'lucide-react';
+import { Phone, ArrowRight } from 'lucide-react';
 import { getCategories, getTotalManualCount } from '@/lib/manuals-db';
 import type { Metadata } from 'next';
 
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   },
 };
 
-const CATEGORY_META: Record<string, { icon?: string; fallbackIcon?: typeof BookOpen; longDesc: string }> = {
+const CATEGORY_META: Record<string, { icon: string; longDesc: string }> = {
   'Circuit Breakers': { icon: '/icons/circuit-breakers.png', longDesc: 'Air breakers, insulated case breakers, molded case breakers, trip units, retrofit kits, vacuum interrupters, renewal parts, and accessories.' },
   'Relays and Meters': { icon: '/icons/relays-meters.png', longDesc: 'Overcurrent relays, protective relays, metering equipment, and related documentation.' },
   'Motor Controls': { icon: '/icons/motor-controls.png', longDesc: 'Motor control centers, starters, contactors, overloads, and MCC bucket replacement guides.' },
@@ -30,7 +30,7 @@ const CATEGORY_META: Record<string, { icon?: string; fallbackIcon?: typeof BookO
   'Fuses': { icon: '/icons/fuses.png', longDesc: 'Fuse links, fuse holders, fuse catalogs, and rating documentation.' },
   'Transformers': { icon: '/icons/transformers.png', longDesc: 'Dry-type transformers, oil-filled transformers, pad-mounted, and instrument transformers.' },
   'Bus Products': { icon: '/icons/bus-products.png', longDesc: 'Bus duct, busway systems, bus plugs, insulators, and installation manuals.' },
-  'Miscellaneous': { fallbackIcon: BookOpen, longDesc: 'Communications modules, accessories, field testing documentation, and other equipment.' },
+  'Miscellaneous': { icon: '/icons/miscellaneous.png', longDesc: 'Communications modules, accessories, field testing documentation, and other equipment.' },
 };
 
 export const revalidate = 3600;
@@ -73,8 +73,7 @@ export default async function CategoriesPage() {
       <div className="max-w-7xl mx-auto px-4 py-10">
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {categories.map((cat) => {
-            const meta = CATEGORY_META[cat.name] || { fallbackIcon: BookOpen, longDesc: '' };
-            const FallbackIcon = meta.fallbackIcon;
+            const meta = CATEGORY_META[cat.name];
             return (
               <Link
                 key={cat.name}
@@ -82,8 +81,8 @@ export default async function CategoriesPage() {
                 className="group bg-white rounded-xl border border-slate-200 p-6 hover:border-[#1a1a1a]/30 hover:shadow-lg transition-all"
               >
                 <div className="flex items-center justify-between mb-4">
-                  <div className={`rounded-xl flex items-center justify-center overflow-hidden ${meta.icon ? 'w-16 h-16 bg-[#1a1a1a]/5' : 'w-12 h-12 bg-[#1a1a1a]/10'}`}>
-                    {meta.icon ? (
+                  <div className="w-16 h-16 rounded-xl flex items-center justify-center overflow-hidden bg-[#1a1a1a]/5">
+                    {meta && (
                       <Image
                         src={meta.icon}
                         alt={cat.name}
@@ -91,16 +90,14 @@ export default async function CategoriesPage() {
                         height={64}
                         className="w-full h-full object-contain"
                       />
-                    ) : FallbackIcon ? (
-                      <FallbackIcon className="w-6 h-6 text-[#1a1a1a]" />
-                    ) : null}
+                    )}
                   </div>
                   <span className="text-sm font-semibold text-[#1a1a1a] bg-[#1a1a1a]/5 px-3 py-1 rounded-full">
                     {cat.count.toLocaleString()} manuals
                   </span>
                 </div>
                 <h2 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-[#1a1a1a] transition-colors">{cat.name}</h2>
-                <p className="text-slate-500 text-sm">{meta.longDesc}</p>
+                <p className="text-slate-500 text-sm">{meta?.longDesc}</p>
               </Link>
             );
           })}
