@@ -99,9 +99,9 @@ export default async function Home() {
           <div className="mt-2 text-center">
             <Link
               href="/tools"
-              className="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-[#dc2626] transition-colors"
+              className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-[#dc2626] transition-colors"
             >
-              <Cpu size={13} className="flex-shrink-0" />
+              <Cpu size={15} className="flex-shrink-0" />
               Free Breaker Decoder Tools
             </Link>
           </div>
