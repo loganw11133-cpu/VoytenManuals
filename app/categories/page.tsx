@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Phone, ArrowRight } from 'lucide-react';
-import { getCategories, getTotalManualCount } from '@/lib/manuals-db';
+import { getCategories, getTotalManualCount, searchManuals } from '@/lib/manuals-db';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -35,10 +35,17 @@ const CATEGORY_META: Record<string, { icon: string; longDesc: string }> = {
 
 export const revalidate = 3600;
 
+// Wiring diagrams span categories (most sit under Circuit Breakers › RL/LA Drawings),
+// so they get a cross-category search link rather than a subcategory. "diagram" also
+// catches the connection diagrams and schematics that "wiring diagram" misses; the FTS
+// index covers titles and keywords, not the boilerplate descriptions that mention diagrams.
+const WIRING_DIAGRAM_QUERY = 'diagram';
+
 export default async function CategoriesPage() {
-  const [categories, totalCount] = await Promise.all([
+  const [categories, totalCount, wiringDiagrams] = await Promise.all([
     getCategories(),
     getTotalManualCount(),
+    searchManuals({ query: WIRING_DIAGRAM_QUERY, limit: 1 }),
   ]);
 
   const itemListSchema = {
@@ -102,6 +109,20 @@ export default async function CategoriesPage() {
             );
           })}
         </div>
+
+        <Link
+          href={`/search?q=${WIRING_DIAGRAM_QUERY}`}
+          className="group mt-6 flex items-center justify-between gap-4 bg-white rounded-xl border border-slate-200 px-6 py-4 hover:border-[#1a1a1a]/30 hover:shadow-lg transition-all"
+        >
+          <div>
+            <h2 className="text-lg font-bold text-slate-900">Wiring Diagrams</h2>
+            <p className="text-slate-500 text-sm">Wiring, connection and schematic diagrams across every category.</p>
+          </div>
+          <span className="flex items-center gap-2 flex-shrink-0 text-sm font-semibold text-[#1a1a1a]">
+            <span className="bg-[#1a1a1a]/5 px-3 py-1 rounded-full">{wiringDiagrams.total.toLocaleString()} drawings</span>
+            <ArrowRight size={16} className="text-slate-400 group-hover:text-[#1a1a1a] transition-colors" />
+          </span>
+        </Link>
 
         {/* CTA */}
         <div className="mt-12 bg-[#1a1a1a] rounded-2xl p-8 lg:p-10 text-center text-white">
