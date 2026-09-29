@@ -144,7 +144,7 @@ const jsonLd = {
   "name": "Voyten Electric & Electronics, Inc.",
   "alternateName": ["Voyten Electric", "Voyten Manuals"],
   "url": "https://www.voytenmanuals.com",
-  "logo": "https://www.voytenmanuals.com/icon.svg",
+  "logo": "https://www.voytenmanuals.com/voyten-logo.png",
   "description": "Free searchable library of 8,400+ electrical equipment manuals and technical documentation. Backed by Voyten Electric & Electronics, Inc. — a third-generation family owned electrical equipment wholesaler since 1953.",
   "telephone": "+1-800-458-4001",
   "email": "sales@voyten.com",
@@ -244,7 +244,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${plexSans.variable} ${plexMono.variable}`}>
       <head>
-        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <meta name="theme-color" content="#dc2626" />
         <meta name="geo.region" content="US-PA" />
         <meta name="geo.placename" content="Polk, Pennsylvania" />
