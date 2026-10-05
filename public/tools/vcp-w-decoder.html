@@ -255,13 +255,13 @@ body {
 .btn-pdf {
   padding: 8px 20px; border: 2px solid var(--red); border-radius: 8px;
   background: var(--white); color: var(--red); font-weight: 600; font-size: 0.8rem;
-  cursor: pointer; transition: all 0.2s;
+  cursor: pointer; transition: all 0.2s; margin-left: 8px;
 }
 .btn-pdf:hover { background: var(--red); color: var(--white); }
 .btn-quote {
   padding: 8px 20px; border: 2px solid var(--red); border-radius: 8px;
   background: var(--red); color: var(--white); font-weight: 700; font-size: 0.8rem;
-  cursor: pointer; transition: all 0.2s;
+  cursor: pointer; transition: all 0.2s; margin-left: 8px;
 }
 .btn-quote:hover { background: #b91c1c; border-color: #b91c1c; }
 
@@ -827,7 +827,7 @@ function decode() {
       '<span class="basis">' + (t0.basis === 'MVA' ? 'MVA class basis' : 'kA basis') + '</span>' +
       (t0.xc ? '<span class="basis">Extra capability</span>' : '') +
       (matches.length > 1 ? '<span class="basis">' + matches.length + ' tables</span>' : '') +
-      '</div></div>';
+      '</div>' + bannerActions() + '</div>';
 
     if (matches.length > 1) {
       html += '<div class="result-card info wide"><div class="card-title">This designation is published in more than one table</div>' +
@@ -846,7 +846,6 @@ function decode() {
     html += nearMissCard(p);
     html += '</div>';
 
-    html += actionRow();
     res.innerHTML = html;
     res.classList.add('visible');
     return;
@@ -938,7 +937,7 @@ function renderStyle(base, suffix, raw) {
       '<div class="headline">' + esc(s.type) + (s.alt ? ' <span style="opacity:.7;font-weight:400">(' + esc(s.alt) + ')</span>' : '') + '</div>' +
       '<div class="catalog-fmt">' + esc(String(raw).toUpperCase()) + '</div>' +
       '<div><span class="basis">' + s.std + '</span><span class="basis">' + s.amps + ' A</span>' +
-      '<span class="basis">' + s.kv + ' kV</span></div></div>';
+      '<span class="basis">' + s.kv + ' kV</span></div>' + bannerActions() + '</div>';
 
     html += '<div class="result-grid"><div class="result-card config wide">' +
       '<div class="card-title">Style number</div>' +
@@ -961,7 +960,6 @@ function renderStyle(base, suffix, raw) {
     html += weightsCard(inputKeys(s.type));
     html += partsCard(pt, K(s.type));
     html += '</div>';
-    html += actionRow();
   } else {
     html += byDescriptionCard(suffix, base);
     html += actionRow();
@@ -997,11 +995,21 @@ function byDescriptionCard(suffix, base) {
     'call ' + TEL + ' with the style number, the serial and the G.O. number.</div></div>';
 }
 
+/* Copy / Download PDF / Quote sit inside the summary banner, under the catalog
+   number and rating pills -- the same place and markup as every other decoder. */
+function bannerActions() {
+  return '<div style="margin-top:12px;">' +
+    '<button class="btn-copy" id="btnCopyCat" onclick="copyCatalog()">Copy Catalog Number</button>' +
+    ' <button class="btn-pdf" onclick="downloadDecoderPDF()">Download PDF</button>' +
+    ' <button class="btn-quote" onclick="openDecoderQuote()">Get a Quote for This Breaker</button>' +
+    '</div>';
+}
+/* Results with no summary banner (route cards: unrated, non-breaker, part). */
 function actionRow() {
-  return '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;">' +
-    '<button class="btn-copy" id="btnCopyCat" onclick="copyCatalog()">Copy</button>' +
-    '<button class="btn-pdf" onclick="downloadDecoderPDF()">Download PDF</button>' +
-    '<button class="btn-quote" onclick="openDecoderQuote()">Get a Quote for This Breaker</button>' +
+  return '<div style="margin-top:14px;">' +
+    '<button class="btn-copy" id="btnCopyCat" onclick="copyCatalog()">Copy Catalog Number</button>' +
+    ' <button class="btn-pdf" onclick="downloadDecoderPDF()">Download PDF</button>' +
+    ' <button class="btn-quote" onclick="openDecoderQuote()">Get a Quote for This Breaker</button>' +
     '</div>';
 }
 
@@ -1032,7 +1040,7 @@ function copyCatalog() {
 function showCopied() {
   var btn = document.getElementById('btnCopyCat'); if (!btn) return;
   btn.textContent = 'Copied!'; btn.classList.add('copied');
-  setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  setTimeout(function () { btn.textContent = 'Copy Catalog Number'; btn.classList.remove('copied'); }, 2000);
 }
 
 document.getElementById('catInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') decode(); });

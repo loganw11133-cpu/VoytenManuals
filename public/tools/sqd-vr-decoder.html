@@ -286,13 +286,13 @@ body {
 .btn-pdf {
   padding: 8px 20px; border: 2px solid var(--red); border-radius: 8px;
   background: var(--white); color: var(--red); font-weight: 600; font-size: 0.8rem;
-  cursor: pointer; transition: all 0.2s;
+  cursor: pointer; transition: all 0.2s; margin-left: 8px;
 }
 .btn-pdf:hover { background: var(--red); color: var(--white); }
 .btn-quote {
   padding: 8px 20px; border: 2px solid var(--red); border-radius: 8px;
   background: var(--red); color: var(--white); font-weight: 700; font-size: 0.8rem;
-  cursor: pointer; transition: all 0.2s;
+  cursor: pointer; transition: all 0.2s; margin-left: 8px;
 }
 .btn-quote:hover { background: #b91c1c; border-color: #b91c1c; }
 
@@ -749,7 +749,7 @@ function renderRating(key, raw, ctx, laterOnly) {
     (t94.length && !modernFirst ? '<span class="basis">1994 catalog</span><span class="basis">K = ' + t94[0].k.toFixed(2) + '</span><span class="basis">' + t94[0].mva + ' MVA</span>'
       : '<span class="basis">Later production</span><span class="basis">K = 1</span>' + (modernFirst ? '<span class="basis">' + tm[0].iMaxKa + ' kA</span>' : '')) +
     '<span class="basis">' + any.amps + ' A</span>' +
-    (KLINE === 'unsure' ? '' : '<span class="basis">Plate K ' + (KLINE === 'one' ? '1.00' : '&gt; 1') + '</span>') + '</div></div>';
+    (KLINE === 'unsure' ? '' : '<span class="basis">Plate K ' + (KLINE === 'one' ? '1.00' : '&gt; 1') + '</span>') + '</div>' + bannerActions() + '</div>';
 
   html += '<div class="result-grid">';
   if (ctx) html += ctx;
@@ -792,7 +792,7 @@ function renderRating(key, raw, ctx, laterOnly) {
   }
   html += weightCard(t94[0] || tm[0]);
   html += docsCard(t94.length ? '1994' : 'modern', kv27);
-  html += '</div>' + actionRow();
+  html += '</div>';
   return html;
 }
 
@@ -895,7 +895,7 @@ function renderVad(series, v, raw, p) {
   var M = VAD_META[series], c = M.ctl();
   var html = '<div class="summary-banner"><div class="headline">Square D ' + M.name + ' &middot; ' + esc(v.cat) + '</div>' +
     '<div class="catalog-fmt">' + esc(String(raw).toUpperCase()) + '</div><div><span class="basis">Predecessor to Type VR</span>' +
-    '<span class="basis">K = ' + v.k.toFixed(2) + '</span><span class="basis">' + v.amps + ' A</span></div></div><div class="result-grid">' +
+    '<span class="basis">K = ' + v.k.toFixed(2) + '</span><span class="basis">' + v.amps + ' A</span></div>' + bannerActions() + '</div><div class="result-grid">' +
     '<div class="result-card ratings wide"><div class="card-title">Rated values &mdash; ' + esc(v.cat) + '</div>' +
     row('Internal catalog number', v.internal ? esc(v.internal) : 'none published', !!v.internal) +
     (p && series === 'VAD3' ? row('Closing / spring-charge voltage', cvText(p.cc, 'close') || (p.cc ? 'code ' + esc(p.cc) + ' &mdash; not identified' : null)) +
@@ -923,7 +923,7 @@ function renderVad(series, v, raw, p) {
     (series === 'VAD2' ? ' VAD-2 uses different motor and coil parts from VAD-3, and the standard leaves the duration column blank.' : '') + '</div></div>' +
     '<div class="result-card wide"><div class="card-title">Documents in the library</div>' +
     row('Technical data', '<a href="' + M.lib() + '" target="_blank" rel="noopener">' + M.doc.replace(/ Rev\..*$/, '') + '</a>') + '</div>' +
-    '</div>' + actionRow();
+    '</div>';
   return html;
 }
 
@@ -1052,11 +1052,13 @@ function decode() {
     'decoding, call ' + TEL + ' with the catalog number, the serial number and the factory order number.');
 }
 
-function actionRow() {
-  return '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;">' +
-    '<button class="btn-copy" id="btnCopyCat" onclick="copyCatalog()">Copy</button>' +
-    '<button class="btn-pdf" onclick="downloadDecoderPDF()">Download PDF</button>' +
-    '<button class="btn-quote" onclick="openDecoderQuote()">Get a Quote for This Breaker</button>' +
+/* Copy / Download PDF / Quote sit inside the summary banner, under the catalog
+   number and rating pills -- the same place and markup as every other decoder. */
+function bannerActions() {
+  return '<div style="margin-top:12px;">' +
+    '<button class="btn-copy" id="btnCopyCat" onclick="copyCatalog()">Copy Catalog Number</button>' +
+    ' <button class="btn-pdf" onclick="downloadDecoderPDF()">Download PDF</button>' +
+    ' <button class="btn-quote" onclick="openDecoderQuote()">Get a Quote for This Breaker</button>' +
     '</div>';
 }
 
@@ -1083,7 +1085,7 @@ function copyCatalog() {
 function showCopied() {
   var btn = document.getElementById('btnCopyCat'); if (!btn) return;
   btn.textContent = 'Copied!'; btn.classList.add('copied');
-  setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  setTimeout(function () { btn.textContent = 'Copy Catalog Number'; btn.classList.remove('copied'); }, 2000);
 }
 document.getElementById('catInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') decode(); });
 </script>
