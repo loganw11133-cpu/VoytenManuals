@@ -80,6 +80,23 @@ body {
 .input-row input:focus { outline: none; border-color: var(--red); }
 .hint { font-size: 0.75rem; color: var(--gray-500); margin-bottom: 2px; }
 
+/* Plate K-line selector. Codes 3-8 were sold at two ratings under one catalog
+   number (1994 K > 1, later K = 1); no character of the number tells them apart,
+   only the nameplate's VOLTAGE RANGE FACTOR "K" line. Same pill pattern as WL. */
+.std-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+.std-pill {
+  flex: 1 1 150px; text-align: left; cursor: pointer; touch-action: manipulation;
+  padding: 10px 14px; border-radius: 10px; background: var(--gray-50);
+  border: 2px solid var(--gray-200); transition: all 0.15s; font-family: inherit;
+}
+.std-pill:hover { border-color: var(--gray-300); background: var(--white); }
+.std-pill:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
+.std-pill.active { background: var(--black); border-color: var(--black); }
+.std-pill__name { display: block; font-weight: 700; font-size: 0.9rem; color: var(--gray-800); }
+.std-pill__desc { display: block; font-size: 0.72rem; color: var(--gray-500); margin-top: 1px; }
+.std-pill.active .std-pill__name { color: var(--white); }
+.std-pill.active .std-pill__desc { color: var(--gray-300); }
+
 .btn-row { display: flex; gap: 8px; margin: 14px 0 12px; }
 .btn {
   padding: 10px 20px; border: none; border-radius: 8px; font-weight: 700;
@@ -364,6 +381,7 @@ body {
             <button class="ex-btn" onclick="loadEx(this)" title="15 kV, 63 kA, 1200 A — nameplate dated 7/14">V5DD133Y000</button>
             <button class="ex-btn" onclick="loadEx(this)" title="4.76 kV, 250 MVA, 29 kA at K = 1.24 — nameplate dated 9/04">V5D3133YD00</button>
             <button class="ex-btn" onclick="loadEx(this)" title="15 kV, 750 MVA at K = 1.00 — a 1994 rating number, re-rated; nameplate dated 1/13">V5D7133N000</button>
+            <button class="ex-btn" onclick="loadEx(this)" title="15 kV, 2000 A, 40 kA at K = 1.00 — nameplate dated 11/17; set Voltage range factor to 1.00">V5D7233YJ00</button>
             <button class="ex-btn" onclick="loadEx(this)" title="120 Vac close, 250 Vdc trip — nameplate dated 11/15">V5D3154Y000</button>
             <button class="ex-btn" onclick="loadEx(this)" title="27 kV class, per the 2026 bulletin — nameplate dated 5/00">V5D1133YZ00</button>
           </div>
@@ -386,6 +404,25 @@ body {
           </div>
         </div>
       </div>
+    </div>
+
+    <div class="field-block">
+      <label>Voltage range factor <span class="opt">(the &ldquo;VOLTAGE RANGE FACTOR &lsquo;K&rsquo;&rdquo; line on the same nameplate &mdash; optional)</span></label>
+      <div class="std-pills" id="kPills" role="radiogroup" aria-label="Nameplate K line">
+        <button type="button" class="std-pill active" id="kPillUnsure" role="radio" aria-checked="true" onclick="setKLine('unsure')">
+          <span class="std-pill__name">Not sure</span>
+          <span class="std-pill__desc">Shows the 1994 rating first</span>
+        </button>
+        <button type="button" class="std-pill" id="kPillAbove" role="radio" aria-checked="false" onclick="setKLine('above')">
+          <span class="std-pill__name">Above 1</span>
+          <span class="std-pill__desc">1.19 &ndash; 1.30 &middot; original Masterclad rating</span>
+        </button>
+        <button type="button" class="std-pill" id="kPillOne" role="radio" aria-checked="false" onclick="setKLine('one')">
+          <span class="std-pill__name">1.00</span>
+          <span class="std-pill__desc">Later production, re-rated</span>
+        </button>
+      </div>
+      <div class="hint" style="margin-top:6px;">Square D sold the same catalog number at two different ratings, and nothing in the number tells them apart &mdash; only this plate line does. Where a number has just one published rating, this setting is not needed.</div>
     </div>
 
     <div class="btn-row">
@@ -617,8 +654,33 @@ function laterCard(list, has94) {
     '<div class="collapse__body"><div class="card-note">Square D later re-rated this same rating number to <strong>K = 1</strong> with a higher ' +
     'short-circuit current. The number did not change, so it cannot tell the two apart &mdash; <strong>the nameplate&rsquo;s ' +
     '&ldquo;VOLTAGE RANGE FACTOR K&rdquo; line does</strong>. K above 1 (1.19&ndash;1.30): the 1994 values above apply. K = 1.00: these do. ' +
-    'Do not go by the build date: real nameplates show K &gt; 1 breakers still being built in 2007, and K = 1 breakers of the same number from 2010.</div>' +
+    'Do not go by the build date: real nameplates show K &gt; 1 breakers still being built in 2007, and K = 1 breakers of the same number from 2010. ' +
+    'If your plate reads 1.00, set <strong>Voltage range factor</strong> above to 1.00 and these values are shown first.</div>' +
     d1 + inner + '</div></details></div>';
+}
+
+/* The 1994 card folded away, for a plate whose K line reads 1.00. */
+function card94Collapsed(t) {
+  return '<div class="result-card info wide"><details class="collapse"><summary><span class="card-title">1994 catalog rating &mdash; does not apply to a K = 1.00 plate</span>' +
+    '<span class="collapse__hint">' + t.iMaxKa + ' kA &middot; K = ' + t.k.toFixed(2) + '</span></summary>' +
+    '<div class="collapse__body"><div class="card-note">Breakers built before the re-rating carry this same catalog number with the 1994 values ' +
+    'below. A plate reading K = 1.00 is the later rating shown above.</div>' + card94(t) + '</div></details></div>';
+}
+
+/* Plate K line, from the selector: 'unsure' (default, 1994 first), 'above', 'one'. */
+var KLINE = 'unsure';
+function setKLine(k, skipDecode) {
+  KLINE = k;
+  [['unsure', 'kPillUnsure'], ['above', 'kPillAbove'], ['one', 'kPillOne']].forEach(function (p) {
+    var el = document.getElementById(p[1]);
+    el.classList.toggle('active', p[0] === k);
+    el.setAttribute('aria-checked', p[0] === k ? 'true' : 'false');
+  });
+  if (!skipDecode && document.getElementById('catInput').value.trim()) decode();
+}
+
+function kLineRow() {
+  return KLINE === 'unsure' ? '' : row('Nameplate K line (entered)', KLINE === 'one' ? '1.00' : 'above 1 (1.19&ndash;1.30)');
 }
 
 function weightCard(t) {
@@ -680,15 +742,34 @@ function renderRating(key, raw, ctx, laterOnly) {
 
   var any = t94[0] || tm[0] || part;
   var kv27 = !!(tm[0] && tm[0].kv27);
+  /* Plate reads K = 1.00 and this number had both ratings: the later one leads. */
+  var modernFirst = KLINE === 'one' && t94.length > 0 && tm.length > 0;
   var html = '<div class="summary-banner"><div class="headline">Square D Type VR &middot; ' + esc(any.cat) + '</div>' +
     '<div class="catalog-fmt">' + esc(String(raw).toUpperCase()) + '</div><div>' +
-    (t94.length ? '<span class="basis">1994 catalog</span><span class="basis">K = ' + t94[0].k.toFixed(2) + '</span><span class="basis">' + t94[0].mva + ' MVA</span>'
-      : '<span class="basis">Later production</span><span class="basis">K = 1</span>') +
-    '<span class="basis">' + any.amps + ' A</span></div></div>';
+    (t94.length && !modernFirst ? '<span class="basis">1994 catalog</span><span class="basis">K = ' + t94[0].k.toFixed(2) + '</span><span class="basis">' + t94[0].mva + ' MVA</span>'
+      : '<span class="basis">Later production</span><span class="basis">K = 1</span>' + (modernFirst ? '<span class="basis">' + tm[0].iMaxKa + ' kA</span>' : '')) +
+    '<span class="basis">' + any.amps + ' A</span>' +
+    (KLINE === 'unsure' ? '' : '<span class="basis">Plate K ' + (KLINE === 'one' ? '1.00' : '&gt; 1') + '</span>') + '</div></div>';
 
   html += '<div class="result-grid">';
   if (ctx) html += ctx;
-  if (t94.length) {
+  /* The plate line contradicts every rating published for this number. */
+  var kClash = (KLINE === 'one' && t94.length && !tm.length) ? 'Your plate reads K = 1.00, but no K = 1 rating is published for ' + esc(any.cat) +
+      ' &mdash; only the 1994 values below. Re-read the K line and the catalog number; if both are right, call ' + TEL + ' before quoting.'
+    : (KLINE === 'above' && !t94.length && (tm.length || part)) ? 'Your plate reads K above 1, but ' + esc(any.cat) +
+      ' is published only at K = 1 &mdash; there is no K &gt; 1 rating for it. Re-read the K line and the catalog number; if both are right, call ' + TEL + ' before quoting.'
+    : '';
+  if (kClash || KLINE !== 'unsure') {
+    html += '<div class="result-card wide"><div class="card-title">Nameplate check</div>' + kLineRow() +
+      (kClash ? '<div class="correction"><strong>Plate and catalog disagree.</strong> ' + kClash + '</div>' : '') + '</div>';
+  }
+  if (modernFirst) {
+    html += '<div class="result-card info wide"><div class="card-title">Later production &mdash; re-rated to K = 1</div><div class="card-note">' +
+      'Your plate reads <strong>K = 1.00</strong>, so these are its rated values. Square D re-rated ' + esc(any.cat) + ' to K = 1 without ' +
+      'changing the number; the original 1994 rating is folded away below for reference.</div></div>';
+    html += laterCard(tm, false);
+    html += card94Collapsed(t94[0]);
+  } else if (t94.length) {
     html += card94(t94[0]);
     html += laterCard(tm, true);
   } else if (tm.length) {
@@ -985,6 +1066,7 @@ function clearAll() {
   document.getElementById('results').innerHTML = '';
   document.getElementById('errorBox').classList.remove('visible');
   document.getElementById('styleMap').innerHTML = '';
+  setKLine('unsure', true);
   document.getElementById('catInput').focus();
 }
 function loadEx(btn) { document.getElementById('catInput').value = btn.textContent; decode(); }
