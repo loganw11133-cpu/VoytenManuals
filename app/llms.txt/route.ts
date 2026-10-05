@@ -71,6 +71,7 @@ For engineers, plant/facility managers, electricians, field-service techs, and m
 - Eaton Magnum PXR / Power Defense SB — 800A–6000A: https://www.voytenmanuals.com/tools/pxr-pdsb
 - Square D / Schneider MasterPact NT / NW — universal power circuit breaker (T/W/Y-frame) + Micrologic trip unit, 800A–6300A: https://www.voytenmanuals.com/tools/sqd-ntnw
 - Eaton / Cutler-Hammer VCP-W — MEDIUM-VOLTAGE vacuum circuit breaker, 4.76kV–27kV, 630A–3000A. Identifies the type designation (incl. VCPW-ND narrow design, VCP-WC / VCP-WXC extra capability, VCPW-SE) and the 10-digit style number, and returns the full ANSI or IEC 60056 rated-values set, breaker weight, control voltage and the interrupter assembly part number: https://www.voytenmanuals.com/tools/vcp-w
+- Square D / Schneider Type VR (Masterclad, Class 6055) — MEDIUM-VOLTAGE vacuum circuit breaker, 4.76kV–27kV, 1200A–4000A. Decodes the nameplate catalog number (V5D…) or the VR rating number (VR-05025-12) and returns the full ANSI rated-values set with close and trip control voltages; leads with the 1994 Masterclad rating and shows the later K = 1 re-rating beside it. Also reads the VAD-3 / VacArc and VAD-2 predecessors (V3D…, V2D…): https://www.voytenmanuals.com/tools/sqd-vr
 - Decoder hub: https://www.voytenmanuals.com/tools
 - Eaton Type SPB (Systems Pow-R): SPB identification is handled directly by Voyten's team — request availability and a quote at https://www.voytenmanuals.com/products/spb-breakers or call 1-800-458-4001.
 

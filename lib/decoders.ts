@@ -333,29 +333,46 @@ export const decoders: Decoder[] = [
     name: 'Type VR',
     fullName: 'Square D Type VR (Masterclad)',
     manufacturer: 'Square D',
-    comingSoon: true,
     description:
-      'In development — a decoder for Square D Type VR medium-voltage vacuum circuit breakers, the drawout breaker in Masterclad metal-clad switchgear. Reads the nameplate catalog number (V5D…) or the VR rating number and returns the full ANSI rated-values set, with close and trip control voltages.',
-    frames: 'Type VR · VAD-3 · Class 6055 Masterclad',
+      'Decode a Square D / Schneider Type VR medium-voltage vacuum circuit breaker, the drawout breaker in Masterclad metal-clad switchgear, from its nameplate catalog number (V5D…) or its VR rating number. Returns the full ANSI rated-values set with close and trip control voltages, and reads the VAD-3 and VAD-2 breakers that came before it.',
+    frames: 'Type VR · VAD-3 · VAD-2 · Class 6055 Masterclad',
     ratings: '4.76 kV – 27 kV · 1200A – 4000A',
-    /* Built and routed (/tools/sqd-vr), but not announced. comingSoon keeps
-       sqd-vr out of publicDecoders — no sitemap entry, llms.txt line,
-       ItemList item or manual-page link — and makes the route noindex
-       (lib/decoder-seo.ts). The card stays a placeholder until launch. */
     example: 'V5DC133YS00',
-    alsoKnownAs: ['Schneider Type VR', 'Square D VR', 'Masterclad VR', 'Class 6055', 'VAD-5', 'VAD-3 (predecessor)'],
+    alsoKnownAs: ['Schneider Type VR', 'Square D VR', 'Masterclad VR', 'Class 6055', 'VAD-5', 'VAD-3 / VacArc (predecessor)', 'VAD-2 (Series 2 predecessor)'],
     identifies: [
       'Nameplate catalog number (V5D…) — rating, continuous current, close and trip control voltages',
       'VR rating number (VR-05025-12) — voltage class, MVA class, continuous current',
       'Full ANSI rated values from the 1994 Masterclad catalog, with the later K = 1 rating where it differs',
       '63 kA, 4000 A and 27 kV ratings from the later Square D data bulletins',
-      'VAD-3 / VacArc predecessor numbers (V3D…, VAD-3-…)',
+      'VAD-3 / VacArc and VAD-2 predecessor numbers (V3D…, V2D…, VAD-3-…, VAD-2-…)',
+      'Charging-motor, closing-coil and trip-coil ratings for VAD-3 and VAD-2 by control voltage',
     ],
-    // "Type VR" with the Square D facet: unfaceted, the Type VRT-3
-    // disconnect switch outranks the breaker.
+    // "Type VR" with the Square D facet keeps out the Westinghouse Type VRT-3
+    // disconnect switch and the Eaton VR-Series retrofit elements.
     manualSearch: '/search?q=Type%20VR&manufacturer=Square%20D',
     manualSearchLabel: 'Square D Type VR instruction bulletins and Masterclad catalogs',
-    faq: [],
+    faq: [
+      {
+        q: 'Where is the catalog number on a Type VR breaker, and why does it not look like VR-05025-12?',
+        a: 'Read the CATALOG NO. line on the breaker nameplate. Type VR nameplates carry a V5D… number (for example V5DC133YS00), not the VR-05025-12 rating number printed in the Masterclad catalog. The V5D number encodes the rating, the continuous current and the closing and trip control voltages; the decoder reads it position by position and also accepts the VR rating number on its own.',
+      },
+      {
+        q: 'Why does the decoder show the 1994 ratings first?',
+        a: 'Most Type VR breakers in service were built to the 1994 Masterclad ratings, with a voltage range factor K greater than 1. Square D later re-rated the same catalog numbers to K = 1, which changes the short-circuit, interrupting and closing-and-latching values. The decoder leads with the 1994 rating and shows the later rating beside it where they differ. The K line on the nameplate decides which applies, not the build date: K > 1 breakers were still being built in 2007.',
+      },
+      {
+        q: 'My 27 kV class Type VR says 29 kV on the nameplate. Which is right?',
+        a: 'The decoder follows Square D data bulletin 6055DB1402 (revised March 2026), which rates this class at 27 kV. One rating-code-1 nameplate, made in May 2000, has been seen printing 29 kV rated maximum voltage and 125 kV BIL, so check the RATED MAXIMUM VOLTAGE line on your own plate.',
+      },
+      {
+        q: 'Does it read VAD-3, VacArc and VAD-2 breakers?',
+        a: 'Yes. VAD-3 (also nameplated VacArc) and VAD-2 use the same catalog grammar as Type VR. The decoder reads VAD-3-… and VAD-2-… numbers and the internal V3D… and V2D… numbers from Square D engineering standards E-52100 and E-51150, including the charging-motor, closing-coil and trip-coil ratings by control voltage. Their ratings match the 1994 Type VR rating of the same number; VAD-2 adds 3000 A on every rating.',
+      },
+      {
+        q: 'Is a Square D Type VR the same as an Eaton VR-Series breaker?',
+        a: 'No. Eaton / Cutler-Hammer VR-Series are vacuum replacement elements that retrofit older air breakers such as GE AM, Westinghouse DH and Federal Pacific DST-2. They share the letters, not the product. The decoder recognises VR-Series, DHP-VR and DST-2VR strings and points them to the right place instead of decoding them as a Square D breaker.',
+      },
+    ],
   },
   {
     slug: 'vcp-w',
@@ -485,6 +502,12 @@ const MANUAL_MATCHERS: { slug: string; manufacturers: RegExp; title: RegExp }[] 
   // different generations with different catalog grammar, and this decoder would
   // mis-parse both. Require an explicit NT/NW.
   { slug: 'sqd-ntnw', manufacturers: /^(Square D|Schneider Electric|Merlin Gerin)$/i, title: /master\s?pact\s*N[TW]\b|\bN[TW]\d{2}\b/i },
+  // "Type VR" needs the trailing \b so Type VRT (the Westinghouse VRT-3 disconnect
+  // switch) never matches; the manufacturer facet already keeps out Eaton's
+  // VR-Series retrofits. VAD-2 / VAD-3 only: the generic "Type VAD", VacArc FVB,
+  // VAV and Powersub FVR are other breakers. The ground-and-test device is a VR
+  // accessory, not a breaker. Matches 14 rows as of 2026-10-04.
+  { slug: 'sqd-vr', manufacturers: /^(Square D|Schneider Electric)$/i, title: /^(?!.*ground and test)(?:.*\bType\s+VR\b|.*\bVAD[\s-]?[23](?!\d))/i },
 ];
 
 export function matchDecoderForManual(manufacturer: string, title: string): Decoder | null {
