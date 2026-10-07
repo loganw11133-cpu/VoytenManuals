@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { FileText, ChevronRight, Phone, Building2, Tag, BookOpen, ArrowLeft, Layers, Download, Shield, Wrench, ArrowRight, ExternalLink, Cpu } from 'lucide-react';
 import { getManualBySlug, getManualWithRelated, formatFileSize, toSlug } from '@/lib/manuals-db';
 import { matchDecoderForManual } from '@/lib/decoders';
+import { matchEbayFamily } from '@/lib/ebay-listings';
 import { MANUAL_REDIRECTS } from '@/lib/manual-redirects';
 import ManualCard from '@/components/ManualCard';
 import LeadCaptureForm from '@/components/LeadCaptureForm';
@@ -91,16 +92,15 @@ export default async function ManualPage({ params }: ManualPageProps) {
       brand: 'Voyten Electric',
       label: 'Voyten Type RL/VRL breaker',
       blurb: 'New Surplus and reconditioned Type RL/VRL breakers, Static Trip III units, and renewal parts',
-      store: 'https://rlbreakers.com',
-      storeLabel: 'RLBreakers.com',
     } :
     (/\bSPB\d*\b/.test(mTitle) || /Systems Pow-R/i.test(mTitle)) ? {
       brand: 'Eaton',
       label: 'Eaton SPB breaker',
       blurb: 'New Surplus and reconditioned SPB (Systems Pow-R) breakers, trip units, and renewal parts',
-      store: 'https://spbbreakers.com',
-      storeLabel: 'SPBBreakers.com',
     } : null;
+  // Families Voyten actively lists on eBay get a direct link to that family's
+  // listings, so the page works as manual + listing.
+  const ebay = matchEbayFamily(manual.manufacturer, mTitle);
   // If this manual's breaker family has a catalog-number decoder, offer it —
   // the visitor is holding the unit and usually needs to identify it before the
   // manual is any use.
@@ -355,14 +355,6 @@ export default async function ManualPage({ params }: ManualPageProps) {
                     </p>
                   </div>
                   <div className="flex flex-col sm:flex-row gap-2 flex-shrink-0">
-                    <a
-                      href={productLine.store}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2 bg-[#1a1a1a] hover:bg-[#111111] text-white px-5 py-3 rounded-lg font-bold transition-colors"
-                    >
-                      Shop {productLine.storeLabel} <ExternalLink size={16} aria-hidden="true" />
-                    </a>
                     <Link
                       href={`/contact?type=quote&manual=${manual.id}`}
                       className="flex items-center justify-center gap-2 bg-[#dc2626] hover:bg-[#b91c1c] text-white px-5 py-3 rounded-lg font-bold transition-colors"
@@ -387,7 +379,24 @@ export default async function ManualPage({ params }: ManualPageProps) {
                     sourcing, testing, and shipping replacement parts for legacy electrical equipment. We stock circuit breakers,
                     trip units, motor controls, and accessories for models no longer manufactured.
                   </p>
+                  {ebay && (
+                    <p className="text-slate-300 text-sm leading-relaxed mt-2">
+                      Voyten Electric currently lists <span className="font-semibold text-white">{ebay.label}</span> on
+                      eBay &mdash; buy direct, or request a quote.
+                    </p>
+                  )}
                   <div className="flex flex-col sm:flex-row gap-3 mt-4">
+                    {ebay && (
+                      <a
+                        href={ebay.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 bg-white hover:bg-slate-100 text-[#1a1a1a] px-5 py-2.5 rounded-lg font-semibold text-sm transition-colors"
+                      >
+                        Shop on eBay
+                        <ExternalLink size={16} aria-hidden="true" />
+                      </a>
+                    )}
                     <a href="tel:1-800-458-4001" className="flex items-center gap-2 bg-[#dc2626] hover:bg-[#b91c1c] text-white px-5 py-2.5 rounded-lg font-semibold text-sm transition-colors">
                       <Phone size={16} aria-hidden="true" />
                       Call for Parts
