@@ -4,6 +4,7 @@ import { sendEmail } from '@/lib/email';
 import { buildQuoteEmail } from '@/lib/quote-email';
 import { checkRateLimit, RATE_LIMITS } from '@/lib/rate-limit';
 import { validateCsrf } from '@/lib/csrf';
+import { checkLeadSpam } from '@/lib/spam-filter';
 
 function getDb() {
   return createClient({
@@ -51,8 +52,30 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Store lead — ALL types are persisted to Turso (admin dashboard / analytics).
     const db = getDb();
+
+    // Spam gate. A rejected lead gets the same {success:true} a real one does, so a
+    // bot learns nothing; it is kept in lead_spam (not lead_submissions) and never
+    // emailed, so a false positive can still be recovered by hand.
+    const verdict = checkLeadSpam(body);
+    if (verdict.spam) {
+      console.warn(`[leads] spam rejected (${verdict.reasons.join(', ')}) email="${email}"`);
+      try {
+        await db.execute(`CREATE TABLE IF NOT EXISTS lead_spam (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          reasons TEXT, score INTEGER, payload TEXT,
+          created_at DATETIME DEFAULT CURRENT_TIMESTAMP)`);
+        await db.execute({
+          sql: 'INSERT INTO lead_spam (reasons, score, payload) VALUES (?, ?, ?)',
+          args: [verdict.reasons.join(','), verdict.score, JSON.stringify(body).slice(0, 8000)],
+        });
+      } catch (err) {
+        console.error('[leads] could not log rejected spam:', err);
+      }
+      return NextResponse.json({ success: true });
+    }
+
+    // Store lead — ALL types are persisted to Turso (admin dashboard / analytics).
     const insert = await db.execute({
       sql: `INSERT INTO lead_submissions (type, name, email, phone, company, message, manual_id, manual_title, source_page)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,

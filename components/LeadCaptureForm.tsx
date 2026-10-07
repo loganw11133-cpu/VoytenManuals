@@ -23,6 +23,9 @@ export default function LeadCaptureForm({ type, manualTitle, manualId, sourcePag
     message: initialMessage || '',
   });
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  // Spam signals for /api/leads: a honeypot people never see, and how long the form was open.
+  const [honeypot, setHoneypot] = useState('');
+  const [renderedAt] = useState(() => Date.now());
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,6 +46,8 @@ export default function LeadCaptureForm({ type, manualTitle, manualId, sourcePag
         manual_id: manualId,
         manual_title: manualTitle,
         source_page: sourcePage || window.location.pathname,
+        website: honeypot,
+        elapsed_ms: Date.now() - renderedAt,
       });
 
       if (res.ok) {
@@ -94,6 +99,19 @@ export default function LeadCaptureForm({ type, manualTitle, manualId, sourcePag
       )}
 
       <form onSubmit={handleSubmit} className="space-y-3">
+        {/* Honeypot: off-screen and out of the tab order, so only a bot fills it. */}
+        <div aria-hidden="true" style={{ position: 'absolute', left: '-10000px', width: 1, height: 1, overflow: 'hidden' }}>
+          <label htmlFor="lead-website">Website</label>
+          <input
+            id="lead-website"
+            name="website"
+            type="text"
+            tabIndex={-1}
+            autoComplete="off"
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
+          />
+        </div>
         <div className={compact ? 'grid sm:grid-cols-2 gap-3' : 'space-y-3'}>
           <div>
             <label htmlFor="lead-name" className="sr-only">Your Name</label>
