@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { FileText, ChevronRight, Phone, Building2, Tag, BookOpen, ArrowLeft, Layers, Download, Shield, Wrench, ArrowRight, ExternalLink, Cpu } from 'lucide-react';
 import { getManualBySlug, getManualWithRelated, formatFileSize, toSlug } from '@/lib/manuals-db';
 import { matchDecoderForManual } from '@/lib/decoders';
-import { matchEbayFamily } from '@/lib/ebay-listings';
+import { matchEbayFamily, stockedOffers } from '@/lib/ebay-listings';
 import { MANUAL_REDIRECTS } from '@/lib/manual-redirects';
 import ManualCard from '@/components/ManualCard';
 import LeadCaptureForm from '@/components/LeadCaptureForm';
@@ -24,7 +24,12 @@ export async function generateMetadata({ params }: ManualPageProps): Promise<Met
   // Keep title under ~60 chars (template adds " | Voyten Manuals" = 17 chars)
   const titleBase = `${manual.title}${partNum}`;
   const title = titleBase.length > 42 ? titleBase : `${titleBase} — ${manual.manufacturer}`;
-  const description = `Free PDF: ${manual.title}${partNum} by ${manual.manufacturer}. ${manual.category}${subcatStr} — instruction guides, parts lists, and wiring diagrams.`;
+  // A stocked family's manual is also a listing, so its snippet says so — this is
+  // the line search and AI answers quote when someone asks where to buy one.
+  const stocked = matchEbayFamily(manual.manufacturer, manual.title || '');
+  const description = stocked
+    ? `Free PDF: ${manual.title}${partNum} by ${manual.manufacturer}. Voyten Electric stocks ${stocked.label} — buy on eBay or request a quote, 24/7: 1-800-458-4001.`
+    : `Free PDF: ${manual.title}${partNum} by ${manual.manufacturer}. ${manual.category}${subcatStr} — instruction guides, parts lists, and wiring diagrams.`;
 
   // Merge DB-stored keywords (curated, SEO-optimized) with generated fallbacks
   const dbKeywords = manual.keywords ? manual.keywords.split(', ').filter(Boolean) : [];
@@ -107,6 +112,8 @@ export default async function ManualPage({ params }: ManualPageProps) {
   const decoder = matchDecoderForManual(manual.manufacturer, mTitle);
 
   const productModel = mTitle.replace(/\s*Manual$/i, '');
+  const pageUrl = `https://www.voytenmanuals.com/manual/${manual.slug}`;
+  const quoteUrl = `https://www.voytenmanuals.com/contact?type=quote&manual=${manual.id}`;
   const productOfferJsonLd = productLine ? {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -117,7 +124,8 @@ export default async function ManualPage({ params }: ManualPageProps) {
     ...(manual.manual_number && { "mpn": manual.manual_number }),
     "url": `https://www.voytenmanuals.com/manual/${manual.slug}`,
     "description": `New Surplus and reconditioned ${productModel} from Voyten Electric — tested, in stock, quote on request. 24/7 emergency: 1-800-458-4001.`,
-    "offers": {
+    "subjectOf": { "@id": `${pageUrl}#manual` },
+    "offers": [{
       "@type": "Offer",
       "availability": "https://schema.org/InStock",
       "itemCondition": "https://schema.org/RefurbishedCondition",
@@ -129,13 +137,26 @@ export default async function ManualPage({ params }: ManualPageProps) {
         "url": "https://www.voytenmanuals.com",
         "telephone": "+1-800-458-4001",
       },
-    },
+    }, ...(ebay ? [stockedOffers(ebay)[0]] : [])],
+  } : ebay ? {
+    // Every other family Voyten stocks on eBay: the page is the manual AND a
+    // listing, so the Product is the family and the manual is its documentation.
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": ebay.product,
+    "category": ebay.category,
+    "brand": { "@type": "Brand", "name": ebay.brand },
+    "url": pageUrl,
+    "description": `${ebay.product}, stocked by Voyten Electric — buy from the Voyten eBay store or request a quote. This page carries the free ${manual.title} PDF. 24/7 emergency: 1-800-458-4001.`,
+    "subjectOf": { "@id": `${pageUrl}#manual` },
+    "offers": stockedOffers(ebay, quoteUrl),
   } : null;
 
   // Rich JSON-LD: TechArticle with part numbers, manufacturer, category
   const techArticleJsonLd = {
     "@context": "https://schema.org",
     "@type": "TechArticle",
+    "@id": `${pageUrl}#manual`,
     "name": manual.title,
     "headline": manual.title,
     "description": manual.description || `${manual.manufacturer} ${manual.category} manual: ${manual.title}`,
@@ -401,7 +422,7 @@ export default async function ManualPage({ params }: ManualPageProps) {
                       <Phone size={16} aria-hidden="true" />
                       Call for Parts
                     </a>
-                    <Link href="/contact?type=quote" className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-5 py-2.5 rounded-lg font-medium text-sm border border-white/20 transition-colors">
+                    <Link href={`/contact?type=quote&manual=${manual.id}`} className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-5 py-2.5 rounded-lg font-medium text-sm border border-white/20 transition-colors">
                       <Wrench size={16} aria-hidden="true" />
                       Request Quote
                     </Link>

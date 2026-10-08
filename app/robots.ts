@@ -5,12 +5,15 @@ import { MetadataRoute } from 'next';
 const AI_CRAWLERS = [
   // OpenAI
   'GPTBot', 'ChatGPT-User', 'OAI-SearchBot',
-  // Anthropic (Claude)
-  'ClaudeBot', 'anthropic-ai',
+  // Anthropic (Claude) — Claude-User / Claude-SearchBot fetch pages live while
+  // answering a user, which is where "where do I buy a ..." questions get answered.
+  'ClaudeBot', 'anthropic-ai', 'Claude-User', 'Claude-SearchBot',
   // Google (Gemini / AI Overviews)
   'Google-Extended', 'GoogleOther',
-  // Perplexity
-  'PerplexityBot',
+  // Perplexity (Perplexity-User = live fetch for a user's question)
+  'PerplexityBot', 'Perplexity-User',
+  // DuckDuckGo AI answers, Mistral Le Chat
+  'DuckAssistBot', 'MistralAI-User',
   // xAI (Grok)
   'xAI-Grok',
   // Apple (Siri / Apple Intelligence)

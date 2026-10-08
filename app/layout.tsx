@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
 import FloatingCallButton from "@/components/FloatingCallButton";
 import Script from "next/script";
+import { EBAY_STORE, stockedOfferCatalog } from "@/lib/ebay-listings";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
@@ -172,7 +173,8 @@ const jsonLd = {
   },
   "sameAs": [
     "https://voytenelectric.com",
-    "https://www.voyten.com"
+    "https://www.voyten.com",
+    EBAY_STORE
   ],
   "memberOf": {
     "@type": "Organization",
@@ -180,7 +182,9 @@ const jsonLd = {
     "url": "https://pearl1.org/",
     "description": "Trade organization (founded 1997) setting quality, safety, and reconditioning standards for surplus and remanufactured electrical apparatus."
   },
-  "hasOfferCatalog": {
+  // Two catalogs: the free manuals, and the equipment Voyten actually stocks
+  // (one entry per family in lib/ebay-listings.ts, each pointing at its eBay listings).
+  "hasOfferCatalog": [stockedOfferCatalog(), {
     "@type": "OfferCatalog",
     "name": "Electrical Equipment Manuals",
     "itemListElement": [
@@ -192,7 +196,7 @@ const jsonLd = {
       { "@type": "OfferCatalog", "name": "Transformer Manuals", "description": "Dry-type, oil-filled, pad-mounted, instrument transformers" },
       { "@type": "OfferCatalog", "name": "Bus Product Manuals", "description": "Bus duct, busway, bus plugs, insulators" }
     ]
-  },
+  }],
   "contactPoint": [
     {
       "@type": "ContactPoint",

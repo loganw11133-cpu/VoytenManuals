@@ -69,9 +69,9 @@ const UA_PATTERNS: [RegExp, string][] = [
   [/duckduckbot|slurp|baiduspider|yandex/i, 'search:other'],
   [/applebot/i, 'search:apple'],
   [/gptbot|chatgpt-user|oai-searchbot/i, 'ai:openai'],
-  [/claudebot|anthropic-ai|claude-web/i, 'ai:anthropic'],
+  [/claudebot|anthropic-ai|claude-web|claude-user|claude-searchbot/i, 'ai:anthropic'],
   [/perplexitybot|perplexity-user/i, 'ai:perplexity'],
-  [/google-extended|xai-grok|cohere-ai|meta-externalagent|amazonbot|bytespider/i, 'ai:other'],
+  [/google-extended|xai-grok|cohere-ai|meta-externalagent|amazonbot|bytespider|duckassistbot|mistralai-user/i, 'ai:other'],
   [/ahrefsbot|semrushbot|mj12bot|dotbot|petalbot|dataforseo|screaming frog/i, 'seo-tool'],
   [/facebookbot|facebookexternalhit|twitterbot|linkedinbot|slackbot|discordbot|whatsapp|telegrambot/i, 'preview'],
   // Generic automation that does not pretend to be a browser.

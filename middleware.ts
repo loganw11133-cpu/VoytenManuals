@@ -40,7 +40,7 @@ const MAX_HITS_CRAWLER = 150;
  * plus the classic search bots that robots.txt covers under `User-Agent: *`.
  */
 const CRAWLER_UA =
-  /(googlebot|google-inspectiontool|storebot-google|google-extended|googleother|bingbot|bingpreview|slurp|duckduckbot|baiduspider|yandex(bot)?|applebot|gptbot|chatgpt-user|oai-searchbot|claudebot|anthropic-ai|perplexitybot|xai-grok|facebookbot|meta-externalagent|cohere-ai|amazonbot|bytespider)/i;
+  /(googlebot|google-inspectiontool|storebot-google|google-extended|googleother|bingbot|bingpreview|slurp|duckduckbot|baiduspider|yandex(bot)?|applebot|gptbot|chatgpt-user|oai-searchbot|claudebot|anthropic-ai|claude-user|claude-searchbot|perplexitybot|perplexity-user|duckassistbot|mistralai-user|xai-grok|facebookbot|meta-externalagent|cohere-ai|amazonbot|bytespider)/i;
 
 // Clean up periodically to prevent memory growth
 let lastCleanup = Date.now();
