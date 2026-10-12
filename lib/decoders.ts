@@ -430,6 +430,59 @@ export const decoders: Decoder[] = [
       },
     ],
   },
+  /* Two staged cards. Nothing parses yet, so `example`, `identifies` and `faq`
+     stay empty and there is deliberately no app/tools/<slug>/ route or
+     public/tools/<slug>-decoder.html — `comingSoon` keeps both slugs out of
+     `publicDecoders`, and with it the sitemap, llms.txt, the hub ItemList and
+     the manual-page matcher. Same staging as the WL and VCP-W cards. */
+  {
+    slug: 'pd-mccb',
+    name: 'Power Defense MCCB',
+    fullName: 'Eaton Power Defense Molded Case Circuit Breaker',
+    manufacturer: 'Eaton',
+    comingSoon: true,
+    description:
+      'In development — a decoder for Eaton Power Defense molded case circuit breaker catalog numbers. Reads the 14-character base number (family, frame, poles, interrupting rating, ampere rating, trip unit and terminals) and the 20-character configured number with its factory-installed accessories.',
+    frames: 'PD1 – PD6 (PDG · PDF · PDD · PDK and related families)',
+    ratings: '15A – 2,500A',
+    example: '',
+    alsoKnownAs: [
+      'Eaton Power Defense',
+      'PD MCCB',
+      'PDG / PDF / PDD',
+      'PD1 / PD2 / PD3 / PD4 / PD5 / PD6',
+      'Power Defense molded case',
+    ],
+    identifies: [],
+    manualSearch: '/search?q=Power%20Defense&manufacturer=Eaton',
+    manualSearchLabel: 'Eaton Power Defense manuals',
+    faq: [],
+  },
+  {
+    slug: 'pringle',
+    name: 'Pringle Bolted Pressure Switch',
+    fullName: 'Eaton Pringle Bolted Pressure Contact Switch',
+    manufacturer: 'Eaton',
+    comingSoon: true,
+    description:
+      'In development — a decoder for Eaton Pringle bolted pressure contact switch catalog numbers, covering the Quick Action (QA) and Charge Before Close (CBC) designs.',
+    frames: 'Pringle QA · CBC',
+    ratings: '800A – 6,000A',
+    example: '',
+    alsoKnownAs: [
+      'Pringle switch',
+      'Pringle bolted pressure switch',
+      'Bolted pressure contact switch',
+      'Pringle QA',
+      'Pringle CBC',
+    ],
+    identifies: [],
+    // Unfiltered on purpose: Pringle documents are as likely to be filed under
+    // Pringle or Cutler-Hammer as under Eaton.
+    manualSearch: '/search?q=Pringle',
+    manualSearchLabel: 'Pringle bolted pressure switch manuals',
+    faq: [],
+  },
   {
     slug: 'spb',
     name: 'SPB',
