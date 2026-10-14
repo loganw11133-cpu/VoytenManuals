@@ -430,11 +430,13 @@ export const decoders: Decoder[] = [
       },
     ],
   },
-  /* Two staged cards. Nothing parses yet, so `example`, `identifies` and `faq`
-     stay empty and there is deliberately no app/tools/<slug>/ route or
-     public/tools/<slug>-decoder.html — `comingSoon` keeps both slugs out of
-     `publicDecoders`, and with it the sitemap, llms.txt, the hub ItemList and
-     the manual-page matcher. Same staging as the WL and VCP-W cards. */
+  /* Power Defense MCCB is STAGED like Type VR: the route and
+     public/tools/pd-mccb-decoder.html exist, but `comingSoon` keeps the slug out of
+     `publicDecoders` (sitemap, llms.txt, hub ItemList, manual-page matcher) and
+     makes the route noindex. The decoder HTML is ASSEMBLED outside the repo
+     (Projects\Decoders\Eaton Power Defense MCCB\build\build_html.mjs) — rebuild it
+     there, never edit the copy here. Pringle below is still a card only: no route,
+     no HTML. Same staging as the WL and VCP-W cards. */
   {
     slug: 'pd-mccb',
     name: 'Power Defense MCCB',
@@ -442,10 +444,10 @@ export const decoders: Decoder[] = [
     manufacturer: 'Eaton',
     comingSoon: true,
     description:
-      'In development — a decoder for Eaton Power Defense molded case circuit breaker catalog numbers. Reads the 14-character base number (family, frame, poles, interrupting rating, ampere rating, trip unit and terminals) and the 20-character configured number with its factory-installed accessories.',
-    frames: 'PD1 – PD6 (PDG · PDF · PDD · PDK and related families)',
-    ratings: '15A – 2,500A',
-    example: '',
+      'Decode Eaton Power Defense molded case circuit breaker catalog numbers. Reads the 14-character base number — certification family, frame, poles, interrupting rating, ampere rating, trip unit and terminals — and the 20-character configured number with its factory-installed accessories, and recognises accessory, terminal-kit and loose trip-unit numbers.',
+    frames: 'PD1 – PD6 (PDG · PDF · PDD · PDJ · PDK · PDL · PVGard)',
+    ratings: '15A – 3,000A',
+    example: 'PDG23M0100P2ML',
     alsoKnownAs: [
       'Eaton Power Defense',
       'PD MCCB',
@@ -453,10 +455,31 @@ export const decoders: Decoder[] = [
       'PD1 / PD2 / PD3 / PD4 / PD5 / PD6',
       'Power Defense molded case',
     ],
-    identifies: [],
+    identifies: [
+      'Certification family (Global, 100% rated, 240 V, DC, PVGard)',
+      'Frame size and, on Frame 3, the 400 A or 600 A construction',
+      'UL/CSA interrupting rating at every printed voltage',
+      'IEC 60947-2 Icu / Ics breaking capacity',
+      'Thermal-magnetic, PXR 10 / 20 / 20D / 25, MCP or MPCB trip unit',
+      'Terminals, including the exact terminal kit',
+      'Factory-installed accessories on 20-character numbers',
+    ],
     manualSearch: '/search?q=Power%20Defense&manufacturer=Eaton',
     manualSearchLabel: 'Eaton Power Defense manuals',
-    faq: [],
+    faq: [
+      {
+        q: 'Where is the catalog number on a Power Defense breaker?',
+        a: 'On the label on the breaker face. A complete breaker number is 14 characters, such as PDG23M0100TFFJ, or 20 characters when accessories were fitted at the factory. Numbers with an X after the frame digit, such as PDG3X3TA630, are accessories, terminal kits or loose trip units rather than breakers, and Frame 3 and 4 trip units carry a label of their own.',
+      },
+      {
+        q: 'Does the interrupting letter mean the same thing on every Power Defense breaker?',
+        a: 'No. Eaton assigns the letter by family and frame. M is 65 kA at 480 V on a PDG2, but 100 kA at 240 V on a PDD breaker, and on a PDK DC breaker it is a DC rating. The decoder reads the letter against the right table for the family and frame instead of using one letter chart.',
+      },
+      {
+        q: 'Which older Eaton breakers does Power Defense replace?',
+        a: 'Eaton publishes a frame-level equivalence only: PD1 for the Series G EG and Series C G-frame, PD2 for the F-frame, PD3 for the K-frame and LG, PD4 for MDL, PD5 for N and NG, and PD6 for R and RG. There is no catalog-number cross-reference, and accessories, handle mechanisms and neutral sensors do not carry over.',
+      },
+    ],
   },
   {
     slug: 'pringle',

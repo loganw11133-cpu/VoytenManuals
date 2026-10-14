@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="description" content="Eaton Power Defense molded case circuit breaker (PD1–PD6) catalog number decoder. Identify certification, frame, poles, interrupting rating, ampere rating, PXR or thermal-magnetic trip unit, terminals and factory modifications.">
+<title>Eaton Power Defense MCCB Decoder — Voyten Electric</title>
+<link rel="stylesheet" href="decoder-fonts.css">
+<style>
+:root {
+  --red: #dc2626;
+  --dark-red: #b91c1c;
+  --deep-red: #991b1b;
+  --black: #1a1a1a;
+  --deep-black: #111111;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --white: #ffffff;
+  --green: #16a34a;
+  --green-light: #dcfce7;
+  --blue: #2563eb;
+  --blue-light: #dbeafe;
+  --purple: #7c3aed;
+  --yellow: #ca8a04;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--gray-100);
+  color: var(--gray-800);
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+
+.header {
+  background: linear-gradient(135deg, var(--deep-black), var(--black));
+  color: var(--white);
+  padding: 24px 20px 20px;
+  text-align: center;
+  border-bottom: 4px solid var(--red);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+.header h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: 0.5px; }
+.header h1 .accent { color: var(--red); }
+.header .subtitle { font-size: 0.85rem; color: var(--gray-300); margin-top: 4px; }
+.container { max-width: 960px; margin: 0 auto; padding: 16px; }
+
+/* Input Section */
+.input-section {
+  background: var(--white); border-radius: 12px; padding: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 16px;
+  border: 2px solid var(--red);
+}
+.input-section label {
+  display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 6px; color: var(--gray-700);
+}
+.input-section label .opt { font-weight: 400; font-size: 0.78rem; color: var(--gray-400); text-transform: none; letter-spacing: 0; }
+.field-block { margin-bottom: 14px; }
+.field-block:last-of-type { margin-bottom: 0; }
+.or-divider { display: flex; align-items: center; text-align: center; margin: 18px 0 12px; }
+.or-divider::before, .or-divider::after { content: ""; flex: 1; height: 1px; background: var(--gray-200); }
+.or-divider span { padding: 0 12px; font-size: 0.72rem; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; }
+.or-divider strong { color: var(--gray-600); }
+.input-row { display: flex; gap: 8px; margin-bottom: 6px; }
+.input-row input {
+  flex: 1; padding: 12px 14px; font-size: 16px; font-family: 'IBM Plex Mono', 'Consolas', 'Monaco', monospace;
+  border: 2px solid var(--gray-200); border-radius: 8px; text-transform: uppercase;
+  letter-spacing: 1.5px; -webkit-appearance: none; transition: border-color 0.2s;
+}
+.input-row input:focus { outline: none; border-color: var(--red); }
+.hint { font-size: 0.75rem; color: var(--gray-500); margin-bottom: 2px; }
+
+.btn-row { display: flex; gap: 8px; margin: 14px 0 12px; }
+.btn {
+  padding: 10px 20px; border: none; border-radius: 8px; font-weight: 700;
+  font-size: 0.9rem; cursor: pointer; transition: background 0.2s; touch-action: manipulation;
+}
+.btn-decode { background: var(--red); color: var(--white); flex: 1; }
+.btn-decode:hover { background: var(--dark-red); }
+.btn-clear { background: var(--gray-200); color: var(--gray-700); }
+.btn-clear:hover { background: var(--gray-300); }
+
+.examples-label { font-size: 0.75rem; font-weight: 600; color: var(--gray-500); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+.examples { display: flex; flex-wrap: wrap; gap: 6px; }
+.ex-btn {
+  padding: 4px 10px; font-size: 0.72rem; font-family: 'IBM Plex Mono', 'Consolas', monospace;
+  background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 6px;
+  cursor: pointer; transition: all 0.15s; color: var(--gray-700); touch-action: manipulation;
+}
+.ex-btn:hover { background: var(--red); color: var(--white); border-color: var(--red); }
+
+/* Compact hover-reveal examples */
+.ex-hover { position: relative; display: inline-block; margin-top: 4px; }
+.ex-hover__trigger {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.4px; text-transform: uppercase;
+  color: var(--gray-500); cursor: pointer; user-select: none;
+  background: var(--gray-100);
+  border: 1px solid var(--gray-300); border-radius: 6px; padding: 4px 10px;
+  transition: color .15s, border-color .15s;
+}
+.ex-hover__trigger::after { content: "\25BE"; font-size: 0.6rem; opacity: .7; }
+.ex-hover:hover .ex-hover__trigger,
+.ex-hover:focus-within .ex-hover__trigger { color: var(--red); border-color: var(--red); }
+.ex-hover__panel {
+  position: absolute; z-index: 50; top: calc(100% + 6px); left: 0;
+  display: none; min-width: 240px; max-width: min(94vw, 560px);
+  padding: 12px 14px 4px;
+  background: #fff; border: 1px solid var(--gray-200); border-radius: 10px;
+  box-shadow: 0 12px 34px rgba(0,0,0,.14);
+}
+.ex-hover:hover .ex-hover__panel,
+.ex-hover:focus-within .ex-hover__panel { display: block; }
+
+/* Char Map */
+.charmap-wrap { margin: 16px 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.charmap-inner { min-width: 300px; }
+.group-labels { display: flex; gap: 2px; margin-bottom: 2px; }
+.group-label {
+  font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--gray-500); text-align: center; padding: 2px 0;
+  border-bottom: 2px solid var(--gray-300);
+}
+.char-boxes { display: flex; gap: 2px; }
+.char-box {
+  width: 32px; height: 38px; display: flex; align-items: center; justify-content: center;
+  font-family: 'IBM Plex Mono', 'Consolas', monospace; font-size: 0.85rem; font-weight: 700;
+  background: var(--gray-100); border: 2px solid var(--gray-200); border-radius: 6px;
+  transition: all 0.2s;
+}
+.char-box.entered { background: var(--black); color: var(--white); border-color: var(--black); }
+.char-box.error { background: #fecaca; color: #dc2626; border-color: #f87171; }
+.char-box.separator { width: 8px; border: none; background: transparent; }
+.pos-labels { display: flex; gap: 2px; margin-top: 1px; }
+.pos-label { width: 32px; text-align: center; font-size: 0.55rem; color: var(--gray-400); }
+.pos-label.sep { width: 8px; }
+
+/* Result Cards */
+.results { display: none; }
+.results.visible { display: block; }
+.card {
+  background: var(--white); border-radius: 12px; padding: 16px;
+  margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  border-left: 4px solid var(--gray-200);
+}
+.card h3 {
+  font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--gray-500); margin-bottom: 8px;
+}
+.field { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--gray-100); gap: 12px; }
+.field:last-child { border-bottom: none; }
+.field-label { font-size: 0.8rem; color: var(--gray-500); }
+.field-value { font-size: 0.8rem; font-weight: 600; color: var(--gray-800); text-align: right; max-width: 62%; }
+.card.valid { border-left-color: var(--red); }
+.card.info { border-left-color: var(--blue); }
+.card.trip { border-left-color: var(--green); }
+
+/* Side-by-side result grid (mirrors the PXR / PD-SB decoder layout).
+   align-items:start keeps each card at its natural height so a short card
+   (e.g. Interrupting Rating) doesn't stretch and leave blank space. */
+.result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: start; }
+@media (max-width: 640px) { .result-grid { grid-template-columns: 1fr; } }
+.result-card {
+  background: var(--white); border-radius: 10px; padding: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-left: 4px solid var(--gray-300);
+}
+.result-card.wide { grid-column: 1 / -1; }
+.result-card.config { border-left-color: var(--red); }
+.result-card.trip { border-left-color: var(--green); }
+.result-card.access { border-left-color: var(--purple); }
+.result-card.options { border-left-color: var(--yellow); }
+.result-card.info { border-left-color: var(--blue); }
+.card-title {
+  font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--gray-500); margin-bottom: 8px;
+}
+.card-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 0.85rem; border-bottom: 1px solid var(--gray-100); gap: 12px; }
+.card-row:last-child { border-bottom: none; }
+.card-label { color: var(--gray-500); font-weight: 500; }
+.card-value { font-weight: 600; color: var(--gray-800); text-align: right; max-width: 62%; }
+
+/* Summary banner */
+.summary-banner {
+  background: linear-gradient(135deg, var(--deep-black), var(--black));
+  color: var(--white); border-radius: 12px;
+  padding: 20px; margin-bottom: 16px; border-left: 5px solid var(--red);
+}
+.summary-banner .headline { font-size: 1.15rem; font-weight: 700; margin-bottom: 6px; }
+.summary-banner .catalog-fmt { font-family: 'IBM Plex Mono', 'Consolas', monospace; font-size: 0.85rem; color: var(--gray-300); letter-spacing: 2px; margin-bottom: 12px; }
+
+.btn-copy {
+  padding: 8px 20px; border: 2px solid var(--gray-200); border-radius: 8px;
+  background: var(--white); color: var(--gray-700); font-weight: 600; font-size: 0.8rem;
+  cursor: pointer; transition: all 0.2s;
+}
+.btn-copy:hover { background: var(--gray-200); }
+.btn-copy.copied { background: var(--green-light); border-color: var(--green); color: var(--green); }
+.btn-pdf {
+  padding: 8px 20px; border: 2px solid var(--red); border-radius: 8px;
+  background: var(--white); color: var(--red); font-weight: 600; font-size: 0.8rem;
+  cursor: pointer; transition: all 0.2s; margin-left: 8px;
+}
+.btn-pdf:hover { background: var(--red); color: var(--white); }
+.btn-quote {
+  padding: 8px 20px; border: 2px solid var(--red); border-radius: 8px;
+  background: var(--red); color: var(--white); font-weight: 700; font-size: 0.8rem;
+  cursor: pointer; transition: all 0.2s; margin-left: 8px;
+}
+.btn-quote:hover { background: #b91c1c; border-color: #b91c1c; }
+
+/* Company link buttons (Google Business · LinkedIn · eBay) */
+.social { display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; margin: 26px auto 24px; padding: 0 12px; }
+.social a {
+  display: inline-flex; align-items: center; gap: 8px; padding: 7px 15px;
+  border-radius: 999px; border: 1px solid var(--gray-200); background: var(--white);
+  text-decoration: none; color: var(--gray-700); font-size: 0.8rem; font-weight: 600;
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+}
+.social a:hover { border-color: var(--gray-300); box-shadow: 0 2px 8px rgba(0,0,0,0.1); transform: translateY(-1px); }
+.social a:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
+.social a svg { height: 18px; width: auto; display: block; }
+
+.footer {
+  text-align: center; padding: 16px 20px 24px; font-size: 0.7rem; color: var(--gray-400); margin-top: 8px;
+}
+
+/* Error */
+.error {
+  background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px;
+  padding: 12px 16px; margin-bottom: 12px; display: none;
+}
+.error.visible { display: block; }
+.error-title { font-weight: 700; color: #991b1b; font-size: 0.85rem; margin-bottom: 2px; }
+.error-text { font-size: 0.8rem; color: #b91c1c; }
+.error-hint { font-size: 0.75rem; color: var(--gray-500); margin-top: 6px; }
+
+.note-box { font-size: 0.75rem; color: var(--gray-500); margin-top: 8px; line-height: 1.5; }
+
+/* Noscript */
+.ios-notice {
+  max-width: 600px; margin: 40px auto; background: #fffbeb; border: 2px solid #f59e0b;
+  border-radius: 12px; padding: 24px; color: #92400e; font-size: 0.95rem; line-height: 1.6;
+}
+.ios-notice strong { color: #78350f; }
+.ios-notice .steps { margin: 12px 0; padding-left: 20px; }
+.ios-notice .steps li { margin-bottom: 6px; }
+
+@media (max-width: 600px) {
+  .header h1 { font-size: 1.25rem; }
+  .container { padding: 10px; }
+  .field-value { max-width: 58%; }
+}
+/* ---- Power Defense additions ---- */
+.result-card.warn { border-left-color: var(--yellow); }
+.result-card.route { border-left-color: var(--blue); }
+.note-list { margin: 4px 0 0 0; padding-left: 18px; font-size: 0.8rem; color: var(--gray-700); }
+.note-list li { margin-bottom: 4px; }
+.note-list li.w { color: #92400e; }
+.src { font-size: 0.7rem; color: var(--gray-400); margin-top: 6px; }
+.sugg { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.sugg span { font-size: 0.75rem; color: var(--gray-600); font-weight: 600; }
+.sugg .ex-btn { font-size: 0.78rem; }
+.char-box.mod { background: var(--gray-700); border-color: var(--gray-700); color: var(--white); }
+.legacy { font-size: 0.78rem; color: var(--gray-600); }
+a.inlink { color: var(--red); font-weight: 600; text-decoration: none; }
+a.inlink:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<noscript>
+<div class="ios-notice">
+  <strong>Interactive Mode Required</strong><br><br>
+  This decoder requires JavaScript to run. If you are viewing this on an iPhone or iPad, the Files app preview does not support interactive content.
+  <ol class="steps">
+    <li>Tap the <strong>Share</strong> button (box with arrow)</li>
+    <li>Select <strong>"Open in Safari"</strong></li>
+    <li>The decoder will be fully interactive in Safari</li>
+  </ol>
+  On Mac: Right-click the file &rarr; Open With &rarr; Safari.<br>
+  On Android: Open with Chrome or any browser.
+</div>
+</noscript>
+
+<div class="header">
+  <h1>Eaton <span class="accent">Power Defense MCCB</span> Decoder</h1>
+  <div class="subtitle">Molded Case Circuit Breakers PD1 – PD6 — Catalog Number Decoder</div>
+</div>
+
+<div class="container">
+  <!-- Input -->
+  <div class="input-section">
+    <div class="field-block">
+      <label>Catalog Number <span class="opt">(14 characters, or 20 with factory modifications — e.g. PDG23M0100TFFJ)</span></label>
+      <div class="input-row">
+        <input type="text" id="catInput" placeholder="e.g. PDG23M0100P2ML" maxlength="28" autocomplete="off" autocorrect="off" spellcheck="false">
+      </div>
+      <div class="hint">Decodes certification, frame, poles, interrupting rating, ampere rating, trip unit (thermal-magnetic, PXR 10 / 20 / 20D / 25, MCP, MPCB), terminals and factory modifications. Accessory and trip-unit kit numbers (PDG3X…) are recognised too.</div>
+      <div class="ex-hover" tabindex="0" role="button" aria-label="Show example catalog numbers">
+        <span class="ex-hover__trigger">Catalog examples</span>
+        <div class="ex-hover__panel">
+          <div class="examples" id="exampleList"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-decode" onclick="decode()">DECODE</button>
+      <button class="btn btn-clear" onclick="clearAll()">CLEAR</button>
+    </div>
+  </div>
+
+  <!-- Char Map -->
+  <div class="charmap-wrap"><div class="charmap-inner">
+    <div class="group-labels" id="groupLabels"></div>
+    <div class="char-boxes" id="charBoxes"></div>
+    <div class="pos-labels" id="posLabels"></div>
+  </div></div>
+
+  <!-- Error -->
+  <div class="error" id="errorBox">
+    <div class="error-title" id="errorTitle">Invalid Input</div>
+    <div class="error-text" id="errorText"></div>
+    <div class="sugg" id="errorSugg"></div>
+    <div class="error-hint">Enter the catalog number from the breaker's label, e.g. PDG23M0100TFFJ. Power Defense MCCB numbers start PD and a family letter (G, F, D, J, K, L, C, E, O or P).</div>
+  </div>
+
+  <!-- Results -->
+  <div class="results" id="results"></div>
+</div>
+
+<nav class="social" aria-label="Connect with Voyten Electric">
+  <a href="https://share.google/8zeiyPVd68OB1smJW" target="_blank" rel="noopener noreferrer" title="Voyten Electric on Google Business Profile">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <rect x="4" y="11" width="16" height="9" rx="1" fill="#4989F5"/>
+      <path d="M3 11 L4.5 5 H19.5 L21 11 Z" fill="#3367D6"/>
+      <path d="M8 5 L7.2 11 H10 L10.3 5 Z" fill="#5B9BFF"/>
+      <path d="M14 5 L14 11 H16.8 L16 5 Z" fill="#5B9BFF"/>
+      <rect x="10" y="14" width="4" height="6" rx="0.5" fill="#ffffff"/>
+    </svg>
+    Google Business
+  </a>
+  <a href="https://www.linkedin.com/in/voyten-electric-sales-team/" target="_blank" rel="noopener noreferrer" title="Voyten Electric on LinkedIn">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <rect width="24" height="24" rx="4" fill="#0A66C2"/>
+      <path fill="#ffffff" d="M8.34 18.34H5.67V9.75h2.67v8.59zM7 8.58a1.55 1.55 0 1 1 0-3.1 1.55 1.55 0 0 1 0 3.1zM18.34 18.34h-2.67v-4.18c0-1-.02-2.28-1.39-2.28-1.39 0-1.6 1.09-1.6 2.21v4.25h-2.67V9.75h2.56v1.17h.04c.36-.68 1.23-1.39 2.53-1.39 2.7 0 3.2 1.78 3.2 4.09v4.72z"/>
+    </svg>
+    LinkedIn
+  </a>
+  <a href="https://www.ebay.com/str/voytenelectric" target="_blank" rel="noopener noreferrer" title="Voyten Electric eBay Store">
+    <svg viewBox="0 0 84 34" aria-hidden="true" focusable="false">
+      <text x="0" y="27" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" letter-spacing="-1.5">
+        <tspan fill="#E53238">e</tspan><tspan fill="#0064D2">b</tspan><tspan fill="#F5AF02">a</tspan><tspan fill="#86B817">y</tspan>
+      </text>
+    </svg>
+    Store
+  </a>
+</nav>
+
+<div class="footer">
+  Eaton Power Defense MCCB Decoder &mdash; Voyten Electric &amp; Electronics, Inc.<br>
+  Ratings from Eaton catalog CA08100005E (January 2021, Volume 4 Tab 2); PDK, PDL1 and PVGard from the April 2026 edition. Checked against Eaton product pages.
+</div>
+
+<script>
+/* GENERATED by build/gen_pd_data.mjs from pd-mccb-grammar-2021.json -- do not edit by hand. */
+var PDDATA = {"edition":"Eaton CA08100005E, January 2021","ratings":{"1":{"src":"01/2021 p.23","L":{"C":{"ul":{"240":25,"480":18,"600Y":10,"dc250":10},"iec":{"240":{"icu":25,"ics":25},"415":{"icu":20,"ics":20},"dc250":{"icu":10,"ics":10}}},"F":{"ul":{"240":35,"480":25,"600Y":14,"dc250":22},"iec":{"240":{"icu":35,"ics":35},"415":{"icu":25,"ics":25},"dc250":{"icu":22,"ics":22}}},"G":{"ul":{"240":65,"480":35,"600Y":18,"dc250":22},"iec":{"240":{"icu":55,"ics":55},"415":{"icu":36,"ics":36},"dc250":{"icu":22,"ics":22}}},"K":{"ul":{"240":85,"480":50,"600Y":22,"dc250":35},"iec":{"240":{"icu":85,"ics":85},"415":{"icu":50,"ics":50},"dc250":{"icu":35,"ics":35}}},"M":{"ul":{"240":100,"480":65,"600Y":25,"dc250":42},"iec":{"240":{"icu":100,"ics":100},"415":{"icu":70,"ics":50},"dc250":{"icu":42,"ics":42}}},"N":{"ul":{"240":150,"480":85,"600Y":30,"dc250":42},"iec":{"240":{"icu":150,"ics":150},"415":{"icu":70,"ics":70},"dc250":{"icu":42,"ics":42}}},"P":{"ul":{"240":200,"480":100,"600Y":35,"dc250":42},"iec":{"240":{"icu":200,"ics":200},"415":{"icu":100,"ics":100},"dc250":{"icu":42,"ics":42}}}},"notes":{"1":"UL current limiting.","2":"Available in 3- and 4-pole configurations only.","3":"Must use 2 poles in series for 250 Vdc."}},"2":{"src":"01/2021 p.30","L":{"F":{"ul":{"240":35,"480":25,"600":14,"dc250":10},"iec":{"240":{"icu":35,"ics":35},"415":{"icu":25,"ics":25},"440":{"icu":25,"ics":20},"480":{"icu":20,"ics":20},"525":{"icu":18,"ics":{"tm":15,"pxr":13}},"690":{"icu":null,"ics":null},"dc250":{"icu":10,"ics":10}}},"G":{"ul":{"240":65,"480":35,"600":18,"dc250":10},"iec":{"240":{"icu":55,"ics":55},"415":{"icu":36,"ics":36},"440":{"icu":30,"ics":22.5},"480":{"icu":25,"ics":20},"525":{"icu":20,"ics":{"tm":15,"pxr":13}},"690":{"icu":8,"ics":4},"dc250":{"icu":10,"ics":10}}},"K":{"ul":{"240":85,"480":50,"600":22,"dc250":10},"iec":{"240":{"icu":85,"ics":85},"415":{"icu":50,"ics":50},"440":{"icu":35,"ics":35},"480":{"icu":35,"ics":22.5},"525":{"icu":{"tm":30,"pxr":25},"ics":{"tm":15,"pxr":13}},"690":{"icu":10,"ics":5},"dc250":{"icu":10,"ics":10}}},"M":{"ul":{"240":100,"480":65,"600":25,"dc250":22},"iec":{"240":{"icu":100,"ics":100},"415":{"icu":70,"ics":53},"440":{"icu":50,"ics":40},"480":{"icu":50,"ics":30},"525":{"icu":{"tm":30,"pxr":25},"ics":{"tm":15,"pxr":13}},"690":{"icu":10,"ics":5},"dc250":{"icu":22,"ics":22}}},"N":{"ul":{"240":150,"480":85,"600":{"tm":30,"pxr":25},"dc250":22},"iec":{"240":{"icu":150,"ics":100},"415":{"icu":70,"ics":70},"440":{"icu":70,"ics":50},"480":{"icu":65,"ics":40},"525":{"icu":{"tm":30,"pxr":25},"ics":{"tm":15,"pxr":13}},"690":{"icu":10,"ics":5},"dc250":{"icu":22,"ics":22}}},"P":{"ul":{"240":200,"480":100,"600":{"tm":35,"pxr":25},"dc250":22},"iec":{"240":{"icu":200,"ics":150},"415":{"icu":100,"ics":70},"440":{"icu":100,"ics":65},"480":{"icu":65,"ics":40},"525":{"icu":{"tm":35,"pxr":25},"ics":{"tm":18,"pxr":13}},"690":{"icu":10,"ics":5},"dc250":{"icu":22,"ics":22}}}},"notes":{"1":"UL current limiting for 3- and 4-pole breakers.","2":"DC ratings available in thermal-magnetic breakers only. 250 Vdc is achieved using 2-poles in series.","3":"First rating listed is for thermal-magnetic breakers, second rating is for breakers with PXR electronic trip units."}},"3":{"src":"01/2021 p.43","L":{"F":{"ul":{"240":35,"480":25,"600":14,"dc250":{"f400":10,"f600":22}},"iec":{"240":{"icu":35,"ics":35},"415":{"icu":25,"ics":25},"440":{"icu":25,"ics":20},"480":{"icu":20,"ics":20},"525":{"icu":18,"ics":5},"690":{"icu":null,"ics":null},"dc250":{"icu":{"f400":10,"f600":22},"ics":{"f400":10,"f600":22}}}},"G":{"ul":{"240":65,"480":35,"600":18,"dc250":{"f400":10,"f600":22}},"iec":{"240":{"icu":55,"ics":55},"415":{"icu":36,"ics":36},"440":{"icu":30,"ics":22.5},"480":{"icu":25,"ics":20},"525":{"icu":20,"ics":7.5},"690":{"icu":8,"ics":4},"dc250":{"icu":{"f400":10,"f600":22},"ics":{"f400":10,"f600":22}}}},"K":{"ul":{"240":85,"480":50,"600":25,"dc250":{"f400":10,"f600":22}},"iec":{"240":{"icu":85,"ics":85},"415":{"icu":50,"ics":50},"440":{"icu":35,"ics":35},"480":{"icu":35,"ics":22.5},"525":{"icu":25,"ics":10},"690":{"icu":10,"ics":5},"dc250":{"icu":{"f400":10,"f600":22},"ics":{"f400":10,"f600":22}}}},"M":{"ul":{"240":100,"480":65,"600":35,"dc250":{"f400":22,"f600":42}},"iec":{"240":{"icu":100,"ics":100},"415":{"icu":70,"ics":53},"440":{"icu":50,"ics":40},"480":{"icu":50,"ics":30},"525":{"icu":30,"ics":15},"690":{"icu":15,"ics":7.5},"dc250":{"icu":{"f400":22,"f600":42},"ics":{"f400":22,"f600":42}}}},"N":{"ul":{"240":150,"480":85,"600":50,"dc250":{"f400":22,"f600":42}},"iec":{"240":{"icu":150,"ics":100},"415":{"icu":70,"ics":70},"440":{"icu":70,"ics":50},"480":{"icu":65,"ics":40},"525":{"icu":35,"ics":25},"690":{"icu":20,"ics":10},"dc250":{"icu":{"f400":22,"f600":42},"ics":{"f400":22,"f600":42}}}},"P":{"ul":{"240":200,"480":100,"600":65,"dc250":{"f400":22,"f600":42}},"iec":{"240":{"icu":200,"ics":150},"415":{"icu":100,"ics":70},"440":{"icu":100,"ics":50},"480":{"icu":85,"ics":40},"525":{"icu":40,"ics":25},"690":{"icu":20,"ics":10},"dc250":{"icu":{"f400":22,"f600":42},"ics":{"f400":22,"f600":42}}}}},"notes":{"1":"UL current limiting. M interrupting rating only current limiting for the 400 A construction breakers.","2":"DC ratings available in thermal-magnetic breakers only. 250 Vdc is achieved using two poles in series.","3":"First rating listed is for 400 A frame, second rating is for 600 A frame."}},"4":{"src":"01/2021 p.58","L":{"G":{"ul":{"240":65,"480":35,"600":18,"dc250":22},"iec":{"240":{"icu":55,"ics":55},"415":{"icu":36,"ics":36},"440":{"icu":30,"ics":22.5},"480":{"icu":25,"ics":20},"525":{"icu":20,"ics":16.5},"690":{"icu":8,"ics":4},"dc250":{"icu":22,"ics":22}}},"K":{"ul":{"240":85,"480":50,"600":25,"dc250":22},"iec":{"240":{"icu":85,"ics":85},"415":{"icu":50,"ics":50},"440":{"icu":35,"ics":35},"480":{"icu":35,"ics":22.5},"525":{"icu":25,"ics":20},"690":{"icu":10,"ics":5},"dc250":{"icu":22,"ics":22}}},"M":{"ul":{"240":100,"480":65,"600":35,"dc250":25},"iec":{"240":{"icu":100,"ics":100},"415":{"icu":70,"ics":53},"440":{"icu":50,"ics":40},"480":{"icu":50,"ics":30},"525":{"icu":30,"ics":25},"690":{"icu":15,"ics":7.5},"dc250":{"icu":25,"ics":25}}}},"notes":{"1":"DC ratings available in thermal-magnetic breakers only. 250 Vdc is achieved using 2 poles in series."}},"5":{"src":"01/2021 p.71","L":{"K":{"ul":{"240":85,"480":50,"600":25},"iec":{"240":{"icu":85,"ics":85},"415":{"icu":50,"ics":50},"440":{"icu":35,"ics":35},"480":{"icu":35,"ics":22.5},"525":{"icu":25,"ics":20},"690":{"icu":10,"ics":5}}},"M":{"ul":{"240":100,"480":65,"600":35},"iec":{"240":{"icu":100,"ics":100},"415":{"icu":70,"ics":53},"440":{"icu":50,"ics":40},"480":{"icu":50,"ics":30},"525":{"icu":30,"ics":25},"690":{"icu":15,"ics":7.5}}},"N":{"ul":{"240":150,"480":85,"600":50},"iec":{"240":{"icu":150,"ics":100},"415":{"icu":70,"ics":50},"440":{"icu":70,"ics":50},"480":{"icu":65,"ics":40},"525":{"icu":35,"ics":25},"690":{"icu":20,"ics":10}}},"P":{"ul":{"240":200,"480":100,"600":65},"iec":{"240":{"icu":200,"ics":150},"415":{"icu":100,"ics":50},"440":{"icu":100,"ics":50},"480":{"icu":85,"ics":40},"525":{"icu":40,"ics":25},"690":{"icu":35,"ics":18}}},"T":{"ul":{"240":200,"480":150,"600":65},"iec":{"240":{"icu":null,"ics":null},"415":{"icu":null,"ics":null},"440":{"icu":null,"ics":null},"480":{"icu":null,"ics":null},"525":{"icu":null,"ics":null},"690":{"icu":null,"ics":null}}}},"notes":{}},"6":{"src":"01/2021 p.80","L":{"M":{"ul":{"240":125,"480":65,"600":35},"iec":{"240":{"icu":135,"ics":100},"415":{"icu":70,"ics":53},"440":{"icu":50,"ics":40},"480":{"icu":50,"ics":30},"525":{"icu":30,"ics":25},"690":{"icu":15,"ics":7.5}}},"N":{"ul":{"240":150,"480":85,"600":50},"iec":{"240":{"icu":150,"ics":100},"415":{"icu":70,"ics":53},"440":{"icu":70,"ics":50},"480":{"icu":65,"ics":40},"525":{"icu":35,"ics":25},"690":{"icu":20,"ics":13}}},"P":{"ul":{"240":200,"480":100,"600":65},"iec":{"240":{"icu":200,"ics":100},"415":{"icu":100,"ics":53},"440":{"icu":100,"ics":50},"480":{"icu":85,"ics":40},"525":{"icu":40,"ics":25},"690":{"icu":35,"ics":18}}}},"notes":{}}},"onePole":{"1":{"src":"01/2021 p.23","L":{"C":{"ul":{"120":35,"240":25,"277":18,"347":10,"dc125":10},"iec":{"240":{"icu":25,"ics":25},"dc125":{"icu":10,"ics":10}}},"F":{"ul":{"120":null,"240":35,"277":25,"347":14,"dc125":22},"iec":{"240":{"icu":35,"ics":35},"dc125":{"icu":22,"ics":22}}},"G":{"ul":{"120":100,"240":65,"277":35,"347":18,"dc125":22},"iec":{"240":{"icu":55,"ics":55},"dc125":{"icu":22,"ics":22}}},"K":{"ul":{"120":null,"240":85,"277":50,"347":22,"dc125":35},"iec":{"240":{"icu":85,"ics":85},"dc125":{"icu":35,"ics":35}}},"M":{"ul":{"120":200,"240":100,"277":65,"347":25,"dc125":35},"iec":{"240":{"icu":100,"ics":100},"dc125":{"icu":35,"ics":35}}}}},"2":{"src":"01/2021 p.30","L":{"F":{"ul":{"277":25,"347":14,"dc125":10},"iec":{"240":{"icu":25,"ics":25},"dc125":{"icu":10,"ics":10}}},"G":{"ul":{"277":35,"347":18,"dc125":10},"iec":{"240":{"icu":36,"ics":36},"dc125":{"icu":10,"ics":10}}},"K":{"ul":{"277":50,"347":22,"dc125":10},"iec":{"240":{"icu":50,"ics":50},"dc125":{"icu":10,"ics":10}}},"M":{"ul":{"277":65,"347":25,"dc125":22},"iec":{"240":{"icu":70,"ics":70},"dc125":{"icu":22,"ics":22}}},"N":{"ul":{"277":85,"347":30,"dc125":22},"iec":{"240":{"icu":85,"ics":70},"dc125":{"icu":22,"ics":22}}},"P":{"ul":{"277":100,"347":35,"dc125":22},"iec":{"240":{"icu":100,"ics":70},"dc125":{"icu":22,"ics":22}}}}}},"letters":{"G:1:tm":"CFGKMNP","G:1:switch":"GM","G:2:tm:1":"FGKMNP","G:2:tm":"FGKMNP","D:2:tm":"FGKMNP","G:2:switch":"GM","G:2:pxr":"FGKMNP","F:2:pxr":"FGKMNP","G:3:tm":"FGKMNP","F:3:tm":"FGKM","D:3:tm":"FGKMNP","G:3:switch":"GM","G:3:pxr":"FGKMNP","F:3:pxr":"FGKM","G:3:frame":"FGKMNP","F:3:frame":"FGKM","G:4:tm":"GKM","G:4:switch":"GM","G:4:pxr":"GKM","F:4:pxr":"GKM","G:4:frame":"GKM","F:4:frame":"GKM","G:5:pxr":"KMNP","F:5:pxr":"KMNP","J:5:pxr":"T","G:5:switch":"KM","C:5:pxr":"KM","G:5:frame":"KMNP","F:5:frame":"KMNP","G:6:pxr":"MNP","F:6:pxr":"MNP","G:6:switch":"M","G:6:frame":"MNP","F:6:frame":"MNP","G:1:mcp":"M","G:2:mcp":" '()-0269;CDGMPabcdeghilmnoprstuvy","G:3:mcp":"M","G:2:mpcb":"FGKMNP","F:2:mpcb":"FGKMNP","G:3:mpcb":"FGKMNP","F:3:mpcb":"FGKM","J:5:pxr:H":"M"},"amps":{"G:1:tm":{"codes":["0015","0020","0025","0030","0035","0040","0045","0050","0060","0070","0080","0090","0100","0110","0125"],"poles":"01234","src":[24]},"G:1:switch":{"codes":["0125"],"poles":"34","src":[24]},"G:2:tm":{"codes":["0015","0020","0025","0030","0035","0040","0045","0050","0060","0070","0080","0090","0100","0110","0125","0150","0175","0200","0225"],"poles":"012346","src":[31]},"D:2:tm":{"codes":["0015","0020","0025","0030","0035","0040","0045","0050","0060","0070","0080","0090","0100","0110","0125","0150","0175","0200","0225"],"poles":"23","src":[32]},"G:2:switch":{"codes":["0100","0150","0225"],"poles":"234","src":[32]},"G:2:pxr":{"codes":["0060","0100","0150","0225"],"poles":"34","src":[32]},"F:2:pxr":{"codes":["0060","0100","0150","0225"],"poles":"34","src":[32]},"G:3:tm":{"codes":["0100","0125","0150","0175","0200","0225","0250","H250","0300","H300","0350","H350","0400","H400","0500","0600"],"poles":"","src":[44]},"F:3:tm":{"codes":["H250","H300","H350","H400","0500","0600"],"poles":"","src":[44]},"D:3:tm":{"codes":["0100","0125","0150","0175","0200","0225","0250","0300","0350","0400","0500","0600"],"poles":"","src":[44]},"G:3:switch":{"codes":["0400","0600"],"poles":"","src":[44]},"G:3:pxr":{"codes":["0125","0250","H250","H300","H350","0400","H400","0600"],"poles":"","src":[45,104]},"F:3:pxr":{"codes":["0125","0250","H250","0400","H400","0600"],"poles":"","src":[45]},"G:3:frame":{"codes":["0400","0600"],"poles":"","src":[46,104]},"F:3:frame":{"codes":["0400","0600"],"poles":"","src":[46]},"G:3:kit-tm":{"codes":["0100","0125","0150","0175","0200","0225","0250","H250","0300","H300","0350","H350","0400","H400","0500","0600"],"poles":"","src":[47]},"G:3:kit-pxr":{"codes":["0125","0250","H250","0400","H400","0600"],"poles":"","src":[47]},"G:4:tm":{"codes":["0300","0350","0400","0450","0500","0600","0700","0800"],"poles":"02346","src":[58]},"G:4:switch":{"codes":["0800"],"poles":"234","src":[58]},"G:4:pxr":{"codes":["0800"],"poles":"234","src":[59]},"F:4:pxr":{"codes":["0800"],"poles":"34","src":[59]},"G:4:frame":{"codes":["0800"],"poles":"234","src":[59]},"F:4:frame":{"codes":["0800"],"poles":"34","src":[59]},"G:4:kit-tm":{"codes":["0300","0350","0400","0450","0500","0600","0700","0800"],"poles":"02346","src":[60]},"G:4:kit-pxr":{"codes":["0800"],"poles":"34","src":[60]},"G:5:pxr":{"codes":["0800","1200"],"poles":"234","src":[71]},"F:5:pxr":{"codes":["0800","1200"],"poles":"34","src":[71]},"J:5:pxr":{"codes":["H400","0800"],"poles":"3","src":[71,106]},"G:5:switch":{"codes":["0800","1200"],"poles":"34","src":[72]},"C:5:pxr":{"codes":["1600"],"poles":"34","src":[72]},"G:5:frame":{"codes":["0800","1200"],"poles":"234","src":[72]},"F:5:frame":{"codes":["0800","1200"],"poles":"34","src":[72]},"G:5:kit-pxr":{"codes":["0800","1200"],"poles":"34","src":[73]},"G:6:pxr":{"codes":["1600","2000","2500"],"poles":"234","src":[80]},"F:6:pxr":{"codes":["1600","2000","2500"],"poles":"34","src":[80],"field":{"2500":"Eaton SKU pages PDF63N2500D5YM, PDF63N2500E2CM (read 2026-10-14); 2021 p.80 prints PDF6 at 1600 and 2000 only"}},"G:6:switch":{"codes":["1600","2000"],"poles":"34","src":[80]},"G:6:frame":{"codes":["1600","2000","2500"],"poles":"234","src":[81]},"F:6:frame":{"codes":["1600","2000"],"poles":"34","src":[81]},"G:6:kit-pxr":{"codes":["1600","2000","2500"],"poles":"34","src":[81]},"G:1:mcp:MSA":{"codes":["0003","0007","0015","0030","0050","0070","0100"],"poles":"3","src":[88]},"G:1:mcp:MHA":{"codes":["0100"],"poles":"3","src":[89]},"G:2:mcp:MSA":{"codes":["0003","0007","0015","0030","0050","0100","0150"],"poles":"3","src":[90]},"G:2:mcp:MHA":{"codes":["0150"],"poles":"3","src":[91]},"G:2:mcp:MLA":{"codes":["0025","0050","0070","0100"],"poles":"3","src":[92]},"G:3:mcp:MSA":{"codes":["0070","0100","0125","0150","0175","0200","0225","0250","H250","0300","H300","0350","H350","0400","H400","0450","0500","0600"],"poles":"3","src":[93,96],"sub":["400","600"]},"G:3:mcp:MHA":{"codes":["0400"],"poles":"3","src":[95],"sub":["400"]},"G:2:mpcb":{"codes":["0060","0100","0150","0200"],"poles":"3","src":[99]},"F:2:mpcb":{"codes":["0060","0100","0150","0200"],"poles":"34","src":[99]},"G:3:mpcb":{"codes":["0125","0250","H250","0400","H400","0600"],"poles":"3","src":[100]},"F:3:mpcb":{"codes":["0125","0250","H250","0400","H400","0600"],"poles":"3","src":[100]},"G:2:tm:1":{"codes":["0015","0020","0025","0030","0035","0040","0045","0050","0060","0070","0080","0090","0100","0110","0125","0150"],"poles":"1","src":[31]}},"term":{"1:N":{"text":"No terminals","side":null,"kits":[]},"1:J":{"text":"Standard terminal, steel body","side":"line and load","kits":[{"kit":"PDG1X3T125","wire":"14-3/0","lo":null,"hi":125,"body":"Steel","per":1,"p":25,"byPole":{"2":"PDG1X2T125","3":"PDG1X3T125","4":"PDG1X4T125"}}]},"1:K":{"text":"Standard terminal, steel body","side":"line only","kits":[{"kit":"PDG1X3T125","wire":"14-3/0","lo":null,"hi":125,"body":"Steel","per":1,"p":25,"byPole":{"2":"PDG1X2T125","3":"PDG1X3T125","4":"PDG1X4T125"}}]},"1:L":{"text":"Standard terminals","side":"load only","kits":[{"kit":"PDG1X3T125","wire":"14-3/0","lo":null,"hi":125,"body":"Steel","per":1,"p":25}]},"1:T":{"text":"Alternate Terminals","side":"line and load","kits":[{"kit":"PDG1X3TA125","wire":"14-1/0","lo":null,"hi":125,"body":"Aluminum","per":1,"p":25,"byPole":{"2":"PDG1X2TA125","3":"PDG1X3TA125","4":"PDG1X4TA125"}}]},"1:U":{"text":"Alternate Terminals","side":"line only","kits":[{"kit":"PDG1X3TA125","wire":"14-1/0","lo":null,"hi":125,"body":"Aluminum","per":1,"p":25,"byPole":{"2":"PDG1X2TA125","3":"PDG1X3TA125","4":"PDG1X4TA125"}}]},"1:V":{"text":"Alternate Terminals","side":"load only","kits":[{"kit":"PDG1X3TA125","wire":"14-1/0","lo":null,"hi":125,"body":"Aluminum","per":1,"p":25}]},"1:G":{"text":"Multi-wire Terminals","side":"load only","kits":[{"kit":"PDG1X3TA1256W","wire":"14-6","lo":null,"hi":125,"body":"Aluminum","per":6,"p":25}]},"1:H":{"text":"Multi-wire Terminals","side":"load only","kits":[{"kit":"PDG1X3TA1253W","wire":"14-2","lo":null,"hi":125,"body":"Aluminum","per":3,"p":25}]},"1:S":{"text":"End Cap Kit/Screw Terminals","side":"line and load","kits":[{"kit":"PDG1X3TS125","wire":"—","lo":null,"hi":null,"body":null,"per":null,"p":25,"byPole":{"3":"PDG1X3TS125","4":"PDG1X4TS125"}}]},"1:D":{"text":"End Cap Kit/Screw Terminals","side":"line only","kits":[{"kit":"PDG1X3TS125","wire":"—","lo":null,"hi":null,"body":null,"per":null,"p":25,"byPole":{"3":"PDG1X3TS125","4":"PDG1X4TS125"}}]},"1:E":{"text":"End Cap Kit/Screw Terminals","side":"load only","kits":[{"kit":"PDG1X3TS125","wire":"—","lo":null,"hi":null,"body":null,"per":null,"p":25}]},"2:N":{"text":"No terminals","side":null,"kits":[]},"2:J":{"text":"Standard terminal, steel body (15–100 A)","side":"line and load","kits":[{"kit":"PDG2X3T100","wire":"14–1/0","lo":15,"hi":100,"body":"Steel","per":1,"p":34,"byPole":{"2":"PDG2X2T100","3":"PDG2X3T100","4":"PDG2X4T100"}},{"kit":"PDG2X3TA225","wire":"4–4/0","lo":60,"hi":225,"body":"Aluminum","per":1,"p":34,"byPole":{"2":"PDG2X2TA225","3":"PDG2X3TA225","4":"PDG2X4TA225"}}]},"2:K":{"text":"Standard terminal, steel body (15–100 A)","side":"line only","kits":[{"kit":"PDG2X3T100","wire":"14–1/0","lo":15,"hi":100,"body":"Steel","per":1,"p":34,"byPole":{"2":"PDG2X2T100","3":"PDG2X3T100","4":"PDG2X4T100"}},{"kit":"PDG2X3TA225","wire":"4–4/0","lo":60,"hi":225,"body":"Aluminum","per":1,"p":34,"byPole":{"2":"PDG2X2TA225","3":"PDG2X3TA225","4":"PDG2X4TA225"}},{"kit":"TA250FJ","wire":"#8–350","lo":null,"hi":null,"body":null,"per":null,"p":108}]},"2:L":{"text":"Standard terminals","side":"load only","kits":[{"kit":"PDG2X3T100","wire":"14–1/0","lo":15,"hi":100,"body":"Steel","per":1,"p":34},{"kit":"PDG2X3TA225","wire":"4–4/0","lo":60,"hi":225,"body":"Aluminum","per":1,"p":34},{"kit":"TA250FJ","wire":"#8–350","lo":null,"hi":null,"body":null,"per":null,"p":108}]},"2:W":{"text":"Optional line and load terminals","side":"line and load","kits":[{"kit":"PDG2X3T100","wire":"14–1/0","lo":15,"hi":100,"body":"Steel","per":1,"p":34},{"kit":"PDG2X3T150","wire":"4–4/0","lo":60,"hi":150,"body":"Stainless Steel","per":1,"p":34,"byPole":{"2":"PDG2X2T150","3":"PDG2X3T150","4":"PDG2X4T150"}},{"kit":"PDG2X3T225","wire":"4–4/0","lo":60,"hi":225,"body":"Copper","per":1,"p":34,"byPole":{"2":"PDG2X2T225","3":"PDG2X3T225","4":"PDG2X4T225"}}]},"2:T":{"text":"Alternate Terminals","side":"line and load","kits":[{"kit":"PDG2X3TA50","wire":"14–4","lo":15,"hi":50,"body":"Aluminum","per":1,"p":34,"byPole":{"2":"PDG2X2TA50","3":"PDG2X3TA50","4":"PDG2X4TA50"}},{"kit":"PDG2X3TA100","wire":"14–1/0","lo":60,"hi":100,"body":"Aluminum","per":1,"p":34,"byPole":{"2":"PDG2X2TA100","3":"PDG2X3TA100","4":"PDG2X4TA100"}},{"kit":"PDG2X3TA150","wire":"14–4/0","lo":60,"hi":150,"body":"Aluminum","per":1,"p":34,"byPole":{"2":"PDG2X2TA150","3":"PDG2X3TA150","4":"PDG2X4TA150"}},{"kit":"PDG2X3TA225K","wire":"6–300","lo":175,"hi":225,"body":"Aluminum","per":1,"p":34,"byPole":{"2":"PDG2X2TA225K","3":"PDG2X3TA225K","4":"PDG2X4TA225K"}}]},"2:U":{"text":"Alternate Terminals","side":"line only","kits":[{"kit":"PDG2X3TA50","wire":"14–4","lo":15,"hi":50,"body":"Aluminum","per":1,"p":34,"byPole":{"2":"PDG2X2TA50","3":"PDG2X3TA50","4":"PDG2X4TA50"}},{"kit":"PDG2X3TA100","wire":"14–1/0","lo":60,"hi":100,"body":"Aluminum","per":1,"p":34,"byPole":{"2":"PDG2X2TA100","3":"PDG2X3TA100","4":"PDG2X4TA100"}},{"kit":"PDG2X3TA150","wire":"14–4/0","lo":60,"hi":150,"body":"Aluminum","per":1,"p":34,"byPole":{"2":"PDG2X2TA150","3":"PDG2X3TA150","4":"PDG2X4TA150"}},{"kit":"PDG2X3TA225K","wire":"6–300","lo":175,"hi":225,"body":"Aluminum","per":1,"p":34,"byPole":{"2":"PDG2X2TA225K","3":"PDG2X3TA225K","4":"PDG2X4TA225K"}}]},"2:V":{"text":"Alternate Terminals","side":"load only","kits":[{"kit":"PDG2X3TA50","wire":"14–4","lo":15,"hi":50,"body":"Aluminum","per":1,"p":34},{"kit":"PDG2X3TA100","wire":"14–1/0","lo":60,"hi":100,"body":"Aluminum","per":1,"p":34},{"kit":"PDG2X3TA150","wire":"14–4/0","lo":60,"hi":150,"body":"Aluminum","per":1,"p":34},{"kit":"PDG2X3TA225K","wire":"6–300","lo":175,"hi":225,"body":"Aluminum","per":1,"p":34}]},"2:Y":{"text":"Non-standard Terminals","side":"line only","kits":[{"kit":"PDG2X3T100","wire":"14–1/0","lo":15,"hi":100,"body":"Steel","per":1,"p":34},{"kit":"PDG2X3T150","wire":"4–4/0","lo":60,"hi":150,"body":"Stainless Steel","per":1,"p":34,"byPole":{"2":"PDG2X2T150","3":"PDG2X3T150","4":"PDG2X4T150"}},{"kit":"PDG2X3T225","wire":"4–4/0","lo":60,"hi":225,"body":"Copper","per":1,"p":34,"byPole":{"2":"PDG2X2T225","3":"PDG2X3T225","4":"PDG2X4T225"}}]},"2:Z":{"text":"Non-standard Terminals","side":"load only","kits":[{"kit":"PDG2X3T100","wire":"14–1/0","lo":15,"hi":100,"body":"Steel","per":1,"p":34},{"kit":"PDG2X3T150","wire":"4–4/0","lo":60,"hi":150,"body":"Stainless Steel","per":1,"p":34},{"kit":"PDG2X3T225","wire":"4–4/0","lo":60,"hi":225,"body":"Copper","per":1,"p":34}]},"2:G":{"text":"Multi-wire Terminals","side":"load only","kits":[{"kit":"PDG2X3TA2256W","wire":"14–6","lo":150,"hi":225,"body":"Aluminum","per":6,"p":34}]},"2:H":{"text":"Multi-wire Terminals","side":"load only","kits":[{"kit":"PDG2X3TA2253W","wire":"14–2","lo":150,"hi":225,"body":"Aluminum","per":3,"p":34}]},"2:R":{"text":"Rear Connectors","side":"line and load","kits":[{"kit":"PDG2X3T225RC","wire":null,"lo":null,"hi":225,"body":null,"per":null,"p":34}]},"2:S":{"text":"End Cap Kits/Screw Terminals","side":"line and load","kits":[{"kit":"PDG2X3TS225","wire":null,"lo":null,"hi":225,"body":null,"per":null,"p":34,"byPole":{"3":"PDG2X3TS225","4":"PDG2X4TS225"}}]},"2:D":{"text":"End Cap Kits/Screw Terminals","side":"line only","kits":[{"kit":"PDG2X3TS225","wire":null,"lo":null,"hi":225,"body":null,"per":null,"p":34,"byPole":{"3":"PDG2X3TS225","4":"PDG2X4TS225"}}]},"2:E":{"text":"End Cap Kits/Screw Terminals","side":"load only","kits":[{"kit":"PDG2X3TS225","wire":null,"lo":null,"hi":225,"body":null,"per":null,"p":34}]},"3:N":{"text":"No terminals","side":null,"kits":[]},"3:J":{"text":"Standard Terminals — Aluminum body","side":"line and load","kits":[{"kit":"PDG3X3TA300","wire":"3–350","lo":100,"hi":225,"body":"Aluminum","per":"1","p":49,"byPole":{"2":"PDG3X2TA300","3":"PDG3X3TA300","4":"PDG3X4TA300"}},{"kit":"PDG3X3TA350","wire":"250–500","lo":250,"hi":350,"body":"Aluminum","per":"1","p":49,"byPole":{"2":"PDG3X2TA350","3":"PDG3X3TA350","4":"PDG3X4TA350"}},{"kit":"PDG3X3TA400","wire":"3/0–250","lo":null,"hi":400,"body":"Aluminum","per":"2","p":49,"byPole":{"2":"PDG3X2TA400","3":"PDG3X3TA400","4":"PDG3X4TA400"}},{"kit":"PDG3X3TA401H","wire":"500–750","lo":null,"hi":400,"body":"Aluminum","per":"1","p":49,"byPole":{"2":"PDG3X2TA401H","3":"PDG3X3TA401H","4":"PDG3X4TA401H"}},{"kit":"PDG3X3TA630","wire":"2–500","lo":450,"hi":600,"body":"Aluminum","per":"2","p":49,"byPole":{"2":"PDG3X2TA630","3":"PDG3X3TA630","4":"PDG3X4TA630"}}]},"3:K":{"text":"Standard Terminals — Aluminum body","side":"line only","kits":[{"kit":"PDG3X3TA300","wire":"3–350","lo":100,"hi":225,"body":"Aluminum","per":"1","p":49,"byPole":{"2":"PDG3X2TA300","3":"PDG3X3TA300","4":"PDG3X4TA300"}},{"kit":"PDG3X3TA350","wire":"250–500","lo":250,"hi":350,"body":"Aluminum","per":"1","p":49,"byPole":{"2":"PDG3X2TA350","3":"PDG3X3TA350","4":"PDG3X4TA350"}},{"kit":"PDG3X3TA400","wire":"3/0–250","lo":null,"hi":400,"body":"Aluminum","per":"2","p":49,"byPole":{"2":"PDG3X2TA400","3":"PDG3X3TA400","4":"PDG3X4TA400"}},{"kit":"PDG3X3TA401H","wire":"500–750","lo":null,"hi":400,"body":"Aluminum","per":"1","p":49,"byPole":{"2":"PDG3X2TA401H","3":"PDG3X3TA401H","4":"PDG3X4TA401H"}},{"kit":"PDG3X3TA630","wire":"2–500","lo":450,"hi":600,"body":"Aluminum","per":"2","p":49,"byPole":{"2":"PDG3X2TA630","3":"PDG3X3TA630","4":"PDG3X4TA630"}}]},"3:L":{"text":"Standard Terminals — Aluminum body","side":"load only","kits":[{"kit":"PDG3X3TA300","wire":"3–350","lo":100,"hi":225,"body":"Aluminum","per":"1","p":49},{"kit":"PDG3X3TA350","wire":"250–500","lo":250,"hi":350,"body":"Aluminum","per":"1","p":49},{"kit":"PDG3X3TA400","wire":"3/0–250","lo":null,"hi":400,"body":"Aluminum","per":"2","p":49},{"kit":"PDG3X3TA401H","wire":"500–750","lo":null,"hi":400,"body":"Aluminum","per":"1","p":49},{"kit":"PDG3X3TA630","wire":"2–500","lo":450,"hi":600,"body":"Aluminum","per":"2","p":49}]},"3:T":{"text":"Optional Aluminum Terminals — Aluminum body","side":"line and load","kits":[{"kit":"PDG3X3TA402","wire":"500–750","lo":100,"hi":400,"body":"Aluminum","per":"1","p":49,"byPole":{"2":"PDG3X2TA402","3":"PDG3X3TA402","4":"PDG3X4TA402"}},{"kit":"PDG3X3TA400H","wire":"3–500","lo":null,"hi":400,"body":"Aluminum","per":"1","p":49,"byPole":{"2":"PDG3X2TA400H","3":"PDG3X3TA400H","4":"PDG3X4TA400H"}}]},"3:U":{"text":"Optional Aluminum Terminals — Aluminum body","side":"line only","kits":[{"kit":"PDG3X3TA402","wire":"500–750","lo":100,"hi":400,"body":"Aluminum","per":"1","p":49,"byPole":{"2":"PDG3X2TA402","3":"PDG3X3TA402","4":"PDG3X4TA402"}},{"kit":"PDG3X3TA400H","wire":"3–500","lo":null,"hi":400,"body":"Aluminum","per":"1","p":49,"byPole":{"2":"PDG3X2TA400H","3":"PDG3X3TA400H","4":"PDG3X4TA400H"}}]},"3:V":{"text":"Optional Aluminum Terminals — Aluminum body","side":"load only","kits":[{"kit":"PDG3X3TA402","wire":"500–750","lo":100,"hi":400,"body":"Aluminum","per":"1","p":49},{"kit":"PDG3X3TA400H","wire":"3–500","lo":null,"hi":400,"body":"Aluminum","per":"1","p":49}]},"3:I":{"text":"Optional Aluminum Terminals — Aluminum body","side":"line and load","kits":[{"kit":"PDG3X3TA401","wire":"2/0–250or 2/0–500","lo":100,"hi":400,"body":"Aluminum","per":"2","p":49}]},"3:O":{"text":"Optional Aluminum Terminals — Aluminum body","side":"line only","kits":[{"kit":"PDG3X3TA401","wire":"2/0–250or 2/0–500","lo":100,"hi":400,"body":"Aluminum","per":"2","p":49}]},"3:F":{"text":"Optional Aluminum Terminals — Aluminum body","side":"load only","kits":[{"kit":"PDG3X3TA401","wire":"2/0–250or 2/0–500","lo":100,"hi":400,"body":"Aluminum","per":"2","p":49}]},"3:W":{"text":"Optional Copper Terminals — Copper body","side":"line and load","kits":[{"kit":"PDG3X3T300","wire":"3–350","lo":100,"hi":225,"body":"Copper","per":"1","p":49,"byPole":{"2":"PDG3X2T300","3":"PDG3X3T300","4":"PDG3X4T300"}},{"kit":"PDG3X3T350","wire":"250–500","lo":250,"hi":350,"body":"Copper","per":"1","p":49,"byPole":{"2":"PDG3X2T350","3":"PDG3X3T350","4":"PDG3X4T350"}},{"kit":"PDG3X3T400","wire":"3/0–250","lo":null,"hi":400,"body":"Copper","per":"2","p":49,"byPole":{"2":"PDG3X2T400","3":"PDG3X3T400","4":"PDG3X4T400"}},{"kit":"PDG3X3T401H","wire":"500–750","lo":null,"hi":400,"body":"Copper","per":"1","p":49,"byPole":{"2":"PDG3X2T401H","3":"PDG3X3T401H","4":"PDG3X4T401H"}},{"kit":"PDG3X3T630","wire":"2–500","lo":450,"hi":600,"body":"Copper","per":"2","p":49,"byPole":{"2":"PDG3X2T630","3":"PDG3X3T630","4":"PDG3X4T630"}}]},"3:Y":{"text":"Optional Copper Terminals — Copper body","side":"line only","kits":[{"kit":"PDG3X3T300","wire":"3–350","lo":100,"hi":225,"body":"Copper","per":"1","p":49,"byPole":{"2":"PDG3X2T300","3":"PDG3X3T300","4":"PDG3X4T300"}},{"kit":"PDG3X3T350","wire":"250–500","lo":250,"hi":350,"body":"Copper","per":"1","p":49,"byPole":{"2":"PDG3X2T350","3":"PDG3X3T350","4":"PDG3X4T350"}},{"kit":"PDG3X3T400","wire":"3/0–250","lo":null,"hi":400,"body":"Copper","per":"2","p":49,"byPole":{"2":"PDG3X2T400","3":"PDG3X3T400","4":"PDG3X4T400"}},{"kit":"PDG3X3T401H","wire":"500–750","lo":null,"hi":400,"body":"Copper","per":"1","p":49,"byPole":{"2":"PDG3X2T401H","3":"PDG3X3T401H","4":"PDG3X4T401H"}},{"kit":"PDG3X3T630","wire":"2–500","lo":450,"hi":600,"body":"Copper","per":"2","p":49,"byPole":{"2":"PDG3X2T630","3":"PDG3X3T630","4":"PDG3X4T630"}}]},"3:Z":{"text":"Optional Copper Terminals — Copper body","side":"load only","kits":[{"kit":"PDG3X3T300","wire":"3–350","lo":100,"hi":225,"body":"Copper","per":"1","p":49},{"kit":"PDG3X3T350","wire":"250–500","lo":250,"hi":350,"body":"Copper","per":"1","p":49},{"kit":"PDG3X3T400","wire":"3/0–250","lo":null,"hi":400,"body":"Copper","per":"2","p":49},{"kit":"PDG3X3T401H","wire":"500–750","lo":null,"hi":400,"body":"Copper","per":"1","p":49},{"kit":"PDG3X3T630","wire":"2–500","lo":450,"hi":600,"body":"Copper","per":"2","p":49}]},"3:A":{"text":"StrandAble Terminals — Aluminum body","side":"line and load","kits":[{"kit":"PDG3X3TA400SW","wire":"3/0–250  |  3/0–4/0","lo":100,"hi":400,"body":"Aluminum","per":"2","p":49,"byPole":{"2":"PDG3X2TA400SW","3":"PDG3X3TA400SW","4":"PDG3X4TA400SW"}},{"kit":"PDG3X3TA630SW","wire":"2–500  |  2–350","lo":250,"hi":600,"body":"Aluminum","per":"2","p":49,"byPole":{"2":"PDG3X2TA630SW","3":"PDG3X3TA630SW","4":"PDG3X4TA630SW"}}]},"3:B":{"text":"StrandAble Terminals — Aluminum body","side":"line only","kits":[{"kit":"PDG3X3TA400SW","wire":"3/0–250  |  3/0–4/0","lo":100,"hi":400,"body":"Aluminum","per":"2","p":49,"byPole":{"2":"PDG3X2TA400SW","3":"PDG3X3TA400SW","4":"PDG3X4TA400SW"}},{"kit":"PDG3X3TA630SW","wire":"2–500  |  2–350","lo":250,"hi":600,"body":"Aluminum","per":"2","p":49,"byPole":{"2":"PDG3X2TA630SW","3":"PDG3X3TA630SW","4":"PDG3X4TA630SW"}}]},"3:C":{"text":"StrandAble Terminals — Aluminum body","side":"load only","kits":[{"kit":"PDG3X3TA400SW","wire":"3/0–250  |  3/0–4/0","lo":100,"hi":400,"body":"Aluminum","per":"2","p":49},{"kit":"PDG3X3TA630SW","wire":"2–500  |  2–350","lo":250,"hi":600,"body":"Aluminum","per":"2","p":49}]},"3:1":{"text":"Control Wire Aluminum Terminals — Aluminum body","side":"line and load","kits":[{"kit":"PDG3X3TA400CW","wire":"3/0–250","lo":100,"hi":400,"body":"Aluminum","per":"2","p":50,"byPole":{"2":"PDG3X2TA400CW","3":"PDG3X3TA400CW","4":"PDG3X4TA400CW"}},{"kit":"PDG3X3TA401HCW","wire":"500–750","lo":null,"hi":400,"body":"Aluminum","per":"1","p":50},{"kit":"PDG3X3TA630CW","wire":"2–500","lo":450,"hi":600,"body":"Aluminum","per":"2","p":50,"byPole":{"2":"PDG3X2TA630CW","3":"PDG3X3TA630CW","4":"PDG3X4TA630CW"}}]},"3:2":{"text":"Control Wire Aluminum Terminals — Aluminum body","side":"line only","kits":[{"kit":"PDG3X3TA400CW","wire":"3/0–250","lo":100,"hi":400,"body":"Aluminum","per":"2","p":50,"byPole":{"2":"PDG3X2TA400CW","3":"PDG3X3TA400CW","4":"PDG3X4TA400CW"}},{"kit":"PDG3X3TA401HCW","wire":"500–750","lo":null,"hi":400,"body":"Aluminum","per":"1","p":50},{"kit":"PDG3X3TA630CW","wire":"2–500","lo":450,"hi":600,"body":"Aluminum","per":"2","p":50,"byPole":{"2":"PDG3X2TA630CW","3":"PDG3X3TA630CW","4":"PDG3X4TA630CW"}}]},"3:3":{"text":"Control Wire Aluminum Terminals — Aluminum body","side":"load only","kits":[{"kit":"PDG3X3TA400CW","wire":"3/0–250","lo":100,"hi":400,"body":"Aluminum","per":"2","p":50},{"kit":"PDG3X3TA401HCW","wire":"500–750","lo":null,"hi":400,"body":"Aluminum","per":"1","p":50},{"kit":"PDG3X3TA630CW","wire":"2–500","lo":450,"hi":600,"body":"Aluminum","per":"2","p":50}]},"3:4":{"text":"Control Wire Aluminum Terminals — Aluminum body","side":"line and load","kits":[{"kit":"PDG3X3TA401CW","wire":"2/0–250or 2/0–500","lo":100,"hi":400,"body":"Aluminum","per":"2","p":50,"byPole":{"2":"PDG3X2TA401CW","3":"PDG3X3TA401CW","4":"PDG3X4TA401CW"}}]},"3:5":{"text":"Control Wire Aluminum Terminals — Aluminum body","side":"line only","kits":[{"kit":"PDG3X3TA401CW","wire":"2/0–250or 2/0–500","lo":100,"hi":400,"body":"Aluminum","per":"2","p":50,"byPole":{"2":"PDG3X2TA401CW","3":"PDG3X3TA401CW","4":"PDG3X4TA401CW"}}]},"3:6":{"text":"Control Wire Aluminum Terminals — Aluminum body","side":"load only","kits":[{"kit":"PDG3X3TA401CW","wire":"2/0–250or 2/0–500","lo":100,"hi":400,"body":"Aluminum","per":"2","p":50}]},"3:7":{"text":"Control Wire Copper Terminals — Copper body","side":"line and load","kits":[{"kit":"PDG3X3T400CW","wire":"3/0–250","lo":100,"hi":400,"body":"Copper","per":"2","p":50,"byPole":{"2":"PDG3X2T400CW","3":"PDG3X3T400CW","4":"PDG3X4T400CW"}},{"kit":"PDG3X3T401HCW","wire":"500–750","lo":null,"hi":400,"body":"Copper","per":"1","p":50},{"kit":"PDG3X3T630CW","wire":"2–500","lo":450,"hi":600,"body":"Copper","per":"2","p":50,"byPole":{"2":"PDG3X2T630CW","3":"PDG3X3T630CW","4":"PDG3X4T630CW"}}]},"3:8":{"text":"Control Wire Copper Terminals — Copper body","side":"line only","kits":[{"kit":"PDG3X3T400CW","wire":"3/0–250","lo":100,"hi":400,"body":"Copper","per":"2","p":50,"byPole":{"2":"PDG3X2T400CW","3":"PDG3X3T400CW","4":"PDG3X4T400CW"}},{"kit":"PDG3X3T401HCW","wire":"500–750","lo":null,"hi":400,"body":"Copper","per":"1","p":50},{"kit":"PDG3X3T630CW","wire":"2–500","lo":450,"hi":600,"body":"Copper","per":"2","p":50,"byPole":{"2":"PDG3X2T630CW","3":"PDG3X3T630CW","4":"PDG3X4T630CW"}}]},"3:9":{"text":"Control Wire Copper Terminals — Copper body","side":"load only","kits":[{"kit":"PDG3X3T400CW","wire":"3/0–250","lo":100,"hi":400,"body":"Copper","per":"2","p":50},{"kit":"PDG3X3T401HCW","wire":"500–750","lo":null,"hi":400,"body":"Copper","per":"1","p":50},{"kit":"PDG3X3T630CW","wire":"2–500","lo":450,"hi":600,"body":"Copper","per":"2","p":50}]},"3:H":{"text":"Multi-wire Terminals — Aluminum body","side":"load only","kits":[{"kit":"PDG3X3TA4003W","wire":"12–2/0","lo":100,"hi":400,"body":"Aluminum","per":"3","p":50}]},"3:G":{"text":"Multi-wire Terminals — Aluminum body","side":"load only","kits":[{"kit":"PDG3X3TA4006W","wire":"14–3","lo":100,"hi":400,"body":"Aluminum","per":"6","p":50},{"kit":"PDG3X3TA6006W","wire":"14–1/0","lo":250,"hi":600,"body":"Aluminum","per":"6","p":50}]},"3:R":{"text":"Rear Connectors — — body","side":"line and load","kits":[{"kit":"PDG3X3T400RC","wire":null,"lo":100,"hi":400,"body":null,"per":null,"p":50},{"kit":"PDG3X3T600RC","wire":null,"lo":250,"hi":600,"body":null,"per":null,"p":50}]},"3:S":{"text":"End Cap Kits/Screw Terminals — — body","side":"line and load","kits":[{"kit":"PDG3X3TS400","wire":null,"lo":100,"hi":400,"body":null,"per":null,"p":50,"byPole":{"3":"PDG3X3TS400","4":"PDG3X4TS400"}},{"kit":"PDG3X3TS600","wire":null,"lo":250,"hi":600,"body":null,"per":null,"p":50,"byPole":{"3":"PDG3X3TS600","4":"PDG3X4TS600"}}]},"3:D":{"text":"End Cap Kits/Screw Terminals — — body","side":"line only","kits":[{"kit":"PDG3X3TS400","wire":null,"lo":100,"hi":400,"body":null,"per":null,"p":50,"byPole":{"3":"PDG3X3TS400","4":"PDG3X4TS400"}},{"kit":"PDG3X3TS600","wire":null,"lo":250,"hi":600,"body":null,"per":null,"p":50,"byPole":{"3":"PDG3X3TS600","4":"PDG3X4TS600"}}]},"3:E":{"text":"End Cap Kits/Screw Terminals — — body","side":"load only","kits":[{"kit":"PDG3X3TS400","wire":null,"lo":100,"hi":400,"body":null,"per":null,"p":50},{"kit":"PDG3X3TS600","wire":null,"lo":250,"hi":600,"body":null,"per":null,"p":50}]},"4:N":{"text":"No terminals","side":null,"kits":[]},"4:J":{"text":"Standard aluminum terminal","side":"line and load","kits":[{"kit":"PDG4X3TA700","wire":"1–500","lo":300,"hi":700,"body":"Aluminum","per":2,"p":62,"byPole":{"2":"PDG4X1TA700","3":"PDG4X3TA700"}},{"kit":"PDG4X3TA800","wire":"3/0–400","lo":null,"hi":800,"body":"Aluminum","per":3,"p":62,"byPole":{"2":"PDG4X1TA800","3":"PDG4X3TA800"}}]},"4:K":{"text":"Standard aluminum terminal","side":"line only","kits":[{"kit":"PDG4X3TA700","wire":"1–500","lo":300,"hi":700,"body":"Aluminum","per":2,"p":62,"byPole":{"2":"PDG4X1TA700","3":"PDG4X3TA700"}},{"kit":"PDG4X3TA800","wire":"3/0–400","lo":null,"hi":800,"body":"Aluminum","per":3,"p":62,"byPole":{"2":"PDG4X1TA800","3":"PDG4X3TA800"}}]},"4:L":{"text":"Standard terminals","side":"load only","kits":[{"kit":"PDG4X3TA700","wire":"1–500","lo":300,"hi":700,"body":"Aluminum","per":2,"p":62},{"kit":"PDG4X3TA800","wire":"3/0–400","lo":null,"hi":800,"body":"Aluminum","per":3,"p":62}]},"4:T":{"text":"Alternate Terminals","side":"line and load","kits":[{"kit":"PDG4X3TA801","wire":"500–750","lo":300,"hi":800,"body":"Aluminum","per":2,"p":62,"byPole":{"2":"PDG4X1TA801","3":"PDG4X3TA801"}}]},"4:U":{"text":"Alternate Terminals","side":"line only","kits":[{"kit":"PDG4X3TA801","wire":"500–750","lo":300,"hi":800,"body":"Aluminum","per":2,"p":62,"byPole":{"2":"PDG4X1TA801","3":"PDG4X3TA801"}}]},"4:V":{"text":"Alternate Terminals","side":null,"kits":[{"kit":"PDG4X3TA801","wire":"500–750","lo":300,"hi":800,"body":"Aluminum","per":2,"p":62}]},"4:W":{"text":"Non-Aluminum Terminals","side":"line and load","kits":[{"kit":"PDG4X3T600","wire":"2/0–500","lo":300,"hi":600,"body":"Aluminum","per":2,"p":62,"byPole":{"2":"PDG4X1T600","3":"PDG4X3T600"}},{"kit":"PDG4X3T800","wire":"3/0–300","lo":700,"hi":800,"body":"Aluminum","per":3,"p":62,"byPole":{"2":"PDG4X1T800","3":"PDG4X3T800"}}]},"4:Y":{"text":"Non-Aluminum Terminals","side":"line only","kits":[{"kit":"PDG4X3T600","wire":"2/0–500","lo":300,"hi":600,"body":"Aluminum","per":2,"p":62,"byPole":{"2":"PDG4X1T600","3":"PDG4X3T600"}},{"kit":"PDG4X3T800","wire":"3/0–300","lo":700,"hi":800,"body":"Aluminum","per":3,"p":62,"byPole":{"2":"PDG4X1T800","3":"PDG4X3T800"}}]},"4:Z":{"text":"Non-Aluminum Terminals","side":null,"kits":[{"kit":"PDG4X3T600","wire":"2/0–500","lo":300,"hi":600,"body":"Aluminum","per":2,"p":62},{"kit":"PDG4X3T800","wire":"3/0–300","lo":700,"hi":800,"body":"Aluminum","per":3,"p":62}]},"4:A":{"text":"StrandAble Terminals","side":"line and load","kits":[{"kit":"PDG4X3TA800SW","wire":"3/0–400/ 3/0–300","lo":300,"hi":800,"body":"Aluminum","per":3,"p":62,"byPole":{"3":"PDG4X3TA800SW"}}]},"4:B":{"text":"StrandAble Terminals","side":"line only","kits":[{"kit":"PDG4X3TA800SW","wire":"3/0–400/ 3/0–300","lo":300,"hi":800,"body":"Aluminum","per":3,"p":62,"byPole":{"3":"PDG4X3TA800SW"}}]},"4:C":{"text":"StrandAble Terminals","side":null,"kits":[{"kit":"PDG4X3TA800SW","wire":"3/0–400/ 3/0–300","lo":300,"hi":800,"body":"Aluminum","per":3,"p":62}]},"4:1":{"text":"Control Wire Terminals","side":"line and load","kits":[{"kit":"PDG4X3TA700CW","wire":"1–500","lo":300,"hi":700,"body":"Aluminum","per":2,"p":62,"byPole":{"2":"PDG4X1TA700CW","3":"PDG4X3TA700CW"}},{"kit":"PDG4X3TA800CW","wire":"3/0–400","lo":null,"hi":800,"body":"Aluminum","per":3,"p":62,"byPole":{"2":"PDG4X1TA800CW","3":"PDG4X3TA800CW"}}]},"4:2":{"text":"Control Wire Terminals","side":"line only","kits":[{"kit":"PDG4X3TA700CW","wire":"1–500","lo":300,"hi":700,"body":"Aluminum","per":2,"p":62,"byPole":{"2":"PDG4X1TA700CW","3":"PDG4X3TA700CW"}},{"kit":"PDG4X3TA800CW","wire":"3/0–400","lo":null,"hi":800,"body":"Aluminum","per":3,"p":62,"byPole":{"2":"PDG4X1TA800CW","3":"PDG4X3TA800CW"}}]},"4:3":{"text":"Control Wire Terminals","side":null,"kits":[{"kit":"PDG4X3TA700CW","wire":"1–500","lo":300,"hi":700,"body":"Aluminum","per":2,"p":62},{"kit":"PDG4X3TA800CW","wire":"3/0–400","lo":null,"hi":800,"body":"Aluminum","per":3,"p":62}]},"4:4":{"text":"Control Wire Terminals","side":"line and load","kits":[{"kit":"PDG4X3TA801CW","wire":"500–750","lo":300,"hi":800,"body":"Aluminum","per":2,"p":62,"byPole":{"2":"PDG4X1TA801CW","3":"PDG4X3TA801CW"}}]},"4:5":{"text":"Control Wire Terminals","side":"line only","kits":[{"kit":"PDG4X3TA801CW","wire":"500–750","lo":300,"hi":800,"body":"Aluminum","per":2,"p":62,"byPole":{"2":"PDG4X1TA801CW","3":"PDG4X3TA801CW"}}]},"4:6":{"text":"Control Wire Terminals","side":null,"kits":[{"kit":"PDG4X3TA801CW","wire":"500–750","lo":300,"hi":800,"body":"Aluminum","per":2,"p":62}]},"4:R":{"text":"Rear Connectors","side":null,"kits":[{"kit":"PDG4X3T800RC","wire":"—","lo":300,"hi":800,"body":null,"per":null,"p":62}]},"4:S":{"text":"End Cap Kits/Screw Terminals","side":"line and load","kits":[{"kit":"PDG4X3TS800","wire":"—","lo":300,"hi":800,"body":null,"per":null,"p":62,"byPole":{"3":"PDG4X3TS800","4":"PDG4X4TS800"}}]},"4:D":{"text":"End Cap Kits/Screw Terminals","side":"line only","kits":[{"kit":"PDG4X3TS800","wire":"—","lo":300,"hi":800,"body":null,"per":null,"p":62,"byPole":{"3":"PDG4X3TS800","4":"PDG4X4TS800"}}]},"4:E":{"text":"End Cap Kits/Screw Terminals","side":null,"kits":[{"kit":"PDG4X3TS800","wire":"—","lo":300,"hi":800,"body":null,"per":null,"p":62}]},"5:N":{"text":"No terminals (imperial tapped conductors)","side":null,"kits":[]},"5:M":{"text":"No terminals (metric tapped conductors)","side":null,"kits":[]},"5:R":{"text":"Rear connectors included","side":null,"kits":[]},"6:N":{"text":"No terminals (imperial tapped conductors)","side":null,"kits":[]},"6:M":{"text":"No terminals (metric tapped conductors)","side":null,"kits":[]}},"pairs":{"d1516":{"1:NN":"Alarm switch: None; Auxiliary switch (three-pole): None","1:AC":"Alarm switch: None; Auxiliary switch (three-pole): 1NO/1NC (1 Form C)","1:A1":"Alarm switch: None; Auxiliary switch (three-pole): 2NO/2NC (2 Form C)","1:BC":"Alarm switch: 1NO/1NC (1 Form C); Auxiliary switch (three-pole): None","1:CC":"Alarm switch: 1NO/1NC (1 Form C); Auxiliary switch (three-pole): 1NO/1NC (1 Form C)","1:B1":"Alarm switch: 2NO/2NC (2 Form C); Auxiliary switch (three-pole): None","2:NN":"Alarm switch None + Auxiliary switch None","2:AA":"Alarm None + Auxiliary 1NO","2:AB":"Alarm None + Auxiliary 1NC","2:AC":"Alarm None + Auxiliary 1NO/1NC","2:AD":"Alarm None + Auxiliary 2NO","2:AE":"Alarm None + Auxiliary 2NC","2:A1":"Alarm None + Auxiliary 2NO/2NC (Four-Pole)","2:A2":"Alarm None + Auxiliary 4NO (Four-Pole)","2:A3":"Alarm None + Auxiliary 4NC (Four-Pole)","2:BA":"Alarm 1NO + Auxiliary None","2:BB":"Alarm 1NC + Auxiliary None","2:BC":"Alarm 1NO/1NC + Auxiliary None","2:BD":"Alarm 2NO + Auxiliary None","2:BE":"Alarm 2NC + Auxiliary None","2:CA":"Alarm 1NO + Auxiliary 1NO","2:CB":"Alarm 1NC + Auxiliary 1NC","2:CC":"Alarm 1NO/1NC + Auxiliary 1NO/1NC","2:CD":"Alarm 2NO + Auxiliary 2NO","2:CE":"Alarm 2NC + Auxiliary 2NC","2:C1":"Alarm 1NO/1NC + Auxiliary 2NO/2NC (Four-Pole)","2:C2":"Alarm 2NO + Auxiliary 4NO (Four-Pole)","2:C3":"Alarm 2NC + Auxiliary 4NC (Four-Pole)","2:XA":"Alarm None + Auxiliary 1NO","2:XB":"Alarm None + Auxiliary 1NC","2:XC":"Alarm None + Auxiliary 1NO/1NC","2:XD":"Alarm None + Auxiliary 2NO","2:XE":"Alarm None + Auxiliary 2NC","2:X1":"Alarm None + Auxiliary 2NO/2NC (Four-Pole)","2:X2":"Alarm None + Auxiliary 4NO (Four-Pole)","2:X3":"Alarm None + Auxiliary 4NC (Four-Pole)","2:YA":"Alarm 1NO + Auxiliary None","2:YB":"Alarm 1NC + Auxiliary None","2:YC":"Alarm 1NO/1NC + Auxiliary None","2:YD":"Alarm 2NO + Auxiliary None","2:YE":"Alarm 2NC + Auxiliary None","2:ZA":"Alarm 1NO + Auxiliary 1NO","2:ZB":"Alarm 1NC + Auxiliary 1NC","2:ZC":"Alarm 1NO/1NC + Auxiliary 1NO/1NC","2:ZD":"Alarm 2NO + Auxiliary 2NO","2:ZE":"Alarm 2NC + Auxiliary 2NC","2:Z1":"Alarm 1NO/1NC + Auxiliary 2NO/2NC (Four-Pole)","2:Z2":"Alarm 2NO + Auxiliary 4NO (Four-Pole)","2:Z3":"Alarm 2NC + Auxiliary 4NC (Four-Pole)","2:UA":"Alarm None + Auxiliary 1NO","2:UB":"Alarm None + Auxiliary 1NC","2:UC":"Alarm None + Auxiliary 1NO/1NC","2:UD":"Alarm None + Auxiliary 2NO","2:UE":"Alarm None + Auxiliary 2NC","2:U1":"Alarm None + Auxiliary 2NO/2NC (Four-Pole)","2:U2":"Alarm None + Auxiliary 4NO (Four-Pole)","2:U3":"Alarm None + Auxiliary 4NC (Four-Pole)","2:VA":"Alarm 1NO + Auxiliary None","2:VB":"Alarm 1NC + Auxiliary None","2:VC":"Alarm 1NO/1NC + Auxiliary None","2:VD":"Alarm 2NO + Auxiliary None","2:VE":"Alarm 2NC + Auxiliary None","2:WA":"Alarm 1NO + Auxiliary 1NO","2:WB":"Alarm 1NC + Auxiliary 1NC","2:WC":"Alarm 1NO/1NC + Auxiliary 1NO/1NC","2:WD":"Alarm 2NO + Auxiliary 2NO","2:WE":"Alarm 2NC + Auxiliary 2NC","2:W1":"Alarm 1NO/1NC + Auxiliary 2NO/2NC (Four-Pole)","2:W2":"Alarm 2NO + Auxiliary 4NO (Four-Pole)","2:W3":"Alarm 2NC + Auxiliary 4NC (Four-Pole)","2:DA":"Alarm None + Auxiliary 1NO","2:DB":"Alarm None + Auxiliary 1NC","2:DC":"Alarm None + Auxiliary 1NO/1NC","2:DD":"Alarm None + Auxiliary 2NO","2:DE":"Alarm None + Auxiliary 2NC","2:D1":"Alarm None + Auxiliary 2NO/2NC (Four-Pole)","2:D2":"Alarm None + Auxiliary 4NO (Four-Pole)","2:D3":"Alarm None + Auxiliary 4NC (Four-Pole)","2:EA":"Alarm 1NO + Auxiliary None","2:EB":"Alarm 1NC + Auxiliary None","2:EC":"Alarm 1NO/1NC + Auxiliary None","2:ED":"Alarm 2NO + Auxiliary None","2:EE":"Alarm 2NC + Auxiliary None","2:FA":"Alarm 1NO + Auxiliary 1NO","2:FB":"Alarm 1NC + Auxiliary 1NC","2:FC":"Alarm 1NO/1NC + Auxiliary 1NO/1NC","2:FD":"Alarm 2NO + Auxiliary 2NO","2:FE":"Alarm 2NC + Auxiliary 2NC","2:F1":"Alarm 1NO/1NC + Auxiliary 2NO/2NC (Four-Pole)","2:F2":"Alarm 2NO + Auxiliary 4NO (Four-Pole)","2:F3":"Alarm 2NC + Auxiliary 4NC (Four-Pole)","3:NN":"Alarm switch: None; Auxiliary switch: None","3:AA":"Alarm switch: None; Auxiliary switch: 1NO","3:AB":"Alarm switch: None; Auxiliary switch: 1NC","3:AC":"Alarm switch: None; Auxiliary switch: 1NO/1NC","3:AD":"Alarm switch: None; Auxiliary switch: 2NO","3:AE":"Alarm switch: None; Auxiliary switch: 2NC","3:A1":"Alarm switch: None; Auxiliary switch: 2NO/2NC","3:A2":"Alarm switch: None; Auxiliary switch: 4NO","3:A3":"Alarm switch: None; Auxiliary switch: 4NC","3:BA":"Alarm switch: 1NO; Auxiliary switch: None","3:CA":"Alarm switch: 1NO; Auxiliary switch: 1NO","3:BB":"Alarm switch: 1NC; Auxiliary switch: None","3:CB":"Alarm switch: 1NC; Auxiliary switch: 1NC","3:BC":"Alarm switch: 1NO/1NC; Auxiliary switch: None","3:CC":"Alarm switch: 1NO/1NC; Auxiliary switch: 1NO/1NC","3:C1":"Alarm switch: 1NO/1NC; Auxiliary switch: 2NO/2NC","3:BD":"Alarm switch: 2NO; Auxiliary switch: None","3:CD":"Alarm switch: 2NO; Auxiliary switch: 2NO","3:C2":"Alarm switch: 2NO; Auxiliary switch: 4NO","3:BE":"Alarm switch: 2NC; Auxiliary switch: None","3:CE":"Alarm switch: 2NC; Auxiliary switch: 2NC","3:C3":"Alarm switch: 2NC; Auxiliary switch: 4NC","3:XA":"Alarm switch: None; Auxiliary switch: 1NO","3:XB":"Alarm switch: None; Auxiliary switch: 1NC","3:XC":"Alarm switch: None; Auxiliary switch: 1NO/1NC","3:XD":"Alarm switch: None; Auxiliary switch: 2NO","3:XE":"Alarm switch: None; Auxiliary switch: 2NC","3:X1":"Alarm switch: None; Auxiliary switch: 2NO/2NC","3:X2":"Alarm switch: None; Auxiliary switch: 4NO","3:X3":"Alarm switch: None; Auxiliary switch: 4NC","3:YA":"Alarm switch: 1NO; Auxiliary switch: None","3:ZA":"Alarm switch: 1NO; Auxiliary switch: 1NO","3:YB":"Alarm switch: 1NC; Auxiliary switch: None","3:ZB":"Alarm switch: 1NC; Auxiliary switch: 1NC","3:YC":"Alarm switch: 1NO/1NC; Auxiliary switch: None","3:ZC":"Alarm switch: 1NO/1NC; Auxiliary switch: 1NO/1NC","3:Z1":"Alarm switch: 1NO/1NC; Auxiliary switch: 2NO/2NC","3:YD":"Alarm switch: 2NO; Auxiliary switch: None","3:ZD":"Alarm switch: 2NO; Auxiliary switch: 2NO","3:Z2":"Alarm switch: 2NO; Auxiliary switch: 4NO","3:YE":"Alarm switch: 2NC; Auxiliary switch: None","3:ZE":"Alarm switch: 2NC; Auxiliary switch: 2NC","3:Z3":"Alarm switch: 2NC; Auxiliary switch: 4NC","3:UA":"Alarm switch: None; Auxiliary switch: 1NO","3:UB":"Alarm switch: None; Auxiliary switch: 1NC","3:UC":"Alarm switch: None; Auxiliary switch: 1NO/1NC","3:UD":"Alarm switch: None; Auxiliary switch: 2NO","3:UE":"Alarm switch: None; Auxiliary switch: 2NC","3:U1":"Alarm switch: None; Auxiliary switch: 2NO/2NC","3:U2":"Alarm switch: None; Auxiliary switch: 4NO","3:U3":"Alarm switch: None; Auxiliary switch: 4NC","3:VA":"Alarm switch: 1NO; Auxiliary switch: None","3:WA":"Alarm switch: 1NO; Auxiliary switch: 1NO","3:VB":"Alarm switch: 1NC; Auxiliary switch: None","3:WB":"Alarm switch: 1NC; Auxiliary switch: 1NC","3:VC":"Alarm switch: 1NO/1NC; Auxiliary switch: None","3:WC":"Alarm switch: 1NO/1NC; Auxiliary switch: 1NO/1NC","3:W1":"Alarm switch: 1NO/1NC; Auxiliary switch: 2NO/2NC","3:VD":"Alarm switch: 2NO; Auxiliary switch: None","3:WD":"Alarm switch: 2NO; Auxiliary switch: 2NO","3:W2":"Alarm switch: 2NO; Auxiliary switch: 4NO","3:VE":"Alarm switch: 2NC; Auxiliary switch: None","3:WE":"Alarm switch: 2NC; Auxiliary switch: 2NC","3:W3":"Alarm switch: 2NC; Auxiliary switch: 4NC","3:DA":"Alarm switch: None; Auxiliary switch: 1NO","3:DB":"Alarm switch: None; Auxiliary switch: 1NC","3:DC":"Alarm switch: None; Auxiliary switch: 1NO/1NC","3:DD":"Alarm switch: None; Auxiliary switch: 2NO","3:DE":"Alarm switch: None; Auxiliary switch: 2NC","3:D1":"Alarm switch: None; Auxiliary switch: 2NO/2NC","3:D2":"Alarm switch: None; Auxiliary switch: 4NO","3:D3":"Alarm switch: None; Auxiliary switch: 4NC","3:EA":"Alarm switch: 1NO; Auxiliary switch: None","3:FA":"Alarm switch: 1NO; Auxiliary switch: 1NO","3:EB":"Alarm switch: 1NC; Auxiliary switch: None","3:FB":"Alarm switch: 1NC; Auxiliary switch: 1NC","3:EC":"Alarm switch: 1NO/1NC; Auxiliary switch: None","3:FC":"Alarm switch: 1NO/1NC; Auxiliary switch: 1NO/1NC","3:F1":"Alarm switch: 1NO/1NC; Auxiliary switch: 2NO/2NC","3:ED":"Alarm switch: 2NO; Auxiliary switch: None","3:FD":"Alarm switch: 2NO; Auxiliary switch: 2NO","3:F2":"Alarm switch: 2NO; Auxiliary switch: 4NO","3:EE":"Alarm switch: 2NC; Auxiliary switch: None","3:FE":"Alarm switch: 2NC; Auxiliary switch: 2NC","3:F3":"Alarm switch: 2NC; Auxiliary switch: 4NC","3:CF":"Alarm switch: 1NO; Auxiliary switch: 1NO/1NC","3:CG":"Alarm switch: 1NO; Auxiliary switch: 2NO","3:CP":"Alarm switch: 1NO; Auxiliary switch: 2NO/2NC","3:CQ":"Alarm switch: 1NO; Auxiliary switch: 4NO","3:CH":"Alarm switch: 1NC; Auxiliary switch: 1NO/1NC","3:CI":"Alarm switch: 1NC; Auxiliary switch: 2NC","3:CR":"Alarm switch: 1NC; Auxiliary switch: 2NO/2NC","3:CS":"Alarm switch: 1NC; Auxiliary switch: 4NC","4:NN":"Alarm switch: None; Auxiliary switch: None","4:AA":"Alarm switch: None; Auxiliary switch: 1NO","4:AB":"Alarm switch: None; Auxiliary switch: 1NC","4:AC":"Alarm switch: None; Auxiliary switch: 1NO/1NC","4:AD":"Alarm switch: None; Auxiliary switch: 2NO","4:AE":"Alarm switch: None; Auxiliary switch: 2NC","4:A1":"Alarm switch: None; Auxiliary switch: 2NO/2NC","4:A2":"Alarm switch: None; Auxiliary switch: 4NO","4:A3":"Alarm switch: None; Auxiliary switch: 4NC","4:A4":"Alarm switch: None; Auxiliary switch: 3NO/3NC","4:A5":"Alarm switch: None; Auxiliary switch: 6NO","4:A6":"Alarm switch: None; Auxiliary switch: 6NC","4:BA":"Alarm switch: 1NO; Auxiliary switch: None","4:CA":"Alarm switch: 1NO; Auxiliary switch: 1NO","4:BB":"Alarm switch: 1NC; Auxiliary switch: None","4:CB":"Alarm switch: 1NC; Auxiliary switch: 1NC","4:BC":"Alarm switch: 1NO/1NC; Auxiliary switch: None","4:CC":"Alarm switch: 1NO/1NC; Auxiliary switch: 1NO/1NC","4:C1":"Alarm switch: 1NO/1NC; Auxiliary switch: 2NO/2NC","4:C4":"Alarm switch: 1NO/1NC; Auxiliary switch: 3NO/3NC","4:BD":"Alarm switch: 2NO; Auxiliary switch: None","4:CD":"Alarm switch: 2NO; Auxiliary switch: 2NO","4:C2":"Alarm switch: 2NO; Auxiliary switch: 4NO","4:C5":"Alarm switch: 2NO; Auxiliary switch: 6NO","4:BE":"Alarm switch: 2NC; Auxiliary switch: None","4:CE":"Alarm switch: 2NC; Auxiliary switch: 2NC","4:C3":"Alarm switch: 2NC; Auxiliary switch: 4NC","4:C6":"Alarm switch: 2NC; Auxiliary switch: 6NC","4:XA":"Alarm switch: None; Auxiliary switch: 1NO","4:XB":"Alarm switch: None; Auxiliary switch: 1NC","4:XC":"Alarm switch: None; Auxiliary switch: 1NO/1NC","4:XD":"Alarm switch: None; Auxiliary switch: 2NO","4:XE":"Alarm switch: None; Auxiliary switch: 2NC","4:X1":"Alarm switch: None; Auxiliary switch: 2NO/2NC","4:X2":"Alarm switch: None; Auxiliary switch: 4NO","4:X3":"Alarm switch: None; Auxiliary switch: 4NC","4:X4":"Alarm switch: None; Auxiliary switch: 3NO/3NC","4:X5":"Alarm switch: None; Auxiliary switch: 6NO","4:X6":"Alarm switch: None; Auxiliary switch: 6NC","4:YA":"Alarm switch: 1NO; Auxiliary switch: None","4:ZA":"Alarm switch: 1NO; Auxiliary switch: 1NO","4:YB":"Alarm switch: 1NC; Auxiliary switch: None","4:ZB":"Alarm switch: 1NC; Auxiliary switch: 1NC","4:YC":"Alarm switch: 1NO/1NC; Auxiliary switch: None","4:ZC":"Alarm switch: 1NO/1NC; Auxiliary switch: 1NO/1NC","4:Z1":"Alarm switch: 1NO/1NC; Auxiliary switch: 2NO/2NC","4:Z4":"Alarm switch: 1NO/1NC; Auxiliary switch: 3NO/3NC","4:YD":"Alarm switch: 2NO; Auxiliary switch: None","4:ZD":"Alarm switch: 2NO; Auxiliary switch: 2NO","4:Z2":"Alarm switch: 2NO; Auxiliary switch: 4NO","4:Z5":"Alarm switch: 2NO; Auxiliary switch: 6NO","4:YE":"Alarm switch: 2NC; Auxiliary switch: None","4:ZE":"Alarm switch: 2NC; Auxiliary switch: 2NC","4:Z3":"Alarm switch: 2NC; Auxiliary switch: 4NC","4:Z6":"Alarm switch: 2NC; Auxiliary switch: 6NC","4:DA":"Alarm switch: None; Auxiliary switch: 1NO","4:DB":"Alarm switch: None; Auxiliary switch: 1NC","4:DC":"Alarm switch: None; Auxiliary switch: 1NO/1NC","4:DD":"Alarm switch: None; Auxiliary switch: 2NO","4:DE":"Alarm switch: None; Auxiliary switch: 2NC","4:D1":"Alarm switch: None; Auxiliary switch: 2NO/2NC","4:D2":"Alarm switch: None; Auxiliary switch: 4NO","4:D3":"Alarm switch: None; Auxiliary switch: 4NC","4:D4":"Alarm switch: None; Auxiliary switch: 3NO/3NC","4:D5":"Alarm switch: None; Auxiliary switch: 6NO","4:D6":"Alarm switch: None; Auxiliary switch: 6NC","4:EA":"Alarm switch: 1NO; Auxiliary switch: None","4:FA":"Alarm switch: 1NO; Auxiliary switch: 1NO","4:EB":"Alarm switch: 1NC; Auxiliary switch: None","4:FB":"Alarm switch: 1NC; Auxiliary switch: 1NC","4:EC":"Alarm switch: 1NO/1NC; Auxiliary switch: None","4:FC":"Alarm switch: 1NO/1NC; Auxiliary switch: 1NO/1NC","4:F1":"Alarm switch: 1NO/1NC; Auxiliary switch: 2NO/2NC","4:F4":"Alarm switch: 1NO/1NC; Auxiliary switch: 3NO/3NC","4:ED":"Alarm switch: 2NO; Auxiliary switch: None","4:FD":"Alarm switch: 2NO; Auxiliary switch: 2NO","4:F2":"Alarm switch: 2NO; Auxiliary switch: 4NO","4:F5":"Alarm switch: 2NO; Auxiliary switch: 6NO","4:EE":"Alarm switch: 2NC; Auxiliary switch: None","4:FE":"Alarm switch: 2NC; Auxiliary switch: 2NC","4:F3":"Alarm switch: 2NC; Auxiliary switch: 4NC","4:F6":"Alarm switch: 2NC; Auxiliary switch: 6NC","4:UA":"Alarm switch: None; Auxiliary switch: 1NO","4:UB":"Alarm switch: None; Auxiliary switch: 1NC","4:UC":"Alarm switch: None; Auxiliary switch: 1NO/1NC","4:UD":"Alarm switch: None; Auxiliary switch: 2NO","4:UE":"Alarm switch: None; Auxiliary switch: 2NC","4:U1":"Alarm switch: None; Auxiliary switch: 2NO/2NC","4:U2":"Alarm switch: None; Auxiliary switch: 4NO","4:U3":"Alarm switch: None; Auxiliary switch: 4NC","4:U4":"Alarm switch: None; Auxiliary switch: 3NO/3NC","4:U5":"Alarm switch: None; Auxiliary switch: 6NO","4:U6":"Alarm switch: None; Auxiliary switch: 6NC","4:VA":"Alarm switch: 1NO; Auxiliary switch: None","4:WA":"Alarm switch: 1NO; Auxiliary switch: 1NO","4:VB":"Alarm switch: 1NC; Auxiliary switch: None","4:WB":"Alarm switch: 1NC; Auxiliary switch: 1NC","4:VC":"Alarm switch: 1NO/1NC; Auxiliary switch: None","4:WC":"Alarm switch: 1NO/1NC; Auxiliary switch: 1NO/1NC","4:W1":"Alarm switch: 1NO/1NC; Auxiliary switch: 2NO/2NC","4:W4":"Alarm switch: 1NO/1NC; Auxiliary switch: 3NO/3NC","4:VD":"Alarm switch: 2NO; Auxiliary switch: None","4:WD":"Alarm switch: 2NO; Auxiliary switch: 2NO","4:W2":"Alarm switch: 2NO; Auxiliary switch: 4NO","4:W5":"Alarm switch: 2NO; Auxiliary switch: 6NO","4:VE":"Alarm switch: 2NC; Auxiliary switch: None","4:WE":"Alarm switch: 2NC; Auxiliary switch: 2NC","4:W3":"Alarm switch: 2NC; Auxiliary switch: 4NC","4:W6":"Alarm switch: 2NC; Auxiliary switch: 6NC","4:CF":"Alarm switch: 1NO; Auxiliary switch: 1NO/1NC","4:CG":"Alarm switch: 1NO; Auxiliary switch: 2NO","4:CP":"Alarm switch: 1NO; Auxiliary switch: 2NO/2NC","4:CQ":"Alarm switch: 1NO; Auxiliary switch: 4NO","4:CT":"Alarm switch: 1NO; Auxiliary switch: 3NO/3NC","4:CU":"Alarm switch: 1NO; Auxiliary switch: 6NO","4:CH":"Alarm switch: 1NC; Auxiliary switch: 1NO/1NC","4:CJ":"Alarm switch: 1NC; Auxiliary switch: 2NC","4:CR":"Alarm switch: 1NC; Auxiliary switch: 2NO/2NC","4:CS":"Alarm switch: 1NC; Auxiliary switch: 4NC","4:CV":"Alarm switch: 1NC; Auxiliary switch: 3NO/3NC","4:CW":"Alarm switch: 1NC; Auxiliary switch: 6NC","5:NN":"Alarm switch None, auxiliary switch None (Right row)","5:AC":"Alarm None, auxiliary 1 Form C, Right","5:A1":"Alarm None, auxiliary 2 Form C, Right","5:A4":"Alarm None, auxiliary 3 Form C — printed in the LEFT row (Right row shows —)","5:BC":"Alarm 1 Form C, auxiliary None, Right","5:CC":"Alarm 1 Form C, auxiliary 1 Form C, Right","5:C1":"Alarm 1 Form C, auxiliary 2 Form C, Right","5:B1":"Alarm 2 Form C, auxiliary None, Right","5:CX":"Alarm 2 Form C, auxiliary 1 Form C, Right","6:NN":"Alarm switch None, Auxiliary None","6:A1":"Alarm None, Auxiliary 2 Form C","6:A7":"Alarm None, Auxiliary 4 Form C","6:BC":"Alarm 1 Form C, Auxiliary None","6:C1":"Alarm 1 Form C, Auxiliary 2 Form C","6:C9":"Alarm 1 Form C, Auxiliary 4 Form C","6:B1":"Alarm 2 Form C, Auxiliary None","6:CY":"Alarm 2 Form C, Auxiliary 2 Form C","6:CZ":"Alarm 2 Form C, Auxiliary 4 Form C"},"d1718":{"1:SH":"Shunt trip, 12 Vdc","1:SN":"Shunt trip, 24 Vac/Vdc","1:UG":"Undervoltage release, 24 Vdc","1:UJ":"Undervoltage release, 48 Vdc","1:UK":"Undervoltage release, 60 Vdc","1:UM":"Undervoltage release, 250 Vdc","1:UF":"Undervoltage release, 24 Vac","1:UB":"Undervoltage release, 240 Vac","1:UD":"Undervoltage release, 525 Vac","1:UE":"Undervoltage release, 600 Vac","2:TH":"Shunt trip, 12 Vdc, Screw Terminals","2:SH":"Shunt trip, 12 Vdc, Pigtail (29 in / 0.75 m)","2:RH":"Shunt trip, 12 Vdc, Pigtail (118 in / 3.0 m)","2:TJ":"Shunt trip, 48 Vdc, Screw Terminals","2:SJ":"Shunt trip, 48 Vdc, Pigtail (29 in / 0.75 m)","2:RJ":"Shunt trip, 48 Vdc, Pigtail (118 in / 3.0 m)","2:TK":"Shunt trip, 60 Vdc, Screw Terminals","2:SK":"Shunt trip, 60 Vdc, Pigtail (29 in / 0.75 m)","2:RK":"Shunt trip, 60 Vdc, Pigtail (118 in / 3.0 m)","2:TN":"Shunt trip, 24 Vac/Vdc, Screw Terminals","2:SN":"Shunt trip, 24 Vac/Vdc, Pigtail (29 in / 0.75 m)","2:RN":"Shunt trip, 24 Vac/Vdc, Pigtail (118 in / 3.0 m)","2:TP":"Shunt trip, 110–130 Vac/125 Vdc, Screw Terminals","2:SP":"Shunt trip, 110–130 Vac/125 Vdc, Pigtail (29 in / 0.75 m)","2:RP":"Shunt trip, 110–130 Vac/125 Vdc, Pigtail (118 in / 3.0 m)","2:TR":"Shunt trip, 200–240 Vac/250 Vdc, Screw Terminals","2:SR":"Shunt trip, 200–240 Vac/250 Vdc, Pigtail (29 in / 0.75 m)","2:RR":"Shunt trip, 200–240 Vac/250 Vdc, Pigtail (118 in / 3.0 m)","2:TC":"Shunt trip, 380–440 Vac, Screw Terminals","2:SC":"Shunt trip, 380–440 Vac, Pigtail (29 in / 0.75 m)","2:RC":"Shunt trip, 380–440 Vac, Pigtail (118 in / 3.0 m)","2:TD":"Shunt trip, 480–525 Vac, Screw Terminals","2:SD":"Shunt trip, 480–525 Vac, Pigtail (29 in / 0.75 m)","2:RD":"Shunt trip, 480–525 Vac, Pigtail (118 in / 3.0 m)","2:TE":"Shunt trip, 600 Vac, Screw Terminals","2:SE":"Shunt trip, 600 Vac, Pigtail (29 in / 0.75 m)","2:RE":"Shunt trip, 600 Vac, Pigtail (118 in / 3.0 m)","2:VH":"Undervoltage release (UVR), 12 Vdc, Screw Terminals","2:UH":"Undervoltage release (UVR), 12 Vdc, Pigtail (29 in / 0.75 m)","2:WH":"Undervoltage release (UVR), 12 Vdc, Pigtail (118 in / 3.0 m)","2:VG":"Undervoltage release (UVR), 24 Vdc, Screw Terminals","2:UG":"Undervoltage release (UVR), 24 Vdc, Pigtail (29 in / 0.75 m)","2:WG":"Undervoltage release (UVR), 24 Vdc, Pigtail (118 in / 3.0 m)","2:VJ":"Undervoltage release (UVR), 48 Vdc, Screw Terminals","2:UJ":"Undervoltage release (UVR), 48 Vdc, Pigtail (29 in / 0.75 m)","2:WJ":"Undervoltage release (UVR), 48 Vdc, Pigtail (118 in / 3.0 m)","2:VK":"Undervoltage release (UVR), 60 Vdc, Screw Terminals","2:UK":"Undervoltage release (UVR), 60 Vdc, Pigtail (29 in / 0.75 m)","2:WK":"Undervoltage release (UVR), 60 Vdc, Pigtail (118 in / 3.0 m)","2:VL":"Undervoltage release (UVR), 125 Vdc, Screw Terminals","2:UL":"Undervoltage release (UVR), 125 Vdc, Pigtail (29 in / 0.75 m)","2:WL":"Undervoltage release (UVR), 125 Vdc, Pigtail (118 in / 3.0 m)","2:VM":"Undervoltage release (UVR), 250 Vdc, Screw Terminals","2:UM":"Undervoltage release (UVR), 250 Vdc, Pigtail (29 in / 0.75 m)","2:WM":"Undervoltage release (UVR), 250 Vdc, Pigtail (118 in / 3.0 m)","2:VF":"Undervoltage release (UVR), 24 Vac, Screw Terminals","2:UF":"Undervoltage release (UVR), 24 Vac, Pigtail (29 in / 0.75 m)","2:WF":"Undervoltage release (UVR), 24 Vac, Pigtail (118 in / 3.0 m)","2:VA":"Undervoltage release (UVR), 130 Vac, Screw Terminals","2:UA":"Undervoltage release (UVR), 130 Vac, Pigtail (29 in / 0.75 m)","2:WA":"Undervoltage release (UVR), 130 Vac, Pigtail (118 in / 3.0 m)","2:VB":"Undervoltage release (UVR), 240 Vac, Screw Terminals","2:UB":"Undervoltage release (UVR), 240 Vac, Pigtail (29 in / 0.75 m)","2:WB":"Undervoltage release (UVR), 240 Vac, Pigtail (118 in / 3.0 m)","2:VC":"Undervoltage release (UVR), 440 Vac, Screw Terminals","2:UC":"Undervoltage release (UVR), 440 Vac, Pigtail (29 in / 0.75 m)","2:WC":"Undervoltage release (UVR), 440 Vac, Pigtail (118 in / 3.0 m)","2:VD":"Undervoltage release (UVR), 525 Vac, Screw Terminals","2:UD":"Undervoltage release (UVR), 525 Vac, Pigtail (29 in / 0.75 m)","2:WD":"Undervoltage release (UVR), 525 Vac, Pigtail (118 in / 3.0 m)","2:VE":"Undervoltage release (UVR), 600 Vac, Screw Terminals","2:UE":"Undervoltage release (UVR), 600 Vac, Pigtail (29 in / 0.75 m)","2:WE":"Undervoltage release (UVR), 600 Vac, Pigtail (118 in / 3.0 m)","2:US":"Note printed under UVR table: Use suffix US for 18 Vdc when using Time Delay UVR.","2:NN":"Text: Digit 17 denotes the type of accessory installed and the terminal type; Digit 18 denotes the voltage of the accessory; If no accessories are selected, use NNNN for the final 4 digits of the catalog number; Each breaker has space for one shunt trip or UVR tripping accessory only.","3:TH":"Shunt trip, 12 Vdc, Screw Terminals","3:TJ":"Shunt trip, 48 Vdc, Screw Terminals","3:TK":"Shunt trip, 60 Vdc, Screw Terminals","3:TN":"Shunt trip, 24 Vac/Vdc, Screw Terminals","3:TP":"Shunt trip, 110–130 Vac/125 Vdc, Screw Terminals","3:TR":"Shunt trip, 200–240 Vac/250 Vdc, Screw Terminals","3:TC":"Shunt trip, 380–440 Vac, Screw Terminals","3:TD":"Shunt trip, 480–525 Vac, Screw Terminals","3:TE":"Shunt trip, 600 Vac, Screw Terminals","3:SH":"Shunt trip, 12 Vdc, Pigtail (29 in / 0.75 m)","3:SJ":"Shunt trip, 48 Vdc, Pigtail (29 in / 0.75 m)","3:SK":"Shunt trip, 60 Vdc, Pigtail (29 in / 0.75 m)","3:SN":"Shunt trip, 24 Vac/Vdc, Pigtail (29 in / 0.75 m)","3:SP":"Shunt trip, 110–130 Vac/125 Vdc, Pigtail (29 in / 0.75 m)","3:SR":"Shunt trip, 200–240 Vac/250 Vdc, Pigtail (29 in / 0.75 m)","3:SC":"Shunt trip, 380–440 Vac, Pigtail (29 in / 0.75 m)","3:SD":"Shunt trip, 480–525 Vac, Pigtail (29 in / 0.75 m)","3:SE":"Shunt trip, 600 Vac, Pigtail (29 in / 0.75 m)","3:RH":"Shunt trip, 12 Vdc, Pigtail (118 in / 3.0 m)","3:RJ":"Shunt trip, 48 Vdc, Pigtail (118 in / 3.0 m)","3:RK":"Shunt trip, 60 Vdc, Pigtail (118 in / 3.0 m)","3:RN":"Shunt trip, 24 Vac/Vdc, Pigtail (118 in / 3.0 m)","3:RP":"Shunt trip, 110–130 Vac/125 Vdc, Pigtail (118 in / 3.0 m)","3:RR":"Shunt trip, 200–240 Vac/250 Vdc, Pigtail (118 in / 3.0 m)","3:RC":"Shunt trip, 380–440 Vac, Pigtail (118 in / 3.0 m)","3:RD":"Shunt trip, 480–525 Vac, Pigtail (118 in / 3.0 m)","3:RE":"Shunt trip, 600 Vac, Pigtail (118 in / 3.0 m)","3:VH":"Undervoltage release (UVR), 12 Vdc, Screw Terminals","3:VG":"Undervoltage release (UVR), 24 Vdc, Screw Terminals","3:VJ":"Undervoltage release (UVR), 48 Vdc, Screw Terminals","3:VK":"Undervoltage release (UVR), 60 Vdc, Screw Terminals","3:VL":"Undervoltage release (UVR), 125 Vdc, Screw Terminals","3:VM":"Undervoltage release (UVR), 250 Vdc, Screw Terminals","3:VF":"Undervoltage release (UVR), 24 Vac, Screw Terminals","3:VA":"Undervoltage release (UVR), 130 Vac, Screw Terminals","3:VB":"Undervoltage release (UVR), 240 Vac, Screw Terminals","3:VC":"Undervoltage release (UVR), 440 Vac, Screw Terminals","3:VD":"Undervoltage release (UVR), 525 Vac, Screw Terminals","3:VE":"Undervoltage release (UVR), 600 Vac, Screw Terminals","3:UH":"Undervoltage release (UVR), 12 Vdc, Pigtail (29 in / 0.75 m)","3:UG":"Undervoltage release (UVR), 24 Vdc, Pigtail (29 in / 0.75 m)","3:UJ":"Undervoltage release (UVR), 48 Vdc, Pigtail (29 in / 0.75 m)","3:UK":"Undervoltage release (UVR), 60 Vdc, Pigtail (29 in / 0.75 m)","3:UL":"Undervoltage release (UVR), 125 Vdc, Pigtail (29 in / 0.75 m)","3:UM":"Undervoltage release (UVR), 250 Vdc, Pigtail (29 in / 0.75 m)","3:UF":"Undervoltage release (UVR), 24 Vac, Pigtail (29 in / 0.75 m)","3:UA":"Undervoltage release (UVR), 130 Vac, Pigtail (29 in / 0.75 m)","3:UB":"Undervoltage release (UVR), 240 Vac, Pigtail (29 in / 0.75 m)","3:UC":"Undervoltage release (UVR), 440 Vac, Pigtail (29 in / 0.75 m)","3:UD":"Undervoltage release (UVR), 525 Vac, Pigtail (29 in / 0.75 m)","3:UE":"Undervoltage release (UVR), 600 Vac, Pigtail (29 in / 0.75 m)","3:WH":"Undervoltage release (UVR), 12 Vdc, Pigtail (118 in / 3.0 m)","3:WG":"Undervoltage release (UVR), 24 Vdc, Pigtail (118 in / 3.0 m)","3:WJ":"Undervoltage release (UVR), 48 Vdc, Pigtail (118 in / 3.0 m)","3:WK":"Undervoltage release (UVR), 60 Vdc, Pigtail (118 in / 3.0 m)","3:WL":"Undervoltage release (UVR), 125 Vdc, Pigtail (118 in / 3.0 m)","3:WM":"Undervoltage release (UVR), 250 Vdc, Pigtail (118 in / 3.0 m)","3:WF":"Undervoltage release (UVR), 24 Vac, Pigtail (118 in / 3.0 m)","3:WA":"Undervoltage release (UVR), 130 Vac, Pigtail (118 in / 3.0 m)","3:WB":"Undervoltage release (UVR), 240 Vac, Pigtail (118 in / 3.0 m)","3:WC":"Undervoltage release (UVR), 440 Vac, Pigtail (118 in / 3.0 m)","3:WD":"Undervoltage release (UVR), 525 Vac, Pigtail (118 in / 3.0 m)","3:WE":"Undervoltage release (UVR), 600 Vac, Pigtail (118 in / 3.0 m)","3:US":"Printed note under the UVR code table: \"Use suffix US for 18 Vdc when using Time Delay UVR.\"","4:TH":"Shunt trip, 12 Vdc, Screw Terminals","4:SH":"Shunt trip, 12 Vdc, Pigtail (29 in / 0.75 m)","4:RH":"Shunt trip, 12 Vdc, Pigtail (118 in / 3.0 m)","4:TJ":"Shunt trip, 48 Vdc, Screw Terminals","4:SJ":"Shunt trip, 48 Vdc, Pigtail (29 in / 0.75 m)","4:RJ":"Shunt trip, 48 Vdc, Pigtail (118 in / 3.0 m)","4:TK":"Shunt trip, 60 Vdc, Screw Terminals","4:SK":"Shunt trip, 60 Vdc, Pigtail (29 in / 0.75 m)","4:RK":"Shunt trip, 60 Vdc, Pigtail (118 in / 3.0 m)","4:TN":"Shunt trip, 24 Vac/Vdc, Screw Terminals","4:SN":"Shunt trip, 24 Vac/Vdc, Pigtail (29 in / 0.75 m)","4:RN":"Shunt trip, 24 Vac/Vdc, Pigtail (118 in / 3.0 m)","4:TP":"Shunt trip, 110–130 Vac/125 Vdc, Screw Terminals","4:SP":"Shunt trip, 110–130 Vac/125 Vdc, Pigtail (29 in / 0.75 m)","4:RP":"Shunt trip, 110–130 Vac/125 Vdc, Pigtail (118 in / 3.0 m)","4:TR":"Shunt trip, 200–240 Vac/250 Vdc, Screw Terminals","4:SR":"Shunt trip, 200–240 Vac/250 Vdc, Pigtail (29 in / 0.75 m)","4:RR":"Shunt trip, 200–240 Vac/250 Vdc, Pigtail (118 in / 3.0 m)","4:TC":"Shunt trip, 380–440 Vac, Screw Terminals","4:SC":"Shunt trip, 380–440 Vac, Pigtail (29 in / 0.75 m)","4:RC":"Shunt trip, 380–440 Vac, Pigtail (118 in / 3.0 m)","4:TD":"Shunt trip, 480–525 Vac, Screw Terminals","4:SD":"Shunt trip, 480–525 Vac, Pigtail (29 in / 0.75 m)","4:RD":"Shunt trip, 480–525 Vac, Pigtail (118 in / 3.0 m)","4:TE":"Shunt trip, 600 Vac, Screw Terminals","4:SE":"Shunt trip, 600 Vac, Pigtail (29 in / 0.75 m)","4:RE":"Shunt trip, 600 Vac, Pigtail (118 in / 3.0 m)","4:VH":"Undervoltage release (UVR), 12 Vdc, Screw Terminals","4:UH":"Undervoltage release (UVR), 12 Vdc, Pigtail (29 in / 0.75 m)","4:WH":"Undervoltage release (UVR), 12 Vdc, Pigtail (118 in / 3.0 m)","4:VG":"Undervoltage release (UVR), 24 Vdc, Screw Terminals","4:UG":"Undervoltage release (UVR), 24 Vdc, Pigtail (29 in / 0.75 m)","4:WG":"Undervoltage release (UVR), 24 Vdc, Pigtail (118 in / 3.0 m)","4:VJ":"Undervoltage release (UVR), 48 Vdc, Screw Terminals","4:UJ":"Undervoltage release (UVR), 48 Vdc, Pigtail (29 in / 0.75 m)","4:WJ":"Undervoltage release (UVR), 48 Vdc, Pigtail (118 in / 3.0 m)","4:VK":"Undervoltage release (UVR), 60 Vdc, Screw Terminals","4:UK":"Undervoltage release (UVR), 60 Vdc, Pigtail (29 in / 0.75 m)","4:WK":"Undervoltage release (UVR), 60 Vdc, Pigtail (118 in / 3.0 m)","4:VL":"Undervoltage release (UVR), 125 Vdc, Screw Terminals","4:UL":"Undervoltage release (UVR), 125 Vdc, Pigtail (29 in / 0.75 m)","4:WL":"Undervoltage release (UVR), 125 Vdc, Pigtail (118 in / 3.0 m)","4:VM":"Undervoltage release (UVR), 250 Vdc, Screw Terminals","4:UM":"Undervoltage release (UVR), 250 Vdc, Pigtail (29 in / 0.75 m)","4:WM":"Undervoltage release (UVR), 250 Vdc, Pigtail (118 in / 3.0 m)","4:VF":"Undervoltage release (UVR), 24 Vac, Screw Terminals","4:UF":"Undervoltage release (UVR), 24 Vac, Pigtail (29 in / 0.75 m)","4:WF":"Undervoltage release (UVR), 24 Vac, Pigtail (118 in / 3.0 m)","4:VA":"Undervoltage release (UVR), 130 Vac, Screw Terminals","4:UA":"Undervoltage release (UVR), 130 Vac, Pigtail (29 in / 0.75 m)","4:WA":"Undervoltage release (UVR), 130 Vac, Pigtail (118 in / 3.0 m)","4:VB":"Undervoltage release (UVR), 240 Vac, Screw Terminals","4:UB":"Undervoltage release (UVR), 240 Vac, Pigtail (29 in / 0.75 m)","4:WB":"Undervoltage release (UVR), 240 Vac, Pigtail (118 in / 3.0 m)","4:VC":"Undervoltage release (UVR), 440 Vac, Screw Terminals","4:UC":"Undervoltage release (UVR), 440 Vac, Pigtail (29 in / 0.75 m)","4:WC":"Undervoltage release (UVR), 440 Vac, Pigtail (118 in / 3.0 m)","4:VD":"Undervoltage release (UVR), 525 Vac, Screw Terminals","4:UD":"Undervoltage release (UVR), 525 Vac, Pigtail (29 in / 0.75 m)","4:WD":"Undervoltage release (UVR), 525 Vac, Pigtail (118 in / 3.0 m)","4:VE":"Undervoltage release (UVR), 600 Vac, Screw Terminals","4:UE":"Undervoltage release (UVR), 600 Vac, Pigtail (29 in / 0.75 m)","4:WE":"Undervoltage release (UVR), 600 Vac, Pigtail (118 in / 3.0 m)","4:US":"Note under UVR table: \"Use suffix US for 18 Vdc when using Time Delay UVR.\"","5:SK":"Shunt trip, 48–60 Vdc","5:SL":"Shunt trip, 110–125 Vdc","5:SM":"Shunt trip, 220–250 Vdc","5:SN":"Shunt trip, 24 Vac/Vdc","5:ST":"Shunt trip, 48–60 Vac","5:SA":"Shunt trip, 110–240 Vac","5:SB":"Shunt trip, 110–240 Vac","5:SC":"Shunt trip, 380–440 Vac","5:SD":"Shunt trip, 480–600 Vac","5:SE":"Shunt trip, 480–600 Vac","5:UH":"Undervoltage release (UVR), 12 Vdc","5:UG":"Undervoltage release (UVR), 24 Vdc","5:UJ":"Undervoltage release (UVR), 48–60 Vdc","5:UK":"Undervoltage release (UVR), 48–60 Vdc","5:UL":"Undervoltage release (UVR), 125 Vdc","5:UM":"Undervoltage release (UVR), 250 Vdc","5:UU":"Undervoltage release (UVR), 12 Vac","5:UF":"Undervoltage release (UVR), 24 Vac","5:UT":"Undervoltage release (UVR), 48–60 Vac","5:UA":"Undervoltage release (UVR), 110–127 Vac","5:UB":"Undervoltage release (UVR), 208–240 Vac","5:UC":"Undervoltage release (UVR), 380–500 Vac","5:UV":"Undervoltage release (UVR), 380–500 Vac","5:US":"As printed in note under UVR table: 'Use PDG5XUV18DCU (Suffix US) when using Time Delay UVR.'","6:SK":"Shunt trip, 48–60 Vdc","6:SL":"Shunt trip, 110–125 Vdc","6:SM":"Shunt trip, 220–250 Vdc","6:SN":"Shunt trip, 24 Vac/ Vdc","6:ST":"Shunt trip, 48–60 Vac","6:SA":"Shunt trip, 110–240 Vac","6:SB":"Shunt trip, 110–240 Vac","6:SC":"Shunt trip, 380–440 Vac","6:SD":"Shunt trip, 480–600 Vac","6:SE":"Shunt trip, 480–600 Vac","6:UH":"Undervoltage release (UVR), 12 Vdc","6:UG":"Undervoltage release (UVR), 24 Vdc","6:UJ":"Undervoltage release (UVR), 48–60 Vdc","6:UK":"Undervoltage release (UVR), 48–60 Vdc","6:UL":"Undervoltage release (UVR), 125 Vdc","6:UM":"Undervoltage release (UVR), 250 Vdc","6:UU":"Undervoltage release (UVR), 12 Vac","6:UF":"Undervoltage release (UVR), 24 Vac","6:UT":"Undervoltage release (UVR), 48–60 Vac","6:UA":"Undervoltage release (UVR), 110–127 Vac","6:UB":"Undervoltage release (UVR), 208–240 Vac","6:UC":"Undervoltage release (UVR), 380–500 Vac","6:UV":"Undervoltage release (UVR), 380–500 Vac"},"d1920":{"1:WB":"walking beam interlock ready modification from plant","2:HA":"Standard lockable handle and mechanism","2:HB":"Standard lockable handle and mechanism with door interlock","2:HC":"Standard lockable handle and mechanism with mechanical padlock","2:HE":"Standard lockable handle and mechanism with door interlock and mechanical padlock","2:H1":"Emergency lockable handle and mechanism","2:H2":"Emergency lockable handle and mechanism with door interlock","2:H3":"Emergency lockable handle and mechanism with mechanical padlock","2:H5":"Emergency lockable handle and mechanism with door interlock and mechanical padlock","2:DA":"Standard lockable handle and mechanism (fn2)","2:DC":"Standard lockable handle and mechanism with mechanical padlock (fn2)","2:D1":"Emergency lockable handle and mechanism (fn2)","2:D3":"Emergency lockable handle and mechanism with mechanical padlock (fn2)","2:L4":"Padlockable hasp — Top","2:L5":"Padlockable hasp — Left side","2:L6":"Padlockable hasp — Right side","2:L0":"Padlockable hasp — Snap on (second character is digit zero; confirmed against text layer)","2:L1":"Padlockable hasp OFF only — Top","2:L2":"Padlockable hasp OFF only — Left side","2:L3":"Padlockable hasp OFF only — Right side","2:L7":"Kirk lock provision (fn1) — Top","2:RG":"Electrical operator — 24 Vdc","2:RJ":"Electrical operator — 48–60 Vdc (cell printed as 'RJ or RK')","2:RK":"Electrical operator — 48–60 Vdc (cell printed as 'RJ or RK')","2:RL":"Electrical operator — 125 Vdc","2:RM":"Electrical operator — 250 Vdc","2:RA":"Electrical operator — 110–130 Vac","2:RB":"Electrical operator — 200–240 Vac","2:RC":"Electrical operator — 380–440 Vac","2:WB":"Footnote 2 on 'Walking beam interlock' (PDG2XWBI234P; its Digits 19–20 cell is a dash): Breaker must be ordered with walking beam interlock ready modification from plant (factory suffix WB). Footnote 3: Requires two breakers.","3:HA":"Direct Rotary Handle Mechanism ①: Standard lockable handle and mechanism","3:HB":"Direct Rotary Handle Mechanism ①: Standard lockable handle and mechanism with door interlock","3:HC":"Direct Rotary Handle Mechanism ①: Standard lockable handle and mechanism with mechanical padlock","3:HE":"Direct Rotary Handle Mechanism ①: Standard lockable handle and mechanism with door interlock and mechanical padlock","3:H1":"Direct Rotary Handle Mechanism ①: Emergency lockable handle and mechanism","3:H2":"Direct Rotary Handle Mechanism ①: Emergency lockable handle and mechanism with door interlock","3:H3":"Direct Rotary Handle Mechanism ①: Emergency lockable handle and mechanism with mechanical padlock","3:H5":"Direct Rotary Handle Mechanism ①: Emergency lockable handle and mechanism with door interlock and mechanical padlock","3:DA":"Variable Depth Rotary Handle Mechanism ①: Standard lockable handle and mechanism ②","3:DC":"Variable Depth Rotary Handle Mechanism ①: Standard lockable handle and mechanism with mechanical padlock ②","3:D1":"Variable Depth Rotary Handle Mechanism ①: Emergency lockable handle and mechanism ②","3:D3":"Variable Depth Rotary Handle Mechanism ①: Standard lockable handle and mechanism with mechanical padlock ② [as printed — same description text as DC; kit number is PDG3XHMDEP]","3:L4":"Padlockable hasp — Fit type: Top","3:L1":"Padlockable hasp, OFF only — Fit type: Top","3:L8":"Kirk lock provision—left side, Type F ① — Fit type: Left side","3:L9":"Kirk lock provision—right side, Type F ① — Fit type: Right side","3:RG":"Electrical operator — 24 Vdc","3:RJ":"Electrical operator — 48–60 Vdc (cell printed \"RJ or RK\")","3:RK":"Electrical operator — 48–60 Vdc (cell printed \"RJ or RK\")","3:RL":"Electrical operator — 125 Vdc","3:RM":"Electrical operator — 250 Vdc","3:RA":"Electrical operator — 110–130 Vac","3:RB":"Electrical operator — 200–240 Vac","3:RC":"Electrical operator — 380–440 Vac","3:WB":"Walking beam interlock ready modification (from footnote ②: \"Breaker must be ordered with walking beam interlock ready modification from plant (factory suffix WB in digits 19-20).\")","4:HA":"Standard lockable handle and mechanism","4:HB":"Standard lockable handle and mechanism with door interlock","4:HC":"Standard lockable handle and mechanism with mechanical padlock","4:HE":"Standard lockable handle and mechanism with door interlock and mechanical padlock","4:H1":"Emergency lockable handle and mechanism","4:H2":"Emergency lockable handle and mechanism with door interlock","4:H3":"Emergency lockable handle and mechanism with mechanical padlock","4:H5":"Emergency lockable handle and mechanism with door interlock and mechanical padlock","4:DA":"Standard lockable handle and mechanism ②","4:DC":"Standard lockable handle and mechanism with mechanical padlock ②","4:D1":"Emergency lockable handle and mechanism ②","4:D3":"Emergency lockable handle and mechanism with mechanical padlock ②","4:L4":"Padlockable hasp — Top","4:L1":"Padlockable hasp, OFF only — Top","4:L8":"Kirk lock provision—left side ① — Left side","4:L9":"Kirk lock provision—right side ① — Right side","4:RG":"Electrical operator 24 Vdc","4:RJ":"Electrical operator 48–60 Vdc (cell printed \"RJ or RK\")","4:RK":"Electrical operator 48–60 Vdc (cell printed \"RJ or RK\")","4:RL":"Electrical operator 125 Vdc","4:RM":"Electrical operator 250 Vdc","4:RA":"Electrical operator 110–130 Vac","4:RB":"Electrical operator 200–240 Vac","4:RC":"Electrical operator 380–440 Vac","4:WB":"Walking beam interlock ready modification — from footnote ②: \"Breaker must be ordered with walking beam interlock ready modification from plant (factory suffix WB).\" The Digits 19–20 cell of the Walking beam interlock row itself is printed \"—\".","5:DA":"Standard lockable handle and mechanism (Variable Depth Rotary Handle Mechanism)","5:D1":"Emergency lockable handle and mechanism (Variable Depth Rotary Handle Mechanism)","5:L5":"Padlockable hasp, Left-side","5:L6":"Padlockable hasp, Right-side","5:L4":"Padlockable hasp, Top","5:L1":"Padlockable hasp, OFF only, Top","5:L8":"Kirk key interlock kit (footnote 2), Left-side","5:L9":"Kirk key interlock kit (footnote 2), Right-side","5:WB":"Walking beam interlock (footnotes 3, 4), Three- or four-pole; code carries footnote 5","5:MG":"Electrical operator, 24 Vdc","5:MJ":"Electrical operator, 48 Vdc","5:ML":"Electrical operator, 125 Vdc","5:MA":"Electrical operator, 120 Vac","5:MY":"Electrical operator, 208 Vac","5:MB":"Electrical operator, 240 Vac","5:MD":"Electrical operator, 480 Vac","6:DA":"Standard lockable handle and mechanism (Variable Depth Rotary Handle Mechanism)","6:D1":"Emergency lockable handle and mechanism (Variable Depth Rotary Handle Mechanism)","6:L6":"Padlockable hasp, Right","6:L3":"Padlockable hasp, OFF only, Right","6:L9":"Kirk key interlock kit (footnote 2), Right","6:WB":"Walking beam interlock (footnotes 3, 4), Three-pole; code carries footnote 5","6:MJ":"Electrical operator, 48 Vdc","6:MA":"Electrical operator, 120 Vac","6:MB":"Electrical operator, 240 Vac","1:ZL":"Load only: Standard Terminals — PDG1X2T125, PDG1X3T125, PDG1X4T125","1:ZH":"Load only: Multi-Wire Terminals — PDG1X3TA1253W, PDG1X4TA1253W","1:ZG":"Load only: Multi-Wire Terminals — PDG1X3TA1256W, PDG1X4TA1256W","1:ZE":"Load only: End Cap Kit/Screw Terminals — PDG1X3TS125, PDG1X4TS125","2:ZL":"Load only: Standard Terminals — PDG2X2T100, PDG2X3T100, PDG2X4T100","2:ZV":"Load only: Alternate Terminals — PDG2X2TA50, PDG2X3TA50, PDG2X4TA50","2:ZZ":"Load only: Non-standard Terminals — PDG2X2T150, PDG2X3T150, PDG2X4T150","2:ZG":"Load only: Multi-Wire Terminals — PDG2X3TA2256W","2:ZH":"Load only: Multi-Wire Terminals — PDG2X3TA2253W","2:ZE":"Load only: End Cap Kit/Screw Terminals — PDG2X3TS225, PDG2X4TS225","3:ZL":"Load only: Standard Terminals — PDG3X2TA300, PDG3X3TA300, PDG3X4TA300","3:ZV":"Load only: Optional Terminals — PDG3X2TA402, PDG3X3TA402, PDG3X4TA402","3:ZZ":"Load only: Optional Copper Terminals — PDG3X2T300, PDG3X3T300, PDG3X4T300","3:ZC":"Load only: StrandAble Terminals — PDG3X2TA400SW, PDG3X3TA400SW, PDG3X4TA400SW","3:Z3":"Load only: Terminals with Control Wire — PDG3X2TA400CW, PDG3X3TA400CW, PDG3X4TA400CW","3:Z6":"Load only: Terminals with Control Wire — PDG3X2TA401CW, PDG3X3TA401CW, PDG3X4TA401CW","3:Z9":"Load only: Copper Terminals with Control Wire — PDG3X2T400CW, PDG3X3T400CW, PDG3X4T400CW","3:ZH":"Load only: Multi-Wire Terminals — PDG3X2TA4003W, PDG3X3TA4003W, PDG3X4TA4003W","3:ZG":"Load only: Multi-Wire Terminals — PDG3X2TA4006W, PDG3X3TA4006W, PDG3X4TA4006W","3:ZE":"Load only: End Cap Kit/Screw Terminals — PDG3X3TS400, PDG3X4TS400","4:ZL":"Load only: Standard Terminals — PDG4X1TA700, PDG4X3TA700","4:ZV":"Load only: Alternate Terminals — PDG4X1TA801, PDG4X3TA801","4:ZZ":"Load only: Alternate Copper Terminals — PDG4X1T600, PDG4X3T600","4:ZC":"Load only: StrandAble Terminals — PDG4X3TA800SW","4:Z3":"Load only: Control Wire Terminals — PDG4X1TA700CW, PDG4X3TA700CW","4:Z6":"Load only: Control Wire Terminals — PDG4X1TA801CW, PDG4X3TA801CW","4:ZE":"Load only: End Cap Kit/Screw Terminals — PDG4X3TS800, PDG4X4TS800","5:ZJ":"Line and Load: Terminal Options — PDG5X1TA700","5:ZK":"Line Only: Terminal Options — PDG5X1TA700","5:ZL":"Load Only: Terminal Options — PDG5X1TA700","5:ZT":"Line and Load: Terminal Options — PDG5X1TA1201","5:ZU":"Line Only: Terminal Options — PDG5X1TA1201","5:ZV":"Load Only: Terminal Options — PDG5X1TA1201","5:ZW":"Line and Load: Copper Terminal Options — PDG5X1T700","5:ZY":"Line Only: Copper Terminal Options — PDG5X1T700","5:ZZ":"Load Only: Copper Terminal Options — PDG5X1T700","5:ZA":"Line and Load: StrandAble Terminals — PDG5X1TA1200SW","5:ZB":"Line Only: StrandAble Terminals — PDG5X1TA1200SW","5:ZC":"Load Only: StrandAble Terminals — PDG5X1TA1200SW","5:Z1":"Line and Load: Control Wire Terminals — PDG5X1TA700CW","5:Z2":"Line Only: Control Wire Terminals — PDG5X1TA700CW","5:Z3":"Load Only: Control Wire Terminals — PDG5X1TA700CW","5:Z4":"Line and Load: Control Wire Terminals, continued — PDG5X1TA1201CW","5:Z5":"Line Only: Control Wire Terminals, continued — PDG5X1TA1201CW","5:Z6":"Load Only: Control Wire Terminals, continued — PDG5X1TA1201CW","6:ZJ":"Line and Load: Terminal Options — PDG6X1TA1600","6:ZK":"Line Only: Terminal Options — PDG6X1TA1600","6:ZL":"Load Only: Terminal Options — PDG6X1TA1600","6:ZW":"Line and Load: Copper Terminal Options — PDG6X1T1600","6:ZY":"Line Only: Copper Terminal Options — PDG6X1T1600","6:ZZ":"Load Only: Copper Terminal Options — PDG6X1T1600"}},"pxr":{"2":["B2N","D2D","D2M","D2W","D2Y","D3D","D3M","D3W","D3Y","E2C","E2M","E2N","E2R","E2W","E2X","E2Z","E3C","E3M","E3R","E3W","E3X","E3Z","P2D","P2M","P2W","P2Y","P3D","P3M","P3W","P3Y"],"3":["B2N","D2D","D2M","D2W","D2Y","D3D","D3M","D3W","D3Y","D4D","D4M","D4W","D4Y","D5D","D5M","D5W","D5Y","E2C","E2M","E2N","E2R","E2W","E2X","E2Z","E3C","E3M","E3R","E3W","E3X","E3Z","E4C","E4M","E4R","E4W","E4X","E4Z","E5C","E5M","E5R","E5W","E5X","E5Z","P2D","P2M","P2W","P2Y","P3D","P3M","P3W","P3Y","P4D","P4M","P4W","P4Y","P5D","P5M","P5W","P5Y"],"4":["B2N","D2D","D2M","D2W","D2Y","D3D","D3M","D3W","D3Y","D4D","D4M","D4W","D4Y","D5D","D5M","D5W","D5Y","E2C","E2M","E2N","E2R","E2W","E2X","E2Z","E3C","E3M","E3R","E3W","E3X","E3Z","E4C","E4M","E4R","E4W","E4X","E4Z","E5C","E5M","E5R","E5W","E5X","E5Z","P2D","P2M","P2W","P2Y","P3D","P3M","P3W","P3Y","P4D","P4M","P4W","P4Y","P5D","P5M","P5W","P5Y"],"5":["D2D","D2M","D2W","D2Y","D3D","D3M","D3W","D3Y","D4D","D4M","D4W","D4Y","D5D","D5M","D5W","D5Y","E2C","E2M","E2N","E2R","E2W","E2X","E2Z","E3C","E3M","E3R","E3W","E3X","E3Z","E4C","E4M","E4R","E4W","E4X","E4Z","E5C","E5M","E5R","E5W","E5X","E5Z","P2D","P2M","P2W","P2Y","P3D","P3M","P3W","P3Y","P4D","P4M","P4W","P4Y","P5D","P5M","P5W","P5Y"],"6":["D2D","D2M","D2W","D2Y","D3D","D3M","D3W","D3Y","D4D","D4M","D4W","D4Y","D5D","D5M","D5W","D5Y","E2C","E2M","E2N","E2R","E2W","E2X","E2Z","E3C","E3M","E3R","E3W","E3X","E3Z","E4C","E4M","E4R","E4W","E4X","E4Z","E5C","E5M","E5R","E5W","E5X","E5Z","P2D","P2M","P2W","P2Y","P3D","P3M","P3W","P3Y","P4D","P4M","P4W","P4Y","P5D","P5M","P5W","P5Y"],"mpcb":["B8N","P8D","P8M","P8W","P8Y","P9D","P9M","P9W","P9Y"],"J5":["D2D","D2M","D2W","D2Y","D4D","D4M","D4W","D4Y","P2D","P2M","P2W","P2Y","P4D","P4M","P4W","P4Y"]},"ed2026":{"src":"Eaton CA08100005E, April 2026","K":{"letters":{"F":{"dc125":10,"dc250":35,"dcHV":35},"K":{"dc125":35,"dc250":42,"dcHV":50},"M":{"dc125":42,"dc250":50,"dcHV":65}},"hv":{"1":500,"2":600,"3":600,"4":600,"5":600,"6":600},"v800":[3,4],"m125note":"p.112 footnote 3 gives M at 125 Vdc (3-/4-pole) as 42 kA for Frames 1-4 and 50 kA for Frame 6; the Frame 5 and 6 selection boxes (p.114) print 42. Shown as printed in the box.","trips":{"1":["TFF"],"2":["TFF"],"3":["TFA","LFA","FNN"],"4":["TFA"],"5":["TFN"],"6":["TFN"]},"poles":{"1":"3","2":"123","3":"34","4":"34","5":"3","6":"3"},"amps":{"1":["0025","0030","0035","0040","0045","0050","0060","0070","0080","0090","0100"],"2":["0015","0020","0025","0030","0035","0040","0045","0050","0060","0070","0080","0090","0100","0125","0150","0175","0200","0225"],"3":["0100","0125","0150","0175","0200","0225","0250","H250","0300","H300","0350","H350","0400","H400","0500","0600"],"4":["0300","0350","0400","0450","0500","0600","0700","0800"],"5":["0800","0900","1000","1200"],"6":["1600","2000","2500","3000"]},"onePoleMax":150,"terms":{"1":"NJ","2":"NJ","3":"NJ","4":"NJ","5":"NM","6":"NM"},"pages":"pp.110-116"},"L":{"frames":[1],"poles":"3","letters":{"C":18,"F":25,"G":35},"trips":["TFF"],"terms":"NJKL","amps":["0015","0020","0025","0030","0035","0040","0045","0050","0060","0070","0080","0090","0100","0110","0125"],"pages":"p.24"},"PV":{"frames":{"2":{"poles":"4","kA":3,"amps":["0030","0040","0050","0060","0070","0080","0090","0100"]},"3":{"poles":"4","kA":5,"amps":["0125","0150","0175","0200","0225","0250","H250","0300","H300","0350","H350","H400"]},"4":{"poles":"3","kA":7.5,"amps":["0300","0350","0400","0450","0500","0600"]}},"letter":"G","trips":["VFF"],"terms":"N","pages":"p.119"},"boltOn":{"term":"B","frames":[1],"pages":"p.24"}}};
+</script>
+<script>
+/* pd_parse.js — Eaton Power Defense MCCB catalog-number parser (prototype).
+
+   Rated values follow Eaton CA08100005E, JANUARY 2021 edition (Volume 4, Tab 2,
+   section 2.2), cross-checked against the March 2020 edition. Page numbers in
+   `src` are 2021 PDF pages (= printed V4-T2 page).
+
+   The interrupting letter (digit 6) is NOT a flat letter -> kA map. It is looked
+   up by family (digit 3), then frame, then pole group / trip-unit type where the
+   catalog distinguishes. See interrupting().
+
+   Plain ES5-style script on purpose: the same text is pasted into a browser page
+   by the verification harness, and later into the decoder HTML. No dependencies.
+   `PD.pairs` (digits 14-20 per-frame tables) is optional and injected by the
+   harness from pd-mccb-grammar-2021.json. */
+
+var PD = (function () {
+
+  var FAMILY = {
+    G: { name: 'Global ratings', marks: 'UL, CSA, CE, CCC', ed: '2021 p.8' },
+    F: { name: 'Global ratings with 100% UL rating', marks: 'UL, CSA, CE, CCC', ed: '2021 p.8' },
+    D: { name: 'Rated to 240 V', marks: 'UL, CSA', ed: '2021 p.8' },
+    J: { name: 'UL and CSA', marks: 'UL, CSA', ed: '2021 p.8' },
+    C: { name: 'IEC and GB', marks: 'CE, CCC', ed: '2021 p.8', iec: true },
+    E: { name: 'IEC only', marks: 'CE', ed: '2021 p.8', iec: true },
+    /* Not in the 2020 or 2021 editions. Recognised from the April 2026 edition;
+       their rating tables are a data-extraction item, not decoded here. */
+    K: { name: 'UL/CSA DC rated', marks: 'UL, CSA', ed: '2026 pp.110-116', later: true },
+    L: { name: 'UL/cUL (PDL1)', marks: 'UL, cUL', ed: '2026 p.24', later: true },
+    O: { name: 'PVGard, UL 489B 100% rated (1000 Vdc)', marks: 'UL 489B', ed: '2026 p.119', later: true },
+    P: { name: 'PVGard, UL 489B 80% rated (1000 Vdc)', marks: 'UL 489B', ed: '2026 p.119', later: true }
+  };
+
+  var POLES = {
+    '1': { n: 1, text: '1-pole' },
+    '2': { n: 2, text: '2-pole' },
+    '3': { n: 3, text: '3-pole' },
+    '4': { n: 4, text: '4-pole, 100% protected neutral (programmable neutral on PXR)' },
+    '0': { n: 4, text: '4-pole, no protection on neutral pole' },
+    '6': { n: 4, text: '4-pole, 60% protected neutral pole' }
+  };
+
+  /* UL/CSA kA rms as [240 Vac, 480 Vac, 600 Vac], 2-/3-/4-pole. 2021 edition.
+     Frame 1's third column is 600Y/347 V. */
+  var BASE = {
+    1: { p: 23, v600: '600Y/347 Vac', L: { C: [25, 18, 10], F: [35, 25, 14], G: [65, 35, 18], K: [85, 50, 22], M: [100, 65, 25], N: [150, 85, 30], P: [200, 100, 35] } },
+    2: { p: 30, v600: '600 Vac', L: { F: [35, 25, 14], G: [65, 35, 18], K: [85, 50, 22], M: [100, 65, 25], N: [150, 85, 30], P: [200, 100, 35] } },
+    3: { p: 43, v600: '600 Vac', L: { F: [35, 25, 14], G: [65, 35, 18], K: [85, 50, 25], M: [100, 65, 35], N: [150, 85, 50], P: [200, 100, 65] } },
+    4: { p: 58, v600: '600 Vac', L: { G: [65, 35, 18], K: [85, 50, 25], M: [100, 65, 35] } },
+    5: { p: 71, v600: '600 Vac', L: { K: [85, 50, 25], M: [100, 65, 35], N: [150, 85, 50], P: [200, 100, 65], T: [200, 150, 65] } },
+    6: { p: 80, v600: '600 Vac', L: { M: [125, 65, 35], N: [150, 85, 50], P: [200, 100, 65] } }
+  };
+  /* Single-pole tables: [277 V, 347 V]. Frame 1 p.23, Frame 2 p.30. */
+  var ONE_POLE = {
+    1: { p: 23, L: { C: [18, 10], F: [25, 14], G: [35, 18], K: [50, 22], M: [65, 25] } },
+    2: { p: 30, L: { F: [25, 14], G: [35, 18], K: [50, 22], M: [65, 25], N: [85, 30], P: [100, 35] } }
+  };
+  /* PDD: one voltage only. Frames 2 and 3 (pp.32, 44). */
+  var PDD_240 = { F: 35, G: 65, K: 85, M: 100, N: 150, P: 200 };
+
+  function interrupting(fam, frame, poleCode, trip, ampCode, letter) {
+    var notes = [];
+    var bad = function (why) { return { ok: false, why: why }; };
+    if (FAMILY[fam] && FAMILY[fam].later) {
+      var E26 = PD.data && PD.data.ed2026;
+      if (!E26) return { ok: null, why: 'Family PD' + fam + ' is not in the 2020/2021 editions; its table is in the April 2026 edition (load pd-data.js).' };
+      var src26 = E26.src + ' ';
+      if (fam === 'K') {
+        var KL = E26.K.letters[letter];
+        if (!KL) return bad('PDK is printed with interrupting letters F, K and M only (' + src26 + 'p.112).');
+        var hv = E26.K.hv[frame], vals = [{ v: '125 Vdc (1 pole)', kA: KL.dc125 }, { v: '250 Vdc (2 poles in series)', kA: KL.dc250 }];
+        if (poleCode !== '1' && poleCode !== '2') vals.push({ v: hv + ' Vdc (3 poles in series)', kA: KL.dcHV });
+        if (poleCode === '4' && E26.K.v800.indexOf(frame) >= 0) vals.push({ v: '800 Vdc (4 poles in series)', kA: KL.dcHV });
+        if (poleCode === '1') vals = vals.slice(0, 1);
+        var kn = ['DC rated, 80% rated. Higher voltages are reached by wiring poles in series (customer-supplied, NEC-rated cable; ' + src26 + 'p.116).'];
+        if (letter === 'M' && poleCode !== '1' && poleCode !== '2' && frame >= 5) kn.push(E26.K.m125note);
+        return { ok: true, basis: 'PDK' + frame + ' DC (UL 489 / CSA)', values: vals, src: src26 + E26.K.pages, notes: kn, dc: true };
+      }
+      if (fam === 'L') {
+        if (frame !== 1) return bad('PDL is printed as PDL1 only (' + src26 + E26.L.pages + ').');
+        if (E26.L.letters[letter] == null) return bad('PDL1 is printed with letters C, F and G only (' + src26 + E26.L.pages + ').');
+        return { ok: true, basis: 'PDL1, UL/cUL', values: [{ v: '480 Vac', kA: E26.L.letters[letter] }], src: src26 + E26.L.pages, notes: ['PDL1 is a form/fit equivalent of PDG1, maximum 35 kA at 480 V, and cannot take internal accessories. Only the 480 V rating is printed.'] };
+      }
+      if (fam === 'O' || fam === 'P') {
+        var PVf = E26.PV.frames[frame];
+        if (!PVf) return bad('PVGard is printed for frames 2, 3 and 4 only (' + src26 + E26.PV.pages + ').');
+        if (letter !== E26.PV.letter) return bad('PVGard is printed with interrupting letter G only (' + src26 + E26.PV.pages + ').');
+        return { ok: true, basis: 'PVGard UL 489B, ' + (fam === 'O' ? '100%' : '80%') + ' rated', values: [{ v: '1000 Vdc (poles in series)', kA: PVf.kA }], src: src26 + E26.PV.pages, notes: ['Photovoltaic breaker: 1000 Vdc is reached only with all poles wired in series (' + src26 + 'p.121).'], dc: true };
+      }
+    }
+    if (fam === 'E') return { ok: null, why: 'PDE (IEC only): no interrupting table is printed in the 2021 US catalog. Route to contact.' };
+
+    if (fam === 'D') {
+      if (frame !== 2 && frame !== 3) return bad('PDD is printed for frames 2 and 3 only (2021 pp.32, 44).');
+      if (PDD_240[letter] == null) return bad('Letter ' + letter + ' is not a PDD' + frame + ' interrupting code.');
+      return { ok: true, basis: 'PDD, rated to 240 Vac only', values: [{ v: '240 Vac', kA: PDD_240[letter] }], src: '01/2021 p.' + (frame === 2 ? 32 : 44), notes: ['PDD letters are 240 V values. The same letter on a PDG is a different rating.'] };
+    }
+    if (fam === 'J') {
+      if (frame !== 5 || !/^[TM]$/.test(letter)) return bad('PDJ is printed only as PDJ5, with letter T (2021 p.71) or M (high-instantaneous, 2021 p.106).');
+      if (letter === 'M') return { ok: true, basis: 'PDJ5 high-instantaneous, UL/CSA', values: [{ v: '240 Vac', kA: 100 }, { v: '480 Vac', kA: 65 }, { v: '600 Vac', kA: 35 }], src: '01/2021 p.106', notes: ['From the PDJ5 high-instantaneous short-circuit table; that section is not in the March 2020 edition.'] };
+      return { ok: true, basis: 'PDJ5 high-instantaneous, UL/CSA', values: [{ v: '240 Vac', kA: 200 }, { v: '480 Vac', kA: 150 }, { v: '600 Vac', kA: 65 }], src: '01/2021 p.71', notes: ['April 2026 edition prints T = 200 / 125 / 85.'] };
+    }
+    if (fam === 'C') {
+      if (frame !== 5 || !/^[KM]$/.test(letter)) return { ok: null, why: 'PDC (IEC and GB): the US catalog prints only the Frame 5 1600 A breaker. This number is an IEC-catalog breaker; its ratings are not decoded here. Route to contact.' };
+      return { ok: true, basis: 'PDC5 IEC/CCC, as printed in the US catalog', values: [{ v: '480 V', kA: letter === 'K' ? 50 : 65 }, { v: '600 V', kA: letter === 'K' ? 25 : 35 }], src: '01/2021 p.72', notes: ['IEC family: other frames are not printed in the US catalog. April 2026 edition states K = 50, M = 70 kA at 415 V.'] };
+    }
+
+    /* G and F share the frame tables, with per-family and per-trip restrictions. */
+    var b = BASE[frame];
+    if (!b) return bad('Unknown frame ' + frame);
+    var isMcp = trip.kind === 'mcp';
+    if (isMcp) {
+      if (letter !== 'M') return bad('Motor circuit protectors are printed with M in digit 6 only (2021 pp.88-97).');
+      return { ok: true, basis: 'Motor circuit protector (instantaneous-only)', values: [], src: '01/2021 pp.88-97', notes: ['No UL interrupting rating is printed for a motor circuit protector; it is a UL Recognized component rated in combination. Do not read the M from the breaker table.'] };
+    }
+    if (poleCode === '1') {
+      var o = ONE_POLE[frame];
+      if (!o) return bad('Single-pole is printed for frames 1 and 2 only.');
+      if (!o.L[letter]) return bad('Letter ' + letter + ' is not a single-pole Frame ' + frame + ' code (2021 p.' + o.p + ').');
+      if (frame === 2 && /[NP]/.test(letter)) notes.push('Single-pole N and P are printed for 15-30 A only (2021 p.31).');
+      return { ok: true, basis: 'Single-pole', values: [{ v: '277 Vac', kA: o.L[letter][0] }, { v: '347 Vac', kA: o.L[letter][1] }], src: '01/2021 p.' + o.p, notes: notes };
+    }
+    var row = b.L[letter];
+    if (!row || letter === 'T') return bad('Letter ' + letter + ' is not a PD' + fam + frame + ' interrupting code (2021 p.' + b.p + ').');
+    row = row.slice();
+    if (frame === 1 && poleCode === '2' && /[NP]/.test(letter)) return bad('Frame 1 N and P are 3- and 4-pole only (2021 pp.23-24).');
+    if (fam === 'F' && frame === 3 && !/[FGKM]/.test(letter)) return bad('PDF3 (100% rated) is printed with F, G, K, M only (2021 pp.44-46).');
+    if (trip.kind === 'switch') {
+      var sw = { 1: 'GM', 2: 'GM', 3: 'GM', 4: 'GM', 5: 'KM', 6: 'M' }[frame];
+      if (sw.indexOf(letter) < 0) return bad('Frame ' + frame + ' molded case switches are printed with ' + sw.split('').join(' or ') + ' only.');
+      if (frame === 2) notes.push('The Frame 2 switch box (2021 p.32) prints M = 35 kA at 600 V; every other Frame 2 table says 25. Shown as the frame table value.');
+    }
+    if (frame === 2 && trip.kind === 'pxr' && /[NP]/.test(letter)) {
+      row[2] = 25;
+      notes.push('Frame 2 N and P are 25 kA at 600 V with a PXR trip unit and ' + (letter === 'N' ? 30 : 35) + ' kA with a thermal-magnetic unit (2021 p.30 note 3).');
+    }
+    if (frame === 1 && /[NP]/.test(letter)) notes.push('April 2026 edition prints 25 kA at 600Y/347 V for this letter (2021: ' + row[2] + ').');
+    return { ok: true, basis: 'PD' + fam + frame + ', 2-/3-/4-pole', values: [{ v: '240 Vac', kA: row[0] }, { v: '480 Vac', kA: row[1] }, { v: b.v600, kA: row[2] }], src: '01/2021 p.' + b.p, notes: notes };
+  }
+
+  var PXR_UNIT = { B: 'PXR 10', E: 'PXR 20', D: 'PXR 20D', P: 'PXR 25' };
+  var PXR_PROT = { '2': 'LSI', '3': 'LSIG', '4': 'LSI with ARMS (ALSI)', '5': 'LSIG with ARMS (ALSIG)', '8': 'LSI motor (MLSI)', '9': 'LSIG motor (MLSIG)' };
+  var PXR_OPT = { N: 'None', R: 'Programmable relays', M: 'Modbus and relays', Z: 'ZSI and relays', C: 'CAM Link and relays', W: 'Modbus, ZSI and relays', X: 'CAM Link, ZSI and relays', D: 'Modbus, CAM Link and relays', Y: 'Modbus, CAM Link, ZSI and relays' };
+  /* General matrix, 2021 p.11. Per-frame matrices narrow this further. */
+  var PXR_ALLOWED = { B: { prot: '28', opt: 'N' }, E: { prot: '2345', opt: 'NRMZCWX' }, D: { prot: '2345', opt: 'MWDY' }, P: { prot: '234589', opt: 'MWDY' } };
+
+  function trip(code, frame, fam) {
+    var a = code[0], b = code[1], c = code[2], w = [];
+    /* PDK (DC, April 2026 pp.112-114): TFN = "Fixed magnetic" on Frames 5-6; LFA = low amperage / adjustable
+       magnetic, Frame 3 600 A construction only. */
+    if (fam === 'K' && code === 'TFN') return { kind: 'tm', text: 'DC trip unit: fixed magnetic (TFN, as printed for PDK Frames 5-6)', dc: true, warn: w };
+    /* PVGard (April 2026 p.119): VFF on every frame, UL 489B listed, calibrated at 50 °C. */
+    if ((fam === 'O' || fam === 'P') && code === 'VFF') return { kind: 'tm', text: 'Thermal-magnetic: fixed thermal, fixed magnetic, calibrated at 50 °C (UL 489B photovoltaic)', dc: true, warn: w };
+    if (fam === 'K' && code === 'LFA') return { kind: 'tm', text: 'DC trip unit: low amperage / adjustable magnetic (LFA, Frame 3 600 A construction only)', dc: true, warn: w };
+    if (code === 'KNS') return { kind: 'switch', text: 'Molded case switch (no trip unit protection)', warn: w };
+    if (code === 'FNN') return { kind: 'frame', text: 'Frame only (no trip unit installed)', warn: w };
+    if (a === 'T' || a === 'V') {
+      var th = { F: 'Fixed thermal', A: 'Adjustable thermal' }[b];
+      var mg = { F: 'fixed magnetic', A: 'adjustable magnetic', N: 'fixed magnetic (DC family code)' }[c];
+      if (!th || !mg) return null;
+      if (frame > 4 && fam !== 'K') w.push('Thermal-magnetic trip units are printed for frames 1-4 only (2021 p.9).');
+      if (code.slice(1) === 'FF' && frame > 2) w.push('TFF/VFF is the Frame 1-2 form; Frame 3-4 UL breakers are TFA/VFA.');
+      if (code.slice(1) === 'FA' && frame < 3) w.push('TFA/VFA is the Frame 3-4 form; Frame 1-2 UL breakers are TFF/VFF.');
+      return { kind: 'tm', text: (a === 'V' ? '50 °C calibrated thermal-magnetic (not UL Listed)' : 'Thermal-magnetic') + ': ' + th + ', ' + mg, calib50: a === 'V', warn: w };
+    }
+    if (a === 'M' && /[SHL]/.test(b) && c === 'A') {
+      if (frame > 3) w.push('Motor circuit protectors are printed for frames 1-3 only.');
+      return { kind: 'mcp', text: 'Motor circuit protector, ' + { S: 'standard', H: 'high', L: 'low' }[b] + ' calibration (adjustable instantaneous only)', warn: w };
+    }
+    if (code === 'MRA') {
+      w.push('MRA is not in the 2020/2021 catalog. Eaton SKU pages describe it as a motor protection circuit breaker, standard calibration, adjustable, UL Listed.');
+      return { kind: 'mpcb', text: 'Motor protection circuit breaker, standard calibration, adjustable (per Eaton SKU pages)', warn: w };
+    }
+    if (PXR_UNIT[a] && PXR_PROT[b] && PXR_OPT[c]) {
+      var al = PXR_ALLOWED[a];
+      if (frame === 1) w.push('Frame 1 has no electronic trip unit.');
+      if (a === 'B' && frame > 4) w.push('PXR 10 is printed for frames 2-4 only.');
+      if (!(PD.data && PD.data.pxr) && al.prot.indexOf(b) < 0) w.push(PXR_UNIT[a] + ' with protection code ' + b + ' is not in the 2021 option matrix (p.11).');
+      if (!(PD.data && PD.data.pxr) && al.opt.indexOf(c) < 0) w.push(PXR_UNIT[a] + ' with option ' + c + ' is not in the 2021 option matrix (p.11).');
+      if (a === 'E' && b !== '2' && c === 'N') w.push('PXR 20 LSIG/ARMS units are printed with relays or communications, never N.');
+      if (a === 'D') w.push('PXR 20D is in the 2020 and 2021 editions and absent from the April 2026 edition.');
+      return { kind: 'pxr', unit: PXR_UNIT[a], text: PXR_UNIT[a] + ', ' + PXR_PROT[b] + ', options: ' + PXR_OPT[c], motor: b === '8' || b === '9', warn: w };
+    }
+    return null;
+  }
+
+  var AMP_MAX = { 1: 125, 2: 225, 3: 600, 4: 800, 5: 1200, 6: 2500 };
+  var AMP_MIN = { 1: 15, 2: 15, 3: 45, 4: 300, 5: 320, 6: 700 };
+
+  function amps(code, frame, fam, t) {
+    var w = [];
+    var m = /^H(\d{3})$/.exec(code);
+    if (m) {
+      if (frame === 5 && fam === 'J') return { amps: +m[1], text: m[1] + ' A, high-instantaneous PDJ5', high: true, warn: w };
+      if (frame !== 3) return null;
+      return { amps: +m[1], text: m[1] + ' A, high-override: built on the 600 A Frame 3 construction', high: true, warn: w };
+    }
+    if (!/^\d{4}$/.test(code)) return null;
+    var a = +code;
+    if (a === 0) return null;
+    var max = AMP_MAX[frame];
+    if (frame === 5 && fam === 'C') max = 1600;
+    if (a > max) w.push(a + ' A is above the Frame ' + frame + ' maximum of ' + max + ' A.');
+    if (t && t.kind !== 'mcp' && a < AMP_MIN[frame]) w.push(a + ' A is below the printed Frame ' + frame + ' range (' + AMP_MIN[frame] + '-' + max + ' A).');
+    return { amps: a, text: a + ' A', high: false, warn: w };
+  }
+
+  var TERM_STD = { N: 'No terminals', J: 'Standard terminals, line and load', K: 'Standard terminals, line only', L: 'Standard terminals, load only' };
+  var D15 = { A: ['Auxiliary switch only', 'pigtail (30 in)'], D: ['Auxiliary switch only', 'pigtail (3 m)'], X: ['Auxiliary switch only', 'screw terminal'], U: ['Auxiliary switch only', 'spring cage clamp'],
+              B: ['Alarm switch only', 'pigtail (30 in)'], E: ['Alarm switch only', 'pigtail (3 m)'], Y: ['Alarm switch only', 'screw terminal'], V: ['Alarm switch only', 'spring cage clamp'],
+              C: ['Auxiliary and alarm', 'pigtail (30 in)'], F: ['Auxiliary and alarm', 'pigtail (3 m)'], Z: ['Auxiliary and alarm', 'screw terminal'], W: ['Auxiliary and alarm', 'spring cage clamp'] };
+  var D17 = { S: ['Shunt trip', 'pigtail (30 in)'], R: ['Shunt trip', 'pigtail (3 m)'], T: ['Shunt trip', 'screw terminal'],
+              U: ['Undervoltage release', 'pigtail (30 in)'], W: ['Undervoltage release', 'pigtail (3 m)'], V: ['Undervoltage release', 'screw terminal'] };
+
+  var GEN1920 = { WB: 'Walking beam interlock ready (2021 p.141)', J1: 'Fungus / moisture treated (2021 p.141; removes UL listing)', J2: 'Freeze tested (2021 p.141; removes UL listing)',
+                  M1: 'Marine modification (April 2026 p.157; not in the 2021 edition)', M2: 'Naval modification (April 2026 p.157; not in the 2021 edition)' };
+
+  /* Accessory / kit / trip-unit numbers share the breaker prefix. The separator X
+     after the frame digit(s) is what distinguishes them (2021 pp.10-11). */
+  var KIT_TYPES = [
+    [/^\dTA?S?\d|^\d[ABR]C\d?|^\dT[A-Z]*\d/, 'Terminal / lug kit'], [/^TF[AF]|^TFA/, 'Thermal-magnetic trip unit (sold separately)'], [/^PXR/, 'PXR electronic trip unit (sold separately)'],
+    [/^ST/, 'Shunt trip kit'], [/^UV/, 'Undervoltage release kit'], [/^HM/, 'Handle mechanism'], [/^ROP/, 'Remote / motor operator'], [/^FS/, 'Flex shaft handle mechanism'],
+    [/^PLK|^PHB|^KLK/, 'Padlock / handle block / key lock'], [/^WBI/, 'Walking beam interlock'], [/^IB/, 'Interphase barrier'], [/^TC/, 'Terminal cover / shield'], [/^NCT/, 'Neutral current sensor'],
+    [/^ALM|^AUX/, 'Alarm / auxiliary switch kit'], [/^MODRTU|^RELAYS|^CAM/, 'Communications / relay module'], [/^DIN/, 'DIN rail adapter'], [/^PIB/, 'Plug-in base'], [/^FP/, 'Finger protection'],
+    [/^RC|^R\d|^L\d/, 'Rear connector / extension'], [/^HB/, 'Handle block']
+  ];
+
+  function kindText(k) {
+    return { tm: 'thermal-magnetic', switch: 'molded case switch', pxr: 'PXR electronic', frame: 'frame only', mcp: 'motor circuit protector', mpcb: 'motor protection (MPCB)' }[k] || k;
+  }
+  /* Digit-14 entry -> text, naming the kit whose factory amp range covers this breaker where the catalog prints one. */
+  /* Kits whose printed amp range covers the breaker. A range (lo-hi) is matched directly; an upper bound only
+     (max breaker amperes) matches the smallest bound at or above the amps. Overlapping printed ranges
+     (Frame 2 J: steel 15-100 A and aluminum 60-225 A) return BOTH -- the catalog does not choose. */
+  /* Kits whose printed amp range covers the breaker. Where printed ranges overlap (Frame 2 J: steel 15-100 A
+     and aluminum 60-225 A) the NARROWEST covering kit is the factory one -- verified against 40+ Eaton SKU
+     pages (PDG23M0060TFFL -> PDG2X3T100, PDG23F0125TFFJ -> PDG2X3TA225). Kits ending in H belong to the
+     Frame 3 600 A construction and pair only with H amp codes (PDF33GH400TFAJ -> PDG3X3TA401H). */
+  function termKits(e, amps, high) {
+    var hasH = false, c = [], i, k;
+    for (i = 0; i < e.kits.length; i++) if (/H$/.test(e.kits[i].kit)) hasH = true;
+    for (i = 0; i < e.kits.length; i++) {
+      k = e.kits[i];
+      if (hasH && (/H$/.test(k.kit) !== !!high)) continue;
+      if (k.hi == null) continue;
+      if (amps <= k.hi && (k.lo == null || amps >= k.lo)) c.push(k);
+    }
+    if (!c.length) return e.kits.length === 1 ? e.kits : [];
+    c.sort(function (a, b) { return a.hi - b.hi; });
+    return c.filter(function (x) { return x.hi === c[0].hi; });
+  }
+  /* The catalog prints the 3-pole kit; per its own note, other pole counts replace the X3 (PDG2X3T100 ->
+     PDG2X1T100 / PDG2X2T100 / PDG2X4T100). A printed per-pole map wins over the rule. */
+  function kitFor(k, poleN) {
+    if (k.byPole && k.byPole[poleN] && k.byPole[poleN] !== '—') return k.byPole[poleN];
+    return poleN === 3 ? k.kit : k.kit.replace(/^(PD[A-Z]\d)X3/, '$1X' + poleN);
+  }
+  function termText(e, amps, poleN, high) {
+    var s = e.text + (e.side && e.text.toLowerCase().indexOf(e.side) < 0 ? ', ' + e.side : '');
+    var ks = termKits(e, amps, high);
+    if (ks.length) s += ' (' + ks.map(function (k) { return 'kit ' + kitFor(k, poleN) + (k.body ? ', ' + k.body.toLowerCase() + ' body' : '') + (k.wire ? ', ' + k.wire + ' AWG/kcmil' : ''); }).join('; or ') + ')';
+    return s;
+  }
+
+  function norm(s) { return String(s == null ? '' : s).toUpperCase().replace(/[\s\-_.\/]/g, ''); }
+
+  function parse(raw) {
+    var s = norm(raw), r = { input: String(raw), key: s, errors: [], warnings: [], route: null };
+
+    var kit = /^PD([A-Z])(\d{1,3})X(.+)$/.exec(s);
+    if (kit) {
+      var type = 'Accessory or kit';
+      for (var i = 0; i < KIT_TYPES.length; i++) if (KIT_TYPES[i][0].test(kit[3])) { type = KIT_TYPES[i][1]; break; }
+      r.route = 'accessory';
+      r.kit = { family: kit[1], frames: kit[2].split('').map(Number), descriptor: kit[3], type: type };
+      /* Loose trip units carry poles + a breaker-style amp code: TFA<poles><amps>, PXR<poles><amps><unit code>
+         (PDG3XTFA30300, PDG3XTFA3H400, PDG3XPXR30250B2N, PDG6XPXR32000E3R). */
+      var lt = /^(TFA|TFF|PXR)(\d)(H\d{3}|\d{4})([A-Z0-9]{3})?$/.exec(kit[3]);
+      if (lt && r.kit.frames.length === 1 && POLES[lt[2]] && (lt[1] === 'PXR') === !!lt[4]) {
+        var kf = r.kit.frames[0];
+        r.kit.poles = POLES[lt[2]];
+        r.kit.amps = amps(lt[3], kf, kit[1], null);
+        if (lt[4]) r.kit.trip = trip(lt[4], kf);
+      }
+      return r;
+    }
+    /* Power Defense SB (SP...) and Magnum PXR (MP...) are insulated-case / power breakers: route, never error.
+       Checked BEFORE the PD prefix test, which would otherwise reject them. */
+    if (/^(SP|MP)[A-Z0-9]{6,}$/.test(s) || /^PDSB/.test(s)) { r.route = 'pd-sb'; return r; }
+    if (!/^PD[A-Z]/.test(s)) { r.errors.push('Not a Power Defense MCCB number: it must begin PD + family letter.'); return r; }
+    if (s.length !== 14 && s.length !== 20) {
+      r.errors.push('Length is ' + s.length + '; a Power Defense MCCB number is 14 characters, or 20 with factory modifications.');
+      if (s.length < 14) return r;
+      r.lengthOdd = true;
+    }
+    var fam = s[2], frame = +s[3], pole = s[4], letter = s[5], ampCode = s.slice(6, 10), tripCode = s.slice(10, 13), term = s[13];
+    r.fields = { family: fam, frame: s[3], poles: pole, interrupting: letter, amps: ampCode, trip: tripCode, terminals: term, mods: s.length >= 20 ? s.slice(14, 20) : null };
+
+    if (!FAMILY[fam]) { r.errors.push('Unknown family letter "' + fam + '" in digit 3.'); return r; }
+    r.family = FAMILY[fam];
+    if (!(frame >= 1 && frame <= 6) || !/^\d$/.test(s[3])) { r.errors.push('Digit 4 must be a frame 1-6, found "' + s[3] + '".'); return r; }
+    r.frame = frame;
+    if (!POLES[pole]) { r.errors.push('Digit 5 "' + pole + '" is not a pole code (1, 2, 3, 4, 0, 6).'); return r; }
+    r.poles = POLES[pole];
+    if (!/^[A-Z]$/.test(letter)) { r.errors.push('Digit 6 must be an interrupting letter, found "' + letter + '".'); return r; }
+    var t = trip(tripCode, frame, fam);
+    if (!t) { r.errors.push('Digits 11-13 "' + tripCode + '" are not a trip unit code.'); return r; }
+    r.trip = t; r.warnings = r.warnings.concat(t.warn);
+    var a = amps(ampCode, frame, fam, t);
+    if (!a) { r.errors.push('Digits 7-10 "' + ampCode + '" are not an ampere code for Frame ' + frame + '.'); return r; }
+    r.amps = a; r.warnings = r.warnings.concat(a.warn);
+    if (a.high && frame === 3) r.frameNote = 'PD3 at 500 A, 600 A or any H code is the 600 A construction ("PD3B"); 400 A and below is the 400 A construction ("PD3A").';
+
+    var it = interrupting(fam, frame, pole, t, ampCode, letter);
+    r.interrupting = it;
+    if (it.ok === false) r.errors.push(it.why);
+    if (it.ok === null) r.warnings.push(it.why);
+
+    if (pole === '1' && frame > 2) r.warnings.push('Single-pole is printed for frames 1 and 2 only.');
+    /* Verified 2026-10-14: twelve PDG21P0035-0150TFFJ numbers sold by one dealer have no Eaton SKU page;
+       every real single-pole N/P is 15-30 A. */
+    if (pole === '1' && frame === 2 && /[NP]/.test(letter) && a.amps > 30)
+      r.warnings.push('Single-pole Frame 2 with letter ' + letter + ' is printed for 15-30 A only (2021 p.31); ' + a.amps + ' A at this rating is not an Eaton catalog number. Check the nameplate.');
+    if (pole === '1' && t.kind !== 'tm') r.warnings.push('Single-pole breakers are printed with thermal-magnetic trip units only.');
+    if (fam === 'F' && frame === 2 && t.kind === 'tm') r.warnings.push('PDF2 (100% rated) is printed with PXR electronic trip units only (2021 p.32).');
+    if (fam === 'F' && frame === 1) r.warnings.push('No 100%-rated (PDF) Frame 1 is printed.');
+    if (fam === 'D' && t.kind !== 'tm') r.warnings.push('PDD is printed with thermal-magnetic trip units only.');
+    if (t.kind === 'mcp' && pole !== '3') r.warnings.push('Motor circuit protectors are 3-pole devices.');
+    if (FAMILY[fam].iec) r.route = 'iec';
+
+    /* Printed catalog lists (PDDATA, generated by gen_pd_data.mjs). A miss is a WARNING, not an error:
+       the lists are what the 2021 catalog prints, and a real breaker can carry a code it does not. */
+    var D = PD.data;
+    /* Families that exist only in the April 2026 edition: validate against ed2026 instead of the 2021 lists. */
+    if (D && FAMILY[fam].later) {
+      var E = D.ed2026, ok26 = function (list, v, what) { if (list && list.indexOf(v) < 0) r.warnings.push(what); };
+      if (fam === 'K') {
+        ok26(E.K.trips[frame], tripCode, 'Trip code ' + tripCode + ' is not printed for PDK' + frame + ' (printed: ' + (E.K.trips[frame] || []).join(', ') + '; ' + E.src + ' ' + E.K.pages + ').');
+        ok26(E.K.amps[frame], ampCode, 'Amp code ' + ampCode + ' is not printed for PDK' + frame + ' (' + E.src + ' ' + E.K.pages + ').');
+        if (E.K.poles[frame] && E.K.poles[frame].indexOf(pole) < 0) r.warnings.push('Pole code ' + pole + ' is not printed for PDK' + frame + ' (printed: ' + E.K.poles[frame].split('').join(', ') + ').');
+        if (pole === '1' && a.amps > E.K.onePoleMax) r.warnings.push('Single-pole PDK2 is printed to ' + E.K.onePoleMax + ' A.');
+        if (E.K.terms[frame].indexOf(term) < 0) r.warnings.push('Terminal code ' + term + ' is not printed for PDK' + frame + '.');
+        if (tripCode === 'LFA' && !(a.high || a.amps >= 500)) r.warnings.push('LFA is printed only for the PDK3 600 A construction.');
+      } else if (fam === 'L') {
+        ok26(E.L.amps, ampCode, 'Amp code ' + ampCode + ' is not printed for PDL1.');
+        ok26(E.L.trips, tripCode, 'PDL1 is printed with TFF only.');
+        if (E.L.poles.indexOf(pole) < 0) r.warnings.push('PDL1 is printed 3-pole only.');
+        if (E.L.terms.indexOf(term) < 0) r.warnings.push('Terminal code ' + term + ' is not printed for PDL1.');
+      } else if (fam === 'O' || fam === 'P') {
+        var PVf = E.PV.frames[frame];
+        if (PVf) {
+          ok26(PVf.amps, ampCode, 'Amp code ' + ampCode + ' is not printed for PVGard Frame ' + frame + '.');
+          if (PVf.poles.indexOf(pole) < 0) r.warnings.push('PVGard Frame ' + frame + ' is printed ' + PVf.poles + '-pole only.');
+        }
+        ok26(E.PV.trips, tripCode, 'PVGard is printed with VFF only.');
+        if (term !== 'N') r.warnings.push('PVGard is printed with terminal code N only.');
+      }
+    }
+    if (D && !FAMILY[fam].later) {
+      var kind = t.kind === 'pxr' && t.motor ? 'mpcb' : t.kind;
+      var akey = fam + ':' + frame + ':' + kind + (kind === 'mcp' ? ':' + tripCode : '') + (pole === '1' ? ':1' : '');
+      var al = D.amps[akey] || (pole === '1' ? null : D.amps[fam + ':' + frame + ':' + kind + (kind === 'mcp' ? ':' + tripCode : '')]);
+      if (pole === '1' && !al) al = D.amps[fam + ':' + frame + ':' + kind];
+      if (tripCode === 'MRA') al = null;   // MRA (motor protection, per Eaton SKU pages) has no printed list; the PXR MPCB list does not apply
+      if (al && al.codes.indexOf(ampCode) < 0)
+        r.warnings.push('Amp code ' + ampCode + ' is not printed for PD' + fam + frame + ' ' + kindText(kind) + (pole === '1' ? ' (single-pole)' : '') + ' (2021 p.' + al.src.join(', p.') + '; printed: ' + al.codes.join(' ') + ').');
+      if (al && al.poles && al.poles.indexOf(pole) < 0 && !(al.poles.indexOf('4') >= 0 && /[06]/.test(pole)))
+        r.warnings.push('Pole code ' + pole + ' is not printed for PD' + fam + frame + ' ' + kindText(kind) + ' (printed: ' + al.poles.split('').join(', ') + ').');
+      var lk = (a.high && fam === 'J') ? D.letters['J:5:pxr:H'] : (D.letters[fam + ':' + frame + ':' + kind + (pole === '1' ? ':1' : '')] || D.letters[fam + ':' + frame + ':' + kind]);
+      if (lk && lk.indexOf(letter) < 0 && it.ok !== false)
+        r.warnings.push('Interrupting letter ' + letter + ' is not offered for PD' + fam + frame + ' ' + kindText(kind) + ' (catalog box prints ' + lk.split('').join(', ') + ').');
+      /* PXR digits 11-13 against the frame's own option table (2021 pp.33, 48, 61, 74, 82; MPCB p.101; PDJ5 p.106). */
+      if (t.kind === 'pxr' && D.pxr) {
+        var pk = t.motor ? 'mpcb' : (fam === 'J' ? 'J5' : String(frame)), pl = D.pxr[pk];
+        var PXP = { '2': 33, '3': 48, '4': 61, '5': 74, '6': 82, mpcb: 101, J5: 106 };
+        if (pl && pl.indexOf(tripCode) < 0)
+          r.warnings.push('Trip code ' + tripCode + ' is not in the ' + (pk === 'mpcb' ? 'MPCB' : pk === 'J5' ? 'PDJ5' : 'Frame ' + frame) + ' PXR option table (2021 p.' + PXP[pk] + ').');
+      }
+      var RT = pole === '1' ? D.onePole[frame] : D.ratings[frame];
+      var R = RT && RT.L[letter];
+      if (R && (fam === 'G' || fam === 'F') && kind !== 'mcp') {
+        if (frame === 3) r.construction = (a.high || a.amps >= 500) ? '600' : '400';
+        /* Split cells resolve by the page's own footnote: Frame 2 = T-M / PXR, Frame 3 = 400 A / 600 A construction.
+           DC columns are dropped unless thermal-magnetic ("DC ratings available in thermal-magnetic breakers only",
+           2021 p.30 fn 2, p.43 fn 2). */
+        var pick = function (x) {
+          if (!x || typeof x !== 'object') return x;
+          if ('tm' in x) return x[kind === 'tm' ? 'tm' : 'pxr'];
+          if ('f400' in x) return x[r.construction === '600' ? 'f600' : 'f400'];
+          if ('icu' in x) return { icu: pick(x.icu), ics: pick(x.ics) };
+          return x;
+        };
+        var res = function (o) { var out = {}; for (var k in o) if (!(/^dc/.test(k) && kind !== 'tm')) out[k] = pick(o[k]); return out; };
+        r.ratingsFull = { ul: res(R.ul), iec: res(R.iec), src: RT.src, singlePole: pole === '1' };
+      }
+    }
+
+    /* Digit 14 */
+    var tl = (PD.data && PD.data.term[frame + ':' + term]) ? termText(PD.data.term[frame + ':' + term], a.amps, r.poles.n, a.high) : (PD.pairs && PD.pairs.term && PD.pairs.term[frame + ':' + term]);
+    if (frame >= 5 && fam !== 'C' && term === 'N') r.terminals = 'No terminals, imperial tapped conductors';
+    else if (frame >= 5 && fam !== 'C' && term === 'M') r.terminals = 'No terminals, metric tapped conductors';
+    else if (term === 'N' && frame <= 4) r.terminals = TERM_STD.N;
+    else if (term === 'B' && frame === 1 && fam === 'G') r.terminals = 'Bolt-on (April 2026 edition p.24; not in the 2021 edition)';
+    else if (tl) r.terminals = tl;
+    else if (TERM_STD[term] && frame <= 4) r.terminals = TERM_STD[term];
+    else { r.terminals = null; r.warnings.push('Digit 14 "' + term + '" is not in the Frame ' + frame + ' terminal table held so far.'); }
+
+    /* Digits 15-20 */
+    if (s.length >= 20) {
+      var m = s.slice(14, 20), p1 = m.slice(0, 2), p2 = m.slice(2, 4), p3 = m.slice(4, 6);
+      var PP = (PD.data && PD.data.pairs) || PD.pairs;
+      var look = function (grp, pair) { return PP && PP[grp] && PP[grp][frame + ':' + pair]; };
+      r.mods = {};
+      if (p1 === 'NN') r.mods.indicating = 'None';
+      else { var d = D15[p1[0]]; r.mods.indicating = look('d1516', p1) || (d ? d[0] + ', ' + d[1] + ', configuration code ' + p1[1] : null); if (!d) r.warnings.push('Digit 15 "' + p1[0] + '" is not an indicating-accessory code.'); else if (!look('d1516', p1)) r.warnings.push('Digits 15-16 "' + p1 + '" not found in the Frame ' + frame + ' table; shown from the general digit-15 table.'); }
+      if (p2 === 'NN') r.mods.tripping = 'None';
+      else { var e = D17[p2[0]]; r.mods.tripping = look('d1718', p2) || (e ? e[0] + ', ' + e[1] + ', voltage code ' + p2[1] : null); if (!e) r.warnings.push('Digit 17 "' + p2[0] + '" is not a tripping-accessory code.'); else if (!look('d1718', p2)) r.warnings.push('Digits 17-18 "' + p2 + '" not found in the Frame ' + frame + ' table; shown from the general digit-17 table.'); }
+      if (p3 === 'NN') r.mods.other = 'None';
+      else { r.mods.other = look('d1920', p3) || GEN1920[p3] || (p3[0] === 'Z' ? 'Different load-side terminal: load terminal code ' + p3[1] + ' (digit 14 then gives the line side)' : null); if (!r.mods.other) r.warnings.push('Digits 19-20 "' + p3 + '" not found in the Frame ' + frame + ' modification table.'); }
+    }
+    return r;
+  }
+
+  /* "Did you mean" for a number that fails to parse. Separate from parse() on purpose:
+     parse() never repairs input. Tries single-character repairs seen in real listings,
+     including Voyten's own storefront: one extra character (PDG23M01100P2ML, PDG21G0020TFFL1),
+     letter O / I for 0 / 1 (PDG23MO150TFFN), and a kit number missing its X separator
+     (PDG12HM79S). A candidate counts only if it parses with no errors and, for a kit, its
+     descriptor matches a known kit type. Truncated numbers are not guessed: any missing
+     character would do. */
+  function suggest(raw) {
+    var s = norm(raw), seen = {}, out = [];
+    if (!/^PD[A-Z]/.test(s) || !parse(s).errors.length) return out;
+    var tryC = function (c, how) {
+      if (seen[c] || c === s) return;
+      seen[c] = 1;
+      var r = parse(c);
+      if (r.errors.length || r.route === 'pd-sb') return;
+      if (r.route === 'accessory' && r.kit.type === 'Accessory or kit') return;
+      out.push({ number: c, how: how, warnings: r.warnings.length });
+    };
+    var i;
+    for (i = 3; i < s.length; i++) tryC(s.slice(0, i) + s.slice(i + 1), 'removed "' + s[i] + '" at position ' + (i + 1));
+    for (i = 3; i < s.length; i++) {
+      if (s[i] === 'O') tryC(s.slice(0, i) + '0' + s.slice(i + 1), 'letter O read as zero at position ' + (i + 1));
+      if (s[i] === 'I') tryC(s.slice(0, i) + '1' + s.slice(i + 1), 'letter I read as one at position ' + (i + 1));
+    }
+    if (s.indexOf('X') < 0 || !/^PD[A-Z]\d{1,3}X/.test(s))
+      for (i = 4; i <= 6 && /\d/.test(s[i - 1]); i++) tryC(s.slice(0, i) + 'X' + s.slice(i), 'added the X kit separator after position ' + i);
+    /* A repair that parses with no warnings outranks one that only parses: when any clean
+       candidate exists, the warned ones (amps off the frame range, unknown terminal) are dropped. */
+    var clean = out.filter(function (c) { return !c.warnings; });
+    return (clean.length ? clean : out).slice(0, 4);
+  }
+
+  return { parse: parse, suggest: suggest, norm: norm, interrupting: interrupting, FAMILY: FAMILY, pairs: null, data: null };
+})();
+</script>
+<script>
+PD.data = PDDATA;
+
+/* ============================================================
+   Static reference text
+   ============================================================ */
+var EXAMPLES = ['PDG23M0100P2ML', 'PDG53M1200E4RN', 'PDG21G0020TFFL', 'PDG23G0225TFFL', 'PDG33M0400TFAN', 'PDG33M0400B2NN',
+  'PDF33M0600P2ML', 'PDD23P0100TFFL', 'PDG13M0003MSAJ', 'PDG23F0175TFFNNNSHNN', 'PDK23M0060TFFN', 'PDG3X3TA630'];
+
+var FRAME_INFO = {
+  1: { size: '125 A', range: '15–125 A' }, 2: { size: '225 A', range: '15–225 A' }, 3: { size: '600 A', range: '45–600 A' },
+  4: { size: '800 A', range: '300–800 A' }, 5: { size: '1200 A', range: '320–1200 A' }, 6: { size: '2500 A', range: '700–2500 A' }
+};
+/* Eaton-published FRAME-LEVEL equivalence (replacement guide MZ012015EN). There is no catalog-number cross-reference. */
+var LEGACY = {
+  1: 'Series G EG / Series C G-frame', 2: 'Series C F-frame', 3: 'Series C K-frame (to 400 A) · LG (500 A, 600 A and H codes)',
+  4: 'Series G MDL', 5: 'Series C N-frame / Series G NG', 6: 'Series C R-frame / Series G RG'
+};
+var VOLT_LABEL = { '120': '120 Vac', '240': '240 Vac', '277': '277 Vac', '347': '347 Vac', '480': '480 Vac', '600': '600 Vac', '600Y': '600Y/347 Vac',
+  '415': '380–415 Vac', '440': '440 Vac', '525': '525 Vac', '690': '660–690 Vac', 'dc125': '125 Vdc', 'dc250': '250 Vdc' };
+var VOLT_ORDER = ['120', '240', '277', '347', '480', '600', '600Y', '415', '440', '525', '690', 'dc125', 'dc250'];
+
+/* ============================================================
+   Decode
+   ============================================================ */
+function decode() {
+  hideError();
+  var raw = document.getElementById('catInput').value;
+  if (!raw || !raw.trim()) { showError('Enter a Catalog Number', 'Type the catalog number from the breaker label, e.g. PDG23M0100TFFJ.'); hideResults(); return; }
+  var r = PD.parse(raw);
+  renderCharMap(r);
+
+  if (r.route === 'accessory') { renderAccessory(r); return; }
+  if (r.route === 'pd-sb') { renderRoute(r, 'Power Defense SB (insulated case)',
+    'This is a Power Defense SB insulated-case breaker, not a molded case breaker. Use the <a class="inlink" href="https://www.voytenmanuals.com/tools/pxr-pdsb" target="_blank" rel="noopener">Magnum PXR / Power Defense SB decoder</a>.'); return; }
+  if (r.errors.length) {
+    var sg = PD.suggest(raw);
+    showError('Cannot Decode This Number', r.errors.join(' '), sg);
+    /* A position map only means something at a valid length; there it marks the failing digit red. */
+    if (r.key.length !== 14 && r.key.length !== 20) clearCharMap();
+    hideResults();
+    return;
+  }
+  renderBreaker(r);
+}
+
+function hideResults() { var el = document.getElementById('results'); el.innerHTML = ''; el.classList.remove('visible'); }
+
+function kindLabel(r) {
+  var t = r.trip;
+  if (t.kind === 'pxr') return t.motor ? 'Motor protection (MPCB), ' + t.unit : t.unit + ' electronic';
+  return { tm: 'Thermal-magnetic', switch: 'Molded case switch', frame: 'Frame only', mcp: 'Motor circuit protector', mpcb: 'Motor protection (MPCB)' }[t.kind] || t.kind;
+}
+
+function headlineKa(r) {
+  var it = r.interrupting;
+  if (!it || !it.values || !it.values.length) return null;
+  var pref = ['480 Vac', '1000 Vdc', '277 Vac', '240 Vac', '600 Vdc', '500 Vdc', '250 Vdc', '125 Vdc'];
+  for (var p = 0; p < pref.length; p++) for (var i = 0; i < it.values.length; i++)
+    if (it.values[i].v.indexOf(pref[p]) === 0) return it.values[i].kA + ' kA @ ' + it.values[i].v.replace(/ \(.*/, '').replace('Vac', 'V');
+  return it.values[0].kA + ' kA @ ' + it.values[0].v;
+}
+
+function renderBreaker(r) {
+  var f = r.fields, fam = f.family, frame = r.frame;
+  var famName = 'PD' + fam + frame;
+  var html = '';
+
+  /* Summary banner */
+  var bits = ['Eaton Power Defense ' + famName];
+  bits.push(r.amps.text.replace(/,.*$/, ''));
+  var hk = headlineKa(r); if (hk) bits.push(hk);
+  bits.push(capFirst(r.poles.text.replace(/,.*$/, '')));
+  html += '<div class="summary-banner">';
+  html += '<div class="headline">' + esc(bits.join(' — ')) + '</div>';
+  html += '<div class="catalog-fmt">' + esc(r.key) + '</div>';
+  html += '<button class="btn-copy" id="btnCopyCat" onclick="copyCatalog()">Copy Catalog Number</button>';
+  html += ' <button class="btn-pdf" onclick="downloadDecoderPDF()">Download PDF</button>';
+  html += ' <button class="btn-quote" onclick="openDecoderQuote()">Get a Quote for This Breaker</button>';
+  html += '</div>';
+
+  html += '<div class="result-grid">';
+
+  /* Breaker Configuration */
+  html += '<div class="result-card config"><div class="card-title">Breaker Configuration</div>';
+  html += row('Product', 'Eaton Power Defense molded case circuit breaker');
+  html += row('Certification (digit 3)', esc(fam + ' — ' + r.family.name + (r.family.marks ? ' (' + r.family.marks + ')' : '')));
+  html += row('Frame (digit 4)', esc('PD' + frame + (FRAME_INFO[frame] ? ' — ' + FRAME_INFO[frame].size + ' frame, ' + FRAME_INFO[frame].range : '')));
+  if (r.construction) html += row('Frame 3 Construction', r.construction === '600' ? '600 A construction (PD3B)' : '400 A construction (PD3A)');
+  html += row('Poles (digit 5)', esc(capFirst(r.poles.text)));
+  html += row('Interrupting Letter (digit 6)', esc(f.interrupting));
+  html += row('Continuous Current (7–10)', esc(r.amps.text));
+  html += row('Trip Unit (11–13)', esc(kindLabel(r)));
+  html += row('Terminals (digit 14)', esc(r.terminals || 'Not in the terminal table held'));
+  html += '</div>';
+
+  /* Trip Unit */
+  html += '<div class="result-card trip"><div class="card-title">Trip Unit</div>';
+  html += row('Code', esc(f.trip));
+  html += row('Description', esc(r.trip.text));
+  if (r.trip.kind === 'pxr') {
+    html += row('Power Xpert Release', esc(r.trip.unit));
+    html += row('Field-Interchangeable', frame >= 3 ? 'Yes (frames 3–6)' : 'No (frames 1–2)');
+  } else if (r.trip.kind === 'tm') {
+    html += row('Field-Interchangeable', frame >= 3 && frame <= 4 ? 'Yes (frames 3–4 thermal-magnetic)' : 'No');
+  }
+  if (r.trip.calib50) html += row('Calibration', '50 °C ambient');
+  html += '</div>';
+
+  /* Interrupting ratings */
+  html += ratingCards(r);
+
+  /* Factory modifications (20-character numbers) */
+  if (r.mods) {
+    html += '<div class="result-card access"><div class="card-title">Factory Modifications (15–20)</div>';
+    html += row('Indicating Accessories (15–16)', esc(f.mods.slice(0, 2) + ' — ' + (r.mods.indicating || 'Not in the frame table')));
+    html += row('Tripping Accessories (17–18)', esc(f.mods.slice(2, 4) + ' — ' + (r.mods.tripping || 'Not in the frame table')));
+    html += row('Other Modifications (19–20)', esc(f.mods.slice(4, 6) + ' — ' + (r.mods.other || 'Not in the frame table')));
+    html += '</div>';
+  }
+
+  /* Checks and notes */
+  var notes = (r.interrupting && r.interrupting.notes) || [];
+  if (r.frameNote) notes = notes.concat([r.frameNote]);
+  if (r.warnings.length || notes.length) {
+    html += '<div class="result-card warn"><div class="card-title">Checks &amp; Notes</div><ul class="note-list">';
+    for (var w = 0; w < r.warnings.length; w++) html += '<li class="w">' + esc(r.warnings[w]) + '</li>';
+    for (var n = 0; n < notes.length; n++) html += '<li>' + esc(notes[n]) + '</li>';
+    html += '</ul></div>';
+  }
+
+  html += '</div>'; // result-grid
+
+  /* General specifications */
+  html += '<div class="result-card wide info" style="margin-top:12px;"><div class="card-title">General Specifications</div>';
+  html += '<div class="result-grid" style="margin:0;"><div style="font-size:0.85rem;">';
+  html += row('Manufacturer', 'Eaton (Cutler-Hammer)');
+  html += row('Product Line', 'Power Defense molded case circuit breakers');
+  html += row('Listing', esc(listingText(fam)));
+  html += row('Rating Basis', esc(ratingBasis(fam)));
+  html += '</div><div style="font-size:0.85rem;">';
+  if (LEGACY[frame] && !r.family.later) html += row('Replaces (frame level)', esc(LEGACY[frame]));
+  html += row('100% Rated', fam === 'F' || fam === 'O' ? 'Yes' : 'No (80% rated)');
+  html += row('Frequency', fam === 'K' || fam === 'O' || fam === 'P' ? 'DC' : '50/60 Hz');
+  html += '</div></div>';
+  if (LEGACY[frame] && !r.family.later) html += '<div class="src">Frame-level equivalence published by Eaton (MZ012015EN). Eaton publishes no catalog-number cross-reference; terminals interchange per that guide, accessories, handle mechanisms and neutral sensors do not.</div>';
+  html += '</div>';
+
+  var el = document.getElementById('results');
+  el.innerHTML = html;
+  el.classList.add('visible');
+}
+
+function listingText(fam) {
+  return { G: 'UL 489, CSA, IEC 60947-2, CCC', F: 'UL 489 (100% rated), CSA, IEC 60947-2, CCC', D: 'UL 489 / CSA, rated to 240 Vac', J: 'UL 489 / CSA',
+    C: 'IEC 60947-2 / CCC', E: 'IEC 60947-2', K: 'UL 489 / CSA DC rated (four-pole: UL/cUL)', L: 'UL / cUL', O: 'UL 489B photovoltaic, 100% rated', P: 'UL 489B photovoltaic, 80% rated' }[fam] || '';
+}
+function ratingBasis(fam) {
+  return /[KLOP]/.test(fam) ? 'Eaton CA08100005E, April 2026 (family not in the 2021 edition)' : 'Eaton CA08100005E, January 2021';
+}
+
+function ratingCards(r) {
+  var html = '', it = r.interrupting;
+  if (r.ratingsFull) {
+    var ul = r.ratingsFull.ul, iec = r.ratingsFull.iec;
+    html += '<div class="result-card info"><div class="card-title">Interrupting Rating — UL / CSA' + (r.ratingsFull.singlePole ? ' (single-pole)' : '') + '</div>';
+    for (var i = 0; i < VOLT_ORDER.length; i++) {
+      var k = VOLT_ORDER[i];
+      if (ul[k] == null || /^(415|440|525|690)$/.test(k)) continue;
+      html += row(VOLT_LABEL[k] + (k === 'dc250' ? ' (2 poles in series)' : ''), ul[k] + ' kA');
+    }
+    if (r.trip.kind === 'switch') html += row('Note', 'Molded case switch: withstand rating, no overcurrent protection');
+    html += '<div class="src">' + esc(r.ratingsFull.src) + '</div></div>';
+    var ih = '';
+    for (var j = 0; j < VOLT_ORDER.length; j++) {
+      var kk = VOLT_ORDER[j], c = iec[kk];
+      if (!c || c.icu == null) continue;
+      ih += row(VOLT_LABEL[kk], 'Icu ' + c.icu + ' / Ics ' + (c.ics == null ? '—' : c.ics) + ' kA');
+    }
+    if (ih) html += '<div class="result-card info"><div class="card-title">Breaking Capacity — IEC 60947-2</div>' + ih + '<div class="src">' + esc(r.ratingsFull.src) + '</div></div>';
+  } else if (it && it.values && it.values.length) {
+    html += '<div class="result-card info"><div class="card-title">Interrupting Rating — ' + esc(it.basis || '') + '</div>';
+    for (var v = 0; v < it.values.length; v++) html += row(esc(it.values[v].v), it.values[v].kA + ' kA');
+    html += '<div class="src">' + esc(it.src || '') + '</div></div>';
+  } else if (it && it.ok === true && r.trip.kind === 'mcp') {
+    html += '<div class="result-card info"><div class="card-title">Interrupting Rating</div>';
+    html += row('UL rating', 'None printed — motor circuit protectors are UL Recognized components, rated in combination with a starter');
+    html += '<div class="src">' + esc(it.src || '') + '</div></div>';
+  }
+  return html;
+}
+
+function renderAccessory(r) {
+  var k = r.kit, html = '';
+  html += '<div class="summary-banner">';
+  html += '<div class="headline">' + esc('Eaton Power Defense accessory — ' + k.type) + '</div>';
+  html += '<div class="catalog-fmt">' + esc(r.key) + '</div>';
+  html += '<button class="btn-copy" id="btnCopyCat" onclick="copyCatalog()">Copy Catalog Number</button>';
+  html += ' <button class="btn-pdf" onclick="downloadDecoderPDF()">Download PDF</button>';
+  html += ' <button class="btn-quote" onclick="openDecoderQuote()">Get a Quote for This Part</button>';
+  html += '</div><div class="result-grid">';
+  html += '<div class="result-card access"><div class="card-title">Accessory / Kit</div>';
+  html += row('Type', esc(k.type));
+  html += row('Fits Frame', esc(k.frames.map(function (x) { return 'PD' + x; }).join(', ')));
+  html += row('Family Prefix', esc('PD' + k.family + k.frames.join('')));
+  html += row('Descriptive Section', esc(k.descriptor));
+  if (k.poles) html += row('Poles', esc(capFirst(k.poles.text.replace(/,.*$/, ''))));
+  if (k.amps) html += row('Ampere Rating', esc(k.amps.text));
+  if (k.trip) html += row('Trip Unit', esc(k.trip.text));
+  html += '</div>';
+  html += '<div class="result-card route"><div class="card-title">How to Read It</div><ul class="note-list">';
+  html += '<li>The X after the frame digit marks a field-installable accessory, terminal kit or loose trip unit — not a complete breaker.</li>';
+  html += '<li>Kits catalogued as 3-pole change the pole digit for other pole counts (PDG2X3T100 → PDG2X2T100 for 2-pole).</li>';
+  if (/[34]/.test(k.frames.join('')) && /trip unit/i.test(k.type)) html += '<li>Frame 3 and 4 trip units carry their own label, so the breaker and its trip unit can show two numbers that disagree on amps.</li>';
+  html += '</ul></div></div>';
+  var el = document.getElementById('results'); el.innerHTML = html; el.classList.add('visible');
+}
+
+function renderRoute(r, title, msg) {
+  var html = '<div class="result-grid"><div class="result-card route wide"><div class="card-title">' + esc(title) + '</div><div class="legacy">' + msg + '</div></div></div>';
+  var el = document.getElementById('results'); el.innerHTML = html; el.classList.add('visible');
+}
+
+/* ============================================================
+   Char map — groups follow Eaton's digit map (2021 p.8)
+   ============================================================ */
+function renderCharMap(r) {
+  var s = r.key, boxes = document.getElementById('charBoxes'), labels = document.getElementById('groupLabels'), posLbls = document.getElementById('posLabels');
+  boxes.innerHTML = ''; labels.innerHTML = ''; posLbls.innerHTML = '';
+  if (!s) return;
+  var groups;
+  if (r.route === 'accessory') {
+    var fl = 3 + r.kit.frames.length;
+    groups = [{ label: 'SERIES', start: 0, len: 2 }, { label: 'FAM', start: 2, len: 1 }, { label: 'FRAME', start: 3, len: r.kit.frames.length }, { label: 'X', start: fl, len: 1 }, { label: 'KIT', start: fl + 1, len: s.length - fl - 1 }];
+  } else {
+    groups = [{ label: 'PD', start: 0, len: 2 }, { label: 'FAM', start: 2, len: 1 }, { label: 'FR', start: 3, len: 1 }, { label: 'POL', start: 4, len: 1 }, { label: 'IR', start: 5, len: 1 },
+      { label: 'AMPS', start: 6, len: 4 }, { label: 'TRIP', start: 10, len: 3 }, { label: 'TRM', start: 13, len: 1 }];
+    if (s.length > 14) groups.push({ label: 'FACTORY MODS', start: 14, len: s.length - 14, mod: true });
+  }
+  var bad = badGroups(r);
+  for (var g = 0; g < groups.length; g++) {
+    var seg = groups[g];
+    if (seg.len <= 0 || seg.start >= s.length) continue;
+    var len = Math.min(seg.len, s.length - seg.start);
+    var gl = document.createElement('div'); gl.className = 'group-label'; gl.style.width = (len * 34 - 2) + 'px'; gl.textContent = len >= 2 || seg.label.length <= 3 ? seg.label : ''; labels.appendChild(gl);
+    for (var i = 0; i < len; i++) {
+      var box = document.createElement('div');
+      box.className = 'char-box entered' + (seg.mod ? ' mod' : '') + (bad[seg.label] ? ' error' : '');
+      box.textContent = s[seg.start + i];
+      boxes.appendChild(box);
+      var pl = document.createElement('div'); pl.className = 'pos-label'; pl.textContent = seg.start + i + 1; posLbls.appendChild(pl);
+    }
+    if (g < groups.length - 1 && groups[g + 1].start < s.length) {
+      var sep = document.createElement('div'); sep.className = 'char-box separator'; boxes.appendChild(sep);
+      var sl = document.createElement('div'); sl.className = 'pos-label sep'; posLbls.appendChild(sl);
+      var gs = document.createElement('div'); gs.className = 'group-label'; gs.style.width = '8px'; gs.style.borderBottom = 'none'; labels.appendChild(gs);
+    }
+  }
+}
+/* Which char-map groups an error points at. */
+function badGroups(r) {
+  var b = {}, e = r.errors.join(' ');
+  if (/family letter|digit 3/i.test(e)) b.FAM = 1;
+  if (/Digit 4|frame/i.test(e) && !/Frame \d/.test(e)) b.FR = 1;
+  if (/Digit 5|pole code/i.test(e)) b.POL = 1;
+  if (/Digit 6|interrupting|Letter/i.test(e)) b.IR = 1;
+  if (/Digits 7-10|ampere code/i.test(e)) b.AMPS = 1;
+  if (/Digits 11-13|trip unit code/i.test(e)) b.TRIP = 1;
+  return b;
+}
+function clearCharMap() { document.getElementById('charBoxes').innerHTML = ''; document.getElementById('groupLabels').innerHTML = ''; document.getElementById('posLabels').innerHTML = ''; }
+
+/* ============================================================
+   UI helpers
+   ============================================================ */
+function row(label, value) {
+  return '<div class="card-row"><span class="card-label">' + label + '</span><span class="card-value">' + value + '</span></div>';
+}
+function capFirst(s) { s = String(s || ''); return s.charAt(0).toUpperCase() + s.slice(1); }
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+
+function showError(title, text, sugg) {
+  document.getElementById('errorTitle').textContent = title;
+  document.getElementById('errorText').textContent = text;
+  var sg = document.getElementById('errorSugg');
+  sg.innerHTML = '';
+  if (sugg && sugg.length) {
+    var lab = document.createElement('span'); lab.textContent = 'Did you mean:'; sg.appendChild(lab);
+    sugg.forEach(function (c) {
+      var bt = document.createElement('button'); bt.className = 'ex-btn'; bt.textContent = c.number; bt.title = c.how;
+      bt.onclick = function () { document.getElementById('catInput').value = c.number; decode(); };
+      sg.appendChild(bt);
+    });
+  }
+  document.getElementById('errorBox').classList.add('visible');
+}
+function hideError() { document.getElementById('errorBox').classList.remove('visible'); }
+
+function clearAll() {
+  document.getElementById('catInput').value = '';
+  hideResults(); hideError(); clearCharMap();
+  document.getElementById('catInput').focus();
+}
+
+function copyCatalog() {
+  var val = PD.norm(document.getElementById('catInput').value);
+  if (!val) return;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(val).then(showCopied);
+  } else {
+    var ta = document.createElement('textarea'); ta.value = val; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); showCopied();
+  }
+}
+function showCopied() {
+  var btn = document.getElementById('btnCopyCat'); if (!btn) return;
+  btn.textContent = 'Copied!'; btn.classList.add('copied');
+  setTimeout(function () { btn.textContent = 'Copy Catalog Number'; btn.classList.remove('copied'); }, 2000);
+}
+
+(function buildExamples() {
+  var host = document.getElementById('exampleList');
+  EXAMPLES.forEach(function (n) {
+    var b = document.createElement('button'); b.className = 'ex-btn'; b.textContent = n;
+    b.onclick = function () { document.getElementById('catInput').value = n; decode(); };
+    host.appendChild(b);
+  });
+})();
+
+document.getElementById('catInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') decode(); });
+</script>
+<style>
+.vmnote-use{max-width:960px;margin:8px auto 28px;padding:0 20px;box-sizing:border-box}
+.vmnote-use .vmnote-box{border:1px solid #e5e7eb;background:#f9fafb;border-radius:12px;padding:16px 18px}
+.vmnote-use h2{margin:0 0 6px;font-size:0.8rem;font-weight:700;color:#374151;letter-spacing:0.01em}
+.vmnote-use p{margin:0 0 8px;font-size:0.72rem;line-height:1.6;color:#4b5563}
+.vmnote-use p:last-child{margin-bottom:0}
+@media print{.vmnote-use{page-break-inside:avoid}}
+</style>
+<div class="vmnote-use">
+  <div class="vmnote-box">
+    <h2>About these results</h2>
+    <p>This decoder reads published manufacturer catalog-number conventions and returns the most
+    likely configuration. It is an identification aid, not a specification: numbers get reused and
+    revised, nameplates get mis-stamped, and some factory-fitted options never appear in a type
+    designation at all. Confirm any result against the breaker&rsquo;s own nameplate and the
+    manufacturer&rsquo;s documentation before ordering a part, fitting a replacement, or relying on
+    a rating.</p>
+    <p>Power circuit breakers are hazardous equipment. Installation, testing and maintenance are
+    work for qualified personnel following NFPA 70E and the equipment manufacturer&rsquo;s
+    instructions. This tool is provided as is, without warranty of any kind, and Voyten Electric
+    &amp; Electronics, Inc. accepts no liability for loss, damage or injury arising from reliance on
+    decoded output.</p>
+  </div>
+</div>
+<script src="jspdf.umd.min.js"></script>
+<script src="decoder-pdf.js"></script>
+<script src="decoder-quote.js"></script>
+</body>
+</html>
