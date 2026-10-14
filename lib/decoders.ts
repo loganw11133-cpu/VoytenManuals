@@ -430,19 +430,16 @@ export const decoders: Decoder[] = [
       },
     ],
   },
-  /* Power Defense MCCB is STAGED like Type VR: the route and
-     public/tools/pd-mccb-decoder.html exist, but `comingSoon` keeps the slug out of
-     `publicDecoders` (sitemap, llms.txt, hub ItemList, manual-page matcher) and
-     makes the route noindex. The decoder HTML is ASSEMBLED outside the repo
-     (Projects\Decoders\Eaton Power Defense MCCB\build\build_html.mjs) — rebuild it
-     there, never edit the copy here. Pringle below is still a card only: no route,
-     no HTML. Same staging as the WL and VCP-W cards. */
+  /* Power Defense MCCB — decoder #11, launched 2026-10-14. The decoder HTML is ASSEMBLED
+     outside the repo (Projects\Decoders\Eaton Power Defense MCCB\build\build_html.mjs) —
+     rebuild it there, never edit public/tools/pd-mccb-decoder.html here.
+     Pringle below is still a staged card only: no route, no HTML, `comingSoon` keeps
+     it out of `publicDecoders`. Same staging as the WL and VCP-W cards. */
   {
     slug: 'pd-mccb',
     name: 'Power Defense MCCB',
     fullName: 'Eaton Power Defense Molded Case Circuit Breaker',
     manufacturer: 'Eaton',
-    comingSoon: true,
     description:
       'Decode Eaton Power Defense molded case circuit breaker catalog numbers. Reads the 14-character base number — certification family, frame, poles, interrupting rating, ampere rating, trip unit and terminals — and the 20-character configured number with its factory-installed accessories, and recognises accessory, terminal-kit and loose trip-unit numbers.',
     frames: 'PD1 – PD6 (PDG · PDF · PDD · PDJ · PDK · PDL · PVGard)',
@@ -464,8 +461,11 @@ export const decoders: Decoder[] = [
       'Terminals, including the exact terminal kit',
       'Factory-installed accessories on 20-character numbers',
     ],
-    manualSearch: '/search?q=Power%20Defense&manufacturer=Eaton',
-    manualSearchLabel: 'Eaton Power Defense manuals',
+    // Not "Power Defense": every Power Defense title in the library is an NF / RF / SB
+    // insulated-case breaker. The molded case library (Series C / G frames Power Defense
+    // replaces) is the useful neighbour.
+    manualSearch: '/search?q=molded%20case&manufacturer=Eaton',
+    manualSearchLabel: 'Eaton molded case breaker manuals',
     faq: [
       {
         q: 'Where is the catalog number on a Power Defense breaker?',
@@ -561,6 +561,11 @@ const MANUAL_MATCHERS: { slug: string; manufacturers: RegExp; title: RegExp }[] 
   { slug: 'wavepro', manufacturers: /^General Electric$/i, title: /wave\s?pro/i },
   // Magnum splits three ways — require the distinguishing token, never bare "Magnum".
   { slug: 'mw-iec', manufacturers: /^(Eaton|Cutler-Hammer)$/i, title: /\bMWI?\b|magnum.*\biec\b|\biec\b.*magnum/i },
+  // Power Defense MCCB must come BEFORE pxr-pdsb, whose bare "power defense" would claim it. It needs a
+  // molded-case signal or a PD catalog token, and never matches the insulated-case NF / RF / SB titles or
+  // the older Series C "PD-Frame" (a different breaker). Matches 0 rows as of 2026-10-14 — the library
+  // holds no Power Defense MCCB documents yet; this is ready for when they are added.
+  { slug: 'pd-mccb', manufacturers: /^(Eaton|Cutler-Hammer)$/i, title: /^(?!.*\b(NF|RF|SB)\b)(?!.*insulated\s+case)(?!.*PD[\s-]frame)(?:.*power\s?defense.*(molded\s+case|MCCB)|.*\bPD[GFDJKL][1-6][0-9A-Z]{8,})/i },
   { slug: 'pxr-pdsb', manufacturers: /^(Eaton|Cutler-Hammer)$/i, title: /\bPXR\b|power\s?defense|\bNRX\b/i },
   { slug: 'mds-sbs', manufacturers: /^(Eaton|Cutler-Hammer)$/i, title: /\bMDS\b|\bSBS\b|magnum\s?ds\b/i },
   // Library titles write this family as "RD-Frame", "R Frame" and "RD/RDC".
