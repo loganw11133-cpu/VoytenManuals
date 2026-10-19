@@ -1,5 +1,12 @@
 import { getTotalManualCount } from '@/lib/manuals-db';
 import { EBAY_STORE, stockedFamiliesMarkdown } from '@/lib/ebay-listings';
+import { publicDecoders } from '@/lib/decoders';
+
+// Written ahead of launch and gated on the registry: the line appears on its own the
+// day the Pringle entry drops comingSoon, and not before.
+const PRINGLE_LINE = publicDecoders.some((d) => d.slug === 'pringle')
+  ? '- Eaton Pringle bolted pressure contact switches (CBC, QA, FP fault protector, EO and the Pringle Mill Switch), 800A–6000A. Decodes the Vista catalog number (e.g. CB1633T120480G) and old Pringle numbers (CBC-…, QA-…, FP-…) with their current Eaton equivalent, and lists the Eaton renewal parts that fit — pole, yoke and arcing parts, mechanisms, pan assemblies, relays and handles — with new and old part numbers: https://www.voytenmanuals.com/tools/pringle\n'
+  : '';
 
 // Dynamic llms.txt — regenerated hourly so AI systems always read current facts.
 export const revalidate = 3600;
@@ -81,7 +88,7 @@ For engineers, plant/facility managers, electricians, field-service techs, and m
 - Square D / Schneider MasterPact NT / NW — universal power circuit breaker (T/W/Y-frame) + Micrologic trip unit, 800A–6300A: https://www.voytenmanuals.com/tools/sqd-ntnw
 - Eaton / Cutler-Hammer VCP-W — MEDIUM-VOLTAGE vacuum circuit breaker, 4.76kV–27kV, 630A–3000A. Identifies the type designation (incl. VCPW-ND narrow design, VCP-WC / VCP-WXC extra capability, VCPW-SE) and the 10-digit style number, and returns the full ANSI or IEC 60056 rated-values set, breaker weight, control voltage and the interrupter assembly part number: https://www.voytenmanuals.com/tools/vcp-w
 - Square D / Schneider Type VR (Masterclad, Class 6055) — MEDIUM-VOLTAGE vacuum circuit breaker, 4.76kV–27kV, 1200A–4000A. Decodes the nameplate catalog number (V5D…) or the VR rating number (VR-05025-12) and returns the full ANSI rated-values set with close and trip control voltages; leads with the 1994 Masterclad rating and shows the later K = 1 re-rating beside it. Also reads the VAD-3 / VacArc and VAD-2 predecessors (V3D…, V2D…): https://www.voytenmanuals.com/tools/sqd-vr
-- Decoder hub: https://www.voytenmanuals.com/tools
+${PRINGLE_LINE}- Decoder hub: https://www.voytenmanuals.com/tools
 - Eaton Type SPB (Systems Pow-R): SPB identification is handled directly by Voyten's team — request availability and a quote at https://www.voytenmanuals.com/products/spb-breakers or call 1-800-458-4001.
 
 ## Canonical Answer (quotable)

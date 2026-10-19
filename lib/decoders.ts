@@ -611,6 +611,11 @@ const MANUAL_MATCHERS: { slug: string; manufacturers: RegExp; title: RegExp }[] 
   // VAV and Powersub FVR are other breakers. The ground-and-test device is a VR
   // accessory, not a breaker. Matches 14 rows as of 2026-10-04.
   { slug: 'sqd-vr', manufacturers: /^(Square D|Schneider Electric)$/i, title: /^(?!.*ground and test)(?:.*\bType\s+VR\b|.*\bVAD[\s-]?[23](?!\d))/i },
+  // Pringle only, never bare "bolted pressure": GE Type HPC and Square D Bolt-Loc are
+  // other makers' bolted pressure switches and this decoder cannot read them (the
+  // manufacturer facet keeps them out as well). Matches 0 rows as of 2026-10-19 — the
+  // library holds no Pringle documents yet. Dark while the registry entry is comingSoon.
+  { slug: 'pringle', manufacturers: /^(Eaton|Cutler-Hammer|Pringle( Electrical)?)$/i, title: /\bPringle\b/i },
 ];
 
 export function matchDecoderForManual(manufacturer: string, title: string): Decoder | null {
