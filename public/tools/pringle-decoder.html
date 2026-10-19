@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="description" content="Eaton Pringle bolted pressure contact switch catalog number decoder. Identify CBC, QA and FP switches, amperes, poles, wire, feed, control and system voltage, ground fault, phase-failure and blown-fuse options, old Pringle numbers, and the renewal parts that fit.">
+<title>Eaton Pringle Bolted Pressure Switch Decoder — Voyten Electric</title>
+<link rel="stylesheet" href="decoder-fonts.css">
+<style>
+:root {
+  --red: #dc2626;
+  --dark-red: #b91c1c;
+  --deep-red: #991b1b;
+  --black: #1a1a1a;
+  --deep-black: #111111;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --white: #ffffff;
+  --green: #16a34a;
+  --green-light: #dcfce7;
+  --blue: #2563eb;
+  --blue-light: #dbeafe;
+  --purple: #7c3aed;
+  --yellow: #ca8a04;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--gray-100);
+  color: var(--gray-800);
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+
+.header {
+  background: linear-gradient(135deg, var(--deep-black), var(--black));
+  color: var(--white);
+  padding: 24px 20px 20px;
+  text-align: center;
+  border-bottom: 4px solid var(--red);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+.header h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: 0.5px; }
+.header h1 .accent { color: var(--red); }
+.header .subtitle { font-size: 0.85rem; color: var(--gray-300); margin-top: 4px; }
+.container { max-width: 960px; margin: 0 auto; padding: 16px; }
+
+/* Input Section */
+.input-section {
+  background: var(--white); border-radius: 12px; padding: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 16px;
+  border: 2px solid var(--red);
+}
+.input-section label {
+  display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 6px; color: var(--gray-700);
+}
+.input-section label .opt { font-weight: 400; font-size: 0.78rem; color: var(--gray-400); text-transform: none; letter-spacing: 0; }
+.field-block { margin-bottom: 14px; }
+.field-block:last-of-type { margin-bottom: 0; }
+.or-divider { display: flex; align-items: center; text-align: center; margin: 18px 0 12px; }
+.or-divider::before, .or-divider::after { content: ""; flex: 1; height: 1px; background: var(--gray-200); }
+.or-divider span { padding: 0 12px; font-size: 0.72rem; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; }
+.or-divider strong { color: var(--gray-600); }
+.input-row { display: flex; gap: 8px; margin-bottom: 6px; }
+.input-row input {
+  flex: 1; padding: 12px 14px; font-size: 16px; font-family: 'IBM Plex Mono', 'Consolas', 'Monaco', monospace;
+  border: 2px solid var(--gray-200); border-radius: 8px; text-transform: uppercase;
+  letter-spacing: 1.5px; -webkit-appearance: none; transition: border-color 0.2s;
+}
+.input-row input:focus { outline: none; border-color: var(--red); }
+.hint { font-size: 0.75rem; color: var(--gray-500); margin-bottom: 2px; }
+
+.btn-row { display: flex; gap: 8px; margin: 14px 0 12px; }
+.btn {
+  padding: 10px 20px; border: none; border-radius: 8px; font-weight: 700;
+  font-size: 0.9rem; cursor: pointer; transition: background 0.2s; touch-action: manipulation;
+}
+.btn-decode { background: var(--red); color: var(--white); flex: 1; }
+.btn-decode:hover { background: var(--dark-red); }
+.btn-clear { background: var(--gray-200); color: var(--gray-700); }
+.btn-clear:hover { background: var(--gray-300); }
+
+.examples-label { font-size: 0.75rem; font-weight: 600; color: var(--gray-500); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+.examples { display: flex; flex-wrap: wrap; gap: 6px; }
+.ex-btn {
+  padding: 4px 10px; font-size: 0.72rem; font-family: 'IBM Plex Mono', 'Consolas', monospace;
+  background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 6px;
+  cursor: pointer; transition: all 0.15s; color: var(--gray-700); touch-action: manipulation;
+}
+.ex-btn:hover { background: var(--red); color: var(--white); border-color: var(--red); }
+
+/* Compact hover-reveal examples */
+.ex-hover { position: relative; display: inline-block; margin-top: 4px; }
+.ex-hover__trigger {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.4px; text-transform: uppercase;
+  color: var(--gray-500); cursor: pointer; user-select: none;
+  background: var(--gray-100);
+  border: 1px solid var(--gray-300); border-radius: 6px; padding: 4px 10px;
+  transition: color .15s, border-color .15s;
+}
+.ex-hover__trigger::after { content: "\25BE"; font-size: 0.6rem; opacity: .7; }
+.ex-hover:hover .ex-hover__trigger,
+.ex-hover:focus-within .ex-hover__trigger { color: var(--red); border-color: var(--red); }
+.ex-hover__panel {
+  position: absolute; z-index: 50; top: calc(100% + 6px); left: 0;
+  display: none; min-width: 240px; max-width: min(94vw, 560px);
+  padding: 12px 14px 4px;
+  background: #fff; border: 1px solid var(--gray-200); border-radius: 10px;
+  box-shadow: 0 12px 34px rgba(0,0,0,.14);
+}
+.ex-hover:hover .ex-hover__panel,
+.ex-hover:focus-within .ex-hover__panel { display: block; }
+
+/* Char Map */
+.charmap-wrap { margin: 16px 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.charmap-inner { min-width: 300px; }
+.group-labels { display: flex; gap: 2px; margin-bottom: 2px; }
+.group-label {
+  font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--gray-500); text-align: center; padding: 2px 0;
+  border-bottom: 2px solid var(--gray-300);
+}
+.char-boxes { display: flex; gap: 2px; }
+.char-box {
+  width: 32px; height: 38px; display: flex; align-items: center; justify-content: center;
+  font-family: 'IBM Plex Mono', 'Consolas', monospace; font-size: 0.85rem; font-weight: 700;
+  background: var(--gray-100); border: 2px solid var(--gray-200); border-radius: 6px;
+  transition: all 0.2s;
+}
+.char-box.entered { background: var(--black); color: var(--white); border-color: var(--black); }
+.char-box.error { background: #fecaca; color: #dc2626; border-color: #f87171; }
+.char-box.separator { width: 8px; border: none; background: transparent; }
+.pos-labels { display: flex; gap: 2px; margin-top: 1px; }
+.pos-label { width: 32px; text-align: center; font-size: 0.55rem; color: var(--gray-400); }
+.pos-label.sep { width: 8px; }
+
+/* Result Cards */
+.results { display: none; }
+.results.visible { display: block; }
+.card {
+  background: var(--white); border-radius: 12px; padding: 16px;
+  margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  border-left: 4px solid var(--gray-200);
+}
+.card h3 {
+  font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--gray-500); margin-bottom: 8px;
+}
+.field { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--gray-100); gap: 12px; }
+.field:last-child { border-bottom: none; }
+.field-label { font-size: 0.8rem; color: var(--gray-500); }
+.field-value { font-size: 0.8rem; font-weight: 600; color: var(--gray-800); text-align: right; max-width: 62%; }
+.card.valid { border-left-color: var(--red); }
+.card.info { border-left-color: var(--blue); }
+.card.trip { border-left-color: var(--green); }
+
+/* Side-by-side result grid (mirrors the PXR / PD-SB decoder layout).
+   align-items:start keeps each card at its natural height so a short card
+   (e.g. Interrupting Rating) doesn't stretch and leave blank space. */
+.result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: start; }
+@media (max-width: 640px) { .result-grid { grid-template-columns: 1fr; } }
+.result-card {
+  background: var(--white); border-radius: 10px; padding: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-left: 4px solid var(--gray-300);
+}
+.result-card.wide { grid-column: 1 / -1; }
+.result-card.config { border-left-color: var(--red); }
+.result-card.trip { border-left-color: var(--green); }
+.result-card.access { border-left-color: var(--purple); }
+.result-card.options { border-left-color: var(--yellow); }
+.result-card.info { border-left-color: var(--blue); }
+.card-title {
+  font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--gray-500); margin-bottom: 8px;
+}
+.card-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 0.85rem; border-bottom: 1px solid var(--gray-100); gap: 12px; }
+.card-row:last-child { border-bottom: none; }
+.card-label { color: var(--gray-500); font-weight: 500; }
+.card-value { font-weight: 600; color: var(--gray-800); text-align: right; max-width: 62%; }
+
+/* Summary banner */
+.summary-banner {
+  background: linear-gradient(135deg, var(--deep-black), var(--black));
+  color: var(--white); border-radius: 12px;
+  padding: 20px; margin-bottom: 16px; border-left: 5px solid var(--red);
+}
+.summary-banner .headline { font-size: 1.15rem; font-weight: 700; margin-bottom: 6px; }
+.summary-banner .catalog-fmt { font-family: 'IBM Plex Mono', 'Consolas', monospace; font-size: 0.85rem; color: var(--gray-300); letter-spacing: 2px; margin-bottom: 12px; }
+
+.btn-copy {
+  padding: 8px 20px; border: 2px solid var(--gray-200); border-radius: 8px;
+  background: var(--white); color: var(--gray-700); font-weight: 600; font-size: 0.8rem;
+  cursor: pointer; transition: all 0.2s;
+}
+.btn-copy:hover { background: var(--gray-200); }
+.btn-copy.copied { background: var(--green-light); border-color: var(--green); color: var(--green); }
+.btn-pdf {
+  padding: 8px 20px; border: 2px solid var(--red); border-radius: 8px;
+  background: var(--white); color: var(--red); font-weight: 600; font-size: 0.8rem;
+  cursor: pointer; transition: all 0.2s; margin-left: 8px;
+}
+.btn-pdf:hover { background: var(--red); color: var(--white); }
+.btn-quote {
+  padding: 8px 20px; border: 2px solid var(--red); border-radius: 8px;
+  background: var(--red); color: var(--white); font-weight: 700; font-size: 0.8rem;
+  cursor: pointer; transition: all 0.2s; margin-left: 8px;
+}
+.btn-quote:hover { background: #b91c1c; border-color: #b91c1c; }
+
+/* Company link buttons (Google Business · LinkedIn · eBay) */
+.social { display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; margin: 26px auto 24px; padding: 0 12px; }
+.social a {
+  display: inline-flex; align-items: center; gap: 8px; padding: 7px 15px;
+  border-radius: 999px; border: 1px solid var(--gray-200); background: var(--white);
+  text-decoration: none; color: var(--gray-700); font-size: 0.8rem; font-weight: 600;
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+}
+.social a:hover { border-color: var(--gray-300); box-shadow: 0 2px 8px rgba(0,0,0,0.1); transform: translateY(-1px); }
+.social a:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
+.social a svg { height: 18px; width: auto; display: block; }
+
+.footer {
+  text-align: center; padding: 16px 20px 24px; font-size: 0.7rem; color: var(--gray-400); margin-top: 8px;
+}
+
+/* Error */
+.error {
+  background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px;
+  padding: 12px 16px; margin-bottom: 12px; display: none;
+}
+.error.visible { display: block; }
+.error-title { font-weight: 700; color: #991b1b; font-size: 0.85rem; margin-bottom: 2px; }
+.error-text { font-size: 0.8rem; color: #b91c1c; }
+.error-hint { font-size: 0.75rem; color: var(--gray-500); margin-top: 6px; }
+
+.note-box { font-size: 0.75rem; color: var(--gray-500); margin-top: 8px; line-height: 1.5; }
+
+/* Noscript */
+.ios-notice {
+  max-width: 600px; margin: 40px auto; background: #fffbeb; border: 2px solid #f59e0b;
+  border-radius: 12px; padding: 24px; color: #92400e; font-size: 0.95rem; line-height: 1.6;
+}
+.ios-notice strong { color: #78350f; }
+.ios-notice .steps { margin: 12px 0; padding-left: 20px; }
+.ios-notice .steps li { margin-bottom: 6px; }
+
+@media (max-width: 600px) {
+  .header h1 { font-size: 1.25rem; }
+  .container { padding: 10px; }
+  .field-value { max-width: 58%; }
+}
+/* ---- Pringle additions ---- */
+.result-card.warn { border-left-color: var(--yellow); }
+.result-card.route { border-left-color: var(--blue); }
+.result-card.call { border-left-color: var(--red); background: #fef2f2; }
+.result-card.parts { border-left-color: var(--gray-700); }
+.note-list { margin: 4px 0 0 0; padding-left: 18px; font-size: 0.8rem; color: var(--gray-700); }
+.note-list li { margin-bottom: 4px; }
+.note-list li.w { color: #92400e; }
+.src { font-size: 0.7rem; color: var(--gray-400); margin-top: 6px; }
+.legacy { font-size: 0.82rem; color: var(--gray-700); line-height: 1.5; }
+.call-line { font-size: 0.9rem; font-weight: 700; color: var(--deep-red); margin: 6px 0 4px; }
+.call-line a { color: var(--deep-red); }
+.char-box.opt { background: var(--gray-700); border-color: var(--gray-700); color: var(--white); }
+.part-new { font-family: 'IBM Plex Mono', 'Consolas', monospace; font-weight: 600; }
+.part-old { color: var(--gray-500); font-size: 0.78rem; }
+.part-miss { color: var(--deep-red); font-weight: 600; }
+.part-note { font-size: 0.74rem; color: var(--gray-500); padding: 0 0 6px 0; }
+.both { font-size: 0.8rem; }
+a.inlink { color: var(--red); font-weight: 600; text-decoration: none; }
+a.inlink:hover { text-decoration: underline; }
+.btn-alt { margin-top: 8px; padding: 6px 14px; border: 2px solid var(--gray-200); background: var(--white); border-radius: 6px; font-size: 0.8rem; cursor: pointer; }
+.btn-alt:hover { border-color: var(--red); color: var(--red); }
+</style>
+</head>
+<body>
+
+<noscript>
+<div class="ios-notice">
+  <strong>Interactive Mode Required</strong><br><br>
+  This decoder requires JavaScript to run. If you are viewing this on an iPhone or iPad, the Files app preview does not support interactive content.
+  <ol class="steps">
+    <li>Tap the <strong>Share</strong> button (box with arrow)</li>
+    <li>Select <strong>"Open in Safari"</strong></li>
+    <li>The decoder will be fully interactive in Safari</li>
+  </ol>
+  On Mac: Right-click the file &rarr; Open With &rarr; Safari.<br>
+  On Android: Open with Chrome or any browser.
+</div>
+</noscript>
+
+<div class="header">
+  <h1>Eaton <span class="accent">Pringle</span> Bolted Pressure Switch Decoder</h1>
+  <div class="subtitle">CBC · QA · FP Bolted Pressure Contact Switches, 800 – 6000 A — Catalog Number &amp; Renewal Parts Decoder</div>
+</div>
+
+<div class="container">
+  <div class="input-section">
+    <div class="field-block">
+      <label>Catalog Number <span class="opt">(from the switch nameplate or carton — e.g. CB1633T120480G)</span></label>
+      <div class="input-row">
+        <input type="text" id="catInput" placeholder="e.g. CB1633T120480G or QA-1233" maxlength="32" autocomplete="off" autocorrect="off" spellcheck="false">
+      </div>
+      <div class="hint">Decodes Eaton (Vista) catalog numbers for CBC, QA, FP and EO switches and the Pringle Mill Switch, old Pringle numbers (CBC-…, QA-…, FP-…), and renewal part numbers. Shows the Eaton renewal parts that fit the decoded switch.</div>
+      <div class="ex-hover" tabindex="0" role="button" aria-label="Show example catalog numbers">
+        <span class="ex-hover__trigger">Catalog examples</span>
+        <div class="ex-hover__panel">
+          <div class="examples" id="exampleList"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-decode" onclick="decode()">DECODE</button>
+      <button class="btn btn-clear" onclick="clearAll()">CLEAR</button>
+    </div>
+  </div>
+
+  <div class="charmap-wrap"><div class="charmap-inner">
+    <div class="group-labels" id="groupLabels"></div>
+    <div class="char-boxes" id="charBoxes"></div>
+    <div class="pos-labels" id="posLabels"></div>
+  </div></div>
+
+  <div class="error" id="errorBox">
+    <div class="error-title" id="errorTitle">Invalid Input</div>
+    <div class="error-text" id="errorText"></div>
+    <div class="call-line" id="errorCall"></div>
+    <div class="error-hint">Pringle catalog numbers start CB, QA, FP, EO or PMS (Eaton), or CBC-, QA- or FP- on older Pringle plates, e.g. CB1633T120480G or QA-1233. The serial, G.O. and drawing numbers on the plate are not catalog numbers.</div>
+  </div>
+
+  <div class="results" id="results"></div>
+</div>
+
+<nav class="social" aria-label="Connect with Voyten Electric">
+  <a href="https://share.google/8zeiyPVd68OB1smJW" target="_blank" rel="noopener noreferrer" title="Voyten Electric on Google Business Profile">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <rect x="4" y="11" width="16" height="9" rx="1" fill="#4989F5"/>
+      <path d="M3 11 L4.5 5 H19.5 L21 11 Z" fill="#3367D6"/>
+      <path d="M8 5 L7.2 11 H10 L10.3 5 Z" fill="#5B9BFF"/>
+      <path d="M14 5 L14 11 H16.8 L16 5 Z" fill="#5B9BFF"/>
+      <rect x="10" y="14" width="4" height="6" rx="0.5" fill="#ffffff"/>
+    </svg>
+    Google Business
+  </a>
+  <a href="https://www.linkedin.com/in/voyten-electric-sales-team/" target="_blank" rel="noopener noreferrer" title="Voyten Electric on LinkedIn">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <rect width="24" height="24" rx="4" fill="#0A66C2"/>
+      <path fill="#ffffff" d="M8.34 18.34H5.67V9.75h2.67v8.59zM7 8.58a1.55 1.55 0 1 1 0-3.1 1.55 1.55 0 0 1 0 3.1zM18.34 18.34h-2.67v-4.18c0-1-.02-2.28-1.39-2.28-1.39 0-1.6 1.09-1.6 2.21v4.25h-2.67V9.75h2.56v1.17h.04c.36-.68 1.23-1.39 2.53-1.39 2.7 0 3.2 1.78 3.2 4.09v4.72z"/>
+    </svg>
+    LinkedIn
+  </a>
+  <a href="https://www.ebay.com/str/voytenelectric" target="_blank" rel="noopener noreferrer" title="Voyten Electric eBay Store">
+    <svg viewBox="0 0 84 34" aria-hidden="true" focusable="false">
+      <text x="0" y="27" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" letter-spacing="-1.5">
+        <tspan fill="#E53238">e</tspan><tspan fill="#0064D2">b</tspan><tspan fill="#F5AF02">a</tspan><tspan fill="#86B817">y</tspan>
+      </text>
+    </svg>
+    Store
+  </a>
+</nav>
+
+<div class="footer">
+  Eaton Pringle Bolted Pressure Switch Decoder &mdash; Voyten Electric &amp; Electronics, Inc.<br>
+  Grammar and renewal parts from Eaton TD00808001E (April 2026); FP from Eaton Volume 2 CA08100003E (August 2026); EO, the Pringle Mill Switch and old Pringle numbers from TD00808001E (February 2007).
+</div>
+
+<script>
+/* GENERATED by build/gen_pringle_data.mjs from pringle-parts-2026.json -- do not edit. */
+var PRDATA = {"src":"Eaton TD00808001E, April 2026, Table 2 (pp. 4-11)","items":{"1":"Three-pole yoke assembly","2":"Arc chute assembly","3":"Arcing parts (catalog number includes parts for one complete pole)","4":"Auxiliary contacts","5":"Blown fuse detection","6":"Capacitor","7":"Coil/solenoid assembly","8":"Operating mechanism (side supports not included)","9":"Ground fault relay (pan mounted)","10":"Key interlock kit (provisions only)","11":"Micro switch","13":"Pole assembly","14":"Ground fault sensor","15":"Barrier","16":"Single-phase voltage relay","17":"Control power transformer","18":"Handle (kit includes handle, interlock bar, washers, cap nut and labels)","19":"Panel spacer","20":"Trim plate","8S":"Operating mechanism (special)","12a":"Pan assembly — SPVR relay and CPT","12b":"Pan assembly — GF and SPVR relay and CPT","12c":"Pan assembly — GF and CPT","18S":"Handle (special)"},"itemNotes":{"9":"GFP relay replaces the BGFL model; when installing GFP in place of BGFL the existing external resistor is no longer required. Replacement GFP must have a compatible ground fault sensor installed (item 14).","11":"Limit switch, located within the CBC mechanism.","19":"800 A applies to CBC only (rows marked).","20":"Trim-plate catalog numbers do not include the switch nameplate information printed on the plate.","12b":"Replacement GFP must have a compatible ground fault sensor installed (item 14).","12c":"Replacement GFP must have a compatible ground fault sensor installed (item 14)."},"rows":[{"i":"1","d":"800 A","f":"BT","t":"QA","ty":["QA"],"lo":800,"hi":800,"v":null,"n":"YOKEPQ800","o":"S10035","fl":"","k":"YOKEPQ800"},{"i":"1","d":"1200 and 2000 A","f":"BT","t":"800QA-S/QA/CBC","ty":["QA","CB"],"lo":1200,"hi":2000,"v":null,"n":"YOKE1220","o":"S10036","fl":"","k":"YOKE1220"},{"i":"1","d":"2500 A","f":"BT","t":"QA/CBC","ty":["QA","CB"],"lo":2500,"hi":2500,"v":null,"n":"YOKE2500","o":"S10037","fl":"","k":"YOKE2500"},{"i":"1","d":"3000 and 4000 A","f":"BT","t":"QA/CBC","ty":["QA","CB"],"lo":3000,"hi":4000,"v":null,"n":"YOKE3040","o":"S10038","fl":"","k":"YOKE3040"},{"i":"1","d":"5000 and 6000 A","f":"BT","t":"QA/CBC","ty":["QA","CB"],"lo":5000,"hi":6000,"v":null,"n":"YOKE5060","o":"S10039","fl":"","k":"YOKE5060"},{"i":"2","d":"Single-pole","f":"BT","t":"QA/CBC","ty":["QA","CB"],"lo":null,"hi":null,"v":null,"n":"ARCHUTE0860","o":"S10075","fl":"","k":"ARCHUTE0860"},{"i":"3","d":"800 A, 480 V","f":"BT","t":"QA","ty":["QA"],"lo":800,"hi":800,"v":480,"n":"ARCPQ800480","o":"S10048","fl":"","k":"ARCPQ800480"},{"i":"3","d":"800 A, 480 V","f":"BT","t":"CBC","ty":["CB"],"lo":800,"hi":800,"v":480,"n":"ARC1200480","o":"S10049","fl":"","k":"ARC1200480"},{"i":"3","d":"800 A, 480 V","f":"BT","t":"QA/CBC","ty":["QA","CB"],"lo":800,"hi":800,"v":480,"n":"ARC1200480","o":"S10049","fl":"S","k":"ARC1200480"},{"i":"3","d":"1200 A, 480 V","f":"BT","t":"QA/CBC","ty":["QA","CB"],"lo":1200,"hi":1200,"v":480,"n":"ARC1200480","o":"S10049","fl":"","k":"ARC1200480"},{"i":"3","d":"1600 A, 480 V","f":"BT","t":"QA/CBC","ty":["QA","CB"],"lo":1600,"hi":1600,"v":480,"n":"ARC1600480","o":"S10050","fl":"","k":"ARC1600480"},{"i":"3","d":"2000 and 2500 A, 480 V","f":"BT","t":"QA/CBC","ty":["QA","CB"],"lo":2000,"hi":2500,"v":480,"n":"ARC2025480","o":"S10051","fl":"","k":"ARC2025480"},{"i":"3","d":"3000-6000 A, 480 V","f":"BT","t":"QA/CBC","ty":["QA","CB"],"lo":3000,"hi":6000,"v":480,"n":"ARC3060480","o":"S10053","fl":"","k":"ARC3060480"},{"i":"3","d":"800 A, 600 V","f":"BT","t":"QA","ty":["QA"],"lo":800,"hi":800,"v":600,"n":"ARCPQ800600","o":"S10054","fl":"","k":"ARCPQ800600"},{"i":"3","d":"800 A, 600 V","f":"BT","t":"CBC","ty":["CB"],"lo":800,"hi":800,"v":600,"n":"ARC1200600","o":"S10055","fl":"","k":"ARC1200600"},{"i":"3","d":"800 A, 600 V","f":"BT","t":"QA/CBC","ty":["QA","CB"],"lo":800,"hi":800,"v":600,"n":"ARC1200600","o":"S10055","fl":"S","k":"ARC1200600"},{"i":"3","d":"1200 A, 600 V","f":"BT","t":"QA/CBC","ty":["QA","CB"],"lo":1200,"hi":1200,"v":600,"n":"ARC1200600","o":"S10055","fl":"","k":"ARC1200600"},{"i":"3","d":"1600 A, 600 V","f":"BT","t":"QA/CBC","ty":["QA","CB"],"lo":1600,"hi":1600,"v":600,"n":"ARC1600600","o":"S10056","fl":"","k":"ARC1600600"},{"i":"3","d":"2000 and 2500 A, 600 V","f":"BT","t":"QA/CBC","ty":["QA","CB"],"lo":2000,"hi":2500,"v":600,"n":"ARC2025600","o":"S10057","fl":"","k":"ARC2025600"},{"i":"3","d":"3000-6000 A, 600 V","f":"BT","t":"QA/CBC","ty":["QA","CB"],"lo":3000,"hi":6000,"v":600,"n":"ARC3060600","o":"S10058","fl":"","k":"ARC3060600"},{"i":"4","d":"Auxiliary contact switch (Std. 5/7)","f":"","t":"QA/CBC","ty":["QA","CB"],"lo":null,"hi":null,"v":null,"n":"AUXCONT6533","o":"6533","fl":"","k":"AUXCONT6533"},{"i":"4","d":"5 auxiliary contact kit (1NO/1NC)","f":"","t":"QA","ty":["QA"],"lo":null,"hi":null,"v":null,"n":"AUXCONTKPQ05","o":"","fl":"","k":"AUXCONTKPQ05"},{"i":"4","d":"5 auxiliary contact kit (1NO/1NC)","f":"","t":"CBC","ty":["CB"],"lo":null,"hi":null,"v":null,"n":"AUXCONTKPC05","o":"S0005R","fl":"","k":"AUXCONTKPC05"},{"i":"4","d":"7 auxiliary contact kit (2NO/2NC)","f":"","t":"QA","ty":["QA"],"lo":null,"hi":null,"v":null,"n":"AUXCONTKPQ07","o":"","fl":"","k":"AUXCONTKPQ07"},{"i":"4","d":"7 auxiliary contact kit (2NO/2NC)","f":"","t":"CBC","ty":["CB"],"lo":null,"hi":null,"v":null,"n":"AUXCONTKPC07","o":"S0007R","fl":"","k":"AUXCONTKPC07"},{"i":"4","d":"14 auxiliary contact kit (3NO/3NC)","f":"","t":"CBC","ty":["CB"],"lo":null,"hi":null,"v":null,"n":"AUXCONTKPC14","o":"S00014R","fl":"","k":"AUXCONTKPC14"},{"i":"4","d":"17 auxiliary contact kit (4NO/4NC)","f":"","t":"CBC","ty":["CB"],"lo":null,"hi":null,"v":null,"n":"AUXCONTKPC17","o":"S00017R","fl":"","k":"AUXCONTKPC17"},{"i":"5","d":"Bussmann blown fuse actuator #KAZ","f":"BT","t":"QA/CBC","ty":["QA","CB"],"lo":null,"hi":null,"v":null,"n":"BLFACTU6585","o":"6585","fl":"","k":"BLFACTU6585"},{"i":"5","d":"Blown fuse kit","f":"BT","t":"QA/CBC","ty":["QA","CB"],"lo":null,"hi":null,"v":null,"n":"BLOWNF0001R","o":"S0001R","fl":"","k":"BLOWNF0001R"},{"i":"6","d":"CTD-2 capacitor","f":"BT","t":"CBC","ty":["CB"],"lo":null,"hi":null,"v":null,"n":"CAP6415","o":"6415","fl":"","k":"CAP6415"},{"i":"7","d":"120 V solenoid assembly kit","f":"BT","t":"CBC","ty":["CB"],"lo":null,"hi":null,"v":null,"n":"COILSOL120","o":"S12013","fl":"","k":"COILSOL120"},{"i":"7","d":"120 V coil only","f":"BT","t":"CBC","ty":["CB"],"lo":null,"hi":null,"v":null,"n":"COIL120VAC","o":"6524","fl":"","k":"COIL120VAC"},{"i":"8","d":"800-2000 A","f":"BT","t":"CBC","ty":["CB"],"lo":800,"hi":2000,"v":null,"n":"MECHPC0820","o":"P50014","fl":"","k":"MECHPC0820"},{"i":"8","d":"2500 A","f":"BT","t":"CBC","ty":["CB"],"lo":2500,"hi":2500,"v":null,"n":"MECHPC2500","o":"P50015","fl":"","k":"MECHPC2500"},{"i":"8","d":"3000 and 4000 A","f":"BT","t":"CBC","ty":["CB"],"lo":3000,"hi":4000,"v":null,"n":"MECHPC3040","o":"P50016","fl":"","k":"MECHPC3040"},{"i":"8","d":"5000 and 6000 A","f":"BT","t":"CBC","ty":["CB"],"lo":5000,"hi":6000,"v":null,"n":"MECHPC5060","o":"S10068","fl":"","k":"MECHPC5060"},{"i":"8","d":"800-2000 A (with key interlock provisions)","f":"BT","t":"CBC","ty":["CB"],"lo":800,"hi":2000,"v":null,"n":"MECHPC0820K","o":"P51080","fl":"K","k":"MECHPC0820K"},{"i":"8","d":"2500 A (with key interlock provisions)","f":"BT","t":"CBC","ty":["CB"],"lo":2500,"hi":2500,"v":null,"n":"MECHPC2500K","o":"P51081","fl":"K","k":"MECHPC2500K"},{"i":"8","d":"3000-4000 A (with key interlock provisions)","f":"BT","t":"CBC","ty":["CB"],"lo":3000,"hi":4000,"v":null,"n":"MECHPC3040K","o":"P51082","fl":"K","k":"MECHPC3040K"},{"i":"8","d":"5000 and 6000 A (with key interlock provisions)","f":"BT","t":"CBC","ty":["CB"],"lo":5000,"hi":6000,"v":null,"n":"MECHPC5060K","o":"S10062","fl":"K","k":"MECHPC5060K"},{"i":"8","d":"800 A","f":"BT","t":"QA","ty":["QA"],"lo":800,"hi":800,"v":null,"n":"MECHPQ800","o":"S10064","fl":"","k":"MECHPQ800"},{"i":"8","d":"1200-2000 A","f":"BT","t":"QA","ty":["QA"],"lo":1200,"hi":2000,"v":null,"n":"MECHPQ1220","o":"S10065","fl":"","k":"MECHPQ1220"},{"i":"8","d":"2500 A","f":"BT","t":"QA","ty":["QA"],"lo":2500,"hi":2500,"v":null,"n":"MECHPQ2500","o":"S10066","fl":"","k":"MECHPQ2500"},{"i":"8","d":"3000 and 4000 A","f":"BT","t":"QA","ty":["QA"],"lo":3000,"hi":4000,"v":null,"n":"MECHPQ3040","o":"S10067","fl":"","k":"MECHPQ3040"},{"i":"8","d":"5000 and 6000 A","f":"BT","t":"QA","ty":["QA"],"lo":5000,"hi":6000,"v":null,"n":"MECHPQ5060","o":"S20501","fl":"","k":"MECHPQ5060"},{"i":"8","d":"800 A (with key interlock provisions)","f":"BT","t":"QA","ty":["QA"],"lo":800,"hi":800,"v":null,"n":"MECHPQ800K","o":"","fl":"K","k":"MECHPQ800K"},{"i":"8","d":"1200-2000 A (with key interlock provisions)","f":"BT","t":"QA","ty":["QA"],"lo":1200,"hi":2000,"v":null,"n":"MECHPQ1220K","o":"","fl":"K","k":"MECHPQ1220K"},{"i":"8","d":"2500 A (with key interlock provisions)","f":"BT","t":"QA","ty":["QA"],"lo":2500,"hi":2500,"v":null,"n":"MECHPQ2500K","o":"","fl":"K","k":"MECHPQ2500K"},{"i":"8","d":"3000 and 4000 A (with key interlock provisions)","f":"BT","t":"QA","ty":["QA"],"lo":3000,"hi":4000,"v":null,"n":"MECHPQ3040K","o":"S10079","fl":"K","k":"MECHPQ3040K"},{"i":"8","d":"5000 and 6000 A (with key interlock provision)","f":"BT","t":"QA","ty":["QA"],"lo":5000,"hi":6000,"v":null,"n":"MECHPQ5060K","o":"","fl":"K","k":"MECHPQ5060K"},{"i":"8S","d":"800-2000 A","f":"BT","t":"QA","ty":["QA"],"lo":800,"hi":2000,"v":null,"n":"MECHQ0820","o":"S10069","fl":"S","k":"MECHQ0820"},{"i":"8S","d":"2500 A","f":"BT","t":"QA","ty":["QA"],"lo":2500,"hi":2500,"v":null,"n":"MECHQ2500","o":"S10070","fl":"S","k":"MECHQ2500"},{"i":"8S","d":"3000 and 4000 A","f":"BT","t":"QA","ty":["QA"],"lo":3000,"hi":4000,"v":null,"n":"MECHQ3040","o":"S10071","fl":"S","k":"MECHQ3040"},{"i":"8S","d":"800-2000 A (with key interlock provisions)","f":"BT","t":"QA","ty":["QA"],"lo":800,"hi":2000,"v":null,"n":"MECHQ0820K","o":"","fl":"SK","k":"MECHQ0820K"},{"i":"8S","d":"2500 A (with key interlock provisions)","f":"BT","t":"QA","ty":["QA"],"lo":2500,"hi":2500,"v":null,"n":"MECHQ2500K","o":"","fl":"SK","k":"MECHQ2500K"},{"i":"8S","d":"3000 and 4000 A (with key interlock provisions)","f":"BT","t":"QA","ty":["QA"],"lo":3000,"hi":4000,"v":null,"n":"MECHQ3040K","o":"","fl":"SK","k":"MECHQ3040K"},{"i":"9","d":"GFP 141-1200, series ground fault relay","f":"BT","t":"CBC","ty":["CB"],"lo":null,"hi":null,"v":null,"n":"GFP1411200","o":"4276-2","fl":"","k":"GFP1411200"},{"i":"10","d":"800-4000 A","f":"BT","t":"QA-S/QA","ty":["QA"],"lo":800,"hi":4000,"v":null,"n":"TK1PQ0840","o":"S1805R","fl":"","k":"TK1PQ0840"},{"i":"10","d":"800-4000 A","f":"BT","t":"CBC","ty":["CB"],"lo":800,"hi":4000,"v":null,"n":"TK1PC0840","o":"S1806R","fl":"","k":"TK1PC0840"},{"i":"11","d":"Limit switch","f":"BT","t":"CBC","ty":["CB"],"lo":null,"hi":null,"v":null,"n":"LS6534","o":"6534","fl":"","k":"LS6534"},{"i":"12a","d":"800-2000 A","f":"B","t":"CBC","ty":["CB"],"lo":800,"hi":2000,"v":208,"n":"PAN0820BN2PI","o":"","fl":"","k":"PAN0820BN2PI"},{"i":"12a","d":"2500 A","f":"B","t":"CBC","ty":["CB"],"lo":2500,"hi":2500,"v":208,"n":"PAN2500BN2PI","o":"","fl":"","k":"PAN2500BN2PI"},{"i":"12a","d":"3000 and 4000 A","f":"B","t":"CBC","ty":["CB"],"lo":3000,"hi":4000,"v":208,"n":"PAN3040BN2PI","o":"","fl":"","k":"PAN3040BN2PI"},{"i":"12a","d":"800-2000 A","f":"T","t":"CBC","ty":["CB"],"lo":800,"hi":2000,"v":208,"n":"PAN0820TN2PI","o":"","fl":"","k":"PAN0820TN2PI"},{"i":"12a","d":"2500 A","f":"T","t":"CBC","ty":["CB"],"lo":2500,"hi":2500,"v":208,"n":"PAN2500TN2PI","o":"","fl":"","k":"PAN2500TN2PI"},{"i":"12a","d":"3000 and 4000 A","f":"T","t":"CBC","ty":["CB"],"lo":3000,"hi":4000,"v":208,"n":"PAN3040TN2PI","o":"","fl":"","k":"PAN3040TN2PI"},{"i":"12a","d":"800-2000 A","f":"B","t":"CBC","ty":["CB"],"lo":800,"hi":2000,"v":480,"n":"PAN0820BN4PI","o":"P55325","fl":"","k":"PAN0820BN4PI"},{"i":"12a","d":"2500 A","f":"B","t":"CBC","ty":["CB"],"lo":2500,"hi":2500,"v":480,"n":"PAN2500BN4PI","o":"P55326","fl":"","k":"PAN2500BN4PI"},{"i":"12a","d":"3000 and 4000 A","f":"B","t":"CBC","ty":["CB"],"lo":3000,"hi":4000,"v":480,"n":"PAN3040BN4PI","o":"P55327","fl":"","k":"PAN3040BN4PI"},{"i":"12a","d":"800-2000 A","f":"T","t":"CBC","ty":["CB"],"lo":800,"hi":2000,"v":480,"n":"PAN0820TN4PI","o":"P51724","fl":"","k":"PAN0820TN4PI"},{"i":"12a","d":"2500 A","f":"T","t":"CBC","ty":["CB"],"lo":2500,"hi":2500,"v":480,"n":"PAN2500TN4PI","o":"P55421","fl":"","k":"PAN2500TN4PI"},{"i":"12a","d":"3000 and 4000 A","f":"T","t":"CBC","ty":["CB"],"lo":3000,"hi":4000,"v":480,"n":"PAN3040TN4PI","o":"P51726","fl":"","k":"PAN3040TN4PI"},{"i":"12b","d":"800-2000 A","f":"B","t":"CBC","ty":["CB"],"lo":800,"hi":2000,"v":208,"n":"PAN0820BG2PI","o":"","fl":"","k":"PAN0820BG2PI"},{"i":"12b","d":"2500 A","f":"B","t":"CBC","ty":["CB"],"lo":2500,"hi":2500,"v":208,"n":"PAN2500BG2PI","o":"","fl":"","k":"PAN2500BG2PI"},{"i":"12b","d":"3000 and 4000 A","f":"B","t":"CBC","ty":["CB"],"lo":3000,"hi":4000,"v":208,"n":"PAN3040BG2PI","o":"","fl":"","k":"PAN3040BG2PI"},{"i":"12b","d":"800-2000 A","f":"T","t":"CBC","ty":["CB"],"lo":800,"hi":2000,"v":208,"n":"PAN0820TG2PI","o":"","fl":"","k":"PAN0820TG2PI"},{"i":"12b","d":"2500 A","f":"T","t":"CBC","ty":["CB"],"lo":2500,"hi":2500,"v":208,"n":"PAN2500TG2PI","o":"","fl":"","k":"PAN2500TG2PI"},{"i":"12b","d":"3000 and 4000 A","f":"T","t":"CBC","ty":["CB"],"lo":3000,"hi":4000,"v":208,"n":"PAN3040TG2PI","o":"","fl":"","k":"PAN3040TG2PI"},{"i":"12b","d":"800-2000 A","f":"B","t":"CBC","ty":["CB"],"lo":800,"hi":2000,"v":480,"n":"PAN0820BG4PI","o":"P51750","fl":"","k":"PAN0820BG4PI"},{"i":"12b","d":"2500 A","f":"B","t":"CBC","ty":["CB"],"lo":2500,"hi":2500,"v":480,"n":"PAN2500BG4PI","o":"P55437","fl":"","k":"PAN2500BG4PI"},{"i":"12b","d":"3000 and 4000 A","f":"B","t":"CBC","ty":["CB"],"lo":3000,"hi":4000,"v":480,"n":"PAN3040BG4PI","o":"P55425","fl":"","k":"PAN3040BG4PI"},{"i":"12b","d":"800-2000 A","f":"T","t":"CBC","ty":["CB"],"lo":800,"hi":2000,"v":480,"n":"PAN0820TG4PI","o":"P55422","fl":"","k":"PAN0820TG4PI"},{"i":"12b","d":"2500 A","f":"T","t":"CBC","ty":["CB"],"lo":2500,"hi":2500,"v":480,"n":"PAN2500TG4PI","o":"P55423","fl":"","k":"PAN2500TG4PI"},{"i":"12b","d":"3000 and 4000 A","f":"T","t":"CBC","ty":["CB"],"lo":3000,"hi":4000,"v":480,"n":"PAN3040TG4PI","o":"P55424","fl":"","k":"PAN3040TG4PI"},{"i":"12c","d":"800-2000 A","f":"B","t":"CBC","ty":["CB"],"lo":800,"hi":2000,"v":208,"n":"PAN0820BG2","o":"P55511","fl":"","k":"PAN0820BG2"},{"i":"12c","d":"2500 A","f":"B","t":"CBC","ty":["CB"],"lo":2500,"hi":2500,"v":208,"n":"PAN2500BG2","o":"P55512","fl":"","k":"PAN2500BG2"},{"i":"12c","d":"3000 and 4000 A","f":"B","t":"CBC","ty":["CB"],"lo":3000,"hi":4000,"v":208,"n":"PAN3040BG2","o":"P55513","fl":"","k":"PAN3040BG2"},{"i":"12c","d":"800-2000 A","f":"T","t":"CBC","ty":["CB"],"lo":800,"hi":2000,"v":208,"n":"PAN0820TG2","o":"P55505","fl":"","k":"PAN0820TG2"},{"i":"12c","d":"2500 A","f":"T","t":"CBC","ty":["CB"],"lo":2500,"hi":2500,"v":208,"n":"PAN2500TG2","o":"P55506","fl":"","k":"PAN2500TG2"},{"i":"12c","d":"3000 and 4000 A","f":"T","t":"CBC","ty":["CB"],"lo":3000,"hi":4000,"v":208,"n":"PAN3040TG2","o":"P55507","fl":"","k":"PAN3040TG2"},{"i":"12c","d":"800-2000 A","f":"B","t":"CBC","ty":["CB"],"lo":800,"hi":2000,"v":480,"n":"PAN0820BG4","o":"P55508","fl":"","k":"PAN0820BG4"},{"i":"12c","d":"2500 A","f":"B","t":"CBC","ty":["CB"],"lo":2500,"hi":2500,"v":480,"n":"PAN2500BG4","o":"P55509","fl":"","k":"PAN2500BG4"},{"i":"12c","d":"3000 and 4000 A","f":"B","t":"CBC","ty":["CB"],"lo":3000,"hi":4000,"v":480,"n":"PAN3040BG4","o":"P55510","fl":"","k":"PAN3040BG4"},{"i":"12c","d":"800-2000 A","f":"T","t":"CBC","ty":["CB"],"lo":800,"hi":2000,"v":480,"n":"PAN0820TG4","o":"P55502","fl":"","k":"PAN0820TG4"},{"i":"12c","d":"2500 A","f":"T","t":"CBC","ty":["CB"],"lo":2500,"hi":2500,"v":480,"n":"PAN2500TG4","o":"P55503","fl":"","k":"PAN2500TG4"},{"i":"12c","d":"3000 and 4000 A","f":"T","t":"CBC","ty":["CB"],"lo":3000,"hi":4000,"v":480,"n":"PAN3040TG4","o":"P55504","fl":"","k":"PAN3040TG4"},{"i":"13","d":"800 A, 480 V","f":"B","t":"QA","ty":["QA"],"lo":800,"hi":800,"v":480,"n":"POLEPQ800B480","o":"S10013","fl":"","k":"POLEPQ800B480"},{"i":"13","d":"800 A, 480 V","f":"B","t":"CBC","ty":["CB"],"lo":800,"hi":800,"v":480,"n":"POLE1200B480","o":"S10014","fl":"","k":"POLE1200B480"},{"i":"13","d":"800 A, 480 V","f":"B","t":"QA/CBC","ty":["QA","CB"],"lo":800,"hi":800,"v":480,"n":"POLE1200B480","o":"S10014","fl":"S","k":"POLE1200B480"},{"i":"13","d":"1200 A, 480 V","f":"B","t":"QA/CBC","ty":["QA","CB"],"lo":1200,"hi":1200,"v":480,"n":"POLE1200B480","o":"S10014","fl":"","k":"POLE1200B480"},{"i":"13","d":"1600 A, 480 V","f":"B","t":"QA/CBC","ty":["QA","CB"],"lo":1600,"hi":1600,"v":480,"n":"POLE1600B480","o":"S10015","fl":"","k":"POLE1600B480"},{"i":"13","d":"2000 A, 480 V","f":"B","t":"QA/CBC","ty":["QA","CB"],"lo":2000,"hi":2000,"v":480,"n":"POLE2000B480","o":"S10016","fl":"","k":"POLE2000B480"},{"i":"13","d":"2500 A, 480 V","f":"B","t":"QA/CBC","ty":["QA","CB"],"lo":2500,"hi":2500,"v":480,"n":"POLE2500B480","o":"S10017","fl":"","k":"POLE2500B480"},{"i":"13","d":"3000 A, 480 V","f":"B","t":"QA/CBC","ty":["QA","CB"],"lo":3000,"hi":3000,"v":480,"n":"POLE3000B480","o":"S10018","fl":"","k":"POLE3000B480"},{"i":"13","d":"4000 A, 480 V","f":"B","t":"QA/CBC","ty":["QA","CB"],"lo":4000,"hi":4000,"v":480,"n":"POLE4000B480","o":"S10019","fl":"","k":"POLE4000B480"},{"i":"13","d":"5000 A, 480 V","f":"B","t":"QA/CBC","ty":["QA","CB"],"lo":5000,"hi":5000,"v":480,"n":"POLE500B480","o":"S10020R","fl":"","k":"POLE500B480"},{"i":"13","d":"800 A, 480 V","f":"T","t":"QA","ty":["QA"],"lo":800,"hi":800,"v":480,"n":"POLEPQ800T480","o":"S10005","fl":"","k":"POLEPQ800T480"},{"i":"13","d":"800 A, 480 V","f":"T","t":"CBC","ty":["CB"],"lo":800,"hi":800,"v":480,"n":"POLE1200T480","o":"S10006","fl":"","k":"POLE1200T480"},{"i":"13","d":"800 A, 480 V","f":"T","t":"QA/CBC","ty":["QA","CB"],"lo":800,"hi":800,"v":480,"n":"POLE1200T480","o":"S10006","fl":"S","k":"POLE1200T480"},{"i":"13","d":"1200 A, 480 V","f":"T","t":"QA/CBC","ty":["QA","CB"],"lo":1200,"hi":1200,"v":480,"n":"POLE1200T480","o":"S10006","fl":"","k":"POLE1200T480"},{"i":"13","d":"1600 A, 480 V","f":"T","t":"QA/CBC","ty":["QA","CB"],"lo":1600,"hi":1600,"v":480,"n":"POLE1600T480","o":"S10007","fl":"","k":"POLE1600T480"},{"i":"13","d":"2000 A, 480 V","f":"T","t":"QA/CBC","ty":["QA","CB"],"lo":2000,"hi":2000,"v":480,"n":"POLE2000T480","o":"S10008R","fl":"","k":"POLE2000T480"},{"i":"13","d":"2500 A, 480 V","f":"T","t":"QA/CBC","ty":["QA","CB"],"lo":2500,"hi":2500,"v":480,"n":"POLE2500T480","o":"S10009","fl":"","k":"POLE2500T480"},{"i":"13","d":"3000 A, 480 V","f":"T","t":"QA/CBC","ty":["QA","CB"],"lo":3000,"hi":3000,"v":480,"n":"POLE3000T480","o":"S10010","fl":"","k":"POLE3000T480"},{"i":"13","d":"4000 A, 480 V","f":"T","t":"QA/CBC","ty":["QA","CB"],"lo":4000,"hi":4000,"v":480,"n":"POLE4000T480","o":"S10011R","fl":"","k":"POLE4000T480"},{"i":"13","d":"5000 A, 480 V","f":"T","t":"QA/CBC","ty":["QA","CB"],"lo":5000,"hi":5000,"v":480,"n":"POLE500T480","o":"S10012","fl":"","k":"POLE500T480"},{"i":"13","d":"800 A, 600 V","f":"B","t":"QA","ty":["QA"],"lo":800,"hi":800,"v":600,"n":"POLEPQ800B600","o":"S10021","fl":"","k":"POLEPQ800B600"},{"i":"13","d":"800 A, 600 V","f":"B","t":"CBC","ty":["CB"],"lo":800,"hi":800,"v":600,"n":"POLE1200B600","o":"S10022","fl":"","k":"POLE1200B600"},{"i":"13","d":"800 A, 600 V","f":"B","t":"QA/CBC","ty":["QA","CB"],"lo":800,"hi":800,"v":600,"n":"POLE1200B600","o":"S10022","fl":"S","k":"POLE1200B600"},{"i":"13","d":"1200 A, 600 V","f":"B","t":"QA/CBC","ty":["QA","CB"],"lo":1200,"hi":1200,"v":600,"n":"POLE1200B600","o":"S10022","fl":"","k":"POLE1200B600"},{"i":"13","d":"1600 A, 600 V","f":"B","t":"QA/CBC","ty":["QA","CB"],"lo":1600,"hi":1600,"v":600,"n":"POLE1600B600","o":"S10023","fl":"","k":"POLE1600B600"},{"i":"13","d":"2000 A, 600 V","f":"B","t":"QA/CBC","ty":["QA","CB"],"lo":2000,"hi":2000,"v":600,"n":"POLE2000B600","o":"S10024","fl":"","k":"POLE2000B600"},{"i":"13","d":"2500 A, 600 V","f":"B","t":"QA/CBC","ty":["QA","CB"],"lo":2500,"hi":2500,"v":600,"n":"POLE2500B600","o":"S10025","fl":"","k":"POLE2500B600"},{"i":"13","d":"3000 A, 600 V","f":"B","t":"QA/CBC","ty":["QA","CB"],"lo":3000,"hi":3000,"v":600,"n":"POLE3000B600","o":"S10026R","fl":"","k":"POLE3000B600"},{"i":"13","d":"4000 A, 600 V","f":"B","t":"QA/CBC","ty":["QA","CB"],"lo":4000,"hi":4000,"v":600,"n":"POLE4000B600","o":"S10027","fl":"","k":"POLE4000B600"},{"i":"13","d":"800 A, 600 V","f":"T","t":"QA","ty":["QA"],"lo":800,"hi":800,"v":600,"n":"POLEPQ800T600","o":"S10028","fl":"","k":"POLEPQ800T600"},{"i":"13","d":"800 A, 600 V","f":"T","t":"CBC","ty":["CB"],"lo":800,"hi":800,"v":600,"n":"POLE1200T600","o":"S10029","fl":"","k":"POLE1200T600"},{"i":"13","d":"800 A, 600 V","f":"T","t":"QA/CBC","ty":["QA","CB"],"lo":800,"hi":800,"v":600,"n":"POLE1200T600","o":"S10029","fl":"S","k":"POLE1200T600"},{"i":"13","d":"1200 A, 600 V","f":"T","t":"QA/CBC","ty":["QA","CB"],"lo":1200,"hi":1200,"v":600,"n":"POLE1200T600","o":"S10029","fl":"","k":"POLE1200T600"},{"i":"13","d":"1600 A, 600 V","f":"T","t":"QA/CBC","ty":["QA","CB"],"lo":1600,"hi":1600,"v":600,"n":"POLE1600T600","o":"S10030R","fl":"","k":"POLE1600T600"},{"i":"13","d":"2000 A, 600 V","f":"T","t":"QA/CBC","ty":["QA","CB"],"lo":2000,"hi":2000,"v":600,"n":"POLE2000T600","o":"S10031","fl":"","k":"POLE2000T600"},{"i":"13","d":"2500 A, 600 V","f":"T","t":"QA/CBC","ty":["QA","CB"],"lo":2500,"hi":2500,"v":600,"n":"POLE2500T600","o":"S10032","fl":"","k":"POLE2500T600"},{"i":"13","d":"3000 A, 600 V","f":"T","t":"QA/CBC","ty":["QA","CB"],"lo":3000,"hi":3000,"v":600,"n":"POLE3000T600","o":"S10033","fl":"","k":"POLE3000T600"},{"i":"13","d":"4000 A, 600 V","f":"T","t":"QA/CBC","ty":["QA","CB"],"lo":4000,"hi":4000,"v":600,"n":"POLE4000T600","o":"S10034","fl":"","k":"POLE4000T600"},{"i":"14","d":"800-2000 A (8.0 x 18.0 window)","f":"BT","t":"CBC","ty":["CB"],"lo":800,"hi":2000,"v":null,"n":"SCS0820","o":"4296SC","fl":"","k":"SCS0820"},{"i":"14","d":"2500 A (8.0 x 24.0 window)","f":"BT","t":"CBC","ty":["CB"],"lo":2500,"hi":2500,"v":null,"n":"SCS2500","o":"4297SC","fl":"","k":"SCS2500"},{"i":"14","d":"3000 and 4000 A (8.0 x 36.0 window)","f":"BT","t":"CBC","ty":["CB"],"lo":3000,"hi":4000,"v":null,"n":"SCS3040","o":"4298SC","fl":"","k":"SCS3040"},{"i":"14","d":"Special 101x301SC1200","f":"BT","t":"CBC","ty":["CB"],"lo":null,"hi":null,"v":null,"n":"SPTCOR101301","o":"","fl":"S","k":"SPTCOR101301"},{"i":"15","d":"800 A","f":"B","t":"QA","ty":["QA"],"lo":800,"hi":800,"v":null,"n":"BARPQ800B","o":"S5208","fl":"","k":"BARPQ800B"},{"i":"15","d":"1200-2000 A","f":"B","t":"800QA-S/QA","ty":["QA"],"lo":1200,"hi":2000,"v":null,"n":"BARPQ1220B","o":"S5216","fl":"","k":"BARPQ1220B"},{"i":"15","d":"2500 A","f":"B","t":"QA","ty":["QA"],"lo":2500,"hi":2500,"v":null,"n":"BARPQ2500B","o":"S5225","fl":"","k":"BARPQ2500B"},{"i":"15","d":"3000 A","f":"B","t":"QA","ty":["QA"],"lo":3000,"hi":3000,"v":null,"n":"BARPQ3000B","o":"S5230","fl":"","k":"BARPQ3000B"},{"i":"15","d":"4000 A","f":"B","t":"QA","ty":["QA"],"lo":4000,"hi":4000,"v":null,"n":"BARPQ4000B","o":"S5240","fl":"","k":"BARPQ4000B"},{"i":"15","d":"800 A","f":"T","t":"QA","ty":["QA"],"lo":800,"hi":800,"v":null,"n":"BARPQ800T","o":"S5008","fl":"","k":"BARPQ800T"},{"i":"15","d":"1200-2000 A","f":"T","t":"800 QA-S","ty":["QA"],"lo":1200,"hi":2000,"v":null,"n":"BARPQ1220T","o":"S5016","fl":"","k":"BARPQ1220T"},{"i":"15","d":"2500 A","f":"T","t":"QA","ty":["QA"],"lo":2500,"hi":2500,"v":null,"n":"BARPQ2500T","o":"S5025","fl":"","k":"BARPQ2500T"},{"i":"15","d":"3000 and 4000 A","f":"T","t":"QA","ty":["QA"],"lo":3000,"hi":4000,"v":null,"n":"BARPQ3040T","o":"S5040R","fl":"","k":"BARPQ3040T"},{"i":"15","d":"800-2000 A","f":"B","t":"CBC and special","ty":["CB"],"lo":800,"hi":2000,"v":null,"n":"BARPC0820B","o":"S5616","fl":"","k":"BARPC0820B"},{"i":"15","d":"2500 A","f":"B","t":"CBC and special","ty":["CB"],"lo":2500,"hi":2500,"v":null,"n":"BARPC2500B","o":"S5625","fl":"","k":"BARPC2500B"},{"i":"15","d":"3000 A","f":"B","t":"CBC and special","ty":["CB"],"lo":3000,"hi":3000,"v":null,"n":"BARPC3000B","o":"S5630","fl":"","k":"BARPC3000B"},{"i":"15","d":"4000 A","f":"B","t":"CBC and special","ty":["CB"],"lo":4000,"hi":4000,"v":null,"n":"BARPC4000B","o":"S5640","fl":"","k":"BARPC4000B"},{"i":"15","d":"800-2000 A","f":"T","t":"CBC and special","ty":["CB"],"lo":800,"hi":2000,"v":null,"n":"BARPC0820T","o":"S5416R","fl":"","k":"BARPC0820T"},{"i":"15","d":"2500 A","f":"T","t":"CBC and special","ty":["CB"],"lo":2500,"hi":2500,"v":null,"n":"BARPC2500T","o":"S5425","fl":"","k":"BARPC2500T"},{"i":"15","d":"3000 and 4000 A","f":"T","t":"CBC and special","ty":["CB"],"lo":3000,"hi":4000,"v":null,"n":"BARPC3040T","o":"S5440","fl":"","k":"BARPC3040T"},{"i":"16","d":"480 V (includes relay support)","f":"BT","t":"CBC","ty":["CB"],"lo":null,"hi":null,"v":480,"n":"SPVR2480","o":"7137R","fl":"","k":"SPVR2480"},{"i":"16","d":"480 V SPVR-2 (includes relay support)","f":"BT","t":"CBC","ty":["CB"],"lo":null,"hi":null,"v":480,"n":"SPVR-2 480","o":"","fl":"","k":"SPVR2480"},{"i":"16","d":"208 V (includes relay and support)","f":"BT","t":"CBC","ty":["CB"],"lo":null,"hi":null,"v":208,"n":"SVR2208","o":"7139R","fl":"","k":"SVR2208"},{"i":"16","d":"600 V SPVR-4 (includes relay support)","f":"BT","t":"CBC","ty":["CB"],"lo":null,"hi":null,"v":600,"n":"SPVR-4 600","o":"","fl":"","k":"SPVR4600"},{"i":"17","d":"480 V","f":"BT","t":"CBC","ty":["CB"],"lo":null,"hi":null,"v":480,"n":"CPT480","o":"4270R","fl":"","k":"CPT480"},{"i":"17","d":"240 V","f":"BT","t":"CBC","ty":["CB"],"lo":null,"hi":null,"v":240,"n":"CPT240","o":"","fl":"","k":"CPT240"},{"i":"17","d":"208 V","f":"BT","t":"CBC","ty":["CB"],"lo":null,"hi":null,"v":208,"n":"CPT208","o":"4272","fl":"","k":"CPT208"},{"i":"17","d":"600 V","f":"BT","t":"CBC","ty":["CB"],"lo":null,"hi":null,"v":600,"n":"CPT600","o":"","fl":"","k":"CPT600"},{"i":"18","d":"800 A","f":"BT","t":"QA","ty":["QA"],"lo":800,"hi":800,"v":null,"n":"HDLPQ0800","o":"2450","fl":"","k":"HDLPQ0800"},{"i":"18","d":"1200-2500 A","f":"BT","t":"QA","ty":["QA"],"lo":1200,"hi":2500,"v":null,"n":"HDLPQ1225","o":"2476","fl":"","k":"HDLPQ1225"},{"i":"18","d":"3000 and 4000 A","f":"BT","t":"QA","ty":["QA"],"lo":3000,"hi":4000,"v":null,"n":"HDLPQ3040","o":"2491","fl":"","k":"HDLPQ3040"},{"i":"18","d":"5000 and 6000 A","f":"BT","t":"QA and CBC","ty":["QA","CB"],"lo":5000,"hi":6000,"v":null,"n":"HDL5060","o":"2515R","fl":"","k":"HDL5060"},{"i":"18","d":"800 A, with provision for 6-foot 6-inch handle","f":"BT","t":"QA","ty":["QA"],"lo":800,"hi":800,"v":null,"n":"HDLPQ08006","o":"2452","fl":"6","k":"HDLPQ08006"},{"i":"18","d":"1200-2500 A, with provision for 6-foot 6-inch handle","f":"B","t":"QA","ty":["QA"],"lo":1200,"hi":2500,"v":null,"n":"HDLPQ1225B6","o":"2442","fl":"6","k":"HDLPQ1225B6"},{"i":"18","d":"1200-2500 A, with provision for 6-foot 6-inch handle","f":"T","t":"QA","ty":["QA"],"lo":1200,"hi":2500,"v":null,"n":"HDLPQ1225T6","o":"2442","fl":"6","k":"HDLPQ1225T6"},{"i":"18","d":"3000 and 4000 A, with provision for 6-foot 6-inch handle","f":"B","t":"QA","ty":["QA"],"lo":3000,"hi":4000,"v":null,"n":"HDLPQ3040B6","o":"2446","fl":"6","k":"HDLPQ3040B6"},{"i":"18","d":"3000 and 4000 A, with provision for 6-foot 6-inch handle","f":"T","t":"QA","ty":["QA"],"lo":3000,"hi":4000,"v":null,"n":"HDLPQ3040T6","o":"2446","fl":"6","k":"HDLPQ3040T6"},{"i":"18","d":"800-2500 A","f":"B","t":"CBC","ty":["CB"],"lo":800,"hi":2500,"v":null,"n":"HDLPC0825B","o":"2467","fl":"","k":"HDLPC0825B"},{"i":"18","d":"3000 and 4000 A","f":"B","t":"CBC","ty":["CB"],"lo":3000,"hi":4000,"v":null,"n":"HDLPC3040B","o":"2502R","fl":"","k":"HDLPC3040B"},{"i":"18","d":"800-2500 A","f":"T","t":"CBC","ty":["CB"],"lo":800,"hi":2500,"v":null,"n":"HDLPC0825T","o":"2463","fl":"","k":"HDLPC0825T"},{"i":"18","d":"3000 and 4000 A","f":"T","t":"CBC","ty":["CB"],"lo":3000,"hi":4000,"v":null,"n":"HDLPC3040T","o":"2498","fl":"","k":"HDLPC3040T"},{"i":"18","d":"800-2500 A, with provision for 6-foot 6-inch handle","f":"BT","t":"CBC","ty":["CB"],"lo":800,"hi":2500,"v":null,"n":"HDLPC08256","o":"2444","fl":"6","k":"HDLPC08256"},{"i":"18","d":"3000 and 4000 A, with provision for 6-foot 6-inch handle","f":"B","t":"CBC","ty":["CB"],"lo":3000,"hi":4000,"v":null,"n":"HDLPC3040B6","o":"2448","fl":"6","k":"HDLPC3040B6"},{"i":"18","d":"3000 and 4000 A, with provision for 6-foot 6-inch handle","f":"T","t":"CBC","ty":["CB"],"lo":3000,"hi":4000,"v":null,"n":"HDLPC3040T6","o":"2448","fl":"6","k":"HDLPC3040T6"},{"i":"18","d":"800 A","f":"","t":"PMS","ty":["PMS"],"lo":800,"hi":800,"v":null,"n":"HDLPMS0800","o":"2461","fl":"S","k":"HDLPMS0800"},{"i":"18","d":"1200-2500 A","f":"","t":"PMS","ty":["PMS"],"lo":1200,"hi":2500,"v":null,"n":"HDLPMS1220","o":"2485","fl":"S","k":"HDLPMS1220"},{"i":"18","d":"3000 and 4000 A","f":"","t":"PMS","ty":["PMS"],"lo":3000,"hi":4000,"v":null,"n":"HDLPMS2540","o":"2512R","fl":"S","k":"HDLPMS2540"},{"i":"18S","d":"800-2500 A, ECOTE","f":"BT","t":"QA-S","ty":["QA"],"lo":800,"hi":2500,"v":null,"n":"HDLQ0825","o":"2477","fl":"SE","k":"HDLQ0825"},{"i":"18S","d":"3000 and 4000 A, ECOTE","f":"BT","t":"QA-S","ty":["QA"],"lo":3000,"hi":4000,"v":null,"n":"HDLQ3040","o":"2492","fl":"SE","k":"HDLQ3040"},{"i":"18S","d":"800-2500 A, ECOTE, with provision for 6-foot 6-inch handle","f":"B","t":"QA-S","ty":["QA"],"lo":800,"hi":2500,"v":null,"n":"HDLQ0825B6","o":"2521R","fl":"SE6","k":"HDLQ0825B6"},{"i":"18S","d":"800-2500 A, ECOTE, with provision for 6-foot 6-inch handle","f":"T","t":"QA-S","ty":["QA"],"lo":800,"hi":2500,"v":null,"n":"HDLQ0825T6","o":"2521R","fl":"SE6","k":"HDLQ0825T6"},{"i":"18S","d":"3000 and 4000 A, ECOTE, with provision for 6-foot 6-inch handle","f":"B","t":"QA-S","ty":["QA"],"lo":3000,"hi":4000,"v":null,"n":"HDLQ3040B6","o":"2524R","fl":"SE6","k":"HDLQ3040B6"},{"i":"18S","d":"3000 and 4000 A, ECOTE, with provision for 6-foot 6-inch handle","f":"T","t":"QA-S","ty":["QA"],"lo":3000,"hi":4000,"v":null,"n":"HDLQ3040T6","o":"2524R","fl":"SE6","k":"HDLQ3040T6"},{"i":"18S","d":"800-2500 A, ECOTE","f":"B","t":"CBC-S","ty":["CB"],"lo":800,"hi":2500,"v":null,"n":"HDLC0825B","o":"2468","fl":"SE","k":"HDLC0825B"},{"i":"18S","d":"3000 and 4000 A, ECOTE","f":"B","t":"CBC-S","ty":["CB"],"lo":3000,"hi":4000,"v":null,"n":"HDLC3040B","o":"2503R","fl":"SE","k":"HDLC3040B"},{"i":"18S","d":"800-2500 A, ECOTE","f":"T","t":"CBC-S","ty":["CB"],"lo":800,"hi":2500,"v":null,"n":"HDLC0825T","o":"2464","fl":"SE","k":"HDLC0825T"},{"i":"18S","d":"3000 and 4000 A, ECOTE","f":"T","t":"CBC-S","ty":["CB"],"lo":3000,"hi":4000,"v":null,"n":"HDLC3040T","o":"2499","fl":"SE","k":"HDLC3040T"},{"i":"18S","d":"800-2500 A, ECOTE, with provision for 6-foot 6-inch handle","f":"BT","t":"CBC-S","ty":["CB"],"lo":800,"hi":2500,"v":null,"n":"HDLC08256","o":"2523","fl":"SE6","k":"HDLC08256"},{"i":"18S","d":"3000 and 4000 A, ECOTE, with provision for 6-foot 6-inch handle","f":"B","t":"CBC-S","ty":["CB"],"lo":3000,"hi":4000,"v":null,"n":"HDLC3040B6","o":"2526","fl":"SE6","k":"HDLC3040B6"},{"i":"18S","d":"3000 and 4000 A, ECOTE, with provision for 6-foot 6-inch handle","f":"T","t":"CBC-S","ty":["CB"],"lo":3000,"hi":4000,"v":null,"n":"HDLC3040T6","o":"2526","fl":"SE6","k":"HDLC3040T6"},{"i":"19","d":"800 A","f":"B","t":"QA","ty":["QA"],"lo":800,"hi":800,"v":null,"n":"PSPACERPQ0800B","o":"","fl":"","k":"PSPACERPQ0800B"},{"i":"19","d":"800 A (CBC only), 1200-4000 A","f":"B","t":"QA and CBC","ty":["QA","CB"],"lo":800,"hi":4000,"v":null,"n":"PSPACER0840B","o":"0911","fl":"","k":"PSPACER0840B"},{"i":"19","d":"800 A","f":"T","t":"QA","ty":["QA"],"lo":800,"hi":800,"v":null,"n":"PSPACERPQ0800T","o":"","fl":"","k":"PSPACERPQ0800T"},{"i":"19","d":"800 A (CBC only), 1200-4000 A","f":"T","t":"QA and CBC","ty":["QA","CB"],"lo":800,"hi":4000,"v":null,"n":"PSPACER0840T","o":"","fl":"","k":"PSPACER0840T"},{"i":"19","d":"800-4000 A","f":"B","t":"QA-S and CBC-S","ty":["QA","CB"],"lo":800,"hi":4000,"v":null,"n":"PSPACERQC0840B","o":"","fl":"S","k":"PSPACERQC0840B"},{"i":"19","d":"800-4000 A","f":"T","t":"QA-S and CBC-S","ty":["QA","CB"],"lo":800,"hi":4000,"v":null,"n":"PSPACERQC0840T","o":"","fl":"S","k":"PSPACERQC0840T"},{"i":"20","d":"800-4000 A","f":"BT","t":"QA","ty":["QA"],"lo":800,"hi":4000,"v":null,"n":"TPPQ0840","o":"3035","fl":"","k":"TPPQ0840"},{"i":"20","d":"800-4000 A","f":"BT","t":"CBC","ty":["CB"],"lo":800,"hi":4000,"v":null,"n":"TPPC0840","o":"3036","fl":"","k":"TPPC0840"},{"i":"20","d":"800 A, lock open and close","f":"BT","t":"QA","ty":["QA"],"lo":800,"hi":800,"v":null,"n":"TPLOPQ0800","o":"","fl":"","k":"TPLOPQ0800"},{"i":"20","d":"1200-6000 A, lock open and close","f":"BT","t":"QA","ty":["QA"],"lo":1200,"hi":6000,"v":null,"n":"TPLOPQ1260","o":"","fl":"","k":"TPLOPQ1260"}],"byKey":{"YOKEPQ800":[0],"YOKE1220":[1],"YOKE2500":[2],"YOKE3040":[3],"YOKE5060":[4],"ARCHUTE0860":[5],"ARCPQ800480":[6],"ARC1200480":[7,8,9],"ARC1600480":[10],"ARC2025480":[11],"ARC3060480":[12],"ARCPQ800600":[13],"ARC1200600":[14,15,16],"ARC1600600":[17],"ARC2025600":[18],"ARC3060600":[19],"AUXCONT6533":[20],"AUXCONTKPQ05":[21],"AUXCONTKPC05":[22],"AUXCONTKPQ07":[23],"AUXCONTKPC07":[24],"AUXCONTKPC14":[25],"AUXCONTKPC17":[26],"BLFACTU6585":[27],"BLOWNF0001R":[28],"CAP6415":[29],"COILSOL120":[30],"COIL120VAC":[31],"MECHPC0820":[32],"MECHPC2500":[33],"MECHPC3040":[34],"MECHPC5060":[35],"MECHPC0820K":[36],"MECHPC2500K":[37],"MECHPC3040K":[38],"MECHPC5060K":[39],"MECHPQ800":[40],"MECHPQ1220":[41],"MECHPQ2500":[42],"MECHPQ3040":[43],"MECHPQ5060":[44],"MECHPQ800K":[45],"MECHPQ1220K":[46],"MECHPQ2500K":[47],"MECHPQ3040K":[48],"MECHPQ5060K":[49],"MECHQ0820":[50],"MECHQ2500":[51],"MECHQ3040":[52],"MECHQ0820K":[53],"MECHQ2500K":[54],"MECHQ3040K":[55],"GFP1411200":[56],"TK1PQ0840":[57],"TK1PC0840":[58],"LS6534":[59],"PAN0820BN2PI":[60],"PAN2500BN2PI":[61],"PAN3040BN2PI":[62],"PAN0820TN2PI":[63],"PAN2500TN2PI":[64],"PAN3040TN2PI":[65],"PAN0820BN4PI":[66],"PAN2500BN4PI":[67],"PAN3040BN4PI":[68],"PAN0820TN4PI":[69],"PAN2500TN4PI":[70],"PAN3040TN4PI":[71],"PAN0820BG2PI":[72],"PAN2500BG2PI":[73],"PAN3040BG2PI":[74],"PAN0820TG2PI":[75],"PAN2500TG2PI":[76],"PAN3040TG2PI":[77],"PAN0820BG4PI":[78],"PAN2500BG4PI":[79],"PAN3040BG4PI":[80],"PAN0820TG4PI":[81],"PAN2500TG4PI":[82],"PAN3040TG4PI":[83],"PAN0820BG2":[84],"PAN2500BG2":[85],"PAN3040BG2":[86],"PAN0820TG2":[87],"PAN2500TG2":[88],"PAN3040TG2":[89],"PAN0820BG4":[90],"PAN2500BG4":[91],"PAN3040BG4":[92],"PAN0820TG4":[93],"PAN2500TG4":[94],"PAN3040TG4":[95],"POLEPQ800B480":[96],"POLE1200B480":[97,98,99],"POLE1600B480":[100],"POLE2000B480":[101],"POLE2500B480":[102],"POLE3000B480":[103],"POLE4000B480":[104],"POLE500B480":[105],"POLEPQ800T480":[106],"POLE1200T480":[107,108,109],"POLE1600T480":[110],"POLE2000T480":[111],"POLE2500T480":[112],"POLE3000T480":[113],"POLE4000T480":[114],"POLE500T480":[115],"POLEPQ800B600":[116],"POLE1200B600":[117,118,119],"POLE1600B600":[120],"POLE2000B600":[121],"POLE2500B600":[122],"POLE3000B600":[123],"POLE4000B600":[124],"POLEPQ800T600":[125],"POLE1200T600":[126,127,128],"POLE1600T600":[129],"POLE2000T600":[130],"POLE2500T600":[131],"POLE3000T600":[132],"POLE4000T600":[133],"SCS0820":[134],"SCS2500":[135],"SCS3040":[136],"SPTCOR101301":[137],"BARPQ800B":[138],"BARPQ1220B":[139],"BARPQ2500B":[140],"BARPQ3000B":[141],"BARPQ4000B":[142],"BARPQ800T":[143],"BARPQ1220T":[144],"BARPQ2500T":[145],"BARPQ3040T":[146],"BARPC0820B":[147],"BARPC2500B":[148],"BARPC3000B":[149],"BARPC4000B":[150],"BARPC0820T":[151],"BARPC2500T":[152],"BARPC3040T":[153],"SPVR2480":[154,155],"SVR2208":[156],"SPVR4600":[157],"CPT480":[158],"CPT240":[159],"CPT208":[160],"CPT600":[161],"HDLPQ0800":[162],"HDLPQ1225":[163],"HDLPQ3040":[164],"HDL5060":[165],"HDLPQ08006":[166],"HDLPQ1225B6":[167],"HDLPQ1225T6":[168],"HDLPQ3040B6":[169],"HDLPQ3040T6":[170],"HDLPC0825B":[171],"HDLPC3040B":[172],"HDLPC0825T":[173],"HDLPC3040T":[174],"HDLPC08256":[175],"HDLPC3040B6":[176],"HDLPC3040T6":[177],"HDLPMS0800":[178],"HDLPMS1220":[179],"HDLPMS2540":[180],"HDLQ0825":[181],"HDLQ3040":[182],"HDLQ0825B6":[183],"HDLQ0825T6":[184],"HDLQ3040B6":[185],"HDLQ3040T6":[186],"HDLC0825B":[187],"HDLC3040B":[188],"HDLC0825T":[189],"HDLC3040T":[190],"HDLC08256":[191],"HDLC3040B6":[192],"HDLC3040T6":[193],"PSPACERPQ0800B":[194],"PSPACER0840B":[195],"PSPACERPQ0800T":[196],"PSPACER0840T":[197],"PSPACERQC0840B":[198],"PSPACERQC0840T":[199],"TPPQ0840":[200],"TPPC0840":[201],"TPLOPQ0800":[202],"TPLOPQ1260":[203]},"byOld":{"2442":[167,168],"2444":[175],"2446":[169,170],"2448":[176,177],"2450":[162],"2452":[166],"2461":[178],"2463":[173],"2464":[189],"2467":[171],"2468":[187],"2476":[163],"2477":[181],"2485":[179],"2491":[164],"2492":[182],"2498":[174],"2499":[190],"2523":[191],"2526":[192,193],"3035":[200],"3036":[201],"4272":[160],"6415":[29],"6524":[31],"6533":[20],"6534":[59],"6585":[27],"42762":[56],"S10035":[0],"S10036":[1],"S10037":[2],"S10038":[3],"S10039":[4],"S10075":[5],"S10048":[6],"S10049":[7,8,9],"S10050":[10],"S10051":[11],"S10053":[12],"S10054":[13],"S10055":[14,15,16],"S10056":[17],"S10057":[18],"S10058":[19],"S0005R":[22],"S0007R":[24],"S00014R":[25],"S00017R":[26],"S0001R":[28],"S12013":[30],"P50014":[32],"P50015":[33],"P50016":[34],"S10068":[35],"P51080":[36],"P51081":[37],"P51082":[38],"S10062":[39],"S10064":[40],"S10065":[41],"S10066":[42],"S10067":[43],"S20501":[44],"S10079":[48],"S10069":[50],"S10070":[51],"S10071":[52],"S1805R":[57],"S1806R":[58],"P55325":[66],"P55326":[67],"P55327":[68],"P51724":[69],"P55421":[70],"P51726":[71],"P51750":[78],"P55437":[79],"P55425":[80],"P55422":[81],"P55423":[82],"P55424":[83],"P55511":[84],"P55512":[85],"P55513":[86],"P55505":[87],"P55506":[88],"P55507":[89],"P55508":[90],"P55509":[91],"P55510":[92],"P55502":[93],"P55503":[94],"P55504":[95],"S10013":[96],"S10014":[97,98,99],"S10015":[100],"S10016":[101],"S10017":[102],"S10018":[103],"S10019":[104],"S10020R":[105],"S10005":[106],"S10006":[107,108,109],"S10007":[110],"S10008R":[111],"S10009":[112],"S10010":[113],"S10011R":[114],"S10012":[115],"S10021":[116],"S10022":[117,118,119],"S10023":[120],"S10024":[121],"S10025":[122],"S10026R":[123],"S10027":[124],"S10028":[125],"S10029":[126,127,128],"S10030R":[129],"S10031":[130],"S10032":[131],"S10033":[132],"S10034":[133],"4296SC":[134],"4297SC":[135],"4298SC":[136],"S5208":[138],"S5216":[139],"S5225":[140],"S5230":[141],"S5240":[142],"S5008":[143],"S5016":[144],"S5025":[145],"S5040R":[146],"S5616":[147],"S5625":[148],"S5630":[149],"S5640":[150],"S5416R":[151],"S5425":[152],"S5440":[153],"7137R":[154],"7139R":[156],"4270R":[158],"2515R":[165],"2502R":[172],"2512R":[180],"2521R":[183,184],"2524R":[185,186],"2503R":[188],"0911":[195]},"defects":[{"id":"P1","level":"confirm","rows":["POLE500B480","POLE500T480"],"what":"5000 A pole assemblies print 'POLE500…' where every sibling encodes full amps (POLE4000B480). As printed.","handling":"Show as printed, flag 'confirm with Voyten'."},{"id":"P2","level":"note","rows":["SPVR-2 480","SPVR-4 600"],"what":"New catalog numbers contain a hyphen and a space; siblings are SPVR2480 / SVR2208.","handling":"Match on a whitespace- and hyphen-stripped key."},{"id":"P3","level":"confirm","rows":["SVR2208"],"what":"208 V relay is SVR2208, not SPVR2208 — possibly a dropped P.","handling":"As printed; SPVR2208 is accepted as an alias with a flag."},{"id":"P4","level":"confirm","rows":["BARPQ1220T"],"what":"Type column reads '800 QA-S' only, where the bottom-feed twin reads '800QA-S/QA'.","handling":"As printed; matched for QA too, flagged."},{"id":"P5","level":"note","rows":["ARC2025480","ARC3060480"],"what":"Edition drift: TD 2007 lists 2000 A = S10051, 2500 A = S10052, 3000-6000 A = S10053 (480 V). TD 2026 merges 2000 and 2500 A under S10051 and S10052 disappears.","handling":"2026 primary; note the 2007 numbers."},{"id":"P6","level":"confirm","rows":["HDLPMS2540"],"what":"PMS 3000/4000 A handle carries '2540' in its number while its row says 3000 and 4000 A (the 1200-2500 A row is HDLPMS1220).","handling":"As printed, flagged."}]};
+</script>
+<script>
+/* Pringle bolted pressure contact switch parser — DRAFT 2 (2026-10-19).
+   Plain script, no deps; inlined into the decoder HTML by build_html.mjs (same as pd_parse.js).
+   Logan's decisions (2026-10-19): TD00808001E April 2026 is the primary basis; the February 2007 edition answers
+   EO, the Pringle Mill Switch and old Pringle numbers; FP is CURRENT (Volume 2 CA08100003E, Aug 2026).
+   PC/PQ style numbers are RECOGNISED ONLY, never decoded. Anything uncertain ends in "Call Voyten" (r.callVoyten).
+   Renewal parts (TD 2026 Table 2) come from PRINGLE.data = PRDATA (gen_pringle_data.mjs).
+   Routes: vista (CB/FP/EO/QA) · pms · style · legacy (old Pringle) · part · notCatalog.
+   Never repairs input. Unknowns are reported, not guessed. */
+var PRINGLE = (function () {
+  var AMPS = { '08': 800, '12': 1200, '16': 1600, '20': 2000, '25': 2500, '30': 3000, '40': 4000, '50': 5000, '60': 6000 };
+  var SWITCH = {
+    CB: 'CBC — charge-before-close, electrical trip',
+    QA: 'QA — quick-acting, manually operated',
+    FP: 'FP — fault protector (CBC with integrated zero-sequence sensor and ground fault)',
+    EO: 'EO — electrically operated CBC'
+  };
+  var WIRE = { '2': 'Two-wire', '3': 'Three-wire', '4': 'Four-wire' };
+  var POLES = { '2': 'Two-pole', '3': 'Three-pole', '4': 'Four-pole' };
+  var FEED = { B: 'Bottom feed', T: 'Top feed' };
+  var SYSV = { '208': '208 V', '480': '480 V', '600': '600 V' };
+  var CTRLV = { '120': '120 V control', '240': '240 V solenoid (footnote option, not in the grammar box)' };
+  // Option tail, in printed order. Each slot: list of [code, meaning, edition-note].
+  var SLOTS = [
+    ['interlock', [['K', 'Key interlock provisions'], ['D', 'Door interlock (enclosed residential product only)', '2026'], ['L', 'Door interlock and key interlock provisions', '2026']]],
+    ['gf', [['GNX', 'Ground fault without control power transformer'], ['G', 'Ground fault with control power transformer'],
+            ['C', 'Arc energy reduction / ground fault combination relay', '2026'], ['E', 'Arc energy reduction relay', '2026']]],
+    ['phase', [['R', 'Single-phase voltage relay with capacitor trip device (SPVR), includes CPT'],
+               ['P', 'Phase failure relay, Taylor single-phase voltage relay with capacitor trip (not in any printed legend; Eaton product text closes it with a C at the end)', 'field']]],
+    ['bfd', [['AO', 'Blown fuse detector, three normally OFF lights (does NOT trip)'], ['AX', 'Blown fuse detector, no lights (trips switch)'],
+             ['A9', 'Blown fuse detector, three normally ON lights (trips switch)'], ['AR', 'Blown fuse detector, three normally OFF lights (trips switch)'],
+             ['A', 'Blown fuse detector, three normally ON lights (does NOT trip)']]],
+    ['ct', [['CT', 'With control power transformer (CPT only, without ground fault)']]],
+    ['aux', [['14', 'Auxiliary contact 3NO/3NC (kit #14 in the TD2026 parts table; not in the grammar box)', 'parts'],
+             ['17', 'Auxiliary contact 4NO/4NC (kit #17 in the TD2026 parts table; not in the grammar box)', 'parts'],
+             ['5', 'Auxiliary contact 1NO/1NC'], ['7', 'Auxiliary contact 2NO/2NC']]],
+    ['option', [['6', 'Handle suitable to meet 6 ft 6 in requirements']]],
+    ['nf', [['NF', 'Non-fused']]]
+  ];
+  // Style <-> Vista pairs proven on Eaton labels (pringle-grammar.json style.pairs).
+  var STYLE_PAIRS = {
+    PC163TG4: 'CB1633T120480G', PC083BG4: 'CB0833B120G480', PC163TAO: 'CB1633T120480AO', PC403B: 'CB4033B120480',
+    PQ403NF: 'QA4033N480', PC403TG4: 'CB4033T120480G', PC303BG4: 'CB3033B120480G', PC253B: 'CB2533B120480'
+  };
+  var api = { data: null };
+  // Part-number shapes from TD 2026 Table 2, for numbers that are not in the table itself.
+  var PART_PREFIX = /^(YOKE|ARCHUTE|ARC(PQ)?\d|AUXCONT|BLFACTU|BLOWNF|CAP\d|COIL|MECH|GFP\d|TK1|LS\d|PAN\d|POLE|SCS\d|SPTCOR|BARP|SPVR|SVR|CPT\d|HDL|PSPACER|TPP|TPLO)/;
+  var PART_ALIAS = { SPVR2208: 'SVR2208' }; // P3: the 208 V relay prints as SVR2208
+
+  function norm(s) { return String(s || '').toUpperCase().replace(/[\s ]+/g, ''); }
+
+  function tail(rest, r) {
+    var i = 0, si = 0, out = [];
+    while (rest.length) {
+      var hit = null;
+      for (; si < SLOTS.length && !hit; si++) {
+        var opts = SLOTS[si][1];
+        for (var k = 0; k < opts.length; k++) {
+          var c = opts[k][0];
+          if (rest.indexOf(c) !== 0) continue;
+          if (c === 'C' && rest.charAt(1) === 'T') continue; // CT belongs to the CPT slot
+          hit = { slot: SLOTS[si][0], code: c, meaning: opts[k][1], ed: opts[k][2] || '' };
+          break;
+        }
+      }
+      if (!hit) break;
+      out.push(hit); rest = rest.slice(hit.code.length);
+      if (hit.ed === '2026') r.notes.push('"' + hit.code + '" is printed only in the April 2026 edition (seen on 2021-2022 plates).');
+      if (hit.ed === 'parts') r.notes.push('Aux code "' + hit.code + '" is printed only as a parts-table kit, but Eaton catalog strings carry it.');
+      if (hit.ed === 'field') r.warnings.push('"' + hit.code + '" in the ' + hit.slot + ' slot is not defined in any Eaton legend.');
+    }
+    r.options = out;
+    return rest;
+  }
+
+  function slot(r, name) { for (var i = 0; i < r.options.length; i++) if (r.options[i].slot === name) return r.options[i]; return null; }
+
+  function vista(s, r, raw) {
+    var m;
+    if (/^S(CB|QA|FP|EO)\d/.test(s)) {
+      r.warnings.push('Leading "S" is in no printed Eaton grammar. Eaton product text for SCB… numbers reads "Pringle/Siemens Component"; the rest is decoded as the standard number.');
+      r.siemensComponent = true;
+      s = s.slice(1);
+    }
+    if ((m = /^QA(\d\d)([234])([234])([BTN])(208|480|600)(.*)$/.exec(s))) {
+      r.route = 'vista'; r.switchType = 'QA'; fill(r, m[1], m[2], m[3], m[4]);
+      r.systemV = m[5];
+      if (m[4] === 'N') r.warnings.push('"N" in the feed position is not in the printed grammar; Eaton labels QA4033N480 / PQ403NF as "3 Pole Non-Fusible". Read as non-fused, feed not stated.');
+      if (m[5] === '208') r.notes.push('Eaton: for QA switches use the 480 V catalog number when referencing a 208 V system.');
+      var left = tail(m[6], r);
+      ['gf', 'phase', 'ct'].forEach(function (k) { if (slot(r, k)) r.warnings.push('Option "' + slot(r, k).code + '" is not available on QA switches.'); });
+      if (slot(r, 'nf') && r.feed !== 'T') r.warnings.push('NF (non-fused) is only offered on QA top-feed switches.');
+      if (left) return bad(r, 'Unrecognised characters "' + left + '" after the options.');
+      return r;
+    }
+    if ((m = /^(CB|FP|EO)(\d\d)([234])([234])([BT])(120|240)(.*)$/.exec(s))) {
+      r.route = 'vista'; r.switchType = m[1]; fill(r, m[2], m[3], m[4], m[5]); r.controlV = m[6];
+      var rest = m[7], v;
+      if ((v = /^(208|480|600)(.*)$/.exec(rest))) { r.systemV = v[1]; rest = v[2]; }
+      else if ((v = /^(GNX|G)(208|480|600)(.*)$/.exec(rest))) {
+        r.systemV = v[2]; rest = v[1] + v[3];
+        r.warnings.push('Ground-fault code printed before the system voltage (Eaton\'s own carton prints CB0833B120G480). Canonical order is …' + r.controlV + r.systemV + v[1] + '….');
+      } else return bad(r, 'Expected the system voltage (208 / 480 / 600) after the control voltage.');
+      if (/CSA$/.test(rest) && r.systemV === '600') { rest = rest.slice(0, -3); r.csa = true; r.notes.push('CSA suffix: Eaton strings append CSA to 600 V numbers (600 V is the CSA rating).'); }
+      var left2 = tail(rest, r);
+      if (left2 === 'C' && slot(r, 'phase') && slot(r, 'phase').code === 'P') {
+        left2 = ''; r.taylor = true;
+        r.notes.push('P … C = single-phase voltage relay with capacitor trip device (Taylor), per Eaton product text (e.g. CB1233T120480GPC). The C closes the P code at the END of the number; it is not the 2026 arc-energy C.');
+      }
+      if (left2) return bad(r, 'Unrecognised characters "' + left2 + '" after the options.');
+      if (slot(r, 'nf')) {
+        if (r.feed === 'T') r.notes.push('Non-fused CB: the catalog footnote limits NF to QA top-feed, but Eaton product data lists top-feed CB…NF numbers (e.g. CB3033T120480K5NF, "Non-fusible").');
+        else r.warnings.push('NF (non-fused) is only documented on top-feed switches.');
+      }
+      if (r.controlV === '240' && (slot(r, 'gf') || slot(r, 'phase'))) r.warnings.push('Eaton: a switch with relay protection must use 120 V control voltage.');
+      if (r.wire === '4' && r.switchType === 'CB' && !(slot(r, 'gf') && slot(r, 'gf').code === 'C')) r.notes.push('April 2026 edition: four-wire on a CB adds a neutral sensor only, "for when the AF/GF combo relay is selected" (code C).');
+      if (r.switchType === 'FP') { r.notes.push('FP is listed as current in Eaton Volume 2 (CA08100003E, August 2026) although the April 2026 technical data omits it; FP numbers are cross-referenced in the 2007 edition.'); if (r.amps > 4000) r.warnings.push('FP is published only to 4000 A.'); }
+      if (r.switchType === 'EO') { r.notes.push('EO appears only in the 2007 edition and is NOT UL Listed.'); if (r.amps > 4000) r.warnings.push('EO is published only to 4000 A.'); }
+      return r;
+    }
+    return null;
+  }
+
+  function fill(r, a, p, w, f) {
+    r.ampsCode = a; r.amps = AMPS[a]; r.poles = p; r.wire = w; r.feed = f;
+    if (!r.amps) bad(r, 'Ampere code "' + a + '" is not published (08, 12, 16, 20, 25, 30, 40, 50, 60).');
+    if (r.amps >= 5000) r.notes.push(r.amps + ' A is available but NOT UL Listed.');
+  }
+
+  function pms(s, r) {
+    var m = /^PMS(\d\d)([23])([23])(NF|F)([BT])([BT])(W?)$/.exec(s);
+    if (!m) return /^PMS/.test(s) ? bad(r, 'Pringle Mill Switch grammar is PMS · amps · poles · wire · F/NF · entry · exit · [W].') : null;
+    r.route = 'pms'; r.switchType = 'PMS'; r.ampsCode = m[1]; r.amps = AMPS[m[1]];
+    if (!r.amps || r.amps > 4000) bad(r, 'PMS is published 800-4000 A.');
+    r.poles = m[2]; r.wire = m[3]; r.fusing = m[4]; r.feedEntry = m[5]; r.feedExit = m[6]; r.window = !!m[7];
+    r.notes.push('Pringle Mill Switch: 2007 edition only, not UL Listed. Two-pole/two-wire = 250 Vdc, three-pole/three-wire = 480 Vac.');
+    if (m[2] !== m[3]) r.warnings.push('Eaton pairs 2-pole with 2-wire (250 Vdc) and 3-pole with 3-wire (480 Vac).');
+    return r;
+  }
+
+  // Recognise only (Logan, 2026-10-19): Eaton publishes no grammar for these, so no field is decoded.
+  function style(s, r) {
+    if (!/^P[CQ]\d{3}[A-Z0-9]*$/.test(s)) return null;
+    r.route = 'style';
+    r.vistaPair = STYLE_PAIRS[s] || null;
+    r.styleFamily = s.charAt(1) === 'C' ? 'CBC (Eaton uses PC for Pringle CBC in its part numbers)' : 'QA (Eaton uses PQ for Pringle QA in its part numbers)';
+    r.callVoyten = true;
+    return r;
+  }
+
+  function legacy(raw, r) {
+    var s = String(raw).toUpperCase().replace(/\s+/g, ' ').trim(), m, special = false;
+    // Special builds: dealers list QA-B-1633-S / CBC-B-xxxx-S (feed before amps, -S suffix; TD2026 types "QA-S", "CBC-S").
+    if ((m = /^(CBC|QA)-B-(\d{4})-S$/.exec(s))) { s = m[1] + '-' + m[2] + '-B'; special = true; }
+    else if (/-S$/.test(s)) { s = s.slice(0, -2); special = true; }
+    m = /^(CBC|QA|FP)-?(\d\d)([234])([234])((?:-?[A-Z0-9]+)*)$/.exec(s.replace(/ /g, '-'));
+    if (!m) return null;
+    var hyph = /-/.test(s) || / /.test(s);
+    var parts = m[5].split('-').filter(Boolean);
+    // An unhyphenated QA… with nothing after is ambiguous with a truncated Vista number.
+    if (!hyph && !parts.length && !/CBC$/.test(m[5])) {
+      if (m[1] !== 'QA') return null;
+    }
+    r.route = 'legacy'; r.ampsCode = m[2]; r.amps = AMPS[m[2]]; r.poles = m[3]; r.wire = m[4];
+    var flags = parts.join('-');
+    if (!parts.length && /^CBC/.test(m[5])) flags = 'CBC';
+    r.feed = /(^|-)B($|-)/.test(flags) ? 'B' : 'T';
+    if (m[1] === 'QA' && /(^|-)CBC($|-)/.test(flags)) r.switchType = 'CB';
+    else if (m[1] === 'CBC' && /(^|-)EO$/.test(flags)) r.switchType = 'EO';
+    else r.switchType = m[1] === 'CBC' ? 'CB' : m[1];
+    if (/(^|-)ET$/.test(flags)) { r.et = true; r.notes.push('"ET" type = QA with an electric (shunt) trip, per dealer listings ("W/ST", 120 / 208-240 / 480 V coils); not defined in an Eaton table. Eaton (2026 FAQ) says ET switches are no longer made but can be replaced with current design — supply the serial number off the old switch.'); }
+    if (special) { r.special = true; r.warnings.push('"-S" = special build (TD2026 lists QA-S / CBC-S parts separately). Standard parts may not fit; quote from the serial or G.O. number.'); }
+    var ctl = /(^|-)240($|-)/.test(flags) && r.switchType !== 'QA' ? '240' : '120';
+    var vp = r.switchType === 'QA' ? 'QA' + m[2] + m[3] + m[4] + r.feed + '480' : r.switchType + m[2] + m[3] + m[4] + r.feed + ctl + '480';
+    r.vistaEquivalent = vp;
+    r.notes.push('Old Pringle catalog number (pre-Vista). 2007 cross-reference equivalent: ' + vp + (r.switchType === 'CB' && r.feed === 'T' ? ' — top-feed CBC old numbers carry the QA- prefix.' : '.'));
+    if (!r.amps) bad(r, 'Ampere code "' + m[2] + '" is not published.');
+    if (!hyph && !parts.length) r.warnings.push('No feed letter and no hyphens: read as the old top-feed QA-' + m[2] + m[3] + m[4] + '. If this is a truncated Vista number, the feed and system voltage are missing.');
+    return r;
+  }
+
+  function bad(r, msg) { r.ok = false; r.errors.push(msg); return r; }
+
+  /* ---------- Renewal parts (TD 2026 Table 2) ---------- */
+  function pkey(s) { return String(s || '').toUpperCase().replace(/[\s-]+/g, ''); }
+
+  // A part number typed on its own: new number, old number, or a Table-2-shaped number not in the table.
+  function part(s, r) {
+    var D = api.data, k = pkey(s), hits = [], via = 'new';
+    if (D) {
+      if (PART_ALIAS[k]) { r.warnings.push(k + ' is not printed; Eaton lists the 208 V relay as ' + PART_ALIAS[k] + ' (possibly a dropped P).'); k = PART_ALIAS[k]; }
+      hits = (D.byKey[k] || []).map(function (i) { return D.rows[i]; });
+      if (!hits.length && D.byOld[k]) { hits = D.byOld[k].map(function (i) { return D.rows[i]; }); via = 'old'; }
+    }
+    if (!hits.length && !PART_PREFIX.test(k)) return null;
+    r.route = 'part'; r.partRows = hits; r.partVia = via;
+    if (!hits.length) { r.warnings.push('Shaped like a Pringle renewal part number but not in Eaton\'s April 2026 cross-reference.'); r.callVoyten = true; }
+    if (via === 'old' && hits.length) r.notes.push('Old (Vista style) catalog number — the current Eaton number is ' + uniq(hits.map(function (h) { return h.n; })).join(' / ') + '.');
+    return r;
+  }
+  // Recorded Table-2 print defects (pringle-parts-2026.json) that touch any of these rows.
+  function defectsOf(rows) {
+    var D = api.data; if (!D || !rows.length) return [];
+    return D.defects.filter(function (d) { return rows.some(function (x) { return d.rows.indexOf(x.n) >= 0; }); });
+  }
+  function uniq(a) { var o = [], s = {}; a.forEach(function (x) { if (!s[x]) { s[x] = 1; o.push(x); } }); return o; }
+
+  // The renewal parts that fit a decoded CB or QA switch. Each entry: { item, name, rows[], note }.
+  function partsFor(r) {
+    var D = api.data, out = [];
+    if (!D || !r.ok || (r.switchType !== 'CB' && r.switchType !== 'QA') || !r.amps) return out;
+    var t = r.switchType, a = r.amps, f = r.feed === 'B' || r.feed === 'T' ? r.feed : null;
+    var v = r.systemV === '480' || r.systemV === '600' ? +r.systemV : null;
+    var gf = slot(r, 'gf'), ph = slot(r, 'phase'), il = slot(r, 'interlock'), aux = slot(r, 'aux'), opt6 = !!slot(r, 'option');
+    var keyed = il && (il.code === 'K' || il.code === 'L');
+    function pick(item, test) {
+      return D.rows.filter(function (x) {
+        if (x.i !== item || x.ty.indexOf(t) < 0) return false;
+        if (x.lo != null && (a < x.lo || a > x.hi)) return false;
+        if (x.f === 'B' || x.f === 'T') { if (!f || x.f !== f) return false; }
+        return test ? test(x) : true;
+      });
+    }
+    function std(x) { return x.fl.indexOf('S') < 0; }
+    function add(item, rows, note) { out.push({ item: item, name: D.items[item], rows: rows, note: note || (D.itemNotes[item] || '') }); }
+    var none = 'Not listed for this rating in Eaton\'s cross-reference — call Voyten.';
+
+    var y = pick('1', std); add('1', y, y.length ? (a === 1600 && y[0].n === 'YOKE1220' ? 'Printed as "1200 and 2000 A"; 1600 A read as covered — confirm with Voyten.' : '') : none);
+    add('2', pick('2'));
+    if (v) { var arc = pick('3', function (x) { return x.v === v && std(x); }); add('3', arc, arc.length ? '' : none); }
+    else add('3', [], 'Eaton lists arcing parts at 480 V and 600 V only — call Voyten for a ' + (r.systemV || 'this') + ' V switch.');
+    if (aux) add('4', pick('4', function (x) { return x.n === 'AUXCONT6533' || new RegExp('^' + aux.code + ' auxiliary').test(x.d); }));
+    if (slot(r, 'bfd')) add('5', pick('5'));
+    if (t === 'CB') {
+      if (ph) add('6', pick('6'));
+      add('7', r.controlV === '120' ? pick('7') : [], r.controlV === '120' ? '' : 'Eaton lists 120 V solenoid parts only — call Voyten for a ' + r.controlV + ' V solenoid.');
+    }
+    var mech = pick('8', function (x) { return (x.fl.indexOf('K') >= 0) === !!keyed; }); add('8', mech, mech.length ? '' : none);
+    if (t === 'CB' && gf && (gf.code === 'G' || gf.code === 'GNX')) add('9', pick('9'));
+    if (t === 'CB' && gf && (gf.code === 'C' || gf.code === 'E')) add('9', [], 'Arc energy reduction relays are not in the cross-reference — call Voyten.');
+    if (keyed) add('10', pick('10'));
+    if (t === 'CB') add('11', pick('11'));
+    if (t === 'CB' && (ph || (gf && gf.code === 'G'))) {
+      var pan = gf && gf.code === 'G' ? (ph ? '12b' : '12c') : '12a';
+      var pv = r.systemV === '208' ? 208 : r.systemV === '480' ? 480 : null;
+      var pr = pv ? pick(pan, function (x) { return x.v === pv; }) : [];
+      add(pan, pr, pr.length ? '' : 'Pan assemblies are listed for 208 V and 480 V, 800-4000 A only — call Voyten.');
+    }
+    if (v) { var pole = pick('13', function (x) { return x.v === v && std(x); }); add('13', pole, pole.length ? '' : none); }
+    else add('13', [], 'Eaton lists pole assemblies at 480 V and 600 V only — call Voyten for a ' + (r.systemV || 'this') + ' V switch.');
+    if (t === 'CB' && gf && /^(G|GNX|C)$/.test(gf.code)) { var sc = pick('14', std); add('14', sc, sc.length ? '' : none); }
+    var bar = pick('15'); add('15', bar, bar.length ? (bar[0].n === 'BARPQ1220T' ? 'Eaton prints the type for this barrier as "800 QA-S" only — confirm with Voyten.' : '') : none);
+    if (t === 'CB' && ph) { var sv = pick('16', function (x) { return x.v === +r.systemV; }); add('16', sv, sv.length ? '' : none); }
+    if (t === 'CB' && (slot(r, 'ct') || ph || (gf && gf.code === 'G'))) { var cp = pick('17', function (x) { return x.v === +r.systemV; }); add('17', cp, cp.length ? '' : none); }
+    var hd = pick('18', function (x) { return (x.fl.indexOf('6') >= 0) === opt6; }); add('18', hd, hd.length ? '' : none);
+    var ps = pick('19', function (x) { return std(x) && !(t === 'QA' && a === 800 && /CBC only/.test(x.d)); }); add('19', ps, ps.length ? '' : none);
+    var tp = pick('20', function (x) { return !/lock open/.test(x.d); }); add('20', tp, tp.length ? '' : none);
+    return out;
+  }
+
+  // Basis per Logan's precedence; anything uncertain is flagged for "Call Voyten".
+  function finish(r) {
+    if (!r.ok) return r;
+    if (r.route === 'vista') r.basis = r.switchType === 'EO' ? 'TD00808001E, February 2007 (EO is not in later editions)'
+      : r.switchType === 'FP' ? 'Eaton Volume 2 CA08100003E (August 2026); FP cross-reference TD00808001E (February 2007)'
+      : 'TD00808001E, April 2026';
+    else if (r.route === 'pms' || r.route === 'legacy') r.basis = 'TD00808001E, February 2007';
+    else if (r.route === 'part') r.basis = 'TD00808001E, April 2026, Table 2';
+    if (r.warnings.length || r.special || r.siemensComponent || r.taylor || r.et) r.callVoyten = true;
+    if (r.route === 'vista') r.parts = partsFor(r);
+    if (r.parts) r.parts.forEach(function (p) {
+      if (!p.rows.length || /Voyten/.test(p.note)) r.callVoyten = true;
+      var d = defectsOf(p.rows); if (d.length) { p.defects = d; if (d.some(function (x) { return x.level !== 'note'; })) r.callVoyten = true; }
+    });
+    if (r.route === 'part' && r.partRows) {
+      var pd = defectsOf(r.partRows);
+      pd.forEach(function (d) { if (d.level === 'note') { r.notes.push(d.what); return; } r.warnings.push('Printed as shown in Eaton\'s table: ' + d.what + ' Confirm with Voyten before ordering.'); });
+      if (pd.some(function (d) { return d.level !== 'note'; })) r.callVoyten = true;
+    }
+    return r;
+  }
+
+  function parse(raw) {
+    var s = norm(raw);
+    var r = { input: raw, key: s, ok: true, route: null, errors: [], warnings: [], notes: [], options: [], callVoyten: false };
+    if (!s) return bad(r, 'Enter a catalog number.');
+    var x = part(s, r);
+    if (x) return finish(x);
+    x = /-|\sET$/.test(String(raw).toUpperCase().trim()) ? legacy(raw, r) : null;
+    if (x) return finish(x);
+    x = vista(s.replace(/-/g, ''), r, raw) || pms(s, r) || style(s, r) || legacy(raw, r);
+    if (x) return finish(x);
+    if (/^\d{4,6}$|^A-?\d{3,5}$|^[A-Z]-?\d{4,6}[A-Z]?$/.test(s)) { r.route = 'notCatalog'; r.callVoyten = true; return bad(r, 'This looks like a serial, drawing or UL label number, not a catalog number. Pringle catalog numbers start with CB, QA, FP, EO, PMS, PC or PQ (or CBC-, QA- or FP- on older plates).'); }
+    r.callVoyten = true;
+    return bad(r, 'Not a recognised Pringle catalog, style or old Pringle number.');
+  }
+
+  api.parse = parse; api.norm = norm; api.partsFor = partsFor; api.AMPS = AMPS; api.SWITCH = SWITCH; api.POLES = POLES;
+  api.WIRE = WIRE; api.FEED = FEED; api.SYSV = SYSV; api.CTRLV = CTRLV;
+  return api;
+})();
+</script>
+<script>
+PRINGLE.data = PRDATA;
+var PHONE = '1-800-458-4001';
+
+var EXAMPLES = ['CB1633T120480G', 'CB2534B120480KC7', 'CB1233T120208GR', 'CB1233T120480GPC', 'QA3033T480K7', 'QA4033N480',
+  'FP0834B120480', 'EO1233T120480', 'PMS0833NFTBW', 'QA-1233 ET', 'QA-1633-CBC', 'POLE1600T480', 'S10014'];
+
+var TYPE_NAME = {
+  CB: 'CBC — Charge-Before-Close, electrical trip', QA: 'QA — Quick-Acting, manually operated',
+  FP: 'FP — Fault Protector (CBC with integrated zero-sequence sensor and ground fault)', EO: 'EO — Electrically Operated CBC'
+};
+var SHORT = { CB: 'CBC', QA: 'QA', FP: 'FP Fault Protector', EO: 'EO Electrically Operated', PMS: 'Pringle Mill Switch' };
+
+function decode() {
+  hideError();
+  var raw = document.getElementById('catInput').value;
+  if (!raw || !raw.trim()) { showError('Enter a Catalog Number', 'Type the catalog number from the switch nameplate, e.g. CB1633T120480G.', false); hideResults(); clearCharMap(); return; }
+  var r = PRINGLE.parse(raw);
+  renderCharMap(r);
+  if (!r.ok) { showError('Cannot Decode This Number', r.errors.join(' '), true); hideResults(); return; }
+  if (r.route === 'part') return renderPart(r);
+  if (r.route === 'style') return renderStyle(r);
+  if (r.route === 'legacy') return renderLegacy(r);
+  if (r.route === 'pms') return renderPms(r);
+  renderSwitch(r);
+}
+
+/* ============================================================
+   Results
+   ============================================================ */
+function banner(headline, catalog, quoteLabel) {
+  var h = '<div class="summary-banner">';
+  h += '<div class="headline">' + esc(headline) + '</div>';
+  h += '<div class="catalog-fmt">' + esc(catalog) + '</div>';
+  h += '<button class="btn-copy" id="btnCopyCat" onclick="copyCatalog()">Copy Catalog Number</button>';
+  h += ' <button class="btn-pdf" onclick="downloadDecoderPDF()">Download PDF</button>';
+  h += ' <button class="btn-quote" onclick="openDecoderQuote()">' + esc(quoteLabel || 'Get a Quote for This Switch') + '</button>';
+  return h + '</div>';
+}
+
+function callCard(r, why) {
+  var h = '<div class="result-card call wide"><div class="card-title">Call Voyten</div>';
+  h += '<div class="legacy">' + esc(why || 'Part of this number cannot be confirmed from Eaton\'s published tables.') + '</div>';
+  var rs = callReasons(r);
+  if (rs.length) { h += '<ul class="note-list">'; rs.forEach(function (x) { h += '<li class="w">' + esc(x) + '</li>'; }); h += '</ul>'; }
+  h += '<div class="call-line">Call Voyten: <a href="tel:18004584001">' + PHONE + '</a></div>';
+  h += '<div class="legacy">Have the catalog number, serial number and G.O. (general order) number from the nameplate ready. Eaton identifies Pringle switches by serial or G.O. number.</div>';
+  h += row('Phone', PHONE);
+  return h + '</div>';
+}
+
+/* What made this result uncertain: warnings, plus any part that is missing, needs confirming or carries a print defect. */
+function callReasons(r) {
+  var out = r.warnings.slice();
+  (r.parts || []).forEach(function (p) {
+    if (!p.rows.length) out.push(p.name.replace(/ \(.*$/, '') + ': ' + (p.note || 'not listed for this rating.'));
+    else if (/Voyten/.test(p.note)) out.push(p.name.replace(/ \(.*$/, '') + ': ' + p.note);
+    (p.defects || []).forEach(function (d) { if (d.level !== 'note') out.push(p.name.replace(/ \(.*$/, '') + ': ' + d.what); });
+  });
+  return out;
+}
+
+function notesCard(r) {
+  if (!r.warnings.length && !r.notes.length) return '';
+  var h = '<div class="result-card warn"><div class="card-title">Checks &amp; Notes</div><ul class="note-list">';
+  r.warnings.forEach(function (w) { h += '<li class="w">' + esc(w) + '</li>'; });
+  r.notes.forEach(function (n) { h += '<li>' + esc(n) + '</li>'; });
+  return h + '</ul></div>';
+}
+
+function headlineOf(r) {
+  var bits = ['Eaton Pringle ' + SHORT[r.switchType]];
+  bits.push(r.amps.toLocaleString('en-US') + ' A');
+  if (r.systemV) bits.push(r.systemV + ' V');
+  bits.push(PRINGLE.POLES[r.poles] + ', ' + PRINGLE.WIRE[r.wire].toLowerCase());
+  if (r.feed === 'B' || r.feed === 'T') bits.push(PRINGLE.FEED[r.feed].toLowerCase());
+  return bits.join(' — ');
+}
+
+function renderSwitch(r) {
+  var html = banner(headlineOf(r), r.key);
+  html += '<div class="result-grid">';
+  if (r.callVoyten) html += callCard(r);
+
+  html += '<div class="result-card config"><div class="card-title">Switch Configuration</div>';
+  html += row('Switch Type', esc(r.switchType + ' — ' + TYPE_NAME[r.switchType].replace(/^[A-Z]+ — /, '')));
+  html += row('Continuous Current', esc(r.amps.toLocaleString('en-US') + ' A (code ' + r.ampsCode + ')'));
+  html += row('Poles', esc(PRINGLE.POLES[r.poles]));
+  html += row('Wire', esc(PRINGLE.WIRE[r.wire] + (r.wire === '4' && r.switchType === 'CB' ? ' (neutral sensor only)' : '')));
+  html += row('Feed', esc(r.feed === 'N' ? 'Not stated (N = non-fusible)' : PRINGLE.FEED[r.feed]));
+  if (r.controlV) html += row('Control Voltage', esc(PRINGLE.CTRLV[r.controlV]));
+  html += row('System Voltage', esc(PRINGLE.SYSV[r.systemV] + (r.csa ? ' (CSA)' : '')));
+  var fused = r.feed === 'N' || r.options.some(function (o) { return o.slot === 'nf'; }) ? 'Non-fused' : 'Fusible (Class L fuses)';
+  html += row('Fusing', fused);
+  html += '</div>';
+
+  html += '<div class="result-card access"><div class="card-title">Options &amp; Accessories</div>';
+  if (!r.options.length) html += row('Options', 'None coded');
+  var LABEL = { interlock: 'Interlock', gf: r.switchType === 'CB' ? 'Arc Energy / Ground Fault' : 'Ground Fault', phase: 'Phase Failure Relay', bfd: 'Blown Fuse Detector',
+    ct: 'Control Power Transformer', aux: 'Auxiliary Contacts', option: 'Handle Option', nf: 'Additional Option' };
+  r.options.forEach(function (o) { html += row(esc(LABEL[o.slot] + ' (' + o.code + ')'), esc(o.meaning)); });
+  if (r.taylor) html += row('Phase Failure Relay (…C)', 'Closing C of the Taylor SPVR code');
+  html += '</div>';
+
+  html += ratingsCard(r);
+  html += notesCard(r);
+  html += '</div>';
+  html += partsCard(r);
+  html += generalCard(r);
+  show(html);
+}
+
+function ratingsCard(r) {
+  var ul = r.switchType === 'EO' ? 'Not UL Listed (2007 edition)' : r.amps >= 5000 ? 'Not UL Listed (5000 A and 6000 A)'
+    : r.switchType === 'FP' ? 'UL Listed' : 'UL 977 Listed; suitable for use in UL 891 switchboards';
+  var h = '<div class="result-card info"><div class="card-title">Ratings</div>';
+  h += row('Listing', esc(ul));
+  h += row('Voltage Ratings', '480 V UL, 600 V CSA');
+  h += row('Short-Circuit Rating', '200,000 A rms symmetrical with Class L fuses');
+  h += row('Continuous Rating', '100% rated; 60 °C rise at terminals, 40 °C max ambient');
+  h += row('Load Make / Break (2007 edition)', '12× make / 6× break');
+  h += row('Load Make / Break (April 2026 edition)', '6× make / 12× break');
+  h += '<div class="src both">Eaton\'s editions disagree on make/break and both are shown as printed. TD00808001E (February 2007) prints "12X Make/6X Break"; the July 2014 brochure gives three load-make operations at 1200% and three load-break operations at 600%; TD00808001E (April 2026) prints "6X Make / 12X Break".</div>';
+  return h + '</div>';
+}
+
+function partsCard(r) {
+  if (!r.parts || !r.parts.length) {
+    if (r.switchType === 'FP' || r.switchType === 'EO')
+      return '<div class="result-card parts wide" style="margin-top:12px;"><div class="card-title">Renewal Parts</div><div class="legacy">Eaton\'s renewal-parts cross-reference lists QA and CBC parts only. The ' + esc(SHORT[r.switchType]) + ' is built on the CBC — call Voyten (' + PHONE + ') to confirm which CBC parts fit.</div>' + row('Parts', 'Call Voyten') + '</div>';
+    return '';
+  }
+  var h = '<div class="result-card parts wide" style="margin-top:12px;"><div class="card-title">Renewal Parts That Fit — Eaton TD00808001E (April 2026)</div>';
+  r.parts.forEach(function (p) {
+    if (!p.rows.length) { h += row(esc(p.name), '<span class="part-miss">Call Voyten</span>'); }
+    else p.rows.forEach(function (x) {
+      h += row(esc(p.name + (p.rows.length > 1 || /\d/.test(x.d) ? ' — ' + x.d : '')),
+        '<span class="part-new">' + esc(x.n) + '</span>' + (x.o ? ' <span class="part-old">(old ' + esc(x.o) + ')</span>' : ''));
+    });
+    var notes = [];
+    if (p.note) notes.push(p.note);
+    (p.defects || []).forEach(function (d) { notes.push(d.what); });
+    if (notes.length) h += '<div class="part-note">' + esc(notes.join(' ')) + '</div>';
+  });
+  h += '<div class="src">New and old (Vista style) numbers as printed in Eaton\'s cross-reference. Eaton: pole and yoke assemblies need the switch serial or G.O. number to confirm top or bottom feed; replacing more than two poles, Eaton recommends replacing the switch.</div>';
+  return h + '</div>';
+}
+
+function generalCard(r) {
+  var h = '<div class="result-card wide info" style="margin-top:12px;"><div class="card-title">General Specifications</div>';
+  h += '<div class="result-grid" style="margin:0;"><div style="font-size:0.85rem;">';
+  h += row('Manufacturer', 'Eaton (Cutler-Hammer); Pringle Electrical Mfg. Co. before 2005');
+  h += row('Product Line', 'Pringle bolted pressure contact switches');
+  h += '</div><div style="font-size:0.85rem;">';
+  h += row('Decode Basis', esc(r.basis || ''));
+  h += row('Service', 'Eaton does not service Pringle switches in-house');
+  h += '</div></div></div>';
+  return h;
+}
+
+function renderLegacy(r) {
+  var html = banner('Old Pringle catalog number — ' + SHORT[r.switchType] + ', ' + r.amps.toLocaleString('en-US') + ' A, ' + PRINGLE.FEED[r.feed].toLowerCase(), r.input.toUpperCase().trim());
+  html += '<div class="result-grid">';
+  if (r.callVoyten) html += callCard(r, r.et ? 'ET-type switches are no longer made. Eaton replaces them with the current design, but needs the serial number off the old switch.' : null);
+  html += '<div class="result-card config"><div class="card-title">Switch Configuration</div>';
+  html += row('Switch Type', esc(TYPE_NAME[r.switchType]));
+  html += row('Continuous Current', esc(r.amps.toLocaleString('en-US') + ' A'));
+  html += row('Poles', esc(PRINGLE.POLES[r.poles]));
+  html += row('Wire', esc(PRINGLE.WIRE[r.wire]));
+  html += row('Feed', esc(PRINGLE.FEED[r.feed]));
+  if (r.et) html += row('Type Suffix', 'ET — QA with electric (shunt) trip; no longer made');
+  if (r.special) html += row('Build', 'Special (-S)');
+  html += '</div>';
+  html += '<div class="result-card route"><div class="card-title">Current Eaton Equivalent</div>';
+  html += row('Vista Catalog Number', '<span class="part-new">' + esc(r.vistaEquivalent) + '</span>');
+  html += '<div class="legacy">From Eaton\'s 2007 cross-reference of old Pringle numbers. The old number does not state the system voltage; the equivalent is the 480 V number.</div>';
+  html += '<button class="btn-alt" onclick="decodeThis(\'' + esc(r.vistaEquivalent) + '\')">Decode ' + esc(r.vistaEquivalent) + ' and its parts</button>';
+  html += '</div>';
+  html += notesCard(r);
+  html += '</div>';
+  html += generalCard(r);
+  show(html);
+}
+
+function renderPms(r) {
+  var html = banner('Eaton Pringle Mill Switch — ' + r.amps.toLocaleString('en-US') + ' A, ' + PRINGLE.POLES[r.poles].toLowerCase(), r.key);
+  html += '<div class="result-grid">';
+  if (r.callVoyten) html += callCard(r);
+  html += '<div class="result-card config"><div class="card-title">Switch Configuration</div>';
+  html += row('Switch Type', 'PMS — Pringle Mill Switch (side-operated, enclosed)');
+  html += row('Continuous Current', esc(r.amps.toLocaleString('en-US') + ' A'));
+  html += row('Poles', esc(PRINGLE.POLES[r.poles] + (r.poles === '2' ? ' (250 Vdc)' : ' (480 Vac)')));
+  html += row('Wire', esc(PRINGLE.WIRE[r.wire]));
+  html += row('Fusing', r.fusing === 'F' ? 'Fusible' : 'Non-fusible');
+  html += row('Feed Entry', esc(PRINGLE.FEED[r.feedEntry]));
+  html += row('Feed Exit', esc(PRINGLE.FEED[r.feedExit]));
+  html += row('Viewing Window', r.window ? 'Yes (W)' : 'No');
+  html += row('Listing', 'Not UL Listed');
+  html += '</div>';
+  html += notesCard(r);
+  html += '</div>';
+  html += generalCard(r);
+  show(html);
+}
+
+function renderStyle(r) {
+  var html = banner('Eaton Pringle Style Number — ' + (r.key.charAt(1) === 'C' ? 'CBC' : 'QA') + ' switch', r.key);
+  html += '<div class="result-grid">';
+  html += callCard(r, 'This is Eaton\'s short Style Number, printed on cartons and newer nameplates beside the Catalog Number. Eaton does not publish how Style Numbers are built, so this decoder does not decode them.');
+  html += '<div class="result-card route"><div class="card-title">Style Number</div>';
+  html += row('Recognised As', esc('Eaton Pringle Style Number — ' + r.styleFamily));
+  if (r.vistaPair) {
+    html += row('Catalog Number on the Same Eaton Label', '<span class="part-new">' + esc(r.vistaPair) + '</span>');
+    html += '<button class="btn-alt" onclick="decodeThis(\'' + esc(r.vistaPair) + '\')">Decode ' + esc(r.vistaPair) + '</button>';
+  } else html += '<div class="legacy">Look for the "Catalog Number" line on the same nameplate or carton (it starts CB, QA or FP) and decode that instead.</div>';
+  html += '</div></div>';
+  show(html);
+}
+
+function renderPart(r) {
+  var rows = r.partRows || [];
+  var first = rows[0];
+  var D = PRINGLE.data;
+  var html = banner(first ? 'Eaton Pringle renewal part — ' + D.items[first.i].replace(/ \(.*$/, '') : 'Pringle renewal part number', r.key, 'Get a Quote for This Part');
+  html += '<div class="result-grid">';
+  if (r.callVoyten) html += callCard(r);
+  rows.forEach(function (x, n) {
+    html += '<div class="result-card access"><div class="card-title">' + esc(D.items[x.i]) + (rows.length > 1 ? ' (' + (n + 1) + ' of ' + rows.length + ')' : '') + '</div>';
+    html += row('Current Eaton Number', '<span class="part-new">' + esc(x.n) + '</span>');
+    html += row('Old Catalog Number', esc(x.o || 'None printed'));
+    html += row('Description', esc(x.d));
+    html += row('Feed', esc({ B: 'Bottom feed', T: 'Top feed', BT: 'Bottom or top feed' }[x.f] || 'Not stated'));
+    html += row('Switch Type', esc(x.t));
+    if (/S/.test(x.fl)) html += row('Build', 'Special');
+    if (D.itemNotes[x.i]) html += '<div class="part-note">' + esc(D.itemNotes[x.i]) + '</div>';
+    html += '</div>';
+  });
+  html += notesCard(r);
+  html += '</div>';
+  show(html);
+}
+
+/* ============================================================
+   Char map
+   ============================================================ */
+function renderCharMap(r) {
+  clearCharMap();
+  var s = r.key; if (!s || r.route !== 'vista' && r.route !== 'pms') return;
+  var g = [];
+  if (r.route === 'pms') g = [['SW', 3], ['AMP', 2], ['P', 1], ['W', 1], ['FUSE', r.fusing ? r.fusing.length : 0], ['IN', 1], ['OUT', 1], ['OPT', r.window ? 1 : 0]];
+  else {
+    var off = r.siemensComponent ? 1 : 0;
+    if (off) g.push(['S', 1]);
+    g.push(['SW', 2], ['AMP', 2], ['P', 1], ['W', 1], ['F', 1]);
+    if (r.controlV) g.push(['CTL', 3]);
+    g.push(['SYS', 3]);
+    var rest = s.length - g.reduce(function (a, x) { return a + x[1]; }, 0);
+    if (rest > 0) g.push(['OPTIONS', rest, 1]);
+  }
+  var boxes = document.getElementById('charBoxes'), labels = document.getElementById('groupLabels'), posLbls = document.getElementById('posLabels');
+  var at = 0;
+  g.forEach(function (seg, gi) {
+    if (!seg[1]) return;
+    var gl = document.createElement('div'); gl.className = 'group-label'; gl.style.width = (seg[1] * 34 - 2) + 'px'; gl.textContent = seg[1] >= 2 || seg[0].length <= 3 ? seg[0] : ''; labels.appendChild(gl);
+    for (var i = 0; i < seg[1] && at < s.length; i++, at++) {
+      var b = document.createElement('div'); b.className = 'char-box entered' + (seg[2] ? ' opt' : ''); b.textContent = s[at]; boxes.appendChild(b);
+      var pl = document.createElement('div'); pl.className = 'pos-label'; pl.textContent = at + 1; posLbls.appendChild(pl);
+    }
+    if (gi < g.length - 1 && at < s.length) {
+      var sep = document.createElement('div'); sep.className = 'char-box separator'; boxes.appendChild(sep);
+      var sl = document.createElement('div'); sl.className = 'pos-label sep'; posLbls.appendChild(sl);
+      var gs = document.createElement('div'); gs.className = 'group-label'; gs.style.width = '8px'; gs.style.borderBottom = 'none'; labels.appendChild(gs);
+    }
+  });
+}
+function clearCharMap() { ['charBoxes', 'groupLabels', 'posLabels'].forEach(function (id) { document.getElementById(id).innerHTML = ''; }); }
+
+/* ============================================================
+   UI helpers
+   ============================================================ */
+function row(label, value) { return '<div class="card-row"><span class="card-label">' + label + '</span><span class="card-value">' + value + '</span></div>'; }
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+function show(html) { var el = document.getElementById('results'); el.innerHTML = html; el.classList.add('visible'); }
+function hideResults() { var el = document.getElementById('results'); el.innerHTML = ''; el.classList.remove('visible'); }
+function decodeThis(n) { document.getElementById('catInput').value = n; decode(); window.scrollTo(0, 0); }
+
+function showError(title, text, call) {
+  document.getElementById('errorTitle').textContent = title;
+  document.getElementById('errorText').textContent = text;
+  document.getElementById('errorCall').innerHTML = call ? 'Not sure what you have? Call Voyten: <a href="tel:18004584001">' + PHONE + '</a>' : '';
+  document.getElementById('errorBox').classList.add('visible');
+}
+function hideError() { document.getElementById('errorBox').classList.remove('visible'); }
+function clearAll() { document.getElementById('catInput').value = ''; hideResults(); hideError(); clearCharMap(); document.getElementById('catInput').focus(); }
+
+function copyCatalog() {
+  var val = document.getElementById('catInput').value.trim().toUpperCase();
+  if (!val) return;
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(val).then(showCopied);
+  else {
+    var ta = document.createElement('textarea'); ta.value = val; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); showCopied();
+  }
+}
+function showCopied() {
+  var btn = document.getElementById('btnCopyCat'); if (!btn) return;
+  btn.textContent = 'Copied!'; btn.classList.add('copied');
+  setTimeout(function () { btn.textContent = 'Copy Catalog Number'; btn.classList.remove('copied'); }, 2000);
+}
+
+(function buildExamples() {
+  var host = document.getElementById('exampleList');
+  EXAMPLES.forEach(function (n) {
+    var b = document.createElement('button'); b.className = 'ex-btn'; b.textContent = n;
+    b.onclick = function () { document.getElementById('catInput').value = n; decode(); };
+    host.appendChild(b);
+  });
+})();
+document.getElementById('catInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') decode(); });
+</script>
+<style>
+.vmnote-use{max-width:960px;margin:8px auto 28px;padding:0 20px;box-sizing:border-box}
+.vmnote-use .vmnote-box{border:1px solid #e5e7eb;background:#f9fafb;border-radius:12px;padding:16px 18px}
+.vmnote-use h2{margin:0 0 6px;font-size:0.8rem;font-weight:700;color:#374151;letter-spacing:0.01em}
+.vmnote-use p{margin:0 0 8px;font-size:0.72rem;line-height:1.6;color:#4b5563}
+.vmnote-use p:last-child{margin-bottom:0}
+@media print{.vmnote-use{page-break-inside:avoid}}
+</style>
+<div class="vmnote-use">
+  <div class="vmnote-box">
+    <h2>About these results</h2>
+    <p>This decoder reads published manufacturer catalog-number conventions and returns the most
+    likely configuration. It is an identification aid, not a specification: numbers get reused and
+    revised, nameplates get mis-stamped, and some factory-fitted options never appear in a type
+    designation at all. Confirm any result against the breaker&rsquo;s own nameplate and the
+    manufacturer&rsquo;s documentation before ordering a part, fitting a replacement, or relying on
+    a rating.</p>
+    <p>Power circuit breakers are hazardous equipment. Installation, testing and maintenance are
+    work for qualified personnel following NFPA 70E and the equipment manufacturer&rsquo;s
+    instructions. This tool is provided as is, without warranty of any kind, and Voyten Electric
+    &amp; Electronics, Inc. accepts no liability for loss, damage or injury arising from reliance on
+    decoded output.</p>
+  </div>
+</div>
+<script src="jspdf.umd.min.js"></script>
+<script src="decoder-pdf.js"></script>
+<script src="decoder-quote.js"></script>
+</body>
+</html>

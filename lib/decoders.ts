@@ -488,23 +488,45 @@ export const decoders: Decoder[] = [
     manufacturer: 'Eaton',
     comingSoon: true,
     description:
-      'In development — a decoder for Eaton Pringle bolted pressure contact switch catalog numbers, covering the Quick Action (QA) and Charge Before Close (CBC) designs.',
-    frames: 'Pringle QA · CBC',
+      'In development — a decoder for Eaton Pringle bolted pressure contact switch catalog numbers, covering the quick-acting (QA) and charge-before-close (CBC) designs.',
+    frames: 'Pringle CBC · QA · FP',
     ratings: '800A – 6,000A',
-    example: '',
+    example: 'CB1633T120480G',
     alsoKnownAs: [
       'Pringle switch',
       'Pringle bolted pressure switch',
       'Bolted pressure contact switch',
       'Pringle QA',
       'Pringle CBC',
+      'Pringle FP fault protector',
+      'Cutler-Hammer Pringle',
     ],
-    identifies: [],
+    identifies: [
+      'Switch type: CBC, QA, FP fault protector, EO and the Pringle Mill Switch',
+      'Amperes, poles, wire, top or bottom feed',
+      'Control and system voltage',
+      'Interlock, ground fault, arc energy reduction, phase-failure relay and blown fuse options',
+      'Old Pringle catalog numbers (CBC-…, QA-…, FP-…) and their current Eaton equivalent',
+      'The Eaton renewal parts that fit, with new and old part numbers',
+    ],
     // Unfiltered on purpose: Pringle documents are as likely to be filed under
     // Pringle or Cutler-Hammer as under Eaton.
     manualSearch: '/search?q=Pringle',
     manualSearchLabel: 'Pringle bolted pressure switch manuals',
-    faq: [],
+    faq: [
+      {
+        q: 'Where is the catalog number on a Pringle switch?',
+        a: 'On the nameplate, on the line marked Catalog Number or CAT#, for example CB1633T120480G. Newer Eaton plates and cartons also print a short Style Number such as PC163TG4 beside it. Eaton does not publish how Style Numbers are built, so decode the Catalog Number. The serial, G.O. and drawing numbers are not catalog numbers, but keep them: Eaton identifies a Pringle switch by its serial or G.O. number.',
+      },
+      {
+        q: 'What do the old Pringle numbers like QA-1233 or CBC-2033-B mean?',
+        a: 'They are Pringle catalog numbers from before Eaton\'s Vista numbering. Eaton\'s cross-reference maps each one to a current number: CBC-2033-B is CB2033B120480, and a top-feed CBC carries a QA- prefix, so QA-1633-CBC is CB1633T120480. ET-type switches (QA with a shunt trip) are no longer made and are replaced with the current design.',
+      },
+      {
+        q: 'What is the difference between a CBC and a QA Pringle switch?',
+        a: 'Both are bolted pressure contact switches rated to 200,000 A with Class L fuses. The QA is manually operated, with a quick-acting mechanism. The CBC charges its spring before it closes and can be tripped by pushbutton or electrically through its solenoid, so it is the one that carries ground fault, arc energy reduction, phase-failure and tripping blown-fuse options.',
+      },
+    ],
   },
   {
     slug: 'spb',
