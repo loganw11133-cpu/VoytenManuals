@@ -486,9 +486,8 @@ export const decoders: Decoder[] = [
     name: 'Pringle Bolted Pressure Switch',
     fullName: 'Eaton Pringle Bolted Pressure Contact Switch',
     manufacturer: 'Eaton',
-    comingSoon: true,
     description:
-      'In development — a decoder for Eaton Pringle bolted pressure contact switch catalog numbers, covering the quick-acting (QA) and charge-before-close (CBC) designs.',
+      'Decode Eaton Pringle bolted pressure contact switch catalog numbers — CBC, QA and FP fault protector switches, plus the EO and the Pringle Mill Switch. Reads amperes, poles, wire, feed, control and system voltage and every option, translates old Pringle numbers (CBC-…, QA-…, FP-…) to the current Eaton number, and lists the Eaton renewal parts that fit, with new and old part numbers.',
     frames: 'Pringle CBC · QA · FP',
     ratings: '800A – 6,000A',
     example: 'CB1633T120480G',
@@ -614,8 +613,7 @@ const MANUAL_MATCHERS: { slug: string; manufacturers: RegExp; title: RegExp }[] 
   // Pringle only, never bare "bolted pressure": GE Type HPC and Square D Bolt-Loc are
   // other makers' bolted pressure switches and this decoder cannot read them (the
   // manufacturer facet keeps them out as well). Matches 5 rows as of 2026-10-20 — the
-  // Eaton Pringle documents (scripts/add-eaton-pringle-documents.mjs). Dark while the
-  // registry entry is comingSoon.
+  // Eaton Pringle documents (scripts/add-eaton-pringle-documents.mjs).
   { slug: 'pringle', manufacturers: /^(Eaton|Cutler-Hammer|Pringle( Electrical)?)$/i, title: /\bPringle\b/i },
 ];
 
