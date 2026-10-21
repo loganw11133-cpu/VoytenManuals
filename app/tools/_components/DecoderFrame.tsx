@@ -14,52 +14,67 @@ export default function DecoderFrame({ src, title }: { src: string; title: strin
     const iframe = iframeRef.current;
     if (!iframe) return;
 
-    let interval: ReturnType<typeof setInterval> | null = null;
-    let timeout: ReturnType<typeof setTimeout> | null = null;
+    let resizeObserver: ResizeObserver | null = null;
+    let mutationObserver: MutationObserver | null = null;
 
+    // Height = the bottom edge of the decoder's own content. Never read
+    // scrollHeight here: it is at least the iframe's current height (and
+    // MDS-SBS/MW-IEC give body min-height: 100vh), so every measure fed the
+    // last height back in and the frame grew 40px a tick into blank space
+    // under the results.
     const resize = () => {
       const frame = iframeRef.current;
-      if (!frame) return;
       try {
-        const body = frame.contentDocument?.body;
-        const html = frame.contentDocument?.documentElement;
-        if (body && html) {
-          const height = Math.max(
-            body.scrollHeight,
-            body.offsetHeight,
-            html.scrollHeight,
-            html.offsetHeight
-          );
-          frame.style.height = height + 40 + 'px';
+        const doc = frame?.contentDocument;
+        const win = doc?.defaultView;
+        if (!frame || !doc?.body || !win) return;
+        let bottom = 0;
+        for (const el of Array.from(doc.body.children)) {
+          const rect = el.getBoundingClientRect();
+          if (!rect.width && !rect.height) continue; // scripts, styles, hidden boxes
+          const marginBottom = parseFloat(win.getComputedStyle(el).marginBottom) || 0;
+          bottom = Math.max(bottom, rect.bottom + win.scrollY + marginBottom);
         }
+        const bodyStyle = win.getComputedStyle(doc.body);
+        bottom += (parseFloat(bodyStyle.paddingBottom) || 0) + (parseFloat(bodyStyle.marginBottom) || 0);
+        if (bottom > 0) frame.style.height = Math.ceil(bottom) + 'px';
       } catch {
         // cross-origin safety fallback
       }
     };
 
-    const clearTimers = () => {
-      if (interval) {
-        clearInterval(interval);
-        interval = null;
-      }
-      if (timeout) {
-        clearTimeout(timeout);
-        timeout = null;
-      }
+    const disconnect = () => {
+      resizeObserver?.disconnect();
+      mutationObserver?.disconnect();
+      resizeObserver = mutationObserver = null;
     };
 
+    // Re-fit whenever the content changes size: a decode, a cleared result,
+    // late webfonts, or the page width reflowing the decoder.
     const onLoad = () => {
+      disconnect();
+      const body = iframe.contentDocument?.body;
+      if (!body) return;
+      resizeObserver = new ResizeObserver(resize);
+      const observeChildren = () => {
+        for (const el of Array.from(body.children)) resizeObserver?.observe(el);
+      };
+      observeChildren();
+      mutationObserver = new MutationObserver(() => {
+        observeChildren();
+        resize();
+      });
+      mutationObserver.observe(body, { childList: true });
       resize();
-      clearTimers();
-      interval = setInterval(resize, 500);
-      timeout = setTimeout(clearTimers, 30000);
     };
 
     iframe.addEventListener('load', onLoad);
+    // The frame can finish loading before hydration attaches the listener.
+    if (iframe.contentDocument?.readyState === 'complete' && iframe.contentDocument.body?.children.length) onLoad();
 
     return () => {
       iframe.removeEventListener('load', onLoad);
-      clearTimers();
+      disconnect();
     };
   }, []);
 
@@ -70,7 +85,9 @@ export default function DecoderFrame({ src, title }: { src: string; title: strin
         src={src}
         style={{
           width: '100%',
-          minHeight: '100vh',
+          // Placeholder until the first measure; a minHeight here would
+          // leave blank space under any decoder shorter than the window.
+          height: '100vh',
           border: 'none',
           display: 'block',
         }}

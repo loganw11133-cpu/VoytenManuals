@@ -729,8 +729,6 @@ function callCard(r, why) {
   var rs = callReasons(r);
   if (rs.length) { h += '<ul class="note-list">'; rs.forEach(function (x) { h += '<li class="w">' + esc(x) + '</li>'; }); h += '</ul>'; }
   h += '<div class="call-line">Call Voyten: <a href="tel:18004584001">' + PHONE + '</a></div>';
-  h += '<div class="legacy">Have the catalog number, serial number and G.O. (general order) number from the nameplate ready. Eaton identifies Pringle switches by serial or G.O. number.</div>';
-  h += row('Phone', PHONE);
   return h + '</div>';
 }
 
