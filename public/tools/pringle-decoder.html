@@ -727,9 +727,14 @@ function callCard(r, why) {
   var h = '<div class="result-card call wide"><div class="card-title">Call Voyten</div>';
   h += '<div class="legacy">' + esc(why || 'Part of this number cannot be confirmed from Eaton\'s published tables.') + '</div>';
   var rs = callReasons(r);
-  if (rs.length) { h += '<ul class="note-list">'; rs.forEach(function (x) { h += '<li class="w">' + esc(x) + '</li>'; }); h += '</ul>'; }
-  h += '<div class="call-line">Call Voyten: <a href="tel:18004584001">' + PHONE + '</a></div>';
+  if (rs.length) { h += '<ul class="note-list">'; rs.forEach(function (x) { h += '<li class="w">' + esc(dropCall(x)) + '</li>'; }); h += '</ul>'; }
+  h += '<div class="call-line"><a href="tel:18004584001">' + PHONE + '</a></div>';
   return h + '</div>';
+}
+
+/* Inside the Call Voyten card the reasons drop their own "call / confirm with Voyten" endings: the card title says it. */
+function dropCall(x) {
+  return x.replace(/\s*—\s*(call|confirm with) Voyten\b[^.]*\./i, '.').replace(/\s*Confirm with Voyten before ordering\./, '');
 }
 
 /* What made this result uncertain: warnings, plus any part that is missing, needs confirming or carries a print defect. */
