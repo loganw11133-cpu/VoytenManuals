@@ -13,7 +13,8 @@ import { decoderStockMeta, getDecoderStock } from '@/lib/decoder-stock';
 const decoder = requireDecoder('pringle');
 
 // Voyten lists this family on eBay, so the route doubles as a listing (lib/decoder-stock.ts).
-export const revalidate = 3600;
+// Its manual list refreshes every 60 days (and on every deploy); it changes rarely.
+export const revalidate = 5184000;
 
 export const metadata = decoderMetadata(decoder, decoderStockMeta(decoder.slug));
 
