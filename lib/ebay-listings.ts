@@ -7,7 +7,8 @@
 // a link to an empty search is worse than no link. Re-check before adding a family.
 //
 // Order matters: the first match wins, so breakers come before the trip units
-// they carry ("Magnum DS ... Digitrip 1150" is a Magnum page).
+// they carry ("Magnum DS ... Digitrip 1150" is a Magnum page). Pringle sits last;
+// none of the library's Pringle documents matches an earlier family.
 //
 // The same list drives every machine-readable "Voyten stocks this" signal:
 // Product/Offer JSON-LD on the matched manual pages, the Organization offer
@@ -98,6 +99,14 @@ const EBAY_FAMILIES: EbayFamily[] = [
     brand: 'GE',
     product: 'GE MicroVersaTrip circuit breaker trip units',
     category: 'Circuit breaker trip unit', manualsSearch: 'q=MicroVersaTrip' },
+  // 36 listings on 2026-10-19 (32 switches, 4 renewal parts), swept through Chrome for
+  // the decoder build. Same pattern as the Pringle decoder matcher.
+  { key: 'pringle', label: 'Pringle bolted pressure switches & parts', query: 'pringle',
+    manufacturers: /^(Eaton|Cutler-Hammer|Pringle( Electrical)?)$/i, title: /\bPringle\b/i,
+    brand: 'Eaton',
+    product: 'Eaton Pringle bolted pressure contact switches (CBC, QA, FP fault protector) and renewal parts',
+    category: 'Bolted pressure contact switch', decoder: 'pringle',
+    manualsSearch: 'q=Pringle' },
 ];
 
 /** The family's search inside the Voyten eBay store (eBay redirects it to a store-scoped search). */
@@ -108,6 +117,12 @@ export function ebayFamilyUrl(f: EbayFamily): string {
 export function matchEbayFamily(manufacturer: string, title: string): (EbayFamily & { url: string }) | null {
   if (!manufacturer || !title) return null;
   const f = EBAY_FAMILIES.find((x) => x.manufacturers.test(manufacturer) && x.title.test(title));
+  return f ? { ...f, url: ebayFamilyUrl(f) } : null;
+}
+
+/** The stocked family a decoder identifies, so its route can double as a listing. */
+export function stockedFamilyForDecoder(slug: string): (EbayFamily & { url: string }) | null {
+  const f = EBAY_FAMILIES.find((x) => x.decoder === slug);
   return f ? { ...f, url: ebayFamilyUrl(f) } : null;
 }
 

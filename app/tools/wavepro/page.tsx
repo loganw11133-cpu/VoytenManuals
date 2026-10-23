@@ -2,6 +2,7 @@ import DecoderFrame from '../_components/DecoderFrame';
 import DecoderAbout from '../_components/DecoderAbout';
 import { requireDecoder } from '@/lib/decoders';
 import { decoderMetadata, decoderJsonLd } from '@/lib/decoder-seo';
+import { decoderStockMeta, getDecoderStock } from '@/lib/decoder-stock';
 
 // Content, metadata and structured data all come from lib/decoders.ts so the
 // eight decoder routes cannot drift apart. DecoderAbout carries the indexable
@@ -9,17 +10,22 @@ import { decoderMetadata, decoderJsonLd } from '@/lib/decoder-seo';
 // on this page.
 const decoder = requireDecoder('wavepro');
 
-export const metadata = decoderMetadata(decoder);
+// Voyten lists this family on eBay, so the route doubles as a listing (lib/decoder-stock.ts).
+export const revalidate = 3600;
 
-export default function WaveProDecoderPage() {
+export const metadata = decoderMetadata(decoder, decoderStockMeta(decoder.slug));
+
+export default async function WaveProDecoderPage() {
+  const stock = await getDecoderStock(decoder.slug);
+
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(decoderJsonLd(decoder)) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(decoderJsonLd(decoder, stock)) }}
       />
       <DecoderFrame src="/tools/wavepro-decoder.html" title="GE WavePro Circuit Breaker Decoder" />
-      <DecoderAbout decoder={decoder} />
+      <DecoderAbout decoder={decoder} stock={stock} />
     </>
   );
 }

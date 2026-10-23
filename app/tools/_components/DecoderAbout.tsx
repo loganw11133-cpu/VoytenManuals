@@ -1,6 +1,7 @@
 import Link from 'next/link';
-import { Phone, ArrowRight, FileText, WifiOff } from 'lucide-react';
+import { Phone, ArrowRight, FileText, WifiOff, ExternalLink } from 'lucide-react';
 import type { Decoder } from '@/lib/decoders';
+import type { DecoderStock } from '@/lib/decoder-seo';
 
 /**
  * Server-rendered, indexable copy for a decoder route.
@@ -8,8 +9,11 @@ import type { Decoder } from '@/lib/decoders';
  * The decoder itself is an iframe, so crawlers see none of its content as part
  * of this page. Everything a search engine or AI assistant can read about
  * /tools/<slug> is rendered here.
+ *
+ * With `stock`, the route doubles as a listing: an in-stock card linking the
+ * family's Voyten eBay listings and a quote, and the library's manuals for it.
  */
-export default function DecoderAbout({ decoder }: { decoder: Decoder }) {
+export default function DecoderAbout({ decoder, stock }: { decoder: Decoder; stock?: DecoderStock }) {
   const { fullName, manufacturer, frames, ratings, example, alsoKnownAs, identifies, faq } = decoder;
 
   return (
@@ -144,6 +148,58 @@ export default function DecoderAbout({ decoder }: { decoder: Decoder }) {
             </Link>
           )}
         </div>
+
+        {stock && (
+          <>
+            <div className="bg-white border border-slate-200 border-l-4 border-l-[#dc2626] rounded-lg p-5 mb-10">
+              <h2 className="text-xl font-bold text-slate-900 mb-2">In stock at Voyten Electric</h2>
+              <p className="text-slate-700 text-sm leading-relaxed mb-4">
+                Voyten Electric currently lists{' '}
+                <span className="font-semibold text-slate-900">{stock.family.label}</span> on eBay. Decode
+                the nameplate above, then buy a listed unit direct or request a quote for the exact
+                catalog number.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <a
+                  href={stock.family.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 bg-[#1a1a1a] hover:bg-black text-white px-5 py-2.5 rounded-lg font-semibold text-sm transition-colors"
+                >
+                  Shop on eBay
+                  <ExternalLink size={16} aria-hidden="true" />
+                </a>
+                <Link
+                  href="/contact?type=quote"
+                  className="inline-flex items-center justify-center gap-2 bg-[#dc2626] hover:bg-[#b91c1c] text-white px-5 py-2.5 rounded-lg font-bold text-sm transition-colors"
+                >
+                  Request a Quote <ArrowRight size={16} aria-hidden="true" />
+                </Link>
+              </div>
+            </div>
+
+            {stock.library.length > 0 && (
+              <>
+                <h2 className="text-xl font-bold text-slate-900 mb-3">{fullName} manuals in the library</h2>
+                <ul className="mb-10 space-y-2">
+                  {stock.library.map((m) => (
+                    <li key={m.slug}>
+                      <Link
+                        href={`/manual/${m.slug}`}
+                        className="group flex items-start gap-3 bg-white border border-slate-200 rounded-lg px-4 py-3 hover:border-slate-400 transition-colors"
+                      >
+                        <FileText className="w-4 h-4 text-slate-500 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                        <span className="text-sm text-slate-800 group-hover:text-[#dc2626] transition-colors">
+                          {m.title}
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </>
+        )}
 
         <div className="bg-white border border-slate-200 rounded-lg p-5 flex flex-col sm:flex-row sm:items-center gap-4 mb-6">
           <WifiOff className="w-5 h-5 text-slate-500 flex-shrink-0" aria-hidden="true" />
