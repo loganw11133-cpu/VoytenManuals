@@ -142,6 +142,8 @@ export const metadata: Metadata = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
+  // Stable @id so page-level JSON-LD can reference this node instead of restating it.
+  "@id": "https://www.voytenmanuals.com/#organization",
   "name": "Voyten Electric & Electronics, Inc.",
   "alternateName": ["Voyten Electric", "Voyten Manuals"],
   "url": "https://www.voytenmanuals.com",
@@ -227,6 +229,7 @@ const jsonLd = {
 const webSiteJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
+  "@id": "https://www.voytenmanuals.com/#website",
   "name": "Voyten Manuals",
   "url": "https://www.voytenmanuals.com",
   "description": "Free searchable library of electrical equipment manuals and technical documentation",

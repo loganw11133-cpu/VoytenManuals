@@ -1,26 +1,37 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Metadata } from 'next';
-import { Phone, ArrowRight, ChevronRight, Wrench, Shield, Download, ExternalLink, BookOpen } from 'lucide-react';
+import { Phone, ArrowRight, ChevronRight, Wrench, Shield, Download, ExternalLink, BookOpen, Cpu } from 'lucide-react';
 import ManualCard from '@/components/ManualCard';
 import { getRLProductLine, type Manual } from '@/lib/manuals-db';
 
 export const revalidate = 3600;
 
-// ── Hero & category images from Voyten's Volusion CDN ──
+// ── Images (self-hosted in public/images) ──
 
-const CDN = 'https://cdn4.volusion.store/jhkcv-upqrn/v/vspfiles';
-const IMG_BREAKER_HERO = `${CDN}/assets/images/breaker%20white.png`;
+const SITE = 'https://www.voytenmanuals.com';
+const PAGE_URL = `${SITE}/products/rl-breakers`;
+const ORG_ID = `${SITE}/#organization`; // declared by the Organization block in app/layout.tsx
+// Hero: the same breaker photo the page used to hotlink from the Volusion CDN
+// ("breaker white.png"), now served locally. Native size 239×195.
+const IMG_BREAKER_HERO = '/images/rl-breaker-hero.png';
 // Parts overview: an upscale of the original accessories photo, served from public/images.
 const IMG_PARTS = '/images/rl-accessories-parts-2026-09.jpg';
+// Social card rendered by ./opengraph-image.tsx (Next serves it at this path).
+const IMG_OG = `${PAGE_URL}/opengraph-image`;
 
 
 // ── SEO Metadata ──
 
+// Page title only — app/layout.tsx appends " | Voyten Manuals" via its title template.
+const PAGE_TITLE = 'Voyten Type RL/VRL Breakers & Accessories — New Surplus Inventory';
+// ~155 chars so Google shows it whole.
+const PAGE_DESCRIPTION =
+  'New-surplus and reconditioned Voyten Type RL/VRL & LA breakers, 800–5000A, plus Static Trip III units and renewal parts. Free manuals. 24/7: 1-800-458-4001.';
+
 export const metadata: Metadata = {
-  title: 'Voyten Type RL/VRL Breakers & Accessories — New Surplus Inventory | Voyten Manuals',
-  description:
-    'Voyten Electric acquired all remaining Type RL & LA breaker inventory directly from the Wendell, NC manufacturing facility. Browse manuals, parts catalogs, and technical documentation for Voyten Type RL/VRL, RLE, RLI, and RLF breakers (800–5000A), Static Trip III units, and 23 accessory categories. Your New Surplus authorized source for RL/VRL parts.',
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   keywords: [
     'Voyten Type RL breaker', 'VRL breaker', 'RL circuit breaker', 'RLE breaker',
     'RLI integrally fused', 'RLF fully rated', 'Static Trip III', 'RL accessories', 'RL parts',
@@ -35,8 +46,13 @@ export const metadata: Metadata = {
     title: 'Voyten Type RL/VRL Breakers — New Surplus Inventory from Voyten Electric',
     description:
       'Complete RL product line: breakers 800–5000A, Static Trip III, 23 accessory categories, and LA breakers. Free manuals + parts available.',
-    url: 'https://www.voytenmanuals.com/products/rl-breakers',
+    url: PAGE_URL,
     type: 'website',
+    siteName: 'Voyten Manuals',
+    locale: 'en_US',
+    // The image itself comes from ./opengraph-image.tsx + ./twitter-image.tsx
+    // (file-based metadata). Without them this page had NO og:image: a page-level
+    // `openGraph` object replaces the root one, so the site card never reached it.
   },
   twitter: {
     card: 'summary_large_image',
@@ -47,6 +63,61 @@ export const metadata: Metadata = {
     canonical: 'https://www.voytenmanuals.com/products/rl-breakers',
   },
 };
+
+// ── Frames + FAQ (one source for the visible FAQ section AND the FAQPage schema) ──
+
+// Six frames, per the RL decoder's FRAME table (public/tools/rl-decoder.html).
+// 1200A / 2500A are sensor ratings and 3000A is a Type LA / sensor size, not RL frames.
+const RL_FRAMES_TEXT = '800A, 1600A, 2000A, 3200A, 4000A, 5000A';
+
+const FAQS: { q: string; a: string }[] = [
+  {
+    q: 'Where can I buy Voyten Type RL/VRL breaker parts?',
+    a: 'Voyten Electric & Electronics, Inc. is the New Surplus authorized source for Voyten Type RL/VRL breaker inventory worldwide. Voyten purchased all remaining RL and LA breaker inventory directly from the Wendell, NC manufacturing facility. New-surplus breakers, Static Trip III units, and every renewal part are tested, in stock, and ready to ship. Call 1-800-458-4001 or request a quote at voytenmanuals.com/contact.',
+  },
+  {
+    q: 'What is a Voyten Type RL/VRL breaker?',
+    a: 'The Voyten Type RL/VRL is a low voltage power circuit breaker (LVPCB) in drawout construction, built in six frames from 800A to 5000A. It uses the Static Trip III electronic trip unit for LSIG (Long-time, Short-time, Instantaneous, Ground fault) overcurrent protection. Variants include the RL (standard, 800–5000A), RLE (economical, higher interrupting per frame, 800–4000A), RLI (integrally fused, 800A only), and RLF (fully rated 200 kA, 800–5000A, drawout only). The RL product line also includes the companion Type LA air circuit breaker (600–3000A).',
+  },
+  {
+    q: 'What is the Static Trip III trip unit?',
+    a: 'The Static Trip III is an electronic trip unit providing adjustable LSIG overcurrent protection for all RL series breakers. L = Long-time delay (adjustable pickup and time band), S = Short-time delay (I²t or flat response), I = Instantaneous (fixed or adjustable pickup), G = Ground fault (adjustable pickup and delay). Voyten stocks new-surplus and reconditioned Static Trip III units with full testing and calibration.',
+  },
+  {
+    q: 'What RL/VRL breaker frame sizes does Voyten stock?',
+    a: `Voyten stocks Type RL/VRL breakers and parts for all six frame sizes: ${RL_FRAMES_TEXT}. The RLE covers 800A through 4000A, the RLI is 800A only, and the RLF covers all six frames in drawout construction. The companion Type LA air circuit breaker covers 600A through 3000A. The inventory includes 23 accessory categories covering every component from anti-pump relays and arc chutes to motor operators and undervoltage trip devices.`,
+  },
+  {
+    q: 'Are Type RL/VRL breakers still manufactured?',
+    a: 'No. The RL product line was discontinued and the Wendell, NC facility closed. Voyten Electric purchased all remaining inventory, making them the New Surplus authorized source for Voyten Type RL/VRL breakers, LA breakers, Static Trip III units, and all renewal parts. Free technical documentation including instruction manuals (SGIM-3068), renewal parts catalogs (SG-3068), and wiring diagrams (SGIM-3068D) is available at voytenmanuals.com/products/rl-breakers.',
+  },
+  {
+    q: 'My Type RL/VRL breaker failed — who do I call for an emergency replacement?',
+    a: 'Call Voyten Electric at 1-800-458-4001 for 24/7 emergency support. As the New Surplus authorized source for Voyten Type RL/VRL inventory, Voyten identifies your breaker from its catalog or edge number, pulls an exact-match new-surplus or reconditioned RL/RLE/RLI/RLF breaker, Static Trip III unit, or renewal part from stock, tests it, and expedites shipment to minimize downtime in plants and critical facilities.',
+  },
+  {
+    q: 'How do I extend the life of aging RL switchgear instead of replacing it?',
+    a: 'Because Voyten holds the complete Type RL/VRL inventory, aging RL switchgear can stay in service with genuine new-surplus and reconditioned RL breakers, Static Trip III trip units, and renewal parts — no need to replace the switchgear lineup. Voyten supplies exact-match components across all six frames (800–5000A) so existing cells, bus, and wiring stay intact. Call 1-800-458-4001.',
+  },
+  {
+    q: 'How do I identify my Type RL/VRL breaker to order a replacement?',
+    a: 'Provide the catalog number or the edge number stamped on the breaker frame, plus the frame size (800–5000A) and trip-unit model. The free Type RL/VRL catalog decoder at voytenmanuals.com/tools/rl breaks a catalog number into model, frame, interrupting rating, trip unit and accessories. Voyten cross-references these to the exact replacement breaker and parts. Call 1-800-458-4001 or request a quote at voytenmanuals.com/contact.',
+  },
+];
+
+// ── Surface cards ──
+
+// This page is a product surface, so its document cards drop the "Siemens" mark
+// from the library title and show the product line instead of the manufacturer
+// (see the RL de-tag rule). The /manual/[slug] pages they link to are the library
+// layer and keep their records untouched — this only changes what the card shows.
+function surfaceCard(manual: Manual, line: string): Manual {
+  return {
+    ...manual,
+    title: manual.title.replace(/\bSiemens(\s*\/\s*Allis[- ]Chalmers)?\s+/gi, '').trim(),
+    manufacturer: line,
+  };
+}
 
 // ── Accessory category data for grid ──
 
@@ -95,168 +166,130 @@ export default async function RLBreakersPage() {
     console.error('[rl-breakers] getRLProductLine failed; rendering static fallback:', err);
   }
 
-  const totalCount = breakers.length + accessories.length + laBreakers.length + laAccessories.length;
+  // Documents actually rendered below (12 RL breaker/trip docs + every RL
+  // accessory, LA breaker and LA accessory doc), so the stat bar and
+  // CollectionPage.numberOfItems match what a visitor can see.
+  const shownBreakers = breakers.slice(0, 12);
+  const shownCount = shownBreakers.length + accessories.length + laBreakers.length + laAccessories.length;
 
-  // JSON-LD
+  // JSON-LD — one connected @graph. The Organization is referenced by @id
+  // (declared once, sitewide, in app/layout.tsx) instead of being restated.
+  // No price on the offers: RL is sold by quote, so a price would be invented.
+  const sellerRef = { '@id': ORG_ID };
+  const productId = `${PAGE_URL}#product`;
+  const offer = (condition: 'New' | 'Refurbished', name: string, description: string) => ({
+    '@type': 'Offer',
+    '@id': `${PAGE_URL}#offer-${condition.toLowerCase()}`,
+    name,
+    description,
+    itemCondition: `https://schema.org/${condition}Condition`,
+    availability: 'https://schema.org/InStock',
+    businessFunction: 'http://purl.org/goodrelations/v1#Sell',
+    url: `${SITE}/contact?type=quote`,
+    areaServed: { '@type': 'Place', name: 'Worldwide' },
+    seller: sellerRef,
+  });
+
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'CollectionPage',
-    name: 'Voyten Type RL/VRL & LA Low Voltage Power Circuit Breakers',
-    description: metadata.description,
-    url: 'https://www.voytenmanuals.com/products/rl-breakers',
-    numberOfItems: totalCount,
-    provider: {
-      '@type': 'Organization',
-      name: 'Voyten Electric & Electronics, Inc.',
-      url: 'https://www.voytenmanuals.com',
-      telephone: '+1-800-458-4001',
-    },
-    about: {
-      '@type': 'Product',
-      name: 'Voyten Type RL/VRL Low Voltage Power Circuit Breaker',
-      manufacturer: { '@type': 'Organization', name: 'Voyten Electric & Electronics, Inc.' },
-      category: 'Circuit Breakers',
-    },
-  };
-
-  const breadcrumbJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.voytenmanuals.com' },
-      { '@type': 'ListItem', position: 2, name: 'Voyten Type RL/VRL Breakers', item: 'https://www.voytenmanuals.com/products/rl-breakers' },
-    ],
-  };
-
-  const faqJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: [
+    '@graph': [
       {
-        '@type': 'Question',
-        name: 'Where can I buy Voyten Type RL/VRL breaker parts?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Voyten Electric & Electronics, Inc. is the New Surplus authorized source for Voyten Type RL/VRL breaker inventory worldwide. Voyten purchased all remaining RL and LA breaker inventory directly from the Wendell, NC manufacturing facility. New-surplus breakers, Static Trip III units, and every renewal part are tested, in stock, and ready to ship. Call 1-800-458-4001 or request a quote at voytenmanuals.com/contact.',
-        },
+        '@type': 'CollectionPage',
+        '@id': `${PAGE_URL}#webpage`,
+        url: PAGE_URL,
+        name: 'Voyten Type RL/VRL & LA Low Voltage Power Circuit Breakers',
+        description: PAGE_DESCRIPTION,
+        isPartOf: { '@id': `${SITE}/#website` },
+        primaryImageOfPage: { '@type': 'ImageObject', url: IMG_OG, width: 1200, height: 630 },
+        breadcrumb: { '@id': `${PAGE_URL}#breadcrumb` },
+        about: { '@id': productId },
+        mainEntity: { '@id': productId },
+        publisher: sellerRef,
+        numberOfItems: shownCount,
       },
       {
-        '@type': 'Question',
-        name: 'What is a Voyten Type RL/VRL breaker?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'The Voyten Type RL/VRL is a low voltage power circuit breaker (LVPCB) in drawout construction, rated from 800A to 5000A. It uses the Static Trip III electronic trip unit for LSIG (Long-time, Short-time, Instantaneous, Ground fault) overcurrent protection. Variants include the RL (standard), RLE (economical — 800/2000/4000A frames), RLI (integrally fused — 800A), and RLF (fully rated). The RL product line also includes the companion Type LA air circuit breaker.',
-        },
+        '@type': 'BreadcrumbList',
+        '@id': `${PAGE_URL}#breadcrumb`,
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: SITE },
+          { '@type': 'ListItem', position: 2, name: 'Voyten Type RL/VRL Breakers', item: PAGE_URL },
+        ],
       },
       {
-        '@type': 'Question',
-        name: 'What is the Static Trip III trip unit?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'The Static Trip III is an electronic trip unit providing adjustable LSIG overcurrent protection for all RL series breakers. L = Long-time delay (adjustable pickup and time band), S = Short-time delay (I²t or flat response), I = Instantaneous (fixed or adjustable pickup), G = Ground fault (adjustable pickup and delay). Voyten stocks new-surplus and reconditioned Static Trip III units with full testing and calibration.',
-        },
+        '@type': 'Product',
+        '@id': productId,
+        name: 'Voyten Type RL/VRL Low Voltage Power Circuit Breaker',
+        alternateName: ['Type RL breaker', 'VRL breaker', 'RLE', 'RLI', 'RLF'],
+        category: 'Low Voltage Power Circuit Breakers',
+        description:
+          'New-surplus and reconditioned Voyten Type RL/VRL, RLE, RLI and RLF low voltage power circuit breakers (drawout, 800–5000A frames), Static Trip III trip units and renewal parts, plus the companion Type LA air circuit breaker — from Voyten Electric, the New Surplus authorized source for the discontinued RL line.',
+        image: [`${SITE}${IMG_BREAKER_HERO}`, `${SITE}${IMG_PARTS}`, IMG_OG],
+        brand: { '@type': 'Brand', name: 'Voyten Electric' },
+        manufacturer: sellerRef,
+        url: PAGE_URL,
+        mainEntityOfPage: { '@id': `${PAGE_URL}#webpage` },
+        additionalProperty: [
+          { '@type': 'PropertyValue', name: 'Frame sizes', value: RL_FRAMES_TEXT },
+          { '@type': 'PropertyValue', name: 'Maximum rated voltage', value: '635V AC' },
+          { '@type': 'PropertyValue', name: 'Construction', value: 'Drawout (RLF drawout only)' },
+          { '@type': 'PropertyValue', name: 'Trip unit', value: 'Static Trip III (LSIG)' },
+          { '@type': 'PropertyValue', name: 'Interrupting rating', value: '30–200 kA RMS symmetrical, by model and frame' },
+        ],
+        isRelatedTo: [{ '@type': 'SoftwareApplication', name: 'Voyten Type RL/VRL Catalog Decoder', url: `${SITE}/tools/rl` }],
+        offers: [
+          offer(
+            'New',
+            'New-surplus Type RL/VRL breakers and parts',
+            'Unused Type RL/VRL and LA breakers, Static Trip III units and renewal parts from the inventory Voyten purchased from the Wendell, NC manufacturing facility.',
+          ),
+          offer(
+            'Refurbished',
+            'Reconditioned Type RL/VRL breakers and parts',
+            'Reconditioned and tested Type RL/VRL breakers, Static Trip III units and renewal parts.',
+          ),
+        ],
       },
       {
-        '@type': 'Question',
-        name: 'What RL/VRL breaker frame sizes does Voyten stock?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Voyten stocks Type RL/VRL breakers and parts for all frame sizes: 800A, 1200A, 1600A, 2000A, 2500A, 3000A, 3200A, 4000A, and 5000A. The inventory includes 23 accessory categories covering every component from anti-pump relays and arc chutes to motor operators and undervoltage trip devices.',
-        },
+        '@type': 'FAQPage',
+        '@id': `${PAGE_URL}#faq`,
+        isPartOf: { '@id': `${PAGE_URL}#webpage` },
+        mainEntity: FAQS.map(f => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: { '@type': 'Answer', text: f.a },
+        })),
       },
       {
-        '@type': 'Question',
-        name: 'Are Type RL/VRL breakers still manufactured?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'No. The RL product line was discontinued and the Wendell, NC facility closed. Voyten Electric purchased all remaining inventory, making them the New Surplus authorized source for Voyten Type RL/VRL breakers, LA breakers, Static Trip III units, and all renewal parts. Free technical documentation including instruction manuals (SGIM-3068), renewal parts catalogs (SG-3068), and wiring diagrams (SGIM-3068D) is available at voytenmanuals.com/products/rl-breakers.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'My Type RL/VRL breaker failed — who do I call for an emergency replacement?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Call Voyten Electric at 1-800-458-4001 for 24/7 emergency support. As the New Surplus authorized source for Voyten Type RL/VRL inventory, Voyten identifies your breaker from its catalog or edge number, pulls an exact-match new-surplus or reconditioned RL/RLE/RLI/RLF breaker, Static Trip III unit, or renewal part from stock, tests it, and expedites shipment to minimize downtime in plants and critical facilities.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'How do I extend the life of aging RL switchgear instead of replacing it?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Because Voyten holds the complete Type RL/VRL inventory, aging RL switchgear can stay in service with genuine new-surplus and reconditioned RL breakers, Static Trip III trip units, and renewal parts — no need to replace the switchgear lineup. Voyten supplies exact-match components across all frames (800–5000A) so existing cells, bus, and wiring stay intact. Call 1-800-458-4001.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'How do I identify my Type RL/VRL breaker to order a replacement?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Provide the catalog number or the edge number stamped on the breaker frame, plus the frame size (800–5000A) and trip-unit model. Voyten cross-references these to the exact replacement breaker and parts. Call 1-800-458-4001 or request a quote at voytenmanuals.com/contact.',
+        '@type': 'Service',
+        '@id': `${PAGE_URL}#emergency-service`,
+        name: '24/7 Emergency Voyten Type RL/VRL Breaker & Parts Sourcing',
+        serviceType: 'Emergency obsolete circuit breaker and renewal-parts sourcing',
+        description:
+          'Emergency sourcing, testing, and expedited shipment of exact-match Voyten Type RL/VRL breakers, Static Trip III trip units, and renewal parts for failed or aging RL switchgear. Voyten holds New Surplus RL inventory acquired from the Wendell, NC facility.',
+        areaServed: { '@type': 'Place', name: 'Worldwide' },
+        isRelatedTo: { '@id': productId },
+        provider: {
+          '@id': ORG_ID,
+          contactPoint: {
+            '@type': 'ContactPoint',
+            contactType: 'emergency',
+            telephone: '+1-800-458-4001',
+            availableLanguage: 'English',
+            hoursAvailable: {
+              '@type': 'OpeningHoursSpecification',
+              dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+              opens: '00:00',
+              closes: '23:59',
+            },
+          },
         },
       },
     ],
-  };
-
-  const offerJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: 'Voyten Type RL/VRL Low Voltage Power Circuit Breaker',
-    category: 'Low Voltage Power Circuit Breakers',
-    description: 'New-surplus and reconditioned Voyten Type RL/VRL/RLE/RLI/RLF power circuit breakers (800–5000A), Static Trip III trip units, and renewal parts — from Voyten Electric, the New Surplus authorized source for the discontinued RL line.',
-    brand: { '@type': 'Brand', name: 'Voyten Electric' },
-    manufacturer: { '@type': 'Organization', name: 'Voyten Electric & Electronics, Inc.' },
-    url: 'https://www.voytenmanuals.com/products/rl-breakers',
-    offers: {
-      '@type': 'Offer',
-      availability: 'https://schema.org/InStock',
-      itemCondition: 'https://schema.org/RefurbishedCondition',
-      url: 'https://www.voytenmanuals.com/products/rl-breakers',
-      areaServed: { '@type': 'Place', name: 'Worldwide' },
-      seller: {
-        '@type': 'Organization',
-        name: 'Voyten Electric & Electronics, Inc.',
-        url: 'https://www.voytenmanuals.com',
-        telephone: '+1-800-458-4001',
-      },
-    },
-  };
-
-  const serviceJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Service',
-    name: '24/7 Emergency Voyten Type RL/VRL Breaker & Parts Sourcing',
-    serviceType: 'Emergency obsolete circuit breaker and renewal-parts sourcing',
-    description: 'Emergency sourcing, testing, and expedited shipment of exact-match Voyten Type RL/VRL breakers, Static Trip III trip units, and renewal parts for failed or aging RL switchgear. Voyten holds New Surplus RL inventory acquired from the Wendell, NC facility.',
-    areaServed: { '@type': 'Place', name: 'Worldwide' },
-    provider: {
-      '@type': 'Organization',
-      name: 'Voyten Electric & Electronics, Inc.',
-      url: 'https://www.voytenmanuals.com',
-      telephone: '+1-800-458-4001',
-      contactPoint: {
-        '@type': 'ContactPoint',
-        contactType: 'emergency',
-        telephone: '+1-800-458-4001',
-        availableLanguage: 'English',
-        hoursAvailable: {
-          '@type': 'OpeningHoursSpecification',
-          dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-          opens: '00:00',
-          closes: '23:59',
-        },
-      },
-    },
   };
 
   return (
     <div className="bg-slate-50 min-h-screen">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(offerJsonLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }} />
 
       {/* ═══════════════ HERO ═══════════════ */}
       <section className="bg-[#1a1a1a] text-white relative overflow-hidden">
@@ -306,6 +339,13 @@ export default async function RLBreakersPage() {
                   Request a Quote
                 </Link>
               </div>
+              <p className="mt-4 text-sm text-slate-400">
+                Not sure which RL you have?{' '}
+                <Link href="/tools/rl" className="text-white underline underline-offset-2 hover:text-[#fca5a5]">
+                  Decode the catalog number
+                </Link>{' '}
+                from the nameplate first.
+              </p>
             </div>
 
             {/* Hero image */}
@@ -314,9 +354,9 @@ export default async function RLBreakersPage() {
                 <div className="bg-white/5 rounded-2xl p-6 backdrop-blur-sm border border-white/10">
                   <Image
                     src={IMG_BREAKER_HERO}
-                    alt="Voyten Type RL/VRL Low Voltage Power Circuit Breaker — drawout insulated case breaker with Static Trip III electronic trip unit"
-                    width={480}
-                    height={360}
+                    alt="Voyten Type RL/VRL low voltage power circuit breaker — drawout power air circuit breaker with Static Trip III electronic trip unit"
+                    width={239}
+                    height={195}
                     className="w-full h-auto rounded-lg"
                     priority
                   />
@@ -335,7 +375,7 @@ export default async function RLBreakersPage() {
         <div className="max-w-7xl mx-auto px-4 py-6">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
             <div>
-              <p className="text-2xl font-extrabold text-[#1a1a1a]">{totalCount}+</p>
+              <p className="text-2xl font-extrabold text-[#1a1a1a]">{shownCount}{breakers.length > shownBreakers.length ? '+' : ''}</p>
               <p className="text-sm text-slate-500">Technical Documents</p>
             </div>
             <div>
@@ -430,6 +470,23 @@ export default async function RLBreakersPage() {
         {/* ═══════════════ TECHNICAL REFERENCE LINK ═══════════════ */}
         <section className="mb-16">
           <Link
+            href="/tools/rl"
+            className="group mb-4 flex items-center gap-4 bg-white rounded-2xl border border-slate-200 p-6 hover:border-[#dc2626]/30 hover:shadow-md transition-all"
+          >
+            <div className="w-12 h-12 bg-[#dc2626]/10 rounded-xl flex items-center justify-center flex-shrink-0">
+              <Cpu size={24} className="text-[#dc2626]" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="text-lg font-bold text-slate-900 group-hover:text-[#dc2626] transition-colors">
+                Identify Your Breaker &mdash; Type RL/VRL Catalog Decoder
+              </p>
+              <p className="text-sm text-slate-500 mt-0.5">
+                Enter the catalog number from the nameplate to get model, frame, interrupting rating, trip unit and accessories &mdash; then request a quote with the decoded spec attached.
+              </p>
+            </div>
+            <ArrowRight size={20} className="text-slate-300 group-hover:text-[#dc2626] flex-shrink-0 transition-colors" />
+          </Link>
+          <Link
             href="/resources/rl-breakers"
             className="group flex items-center gap-4 bg-white rounded-2xl border border-slate-200 p-6 hover:border-[#dc2626]/30 hover:shadow-md transition-all"
           >
@@ -480,8 +537,8 @@ export default async function RLBreakersPage() {
             </Link>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {breakers.slice(0, 12).map(manual => (
-              <ManualCard key={manual.id} manual={manual} />
+            {shownBreakers.map(manual => (
+              <ManualCard key={manual.id} manual={surfaceCard(manual, 'Type RL/VRL')} />
             ))}
           </div>
           {breakers.length > 12 && (
@@ -495,6 +552,56 @@ export default async function RLBreakersPage() {
             </div>
           )}
         </section>
+
+        {/* ═══════════════ RL ACCESSORY DOCUMENTATION ═══════════════ */}
+        {accessories.length > 0 && (
+          <section className="mb-16">
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold text-slate-900">RL Accessory Parts Documentation</h2>
+              <p className="text-slate-500 mt-1">
+                Parts and technical sheets for each of the {accessories.length} RL/VRL accessory categories — part numbers, exploded views and fit-up by frame.
+              </p>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {accessories.map(manual => (
+                <ManualCard key={manual.id} manual={surfaceCard(manual, 'Type RL/VRL')} />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* ═══════════════ TYPE LA ═══════════════ */}
+        {(laBreakers.length > 0 || laAccessories.length > 0) && (
+          <section className="mb-16" id="type-la">
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold text-slate-900">Type LA Air Circuit Breakers (600–3000A)</h2>
+              <p className="text-slate-500 mt-1">
+                The companion Type LA air circuit breaker came from the same Wendell, NC inventory. Voyten stocks LA breakers and
+                renewal parts alongside the RL/VRL line — call 1-800-458-4001 or request a quote.
+              </p>
+            </div>
+            {laBreakers.length > 0 && (
+              <>
+                <h3 className="text-lg font-semibold text-slate-900 mb-3">LA Breaker Documentation</h3>
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+                  {laBreakers.map(manual => (
+                    <ManualCard key={manual.id} manual={surfaceCard(manual, 'Type LA')} />
+                  ))}
+                </div>
+              </>
+            )}
+            {laAccessories.length > 0 && (
+              <>
+                <h3 className="text-lg font-semibold text-slate-900 mb-3">LA Accessory &amp; Renewal Parts Documentation</h3>
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {laAccessories.map(manual => (
+                    <ManualCard key={manual.id} manual={surfaceCard(manual, 'Type LA')} />
+                  ))}
+                </div>
+              </>
+            )}
+          </section>
+        )}
 
         {/* ═══════════════ STATIC TRIP III ═══════════════ */}
         <section className="mb-16">
@@ -536,6 +643,22 @@ export default async function RLBreakersPage() {
                 />
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* ═══════════════ FAQ (visible copy of the FAQPage schema — same FAQS array) ═══════════════ */}
+        <section className="mb-16" id="faq">
+          <h2 className="text-2xl font-bold text-slate-900 mb-6">Type RL/VRL Questions &amp; Answers</h2>
+          <div className="bg-white rounded-2xl border border-slate-200 divide-y divide-slate-200">
+            {FAQS.map(f => (
+              <details key={f.q} className="group p-5">
+                <summary className="flex items-start justify-between gap-4 cursor-pointer list-none [&::-webkit-details-marker]:hidden font-semibold text-slate-900 hover:text-[#dc2626] transition-colors">
+                  <h3 className="text-base">{f.q}</h3>
+                  <ChevronRight size={18} className="flex-shrink-0 mt-0.5 text-slate-400 transition-transform group-open:rotate-90" aria-hidden="true" />
+                </summary>
+                <p className="mt-3 text-slate-600 leading-relaxed">{f.a}</p>
+              </details>
+            ))}
           </div>
         </section>
 
