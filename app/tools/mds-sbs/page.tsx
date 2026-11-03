@@ -25,7 +25,7 @@ export default async function MdsSbsDecoderPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(decoderJsonLd(decoder, stock)) }}
       />
-      <DecoderFrame src="/tools/mds-sbs-decoder.html" title="Eaton Magnum DS (MDS) / SBS Circuit Breaker Decoder" />
+      <DecoderFrame src="/tools/mds-sbs-decoder.html" title="Eaton Magnum DS (MDS) / SBS Circuit Breaker Catalog Decoder" />
       <DecoderAbout decoder={decoder} stock={stock} />
     </>
   );

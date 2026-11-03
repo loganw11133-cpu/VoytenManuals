@@ -102,7 +102,7 @@ export default async function Home() {
               className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-[#dc2626] transition-colors"
             >
               <Cpu size={15} className="flex-shrink-0" />
-              Free Breaker Decoder Tools
+              Free Catalog Decoder Tools
             </Link>
           </div>
         </div>

@@ -27,7 +27,7 @@ function _pdfReadCards() {
 
 function _pdfGetDecoderName() {
   var h1 = document.querySelector('.header h1, header h1');
-  return h1 ? h1.textContent.trim() : 'Circuit Breaker Decoder';
+  return h1 ? h1.textContent.trim() : 'Catalog Decoder';
 }
 
 function _pdfGetCatalog() {

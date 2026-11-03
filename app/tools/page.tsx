@@ -6,7 +6,7 @@ import { decoders, groupedDecoders as grouped, publicDecoders, SECTION_CROSS_REF
 const SITE = 'https://www.voytenmanuals.com';
 
 export const metadata: Metadata = {
-  title: 'Breaker Decoder Tools',
+  title: 'Catalog Decoder Tools',
   description: 'Free circuit breaker catalog number decoders. Decode Voyten, Eaton, Siemens, GE, and Square D / Schneider model numbers for Voyten Type RL/VRL, Siemens WL (Sentron WL), GE WavePro, Eaton RD (R-Frame), Magnum DS (MDS) / SBS, Magnum MW (IEC), Magnum PXR / Power Defense SB, and Square D MasterPact NT / NW breakers instantly.',
   keywords: [
     'circuit breaker catalog number decoder',
@@ -52,7 +52,7 @@ const hubJsonLd = {
       '@id': `${SITE}/tools#breadcrumbs`,
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Home', item: SITE },
-        { '@type': 'ListItem', position: 2, name: 'Breaker Decoders', item: `${SITE}/tools` },
+        { '@type': 'ListItem', position: 2, name: 'Catalog Decoder Tools', item: `${SITE}/tools` },
       ],
     },
   ],
@@ -70,7 +70,7 @@ export default function ToolsPage() {
       <div className="bg-[#1a1a1a] text-white">
         <div className="max-w-6xl mx-auto px-4 py-12 text-center">
           <h1 className="text-3xl md:text-4xl font-bold mb-3">
-            Breaker Decoders
+            Catalog Decoder Tools
           </h1>
           <p className="text-slate-300 max-w-2xl mx-auto text-lg">
             Enter a catalog or edge-stamped number to instantly decode frame size, ampere rating, trip unit, mounting, and accessories.

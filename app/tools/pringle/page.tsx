@@ -27,7 +27,7 @@ export default async function PringleDecoderPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(decoderJsonLd(decoder, stock)) }}
       />
-      <DecoderFrame src="/tools/pringle-decoder.html" title="Eaton Pringle Bolted Pressure Switch Decoder" />
+      <DecoderFrame src="/tools/pringle-decoder.html" title="Eaton Pringle Bolted Pressure Switch Catalog Decoder" />
       <DecoderAbout decoder={decoder} stock={stock} />
     </>
   );

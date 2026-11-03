@@ -27,7 +27,7 @@ export default async function SqdVrDecoderPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(decoderJsonLd(decoder, stock)) }}
       />
-      <DecoderFrame src="/tools/sqd-vr-decoder.html" title="Square D Type VR Medium Voltage Vacuum Circuit Breaker Decoder" />
+      <DecoderFrame src="/tools/sqd-vr-decoder.html" title="Square D Type VR Medium Voltage Vacuum Circuit Breaker Catalog Decoder" />
       <DecoderAbout decoder={decoder} stock={stock} />
     </>
   );

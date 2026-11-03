@@ -18,7 +18,7 @@ export default function PxrPdsbDecoderPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(decoderJsonLd(decoder)) }}
       />
-      <DecoderFrame src="/tools/pxr-pdsb-decoder.html" title="Eaton Magnum PXR / Power Defense SB Circuit Breaker Decoder" />
+      <DecoderFrame src="/tools/pxr-pdsb-decoder.html" title="Eaton Magnum PXR / Power Defense SB Circuit Breaker Catalog Decoder" />
       <DecoderAbout decoder={decoder} />
     </>
   );

@@ -118,7 +118,7 @@ export default function Header() {
                     href="/tools"
                     className="block px-4 py-3 hover:bg-slate-50"
                   >
-                    <p className="font-semibold text-slate-900 text-sm">Breaker Decoders</p>
+                    <p className="font-semibold text-slate-900 text-sm">Catalog Decoder Tools</p>
                     <p className="text-xs text-slate-500 mt-0.5">Free catalog-number decoder tools</p>
                   </Link>
                 </div>
@@ -271,7 +271,7 @@ export default function Header() {
                 onClick={() => setMobileMenuOpen(false)}
                 className="block pl-3 py-1.5 text-slate-700 hover:text-slate-900"
               >
-                Breaker Decoders
+                Catalog Decoder Tools
               </Link>
             </div>
             <div className="py-2.5">

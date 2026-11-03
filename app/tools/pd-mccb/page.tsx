@@ -20,7 +20,7 @@ export default function PdMccbDecoderPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(decoderJsonLd(decoder)) }}
       />
-      <DecoderFrame src="/tools/pd-mccb-decoder.html" title="Eaton Power Defense Molded Case Circuit Breaker Decoder" />
+      <DecoderFrame src="/tools/pd-mccb-decoder.html" title="Eaton Power Defense Molded Case Circuit Breaker Catalog Decoder" />
       <DecoderAbout decoder={decoder} />
     </>
   );

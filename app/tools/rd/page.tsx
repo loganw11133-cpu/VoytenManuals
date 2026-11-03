@@ -18,7 +18,7 @@ export default function RdDecoderPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(decoderJsonLd(decoder)) }}
       />
-      <DecoderFrame src="/tools/rd-decoder.html" title="Eaton RD (R-Frame) Circuit Breaker Decoder" />
+      <DecoderFrame src="/tools/rd-decoder.html" title="Eaton RD (R-Frame) Circuit Breaker Catalog Decoder" />
       <DecoderAbout decoder={decoder} />
     </>
   );

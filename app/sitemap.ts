@@ -140,7 +140,7 @@ async function generateStaticAndFilterSitemap(): Promise<MetadataRoute.Sitemap> 
       changeFrequency: 'monthly',
       priority: 0.8,
     },
-    // Public breaker decoders, derived from the registry rather than listed
+    // Public catalog decoder tools, derived from the registry rather than listed
     // here — `publicDecoders` already excludes the internal-only SPB card
     // (landing) and any card still staged as comingSoon. This used to be a
     // hardcoded slug array that needed a manual edit on the day a decoder

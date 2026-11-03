@@ -138,7 +138,7 @@ export default function DecoderAbout({ decoder, stock }: { decoder: Decoder; sto
                 <ArrowRight className="w-5 h-5 text-[#1a1a1a] flex-shrink-0 mt-0.5" aria-hidden="true" />
                 <div>
                   <h3 className="font-bold text-slate-900 group-hover:text-[#dc2626] transition-colors mb-1">
-                    All breaker decoders
+                    All catalog decoder tools
                   </h3>
                   <p className="text-slate-600 text-sm">
                     Siemens, Eaton / Cutler-Hammer, GE and Square D catalog-number tools

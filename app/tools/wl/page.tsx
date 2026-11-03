@@ -18,7 +18,7 @@ export default function WlDecoderPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(decoderJsonLd(decoder)) }}
       />
-      <DecoderFrame src="/tools/wl-decoder.html" title="Siemens WL / Sentron WL Circuit Breaker Decoder" />
+      <DecoderFrame src="/tools/wl-decoder.html" title="Siemens WL / Sentron WL Circuit Breaker Catalog Decoder" />
       <DecoderAbout decoder={decoder} />
     </>
   );

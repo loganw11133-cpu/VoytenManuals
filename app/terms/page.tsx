@@ -14,7 +14,7 @@ const LAST_UPDATED = '22 September 2026';
 export const metadata: Metadata = {
   title: 'Terms of Use',
   description:
-    'Terms of use for Voyten Manuals — the manual library, the breaker decoder tools, warranty disclaimer, limitation of liability, trademarks and governing law.',
+    'Terms of use for Voyten Manuals — the manual library, the catalog decoder tools, warranty disclaimer, limitation of liability, trademarks and governing law.',
   openGraph: {
     title: 'Terms of Use | Voyten Manuals',
     description:
@@ -121,7 +121,7 @@ export default function TermsPage() {
             <p>
               The{' '}
               <Link href="/tools" className="text-[#dc2626] hover:underline font-medium">
-                breaker decoders
+                catalog decoder tools
               </Link>{' '}
               read published manufacturer catalog-number conventions and return the most likely
               configuration. They are an identification aid, not a specification, and not an

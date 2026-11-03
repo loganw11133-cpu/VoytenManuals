@@ -38,7 +38,7 @@ function _rfqGetCatalog() {
 
 function _rfqGetDecoderName() {
   var h1 = document.querySelector('.header h1, header h1');
-  return h1 ? h1.textContent.trim().replace(/\s+/g, ' ') : 'Circuit Breaker Decoder';
+  return h1 ? h1.textContent.trim().replace(/\s+/g, ' ') : 'Catalog Decoder';
 }
 
 function _rfqReadCards() {

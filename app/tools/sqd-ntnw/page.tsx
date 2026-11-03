@@ -18,7 +18,7 @@ export default function SqdNtNwDecoderPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(decoderJsonLd(decoder)) }}
       />
-      <DecoderFrame src="/tools/sqd-ntnw-decoder.html" title="Square D / MasterPact NT-NW Circuit Breaker Decoder" />
+      <DecoderFrame src="/tools/sqd-ntnw-decoder.html" title="Square D / MasterPact NT-NW Circuit Breaker Catalog Decoder" />
       <DecoderAbout decoder={decoder} />
     </>
   );

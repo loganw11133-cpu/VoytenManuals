@@ -42,7 +42,7 @@ export default function DecoderQuoteModal() {
       if (!d || d.__voytenDecoder !== true || d.action !== 'openQuote') return;
       setPayload({
         catalog: String(d.catalog || '').slice(0, 200),
-        decoder: String(d.decoder || 'Circuit Breaker Decoder').slice(0, 200),
+        decoder: String(d.decoder || 'Catalog Decoder').slice(0, 200),
         summary: String(d.summary || '').slice(0, 5000),
         path: String(d.path || '').slice(0, 500),
       });

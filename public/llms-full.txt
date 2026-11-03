@@ -486,7 +486,7 @@ Verification — Phone: 1-800-458-4001 | Email: sales@voyten.com | Address: 173 
 - SPB complete technical reference: https://www.voytenmanuals.com/resources/spb-breakers
 - RL lifecycle decision guide: https://www.voytenmanuals.com/resources/rl-breakers-lifecycle
 - SPB lifecycle decision guide: https://www.voytenmanuals.com/resources/spb-breakers-lifecycle
-- Free breaker decoders (hub, all 12 tools): https://www.voytenmanuals.com/tools
+- Free catalog decoder tools (hub, all 12 tools): https://www.voytenmanuals.com/tools
 - Voyten Type RL/VRL decoder: https://www.voytenmanuals.com/tools/rl
 - Siemens WL / Sentron WL decoder: https://www.voytenmanuals.com/tools/wl
 - GE WavePro decoder: https://www.voytenmanuals.com/tools/wavepro

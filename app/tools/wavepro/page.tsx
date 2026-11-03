@@ -25,7 +25,7 @@ export default async function WaveProDecoderPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(decoderJsonLd(decoder, stock)) }}
       />
-      <DecoderFrame src="/tools/wavepro-decoder.html" title="GE WavePro Circuit Breaker Decoder" />
+      <DecoderFrame src="/tools/wavepro-decoder.html" title="GE WavePro Circuit Breaker Catalog Decoder" />
       <DecoderAbout decoder={decoder} stock={stock} />
     </>
   );

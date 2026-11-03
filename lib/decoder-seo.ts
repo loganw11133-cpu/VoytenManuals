@@ -25,7 +25,7 @@ export interface DecoderStock {
  */
 export function decoderMetadata(d: Decoder, stock?: DecoderStock): Metadata {
   const url = `${SITE}/tools/${d.slug}`;
-  const title = `${d.fullName} Breaker Decoder | Free Catalog Number Tool`;
+  const title = `${d.fullName} Catalog Decoder | Free Catalog Number Tool`;
   // A stocked family's decoder is also a listing, so its snippet says so, the
   // same way the family's manual pages do.
   const description = stock
@@ -96,7 +96,7 @@ export function decoderJsonLd(d: Decoder, stock?: DecoderStock) {
       '@id': `${url}#breadcrumbs`,
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Home', item: SITE },
-        { '@type': 'ListItem', position: 2, name: 'Breaker Decoders', item: `${SITE}/tools` },
+        { '@type': 'ListItem', position: 2, name: 'Catalog Decoder Tools', item: `${SITE}/tools` },
         { '@type': 'ListItem', position: 3, name: `${d.fullName} Decoder`, item: url },
       ],
     },
