@@ -174,13 +174,13 @@ export default async function ManualPage({ params }: ManualPageProps) {
     ...(manual.manual_number && { "identifier": manual.manual_number }),
     ...(manual.manual_number && { "productID": manual.manual_number }),
     ...(manual.page_count && { "numberOfPages": manual.page_count }),
+    // A Thing, not a Product: a Product with no offer/price is an invalid
+    // rich-result item in GSC. The page's own Product (when Voyten stocks the
+    // family) is emitted separately above.
     "about": {
-      "@type": "Product",
+      "@type": "Thing",
       "name": manual.title,
-      "manufacturer": { "@type": "Organization", "name": manual.manufacturer },
-      "category": manual.category,
-      ...(manual.manual_number && { "mpn": manual.manual_number }),
-      ...(manual.manual_number && { "sku": manual.manual_number }),
+      ...(manual.manual_number && { "identifier": manual.manual_number }),
       "description": `${manual.manufacturer} ${manual.category}${manual.subcategory ? ' — ' + manual.subcategory : ''}. EOL and legacy replacement parts available from Voyten Electric.`,
     },
     "keywords": manual.keywords || [

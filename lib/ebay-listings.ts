@@ -161,7 +161,15 @@ export function stockedOffers(f: EbayFamily, quoteUrl = `${SITE}/contact?type=qu
   ];
 }
 
-/** Organization-level offer catalog: one entry per stocked family. */
+/**
+ * Organization-level offer catalog: one entry per stocked family.
+ *
+ * This sits in the layout, so it is on EVERY page. Each entry is a plain Offer
+ * naming the family; it deliberately carries no nested `Product`. Google reads
+ * any Product as a product-snippet candidate and requires a price (or a review /
+ * rating) on it, and a family has no single price, so a nested Product here put
+ * one invalid rich-result item per family on all 8,000+ pages (GSC, Nov 2026).
+ */
 export function stockedOfferCatalog() {
   return {
     "@type": "OfferCatalog",
@@ -169,15 +177,11 @@ export function stockedOfferCatalog() {
     "url": EBAY_STORE,
     "itemListElement": EBAY_FAMILIES.map((f) => ({
       "@type": "Offer",
+      "name": f.product,
+      "category": f.category,
       "url": ebayFamilyUrl(f),
       "availability": "https://schema.org/InStock",
       "seller": SELLER,
-      "itemOffered": {
-        "@type": "Product",
-        "name": f.product,
-        "category": f.category,
-        "brand": { "@type": "Brand", "name": f.brand },
-      },
     })),
   };
 }
