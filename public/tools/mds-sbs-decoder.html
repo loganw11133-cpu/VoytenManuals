@@ -8,407 +8,204 @@
 <title>Eaton MDS / SBS Decoder — Voyten Electric</title>
 <link rel="stylesheet" href="decoder-fonts.css">
 <style>
-  :root {
-    --red: #dc2626;
-    --dark-red: #b91c1c;
-    --black: #1a1a1a;
-    --deep-black: #111111;
-    --gray-50: #f9fafb;
-    --gray-100: #f3f4f6;
-    --gray-200: #e5e7eb;
-    --gray-300: #d1d5db;
-    --gray-400: #9ca3af;
-    --gray-500: #6b7280;
-    --gray-600: #4b5563;
-    --gray-700: #374151;
-    --gray-800: #1f2937;
-    --white: #ffffff;
-    --blue: #2563eb;
-    --blue-light: #dbeafe;
-  }
+:root {
+  --red: #dc2626;
+  --dark-red: #b91c1c;
+  --deep-red: #991b1b;
+  --black: #1a1a1a;
+  --deep-black: #111111;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --white: #ffffff;
+  --blue: #2563eb;
+  --blue-light: #dbeafe;
+  --green: #16a34a;
+  --green-light: #dcfce7;
+  --yellow: #ca8a04;
+  --yellow-light: #fef9c3;
+  --purple: #7c3aed;
+  --purple-light: #ede9fe;
+}
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-  body {
-    font-family: 'IBM Plex Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: var(--gray-100);
-    color: var(--gray-800);
-    min-height: 100vh;
-  }
+body {
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--gray-100);
+  color: var(--gray-800);
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
 
-  .header {
-    background: linear-gradient(135deg, var(--deep-black), var(--black));
-    color: var(--white);
-    padding: 24px 20px 20px;
-    text-align: center;
-    border-bottom: 4px solid var(--red);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-  }
+.header {
+  background: linear-gradient(135deg, var(--deep-black), var(--black));
+  color: var(--white);
+  padding: 24px 20px 20px;
+  text-align: center;
+  border-bottom: 4px solid var(--red);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+.header h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: 0.5px; }
+.header h1 .accent { color: var(--red); }
+.header .subtitle { font-size: 0.85rem; color: var(--gray-300); margin-top: 4px; }
+.container { max-width: 960px; margin: 0 auto; padding: 16px; }
 
-  .header h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: 0.5px; }
-  .header h1 .accent { color: var(--red); }
+/* Input Section */
+.input-section {
+  background: var(--white); border-radius: 12px; padding: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 16px;
+  border: 2px solid var(--red);
+}
+.input-section label {
+  display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 6px; color: var(--gray-700);
+}
+.input-row { display: flex; gap: 8px; margin-bottom: 8px; }
+.input-row input {
+  flex: 1; padding: 12px 14px; font-size: 16px; font-family: 'IBM Plex Mono', 'Consolas', 'Monaco', monospace;
+  border: 2px solid var(--gray-200); border-radius: 8px; text-transform: uppercase;
+  letter-spacing: 1.5px; -webkit-appearance: none; transition: border-color 0.2s;
+}
+.input-row input:focus { outline: none; border-color: var(--red); }
+.hint { font-size: 0.75rem; color: var(--gray-500); margin-bottom: 10px; }
 
-  .header .subtitle {
-    font-size: 0.85rem;
-    color: var(--gray-300);
-    margin-top: 4px;
-  }
+.detect-badge {
+  display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 2px 8px;
+  border-radius: 4px; margin-left: 8px; vertical-align: middle;
+}
+.detect-breaker { background: var(--blue-light); color: var(--blue); }
+.detect-cassette { background: var(--purple-light); color: var(--purple); }
+.detect-unknown { background: var(--yellow-light); color: var(--yellow); }
 
-  .container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 25px 20px;
-  }
+.btn-row { display: flex; gap: 8px; margin-bottom: 12px; }
+.btn {
+  padding: 10px 20px; border: none; border-radius: 8px; font-weight: 700;
+  font-size: 0.9rem; cursor: pointer; transition: background 0.2s; touch-action: manipulation;
+}
+.btn-decode { background: var(--red); color: var(--white); flex: 1; }
+.btn-decode:hover { background: var(--dark-red); }
+.btn-clear { background: var(--gray-200); color: var(--gray-700); }
+.btn-clear:hover { background: var(--gray-300); }
 
-  .input-section {
-    background: var(--white);
-    border-radius: 12px;
-    padding: 25px 30px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-    margin-bottom: 20px;
-  }
+.examples-label { font-size: 0.75rem; font-weight: 600; color: var(--gray-500); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+.examples { display: flex; flex-wrap: wrap; gap: 6px; }
+.ex-btn {
+  padding: 4px 10px; font-size: 0.72rem; font-family: 'IBM Plex Mono', 'Consolas', monospace;
+  background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 6px;
+  cursor: pointer; transition: all 0.15s; color: var(--gray-700); touch-action: manipulation;
+}
+.ex-btn:hover { background: var(--red); color: var(--white); border-color: var(--red); }
 
-  .input-section label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 8px;
-    font-size: 0.95rem;
-    color: var(--gray-700);
-  }
+/* Char Map */
+.charmap-wrap { margin: 16px 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.charmap-inner { min-width: 600px; }
+.group-labels { display: flex; gap: 2px; margin-bottom: 2px; }
+.group-label {
+  font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--gray-500); text-align: center; padding: 2px 0;
+  border-bottom: 2px solid var(--gray-300);
+}
+.char-boxes { display: flex; gap: 2px; }
+.char-box {
+  width: 32px; height: 38px; display: flex; align-items: center; justify-content: center;
+  font-family: 'IBM Plex Mono', 'Consolas', monospace; font-size: 0.85rem; font-weight: 700;
+  border-radius: 4px; border: 1px solid var(--gray-300); background: var(--gray-50); color: var(--gray-700);
+}
+.char-box.entered { background: var(--black); color: var(--white); border-color: var(--black); }
+.char-box.assumed { background: var(--blue-light); color: var(--blue); border-color: #93c5fd; }
+.char-box.error { background: #fecaca; color: #dc2626; border-color: #f87171; }
+.char-box.separator { width: 8px; border: none; background: transparent; }
+.pos-labels { display: flex; gap: 2px; margin-top: 1px; }
+.pos-label { width: 32px; text-align: center; font-size: 0.55rem; color: var(--gray-400); }
+.pos-label.sep { width: 8px; }
 
-  .input-row {
-    display: flex;
-    gap: 12px;
-    align-items: stretch;
-  }
+.char-legend {
+  display: none; margin-top: 8px; font-size: 0.7rem; color: var(--gray-500);
+}
+.char-legend span { margin-right: 14px; }
+.char-legend .swatch {
+  display: inline-block; width: 10px; height: 10px; border-radius: 2px;
+  vertical-align: middle; margin-right: 3px;
+}
 
-  .input-row input {
-    flex: 1;
-    padding: 14px 18px;
-    font-size: 1.3rem;
-    font-family: 'IBM Plex Mono', 'Consolas', 'Courier New', monospace;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    border: 2px solid var(--gray-300);
-    border-radius: 8px;
-    outline: none;
-    transition: border-color 0.2s;
-  }
+/* Results */
+.results { display: none; }
+.summary-banner {
+  background: linear-gradient(135deg, var(--deep-black), var(--black));
+  color: var(--white); border-radius: 12px; padding: 20px; margin-bottom: 16px;
+  border-left: 5px solid var(--red);
+}
+.summary-banner .headline { font-size: 1.15rem; font-weight: 700; margin-bottom: 6px; }
+.summary-banner .catalog-fmt { font-family: 'IBM Plex Mono', 'Consolas', monospace; font-size: 0.85rem; color: var(--gray-300); letter-spacing: 2px; margin-bottom: 12px; }
+.summary-banner .partial-tag {
+  display: inline-block; font-size: 0.65rem; background: rgba(255,255,255,0.1);
+  padding: 2px 8px; border-radius: 4px; margin-top: 6px; color: var(--gray-400);
+}
 
-  .input-row input:focus { border-color: var(--red); }
+.result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 640px) { .result-grid { grid-template-columns: 1fr; } }
+.result-card {
+  background: var(--white); border-radius: 10px; padding: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-left: 4px solid var(--gray-300);
+}
+.result-card.wide { grid-column: 1 / -1; }
+.result-card.warn { border-left-color: #f59e0b; background: #fffbeb; }
+.result-card.info { border-left-color: var(--blue); }
+.result-card.config { border-left-color: var(--red); }
+.result-card.trip { border-left-color: var(--green); }
+.result-card.access { border-left-color: var(--purple); }
+.result-card.options { border-left-color: var(--yellow); }
+.card-title {
+  font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--gray-500); margin-bottom: 8px;
+}
+.card-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 0.85rem; border-bottom: 1px solid var(--gray-100); }
+.card-row:last-child { border-bottom: none; }
+.card-label { color: var(--gray-500); font-weight: 500; }
+.card-value { font-weight: 600; color: var(--gray-800); text-align: right; max-width: 60%; }
 
-  .input-row button {
-    padding: 14px 28px;
-    background: var(--red);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s;
-    white-space: nowrap;
-  }
+/* Tables */
+.ref-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin-top: 8px; }
+.ref-table th {
+  background: var(--gray-100); text-align: left; padding: 6px 10px;
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gray-500);
+}
+.ref-table td { padding: 5px 10px; border-bottom: 1px solid var(--gray-100); }
 
-  .input-row button:hover { background: var(--dark-red); }
+.btn-copy {
+  padding: 8px 20px; border: 2px solid var(--gray-200); border-radius: 8px;
+  background: var(--white); color: var(--gray-700); font-weight: 600; font-size: 0.8rem;
+  cursor: pointer; transition: all 0.2s;
+}
+.btn-copy:hover { background: var(--gray-200); }
+.btn-copy.copied { background: var(--green-light); color: var(--green); border-color: var(--green); }
+.btn-pdf {
+  padding: 8px 20px; border: 2px solid var(--red); border-radius: 8px;
+  background: var(--white); color: var(--red); font-weight: 600; font-size: 0.8rem;
+  cursor: pointer; transition: all 0.2s; margin-left: 8px;
+}
+.btn-pdf:hover { background: var(--red); color: var(--white); }
+.btn-quote {
+  padding: 8px 20px; border: 2px solid var(--red); border-radius: 8px;
+  background: var(--red); color: var(--white); font-weight: 700; font-size: 0.8rem;
+  cursor: pointer; transition: all 0.2s; margin-left: 8px;
+}
+.btn-quote:hover { background: #b91c1c; border-color: #b91c1c; }
 
-  .btn-clear { background: var(--gray-600) !important; }
-  .btn-clear:hover { background: var(--gray-700) !important; }
+.footer {
+  text-align: center; padding: 20px; font-size: 0.7rem; color: var(--gray-400); margin-top: 20px;
+}
 
-  .hint {
-    margin-top: 10px;
-    font-size: 0.8rem;
-    color: var(--gray-400);
-  }
-
-  .hint code {
-    background: var(--gray-200);
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-family: 'IBM Plex Mono', 'Consolas', monospace;
-    font-size: 0.8rem;
-  }
-
-  .char-map {
-    background: var(--white);
-    border-radius: 12px;
-    padding: 20px 30px 30px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-    margin-bottom: 20px;
-  }
-
-  .char-map h3 {
-    font-size: 0.85rem;
-    color: var(--gray-600);
-    margin-bottom: 12px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  /* Character position map — unified format (matches PXR/PD-SB & RL/RD).
-     Fixed 32px boxes with horizontal scroll; group labels above, position
-     numbers in a separate aligned row below. Constant 34px pitch keeps the
-     three rows aligned at every viewport width. */
-  .charmap-wrap { margin: 8px 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  .charmap-inner { min-width: 600px; }
-
-  .group-labels { display: flex; gap: 2px; margin-bottom: 2px; }
-  .group-label {
-    font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
-    color: var(--gray-500); text-align: center; padding: 2px 0;
-    border-bottom: 2px solid var(--gray-300); flex-shrink: 0;
-  }
-
-  .char-boxes { display: flex; gap: 2px; flex-wrap: nowrap; }
-  .char-box {
-    width: 32px; height: 38px; display: flex; align-items: center; justify-content: center;
-    font-family: 'IBM Plex Mono', 'Consolas', monospace; font-size: 0.85rem; font-weight: 700;
-    border-radius: 4px; border: 1px solid var(--gray-300);
-    background: var(--gray-50); color: var(--gray-700); flex-shrink: 0;
-  }
-  .char-box.entered { background: var(--deep-black); color: var(--white); border-color: var(--deep-black); }
-  .char-box.assumed { background: var(--blue-light); color: var(--blue); border-color: #93c5fd; }
-  .char-box.error { background: #fecaca; color: #dc2626; border-color: #f87171; }
-  .char-box.separator { width: 8px; border: none; background: transparent; }
-
-  .pos-labels { display: flex; gap: 2px; margin-top: 1px; }
-  .pos-label { width: 32px; text-align: center; font-size: 0.55rem; color: var(--gray-400); flex-shrink: 0; }
-  .pos-label.sep { width: 8px; }
-
-  .char-legend {
-    display: flex;
-    gap: 16px;
-    margin-top: 10px;
-    font-size: 0.7rem;
-    color: var(--gray-600);
-  }
-
-  .char-legend-item {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-
-  .char-legend-swatch {
-    width: 12px;
-    height: 12px;
-    border-radius: 3px;
-    flex-shrink: 0;
-  }
-
-  .results-section {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-  }
-
-  @media (max-width: 768px) {
-    .results-section { grid-template-columns: 1fr; }
-  }
-
-  .result-card {
-    background: var(--white);
-    border-radius: 10px;
-    padding: 20px 24px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-    border-left: 4px solid var(--gray-300);
-  }
-
-  .result-card.valid { border-left-color: var(--red); }
-  .result-card.info-card { border-left-color: var(--blue); }
-  .result-card.error-card { border-left-color: #f59e0b; }
-  .result-card.full-width { grid-column: 1 / -1; }
-
-  .result-card h3 {
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--gray-400);
-    margin-bottom: 10px;
-  }
-
-  .result-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 6px 0;
-    border-bottom: 1px solid var(--gray-100);
-    font-size: 0.9rem;
-  }
-
-  .result-item:last-child { border-bottom: none; }
-
-  .result-item .label { color: var(--gray-600); font-weight: 500; }
-  .result-item .value { font-weight: 600; color: var(--gray-800); text-align: right; max-width: 60%; }
-  .result-item .value.error-val { color: var(--red); }
-  .result-item .value.default-val { color: var(--blue); font-style: italic; }
-
-  .summary-banner {
-    background: linear-gradient(135deg, var(--deep-black), var(--black));
-    color: white;
-    border-radius: 10px;
-    padding: 20px 24px;
-    margin-bottom: 16px;
-    grid-column: 1 / -1;
-  }
-
-  .summary-banner h2 { font-size: 1.1rem; margin-bottom: 4px; }
-  .summary-banner p { color: var(--gray-400); font-size: 0.85rem; }
-  .summary-banner .partial-tag {
-    display: inline-block;
-    background: var(--blue);
-    color: white;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 0.7rem;
-    font-weight: 600;
-    margin-left: 8px;
-    vertical-align: middle;
-    letter-spacing: 0.5px;
-  }
-
-  .hidden { display: none; }
-
-  footer {
-    text-align: center;
-    padding: 20px;
-    color: var(--gray-400);
-    font-size: 0.75rem;
-  }
-
-  .examples-bar {
-    margin-top: 12px;
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    align-items: center;
-  }
-
-  .examples-label {
-    font-size: 0.78rem;
-    color: var(--gray-400);
-    line-height: 30px;
-    flex-shrink: 0;
-  }
-
-  .example-btn {
-    padding: 5px 12px;
-    background: var(--gray-200);
-    border: 1px solid var(--gray-300);
-    border-radius: 6px;
-    font-family: 'IBM Plex Mono', 'Consolas', monospace;
-    font-size: 0.72rem;
-    cursor: pointer;
-    transition: all 0.15s;
-    color: var(--gray-700);
-  }
-
-  .example-btn:hover {
-    background: var(--red);
-    color: white;
-    border-color: var(--red);
-  }
-
-  /* [HIDDEN FOR LATER DEPLOYMENT] Renewal table styles
-  .renewal-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 8px;
-    font-size: 0.82rem;
-  }
-
-  .renewal-table th {
-    background: var(--gray-100);
-    padding: 6px 10px;
-    text-align: left;
-    font-weight: 600;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    color: var(--gray-600);
-  }
-
-  .renewal-table td {
-    padding: 5px 10px;
-    border-bottom: 1px solid var(--gray-100);
-  }
-  */
-
-  /* iOS / Mobile notice for Quick Look (no JS) */
-  .ios-notice {
-    background: #fef3c7;
-    border: 2px solid #f59e0b;
-    border-radius: 10px;
-    padding: 20px 24px;
-    margin: 20px auto;
-    max-width: 600px;
-    text-align: center;
-    font-size: 0.95rem;
-    color: #92400e;
-    line-height: 1.6;
-  }
-  .ios-notice strong { color: #78350f; font-size: 1.05rem; }
-  .ios-notice .steps { text-align: left; margin: 12px auto; max-width: 400px; }
-  .ios-notice .steps li { margin: 6px 0; }
-
-  /* Mobile-responsive */
-  @media (max-width: 768px) {
-    header { padding: 14px 16px; flex-wrap: wrap; gap: 8px; }
-    header h1 { font-size: 1.2rem; }
-    .container { padding: 14px 10px; }
-    .input-section { padding: 16px 14px; }
-    .input-row { flex-direction: column; gap: 8px; }
-    .input-row input {
-      font-size: 1rem;
-      padding: 12px 14px;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-    }
-    .input-row button {
-      padding: 14px 20px;
-      font-size: 1rem;
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
-    }
-    .examples-bar { gap: 6px; }
-    .example-btn { font-size: 0.65rem; padding: 4px 7px; }
-    .char-map { padding: 14px 12px 20px; }
-    .result-grid { grid-template-columns: 1fr; }
-    .summary-banner h2 { font-size: 1rem; }
-  }
-
-  /* Touch-friendly tap targets (iOS Safari) */
-  @supports (-webkit-touch-callout: none) {
-    button, .example-btn {
-      -webkit-tap-highlight-color: rgba(220, 38, 38, 0.2);
-      touch-action: manipulation;
-      cursor: pointer;
-    }
-    input[type="text"] {
-      -webkit-appearance: none;
-      font-size: 16px; /* prevents iOS auto-zoom on focus */
-    }
-  }
-
-  .btn-copy {
-    padding: 8px 20px; border: 2px solid var(--gray-200); border-radius: 8px;
-    background: var(--white); color: var(--gray-700); font-weight: 600; font-size: 0.8rem;
-    cursor: pointer; transition: all 0.2s;
-    margin-top: 10px;
-  }
-  .btn-copy:hover { background: var(--gray-200); }
-  .btn-copy.copied { background: var(--green-light); color: var(--green); border-color: var(--green); }
-  .btn-pdf {
-    padding: 8px 20px; border: 2px solid var(--red); border-radius: 8px;
-    background: var(--white); color: var(--red); font-weight: 600; font-size: 0.8rem;
-    cursor: pointer; transition: all 0.2s; margin-left: 8px;
-  }
-  .btn-pdf:hover { background: var(--red); color: var(--white); }
-  .btn-quote {
-    padding: 8px 20px; border: 2px solid var(--red); border-radius: 8px;
-    background: var(--red); color: var(--white); font-weight: 700; font-size: 0.8rem;
-    cursor: pointer; transition: all 0.2s; margin-left: 8px;
-  }
-  .btn-quote:hover { background: #b91c1c; border-color: #b91c1c; }
+noscript .ns-msg {
+  max-width: 480px; margin: 60px auto; padding: 24px; background: var(--white);
+  border-radius: 12px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
 
 /* Company link buttons (Google Business · LinkedIn · eBay) */
 .social { display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; margin: 26px auto 24px; padding: 0 12px; }
@@ -422,6 +219,31 @@
 .social a:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
 .social a svg { height: 18px; width: auto; display: block; }
 
+
+/* ---- DS/MW additions on top of the PXR/PD-SB shell (same tokens) ---- */
+.hidden { display: none; }
+.hint code {
+  background: var(--gray-100); padding: 1px 5px; border-radius: 4px;
+  font-family: 'IBM Plex Mono', 'Consolas', monospace; font-size: 0.72rem;
+}
+.card-value.error-val { color: var(--red); }
+.card-value.default-val { color: var(--blue); font-style: italic; }
+.results > .result-card.wide { margin-bottom: 12px; }
+.results > .result-grid + .result-card.wide { margin-top: 12px; margin-bottom: 0; }
+.summary-banner .expanded-note { color: #93c5fd; font-size: 0.8rem; margin: -6px 0 12px; }
+.summary-banner .partial-tag { display: block; width: fit-content; margin: -6px 0 12px; }
+footer { text-align: center; padding: 20px; font-size: 0.7rem; color: var(--gray-400); margin-top: 20px; }
+.ios-notice {
+  background: #fef3c7; border: 2px solid #f59e0b; border-radius: 10px; padding: 20px 24px;
+  margin: 20px auto; max-width: 600px; text-align: center; font-size: 0.95rem; color: #92400e; line-height: 1.6;
+}
+.ios-notice strong { color: #78350f; font-size: 1.05rem; }
+.ios-notice .steps { text-align: left; margin: 12px auto; max-width: 400px; }
+.ios-notice .steps li { margin: 6px 0; }
+@supports (-webkit-touch-callout: none) {
+  button, .ex-btn { -webkit-tap-highlight-color: rgba(220, 38, 38, 0.2); touch-action: manipulation; cursor: pointer; }
+  input[type="text"] { -webkit-appearance: none; font-size: 16px; }
+}
 </style>
   <style>
   /* Compact hover-reveal examples — condensed, professional UI */
@@ -473,63 +295,93 @@
 
 <div class="container">
   <div class="input-section">
-    <label for="catInput">Enter MDS or SBS Catalog Number (full or partial)</label>
+    <label for="catInput">Catalog Number</label>
     <div class="input-row">
-      <input type="text" id="catInput" placeholder="MDS6163WEA or SBS6123WEA or full 25-char" maxlength="30" autocomplete="off" spellcheck="false">
-      <button onclick="decode()">DECODE</button>
-      <button class="btn-clear" onclick="clearAll()">CLEAR</button>
+      <input type="text" id="catInput" placeholder="e.g. MDS6163WEA  or  SBS6123WEA" maxlength="30" autocomplete="off" spellcheck="false" autocapitalize="characters">
     </div>
-    <div class="hint">
-      Full format: <code>XXXXXXXXXX XXXXX XXXXX XXXXX</code> &nbsp;|&nbsp; Partial input accepted — remaining positions assume default (base) build.
+    <div class="hint">MDS / SBS: 25 chars (e.g. MDS6123WEA 121GH NHN6Y NNMAX) &nbsp;|&nbsp; Dealer short codes (SBS608) &nbsp;|&nbsp; Partial input accepted &mdash; remaining positions assume the base build</div>
+    <div class="btn-row">
+      <button class="btn btn-decode" onclick="decode()">DECODE</button>
+      <button class="btn btn-clear" onclick="clearAll()">CLEAR</button>
     </div>
     <div class="ex-hover" tabindex="0" role="button" aria-label="Show example catalog numbers">
       <span class="ex-hover__trigger">Examples</span>
       <div class="ex-hover__panel">
-        <div class="examples-bar">
-          <span class="examples-label">MDS:</span>
-          <button class="example-btn" onclick="loadExample(this)">MDS6163WEA</button>
-          <button class="example-btn" onclick="loadExample(this)">MDSC183LEA 32MAA MNA2Y NNNAX</button>
-          <button class="example-btn" onclick="loadExample(this)">MDS6083WEA 061GA NAN6Y NANAX</button>
-          <button class="example-btn" onclick="loadExample(this)">MDS6123WEA 121GH NHN6Y NNMAX</button>
-          <button class="example-btn" onclick="loadExample(this)">MDS6203WEA 20CUA NAN4E PNNAX</button>
-          <span class="examples-label">SBS:</span>
-          <button class="example-btn" onclick="loadExample(this)">SBS6123WEA 121KN MNNNE PNNAX</button>
-          <button class="example-btn" onclick="loadExample(this)">SBS6303WEA 305GC NAN2Y NNNAX</button>
-          <button class="example-btn" onclick="loadExample(this)">SBSC083WEA 025GN MNNNE NNNAX</button>
-          <button class="example-btn" onclick="loadExample(this)">SBSC163WEA 165GC NAN2Y NNNAX</button>
-          <button class="example-btn" onclick="loadExample(this)">SBS6253WEA 25CMA NAC4E MKNAX</button>
-          <span class="examples-label">Short Codes:</span>
-          <button class="example-btn" onclick="loadExample(this)">SBS608</button>
-          <button class="example-btn" onclick="loadExample(this)">SBS4025</button>
-          <button class="example-btn" onclick="loadExample(this)">SBSC08</button>
-          <button class="example-btn" onclick="loadExample(this)">MDS608</button>
+        <div class="examples-label">MDS</div>
+        <div class="examples" style="margin-bottom:8px;">
+          <button class="ex-btn" onclick="loadExample(this)">MDS6163WEA</button>
+          <button class="ex-btn" onclick="loadExample(this)">MDSC183LEA 32MAA MNA2Y NNNAX</button>
+          <button class="ex-btn" onclick="loadExample(this)">MDS6083WEA 061GA NAN6Y NANAX</button>
+          <button class="ex-btn" onclick="loadExample(this)">MDS6123WEA 121GH NHN6Y NNMAX</button>
+          <button class="ex-btn" onclick="loadExample(this)">MDS6203WEA 20CUA NAN4E PNNAX</button>
+        </div>
+        <div class="examples-label">SBS</div>
+        <div class="examples" style="margin-bottom:8px;">
+          <button class="ex-btn" onclick="loadExample(this)">SBS6123WEA 121KN MNNNE PNNAX</button>
+          <button class="ex-btn" onclick="loadExample(this)">SBS6303WEA 305GC NAN2Y NNNAX</button>
+          <button class="ex-btn" onclick="loadExample(this)">SBSC083WEA 025GN MNNNE NNNAX</button>
+          <button class="ex-btn" onclick="loadExample(this)">SBSC163WEA 165GC NAN2Y NNNAX</button>
+          <button class="ex-btn" onclick="loadExample(this)">SBS6253WEA 25CMA NAC4E MKNAX</button>
+        </div>
+        <div class="examples-label">Short Codes</div>
+        <div class="examples">
+          <button class="ex-btn" onclick="loadExample(this)">SBS608</button>
+          <button class="ex-btn" onclick="loadExample(this)">SBS4025</button>
+          <button class="ex-btn" onclick="loadExample(this)">SBSC08</button>
+          <button class="ex-btn" onclick="loadExample(this)">MDS608</button>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="char-map" id="charMap">
-    <h3>Character Position Map</h3>
-    <div class="charmap-wrap">
-      <div class="charmap-inner">
-        <div class="group-labels" id="groupLabels"></div>
-        <div class="char-boxes" id="charBoxes"></div>
-        <div class="pos-labels" id="posLabels"></div>
-      </div>
-    </div>
-    <div class="char-legend" id="charLegend" style="display:none;">
-      <div class="char-legend-item"><div class="char-legend-swatch" style="background:var(--deep-black)"></div> Entered</div>
-      <div class="char-legend-item"><div class="char-legend-swatch" style="background:var(--blue-light);border:1px solid #93c5fd"></div> Assumed (default)</div>
-      <div class="char-legend-item"><div class="char-legend-swatch" style="background:#fecaca;border:1px solid #f87171"></div> Unrecognized</div>
+  <div class="charmap-wrap">
+    <div class="charmap-inner">
+      <div id="groupLabels" class="group-labels"></div>
+      <div id="charBoxes" class="char-boxes"></div>
+      <div id="posLabels" class="pos-labels"></div>
     </div>
   </div>
+  <div id="charLegend" class="char-legend">
+    <span><span class="swatch" style="background:var(--black)"></span> Entered</span>
+    <span><span class="swatch" style="background:var(--blue-light);border:1px solid #93c5fd"></span> Assumed (default)</span>
+    <span><span class="swatch" style="background:#fecaca;border:1px solid #f87171"></span> Unrecognized</span>
+  </div>
 
-  <div class="results-section hidden" id="results"></div>
+  <div id="results" class="results"></div>
 </div>
 
-<footer>
-  Eaton Magnum DS / SB Decoder &mdash; Voyten Electric & Electronics, Inc. &mdash; Data sourced from Eaton public catalogs (CA08100005E, CA013002EN, PA01301018E, TD013013EN)
-</footer>
+<nav class="social" aria-label="Connect with Voyten Electric">
+  <a href="https://share.google/8zeiyPVd68OB1smJW" target="_blank" rel="noopener noreferrer" title="Voyten Electric on Google Business Profile">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <rect x="4" y="11" width="16" height="9" rx="1" fill="#4989F5"/>
+      <path d="M3 11 L4.5 5 H19.5 L21 11 Z" fill="#3367D6"/>
+      <path d="M8 5 L7.2 11 H10 L10.3 5 Z" fill="#5B9BFF"/>
+      <path d="M14 5 L14 11 H16.8 L16 5 Z" fill="#5B9BFF"/>
+      <rect x="10" y="14" width="4" height="6" rx="0.5" fill="#ffffff"/>
+    </svg>
+    Google Business
+  </a>
+  <a href="https://www.linkedin.com/in/voyten-electric-sales-team/" target="_blank" rel="noopener noreferrer" title="Voyten Electric on LinkedIn">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <rect width="24" height="24" rx="4" fill="#0A66C2"/>
+      <path fill="#ffffff" d="M8.34 18.34H5.67V9.75h2.67v8.59zM7 8.58a1.55 1.55 0 1 1 0-3.1 1.55 1.55 0 0 1 0 3.1zM18.34 18.34h-2.67v-4.18c0-1-.02-2.28-1.39-2.28-1.39 0-1.6 1.09-1.6 2.21v4.25h-2.67V9.75h2.56v1.17h.04c.36-.68 1.23-1.39 2.53-1.39 2.7 0 3.2 1.78 3.2 4.09v4.72z"/>
+    </svg>
+    LinkedIn
+  </a>
+  <a href="https://www.ebay.com/str/voytenelectric" target="_blank" rel="noopener noreferrer" title="Voyten Electric eBay Store">
+    <svg viewBox="0 0 84 34" aria-hidden="true" focusable="false">
+      <text x="0" y="27" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" letter-spacing="-1.5">
+        <tspan fill="#E53238">e</tspan><tspan fill="#0064D2">b</tspan><tspan fill="#F5AF02">a</tspan><tspan fill="#86B817">y</tspan>
+      </text>
+    </svg>
+    Store
+  </a>
+</nav>
+
+<div class="footer">
+  Eaton Magnum DS / SB Decoder &mdash; Voyten Electric &amp; Electronics, Inc.<br>
+  Data sourced from Eaton public catalogs (CA08100005E, CA013002EN, PA01301018E, TD013013EN).
+</div>
 
 <script>
 // ============================================================
@@ -1227,6 +1079,15 @@ function decode() {
   renderResults(c, results, errors, renewalParts, isDefault, isPartial, enteredLen, wasExpanded, normalized);
 }
 
+var MAP_GROUPS = [2, 1, 1, 2, 1, 1, 2, 2, 2, 6, 5];
+
+// Space the catalog number by field, the same way the PXR/PD-SB banner does.
+function fmtGroups(chars, groups) {
+  var out = [], i = 0;
+  for (var g = 0; g < groups.length && i < chars.length; g++) { out.push(chars.substr(i, groups[g])); i += groups[g]; }
+  return out.join(' ');
+}
+
 function renderCharMap(chars, isDefault, enteredLen, errorPositions) {
   const boxesEl = document.getElementById('charBoxes');
   const labelsEl = document.getElementById('groupLabels');
@@ -1234,7 +1095,7 @@ function renderCharMap(chars, isDefault, enteredLen, errorPositions) {
   const legend = document.getElementById('charLegend');
   // Per-field position map — one label per logical field, matching the
   // RL and PXR/PD-SB decoders (MDS/SBS uses the standard Magnum 25-char scheme).
-  const groups =     [2,       1,      1,    2,     1,      1,      2,         2,       2,     6,                       5];
+  const groups = MAP_GROUPS;
   const groupNames = ['Family','Frame','Int','Amps','Poles','Mount','Lang/DSL','Sensor','Trip','ST/Mot/SR/UVR/Aux/Bell','PB/Cnt/LCS/Ship/Fut'];
   let boxHtml = '';
   let labelHtml = '';
@@ -1273,12 +1134,12 @@ function renderCharMap(chars, isDefault, enteredLen, errorPositions) {
   boxesEl.innerHTML = boxHtml;
   labelsEl.innerHTML = labelHtml;
   posEl.innerHTML = posHtml;
-  legend.style.display = hasDefaults ? 'flex' : 'none';
+  legend.style.display = chars ? 'block' : 'none';
 }
 
 function renderResults(chars, r, errors, renewalParts, isDefault, isPartial, enteredLen, wasExpanded, originalInput) {
   const el = document.getElementById('results');
-  el.classList.remove('hidden');
+  el.style.display = 'block';
 
   const summaryParts = [];
   if (r.family) summaryParts.push(r.family.split('(')[0].trim());
@@ -1291,55 +1152,57 @@ function renderResults(chars, r, errors, renewalParts, isDefault, isPartial, ent
   let html = '';
 
   // Summary banner
-  const partialTag = isPartial ? '<span class="partial-tag">Partial \u2014 ' + enteredLen + ' of 25 chars entered</span>' : '';
   html += '<div class="summary-banner">';
-  html += '<h2>' + summaryParts.join(' \u2014 ') + partialTag + '</h2>';
-  html += '<p>Catalog: ' + chars.substring(0,10) + ' ' + chars.substring(10,15) + ' ' + chars.substring(15,20) + ' ' + chars.substring(20,25) + '</p>';
+  html += '<div class="headline">' + summaryParts.join(' \u2014 ') + '</div>';
+  html += '<div class="catalog-fmt">' + fmtGroups(chars, MAP_GROUPS) + '</div>';
+  if (isPartial) html += '<div class="partial-tag">Partial \u2014 ' + enteredLen + ' of 25 chars entered</div>';
   if (wasExpanded) {
-    html += '<p style="color:#93c5fd;margin-top:4px;font-size:0.8rem;">Short code "' + originalInput + '" expanded to "' + chars.substring(0, enteredLen) + '"</p>';
+    html += '<div class="expanded-note">Short code "' + originalInput + '" expanded to "' + chars.substring(0, enteredLen) + '"</div>';
   }
-  html += '<button class="btn-copy" id="btnCopyCat" type="button">Copy Catalog Number</button>';
+  html += '<button class="btn-copy" id="btnCopyCat" type="button">Copy Full Catalog Number</button>';
   html += ' <button class="btn-pdf" onclick="downloadDecoderPDF()">Download PDF</button>';
   html += ' <button class="btn-quote" onclick="openDecoderQuote()">Get a Quote for This Breaker</button>';
   html += '</div>';
 
   // Short-code expansion info
   if (wasExpanded) {
-    html += '<div class="result-card info-card full-width"><h3>Short Code Expanded</h3>';
+    html += '<div class="result-card info wide"><div class="card-title">Short Code Expanded</div>';
     html += itemD('Original Input', originalInput, false);
     html += itemD('Expanded To', chars.substring(0, enteredLen), false);
-    html += '<div class="result-item"><span class="label">Note</span><span class="value default-val">Dealer/listing shorthand detected and auto-expanded. Defaults assumed for 3-pole drawout.</span></div>';
+    html += '<div class="card-row"><span class="card-label">Note</span><span class="card-value default-val">Dealer/listing shorthand detected and auto-expanded. Defaults assumed for 3-pole drawout.</span></div>';
     html += '</div>';
   }
 
   // Partial input info card
   if (isPartial && !wasExpanded) {
     const defaultCount = isDefault.filter(function(d) { return d; }).length;
-    html += '<div class="result-card info-card full-width"><h3>Partial Input</h3>';
+    html += '<div class="result-card info wide"><div class="card-title">Partial Input</div>';
     html += itemD('Characters Entered', enteredLen + ' of 25', false);
     html += itemD('Positions Defaulted', defaultCount + ' positions assumed base build', false);
-    html += '<div class="result-item"><span class="label">Defaults Applied</span><span class="value default-val">Sensor matched to frame amps, no trip unit, no accessories</span></div>';
+    html += '<div class="card-row"><span class="card-label">Defaults Applied</span><span class="card-value default-val">Sensor matched to frame amps, no trip unit, no accessories</span></div>';
     html += '</div>';
   } else if (isPartial && wasExpanded) {
     const defaultCount = isDefault.filter(function(d) { return d; }).length;
-    html += '<div class="result-card info-card full-width"><h3>Defaulted Positions</h3>';
+    html += '<div class="result-card info wide"><div class="card-title">Defaulted Positions</div>';
     html += itemD('Positions Defaulted', defaultCount + ' positions assumed base build', false);
-    html += '<div class="result-item"><span class="label">Defaults Applied</span><span class="value default-val">Sensor matched to frame amps, no trip unit, no accessories</span></div>';
+    html += '<div class="card-row"><span class="card-label">Defaults Applied</span><span class="card-value default-val">Sensor matched to frame amps, no trip unit, no accessories</span></div>';
     html += '</div>';
   }
 
   // Errors card
   if (errors.length > 0) {
-    html += '<div class="result-card error-card full-width"><h3>Warnings</h3>';
+    html += '<div class="result-card warn wide"><div class="card-title">Warnings</div>';
     for (var i = 0; i < errors.length; i++) {
       var e = errors[i];
-      html += '<div class="result-item"><span class="label">Pos ' + e.pos + ' (' + e.code + ')</span><span class="value error-val">' + e.msg + '</span></div>';
+      html += '<div class="card-row"><span class="card-label">Pos ' + e.pos + ' (' + e.code + ')</span><span class="card-value error-val">' + e.msg + '</span></div>';
     }
     html += '</div>';
   }
 
+  html += '<div class="result-grid">';
+
   // Breaker Config card
-  html += '<div class="result-card valid"><h3>Breaker Configuration</h3>';
+  html += '<div class="result-card config"><div class="card-title">Breaker Configuration</div>';
   html += itemD('Product Family', r.family, isDefault[0]);
   html += itemD('Frame Type', r.frameType, isDefault[2]);
   html += itemD('Interrupting Capacity', r.interruptKA ? r.interruptKA + ' kA' : null, isDefault[3]);
@@ -1353,7 +1216,7 @@ function renderResults(chars, r, errors, renewalParts, isDefault, isPartial, ent
   html += '</div>';
 
   // Trip Unit card
-  html += '<div class="result-card valid"><h3>Sensor & Trip Unit</h3>';
+  html += '<div class="result-card trip"><div class="card-title">Sensor & Trip Unit</div>';
   html += itemD('Sensor Rating', r.sensorLabel || null, isDefault[10]);
   html += itemD('Trip Unit', r.tripName || null, isDefault[12]);
   html += itemD('Protection Functions', r.protection || null, isDefault[12]);
@@ -1362,7 +1225,7 @@ function renderResults(chars, r, errors, renewalParts, isDefault, isPartial, ent
   html += '</div>';
 
   // Accessories card
-  html += '<div class="result-card valid"><h3>Accessories</h3>';
+  html += '<div class="result-card access"><div class="card-title">Accessories</div>';
   html += itemD('Motor Operator', r.motor || null, isDefault[15]);
   html += itemD('Spring Release', r.spring || null, isDefault[16]);
   html += itemD('UVR / 2nd Shunt', r.uvr || null, isDefault[17]);
@@ -1371,11 +1234,13 @@ function renderResults(chars, r, errors, renewalParts, isDefault, isPartial, ent
   html += '</div>';
 
   // Options card
-  html += '<div class="result-card valid"><h3>Additional Options</h3>';
+  html += '<div class="result-card options"><div class="card-title">Additional Options</div>';
   html += itemD('Padlock', r.padlock || null, isDefault[20]);
   html += itemD('Operations Counter', r.opsCounter || null, isDefault[21]);
   html += itemD('Latch Check Switch', r.latchCheck || null, isDefault[22]);
   html += itemD('Shipping Config', r.shipping || null, isDefault[23]);
+  html += '</div>';
+
   html += '</div>';
 
   // [HIDDEN FOR LATER DEPLOYMENT] Renewal Parts cross-reference
@@ -1410,34 +1275,34 @@ function renderResults(chars, r, errors, renewalParts, isDefault, isPartial, ent
 
 function item(label, value) {
   var v = value || '\u2014';
-  var cls = value ? 'value' : 'value error-val';
-  return '<div class="result-item"><span class="label">' + label + '</span><span class="' + cls + '">' + v + '</span></div>';
+  var cls = value ? 'card-value' : 'card-value error-val';
+  return '<div class="card-row"><span class="card-label">' + label + '</span><span class="' + cls + '">' + v + '</span></div>';
 }
 
 function itemD(label, value, isDefaulted) {
   var v = value || '\u2014';
-  var cls = 'value';
+  var cls = 'card-value';
   var suffix = '';
   if (!value) {
-    cls = 'value error-val';
+    cls = 'card-value error-val';
   } else if (isDefaulted) {
-    cls = 'value default-val';
+    cls = 'card-value default-val';
     suffix = ' (default)';
   }
-  return '<div class="result-item"><span class="label">' + label + '</span><span class="' + cls + '">' + v + suffix + '</span></div>';
+  return '<div class="card-row"><span class="card-label">' + label + '</span><span class="' + cls + '">' + v + suffix + '</span></div>';
 }
 
 function showError(msg) {
   var el = document.getElementById('results');
-  el.classList.remove('hidden');
-  el.innerHTML = '<div class="result-card error-card full-width"><h3>Error</h3>' +
-    '<div class="result-item"><span class="label">Input Error</span><span class="value error-val">' + msg + '</span></div></div>';
+  el.style.display = 'block';
+  el.innerHTML = '<div class="result-card warn wide"><div class="card-title">Error</div>' +
+    '<div class="card-row"><span class="card-label">Input Error</span><span class="card-value error-val">' + msg + '</span></div></div>';
 }
 
 function clearAll() {
   document.getElementById('catInput').value = '';
   document.getElementById('results').innerHTML = '';
-  document.getElementById('results').classList.add('hidden');
+  document.getElementById('results').style.display = 'none';
   document.getElementById('charBoxes').innerHTML = '';
   document.getElementById('groupLabels').innerHTML = '';
   document.getElementById('posLabels').innerHTML = '';
@@ -1453,51 +1318,23 @@ document.getElementById('catInput').addEventListener('keydown', function(e) {
   if (e.key === 'Enter') decode();
 });
 
-renderCharMap('', [], 0, new Set());
 
 function copyCatalog(cat, btn) {
   if (navigator.clipboard) {
     navigator.clipboard.writeText(cat).then(function() {
       btn.textContent = 'Copied!';
       btn.classList.add('copied');
-      setTimeout(function() { btn.textContent = 'Copy Catalog Number'; btn.classList.remove('copied'); }, 2000);
+      setTimeout(function() { btn.textContent = 'Copy Full Catalog Number'; btn.classList.remove('copied'); }, 2000);
     });
   } else {
     var ta = document.createElement('textarea');
     ta.value = cat; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
     btn.textContent = 'Copied!';
     btn.classList.add('copied');
-    setTimeout(function() { btn.textContent = 'Copy Catalog Number'; btn.classList.remove('copied'); }, 2000);
+    setTimeout(function() { btn.textContent = 'Copy Full Catalog Number'; btn.classList.remove('copied'); }, 2000);
   }
 }
 </script>
-<nav class="social" aria-label="Connect with Voyten Electric">
-  <a href="https://share.google/8zeiyPVd68OB1smJW" target="_blank" rel="noopener noreferrer" title="Voyten Electric on Google Business Profile">
-    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <rect x="4" y="11" width="16" height="9" rx="1" fill="#4989F5"/>
-      <path d="M3 11 L4.5 5 H19.5 L21 11 Z" fill="#3367D6"/>
-      <path d="M8 5 L7.2 11 H10 L10.3 5 Z" fill="#5B9BFF"/>
-      <path d="M14 5 L14 11 H16.8 L16 5 Z" fill="#5B9BFF"/>
-      <rect x="10" y="14" width="4" height="6" rx="0.5" fill="#ffffff"/>
-    </svg>
-    Google Business
-  </a>
-  <a href="https://www.linkedin.com/in/voyten-electric-sales-team/" target="_blank" rel="noopener noreferrer" title="Voyten Electric on LinkedIn">
-    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <rect width="24" height="24" rx="4" fill="#0A66C2"/>
-      <path fill="#ffffff" d="M8.34 18.34H5.67V9.75h2.67v8.59zM7 8.58a1.55 1.55 0 1 1 0-3.1 1.55 1.55 0 0 1 0 3.1zM18.34 18.34h-2.67v-4.18c0-1-.02-2.28-1.39-2.28-1.39 0-1.6 1.09-1.6 2.21v4.25h-2.67V9.75h2.56v1.17h.04c.36-.68 1.23-1.39 2.53-1.39 2.7 0 3.2 1.78 3.2 4.09v4.72z"/>
-    </svg>
-    LinkedIn
-  </a>
-  <a href="https://www.ebay.com/str/voytenelectric" target="_blank" rel="noopener noreferrer" title="Voyten Electric eBay Store">
-    <svg viewBox="0 0 84 34" aria-hidden="true" focusable="false">
-      <text x="0" y="27" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" letter-spacing="-1.5">
-        <tspan fill="#E53238">e</tspan><tspan fill="#0064D2">b</tspan><tspan fill="#F5AF02">a</tspan><tspan fill="#86B817">y</tspan>
-      </text>
-    </svg>
-    Store
-  </a>
-</nav>
 
 <style>
 .vmnote-use{max-width:960px;margin:8px auto 28px;padding:0 20px;box-sizing:border-box}
