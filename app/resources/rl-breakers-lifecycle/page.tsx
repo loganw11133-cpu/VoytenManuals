@@ -57,7 +57,7 @@ export default function RLBreakersLifecyclePage() {
     url: 'https://www.voytenmanuals.com/resources/rl-breakers-lifecycle',
     author: VOYTEN,
     publisher: VOYTEN,
-    about: { '@type': 'Product', name: 'Voyten Type RL/VRL Low Voltage Power Circuit Breaker', manufacturer: { '@type': 'Organization', name: 'Voyten Electric & Electronics, Inc.' }, category: 'Circuit Breakers' },
+    about: { '@type': 'Thing', name: 'Voyten Type RL/VRL Low Voltage Power Circuit Breaker', manufacturer: { '@type': 'Organization', name: 'Voyten Electric & Electronics, Inc.' }, category: 'Circuit Breakers' },
   };
 
   const breadcrumbJsonLd = {

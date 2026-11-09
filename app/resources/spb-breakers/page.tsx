@@ -66,7 +66,7 @@ export default function SPBBreakersGuide() {
     datePublished: '2026-05-29',
     dateModified: '2026-05-29',
     about: {
-      '@type': 'Product',
+      '@type': 'Thing',
       name: 'Eaton Type SPB Systems Pow-R Breaker',
       manufacturer: { '@type': 'Organization', name: 'Eaton' },
       category: 'Circuit Breakers',

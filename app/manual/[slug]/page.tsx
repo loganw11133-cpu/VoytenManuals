@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { FileText, ChevronRight, Phone, Building2, Tag, BookOpen, ArrowLeft, Layers, Download, Shield, Wrench, ArrowRight, ExternalLink, Cpu } from 'lucide-react';
 import { getManualBySlug, getManualWithRelated, formatFileSize, toSlug } from '@/lib/manuals-db';
 import { matchDecoderForManual } from '@/lib/decoders';
-import { matchEbayFamily, stockedOffers } from '@/lib/ebay-listings';
+import { familyOfferCatalog, matchEbayFamily, stockedOffers } from '@/lib/ebay-listings';
 import { MANUAL_REDIRECTS } from '@/lib/manual-redirects';
 import ManualCard from '@/components/ManualCard';
 import LeadCaptureForm from '@/components/LeadCaptureForm';
@@ -114,18 +114,19 @@ export default async function ManualPage({ params }: ManualPageProps) {
   const productModel = mTitle.replace(/\s*Manual$/i, '');
   const pageUrl = `https://www.voytenmanuals.com/manual/${manual.slug}`;
   const quoteUrl = `https://www.voytenmanuals.com/contact?type=quote&manual=${manual.id}`;
+  // OfferCatalog, not Product. These pages are about a product FAMILY, and Google
+  // only gives product rich results to a page about one specific product, so a
+  // Product here was never eligible and GSC listed each one as invalid. The catalog
+  // keeps the seller / availability / quote + eBay offers for crawlers and AI.
   const productOfferJsonLd = productLine ? {
     "@context": "https://schema.org",
-    "@type": "Product",
+    "@type": "OfferCatalog",
     "name": productModel,
     "category": manual.subcategory || manual.category,
-    "brand": { "@type": "Brand", "name": productLine.brand },
-    "manufacturer": { "@type": "Organization", "name": productLine.brand },
-    ...(manual.manual_number && { "mpn": manual.manual_number }),
     "url": `https://www.voytenmanuals.com/manual/${manual.slug}`,
-    "description": `New Surplus and reconditioned ${productModel} from Voyten Electric — tested, in stock, quote on request. 24/7 emergency: 1-800-458-4001.`,
+    "description": `New Surplus and reconditioned ${productModel} (${productLine.brand}) from Voyten Electric — tested, in stock, quote on request. 24/7 emergency: 1-800-458-4001.`,
     "subjectOf": { "@id": `${pageUrl}#manual` },
-    "offers": [{
+    "itemListElement": [{
       "@type": "Offer",
       "availability": "https://schema.org/InStock",
       "itemCondition": "https://schema.org/RefurbishedCondition",
@@ -142,14 +143,12 @@ export default async function ManualPage({ params }: ManualPageProps) {
     // Every other family Voyten stocks on eBay: the page is the manual AND a
     // listing, so the Product is the family and the manual is its documentation.
     "@context": "https://schema.org",
-    "@type": "Product",
-    "name": ebay.product,
-    "category": ebay.category,
-    "brand": { "@type": "Brand", "name": ebay.brand },
-    "url": pageUrl,
-    "description": `${ebay.product}, stocked by Voyten Electric — buy from the Voyten eBay store or request a quote. This page carries the free ${manual.title} PDF. 24/7 emergency: 1-800-458-4001.`,
+    ...familyOfferCatalog(ebay, {
+      url: pageUrl,
+      quoteUrl,
+      description: `${ebay.product} (${ebay.brand}), stocked by Voyten Electric — buy from the Voyten eBay store or request a quote. This page carries the free ${manual.title} PDF. 24/7 emergency: 1-800-458-4001.`,
+    }),
     "subjectOf": { "@id": `${pageUrl}#manual` },
-    "offers": stockedOffers(ebay, quoteUrl),
   } : null;
 
   // Rich JSON-LD: TechArticle with part numbers, manufacturer, category

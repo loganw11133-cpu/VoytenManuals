@@ -103,7 +103,7 @@ export default async function SPBBreakersPage() {
       telephone: '+1-800-458-4001',
     },
     about: {
-      '@type': 'Product',
+      '@type': 'Thing',
       name: 'Eaton Type SPB Systems Pow-R Breaker',
       manufacturer: { '@type': 'Organization', name: 'Eaton' },
       category: 'Circuit Breakers',
@@ -192,16 +192,17 @@ export default async function SPBBreakersPage() {
     ],
   };
 
+  // OfferCatalog, not Product: the page covers the whole SPB line, and Google only
+  // gives product rich results to a page about one specific product, so a
+  // line-level Product is an invalid item in GSC.
   const offerJsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'Product',
+    '@type': 'OfferCatalog',
     name: 'Eaton Type SPB (Systems Pow-R) Insulated Case Circuit Breaker',
     category: 'Insulated Case Circuit Breakers',
     description: 'New and reconditioned Eaton/Cutler-Hammer/Westinghouse Type SPB breakers (800–5000A, 50–150 kA), Digitrip RMS trip units, rating plugs, and renewal parts — from Voyten Electric, the New Surplus authorized SPB source. 1-year warranty on reconditioned units.',
-    brand: { '@type': 'Brand', name: 'Eaton' },
-    manufacturer: { '@type': 'Organization', name: 'Eaton' },
     url: 'https://www.voytenmanuals.com/products/spb-breakers',
-    offers: {
+    itemListElement: {
       '@type': 'Offer',
       availability: 'https://schema.org/InStock',
       itemCondition: 'https://schema.org/RefurbishedCondition',

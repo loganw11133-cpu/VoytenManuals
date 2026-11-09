@@ -110,7 +110,7 @@ export default function RLBreakersGuide() {
     datePublished: '2026-06-03',
     dateModified: '2026-06-04',
     about: {
-      '@type': 'Product',
+      '@type': 'Thing',
       name: 'Voyten Type RL/VRL Low Voltage Power Circuit Breaker',
       manufacturer: { '@type': 'Organization', name: 'Voyten Electric & Electronics, Inc.' },
       category: 'Circuit Breakers',

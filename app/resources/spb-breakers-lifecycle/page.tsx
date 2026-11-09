@@ -55,7 +55,7 @@ export default function SPBBreakersLifecyclePage() {
     url: 'https://www.voytenmanuals.com/resources/spb-breakers-lifecycle',
     author: VOYTEN,
     publisher: VOYTEN,
-    about: { '@type': 'Product', name: 'Eaton Type SPB (Systems Pow-R) Insulated Case Circuit Breaker', manufacturer: { '@type': 'Organization', name: 'Eaton' }, category: 'Circuit Breakers' },
+    about: { '@type': 'Thing', name: 'Eaton Type SPB (Systems Pow-R) Insulated Case Circuit Breaker', manufacturer: { '@type': 'Organization', name: 'Eaton' }, category: 'Circuit Breakers' },
   };
 
   const breadcrumbJsonLd = {

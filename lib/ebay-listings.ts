@@ -162,6 +162,31 @@ export function stockedOffers(f: EbayFamily, quoteUrl = `${SITE}/contact?type=qu
 }
 
 /**
+ * Page-level "Voyten stocks this family" node, for manual pages and decoder routes.
+ *
+ * An OfferCatalog, not a Product. Google gives product rich results only to a page
+ * about ONE specific product ("shoes in our shop" is not a specific product), and a
+ * family has no single price, so a family Product is never eligible and GSC lists
+ * every one as invalid ("Either offers, review, or aggregateRating…", then "Either
+ * price…"). The catalog keeps what crawlers and AI assistants use: the family, the
+ * seller, availability, the eBay listings and the quote route.
+ */
+export function familyOfferCatalog(
+  f: EbayFamily,
+  opts: { id?: string; url: string; description: string; quoteUrl?: string },
+) {
+  return {
+    "@type": "OfferCatalog",
+    ...(opts.id && { "@id": opts.id }),
+    "name": f.product,
+    "category": f.category,
+    "url": opts.url,
+    "description": opts.description,
+    "itemListElement": stockedOffers(f, opts.quoteUrl),
+  };
+}
+
+/**
  * Organization-level offer catalog: one entry per stocked family.
  *
  * This sits in the layout, so it is on EVERY page. Each entry is a plain Offer

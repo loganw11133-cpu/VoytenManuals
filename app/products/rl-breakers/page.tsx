@@ -206,6 +206,7 @@ export default async function RLBreakersPage() {
         mainEntity: { '@id': productId },
         publisher: sellerRef,
         numberOfItems: shownCount,
+        relatedLink: `${SITE}/tools/rl`,
       },
       {
         '@type': 'BreadcrumbList',
@@ -216,27 +217,21 @@ export default async function RLBreakersPage() {
         ],
       },
       {
-        '@type': 'Product',
+        // OfferCatalog, not Product: this page covers the whole RL/VRL line, and
+        // Google only gives product rich results to a page about one specific
+        // product, so a line-level Product is an invalid item in GSC. The specs that
+        // sat in Product.additionalProperty are in the description (and on the page).
+        '@type': 'OfferCatalog',
         '@id': productId,
         name: 'Voyten Type RL/VRL Low Voltage Power Circuit Breaker',
         alternateName: ['Type RL breaker', 'VRL breaker', 'RLE', 'RLI', 'RLF'],
         category: 'Low Voltage Power Circuit Breakers',
         description:
-          'New-surplus and reconditioned Voyten Type RL/VRL, RLE, RLI and RLF low voltage power circuit breakers (drawout, 800–5000A frames), Static Trip III trip units and renewal parts, plus the companion Type LA air circuit breaker — from Voyten Electric, the New Surplus authorized source for the discontinued RL line.',
+          `New-surplus and reconditioned Voyten Type RL/VRL, RLE, RLI and RLF low voltage power circuit breakers, Static Trip III trip units and renewal parts, plus the companion Type LA air circuit breaker — from Voyten Electric, the New Surplus authorized source for the discontinued RL line. Frames: ${RL_FRAMES_TEXT}. Maximum rated voltage 635V AC. Drawout construction (RLF drawout only). Static Trip III (LSIG) trip unit. Interrupting rating 30–200 kA RMS symmetrical, by model and frame.`,
         image: [`${SITE}${IMG_BREAKER_HERO}`, `${SITE}${IMG_PARTS}`, IMG_OG],
-        brand: { '@type': 'Brand', name: 'Voyten Electric' },
-        manufacturer: sellerRef,
         url: PAGE_URL,
         mainEntityOfPage: { '@id': `${PAGE_URL}#webpage` },
-        additionalProperty: [
-          { '@type': 'PropertyValue', name: 'Frame sizes', value: RL_FRAMES_TEXT },
-          { '@type': 'PropertyValue', name: 'Maximum rated voltage', value: '635V AC' },
-          { '@type': 'PropertyValue', name: 'Construction', value: 'Drawout (RLF drawout only)' },
-          { '@type': 'PropertyValue', name: 'Trip unit', value: 'Static Trip III (LSIG)' },
-          { '@type': 'PropertyValue', name: 'Interrupting rating', value: '30–200 kA RMS symmetrical, by model and frame' },
-        ],
-        isRelatedTo: [{ '@type': 'SoftwareApplication', name: 'Voyten Type RL/VRL Catalog Decoder', url: `${SITE}/tools/rl` }],
-        offers: [
+        itemListElement: [
           offer(
             'New',
             'New-surplus Type RL/VRL breakers and parts',
@@ -267,7 +262,7 @@ export default async function RLBreakersPage() {
         description:
           'Emergency sourcing, testing, and expedited shipment of exact-match Voyten Type RL/VRL breakers, Static Trip III trip units, and renewal parts for failed or aging RL switchgear. Voyten holds New Surplus RL inventory acquired from the Wendell, NC facility.',
         areaServed: { '@type': 'Place', name: 'Worldwide' },
-        isRelatedTo: { '@id': productId },
+        hasOfferCatalog: { '@id': productId },
         provider: {
           '@id': ORG_ID,
           contactPoint: {

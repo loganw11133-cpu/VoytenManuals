@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import type { Decoder } from '@/lib/decoders';
-import { stockedOffers, type EbayFamily } from '@/lib/ebay-listings';
+import { familyOfferCatalog, type EbayFamily } from '@/lib/ebay-listings';
 
 const SITE = 'https://www.voytenmanuals.com';
 
@@ -118,14 +118,14 @@ export function decoderJsonLd(d: Decoder, stock?: DecoderStock) {
     const { family, library } = stock;
     graph.push(
       {
-        '@type': 'Product',
-        '@id': `${url}#stock`,
-        name: family.product,
-        category: family.category,
-        brand: { '@type': 'Brand', name: family.brand },
-        description: `${family.product}, stocked by Voyten Electric — buy from the Voyten eBay store or request a quote. Identify the exact unit first with the free decoder on this page. 24/7 emergency: 1-800-458-4001.`,
+        // OfferCatalog, not Product: a family is never a product rich result (see
+        // familyOfferCatalog in lib/ebay-listings.ts).
+        ...familyOfferCatalog(family, {
+          id: `${url}#stock`,
+          url,
+          description: `${family.product} (${family.brand}), stocked by Voyten Electric — buy from the Voyten eBay store or request a quote. Identify the exact unit first with the free decoder on this page. 24/7 emergency: 1-800-458-4001.`,
+        }),
         subjectOf: { '@id': `${url}#tool` },
-        offers: stockedOffers(family),
       },
       {
         '@type': 'CollectionPage',
