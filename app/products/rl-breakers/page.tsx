@@ -12,9 +12,13 @@ export const revalidate = 3600;
 const SITE = 'https://www.voytenmanuals.com';
 const PAGE_URL = `${SITE}/products/rl-breakers`;
 const ORG_ID = `${SITE}/#organization`; // declared by the Organization block in app/layout.tsx
-// Hero: the same breaker photo the page used to hotlink from the Volusion CDN
-// ("breaker white.png"), now served locally. Native size 239×195.
-const IMG_BREAKER_HERO = '/images/rl-breaker-hero.png';
+// Hero (2026-11-11): Voyten's own studio photo of an RL breaker (source:
+// Voyten-ICCB/.../Breakers/RL_bkr.jpg), white background cut out to transparent.
+// The Siemens marks — the nameplate, the "SIEMENS" badge on the Static Trip III
+// and the maker line on the front panel — are BLURRED OUT per the RL de-tag rule
+// (RL is "Voyten Type RL/VRL" on every front-facing surface, images included).
+// Never swap in an unredacted copy. 960×638.
+const IMG_BREAKER_HERO = '/images/rl-breaker-hero-2026-11.webp';
 // Parts overview: an upscale of the original accessories photo, served from public/images.
 const IMG_PARTS = '/images/rl-accessories-parts-2026-09.jpg';
 // Social card rendered by ./opengraph-image.tsx (Next serves it at this path).
@@ -350,8 +354,9 @@ export default async function RLBreakersPage() {
                   <Image
                     src={IMG_BREAKER_HERO}
                     alt="Voyten Type RL/VRL low voltage power circuit breaker — drawout power air circuit breaker with Static Trip III electronic trip unit"
-                    width={239}
-                    height={195}
+                    width={960}
+                    height={638}
+                    sizes="(max-width: 1024px) 100vw, 400px"
                     className="w-full h-auto rounded-lg"
                     priority
                   />
