@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Metadata } from 'next';
-import { Phone, ArrowRight, ChevronRight, Wrench, Shield, ExternalLink, BookOpen, Zap } from 'lucide-react';
+import { Phone, ArrowRight, ChevronRight, Wrench, Shield, ExternalLink, BookOpen, Zap, Cpu } from 'lucide-react';
 import ManualCard from '@/components/ManualCard';
 import { getSPBProductLine, type Manual } from '@/lib/manuals-db';
 
@@ -10,7 +10,9 @@ export const revalidate = 3600;
 // ── Hero & component images from Voyten's SPB Volusion store (custom domain) ──
 
 const IMG_BASE = 'https://www.spbbreakers.com/v/vspfiles/assets/images';
-const IMG_BREAKER_HERO = `${IMG_BASE}/Transparent%20SPB%20100%20Side.gif`;
+// Self-hosted Voyten warehouse photo (2026-11-11), edges feathered to transparent
+// so it blends into the dark hero. Source: Voyten-ICCB/.../Breakers/SPB.jfif.
+const IMG_BREAKER_HERO = '/images/spb-hero.webp';
 const IMG_PARTS = `${IMG_BASE}/Charging%20Hub%20Assembly.gif`;
 
 const SPB_STORE = 'https://www.spbbreakers.com/category-s';
@@ -307,21 +309,21 @@ export default async function SPBBreakersPage() {
 
             {/* Hero image */}
             <div className="flex justify-center lg:justify-end">
-              <div className="relative w-full max-w-md">
-                <div className="bg-white/5 rounded-2xl p-6 backdrop-blur-sm border border-white/10">
-                  <Image
-                    src={IMG_BREAKER_HERO}
-                    alt="Eaton Type SPB Systems Pow-R low voltage insulated case circuit breaker — drawout construction with Pow-R Trip 7 trip unit"
-                    width={480}
-                    height={360}
-                    className="w-full h-auto rounded-lg"
-                    unoptimized
-                    priority
-                  />
-                  <p className="text-center text-sm text-slate-400 mt-3">
-                    Eaton Type SPB-100 Systems Pow-R Breaker
-                  </p>
-                </div>
+              {/* No framed box: the photo's edges fade to transparent and blend
+                  straight into the hero background. */}
+              <div className="relative w-full max-w-lg">
+                <Image
+                  src={IMG_BREAKER_HERO}
+                  alt="Eaton Type SPB Systems Pow-R low voltage insulated case circuit breakers, including an SPB 65 and an SPBNH, on a pallet in the Voyten Electric warehouse"
+                  width={1200}
+                  height={761}
+                  sizes="(max-width: 1024px) 100vw, 512px"
+                  className="w-full h-auto"
+                  priority
+                />
+                <p className="text-center text-sm text-slate-400 mt-2">
+                  Eaton Type SPB Systems Pow-R breakers at Voyten Electric
+                </p>
               </div>
             </div>
           </div>
@@ -467,6 +469,27 @@ export default async function SPBBreakersPage() {
 
         {/* ═══════════════ TECHNICAL REFERENCE LINK ═══════════════ */}
         <section className="mb-16">
+          {/* Mirrors the RL page's decoder card. The SPB decoder is INTERNAL ONLY
+              (edge-number tables are competitively sensitive; /tools/spb redirects
+              here), so this card routes to the quote form and staff decode the
+              number with the offline tool. Never point it at /tools/spb. */}
+          <Link
+            href="/contact?type=quote"
+            className="group mb-4 flex items-center gap-4 bg-white rounded-2xl border border-slate-200 p-6 hover:border-[#dc2626]/30 hover:shadow-md transition-all"
+          >
+            <div className="w-12 h-12 bg-[#dc2626]/10 rounded-xl flex items-center justify-center flex-shrink-0">
+              <Cpu size={24} className="text-[#dc2626]" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="text-lg font-bold text-slate-900 group-hover:text-[#dc2626] transition-colors">
+                Identify Your Breaker &mdash; SPB Edge-Number Lookup
+              </p>
+              <p className="text-sm text-slate-500 mt-0.5">
+                Send us the catalog or edge number from the nameplate &mdash; our team decodes the model, frame, interrupting rating, trip unit and accessories, and quotes the match.
+              </p>
+            </div>
+            <ArrowRight size={20} className="text-slate-300 group-hover:text-[#dc2626] flex-shrink-0 transition-colors" />
+          </Link>
           <Link
             href="/resources/spb-breakers"
             className="group flex items-center gap-4 bg-white rounded-2xl border border-slate-200 p-6 hover:border-[#dc2626]/30 hover:shadow-md transition-all"
