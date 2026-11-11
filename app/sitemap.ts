@@ -5,6 +5,9 @@ import { publicDecoders } from '@/lib/decoders';
 const baseUrl = 'https://www.voytenmanuals.com';
 const MANUALS_PER_SITEMAP = 1000;
 
+const xmlEscape = (s: string) =>
+  s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
 /**
  * Generate sitemap index — Next.js calls this to determine how many sitemaps exist.
  * Returns [{id: 0}, {id: 1}, ...] where id 0 = static/filter pages,
@@ -196,7 +199,16 @@ async function generateStaticAndFilterSitemap(): Promise<MetadataRoute.Sitemap> 
     // DB not available during build
   }
 
-  return [...staticPages, ...categoryPages, ...manufacturerPages, ...comboPages];
+  // Next 15.5 writes each url into <loc> VERBATIM — it does not XML-escape. The
+  // combo pages carry a raw '&' between query params, which is an illegal bare
+  // entity in XML: browsers stopped parsing sitemap/0.xml at the first combo row
+  // and every URL after it was unreadable to crawlers. Escape here, once, for all
+  // entries. (encodeURIComponent already turns any '&' inside a name into %26.)
+  // If a future Next release starts escaping <loc> itself, this will double-escape
+  // to '&amp;amp;' — re-check sitemap/0.xml after any Next upgrade.
+  return [...staticPages, ...categoryPages, ...manufacturerPages, ...comboPages].map(
+    (e) => ({ ...e, url: xmlEscape(e.url) })
+  );
 }
 
 async function generateManualBatchSitemap(id: number): Promise<MetadataRoute.Sitemap> {
@@ -209,7 +221,7 @@ async function generateManualBatchSitemap(id: number): Promise<MetadataRoute.Sit
     return result.manuals.map(manual => {
       const d = new Date(manual.updated_at || manual.created_at);
       return {
-        url: `${baseUrl}/manual/${manual.slug}`,
+        url: xmlEscape(`${baseUrl}/manual/${manual.slug}`),
         lastModified: isNaN(d.getTime()) ? new Date() : d,
         changeFrequency: 'monthly' as const,
         priority: 0.6,
