@@ -33,30 +33,14 @@ export const metadata: Metadata = {
   ],
 };
 
-/* Mirrors the homepage facility-tour markup. Every field is taken from the
-   video's own YouTube metadata rather than estimated. */
-const videoJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'VideoObject',
-  name: 'The People of Voyten',
-  description:
-    'Meet the team at Voyten Electric & Electronics, Inc. — a third-generation family owned electrical equipment wholesaler in Polk, Pennsylvania, started by the late John Voyten in 1953.',
-  thumbnailUrl: 'https://img.youtube.com/vi/TyLrTVjjxCo/maxresdefault.jpg',
-  uploadDate: '2025-03-31',
-  duration: 'PT3M25S',
-  contentUrl: 'https://www.youtube.com/watch?v=TyLrTVjjxCo',
-  embedUrl: 'https://www.youtube.com/embed/TyLrTVjjxCo',
-  publisher: {
-    '@type': 'Organization',
-    name: 'Voyten Electric & Electronics, Inc.',
-    url: 'https://www.voytenmanuals.com',
-  },
-};
+/* The VideoObject markup for "The People of Voyten" lives on its watch page,
+   /videos/the-people-of-voyten. Here the video is supplementary to the history
+   copy, so GSC rejected it ("Video isn't on a watch page"); the embed stays and
+   the footer CTA links to the watch page (lib/videos.ts). */
 
 export default function AboutPage() {
   return (
     <div className="bg-white">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(videoJsonLd) }} />
       {/* Hero */}
       <section className="bg-[#1a1a1a] text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-[#111111] via-[#1a1a1a] to-[#991b1b]"></div>
@@ -388,6 +372,11 @@ export default function AboutPage() {
             CAGE: 0GEF5 &nbsp;|&nbsp; DUNS: 070449368
           </p>
           <SocialLinks className="mt-6 justify-center" />
+          <p className="mt-5 text-sm">
+            <Link href="/videos/the-people-of-voyten" className="text-slate-400 hover:text-white underline-offset-4 hover:underline">
+              Watch: The People of Voyten (3:25) &rarr;
+            </Link>
+          </p>
         </div>
       </section>
     </div>

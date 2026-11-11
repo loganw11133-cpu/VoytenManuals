@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next';
 import { searchManuals, getCategories, getManufacturers, toSlug } from '@/lib/manuals-db';
 import { publicDecoders } from '@/lib/decoders';
+import { watchVideos } from '@/lib/videos';
 
 const baseUrl = 'https://www.voytenmanuals.com';
 const MANUALS_PER_SITEMAP = 1000;
@@ -125,6 +126,13 @@ async function generateStaticAndFilterSitemap(): Promise<MetadataRoute.Sitemap> 
       changeFrequency: 'monthly',
       priority: 0.85,
     },
+    // One watch page per video (GSC: a video must be on a watch page to index).
+    ...watchVideos.map((v) => ({
+      url: `${baseUrl}/videos/${v.slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly' as const,
+      priority: 0.5,
+    })),
     {
       url: `${baseUrl}/faq`,
       lastModified: new Date(),

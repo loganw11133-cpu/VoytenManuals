@@ -22,30 +22,13 @@ export const revalidate = 3600;
 export default async function Home() {
   const categories = await getCategories();
 
-  const videoJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "VideoObject",
-    "name": "Voyten Electric Capabilities — Facility Tour",
-    "description": "Tour of Voyten Electric & Electronics' 200,000 sq ft facility in Polk, PA. Specializing in new, surplus, and reconditioned electrical equipment — circuit breakers, switchgear, motor controls, and more. Family owned since 1953.",
-    // This video has no maxresdefault (it was not uploaded at 720p or better),
-    // so that URL 404s — sddefault is the largest size YouTube actually serves for it.
-    "thumbnailUrl": "https://img.youtube.com/vi/pf5XGcExiM0/sddefault.jpg",
-    "uploadDate": "2025-02-25",
-    "contentUrl": "https://www.youtube.com/watch?v=pf5XGcExiM0",
-    "embedUrl": "https://www.youtube.com/embed/pf5XGcExiM0",
-    "publisher": {
-      "@type": "Organization",
-      "name": "Voyten Electric & Electronics, Inc.",
-      "url": "https://www.voytenmanuals.com",
-    },
-  };
+  /* The facility tour's VideoObject markup lives on its watch page,
+     /videos/voyten-electric-facility-tour (lib/videos.ts). Here the video is
+     supplementary to the page, so GSC rejected it ("Video isn't on a watch
+     page"); the embed stays and links to the watch page. */
 
   return (
     <div className="bg-white">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(videoJsonLd) }}
-      />
       {/* Hero Section */}
       <section className="bg-[#1a1a1a] relative overflow-hidden">
         {/* Aerial facility photo background */}
@@ -158,6 +141,11 @@ export default async function Home() {
                 // This video has no maxresdefault — sddefault is the largest YouTube serves for it.
                 thumbnailSize="sddefault"
               />
+              <p className="mt-3 text-sm text-center lg:text-left">
+                <Link href="/videos/voyten-electric-facility-tour" className="text-slate-400 hover:text-white underline-offset-4 hover:underline">
+                  Watch the facility tour on its own page &rarr;
+                </Link>
+              </p>
             </div>
 
             {/* CTA Content */}
