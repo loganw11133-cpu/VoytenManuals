@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { FileText, ChevronRight, Phone, Building2, Tag, BookOpen, ArrowLeft, Layers, Download, Shield, Wrench, ArrowRight, ExternalLink, Cpu } from 'lucide-react';
 import { getManualBySlug, getManualWithRelated, formatFileSize, toSlug } from '@/lib/manuals-db';
 import { matchDecoderForManual } from '@/lib/decoders';
-import { familyOfferCatalog, matchEbayFamily, stockedOffers } from '@/lib/ebay-listings';
+import { familyOfferCatalog, matchEbayFamily, ORG_REF, stockedOffers } from '@/lib/ebay-listings';
 import { MANUAL_REDIRECTS } from '@/lib/manual-redirects';
 import ManualCard from '@/components/ManualCard';
 import LeadCaptureForm from '@/components/LeadCaptureForm';
@@ -132,12 +132,7 @@ export default async function ManualPage({ params }: ManualPageProps) {
       "itemCondition": "https://schema.org/RefurbishedCondition",
       "url": `https://www.voytenmanuals.com/manual/${manual.slug}`,
       "areaServed": { "@type": "Place", "name": "Worldwide" },
-      "seller": {
-        "@type": "Organization",
-        "name": "Voyten Electric & Electronics, Inc.",
-        "url": "https://www.voytenmanuals.com",
-        "telephone": "+1-800-458-4001",
-      },
+      "seller": ORG_REF,
     }, ...(ebay ? [stockedOffers(ebay)[0]] : [])],
   } : ebay ? {
     // Every other family Voyten stocks on eBay: the page is the manual AND a
@@ -160,12 +155,7 @@ export default async function ManualPage({ params }: ManualPageProps) {
     "headline": manual.title,
     "description": manual.description || `${manual.manufacturer} ${manual.category} manual: ${manual.title}`,
     "author": { "@type": "Organization", "name": manual.manufacturer },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Voyten Electric & Electronics, Inc.",
-      "url": "https://www.voytenmanuals.com",
-      "logo": "https://www.voytenmanuals.com/voyten-logo.png",
-    },
+    "publisher": { '@id': 'https://www.voytenmanuals.com/#organization' },
     "url": `https://www.voytenmanuals.com/manual/${manual.slug}`,
     "mainEntityOfPage": `https://www.voytenmanuals.com/manual/${manual.slug}`,
     "encodingFormat": "application/pdf",

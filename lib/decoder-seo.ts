@@ -83,11 +83,7 @@ export function decoderJsonLd(d: Decoder, stock?: DecoderStock) {
       url,
       isAccessibleForFree: true,
       offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-      publisher: {
-        '@type': 'Organization',
-        name: 'Voyten Electric & Electronics',
-        url: 'https://www.voyten.com',
-      },
+      publisher: { '@id': 'https://www.voytenmanuals.com/#organization' },
       description: `${d.description} Covers ${d.frames}, ${d.ratings}.`,
       featureList: d.identifies,
     },

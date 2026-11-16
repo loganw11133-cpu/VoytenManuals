@@ -40,7 +40,7 @@ export const metadata: Metadata = {
 };
 
 const VOYTEN = {
-  '@type': 'Organization',
+  '@id': 'https://www.voytenmanuals.com/#organization',
   name: 'Voyten Electric & Electronics, Inc.',
   url: 'https://www.voytenmanuals.com',
   telephone: '+1-800-458-4001',
@@ -57,7 +57,7 @@ export default function RLBreakersLifecyclePage() {
     url: 'https://www.voytenmanuals.com/resources/rl-breakers-lifecycle',
     author: VOYTEN,
     publisher: VOYTEN,
-    about: { '@type': 'Thing', name: 'Voyten Type RL/VRL Low Voltage Power Circuit Breaker', manufacturer: { '@type': 'Organization', name: 'Voyten Electric & Electronics, Inc.' }, category: 'Circuit Breakers' },
+    about: { '@type': 'Thing', name: 'Voyten Type RL/VRL Low Voltage Power Circuit Breaker', manufacturer: { '@id': 'https://www.voytenmanuals.com/#organization' }, category: 'Circuit Breakers' },
   };
 
   const breadcrumbJsonLd = {

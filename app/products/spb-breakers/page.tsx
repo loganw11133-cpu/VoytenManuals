@@ -98,12 +98,7 @@ export default async function SPBBreakersPage() {
     description: metadata.description,
     url: 'https://www.voytenmanuals.com/products/spb-breakers',
     numberOfItems: totalCount,
-    provider: {
-      '@type': 'Organization',
-      name: 'Voyten Electric & Electronics, Inc.',
-      url: 'https://www.voytenmanuals.com',
-      telephone: '+1-800-458-4001',
-    },
+    provider: { '@id': 'https://www.voytenmanuals.com/#organization' },
     about: {
       '@type': 'Thing',
       name: 'Eaton Type SPB Systems Pow-R Breaker',
@@ -211,12 +206,9 @@ export default async function SPBBreakersPage() {
       url: 'https://www.voytenmanuals.com/products/spb-breakers',
       areaServed: { '@type': 'Place', name: 'Worldwide' },
       warranty: { '@type': 'WarrantyPromise', durationOfWarranty: { '@type': 'QuantitativeValue', value: 1, unitCode: 'ANN' } },
-      seller: {
-        '@type': 'Organization',
-        name: 'Voyten Electric & Electronics, Inc.',
-        url: 'https://www.voytenmanuals.com',
-        telephone: '+1-800-458-4001',
-      },
+      // Reference the layout's Organization node; an inline copy is its own item
+      // to Google and gets flagged for missing address / image.
+      seller: { '@id': 'https://www.voytenmanuals.com/#organization' },
     },
   };
 
@@ -228,7 +220,7 @@ export default async function SPBBreakersPage() {
     description: 'Emergency sourcing, testing, and expedited shipment of exact-match Eaton/Cutler-Hammer/Westinghouse Type SPB breakers, Digitrip RMS trip units, rating plugs, and renewal parts for failed or aging SPB switchgear — including the drop-in SPB-100 upgrade for under-rated SPB-50/65 cubicles. Voyten is the New Surplus authorized SPB source.',
     areaServed: { '@type': 'Place', name: 'Worldwide' },
     provider: {
-      '@type': 'Organization',
+      '@id': 'https://www.voytenmanuals.com/#organization',
       name: 'Voyten Electric & Electronics, Inc.',
       url: 'https://www.voytenmanuals.com',
       telephone: '+1-800-458-4001',

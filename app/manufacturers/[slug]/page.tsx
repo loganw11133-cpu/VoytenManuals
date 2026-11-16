@@ -90,11 +90,7 @@ export default async function ManufacturerDetailPage({ params }: ManufacturerPag
     'description': description,
     'url': `https://www.voytenmanuals.com/manufacturers/${slug}`,
     'numberOfItems': manufacturer.count,
-    'provider': {
-      '@type': 'Organization',
-      'name': 'Voyten Electric & Electronics, Inc.',
-      'url': 'https://www.voytenmanuals.com',
-    },
+    'provider': { '@id': 'https://www.voytenmanuals.com/#organization' },
     'about': {
       '@type': 'Organization',
       'name': manufacturer.name,

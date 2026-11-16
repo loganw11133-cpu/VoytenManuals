@@ -38,7 +38,7 @@ export const metadata: Metadata = {
 };
 
 const VOYTEN = {
-  '@type': 'Organization',
+  '@id': 'https://www.voytenmanuals.com/#organization',
   name: 'Voyten Electric & Electronics, Inc.',
   url: 'https://www.voytenmanuals.com',
   telephone: '+1-800-458-4001',

@@ -128,12 +128,13 @@ export function stockedFamilyForDecoder(slug: string): (EbayFamily & { url: stri
 
 const SITE = 'https://www.voytenmanuals.com';
 
-const SELLER = {
-  "@type": "Organization",
-  "name": "Voyten Electric & Electronics, Inc.",
-  "url": SITE,
-  "telephone": "+1-800-458-4001",
-};
+/**
+ * A reference to the full Organization node in app/layout.tsx (on every page), not
+ * an inline copy. Google reads each inline Organization as its own item and flags
+ * the copies for missing address / image (Rich Results Test, Nov 2026).
+ */
+export const ORG_REF = { "@id": `${SITE}/#organization` };
+const SELLER = ORG_REF;
 
 /**
  * The two ways to buy a stocked family: its live eBay listings, and a quote from

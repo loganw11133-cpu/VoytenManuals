@@ -148,6 +148,7 @@ const jsonLd = {
   "alternateName": ["Voyten Electric", "Voyten Manuals"],
   "url": "https://www.voytenmanuals.com",
   "logo": "https://www.voytenmanuals.com/voyten-logo.png",
+  "image": "https://www.voytenmanuals.com/images/aerial-facility.png",
   "description": "Free searchable library of 8,400+ electrical equipment manuals and technical documentation. Backed by Voyten Electric & Electronics, Inc. — a third-generation family owned electrical equipment wholesaler since 1953.",
   "telephone": "+1-800-458-4001",
   "email": "sales@voyten.com",

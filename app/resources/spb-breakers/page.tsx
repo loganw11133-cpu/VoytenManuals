@@ -52,17 +52,8 @@ export default function SPBBreakersGuide() {
     headline: 'Eaton SPB Systems Pow-R Breaker — Complete Technical Reference',
     description: metadata.description,
     url: 'https://www.voytenmanuals.com/resources/spb-breakers',
-    author: {
-      '@type': 'Organization',
-      name: 'Voyten Electric & Electronics, Inc.',
-      url: 'https://www.voytenmanuals.com',
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: 'Voyten Electric & Electronics, Inc.',
-      url: 'https://www.voytenmanuals.com',
-      telephone: '+1-800-458-4001',
-    },
+    author: { '@id': 'https://www.voytenmanuals.com/#organization' },
+    publisher: { '@id': 'https://www.voytenmanuals.com/#organization' },
     datePublished: '2026-05-29',
     dateModified: '2026-05-29',
     about: {

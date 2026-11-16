@@ -96,23 +96,14 @@ export default function RLBreakersGuide() {
     headline: 'Voyten Type RL/VRL Low Voltage Power Circuit Breaker — Complete Technical Reference',
     description: metadata.description,
     url: 'https://www.voytenmanuals.com/resources/rl-breakers',
-    author: {
-      '@type': 'Organization',
-      name: 'Voyten Electric & Electronics, Inc.',
-      url: 'https://www.voytenmanuals.com',
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: 'Voyten Electric & Electronics, Inc.',
-      url: 'https://www.voytenmanuals.com',
-      telephone: '+1-800-458-4001',
-    },
+    author: { '@id': 'https://www.voytenmanuals.com/#organization' },
+    publisher: { '@id': 'https://www.voytenmanuals.com/#organization' },
     datePublished: '2026-06-03',
     dateModified: '2026-06-04',
     about: {
       '@type': 'Thing',
       name: 'Voyten Type RL/VRL Low Voltage Power Circuit Breaker',
-      manufacturer: { '@type': 'Organization', name: 'Voyten Electric & Electronics, Inc.' },
+      manufacturer: { '@id': 'https://www.voytenmanuals.com/#organization' },
       category: 'Circuit Breakers',
     },
   };

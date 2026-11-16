@@ -60,7 +60,7 @@ export default async function WatchPage({ params }: Props) {
     contentUrl: `https://www.youtube.com/watch?v=${v.youtubeId}`,
     embedUrl: `https://www.youtube.com/embed/${v.youtubeId}`,
     url: `${BASE}/videos/${v.slug}`,
-    publisher: { '@type': 'Organization', name: 'Voyten Electric & Electronics, Inc.', url: BASE },
+    publisher: { '@id': 'https://www.voytenmanuals.com/#organization' },
   };
 
   return (
