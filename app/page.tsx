@@ -79,13 +79,16 @@ export default async function Home() {
               SPB Breakers — New Surplus
             </Link>
           </div>
-          <div className="mt-2 text-center">
+          {/* Own line, pill-shaped: the decoders are a separate offer from the
+              RL/SPB product lines above, so they get a button, not another link. */}
+          <div className="mt-3 text-center">
             <Link
               href="/tools"
-              className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-[#dc2626] transition-colors"
+              className="group inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-4 py-1.5 text-sm font-semibold text-slate-700 shadow-sm transition-colors hover:border-[#dc2626] hover:bg-[#dc2626] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#dc2626] focus-visible:ring-offset-2 focus-visible:ring-offset-slate-50"
             >
-              <Cpu size={15} className="flex-shrink-0" />
+              <Cpu size={15} className="flex-shrink-0 text-[#dc2626] transition-colors group-hover:text-white" />
               Free Catalog Decoder Tools
+              <ArrowRight size={14} className="flex-shrink-0 transition-transform group-hover:translate-x-0.5" />
             </Link>
           </div>
         </div>
